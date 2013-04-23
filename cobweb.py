@@ -223,7 +223,6 @@ class ConceptTree:
             operations.append((self.cu_for_split(best1[1]),'split'))
             operations.sort(reverse=True)
 
-            print operations
             best_action = operations[0][1]
             if best_action == 'new':
                 self.new_child(instance)
