@@ -4,6 +4,9 @@ import random
 class ClassificationTree:
 
     def __init__(self, root=None, classification_tree=None):
+        """
+        The constructor.
+        """
         # keep track of the root of the tree
         if root:
             self.root = root
@@ -20,17 +23,33 @@ class ClassificationTree:
             self.av_counts = {}
             self.children = []
 
-    def increment_counts(self, record):
-        self.count += 1.0 
-        for a in record:
-            self.av_counts[a] = self.av_counts.setdefault(a,{})
-            self.av_counts[a][record[a]] = self.av_counts[a].get(record[a],0) + 1.0
+    def increment_counts(self, instance):
+        """
+        Increment the counts at the current node according to the specified
+        instance.
 
-    def decrement_counts(self, record):
-        self.count -= 1.0 
-        for a in record:
+        input:
+            instance: {a1: v1, a2: v2, ...} - a hashtable of attr and values. 
+        """
+        self.count += 1.0 
+        for a in instance:
             self.av_counts[a] = self.av_counts.setdefault(a,{})
-            self.av_counts[a][record[a]] = self.av_counts[a].get(record[a],0) - 1.0
+            self.av_counts[a][instance[a]] = (self.av_counts[a].get(instance[a],
+                                                                    0) + 1.0)
+
+    def decrement_counts(self, instance):
+        """
+        Decrement the counts at the current node according to the specified
+        instance.
+        
+        input:
+            instance: {a1: v1, a2: v2, ...} - a hashtable of attr and values. 
+        """
+        self.count -= 1.0 
+        for a in instance:
+            self.av_counts[a] = self.av_counts.setdefault(a,{})
+            self.av_counts[a][instance[a]] = (self.av_counts[a].get(instance[a],
+                                                                    0) - 1.0)
     
     def update_counts_from_node(self, node):
         self.count += node.count
@@ -40,120 +59,58 @@ class ClassificationTree:
                 self.av_counts[a][v] = (self.av_counts[a].get(v,0) +
                                      node.counts[a][v])
 
-    def cobweb(self, record):
+    def create_new_child(self,instance):
+        """
+        Creates a new child (to the current node) with the counts initialized by
+        the given instance. 
+        """
+        new_child = ClassificationTree(self.root)
+        new_child.increment_counts(instance)
+        self.children.append(new_child)
 
+    def create_child_with_current_counts(self):
+        """
+        Creates a new child (to the current node) with the counts initialized by
+        the current node's counts.
+        """
+        self.children.append(ClassificationTree(self.root,self))
+
+
+    def cobweb(self, instance):
+        """
+        Incrementally integrates an instance into the categorization tree
+        defined by the current node. This function operates recursively to
+        integrate this instance and uses category utility as the heuristic to
+        make decisions.
+        """
         if not self.children: 
-            # make a copy of the current node and make it a child 
-            self.children.append(ClassificationTree(self.root, self))
+            self.create_child_with_current_counts()
+            self.increment_counts(instance)
+            self.create_new_child(instance)
 
-            # increment count at the current node
-            self.increment_counts(record)
-            
-            # create a new child for the record
-            new_child = ClassificationTree(self.root)
-            new_child.increment_counts(record)
-            self.children.append(new_child)
         else:
-            self.increment_counts(record)
+            self.increment_counts(instance)
 
             # calculate the category utility for adding to each child
             children_cu = []
-            for i in range(len(self.children)):
-                old_c = self.children[i]
-                self.children[i] = ClassificationTree(self.root,self.children[i])
-                
-                # just update the counts at the child
-
-
-                # don't recursively add yet... 
-                # self.children[i].cobweb(record)
-                children_cu.append((i,self.category_utility()))          
-                self.children[i] = old_c
+            for child in self.children:
+                child.increment_counts(instance)
+                children_cu.append((self.category_utility(),child))
+                child.decrement_counts(instance)
             
             # sort the children by their cu
-            children_cu.sort(key=lambda x: x[1])
+            children_cu.sort()
 
             best_cu = float('-inf') 
             action = None 
 
             # calc cu for creating a new category
-            new_child = ClassificationTree(self.root)
-            new_child.increment_counts(record)
-            self.children.append(new_child)
-            cu = self.category_utility()
-            self.children.pop()
-            if cu >= best_cu:
-                best_cu = cu
-                action = 'new'
             
             # calc cu for merge of two best
-            if len(self.children) > 1:
-                index1 = children_cu[0][0]
-                index2 = children_cu[1][0]
-                if index2 < index1:
-                    temp = index1
-                    index1 = index2
-                    index2 = temp
-                old1 = self.children[index1]
-                old2 = self.children[index2]
-                new_c = ClassificationTree(self.root)
-                new_c.increment_counts_from_node(old1)
-                new_c.update_counts_from_node(old2)
-                new_c.children.append(ClassificationTree(self.root,old1))
-                new_c.children.append(ClassificationTree(self.root,old2))
-                self.children.pop(index2)
-                self.children.pop(index1)
-                self.children.append(new_c)
-                cu = self.category_utility()
-                if cu >= best_cu:
-                    best_cu = cu
-                    action = 'merge'
-                self.children.pop()
-                self.children.insert(index1,old1)
-                self.children.insert(index2,old2)
 
             # calc cu for split of best
-            old_index = children_cu[0][0]
-            old = self.children.pop(old_index)
-            for c in old.children:
-                self.children.append(ClassificationTree(self.root,c))
-            cu = self.category_utility()
-            if cu >= best_cu:
-                best_cu = cu
-                action = 'split'
-            for i in range(len(old.children)):
-                self.children.pop()
-            self.children.insert(old_index,old)
 
             # take the best action and permenantly update the tree
-            if action == 'new':
-                new_child = ClassificationTree(self.root)
-                new_child.increment_counts(record)
-                self.children.append(new_child)
-            elif action == 'merge':
-                index1 = children_cu[0][0]
-                index2 = children_cu[1][0]
-                if index2 < index1:
-                    temp = index1
-                    index1 = index2
-                    index2 = temp
-                old1 = self.children[index1]
-                old2 = self.children[index2]
-                new_c = ClassificationTree(self.root)
-                new_c.update_counts_from_node(old1)
-                new_c.update_counts_from_node(old2)
-                new_c.children.append(old1)
-                new_c.children.append(old2)
-                self.children.pop(index2)
-                self.children.pop(index1)
-                self.children.append(new_c)
-            elif action == 'split':
-                old = self.children.pop(children_cu[0][0])
-                for c in old.children:
-                    self.children.append(c)
-            else:
-                self.children[children_cu[0][0]].cobweb(record)
-
 
     def category_utility(self):
         """
@@ -186,12 +143,19 @@ class ClassificationTree:
         return exp_count
 
     def num_concepts(self):
+        """
+        Return the number of concepts contained in the tree defined by the
+        current node. 
+        """
         children_count = 0
         for c in self.children:
            children_count += c.num_concepts() 
         return 1 + children_count 
 
     def pretty_print(self,depth=0):
+        """
+        Prints the categorization tree.
+        """
         for i in range(depth):
             print "\t",
         print "|-" + str(self.av_counts)
@@ -200,6 +164,9 @@ class ClassificationTree:
             c.pretty_print(depth+1)
 
     def __str__(self):
+        """
+        Converts the categorization tree into a string.
+        """
         ret = str(self.av_counts)
         for c in self.children:
             ret += "\n" + str(c)
