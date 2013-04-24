@@ -85,8 +85,6 @@ class ConceptTree:
             (0.2,2),(0.1,3) - the category utility and indices for the two best
             children (the second tuple will be None if there is only 1 child).
         """
-        #TODO - Run some simple check to ensure the structure has not
-        #       been canged by this operation.
         if len(self.children) == 0:
             raise Exception("No children!")
         
@@ -97,7 +95,7 @@ class ConceptTree:
             children_cu.append((self.category_utility(),i))
             self.children[i].decrement_counts(instance)
         self.decrement_counts(instance)
-        children_cu.sort()
+        children_cu.sort(reverse=True)
 
         if len(self.children) == 1:
             return children_cu[0], None 
@@ -284,7 +282,7 @@ class ConceptTree:
             if len(self.children[best1[1]].children):
                 operations.append((self.cu_for_split(best1[1]),'split'))
             operations.sort(reverse=True)
-            print operations
+            #print operations
 
             best_action = operations[0][1]
             action_cu = operations[0][0]
@@ -327,10 +325,10 @@ class ConceptTree:
             category_utility += p_of_child * (exp_child_guesses -
                                               exp_parent_guesses)
             #print (p_of_child, exp_child_guesses, exp_parent_guesses,
-            #       category_utility)
+            #       p_of_child * (exp_child_guesses - exp_parent_guesses))
 
         # return the category utility normalized by the number of children.
-        print category_utility, category_utility / (1.0 * len(self.children)), len(self.children)
+        #print category_utility, category_utility / (1.0 * len(self.children)), len(self.children)
 
         return category_utility / (1.0 * len(self.children))
 
@@ -385,17 +383,19 @@ if __name__ == "__main__":
     for i in range(10):
         r = {}
         r['a1'] = 1 
+        r['a2'] = 1
         r['a3'] = 1
         instances.append(r)
 
     # concept 2 bird 
-    for i in range(2):
+    for i in range(10):
         r = {}
         r['a1'] = 0 
+        r['a2'] = 0
         r['a3'] = 1
         instances.append(r)
 
-    #random.shuffle(instances)
+    random.shuffle(instances)
     for i in instances:
         t.cobweb(i)
 
