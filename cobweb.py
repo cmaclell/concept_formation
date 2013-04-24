@@ -204,6 +204,10 @@ class ConceptTree:
         return cu
 
     def check_children_eq_parent(self):
+        """
+        Checks the property that the counts of the children sum to the same
+        count as the parent. This is/was useful when debugging.
+        """
         if len(self.children) == 0:
             return
 
@@ -213,6 +217,11 @@ class ConceptTree:
         assert self.count == child_count
 
     def is_instance(self,instance):
+        """
+        Checks to see if the current node perfectly represents the instance (all
+        of the attribute values the instance has are probability 1.0 and here
+        are no extra attribute values).
+        """
         for attribute in self.av_counts:
             for value in self.av_counts[attribute]:
                 if (self.av_counts[attribute][value] / self.count) != 1.0:
@@ -234,6 +243,13 @@ class ConceptTree:
         return True
 
     def closest_matching_child(self,instance):
+        """
+        Returns the child that is the best match for the instance in terms of
+        difference between attribute value probabilites (note the instance has
+        probability 1 of all attribute values it possesses). This function is
+        used when the category utility of all actions is 0. It is a secondary
+        heuristic for deciding the best node to add to.
+        """
         best = 0
         smallest_diff = float('inf')
         for i in range(len(self.children)):
