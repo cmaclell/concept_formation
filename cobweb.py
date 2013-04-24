@@ -401,19 +401,21 @@ if __name__ == "__main__":
     # concept 1 lizard
     for i in range(10):
         r = {}
-        r['a1'] = 1 
-        r['a2'] = 1
-        r['a3'] = 1
-        r['a5'] = 0
+        r['scales'] = "T" 
+        r['moist'] = "T" 
         instances.append(r)
 
     # concept 2 bird 
     for i in range(10):
         r = {}
-        r['a1'] = 0 
-        r['a2'] = 0
-        r['a3'] = 1
-        r['a4'] = 1
+        r['hair'] = "T"
+        r['feather'] = "T" 
+        instances.append(r)
+
+    # concept 3 mammal? 
+    for i in range(10):
+        r = {}
+        r['hair'] = "T"
         instances.append(r)
 
     random.shuffle(instances)
