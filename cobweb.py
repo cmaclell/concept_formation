@@ -145,6 +145,7 @@ class ConceptTree:
         output:
             0.02 - the category utility for the merge of best1 and best2.
         """
+        #TODO - Might want to consider adding the instance to the merged node.
         first = best1
         second = best2
 
@@ -191,7 +192,6 @@ class ConceptTree:
         best_c = self.children.pop(best)
         for child in best_c.children:
             self.children.append(child)
-
         cu = self.category_utility()
 
         if undo:
@@ -201,6 +201,63 @@ class ConceptTree:
 
         return cu
 
+    def check_children_eq_parent(self):
+        if len(self.children) == 0:
+            return
+
+        child_count = 0.0
+        for child in self.children:
+            child_count += child.count
+        assert self.count == child_count
+
+    def is_instance(self,instance):
+        for attribute in self.av_counts:
+            for value in self.av_counts[attribute]:
+                if (self.av_counts[attribute][value] / self.count) != 1.0:
+                    return False
+                if attribute not in instance:
+                    return False
+                if instance[attribute] != value:
+                    return False
+        
+        for attribute in instance:
+            if attribute not in self.av_counts:
+                return False
+            if instance[attribute] not in self.av_counts[attribute]:
+                return False
+            if ((self.av_counts[attribute][instance[attribute]] / self.count) !=
+                1.0):
+                return False
+        
+        return True
+
+    def closest_matching_child(self,instance):
+        best = 0
+        smallest_diff = float('inf')
+        for i in range(len(self.children)):
+            child = self.children[i]
+            sum_diff = 0.0
+            count = 0.0
+            for attribute in child.av_counts:
+                for value in self.av_counts[attribute]:
+                    count += 1
+                    if attribute in instance and instance[attribute] == value:
+                        sum_diff += 1.0 - (self.av_counts[attribute][value] /
+                                       self.count)
+                    else:
+                        sum_diff += 1.0
+
+            if count > 0:
+                sum_diff /= count
+            else:
+                sum_diff = float('inf')
+
+            if sum_diff < smallest_diff:
+                best = i
+                smallest_diff = sum_diff
+        
+        return best
+
     def cobweb(self, instance):
         """
         Incrementally integrates an instance into the categorization tree
@@ -208,11 +265,15 @@ class ConceptTree:
         integrate this instance and uses category utility as the heuristic to
         make decisions.
         """
-        if not self.children: 
+        if not self.children and self.is_instance(instance): 
+            self.increment_counts(instance)
+
+        elif not self.children:
+            #print self.av_counts, self.count, instance
             self.create_child_with_current_counts()
             self.increment_counts(instance)
             self.create_new_child(instance)
-
+            
         else:
             best1, best2 = self.two_best_children(instance)
             operations = []
@@ -220,11 +281,20 @@ class ConceptTree:
             operations.append((self.cu_for_new_child(instance),'new'))
             if best2:
                 operations.append((self.cu_for_merge(best1[1],best2[1]),'merge'))
-            operations.append((self.cu_for_split(best1[1]),'split'))
+            if len(self.children[best1[1]].children):
+                operations.append((self.cu_for_split(best1[1]),'split'))
             operations.sort(reverse=True)
+            print operations
 
             best_action = operations[0][1]
-            if best_action == 'new':
+            action_cu = operations[0][0]
+            if action_cu == 0.0:
+                self.increment_counts(instance)
+                self.children[self.closest_matching_child(instance)].cobweb(instance)
+            elif best_action == 'best':
+                self.increment_counts(instance)
+                self.children[best1[1]].cobweb(instance)
+            elif best_action == 'new':
                 self.new_child(instance)
             elif best_action == 'merge':
                 self.merge(best1[1],best2[1])
@@ -233,7 +303,8 @@ class ConceptTree:
                 self.split(best1[1])
                 self.cobweb(instance)
             else:
-                self.children[best1[1]].cobweb(instance)
+                raise Exception("Should never get here.")
+
 
     def category_utility(self):
         """
@@ -244,6 +315,8 @@ class ConceptTree:
         if len(self.children) == 0:
             return 0.0
 
+        # should be initialized to a small non-zero value so that we favor
+        # merging like nodes.
         category_utility = 0.0
 
         exp_parent_guesses = self.expected_correct_guesses()
@@ -253,8 +326,12 @@ class ConceptTree:
             exp_child_guesses = child.expected_correct_guesses()
             category_utility += p_of_child * (exp_child_guesses -
                                               exp_parent_guesses)
+            #print (p_of_child, exp_child_guesses, exp_parent_guesses,
+            #       category_utility)
 
         # return the category utility normalized by the number of children.
+        print category_utility, category_utility / (1.0 * len(self.children)), len(self.children)
+
         return category_utility / (1.0 * len(self.children))
 
     def expected_correct_guesses(self):
@@ -265,7 +342,7 @@ class ConceptTree:
         exp_count = 0.0
         for attribute in self.av_counts:
             for value in self.av_counts[attribute]:
-                exp_count = (self.av_counts[attribute][value] / self.count)**2
+                exp_count += (self.av_counts[attribute][value] / self.count)**2
         return exp_count
 
     def num_concepts(self):
@@ -305,18 +382,16 @@ if __name__ == "__main__":
     instances = []
     
     # concept 1 lizard
-    for i in range(2):
+    for i in range(10):
         r = {}
         r['a1'] = 1 
-        r['a2'] = 1
         r['a3'] = 1
         instances.append(r)
 
     # concept 2 bird 
-    for i in range(2):
+    for i in range(4):
         r = {}
         r['a1'] = 0 
-        r['a2'] = 0 
         r['a3'] = 1
         instances.append(r)
 
