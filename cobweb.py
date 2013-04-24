@@ -51,6 +51,10 @@ class ConceptTree:
                 del self.av_counts[a]
     
     def update_counts_from_node(self, node):
+        """
+        Increments the counts of the current node by the amount in the specified
+        node.
+        """
         self.count += node.count
         for a in node.av_counts:
             for v in node.av_counts[a]:
