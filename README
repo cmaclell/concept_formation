@@ -1,11 +1,11 @@
 This is a python library of algorithms that perform concept formation written by
-[Christopher MacLellan](http://www.christopia.net).  
+Christopher MacLellan (http://www.christopia.net).  
 
-Currently only
-[COBWEB](http://axon.cs.byu.edu/~martinez/classes/678/Papers/Fisher_Cobweb.pdf)
-is implemented. The system accepts a stream of instances, which are represented
-as hash tables of attributes and values, and learns a concept hierarchy.
+Currently only COBWEB
+(http://axon.cs.byu.edu/~martinez/classes/678/Papers/Fisher_Cobweb.pdf) is
+implemented. The system accepts a stream of instances, which are represented as
+hash tables of attributes and values, and learns a concept hierarchy.
 
 Current plans are to extend this library to include
-[LABYRINTH](http://www.isle.org/~langley/papers/labyrinth.cfb.pdf)algorithm for
+LABYRINTH (http://www.isle.org/~langley/papers/labyrinth.cfb.pdf)algorithm for
 learning structured concepts with relations and components.
