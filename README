@@ -7,5 +7,5 @@ implemented. The system accepts a stream of instances, which are represented as
 hash tables of attributes and values, and learns a concept hierarchy.
 
 Current plans are to extend this library to include
-LABYRINTH (http://www.isle.org/~langley/papers/labyrinth.cfb.pdf)algorithm for
+LABYRINTH (http://www.isle.org/~langley/papers/labyrinth.cfb.pdf) algorithm for
 learning structured concepts with relations and components.
