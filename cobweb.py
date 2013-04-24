@@ -398,21 +398,26 @@ if __name__ == "__main__":
 
     instances = []
     
-    # concept 1 lizard
+    # concept 1 reptile 
     for i in range(10):
         r = {}
         r['scales'] = "T" 
+        instances.append(r)
+    
+    # concept 2 insect? 
+    for i in range(10):
+        r = {}
         r['moist'] = "T" 
         instances.append(r)
 
-    # concept 2 bird 
+    # concept 3 bird 
     for i in range(10):
         r = {}
         r['hair'] = "T"
         r['feather'] = "T" 
         instances.append(r)
 
-    # concept 3 mammal? 
+    # concept 4 mammal? 
     for i in range(10):
         r = {}
         r['hair'] = "T"
