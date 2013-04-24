@@ -389,7 +389,7 @@ if __name__ == "__main__":
         instances.append(r)
 
     # concept 2 bird 
-    for i in range(4):
+    for i in range(2):
         r = {}
         r['a1'] = 0 
         r['a3'] = 1
