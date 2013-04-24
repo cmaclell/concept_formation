@@ -313,8 +313,6 @@ class ConceptTree:
         if len(self.children) == 0:
             return 0.0
 
-        # should be initialized to a small non-zero value so that we favor
-        # merging like nodes.
         category_utility = 0.0
 
         exp_parent_guesses = self.expected_correct_guesses()
@@ -328,7 +326,8 @@ class ConceptTree:
             #       p_of_child * (exp_child_guesses - exp_parent_guesses))
 
         # return the category utility normalized by the number of children.
-        #print category_utility, category_utility / (1.0 * len(self.children)), len(self.children)
+        #print category_utility, category_utility / (1.0 * len(self.children)),
+        #len(self.children)
 
         return category_utility / (1.0 * len(self.children))
 
@@ -385,6 +384,7 @@ if __name__ == "__main__":
         r['a1'] = 1 
         r['a2'] = 1
         r['a3'] = 1
+        r['a5'] = 0
         instances.append(r)
 
     # concept 2 bird 
@@ -393,6 +393,7 @@ if __name__ == "__main__":
         r['a1'] = 0 
         r['a2'] = 0
         r['a3'] = 1
+        r['a4'] = 1
         instances.append(r)
 
     random.shuffle(instances)
