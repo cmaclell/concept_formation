@@ -1,4 +1,3 @@
-import copy
 import random
 
 class ConceptTree:
@@ -7,15 +6,32 @@ class ConceptTree:
         """
         The constructor.
         """
+        self.count = 0.0
+        self.av_counts = {}
+        self.children = []
+
         # check if the constructor is being used as a copy constructor
         if concept_tree:
-            self.count = concept_tree.count
-            self.av_counts = copy.deepcopy(concept_tree.av_counts)
-            self.children = copy.deepcopy(concept_tree.children)
-        else:
-            self.count = 0.0
-            self.av_counts = {}
-            self.children = []
+            self.update_counts_from_node(concept_tree)
+
+            for child in concept_tree.children:
+                self.children.append(ConceptTree(child))
+
+    def shallow_copy(self):
+        """
+        Creates a copy of the current node and its children (but not their
+        children)
+        """
+        temp = ConceptTree()
+        temp.update_counts_from_node(self)
+
+        # important to maintain order
+        for child in self.children:
+            temp_child = ConceptTree()
+            temp_child.update_counts_from_node(child)
+            temp.children.append(temp_child)
+
+        return temp
 
     def increment_counts(self, instance):
         """
@@ -26,10 +42,10 @@ class ConceptTree:
             instance: {a1: v1, a2: v2, ...} - a hashtable of attr and values. 
         """
         self.count += 1.0 
-        for a in instance:
-            self.av_counts[a] = self.av_counts.setdefault(a,{})
-            self.av_counts[a][instance[a]] = (self.av_counts[a].get(instance[a],
-                                                                    0) + 1.0)
+        for attr in instance:
+            self.av_counts[attr] = self.av_counts.setdefault(attr,{})
+            self.av_counts[attr][instance[attr]] = (self.av_counts[attr].get(
+                instance[attr], 0) + 1.0)
 
     def decrement_counts(self, instance):
         """
@@ -40,15 +56,17 @@ class ConceptTree:
             instance: {a1: v1, a2: v2, ...} - a hashtable of attr and values. 
         """
         self.count -= 1.0 
-        for a in instance:
-            self.av_counts[a] = self.av_counts.setdefault(a,{})
-            self.av_counts[a][instance[a]] = (self.av_counts[a].get(instance[a],
-                                                                    0) - 1.0)
+        for attr in instance:
+            val = instance[attr]
+            self.av_counts[attr] = self.av_counts.setdefault(attr,{})
+            self.av_counts[attr][val] = max(0, (self.av_counts[attr].get(
+                instance[attr], 0) - 1.0))
+
             # for clarity in printing we remove the values and attributes
-            if self.av_counts[a][instance[a]] == 0:
-                del self.av_counts[a][instance[a]]
-            if self.av_counts[a] == {}:
-                del self.av_counts[a]
+            if self.av_counts[attr][val] == 0:
+                del self.av_counts[attr][val]
+            if self.av_counts[attr] == {}:
+                del self.av_counts[attr]
     
     def update_counts_from_node(self, node):
         """
@@ -56,13 +74,53 @@ class ConceptTree:
         node.
         """
         self.count += node.count
-        for a in node.av_counts:
-            for v in node.av_counts[a]:
-                self.av_counts[a] = self.av_counts.setdefault(a,{})
-                self.av_counts[a][v] = (self.av_counts[a].get(v,0) +
-                                     node.av_counts[a][v])
+        for attr in node.av_counts:
+            for val in node.av_counts[attr]:
+                self.av_counts[attr] = self.av_counts.setdefault(attr,{})
+                self.av_counts[attr][val] = (self.av_counts[attr].get(val,0) +
+                                     node.av_counts[attr][val])
 
-    def create_new_child(self,instance):
+    def two_best_children(self, instance):
+        """
+        Returns the indices of the two best children to incorporate the instance
+        into in terms of category utility.
+
+        input:
+            instance: {a1: v1, a2: v2,...} - a hashtable of attr. and values. 
+        output:
+            (0.2,2),(0.1,3) - the category utility and indices for the two best
+            children (the second tuple will be None if there is only 1 child).
+        """
+        if len(self.children) == 0:
+            raise Exception("No children!")
+
+        children_cu = [(self.cu_for_insert(child, instance), child) for child
+                       in self.children]
+        children_cu.sort(key=lambda x: x[0],reverse=True)
+
+        if len(children_cu) == 1:
+            return children_cu[0], None 
+        return children_cu[0], children_cu[1]
+
+    def cu_for_insert(self, child, instance):
+        """
+        Computer the category utility of adding the instance to the specified
+        child.
+        """
+        temp = ConceptTree()
+        temp.update_counts_from_node(self)
+        temp.increment_counts(instance)
+
+        for c in self.children:
+            temp_child = ConceptTree()
+            temp_child.update_counts_from_node(c)
+            temp.children.append(temp_child)
+            if c == child:
+                temp_child.increment_counts(instance)
+
+        return temp.category_utility()
+
+    def create_new_child(self, instance):
         """
         Creates a new child (to the current node) with the counts initialized by
         the given instance. 
@@ -76,62 +134,41 @@ class ConceptTree:
         Creates a new child (to the current node) with the counts initialized by
         the current node's counts.
         """
-        self.children.append(ConceptTree(self))
+        if self.count > 0:
+            self.children.append(ConceptTree(self))
 
-    def two_best_children(self,instance):
-        """
-        Returns the indices of the two best children to incorporate the instance
-        into in terms of category utility.
-
-        input:
-            instance: {a1: v1, a2: v2,...} - a hashtable of attr. and values. 
-        output:
-            (0.2,2),(0.1,3) - the category utility and indices for the two best
-            children (the second tuple will be None if there is only 1 child).
-        """
-        if len(self.children) == 0:
-            raise Exception("No children!")
-        
-        self.increment_counts(instance)
-        children_cu = []
-        for i in range(len(self.children)):
-            self.children[i].increment_counts(instance)
-            children_cu.append((self.category_utility(),i))
-            self.children[i].decrement_counts(instance)
-        self.decrement_counts(instance)
-        children_cu.sort(reverse=True)
-
-        if len(self.children) == 1:
-            return children_cu[0], None 
-
-        return children_cu[0], children_cu[1]
-
-    def new_child(self,instance):
-        """
-        Updates root count and adds child -- permenant.
-        """
-        return self.cu_for_new_child(instance,False)
-
-    def cu_for_new_child(self,instance, undo=True):
+    def cu_for_new_child(self, instance):
         """
         Returns the category utility for creating a new child using the
         particular instance.
         """
-        self.increment_counts(instance)
-        self.create_new_child(instance)
-        cu = self.category_utility()
-        if undo:
-            self.children.pop()
-            self.decrement_counts(instance)
-        return cu
+        temp = self.shallow_copy()
+        temp.increment_counts(instance)
+        temp.create_new_child(instance)
+        return temp.category_utility()
 
-    def merge(self,best1,best2):
+    def merge(self, best1, best2, instance):
         """
-        A version of merge that is permenant.
-        """
-        return self.cu_for_merge(best1,best2,False)
+        Merge the two specified nodes.
 
-    def cu_for_merge(self, best1, best2, undo=True):
+        input:
+            best1: the best child
+            best2: the second best child
+        output:
+            The new child formed from the merge
+        """
+        new_child = ConceptTree()
+        new_child.update_counts_from_node(best1)
+        new_child.update_counts_from_node(best2)
+        new_child.children.append(best1)
+        new_child.children.append(best2)
+        self.children.remove(best1)
+        self.children.remove(best2)
+        self.children.append(new_child)
+
+        return new_child
+
+    def cu_for_merge(self, best1, best2, instance):
         """
         Returns the category utility for merging the two best children.
         NOTE! - I decided that testing a merge does not incorporate the latest
@@ -142,66 +179,58 @@ class ConceptTree:
         incorporating the instance. 
 
         input:
-            best1: 1 - an index for a child in the children array.
-            best2: 2 - an index for a child in the children array.
+            best1: the best child in the children array.
+            best2: the second best child in the children array.
         output:
             0.02 - the category utility for the merge of best1 and best2.
         """
-        #TODO - Might want to consider adding the instance to the merged node.
-        first = best1
-        second = best2
+        temp = ConceptTree()
+        temp.update_counts_from_node(self)
+        temp.increment_counts(instance)
 
-        if second < first:
-            temp = first 
-            first = second 
-            second = temp
+        new_child = ConceptTree()
+        new_child.update_counts_from_node(best1)
+        new_child.update_counts_from_node(best2)
+        new_child.increment_counts(instance)
+        temp.children.append(new_child)
 
-        first_c = self.children[first]
-        second_c = self.children[second]
+        for c in self.children:
+            if c == best1 or c == best2:
+                continue
+            temp_child = ConceptTree()
+            temp_child.update_counts_from_node(c)
+            temp.children.append(temp_child)
 
-        new_c = ConceptTree()
-        new_c.update_counts_from_node(first_c)
-        new_c.update_counts_from_node(second_c)
+        return temp.category_utility()
 
-        self.children.pop(second)
-        self.children.pop(first)
-        self.children.append(new_c)
-
-        cu = self.category_utility()
-
-        if undo:
-            self.children.pop()
-            self.children.insert(first,first_c)
-            self.children.insert(second,second_c)
-
-        return cu
-
-    def split(self,best):
+    def split(self, best):
         """
-        Permemantly split the best.
+        Split the best node and promote its children
         """
-        return self.cu_for_split(best,False)
+        self.children.remove(best)
+        for child in best.children:
+            self.children.append(child)
 
-    def cu_for_split(self,best,undo=True):
+    def cu_for_split(self, best):
         """
         Return the category utility for splitting the best child.
         
         input:
-            best1: 0 - an index for a child in the children array.
+            best1: a child in the children array.
         output:
             0.03 - the category utility for the split of best1.
         """
-        best_c = self.children.pop(best)
-        for child in best_c.children:
-            self.children.append(child)
-        cu = self.category_utility()
+        temp = ConceptTree()
+        temp.update_counts_from_node(self)
 
-        if undo:
-            for i in range(len(best_c.children)):
-                self.children.pop()
-            self.children.insert(best,best_c)
+        for c in self.children + best.children:
+            if c == best:
+                continue
+            temp_child = ConceptTree()
+            temp_child.update_counts_from_node(c)
+            temp.children.append(temp_child)
 
-        return cu
+        return temp.category_utility()
 
     def check_children_eq_parent(self):
         """
@@ -216,7 +245,7 @@ class ConceptTree:
             child_count += child.count
         assert self.count == child_count
 
-    def is_instance(self,instance):
+    def is_instance(self, instance):
         """
         Checks to see if the current node perfectly represents the instance (all
         of the attribute values the instance has are probability 1.0 and here
@@ -242,40 +271,6 @@ class ConceptTree:
         
         return True
 
-    def closest_matching_child(self,instance):
-        """
-        Returns the child that is the best match for the instance in terms of
-        difference between attribute value probabilites (note the instance has
-        probability 1 of all attribute values it possesses). This function is
-        used when the category utility of all actions is 0. It is a secondary
-        heuristic for deciding the best node to add to.
-        """
-        best = 0
-        smallest_diff = float('inf')
-        for i in range(len(self.children)):
-            child = self.children[i]
-            sum_diff = 0.0
-            count = 0.0
-            for attribute in child.av_counts:
-                for value in self.av_counts[attribute]:
-                    count += 1
-                    if attribute in instance and instance[attribute] == value:
-                        sum_diff += 1.0 - (self.av_counts[attribute][value] /
-                                       self.count)
-                    else:
-                        sum_diff += 1.0
-
-            if count > 0:
-                sum_diff /= count
-            else:
-                sum_diff = float('inf')
-
-            if sum_diff < smallest_diff:
-                best = i
-                smallest_diff = sum_diff
-        
-        return best
-
     def cobweb(self, instance):
         """
         Incrementally integrates an instance into the categorization tree
@@ -287,42 +282,44 @@ class ConceptTree:
             self.increment_counts(instance)
 
         elif not self.children:
-            #print self.av_counts, self.count, instance
             self.create_child_with_current_counts()
             self.increment_counts(instance)
             self.create_new_child(instance)
             
         else:
             best1, best2 = self.two_best_children(instance)
+            best1_cu, best1 = best1
+            if best2:
+                best2_cu, best2 = best2
+
             operations = []
-            operations.append((best1[0],"best"))
+            operations.append((best1_cu,"best"))
             operations.append((self.cu_for_new_child(instance),'new'))
             if best2:
-                operations.append((self.cu_for_merge(best1[1],best2[1]),'merge'))
-            if len(self.children[best1[1]].children):
-                operations.append((self.cu_for_split(best1[1]),'split'))
-            operations.sort(reverse=True)
-            #print operations
+                operations.append((self.cu_for_merge(best1, best2,
+                                                     instance),'merge'))
+            if len(best1.children) > 0:
+                operations.append((self.cu_for_split(best1),'split'))
 
-            best_action = operations[0][1]
-            action_cu = operations[0][0]
-            if action_cu == 0.0:
+            # pick the best operation
+            operations.sort(reverse=True)
+            action_cu, best_action = operations[0]
+
+            if action_cu == 0.0 or best_action == 'best':
                 self.increment_counts(instance)
-                self.children[self.closest_matching_child(instance)].cobweb(instance)
-            elif best_action == 'best':
-                self.increment_counts(instance)
-                self.children[best1[1]].cobweb(instance)
+                best1.cobweb(instance)
             elif best_action == 'new':
-                self.new_child(instance)
+                self.increment_counts(instance)
+                self.create_new_child(instance)
             elif best_action == 'merge':
-                self.merge(best1[1],best2[1])
-                self.cobweb(instance)
+                self.increment_counts(instance)
+                new_child = self.merge(best1, best2, instance)
+                new_child.cobweb(instance)
             elif best_action == 'split':
-                self.split(best1[1])
+                self.split(best1)
                 self.cobweb(instance)
             else:
                 raise Exception("Should never get here.")
-
 
     def category_utility(self):
         """
@@ -342,12 +339,6 @@ class ConceptTree:
             exp_child_guesses = child.expected_correct_guesses()
             category_utility += p_of_child * (exp_child_guesses -
                                               exp_parent_guesses)
-            #print (p_of_child, exp_child_guesses, exp_parent_guesses,
-            #       p_of_child * (exp_child_guesses - exp_parent_guesses))
-
-        # return the category utility normalized by the number of children.
-        #print category_utility, category_utility / (1.0 * len(self.children)),
-        #len(self.children)
 
         return category_utility / (1.0 * len(self.children))
 
@@ -356,10 +347,13 @@ class ConceptTree:
         The number of attribute value guesses we would be expected to get
         correct using the current concept.
         """
+        if self.count == 0:
+            return 0.0
+
         exp_count = 0.0
-        for attribute in self.av_counts:
-            for value in self.av_counts[attribute]:
-                exp_count += (self.av_counts[attribute][value] / self.count)**2
+        for attr in self.av_counts:
+            for val in self.av_counts[attr]:
+                exp_count += (self.av_counts[attr][val] / self.count)**2
         return exp_count
 
     def num_concepts(self):
@@ -372,13 +366,11 @@ class ConceptTree:
            children_count += c.num_concepts() 
         return 1 + children_count 
 
-    def pretty_print(self,depth=0):
+    def pretty_print(self, depth=0):
         """
         Prints the categorization tree.
         """
-        for i in range(depth):
-            print "\t",
-        print "|-" + str(self.av_counts) + ":" + str(self.count)
+        print(('\t' * depth) + "|-" + str(self.av_counts) + ":" + str(self.count))
         
         for c in self.children:
             c.pretty_print(depth+1)
@@ -397,36 +389,62 @@ if __name__ == "__main__":
     t = ConceptTree()
 
     instances = []
-    
-    # concept 1 reptile 
-    for i in range(10):
+
+    # concept 1 mammal
+    for i in range(1):
         r = {}
-        r['scales'] = "T" 
-        instances.append(r)
-    
-    # concept 2 insect? 
-    for i in range(10):
-        r = {}
-        r['moist'] = "T" 
+        r['BodyCover'] = "hair"
+        r['HeartChamber'] = "four"
+        r['BodyTemp'] = "regulated"
+        r['Fertilization'] = "internal"
+        r['Name'] = "mammal"
         instances.append(r)
 
-    # concept 3 bird 
-    for i in range(10):
+    # concept 2 bird 
+    for i in range(1):
         r = {}
-        r['hair'] = "T"
-        r['feather'] = "T" 
+        r['BodyCover'] = "feathers"
+        r['HeartChamber'] = "four"
+        r['BodyTemp'] = "regulated"
+        r['Fertilization'] = "internal"
+        r['Name'] = "bird"
         instances.append(r)
 
-    # concept 4 mammal? 
-    for i in range(10):
+    # concept 3 reptile 
+    for i in range(1):
         r = {}
-        r['hair'] = "T"
+        r['BodyCover'] = "cornified-skin"
+        r['HeartChamber'] = "imperfect-four"
+        r['BodyTemp'] = "unregulated"
+        r['Fertilization'] = "internal"
+        r['Name'] = "reptile"
+        instances.append(r)
+
+    # concept 4 amphibian 
+    for i in range(1):
+        r = {}
+        r['BodyCover'] = "moist-skin"
+        r['HeartChamber'] = "three"
+        r['BodyTemp'] = "unregulated"
+        r['Fertilization'] = "external"
+        r['Name'] = "amphibian"
+        instances.append(r)
+
+    # concept 5 fish
+    for i in range(1):
+        r = {}
+        r['BodyCover'] = "scales"
+        r['HeartChamber'] = "two"
+        r['BodyTemp'] = "unregulated"
+        r['Fertilization'] = "external"
+        r['Name'] = "fish"
         instances.append(r)
 
     random.shuffle(instances)
-    for i in instances:
+    for i in instances+instances:
         t.cobweb(i)
+        #t.pretty_print()
 
     t.pretty_print()
-    print t.category_utility()
+    print(t.category_utility())
 
