@@ -1,4 +1,6 @@
 import random
+import math
+import numpy as np
 
 class ConceptTree:
 
@@ -117,7 +119,6 @@ class ConceptTree:
             temp.children.append(temp_child)
             if c == child:
                 temp_child.increment_counts(instance)
-
         return temp.category_utility()
 
     def create_new_child(self, instance):
@@ -305,6 +306,8 @@ class ConceptTree:
             operations.sort(reverse=True)
             action_cu, best_action = operations[0]
 
+            #print(operations)
+
             if action_cu == 0.0 or best_action == 'best':
                 self.increment_counts(instance)
                 best1.cobweb(instance)
@@ -321,7 +324,65 @@ class ConceptTree:
             else:
                 raise Exception("Should never get here.")
 
+    def category_utility_nominal(self, parent):
+        category_utility = 0.0
+        for attr in self.av_counts:
+            for val in self.av_counts[attr]:
+                category_utility += ((self.av_counts[attr][val] /
+                                      self.count)**2 -
+                                     (parent.av_counts[attr][val] /
+                                      parent.count)**2)
+        
+        return category_utility
+
+    def category_utility_numeric(self, parent):
+        category_utility = 0.0
+        for attr in self.av_counts:
+            child_vals = []
+            parent_vals = []
+
+            for val in self.av_counts[attr]:
+                if isinstance(val, float):
+                    child_vals += [val] * int(self.av_counts[attr][val])
+            for val in parent.av_counts[attr]:
+                if isinstance(val, float):
+                    parent_vals += [val] * int(parent.av_counts[attr][val])
+
+            if len(child_vals) == 0:
+                continue
+
+            mean_child = sum(child_vals) / len(child_vals)
+            std_child = math.sqrt(sum([(v - mean_child)**2 for v in
+                                       child_vals])/len(child_vals))
+
+            mean_parent = sum(parent_vals) / len(parent_vals)
+            std_parent = math.sqrt(sum([(v - mean_parent)**2 for v in
+                                       parent_vals])/len(parent_vals))
+
+            if std_child < 1.0:
+                std_child = 1.0
+
+            if std_parent < 1.0:
+                std_parent = 1.0
+
+            category_utility += (1.0/std_child - 1.0/std_parent)
+
+        return category_utility / (2.0 * math.sqrt(math.pi))
+
     def category_utility(self):
+        if len(self.children) == 0:
+            return 0.0
+
+        category_utility = 0.0
+
+        for child in self.children:
+            p_of_child = child.count / self.count
+            category_utility += (p_of_child *
+                                 (child.category_utility_nominal(self) +
+                                  child.category_utility_numeric(self)))
+        return category_utility / (1.0 * len(self.children))
+
+    def category_utility_old(self):
         """
         The category utility is a local heuristic calculation to determine if
         the split of instances across the children increases the ability to
@@ -353,7 +414,8 @@ class ConceptTree:
         exp_count = 0.0
         for attr in self.av_counts:
             for val in self.av_counts[attr]:
-                exp_count += (self.av_counts[attr][val] / self.count)**2
+                if not isinstance(val, float):
+                    exp_count += (self.av_counts[attr][val] / self.count)**2
         return exp_count
 
     def num_concepts(self):
@@ -390,60 +452,69 @@ if __name__ == "__main__":
 
     instances = []
 
+    for v in np.random.randn(10):
+        r = {}
+        r['val'] = v
+        instances.append(r)
+
+    for v in (40 + np.random.randn(10)):
+        r = {}
+        r['val'] = v
+        instances.append(r)
+
     # concept 1 mammal
-    for i in range(1):
-        r = {}
-        r['BodyCover'] = "hair"
-        r['HeartChamber'] = "four"
-        r['BodyTemp'] = "regulated"
-        r['Fertilization'] = "internal"
-        r['Name'] = "mammal"
-        instances.append(r)
+    #for i in range(1):
+    #    r = {}
+    #    r['BodyCover'] = "hair"
+    #    r['HeartChamber'] = "four"
+    #    r['BodyTemp'] = "regulated"
+    #    r['Fertilization'] = "internal"
+    #    r['Name'] = "mammal"
+    #    instances.append(r)
 
-    # concept 2 bird 
-    for i in range(1):
-        r = {}
-        r['BodyCover'] = "feathers"
-        r['HeartChamber'] = "four"
-        r['BodyTemp'] = "regulated"
-        r['Fertilization'] = "internal"
-        r['Name'] = "bird"
-        instances.append(r)
+    ## concept 2 bird 
+    #for i in range(1):
+    #    r = {}
+    #    r['BodyCover'] = "feathers"
+    #    r['HeartChamber'] = "four"
+    #    r['BodyTemp'] = "regulated"
+    #    r['Fertilization'] = "internal"
+    #    r['Name'] = "bird"
+    #    instances.append(r)
 
-    # concept 3 reptile 
-    for i in range(1):
-        r = {}
-        r['BodyCover'] = "cornified-skin"
-        r['HeartChamber'] = "imperfect-four"
-        r['BodyTemp'] = "unregulated"
-        r['Fertilization'] = "internal"
-        r['Name'] = "reptile"
-        instances.append(r)
+    ## concept 3 reptile 
+    #for i in range(1):
+    #    r = {}
+    #    r['BodyCover'] = "cornified-skin"
+    #    r['HeartChamber'] = "imperfect-four"
+    #    r['BodyTemp'] = "unregulated"
+    #    r['Fertilization'] = "internal"
+    #    r['Name'] = "reptile"
+    #    instances.append(r)
 
-    # concept 4 amphibian 
-    for i in range(1):
-        r = {}
-        r['BodyCover'] = "moist-skin"
-        r['HeartChamber'] = "three"
-        r['BodyTemp'] = "unregulated"
-        r['Fertilization'] = "external"
-        r['Name'] = "amphibian"
-        instances.append(r)
+    ## concept 4 amphibian 
+    #for i in range(1):
+    #    r = {}
+    #    r['BodyCover'] = "moist-skin"
+    #    r['HeartChamber'] = "three"
+    #    r['BodyTemp'] = "unregulated"
+    #    r['Fertilization'] = "external"
+    #    r['Name'] = "amphibian"
+    #    instances.append(r)
 
-    # concept 5 fish
-    for i in range(1):
-        r = {}
-        r['BodyCover'] = "scales"
-        r['HeartChamber'] = "two"
-        r['BodyTemp'] = "unregulated"
-        r['Fertilization'] = "external"
-        r['Name'] = "fish"
-        instances.append(r)
+    ## concept 5 fish
+    #for i in range(1):
+    #    r = {}
+    #    r['BodyCover'] = "scales"
+    #    r['HeartChamber'] = "two"
+    #    r['BodyTemp'] = "unregulated"
+    #    r['Fertilization'] = "external"
+    #    r['Name'] = "fish"
+    #    instances.append(r)
 
     random.shuffle(instances)
-    for i in instances+instances:
+    for i in instances:
         t.cobweb(i)
-        #t.pretty_print()
 
     t.pretty_print()
     print(t.category_utility())
