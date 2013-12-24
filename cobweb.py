@@ -48,28 +48,6 @@ class CobwebTree:
             self.av_counts[attr] = self.av_counts.setdefault(attr,{})
             self.av_counts[attr][instance[attr]] = (self.av_counts[attr].get(
                 instance[attr], 0) + 1.0)
-
-    # DEPRECIATED? Remove?
-    def _decrement_counts(self, instance):
-        """
-        Decrement the counts at the current node according to the specified
-        instance.
-        
-        input:
-            instance: {a1: v1, a2: v2, ...} - a hashtable of attr and values. 
-        """
-        self.count -= 1.0 
-        for attr in instance:
-            val = instance[attr]
-            self.av_counts[attr] = self.av_counts.setdefault(attr,{})
-            self.av_counts[attr][val] = max(0, (self.av_counts[attr].get(
-                instance[attr], 0) - 1.0))
-
-            # for clarity in printing we remove the values and attributes
-            if self.av_counts[attr][val] == 0:
-                del self.av_counts[attr][val]
-            if self.av_counts[attr] == {}:
-                del self.av_counts[attr]
     
     def _update_counts_from_node(self, node):
         """
