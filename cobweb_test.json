@@ -1,0 +1,7 @@
+[
+{"BodyTemp": "regulated", "BodyCover": "feathers", "Fertilization": "internal", "HeartChamber": "four", "Name": "bird"}, 
+{"BodyTemp": "unregulated", "BodyCover": "moist-skin", "Fertilization": "external", "HeartChamber": "three", "Name": "amphibian"}, 
+{"BodyTemp": "regulated", "BodyCover": "hair", "Fertilization": "internal", "HeartChamber": "four", "Name": "mammal"}, 
+{"BodyTemp": "unregulated", "BodyCover": "cornified-skin", "Fertilization": "internal", "HeartChamber": "imperfect-four", "Name": "reptile"}, 
+{"BodyTemp": "unregulated", "BodyCover": "scales", "Fertilization": "external", "HeartChamber": "two", "Name": "fish"}
+]

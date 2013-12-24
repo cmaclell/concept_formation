@@ -1,3 +1,4 @@
+import json
 from random import choice
 from random import shuffle
 
@@ -505,63 +506,69 @@ class CobwebTree:
         predictions = [self.predict(instance) for instance in instances]
         return predictions
 
+    def train_from_json(self, filename):
+        json_data = open(filename, "r")
+        instances = json.load(json_data)
+        self.fit(instances)
+
+        json_data.close()
+
 if __name__ == "__main__":
     t = CobwebTree()
 
-    instances = []
+    #instances = []
 
     # concept 1 mammal
-    for i in range(1):
-        r = {}
-        r['BodyCover'] = "hair"
-        r['HeartChamber'] = "four"
-        r['BodyTemp'] = "regulated"
-        r['Fertilization'] = "internal"
-        r['Name'] = "mammal"
-        instances.append(r)
+    #for i in range(1):
+    #    r = {}
+    #    r['BodyCover'] = "hair"
+    #    r['HeartChamber'] = "four"
+    #    r['BodyTemp'] = "regulated"
+    #    r['Fertilization'] = "internal"
+    #    r['Name'] = "mammal"
+    #    instances.append(r)
 
-    # concept 2 bird 
-    for i in range(1):
-        r = {}
-        r['BodyCover'] = "feathers"
-        r['HeartChamber'] = "four"
-        r['BodyTemp'] = "regulated"
-        r['Fertilization'] = "internal"
-        r['Name'] = "bird"
-        instances.append(r)
+    ## concept 2 bird 
+    #for i in range(1):
+    #    r = {}
+    #    r['BodyCover'] = "feathers"
+    #    r['HeartChamber'] = "four"
+    #    r['BodyTemp'] = "regulated"
+    #    r['Fertilization'] = "internal"
+    #    r['Name'] = "bird"
+    #    instances.append(r)
 
-    # concept 3 reptile 
-    for i in range(1):
-        r = {}
-        r['BodyCover'] = "cornified-skin"
-        r['HeartChamber'] = "imperfect-four"
-        r['BodyTemp'] = "unregulated"
-        r['Fertilization'] = "internal"
-        r['Name'] = "reptile"
-        instances.append(r)
+    ## concept 3 reptile 
+    #for i in range(1):
+    #    r = {}
+    #    r['BodyCover'] = "cornified-skin"
+    #    r['HeartChamber'] = "imperfect-four"
+    #    r['BodyTemp'] = "unregulated"
+    #    r['Fertilization'] = "internal"
+    #    r['Name'] = "reptile"
+    #    instances.append(r)
 
-    # concept 4 amphibian 
-    for i in range(1):
-        r = {}
-        r['BodyCover'] = "moist-skin"
-        r['HeartChamber'] = "three"
-        r['BodyTemp'] = "unregulated"
-        r['Fertilization'] = "external"
-        r['Name'] = "amphibian"
-        instances.append(r)
+    ## concept 4 amphibian 
+    #for i in range(1):
+    #    r = {}
+    #    r['BodyCover'] = "moist-skin"
+    #    r['HeartChamber'] = "three"
+    #    r['BodyTemp'] = "unregulated"
+    #    r['Fertilization'] = "external"
+    #    r['Name'] = "amphibian"
+    #    instances.append(r)
 
-    # concept 5 fish
-    for i in range(1):
-        r = {}
-        r['BodyCover'] = "scales"
-        r['HeartChamber'] = "two"
-        r['BodyTemp'] = "unregulated"
-        r['Fertilization'] = "external"
-        r['Name'] = "fish"
-        instances.append(r)
+    ## concept 5 fish
+    #for i in range(1):
+    #    r = {}
+    #    r['BodyCover'] = "scales"
+    #    r['HeartChamber'] = "two"
+    #    r['BodyTemp'] = "unregulated"
+    #    r['Fertilization'] = "external"
+    #    r['Name'] = "fish"
+    #    instances.append(r)
 
-    shuffle(instances)
-    t.fit(instances)
+    t.train_from_json("cobweb_test.json")
     print(t)
     print()
 

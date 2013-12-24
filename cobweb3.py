@@ -1,4 +1,5 @@
 import math
+import json
 from random import normalvariate
 from random import choice
 from random import random
@@ -127,23 +128,24 @@ class Cobweb3Tree(CobwebTree):
 if __name__ == "__main__":
 
     t = Cobweb3Tree()
-    instances = []
 
-    for v in np.random.randn(10):
-        r = {}
-        r['x'] = v
-        r['sample_mean'] = "0"
-        instances.append(r)
+    #instances = []
 
-    for v in (40 + np.random.randn(10)):
-        r = {}
-        r['x'] = v
-        r['sample_mean'] = "40"
-        instances.append(r)
+    #for v in np.random.randn(10):
+    #    r = {}
+    #    r['x'] = v
+    #    r['sample_mean'] = "0"
+    #    instances.append(r)
 
-    shuffle(instances)
-    t.fit(instances)
+    #for v in (40 + np.random.randn(10)):
+    #    r = {}
+    #    r['x'] = v
+    #    r['sample_mean'] = "40"
+    #    instances.append(r)
+
+    t.train_from_json("cobweb3_test.json")
     print(t)
+    print()
 
     test = {}
     test['sample_mean'] = "40"
