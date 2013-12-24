@@ -496,6 +496,14 @@ class CobwebTree:
 
         return prediction
 
+    def predict_all(self, instances):
+        """
+        Predicts missing attribute values of all instances in the give
+        list.
+        """
+        predictions = [self.predict(instance) for instance in instances]
+        return predictions
+
 if __name__ == "__main__":
     from random import shuffle
 
