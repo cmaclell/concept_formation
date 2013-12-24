@@ -1,4 +1,5 @@
 from random import choice
+from random import shuffle
 
 class CobwebTree:
 
@@ -505,7 +506,6 @@ class CobwebTree:
         return predictions
 
 if __name__ == "__main__":
-    from random import shuffle
 
     t = CobwebTree()
 

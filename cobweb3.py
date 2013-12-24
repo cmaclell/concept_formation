@@ -2,6 +2,8 @@ import math
 from random import normalvariate
 from random import choice
 from random import random
+from random import shuffle
+import numpy as np
 from cobweb import CobwebTree
 
 class Cobweb3Tree(CobwebTree):
@@ -123,8 +125,6 @@ class Cobweb3Tree(CobwebTree):
         return prediction
 
 if __name__ == "__main__":
-    from random import shuffle
-    import numpy as np
 
     t = Cobweb3Tree()
     instances = []
