@@ -1,4 +1,4 @@
-import random
+from random import choice
 
 class CobwebTree:
 
@@ -41,11 +41,12 @@ class CobwebTree:
         input:
             instance: {a1: v1, a2: v2, ...} - a hashtable of attr and values. 
         """
-        self.count += 1.0 
+        #TODO do counts need to be floats?
+        self.count += 1 
         for attr in instance:
             self.av_counts[attr] = self.av_counts.setdefault(attr,{})
             self.av_counts[attr][instance[attr]] = (self.av_counts[attr].get(
-                instance[attr], 0) + 1.0)
+                instance[attr], 0) + 1)
     
     def _update_counts_from_node(self, node):
         """
@@ -265,24 +266,14 @@ class CobwebTree:
             self._create_new_child(instance)
             
         else:
+            #TODO is there a cleaner way to do this?
             best1, best2 = self._two_best_children(instance)
+            action_cu, best_action = self._get_best_operation(instance, best1,
+                                                              best2)
+
             best1_cu, best1 = best1
             if best2:
                 best2_cu, best2 = best2
-
-            operations = []
-            operations.append((best1_cu,"best"))
-            operations.append((self._cu_for_new_child(instance),'new'))
-            if best2:
-                operations.append((self._cu_for_merge(best1, best2,
-                                                     instance),'merge'))
-            if len(best1.children) > 0:
-                operations.append((self._cu_for_split(best1),'split'))
-
-            # pick the best operation
-            operations.sort(reverse=True)
-            action_cu, best_action = operations[0]
-
             #print(operations)
 
             if action_cu == 0.0 or best_action == 'best':
@@ -300,6 +291,85 @@ class CobwebTree:
                 self._cobweb(instance)
             else:
                 raise Exception("Should never get here.")
+
+    def _get_best_operation(self, instance, best1, best2, 
+                            possible_ops=["best", "new", "merge", "split"]):
+        """
+        Given a set of possible operations, find the best and return its cu and
+        the action name.
+        """
+        best1_cu, best1 = best1
+        if best2:
+            best2_cu, best2 = best2
+        operations = []
+
+        if "best" in possible_ops:
+            operations.append((best1_cu,"best"))
+        if "new" in possible_ops: 
+            operations.append((self._cu_for_new_child(instance),'new'))
+        if "merge" in possible_ops and best2:
+            operations.append((self._cu_for_merge(best1, best2,
+                                                 instance),'merge'))
+        if "split" in possible_ops and len(best1.children) > 0:
+            operations.append((self._cu_for_split(best1),'split'))
+
+        # pick the best operation
+        operations.sort(reverse=True)
+
+        return operations[0]
+        
+    def _categorize(self, instance):
+        """
+        Sorts an instance in the categorization tree defined at the current
+        node without modifying the counts of the tree.
+        """
+        if not self.children:
+            return self
+    
+        child = self._get_best_match(instance)
+        if child and (child._probility_of_instance(instance) >
+                      self._probility_of_instance(instance)):
+            return child._categorize(instance)
+        else:
+            return self
+
+    def _get_best_match(self, instance):
+        """
+        Tries to find the best matching child based on match probability. If
+        none of the children match, then it returns None.
+        """
+        matches = []
+        for child in self.children:
+            matches.append((child._probility_of_instance(instance),
+                            child))
+
+        matches.sort(reverse=True, key=lambda x: x[0])
+        best_probability, best_match = matches[0]
+        
+        if best_probability == 0.0:
+            return None
+        else:
+            return best_match
+
+    def _probility_of_instance(self, instance):
+        """
+        Computes the probability that the instance came from the class self.
+        """
+        probability = 1.0
+        for attr in instance:
+            if attr not in self.av_counts:
+                return 0.0
+            if instance[attr] not in self.av_counts[attr]:
+                return 0.0
+
+            attr_count = sum([self.av_counts[attr][val] for attr in
+                              self.av_counts for val in self.av_counts[attr]])
+            probability *= ((1.0 * self.av_counts[attr][instance[attr]]) /
+                            attr_count)
+
+        return probability
+
+        pass
 
     def _category_utility_nominal(self, parent):
         category_utility = 0.0
@@ -374,22 +444,61 @@ class CobwebTree:
         """
         Prints the categorization tree.
         """
-        print(('\t' * depth) + "|-" + str(self.av_counts) + ":" + str(self.count))
+        ret = str(('\t' * depth) + "|-" + str(self.av_counts) + ":" +
+                  str(self.count) + '\n')
         
         for c in self.children:
-            c._pretty_print(depth+1)
-
-    def __str__(self):
-        """
-        Converts the categorization tree into a string.
-        """
-        ret = str(self.av_counts)
-        for c in self.children:
-            ret += "\n" + str(c)
+            ret += c._pretty_print(depth+1)
 
         return ret
 
+    def __str__(self):
+        """
+        Converts the categorization tree into a string for printing"
+        """
+        return self._pretty_print()
+
+    def ifit(self, instance):
+        """
+        Given an instance incrementally update the categorization tree.
+        """
+        self._cobweb(instance)
+
+    def fit(self, list_of_instances):
+        """
+        Call incremental fit on each element in a list of instances.
+        """
+        for instance in list_of_instances:
+            self.ifit(instance)
+
+    def predict(self, instance):
+        """
+        Given an instance predict any missing attribute values without
+        modifying the tree.
+        """
+        prediction = {}
+
+        # make a copy of the instance
+        for attr in instance:
+            prediction[attr] = instance[attr]
+
+        concept = self._categorize(instance)
+        
+        for attr in concept.av_counts:
+            if attr in prediction:
+                continue
+            
+            values = []
+            for val in concept.av_counts[attr]:
+                values += [val] * concept.av_counts[attr][val]
+
+            prediction[attr] = choice(values)
+
+        return prediction
+
 if __name__ == "__main__":
+    from random import shuffle
+
     t = CobwebTree()
 
     instances = []
@@ -444,10 +553,13 @@ if __name__ == "__main__":
         r['Name'] = "fish"
         instances.append(r)
 
-    random.shuffle(instances)
-    for i in instances:
-        t._cobweb(i)
+    shuffle(instances)
+    t.fit(instances)
+    print(t)
+    print()
 
-    t._pretty_print()
-    print(t._category_utility())
+    test = {}
+    test['HeartChamber'] = "four"
+    print(t.predict(test))
+
 
