@@ -15,19 +15,19 @@ class CobwebTree:
             self._update_counts_from_node(tree)
 
             for child in tree.children:
-                self.children.append(CobwebTree(child))
+                self.children.append(self.__class__(child))
 
     def _shallow_copy(self):
         """
         Creates a copy of the current node and its children (but not their
         children)
         """
-        temp = CobwebTree()
+        temp = self.__class__()
         temp._update_counts_from_node(self)
 
         # important to maintain order
         for child in self.children:
-            temp_child = CobwebTree()
+            temp_child = self.__class__()
             temp_child._update_counts_from_node(child)
             temp.children.append(temp_child)
 
@@ -86,12 +86,12 @@ class CobwebTree:
         Computer the category utility of adding the instance to the specified
         child.
         """
-        temp = CobwebTree()
+        temp = self.__class__()
         temp._update_counts_from_node(self)
         temp._increment_counts(instance)
 
         for c in self.children:
-            temp_child = CobwebTree()
+            temp_child = self.__class__()
             temp_child._update_counts_from_node(c)
             temp.children.append(temp_child)
             if c == child:
@@ -103,7 +103,7 @@ class CobwebTree:
         Creates a new child (to the current node) with the counts initialized by
         the given instance. 
         """
-        new_child = CobwebTree()
+        new_child = self.__class__()
         new_child._increment_counts(instance)
         self.children.append(new_child)
 
@@ -113,7 +113,7 @@ class CobwebTree:
         the current node's counts.
         """
         if self.count > 0:
-            self.children.append(CobwebTree(self))
+            self.children.append(self.__class__(self))
 
     def _cu_for_new_child(self, instance):
         """
@@ -135,7 +135,7 @@ class CobwebTree:
         output:
             The new child formed from the merge
         """
-        new_child = CobwebTree()
+        new_child = self.__class__()
         new_child._update_counts_from_node(best1)
         new_child._update_counts_from_node(best2)
         new_child.children.append(best1)
@@ -162,11 +162,11 @@ class CobwebTree:
         output:
             0.02 - the category utility for the merge of best1 and best2.
         """
-        temp = CobwebTree()
+        temp = self.__class__()
         temp._update_counts_from_node(self)
         temp._increment_counts(instance)
 
-        new_child = CobwebTree()
+        new_child = self.__class__()
         new_child._update_counts_from_node(best1)
         new_child._update_counts_from_node(best2)
         new_child._increment_counts(instance)
@@ -175,7 +175,7 @@ class CobwebTree:
         for c in self.children:
             if c == best1 or c == best2:
                 continue
-            temp_child = CobwebTree()
+            temp_child = self.__class__()
             temp_child._update_counts_from_node(c)
             temp.children.append(temp_child)
 
@@ -198,13 +198,13 @@ class CobwebTree:
         output:
             0.03 - the category utility for the split of best1.
         """
-        temp = CobwebTree()
+        temp = self.__class__()
         temp._update_counts_from_node(self)
 
         for c in self.children + best.children:
             if c == best:
                 continue
-            temp_child = CobwebTree()
+            temp_child = self.__class__()
             temp_child._update_counts_from_node(c)
             temp.children.append(temp_child)
 
