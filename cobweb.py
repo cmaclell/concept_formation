@@ -506,7 +506,6 @@ class CobwebTree:
         return predictions
 
 if __name__ == "__main__":
-
     t = CobwebTree()
 
     instances = []
