@@ -5,11 +5,14 @@ class CobwebTree:
 
     # static variable for hashing concepts
     counter = 0
+    root = None
 
     def __init__(self, tree=None):
         """
         The constructor.
         """
+        if self.__class__.root == None:
+            self.__class__.root = self
         self.concept_name = "Concept" + self._gensym()
         self.count = 0
         self.av_counts = {}

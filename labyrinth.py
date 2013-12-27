@@ -33,6 +33,10 @@ class Labyrinth(Cobweb3Tree):
             else:
                 temp_instance[attr] = instance[attr]
 
+        # should be able to match just at the root, if the matchings change
+        # than the counts between parent and child will be thrown off which is
+        # not allowed to happen so for now don't worry about it.
+        # TODO check if this needs to be changed
         temp_instance = self._match(temp_instance)
         ret = self._cobweb(temp_instance)
 
@@ -49,6 +53,13 @@ class Labyrinth(Cobweb3Tree):
         have a name they map to). Will throw assertion error if this is not
         true.
         """
+        # Ensure it is a complete mapping
+        for attr in instance:
+            if not isinstance(instance[attr], Labyrinth):
+                continue
+            if attr not in mapping:
+                mapping[attr] = attr
+
         temp_instance = {}
         relations = []
 
@@ -57,6 +68,8 @@ class Labyrinth(Cobweb3Tree):
             if isinstance(attr, tuple):
                 relations.append(attr)
             elif isinstance(instance[attr], Labyrinth):
+                mapping[attr]
+                instance[attr]
                 temp_instance[mapping[attr]] = instance[attr]
             else:
                 temp_instance[attr] = instance[attr]
@@ -104,10 +117,20 @@ class Labyrinth(Cobweb3Tree):
                 for i in range(len(from_name)):
                     mapping[from_name[i]] = to_list[i]
                 mappings.append(mapping)
+    
+        scored_mappings = []
+        for mapping in mappings:
+            score = self._reduced_category_utility(self._rename(instance,
+                                                                mapping))
+            scored_mappings.append((score, mapping))
 
-
-
-        return mappings[0]
+        best_mapping = sorted(scored_mappings, key=lambda x: x[0])[0][1]
+        print('###########')
+        print(from_name)
+        print(to_name)
+        print(best_mapping)
+        print('###########')
+        return best_mapping
 
     def _no_match(self, instance):
         """
@@ -127,15 +150,6 @@ class Labyrinth(Cobweb3Tree):
         current concept (self).
         """
         mapping = self._exhaustive_match(instance)
-
-        # Ensure it is a complete mapping
-        for attr in instance:
-            if not isinstance(instance[attr], Labyrinth):
-                continue
-            if attr not in mapping:
-                print("!!!!!!!!!!!!attr: " + attr)
-                mapping[attr] = attr
-
         temp_instance = self._rename(instance, mapping)
         return temp_instance
 
@@ -167,6 +181,40 @@ class Labyrinth(Cobweb3Tree):
 
     def ifit(self, instance):
         self._labyrinth(instance)
+
+    def _replace(self, old, new):
+        """
+        Traverse the tree and replace all references to concept old with
+        concept new.
+        """
+        temp_counts = {}
+        for attr in self.av_counts:
+            temp_counts[attr] = {}
+            for val in self.av_counts[attr]:
+                x = val
+                if val == old:
+                    x = new
+                if x not in temp_counts[attr]:
+                    temp_counts[attr][x] = 0
+                temp_counts[attr][x] += self.av_counts[attr][val] 
+
+        self.av_counts = temp_counts
+
+        for c in self.children:
+            c._replace(old,new)
+
+    def _split(self, best):
+        """
+        Specialized version of split for labyrinth. This removes all references
+        to a particular concept from the tree. It replaces these references
+        with a reference to the parent concept
+        """
+        self.children.remove(best)
+        for child in best.children:
+            self.children.append(child)
+
+        # replace references to deleted concept with parent concept
+        self.__class__.root._replace(best, self)
 
     def _pretty_print(self, depth=0):
         """
