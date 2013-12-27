@@ -1,14 +1,17 @@
 import json
 from random import choice
-from random import shuffle
 
 class CobwebTree:
+
+    # static variable for hashing concepts
+    counter = 0
 
     def __init__(self, tree=None):
         """
         The constructor.
         """
-        self.count = 0.0
+        self.concept_name = "Concept" + self._gensym()
+        self.count = 0
         self.av_counts = {}
         self.children = []
 
@@ -18,6 +21,13 @@ class CobwebTree:
 
             for child in tree.children:
                 self.children.append(self.__class__(child))
+
+    def __hash__(self):
+        return hash(self.concept_name)
+
+    def _gensym(self):
+        self.__class__.counter += 1
+        return str(self.__class__.counter)
 
     def _shallow_copy(self):
         """
@@ -109,6 +119,7 @@ class CobwebTree:
         new_child = self.__class__()
         new_child._increment_counts(instance)
         self.children.append(new_child)
+        return new_child
 
     def _create_child_with_current_counts(self):
         """
@@ -252,6 +263,13 @@ class CobwebTree:
         
         return True
 
+    def _match(self, instance):
+        """
+        Just a stub here, but it is used by Labyrinth later to match
+        the concept.
+        """
+        return instance
+
     def _cobweb(self, instance):
         """
         Incrementally integrates an instance into the categorization tree
@@ -259,13 +277,16 @@ class CobwebTree:
         integrate this instance and uses category utility as the heuristic to
         make decisions.
         """
+        #instance = self._match(instance)
+
         if not self.children and self._is_concept(instance): 
             self._increment_counts(instance)
+            return self
 
         elif not self.children:
             self._create_child_with_current_counts()
             self._increment_counts(instance)
-            self._create_new_child(instance)
+            return self._create_new_child(instance)
             
         else:
             #TODO is there a cleaner way to do this?
@@ -280,17 +301,17 @@ class CobwebTree:
 
             if action_cu == 0.0 or best_action == 'best':
                 self._increment_counts(instance)
-                best1._cobweb(instance)
+                return best1._cobweb(instance)
             elif best_action == 'new':
                 self._increment_counts(instance)
-                self._create_new_child(instance)
+                return self._create_new_child(instance)
             elif best_action == 'merge':
                 self._increment_counts(instance)
                 new_child = self._merge(best1, best2, instance)
-                new_child._cobweb(instance)
+                return new_child._cobweb(instance)
             elif best_action == 'split':
                 self._split(best1)
-                self._cobweb(instance)
+                return self._cobweb(instance)
             else:
                 raise Exception("Should never get here.")
 
@@ -320,7 +341,7 @@ class CobwebTree:
 
         return operations[0]
         
-    def _categorize(self, instance):
+    def _cobweb_categorize(self, instance):
         """
         Sorts an instance in the categorization tree defined at the current
         node without modifying the counts of the tree.
@@ -329,9 +350,9 @@ class CobwebTree:
             return self
     
         child = self._get_best_match(instance)
-        if child and (child._probility_of_instance(instance) >
-                      self._probility_of_instance(instance)):
-            return child._categorize(instance)
+        if child and (child._reduced_category_utility(instance) >
+                      self._reduced_category_utility(instance)):
+            return child._cobweb_categorize(instance)
         else:
             return self
 
@@ -342,7 +363,7 @@ class CobwebTree:
         """
         matches = []
         for child in self.children:
-            matches.append((child._probility_of_instance(instance),
+            matches.append((child._reduced_category_utility(instance),
                             child))
 
         matches.sort(reverse=True, key=lambda x: x[0])
@@ -353,21 +374,24 @@ class CobwebTree:
         else:
             return best_match
 
-    def _probility_of_instance(self, instance):
+    def _reduced_category_utility(self, instance):
         """
-        Computes the probability that the instance came from the class self.
+        Computes a reduced form of category utility for matching an instance
+        to a class; i.e., the expected number of correct attribute values
+        guessed correctly. 
         """
-        probability = 1.0
+        #TODO needs to be modified to only work with nominal values
+        probability = 0.0 
         for attr in instance:
             if attr not in self.av_counts:
-                return 0.0
+                continue
             if instance[attr] not in self.av_counts[attr]:
-                return 0.0
+                continue
 
             attr_count = sum([self.av_counts[attr][val] for attr in
                               self.av_counts for val in self.av_counts[attr]])
-            probability *= ((1.0 * self.av_counts[attr][instance[attr]]) /
-                            attr_count)
+            probability += ((1.0 * self.av_counts[attr][instance[attr]]) /
+                            attr_count)**2
 
         return probability
 
@@ -377,10 +401,11 @@ class CobwebTree:
         category_utility = 0.0
         for attr in self.av_counts:
             for val in self.av_counts[attr]:
-                category_utility += ((self.av_counts[attr][val] /
-                                      self.count)**2 -
-                                     (parent.av_counts[attr][val] /
-                                      parent.count)**2)
+                if isinstance(val, str):
+                    category_utility += ((self.av_counts[attr][val] /
+                                          self.count)**2 -
+                                         (parent.av_counts[attr][val] /
+                                          parent.count)**2)
         
         return category_utility
 
@@ -484,7 +509,7 @@ class CobwebTree:
         for attr in instance:
             prediction[attr] = instance[attr]
 
-        concept = self._categorize(instance)
+        concept = self._cobweb_categorize(instance)
         
         for attr in concept.av_counts:
             if attr in prediction:

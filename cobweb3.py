@@ -1,10 +1,7 @@
 import math
-import json
 from random import normalvariate
 from random import choice
 from random import random
-from random import shuffle
-import numpy as np
 from cobweb import CobwebTree
 
 class Cobweb3Tree(CobwebTree):
@@ -74,7 +71,7 @@ class Cobweb3Tree(CobwebTree):
                 if isinstance(val, float):
                     float_values.append(val)
                 else:
-                    values.append("'" + val + "': " +
+                    values.append("'" + str(val) + "': " +
                                   str(self.av_counts[attr][val]))
 
             if float_values:
@@ -101,7 +98,7 @@ class Cobweb3Tree(CobwebTree):
         for attr in instance:
             prediction[attr] = instance[attr]
 
-        concept = self._categorize(instance)
+        concept = self._cobweb_categorize(instance)
         
         for attr in concept.av_counts:
             if attr in prediction:
