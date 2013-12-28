@@ -6,6 +6,11 @@ class Labyrinth(Cobweb3Tree):
     # TODO naming convention on these category utility functions is weird and
     # probably needs to be redone
     def _category_utility_component(self, parent):
+        """
+        The Labyrinth category utility function is the same as the one for
+        nominal category utility, it just checks for equal values (i.e., equal
+        concepts) and updates the counts.
+        """
         category_utility = 0.0
         for attr in self.av_counts:
             for val in self.av_counts[attr]:
@@ -125,11 +130,6 @@ class Labyrinth(Cobweb3Tree):
             scored_mappings.append((score, mapping))
 
         best_mapping = sorted(scored_mappings, key=lambda x: x[0])[0][1]
-        print('###########')
-        print(from_name)
-        print(to_name)
-        print(best_mapping)
-        print('###########')
         return best_mapping
 
     def _no_match(self, instance):

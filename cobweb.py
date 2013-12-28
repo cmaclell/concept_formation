@@ -40,7 +40,6 @@ class CobwebTree:
         temp = self.__class__()
         temp._update_counts_from_node(self)
 
-        # important to maintain order
         for child in self.children:
             temp_child = self.__class__()
             temp_child._update_counts_from_node(child)
@@ -280,8 +279,6 @@ class CobwebTree:
         integrate this instance and uses category utility as the heuristic to
         make decisions.
         """
-        #instance = self._match(instance)
-
         if not self.children and self._is_concept(instance): 
             self._increment_counts(instance)
             return self
@@ -296,11 +293,9 @@ class CobwebTree:
             best1, best2 = self._two_best_children(instance)
             action_cu, best_action = self._get_best_operation(instance, best1,
                                                               best2)
-
             best1_cu, best1 = best1
             if best2:
                 best2_cu, best2 = best2
-            #print(operations)
 
             if action_cu == 0.0 or best_action == 'best':
                 self._increment_counts(instance)
@@ -351,54 +346,17 @@ class CobwebTree:
         """
         if not self.children:
             return self
-    
-        child = self._get_best_match(instance)
-        if child and (child._reduced_category_utility(instance) >
-                      self._reduced_category_utility(instance)):
-            return child._cobweb_categorize(instance)
-        else:
+
+        best1, best2 = self._two_best_children(instance)
+        action_cu, best_action = self._get_best_operation(instance, best1,
+                                                          best2, ["best",
+                                                                  "new"]) 
+        best1_cu, best1 = best1
+
+        if best_action == "new":
             return self
-
-    def _get_best_match(self, instance):
-        """
-        Tries to find the best matching child based on match probability. If
-        none of the children match, then it returns None.
-        """
-        matches = []
-        for child in self.children:
-            matches.append((child._reduced_category_utility(instance),
-                            child))
-
-        matches.sort(reverse=True, key=lambda x: x[0])
-        best_probability, best_match = matches[0]
-        
-        if best_probability == 0.0:
-            return None
-        else:
-            return best_match
-
-    def _reduced_category_utility(self, instance):
-        """
-        Computes a reduced form of category utility for matching an instance
-        to a class; i.e., the expected number of correct attribute values
-        guessed correctly. 
-        """
-        #TODO needs to be modified to only work with nominal values
-        probability = 0.0 
-        for attr in instance:
-            if attr not in self.av_counts:
-                continue
-            if instance[attr] not in self.av_counts[attr]:
-                continue
-
-            attr_count = sum([self.av_counts[attr][val] for attr in
-                              self.av_counts for val in self.av_counts[attr]])
-            probability += ((1.0 * self.av_counts[attr][instance[attr]]) /
-                            attr_count)**2
-
-        return probability
-
-        pass
+        elif best_action == "best":
+            return best1._cobweb_categorize(instance)
 
     def _category_utility_nominal(self, parent):
         category_utility = 0.0
