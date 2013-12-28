@@ -400,42 +400,6 @@ class CobwebTree:
                                   - self._expected_correct_guesses()))
         return category_utility / (1.0 * len(self.children))
 
-    def _category_utility_old(self):
-        """
-        The category utility is a local heuristic calculation to determine if
-        the split of instances across the children increases the ability to
-        guess from the parent node. 
-        """
-        if len(self.children) == 0:
-            return 0.0
-
-        category_utility = 0.0
-
-        exp_parent_guesses = self._expected_correct_guesses()
-
-        for child in self.children:
-            p_of_child = child.count / self.count
-            exp_child_guesses = child._expected_correct_guesses()
-            category_utility += p_of_child * (exp_child_guesses -
-                                              exp_parent_guesses)
-
-        return category_utility / (1.0 * len(self.children))
-
-    #def _expected_correct_guesses(self):
-    #    """
-    #    The number of attribute value guesses we would be expected to get
-    #    correct using the current concept.
-    #    """
-    #    if self.count == 0:
-    #        return 0.0
-
-    #    exp_count = 0.0
-    #    for attr in self.av_counts:
-    #        for val in self.av_counts[attr]:
-    #            if not isinstance(val, float):
-    #                exp_count += (self.av_counts[attr][val] / self.count)**2
-    #    return exp_count
-
     def _num_concepts(self):
         """
         Return the number of concepts contained in the tree defined by the
