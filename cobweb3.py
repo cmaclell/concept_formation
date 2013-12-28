@@ -141,6 +141,7 @@ if __name__ == "__main__":
     #    instances.append(r)
 
     t.train_from_json("cobweb3_test.json")
+    t._verify_counts()
     print(t)
     print()
 

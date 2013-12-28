@@ -76,7 +76,7 @@ class CobwebTree:
 
     def _two_best_children(self, instance):
         """
-        Returns the indices of the two best children to incorporate the instance
+        Returns the two best children to incorporate the instance
         into in terms of category utility.
 
         input:
@@ -94,6 +94,7 @@ class CobwebTree:
 
         if len(children_cu) == 1:
             return children_cu[0], None 
+
         return children_cu[0], children_cu[1]
 
     def _cu_for_insert(self, child, instance):
@@ -226,18 +227,38 @@ class CobwebTree:
 
         return temp._category_utility()
 
-    def _check_children_eq_parent(self):
+    def _verify_counts(self):
         """
         Checks the property that the counts of the children sum to the same
         count as the parent. This is/was useful when debugging.
         """
         if len(self.children) == 0:
-            return
+            return 
 
-        child_count = 0.0
+        temp = {}
+        temp_count = self.count
+        for attr in self.av_counts:
+            if attr not in temp:
+                temp[attr] = {}
+            for val in self.av_counts[attr]:
+                temp[attr][val] = self.av_counts[attr][val]
+
         for child in self.children:
-            child_count += child.count
-        assert self.count == child_count
+            temp_count -= child.count
+            for attr in child.av_counts:
+                assert attr in temp
+                for val in child.av_counts[attr]:
+                    assert val in temp[attr]
+                    temp[attr][val] -= child.av_counts[attr][val]
+
+        assert temp_count == 0
+
+        for attr in temp:
+            for val in temp[attr]:
+                assert temp[attr][val] == 0.0
+
+        for child in self.children:
+            child._verify_counts()
 
     def _is_concept(self, instance):
         """
@@ -358,17 +379,13 @@ class CobwebTree:
         elif best_action == "best":
             return best1._cobweb_categorize(instance)
 
-    def _category_utility_nominal(self, parent):
-        category_utility = 0.0
+    def _expected_correct_guesses(self):
+        correct_guesses = 0.0
         for attr in self.av_counts:
             for val in self.av_counts[attr]:
-                if isinstance(val, str):
-                    category_utility += ((self.av_counts[attr][val] /
-                                          self.count)**2 -
-                                         (parent.av_counts[attr][val] /
-                                          parent.count)**2)
-        
-        return category_utility
+                prob = ((1.0 * self.av_counts[attr][val]) / self.count)
+                correct_guesses += (prob * prob)
+        return correct_guesses
 
     def _category_utility(self):
         if len(self.children) == 0:
@@ -379,7 +396,8 @@ class CobwebTree:
         for child in self.children:
             p_of_child = child.count / self.count
             category_utility += (p_of_child *
-                                 child._category_utility_nominal(self))
+                                 (child._expected_correct_guesses()
+                                  - self._expected_correct_guesses()))
         return category_utility / (1.0 * len(self.children))
 
     def _category_utility_old(self):
@@ -403,20 +421,20 @@ class CobwebTree:
 
         return category_utility / (1.0 * len(self.children))
 
-    def _expected_correct_guesses(self):
-        """
-        The number of attribute value guesses we would be expected to get
-        correct using the current concept.
-        """
-        if self.count == 0:
-            return 0.0
+    #def _expected_correct_guesses(self):
+    #    """
+    #    The number of attribute value guesses we would be expected to get
+    #    correct using the current concept.
+    #    """
+    #    if self.count == 0:
+    #        return 0.0
 
-        exp_count = 0.0
-        for attr in self.av_counts:
-            for val in self.av_counts[attr]:
-                if not isinstance(val, float):
-                    exp_count += (self.av_counts[attr][val] / self.count)**2
-        return exp_count
+    #    exp_count = 0.0
+    #    for attr in self.av_counts:
+    #        for val in self.av_counts[attr]:
+    #            if not isinstance(val, float):
+    #                exp_count += (self.av_counts[attr][val] / self.count)**2
+    #    return exp_count
 
     def _num_concepts(self):
         """
@@ -501,60 +519,8 @@ class CobwebTree:
 
 if __name__ == "__main__":
     t = CobwebTree()
-
-    #instances = []
-
-    # concept 1 mammal
-    #for i in range(1):
-    #    r = {}
-    #    r['BodyCover'] = "hair"
-    #    r['HeartChamber'] = "four"
-    #    r['BodyTemp'] = "regulated"
-    #    r['Fertilization'] = "internal"
-    #    r['Name'] = "mammal"
-    #    instances.append(r)
-
-    ## concept 2 bird 
-    #for i in range(1):
-    #    r = {}
-    #    r['BodyCover'] = "feathers"
-    #    r['HeartChamber'] = "four"
-    #    r['BodyTemp'] = "regulated"
-    #    r['Fertilization'] = "internal"
-    #    r['Name'] = "bird"
-    #    instances.append(r)
-
-    ## concept 3 reptile 
-    #for i in range(1):
-    #    r = {}
-    #    r['BodyCover'] = "cornified-skin"
-    #    r['HeartChamber'] = "imperfect-four"
-    #    r['BodyTemp'] = "unregulated"
-    #    r['Fertilization'] = "internal"
-    #    r['Name'] = "reptile"
-    #    instances.append(r)
-
-    ## concept 4 amphibian 
-    #for i in range(1):
-    #    r = {}
-    #    r['BodyCover'] = "moist-skin"
-    #    r['HeartChamber'] = "three"
-    #    r['BodyTemp'] = "unregulated"
-    #    r['Fertilization'] = "external"
-    #    r['Name'] = "amphibian"
-    #    instances.append(r)
-
-    ## concept 5 fish
-    #for i in range(1):
-    #    r = {}
-    #    r['BodyCover'] = "scales"
-    #    r['HeartChamber'] = "two"
-    #    r['BodyTemp'] = "unregulated"
-    #    r['Fertilization'] = "external"
-    #    r['Name'] = "fish"
-    #    instances.append(r)
-
     t.train_from_json("cobweb_test.json")
+    t._verify_counts()
     print(t)
     print()
 
