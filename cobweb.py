@@ -26,6 +26,9 @@ class CobwebTree:
                 self.children.append(self.__class__(child))
 
     def __hash__(self):
+        """
+        The basic hash function.
+        """
         return hash(self.concept_name)
 
     def _gensym(self):
@@ -227,7 +230,7 @@ class CobwebTree:
 
         return temp._category_utility()
 
-    def _verify_counts(self):
+    def verify_counts(self):
         """
         Checks the property that the counts of the children sum to the same
         count as the parent. This is/was useful when debugging.
@@ -258,7 +261,7 @@ class CobwebTree:
                 assert temp[attr][val] == 0.0
 
         for child in self.children:
-            child._verify_counts()
+            child.verify_counts()
 
     def _is_concept(self, instance):
         """
@@ -268,7 +271,7 @@ class CobwebTree:
         """
         for attribute in self.av_counts:
             for value in self.av_counts[attribute]:
-                if (self.av_counts[attribute][value] / self.count) != 1.0:
+                if (self.av_counts[attribute][value] / (1.0 * self.count)) != 1.0:
                     return False
                 if attribute not in instance:
                     return False
@@ -280,18 +283,11 @@ class CobwebTree:
                 return False
             if instance[attribute] not in self.av_counts[attribute]:
                 return False
-            if ((self.av_counts[attribute][instance[attribute]] / self.count) !=
-                1.0):
+            if ((self.av_counts[attribute][instance[attribute]] / 
+                 (1.0 * self.count)) != 1.0):
                 return False
         
         return True
-
-    def _match(self, instance):
-        """
-        Just a stub here, but it is used by Labyrinth later to match
-        the concept.
-        """
-        return instance
 
     def _cobweb(self, instance):
         """
@@ -364,6 +360,9 @@ class CobwebTree:
         """
         Sorts an instance in the categorization tree defined at the current
         node without modifying the counts of the tree.
+
+        Uses the new and best operations; when new is the best operation it
+        returns the current node otherwise it recurses on the best node. 
         """
         if not self.children:
             return self
@@ -383,7 +382,7 @@ class CobwebTree:
         correct_guesses = 0.0
         for attr in self.av_counts:
             for val in self.av_counts[attr]:
-                prob = ((1.0 * self.av_counts[attr][val]) / self.count)
+                prob = (self.av_counts[attr][val] / (1.0 * self.count))
                 correct_guesses += (prob * prob)
         return correct_guesses
 
@@ -394,7 +393,7 @@ class CobwebTree:
         category_utility = 0.0
 
         for child in self.children:
-            p_of_child = child.count / self.count
+            p_of_child = child.count / (1.0 * self.count)
             category_utility += (p_of_child *
                                  (child._expected_correct_guesses()
                                   - self._expected_correct_guesses()))
@@ -484,7 +483,7 @@ class CobwebTree:
 if __name__ == "__main__":
     t = CobwebTree()
     t.train_from_json("cobweb_test.json")
-    t._verify_counts()
+    t.verify_counts()
     print(t)
     print()
 

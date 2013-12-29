@@ -1,26 +1,10 @@
 import itertools
+from random import normalvariate
+from random import choice
+from random import random
 from cobweb3 import Cobweb3Tree
 
 class Labyrinth(Cobweb3Tree):
-
-    # TODO naming convention on these category utility functions is weird and
-    # probably needs to be redone
-    def _category_utility_component(self, parent):
-        """
-        The Labyrinth category utility function is the same as the one for
-        nominal category utility, it just checks for equal values (i.e., equal
-        concepts) and updates the counts.
-        """
-        category_utility = 0.0
-        for attr in self.av_counts:
-            for val in self.av_counts[attr]:
-                if isinstance(val, Labyrinth):
-                    category_utility += ((self.av_counts[attr][val] /
-                                          self.count)**2 -
-                                         (parent.av_counts[attr][val] /
-                                          parent.count)**2)
-        
-        return category_utility
 
     def _labyrinth(self, instance):
         """
@@ -49,16 +33,12 @@ class Labyrinth(Cobweb3Tree):
 
     def _rename(self, instance, mapping):
         """
-        Given a name_assignemnts (a dict) rename the 
+        Given a mapping (type = dict) rename the 
         components and relations and return the renamed
         instance.
-
-        To ensure there isn't a renaming collision the mapping should be a
-        complete mapping for the given instance (all components should
-        have a name they map to). Will throw assertion error if this is not
-        true.
         """
         # Ensure it is a complete mapping
+        # Might be troublesome if there is a name collision
         for attr in instance:
             if not isinstance(instance[attr], Labyrinth):
                 continue
@@ -125,23 +105,13 @@ class Labyrinth(Cobweb3Tree):
     
         scored_mappings = []
         for mapping in mappings:
-            score = self._reduced_category_utility(self._rename(instance,
-                                                                mapping))
+            temp = self._shallow_copy()
+            temp._increment_counts(self._rename(instance, mapping))
+            score = temp._expected_correct_guesses()
             scored_mappings.append((score, mapping))
 
         best_mapping = sorted(scored_mappings, key=lambda x: x[0])[0][1]
         return best_mapping
-
-    def _no_match(self, instance):
-        """
-        Don't do any matching, just rename things to themselves.
-        """
-        mapping = {}
-        for attr in instance:
-            if isinstance(instance[attr], Labyrinth):
-                mapping[attr] = attr
-
-        return mapping
 
     def _match(self, instance):
         """ 
@@ -152,6 +122,9 @@ class Labyrinth(Cobweb3Tree):
         mapping = self._exhaustive_match(instance)
         temp_instance = self._rename(instance, mapping)
         return temp_instance
+
+    #def _cobweb(self, instance):
+    #    super(Labyrinth, self)._cobweb(instance)
 
     def _labyrinth_categorize(self, instance):
         temp_instance = {}
@@ -165,64 +138,16 @@ class Labyrinth(Cobweb3Tree):
 
         return self._cobweb_categorize(temp_instance)
 
-    def _category_utility(self):
-        if len(self.children) == 0:
-            return 0.0
-
-        category_utility = 0.0
-
-        for child in self.children:
-            p_of_child = child.count / self.count
-            category_utility += (p_of_child *
-                                 (child._category_utility_nominal(self) +
-                                  child._category_utility_numeric(self) +
-                                  child._category_utility_component(self)))
-        return category_utility / (1.0 * len(self.children))
-
     def ifit(self, instance):
         self._labyrinth(instance)
-
-    def _replace(self, old, new):
-        """
-        Traverse the tree and replace all references to concept old with
-        concept new.
-        """
-        temp_counts = {}
-        for attr in self.av_counts:
-            temp_counts[attr] = {}
-            for val in self.av_counts[attr]:
-                x = val
-                if val == old:
-                    x = new
-                if x not in temp_counts[attr]:
-                    temp_counts[attr][x] = 0
-                temp_counts[attr][x] += self.av_counts[attr][val] 
-
-        self.av_counts = temp_counts
-
-        for c in self.children:
-            c._replace(old,new)
-
-    def _split(self, best):
-        """
-        Specialized version of split for labyrinth. This removes all references
-        to a particular concept from the tree. It replaces these references
-        with a reference to the parent concept
-        """
-        self.children.remove(best)
-        for child in best.children:
-            self.children.append(child)
-
-        # replace references to deleted concept with parent concept
-        self.__class__.root._replace(best, self)
 
     def _pretty_print(self, depth=0):
         """
         Prints the categorization tree.
         """
         tabs = "\t" * depth
-        ret = str(('\t' * depth) + "|-" + "[" + self.concept_name + "]\n" +
-                  tabs + "  ")
+        ret = str(('\t' * depth) + "|-" + "[" + self.concept_name + "]: " +
+                  str(self.count) + "\n" + tabs + "  ")
 
         attributes = []
 
@@ -246,23 +171,71 @@ class Labyrinth(Cobweb3Tree):
 
             attributes.append("'" + str(attr) + "': {" + ", ".join(values) + "}")
                   
-        ret += "{" + (",\n" + tabs + "   ").join(attributes) + "}: " + str(self.count) + '\n'
+        ret += "{" + (",\n" + tabs + "   ").join(attributes) + "}\n"
         
         for c in self.children:
             ret += c._pretty_print(depth+1)
 
         return ret
 
+    def predict(self, instance):
+        """
+        Given an instance predict any missing attribute values without
+        modifying the tree.
+        """
+        prediction = {}
+
+        # make a copy of the instance
+        # call recursively on structured parts
+        for attr in instance:
+            if isinstance(instance[attr], dict):
+                prediction[attr] = self.predict(instance[attr])
+            else:
+                prediction[attr] = instance[attr]
+
+        concept = self._labyrinth_categorize(prediction)
+        
+        for attr in concept.av_counts:
+            if attr in prediction:
+                continue
+            
+            nominal_values = []
+            component_values = []
+            float_values = []
+
+            for val in concept.av_counts[attr]:
+                if isinstance(val, float):
+                    float_values += [val] * concept.av_counts[attr][val]
+                elif isinstance(val, Labyrinth):
+                    component_values += [val] * concept.av_counts[attr][val] 
+                else:
+                    nominal_values += [val] * concept.av_counts[attr][val]
+
+            rand = random()
+
+            if rand < ((len(nominal_values) * 1.0) / (len(nominal_values) +
+                                                      len(component_values) +
+                                                      len(float_values))):
+                prediction[attr] = choice(nominal_values)
+            elif rand < ((len(nominal_values) + len(component_values) * 1.0) /
+                         (len(nominal_values) + len(component_values) +
+                          len(float_values))):
+                prediction[attr] = choice(component_values).predict({})
+            else:
+                prediction[attr] = normalvariate(self._mean(float_values),
+                                                 self._std(float_values))
+
+        return prediction
+
+
 if __name__ == "__main__":
 
     t = Labyrinth()
-
     t.train_from_json("labyrinth_test.json")
     print(t)
 
     test = {}
-    test['sample_mean'] = "40"
-    #print(t.predict(test))
+    print(t.predict(test))
 
 
 
