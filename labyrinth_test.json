@@ -21,7 +21,7 @@
             "relation2": [
                 "left-of",
                 "component1",
-                "component2"
+                "component3"
             ],
             "relation3": [
                 "on",

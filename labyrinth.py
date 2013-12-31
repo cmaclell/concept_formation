@@ -63,7 +63,7 @@ class Labyrinth(Cobweb3Tree):
         for relation in relations:
             temp = []
             for idx, val in enumerate(relation):
-                if idx == 0:
+                if idx == 0 or val not in mapping:
                     temp.append(val)
                 else:
                     temp.append(mapping[val])
@@ -128,17 +128,23 @@ class Labyrinth(Cobweb3Tree):
 
     def _labyrinth_categorize(self, instance):
         temp_instance = {}
-
         for attr in instance:
-            for val in instance[attr]:
-                if isinstance(val, dict):
-                    temp_instance[attr] = self._labyrinth_categorize(val)
-                else:
-                    temp_instance[attr] = val
+            if isinstance(instance[attr], dict):
+                temp_instance[attr] = self._labyrinth_categorize(instance[attr])
+            elif isinstance(instance[attr], list):
+                temp_instance[attr] = tuple(instance[attr])
+            else:
+                temp_instance[attr] = instance[attr]
 
+        # should be able to match just at the root, if the matchings change
+        # than the counts between parent and child will be thrown off which is
+        # not allowed to happen so for now don't worry about it.
+        # TODO check if this needs to be changed
+        temp_instance = self._match(temp_instance)
         return self._cobweb_categorize(temp_instance)
 
     def ifit(self, instance):
+        print("incorporating instance")
         self._labyrinth(instance)
 
     def _pretty_print(self, depth=0):
@@ -193,10 +199,18 @@ class Labyrinth(Cobweb3Tree):
             else:
                 prediction[attr] = instance[attr]
 
+        prediction = self._match(prediction)
         concept = self._labyrinth_categorize(prediction)
+        #print(concept)
         
         for attr in concept.av_counts:
             if attr in prediction:
+                continue
+           
+            # sample to determine if the attribute should be included
+            num_attr = sum([concept.av_counts[attr][val] for val in
+                            concept.av_counts[attr]])
+            if random() > (1.0 * num_attr) / concept.count:
                 continue
             
             nominal_values = []
@@ -232,7 +246,7 @@ if __name__ == "__main__":
 
     t = Labyrinth()
     t.train_from_json("labyrinth_test.json")
-    print(t)
+    #print(t)
 
     test = {}
     print(t.predict(test))
