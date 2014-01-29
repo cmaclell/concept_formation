@@ -1,6 +1,6 @@
 import math
 import numpy
-import hungarian
+import hungarianNative
 from labyrinth import Labyrinth
 
 class Trestle(Labyrinth):
@@ -52,7 +52,11 @@ class Trestle(Labyrinth):
 
         # may be able to eliminate this duplicate
         b = numpy.array(cost_matrix)
-        assignment = hungarian.lap(a)[0]
+        # This is the original code I swapped it out because I couldn't install the hungarian module
+        #assignment = hungarian.lap(a)[0]
+        ### substitute hungarian method ####
+        assignment = hungarianNative.hungarian(a)
+        ### substitute hungarian method ####
         mapping = {}
         
         for index, val in enumerate(assignment):

@@ -1,0 +1,7 @@
+# ignore various kinds of temp files
+*.swp
+*~
+
+# ignore compiled python files
+*.pyc
+

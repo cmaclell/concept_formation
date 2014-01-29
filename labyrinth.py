@@ -44,6 +44,7 @@ class Labyrinth(Cobweb3Tree):
                 continue
             if attr not in mapping:
                 mapping[attr] = attr
+                print "something may be wrong"
 
         temp_instance = {}
         relations = []
@@ -133,7 +134,7 @@ class Labyrinth(Cobweb3Tree):
                 temp_instance[attr] = self._labyrinth_categorize(instance[attr])
             elif isinstance(instance[attr], list):
                 temp_instance[attr] = tuple(instance[attr])
-            else:
+            else:#COVERTEN
                 temp_instance[attr] = instance[attr]
 
         # should be able to match just at the root, if the matchings change
