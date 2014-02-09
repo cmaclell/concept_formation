@@ -320,46 +320,53 @@ class CobwebTree:
         integrate this instance and uses category utility as the heuristic to
         make decisions.
         """
-        # instead of checking if the instance is the fringe concept, I
-        # check to see if category utility is increased by fringe splitting.
-        # this is more generally and will be used by the Labyrinth/Trestle
-        # systems to achieve more complex fringe behavior. 
-        if not self.children and self._cu_for_fringe_split(instance) <= 0:
-            self._increment_counts(instance)
-            #print(self)
-            return self
+        current = self
 
-        elif not self.children:
-            self._create_child_with_current_counts()
-            self._increment_counts(instance)
-            #print("SPLIT")
-            #print(self)
-            return self._create_new_child(instance)
-            
-        else:
-            #TODO is there a cleaner way to do this?
-            best1, best2 = self._two_best_children(instance)
-            action_cu, best_action = self._get_best_operation(instance, best1,
-                                                              best2)
-            best1_cu, best1 = best1
-            if best2:
-                best2_cu, best2 = best2
+        while current:
+            # instead of checking if the instance is the fringe concept, I
+            # check to see if category utility is increased by fringe splitting.
+            # this is more generally and will be used by the Labyrinth/Trestle
+            # systems to achieve more complex fringe behavior. 
+            if not current.children and current._cu_for_fringe_split(instance) <= 0:
+                current._increment_counts(instance)
+                #print(self)
+                return current 
 
-            if action_cu == 0.0 or best_action == 'best':
-                self._increment_counts(instance)
-                return best1._cobweb(instance)
-            elif best_action == 'new':
-                self._increment_counts(instance)
-                return self._create_new_child(instance)
-            elif best_action == 'merge':
-                self._increment_counts(instance)
-                new_child = self._merge(best1, best2, instance)
-                return new_child._cobweb(instance)
-            elif best_action == 'split':
-                self._split(best1)
-                return self._cobweb(instance)
+            elif not current.children:
+                current._create_child_with_current_counts()
+                current._increment_counts(instance)
+                #print("SPLIT")
+                #print(self)
+                return current._create_new_child(instance)
+                
             else:
-                raise Exception("Should never get here.")
+                #TODO is there a cleaner way to do this?
+                best1, best2 = current._two_best_children(instance)
+                action_cu, best_action = current._get_best_operation(instance,
+                                                                     best1,
+                                                                     best2)
+                best1_cu, best1 = best1
+                if best2:
+                    best2_cu, best2 = best2
+
+                if action_cu == 0.0 or best_action == 'best':
+                    current._increment_counts(instance)
+                    current = best1
+                    #return best1._cobweb(instance)
+                elif best_action == 'new':
+                    current._increment_counts(instance)
+                    return current._create_new_child(instance)
+                    #return self._create_new_child(instance)
+                elif best_action == 'merge':
+                    current._increment_counts(instance)
+                    new_child = current._merge(best1, best2, instance)
+                    current = new_child
+                    #return new_child._cobweb(instance)
+                elif best_action == 'split':
+                    current._split(best1)
+                    #return self._cobweb(instance)
+                else:
+                    raise Exception("Should never get here.")
 
     def _get_best_operation(self, instance, best1, best2, 
                             possible_ops=["best", "new", "merge", "split"]):
@@ -384,6 +391,7 @@ class CobwebTree:
 
         # pick the best operation
         operations.sort(reverse=True)
+        print(operations)
 
         return operations[0]
         
@@ -395,19 +403,24 @@ class CobwebTree:
         Uses the new and best operations; when new is the best operation it
         returns the current node otherwise it recurses on the best node. 
         """
-        if not self.children:
-            return self
+        current = self
 
-        best1, best2 = self._two_best_children(instance)
-        action_cu, best_action = self._get_best_operation(instance, best1,
-                                                          best2, ["best",
+        while current:
+            if not current.children:
+                return current
+
+            best1, best2 = current._two_best_children(instance)
+            action_cu, best_action = current._get_best_operation(instance,
+                                                                 best1, best2,
+                                                                 ["best",
                                                                   "new"]) 
-        best1_cu, best1 = best1
+            best1_cu, best1 = best1
 
-        if best_action == "new":
-            return self
-        elif best_action == "best":
-            return best1._cobweb_categorize(instance)
+            if best_action == "new":
+                return current
+            elif best_action == "best":
+                current = best1
+                #return best1._cobweb_categorize(instance)
 
     def _expected_correct_guesses(self):
         correct_guesses = 0.0
