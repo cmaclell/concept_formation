@@ -1,4 +1,4 @@
-#import json
+import json
 import math
 import numpy
 import hungarianNative
@@ -104,7 +104,7 @@ class Trestle(Labyrinth):
 
         # some reasonably large constant when dealing with really small
         # probabilities
-        max_cost = 2.0
+        max_cost = 100.0
         
         cost_matrix = []
         for row_index in range(length):
@@ -124,10 +124,13 @@ class Trestle(Labyrinth):
                     #print((1.0 * self.av_counts[to_name[col_index]][val]) / self.count)
                     #print(from_val._probability_given(val))
 
-
-                    reward += (((1.0 * self.av_counts[to_name[col_index]][val]) /
-                              self.count) *
-                             from_val._probability_given(val))
+                    #print((((1.0 * self.av_counts[to_name[col_index]][val]) /
+                    #        self.count) * from_val._probability_given(val) *
+                    #       val._probability_given(from_val)))
+                    reward += (((1.0 * self.av_counts[to_name[col_index]][val])
+                                / self.count) *
+                               from_val._probability_given(val) *
+                               val._probability_given(from_val))
                     #ancestor = from_val._common_ancestor(val)
                     #reward += (((1.0 * self.av_counts[to_name[col_index]][val]) /
                     #          self.count) *
@@ -167,6 +170,14 @@ class Trestle(Labyrinth):
 
         ### substitute hungarian method ####
         assignment = hungarianNative.hungarian(a)
+
+        #print("MATCHING")
+        #print(b)
+        #print(instance)
+        #print(from_name)
+        #print(self)
+        #print(to_name)
+        #print(assignment)
         
         ### substitute hungarian method ####
         mapping = {}
@@ -174,11 +185,15 @@ class Trestle(Labyrinth):
         for index, val in enumerate(assignment):
             if (index >= len(from_name)):
                 continue
-            elif (b[index][val] == max_cost):
+            elif (val >= len(to_name)):
                 mapping[from_name[index]] = "component" + self._gensym()
             else:
                 mapping[from_name[index]] = to_name[val]
-                
+            #print("match cost: %0.3f" % b[index][val])
+
+            #elif (b[index][val] == max_cost):
+            #    mapping[from_name[index]] = "component" + self._gensym()
+
         return mapping 
 
     def _match(self, instance):
@@ -238,10 +253,14 @@ class Trestle(Labyrinth):
         """
         if self == other:
             return 1.0
-        if self._is_parent(other):
-            return 1.0
-        elif other._is_parent(self):
-            return (1.0 * self.count) / other.count
+        if (self.count >= other.count):
+            if self._is_parent(other):
+                return 1.0
+            else:
+                return 0.0
+        elif (self.count < other.count):
+            if other._is_parent(other):
+                return (1.0 * self.count) / other.count
 
     #def _probability_given(self, other):
     #    """
@@ -472,13 +491,45 @@ class Trestle(Labyrinth):
 
     #def ifit(self, instance):
     #    self._trestle(instance)
+    def predictions(self, filename, length):
+        n = 3 
+        runs = []
+        for i in range(0,n):
+            print("run %i" % i)
+            t = Trestle()
+            runs.append(t.sequential_prediction(filename,
+                                               length))
+            print(json.dumps(t._output_json()))
+            #runs.append(t.sequential_prediction("really_small.json", 10))
+
+        #print(runs)
+        print("MEAN")
+        for i in range(0,len(runs[0])):
+            a = []
+            for r in runs:
+                a.append(r[i])
+            print("%0.2f" % (Trestle()._mean(a)))
+            #print("mean: %0.2f, std: %0.2f" % (Labyrinth()._mean(a),
+            #                                   Labyrinth()._std(a)))
+        print()
+        print("STD")
+        for i in range(0,len(runs[0])):
+            a = []
+            for r in runs:
+                a.append(r[i])
+            print("%0.2f" % (Trestle()._std(a)))
+    
 
 if __name__ == "__main__":
 
+    #print(Trestle().cluster("towers_trestle.json", 15))
     #t = Trestle()
     #t.train_from_json("labyrinth_test.json")
     #t.train_from_json("towers_small_trestle.json")
-    #print(t.sequential_prediction("towers_small_trestle.json", 6))
+
+    #print(Trestle().predictions("towers_small_trestle.json", 15))
+    print(Trestle().cluster("towers_small_trestle.json", 15))
+
     #t.train_from_json("towers_small_trestle-continuous.json")
     #t.train_from_json("towers_trestle.json")
     #t.verify_counts()
@@ -509,17 +560,3 @@ if __name__ == "__main__":
     ##test["Rightstack-2"] = right_stack
     #print(t.predict(test))
 
-    n = 1 
-    runs = []
-    for i in range(0,n):
-        print("run %i" % i)
-        t = Trestle()
-        runs.append(t.sequential_prediction("towers_small_trestle.json", 40))
-
-    print(runs)
-    for i in range(0,len(runs[0])):
-        a = []
-        for r in runs:
-            a.append(r[i])
-        print("mean: %0.2f, std: %0.2f" % (Trestle()._mean(a),
-                                           Trestle()._std(a)))

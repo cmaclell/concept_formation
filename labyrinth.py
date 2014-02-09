@@ -25,6 +25,7 @@ class Labyrinth(Cobweb3Tree):
             if isinstance(instance[attr], dict):
                 temp_instance[attr] = self._labyrinth(instance[attr])
             elif isinstance(instance[attr], list):
+                #pass
                 temp_instance[tuple(instance[attr])] = True
             else:
                 temp_instance[attr] = instance[attr]
@@ -137,8 +138,10 @@ class Labyrinth(Cobweb3Tree):
         for index, val in enumerate(assignment):
             if (index >= len(from_name)):
                 continue
-            elif (b[index][val] == max_cost):
+            elif (val >= len(to_name)):
                 mapping[from_name[index]] = "component" + self._gensym()
+            #elif (b[index][val] == max_cost):
+            #    mapping[from_name[index]] = "component" + self._gensym()
             else:
                 mapping[from_name[index]] = to_name[val]
                 
@@ -254,12 +257,85 @@ class Labyrinth(Cobweb3Tree):
 
     #    return output
 
+    def _cobweb_categorize(self, instance):
+        """
+        Sorts an instance in the categorization tree defined at the current
+        node without modifying the counts of the tree.
+
+        Uses the new and best operations; when new is the best operation it
+        returns the current node otherwise it recurses on the best node. 
+        """
+        instance = self._match(instance)
+        if not self.children:
+            return self
+
+        best1, best2 = self._two_best_children(instance)
+        action_cu, best_action = self._get_best_operation(instance, best1,
+                                                          best2, ["best",
+                                                                  "new"]) 
+        best1_cu, best1 = best1
+
+        if best_action == "new":
+            return self
+        elif best_action == "best":
+            return best1._cobweb_categorize(instance)
+
+    def _cobweb(self, instance):
+        """
+        Incrementally integrates an instance into the categorization tree
+        defined by the current node. This function operates recursively to
+        integrate this instance and uses category utility as the heuristic to
+        make decisions.
+        """
+        instance = self._match(instance)
+        # instead of checking if the instance is the fringe concept, I
+        # check to see if category utility is increased by fringe splitting.
+        # this is more generally and will be used by the Labyrinth/Trestle
+        # systems to achieve more complex fringe behavior. 
+        if not self.children and self._cu_for_fringe_split(instance) <= 0:
+            self._increment_counts(instance)
+            #print(self)
+            return self
+
+        elif not self.children:
+            self._create_child_with_current_counts()
+            self._increment_counts(instance)
+            #print("SPLIT")
+            #print(self)
+            return self._create_new_child(instance)
+            
+        else:
+            #TODO is there a cleaner way to do this?
+            best1, best2 = self._two_best_children(instance)
+            action_cu, best_action = self._get_best_operation(instance, best1,
+                                                              best2)
+            best1_cu, best1 = best1
+            if best2:
+                best2_cu, best2 = best2
+
+            if action_cu == 0.0 or best_action == 'best':
+                self._increment_counts(instance)
+                return best1._cobweb(instance)
+            elif best_action == 'new':
+                self._increment_counts(instance)
+                return self._create_new_child(instance)
+            elif best_action == 'merge':
+                self._increment_counts(instance)
+                new_child = self._merge(best1, best2, instance)
+                return new_child._cobweb(instance)
+            elif best_action == 'split':
+                self._split(best1)
+                return self._cobweb(instance)
+            else:
+                raise Exception("Should never get here.")
+
     def _labyrinth_categorize(self, instance):
         temp_instance = {}
         for attr in instance:
             if isinstance(instance[attr], dict):
                 temp_instance[attr] = self._labyrinth_categorize(instance[attr])
             elif isinstance(instance[attr], list):
+                #pass
                 temp_instance[attr] = tuple(instance[attr])
             else:#COVERTEN
                 temp_instance[attr] = instance[attr]
@@ -477,28 +553,64 @@ class Labyrinth(Cobweb3Tree):
 
         return prediction
 
+    def cluster(self, filename, length):
+        json_data = open(filename, "r")
+        instances = json.load(json_data)
+        json_data.close()
+        instances = instances[0:length]
+        clusters = []
+        for j in range(3):
+            print("run %i" % j)
+            shuffle(instances)
+            for n, i in enumerate(instances):
+                if n >= length:
+                    break
+                self.ifit(i)
+        print(json.dumps(self._output_json()))
+        for n, i in enumerate(instances):
+            concept = self._labyrinth_categorize(i)
+            if len(concept.children) == 0:
+                concept = concept.parent
+            clusters.append(concept.concept_name)
+        return clusters
+
+    def predictions(self, filename, length):
+        n = 3 
+        runs = []
+        for i in range(0,n):
+            print("run %i" % i)
+            t = Labyrinth()
+            runs.append(t.sequential_prediction("towers_small_trestle.json",
+                                               length))
+            print(json.dumps(t._output_json()))
+            #runs.append(t.sequential_prediction("really_small.json", 10))
+
+        #print(runs)
+        print("MEAN")
+        for i in range(0,len(runs[0])):
+            a = []
+            for r in runs:
+                a.append(r[i])
+            print("%0.2f" % (Labyrinth()._mean(a)))
+            #print("mean: %0.2f, std: %0.2f" % (Labyrinth()._mean(a),
+            #                                   Labyrinth()._std(a)))
+        print()
+        print("STD")
+        for i in range(0,len(runs[0])):
+            a = []
+            for r in runs:
+                a.append(r[i])
+            print("%0.2f" % (Labyrinth()._std(a)))
+
+
 
 if __name__ == "__main__":
 
     #t.train_from_json("labyrinth_test.json")
     #t.train_from_json("towers_small_trestle.json")
-    n = 1 
-    runs = []
-    for i in range(0,n):
-        print("run %i" % i)
-        t = Labyrinth()
-        runs.append(t.sequential_prediction("towers_trestle.json",
-                                           2))
-        print(json.dumps(t._output_json()))
-        #runs.append(t.sequential_prediction("really_small.json", 10))
+    print(Labyrinth().cluster("towers_small_trestle.json", 15))
+    #print(Labyrinth().predictions("towers_small_trestle.json", 15))
 
-    print(runs)
-    for i in range(0,len(runs[0])):
-        a = []
-        for r in runs:
-            a.append(r[i])
-        print("mean: %0.2f, std: %0.2f" % (Labyrinth()._mean(a),
-                                           Labyrinth()._std(a)))
 
     #print(t)
 

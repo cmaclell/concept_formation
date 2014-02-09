@@ -227,6 +227,9 @@ class CobwebTree:
         temp._increment_counts(instance)
         temp._create_new_child(instance)
 
+        #print("CU for fringe: %0.2f" % temp._category_utility())
+        #print("EQ 0? %i" % (temp._category_utility() == 0))
+
         return temp._category_utility()
 
     def _cu_for_split(self, best):
@@ -317,18 +320,20 @@ class CobwebTree:
         integrate this instance and uses category utility as the heuristic to
         make decisions.
         """
-
         # instead of checking if the instance is the fringe concept, I
         # check to see if category utility is increased by fringe splitting.
         # this is more generally and will be used by the Labyrinth/Trestle
         # systems to achieve more complex fringe behavior. 
-        if not self.children and self._cu_for_fringe_split(instance) == 0:
+        if not self.children and self._cu_for_fringe_split(instance) <= 0:
             self._increment_counts(instance)
+            #print(self)
             return self
 
         elif not self.children:
             self._create_child_with_current_counts()
             self._increment_counts(instance)
+            #print("SPLIT")
+            #print(self)
             return self._create_new_child(instance)
             
         else:
@@ -550,18 +555,34 @@ class CobwebTree:
         instances = json.load(json_data)
         instances = instances[0:length]
         accuracy = []
-        for j in range(10):
+        for j in range(1):
             shuffle(instances)
             for n, i in enumerate(instances):
                 if n >= length:
                     break
                 accuracy.append(self._flexible_prediction(i))
-                print(self._num_concepts())
+                #print(self._num_concepts())
                 #print(self.root._num_concepts())
                 #print(self.root)
                 self.ifit(i)
         json_data.close()
         return accuracy
+
+    def cluster(self, filename, length):
+        json_data = open(filename, "r")
+        instances = json.load(json_data)
+        json_data.close()
+        instances = instances[0:length]
+        clusters = []
+        for j in range(3):
+            shuffle(instances)
+            for n, i in enumerate(instances):
+                if n >= length:
+                    break
+                self.ifit(i)
+        for n, i in enumerate(instances):
+            clusters.append(self._cobweb_categorize(i).concept_name)
+        return clusters
 
 if __name__ == "__main__":
     t = CobwebTree()
