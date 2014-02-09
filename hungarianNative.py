@@ -5,9 +5,9 @@ def hungarian(costMatrix) :
     map = hun.compute(costMatrix)
     ret = {}
     for tup in map:
-        print tup[0]
+#        print(tup[0])
         ret[tup[0]] = tup[1]
-    print ret
+#    print(ret)
     return ret
 
 if __name__ == '__main__' :
@@ -15,4 +15,4 @@ if __name__ == '__main__' :
               [400, 450, 600],
               [300, 225, 300]]
 
-    print hungarian(matrix)
+    print(hungarian(matrix))

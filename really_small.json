@@ -1,0 +1,56 @@
+[
+{
+"success": "0", "component0": {
+ "type": "plat0", "l": 0, "r": 3, "b": 0 , "t": 1}
+, "component1": {
+ "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
+, "component2": {
+ "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
+, "component3": {
+ "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
+, "component4": {
+ "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
+, "component5": {
+ "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
+, "component6": {
+ "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
+, "component7": {
+ "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
+, "component8": {
+ "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
+, "relation1": [
+ "vertical",
+ "component5",
+ "component6"
+]
+}, 
+{
+"success": "1", "component0": {
+ "type": "plat0", "l": 0, "r": 3, "b": 3 , "t": 4}
+, "component1": {
+ "type": "plat90", "l": 0, "r": 1, "b": 0 , "t": 3}
+, "component2": {
+ "type": "plat90", "l": 2, "r": 3, "b": 0 , "t": 3}
+, "component3": {
+ "type": "space", "l": 0, "r": 1, "b": 4 , "t": 5}
+, "component4": {
+ "type": "space", "l": 1, "r": 2, "b": 0 , "t": 1}
+, "component5": {
+ "type": "space", "l": 1, "r": 2, "b": 1 , "t": 2}
+, "component6": {
+ "type": "space", "l": 1, "r": 2, "b": 2 , "t": 3}
+, "component7": {
+ "type": "ufoo0", "l": 1, "r": 3, "b": 4 , "t": 5}
+, "relation1": [
+ "horizontal",
+ "component3",
+ "component7"
+]
+, "relation2": [
+ "vertical",
+ "component4",
+ "component5"
+]
+}
+]
+

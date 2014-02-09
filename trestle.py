@@ -1,9 +1,89 @@
+#import json
 import math
 import numpy
 import hungarianNative
+#import hungarian # depreciated
 from labyrinth import Labyrinth
 
 class Trestle(Labyrinth):
+
+    def _trestle(self, instance):
+        """
+        Wraps the Labyrinth algorithm and includes context information.
+        """
+        temp_instance = {}
+        for attr in instance:
+            if isinstance(instance[attr], dict):
+                temp_instance[attr] = self._trestle_categorize(instance[attr])
+            elif isinstance(instance[attr], list):
+                temp_instance[attr] = tuple(instance[attr])
+            else:
+                temp_instance[attr] = instance[attr]
+
+        temp_instance = self._match(temp_instance)
+        context = self._cobweb_categorize(temp_instance)
+
+        temp_instance = {}
+        for attr in instance:
+            if isinstance(instance[attr], dict):
+                temp2 = {}
+                for a in instance[attr]:
+                    temp2[a] = instance[attr][a]
+                    temp2['parent_context'] = context
+                temp_instance[attr] = self._trestle(temp2)
+            elif isinstance(instance[attr], list):
+                temp_instance[attr] = tuple(instance[attr])
+            else:
+                temp_instance[attr] = instance[attr]
+
+        #print(temp_instance)
+        temp_instance = self._match(temp_instance)
+        return self._cobweb(temp_instance)
+
+    def _trestle_categorize(self, instance):
+        temp_instance = {}
+        for attr in instance:
+            if isinstance(instance[attr], dict):
+                temp_instance[attr] = self._trestle_categorize(instance[attr])
+            elif isinstance(instance[attr], list):
+                temp_instance[attr] = tuple(instance[attr])
+            else:
+                temp_instance[attr] = instance[attr]
+
+        temp_instance = self._match(temp_instance)
+        context = self._cobweb_categorize(temp_instance)
+
+        temp_instance = {}
+        for attr in instance:
+            if isinstance(instance[attr], dict):
+                temp2 = {}
+                for a in instance[attr]:
+                    temp2[a] = instance[attr][a]
+                    temp2['parent_context'] = context
+                temp_instance[attr] = self._trestle_categorize(temp2)
+            elif isinstance(instance[attr], list):
+                temp_instance[attr] = tuple(instance[attr])
+            else:
+                temp_instance[attr] = instance[attr]
+
+        temp_instance = self._match(temp_instance)
+        return self._cobweb_categorize(temp_instance)
+
+    def _is_parent(self, other_concept):
+        temp = other_concept
+        while temp != None:
+            if temp == self:
+                return True
+            temp = temp.parent
+        return False
+
+    def _common_ancestor(self, other_concept):
+        temp = self
+        while temp != None:
+            if temp._is_parent(other_concept):
+                return temp 
+            temp = temp.parent
+        print("ERROR Concepts not being compared in the same tree")
 
     def _hungarian_match(self, instance):
         from_name = [attr for attr in instance if isinstance(instance[attr],
@@ -21,6 +101,8 @@ class Trestle(Labyrinth):
         
         length = max(len(from_name), len(to_name))
 
+        # some reasonably large constant when dealing with really small
+        # probabilities
         max_cost = 2.0
         
         cost_matrix = []
@@ -35,16 +117,38 @@ class Trestle(Labyrinth):
                     row.append(max_cost)
                     continue
 
-                cost = max_cost
+                reward = 0.0
                 from_val = instance[from_name[row_index]]
                 for val in self.av_counts[to_name[col_index]]:
                     #print((1.0 * self.av_counts[to_name[col_index]][val]) / self.count)
                     #print(from_val._probability_given(val))
 
-                    cost -= (((1.0 * self.av_counts[to_name[col_index]][val]) /
-                                          self.count) *
-                                         from_val._probability_given(val))
-                row.append(cost)
+                    ancestor = from_val._common_ancestor(val)
+                    reward += (((1.0 * self.av_counts[to_name[col_index]][val]) /
+                              self.count) *
+                             from_val._probability_given(ancestor) *
+                             val._probability_given(ancestor))
+                    
+                    # Additional bonus for part of a relational match
+                    for attr in instance:
+                        if not isinstance(attr, tuple):
+                            continue
+                        for attr2 in self.av_counts:
+                            if not isinstance(attr2, tuple):
+                                continue
+                            if len(attr) != len(attr2):
+                                continue
+                            if attr[0] != attr2[0]:
+                                continue
+                            for i in range(1, len(attr)):
+                                if (attr[i] == from_name[row_index] and attr2[i]
+                                    == to_name[col_index]):
+                                    reward += ((1.0 *
+                                                self.av_counts[attr2][True] /
+                                                self.count) * (1.0 /
+                                                               len(attr2)))
+
+                row.append(max_cost - (reward*reward))
                     
             cost_matrix.append(row)
 
@@ -52,10 +156,13 @@ class Trestle(Labyrinth):
 
         # may be able to eliminate this duplicate
         b = numpy.array(cost_matrix)
-        # This is the original code I swapped it out because I couldn't install the hungarian module
-        #assignment = hungarian.lap(a)[0]
+
+        #depreciated c library approach
+        #assignment1 = hungarian.lap(a)[0]
+
         ### substitute hungarian method ####
         assignment = hungarianNative.hungarian(a)
+        
         ### substitute hungarian method ####
         mapping = {}
         
@@ -100,18 +207,22 @@ class Trestle(Labyrinth):
         for c in self.children:
             c._replace(old,new)
 
+    def _get_root(self):
+        if self.parent == None:
+            return self
+        else:
+            return self.parent._get_root()
+
     def _split(self, best):
         """
         Specialized version of split for labyrinth. This removes all references
         to a particular concept from the tree. It replaces these references
         with a reference to the parent concept
         """
-        self.children.remove(best)
-        for child in best.children:
-            self.children.append(child)
+        super(Trestle, self)._split(best)
 
         # replace references to deleted concept with parent concept
-        self.__class__.root._replace(best, self)
+        self._get_root()._replace(best, self)
 
     def _probability_given(self, other):
         """
@@ -120,88 +231,174 @@ class Trestle(Labyrinth):
         """
         if self == other:
             return 1.0
-        elif len(other.children) == 0:
+        elif self.parent == None:
             return 0.0
 
-        probs = [((child.count / (other.count * 1.0)) *
-                 self._probability_given(child)) for child in other.children]
+        prob = ((self.count / (self.parent.count * 1.0)) *
+                self.parent._probability_given(other))
         
-        return max(probs)
+        if(prob > 1.0):
+            print(prob)
+            print(self)
+            print(self.parent)
+        assert(prob <= 1.0)
+        
+
+        return prob
+
+    # TODO I don't think I need to predict the relational attributes?
+    #def _prob_attr_value(self, instance, attr, val):
+    #    concept = self._labyrinth_categorize(instance)
+
+    #    if isinstance(val, list):
+    #        temp_instance = {}
+
+    #        for attr in instance:
+    #            if isinstance(instance[attr], dict):
+    #                temp_instance[attr] = self._labyrinth(instance[attr])
+    #            elif isinstance(instance[attr], list):
+    #                temp_instance[tuple(instance[attr])] = True
+    #            else:
+    #                temp_instance[attr] = instance[attr]
+
+    #        mapping = self._hungarian_match(temp_instance)
+    #        #print(mapping)
+
+    #        new_val = []
+    #        for i in range(len(val)):
+    #            if i == 0:
+    #                new_val.append(val[i])
+    #                continue
+    #            if val[i] in mapping:
+    #                new_val.append(mapping[val[i]])
+    #            else:
+    #                new_val.append(val[i])
+    #        attr = tuple(new_val)
+    #        val = True
+    #        print(attr)
+    #        print(concept)
+    #        #print(concept._get_probability(attr,val))
+    #        return concept._get_probability(attr, val)
+
+    #    return concept._get_probability(attr, val)
+
+    def _get_probability(self, attr, val):
+        if attr not in self.av_counts:
+            return 0.0
+
+        if isinstance(val, Trestle):
+            prob = 0.0
+            for val2 in self.av_counts[attr]:
+                if isinstance(val2, Trestle):
+                    ancestor = val._common_ancestor(val2)
+
+                    prob += (((1.0 * self.av_counts[attr][val2]) /
+                              self.count) *
+                             val._probability_given(ancestor) *
+                             val2._probability_given(ancestor))
+            return prob
+
+        if isinstance(val, float):
+            # acuity the smallest allowed standard deviation; default = 1.0 
+            acuity = 1.0
+            float_values = []
+
+            for fv in self.av_counts[attr]:
+                if isinstance(fv, float):
+                    float_values += [fv] * self.av_counts[attr][fv]
+
+            if len(float_values) == 0:
+                return 0.0
+
+            mean = self._mean(float_values)
+            std = self._std(float_values)
+            if std < acuity:
+                std = acuity
+
+            point = abs((val - mean) / (std))
+            return (1.0 - math.erf(point / math.sqrt(2)))#/2.0
+
+        if val in self.av_counts[attr]:
+            return (1.0 * self.av_counts[attr][val]) / self.count
+
+        return 0.0
 
     def _probability_instance(self, instance):
         """
         Returns the probability of the instance's attribute values given
         the current concept.
         """
-        prob = 0.0
+        prob = 1.0
         for attr in instance:
-            prob += self._probability_attribute_value(attr, instance[attr])
+            prob *= self._get_probability(attr, instance[attr])
         return prob
 
-    def _probability_attribute_value(self, attr, val):
-        """
-        Returns the probability of a given attribute value pair in the current
-        concept (self).
-        """
-        if attr not in self.av_counts:
-            return 0.0
+    #def _prob_attribute_value(self, attr, val):
+    #    """
+    #    Returns the probability of a given attribute value pair in the current
+    #    concept (self).
 
-        if isinstance(val, float):
-            float_values = []
-            for v in self.av_counts[attr]:
-                if isinstance(v, float):
-                    float_values.append(v)
-                
-            # handle the float values
-            if len(float_values) == 0:
-                return 0.0
-            mean = self._mean(float_values)
-            std = self._std(float_values)
+    #    NOTE: not used in category utility... just for prediction error.
+    #    """
+    #    if attr not in self.av_counts:
+    #        return 0.0
 
-            # return the probability that the point (or a point further from
-            # the mean) would be generated given the mean and std
-            point = math.abs((val - mean) / (std))
-            return (1.0 - math.erf(point / math.sqrt(2)))/2.0
+    #    if isinstance(val, float):
+    #        float_values = []
+    #        for v in self.av_counts[attr]:
+    #            if isinstance(v, float):
+    #                float_values.append(v)
+    #            
+    #        # handle the float values
+    #        if len(float_values) == 0:
+    #            return 0.0
+    #        mean = self._mean(float_values)
+    #        std = self._std(float_values)
 
-        elif isinstance(val, Trestle):
-            for v in self.av_counts[attr]:
-                prob = 0.0
-                if isinstance(v, Trestle):
-                    prob += (((1.0 * self.av_counts[attr][v]) / self.count) *
-                             val._probability_given(v))
-            return prob
+    #        # return the probability that the point (or a point further from
+    #        # the mean) would be generated given the mean and std
+    #        point = abs((val - mean) / (std))
+    #        return (1.0 - math.erf(point / math.sqrt(2)))/2.0
 
-        else:
-            if val not in self.av_counts[attr]:
-                return 0.0
-            return (1.0 * self.av_counts[attr][val]) / self.count
+    #    elif isinstance(val, Trestle):
+    #        for v in self.av_counts[attr]:
+    #            prob = 0.0
+    #            if isinstance(v, Trestle):
+    #                prob += (((1.0 * self.av_counts[attr][v]) / self.count) *
+    #                         val._probability_given(v))
+    #        return prob
 
-    def _cobweb_categorize(self, instance):
-        """
-        Sorts an instance in the categorization tree defined at the current
-        node without modifying the counts of the tree.
+    #    else:
+    #        if val not in self.av_counts[attr]:
+    #            return 0.0
+    #        return (1.0 * self.av_counts[attr][val]) / self.count
 
-        Uses the new and best operations; when new is the best operation it
-        returns the current node otherwise it recurses on the best node. 
-        """
-        if not self.children:
-            return self
+    #def _cobweb_categorize(self, instance):
+    #    """
+    #    Sorts an instance in the categorization tree defined at the current
+    #    node without modifying the counts of the tree.
 
-        best1, best2 = self._two_best_children(instance)
-        action_cu, best_action = self._get_best_operation(instance, best1,
-                                                          best2, ["best",
-                                                                  "new"]) 
-        best1_cu, best1 = best1
+    #    Uses the new and best operations; when new is the best operation it
+    #    returns the current node otherwise it recurses on the best node. 
+    #    """
+    #    if not self.children:
+    #        return self
 
-        if best_action == "new":
-            return self
-        elif best_action == "best":
-            # Only recurse if we increase the probability in the best.
-            if (best1._probability_instance(instance) >
-                self._probability_instance(instance)):
-                return best1._cobweb_categorize(instance)
-            
-            return self
+    #    best1, best2 = self._two_best_children(instance)
+    #    action_cu, best_action = self._get_best_operation(instance, best1,
+    #                                                      best2, ["best",
+    #                                                              "new"]) 
+    #    best1_cu, best1 = best1
+
+    #    if best_action == "new":
+    #        return self
+    #    elif best_action == "best":
+    #        # Only recurse if we increase the probability in the best.
+    #        if (best1._probability_instance(instance) >
+    #            self._probability_instance(instance)):
+    #            return best1._cobweb_categorize(instance)
+    #        
+    #        return self
 
     def _expected_correct_guesses(self):
         """
@@ -219,15 +416,19 @@ class Trestle(Labyrinth):
                 if isinstance(val, float):
                     float_values += [val] * int(self.av_counts[attr][val])
                 else:
-                    if isinstance(val, Labyrinth):
+                    if isinstance(val, Trestle):
                         prob = 0.0
                         for val2 in self.av_counts[attr]:
-                            if isinstance(val2, Labyrinth):
+                            if isinstance(val2, Trestle):
+                                ancestor = val._common_ancestor(val2)
+
                                 prob += (((1.0 * self.av_counts[attr][val2]) /
                                           self.count) *
-                                         val._probability_given(val2))
+                                         val._probability_given(ancestor) *
+                                         val2._probability_given(ancestor))
                     else:
                         prob = ((1.0 * self.av_counts[attr][val]) / self.count)
+                    #prob = ((1.0 * self.av_counts[attr][val]) / self.count)
                     correct_guesses += (prob * prob)
 
             # handle the float values
@@ -240,36 +441,60 @@ class Trestle(Labyrinth):
 
         return correct_guesses
 
+    #def _prob_attr_value(self, instance, attr, val):
+    #    concept = self._trestle_categorize(instance)
+    #    return concept._get_probability(attr, val)
+
+    #def ifit(self, instance):
+    #    self._trestle(instance)
+
 if __name__ == "__main__":
 
-    t = Trestle()
-    t.train_from_json("labyrinth_test.json")
+    #t = Trestle()
+    #t.train_from_json("labyrinth_test.json")
+    #t.train_from_json("towers_small_trestle.json")
+    #print(t.sequential_prediction("towers_small_trestle.json", 6))
+    #t.train_from_json("towers_small_trestle-continuous.json")
     #t.train_from_json("towers_trestle.json")
-    t.verify_counts()
-    print(t)
-    
-    print("Predicting")
+    #t.verify_counts()
+    ##print(json.dumps(t._output_json()))
+    #
+    ##print("Predicting")
+    ##
+    #test = {}
+    ##right_stack = {}
+    ##comp1 = {}
+    ##comp1["color"] = "blue"
+    ##comp1["shape"] = "odd"
+    ##comp2 = {}
+    ##comp2["color"] = "red"
+    ##comp2["shape"] = "circular"
+    ##comp3 = {}
+    ###comp3["color"] = "grey"
+    ##comp3["shape"] = "square"
+    ##relation1 = ["left-of", "component1", "component2"]
+    ##relation2 = ["left-of", "component1", "component3"]
+    ##relation3 = ["on", "component3", "component2"]
+    ##right_stack["component1"] = comp1 
+    ##right_stack["component2"] = comp2 
+    ##right_stack["component3"] = comp3 
+    ##right_stack["relation1"] = relation1 
+    ##right_stack["relation2"] = relation2 
+    ##right_stack["relation3"] = relation3 
+    ##test["Rightstack-2"] = right_stack
+    #print(t.predict(test))
 
-    test = {}
-    right_stack = {}
-    comp1 = {}
-    comp1["color"] = "blue"
-    comp1["shape"] = "odd"
-    comp2 = {}
-    comp2["color"] = "red"
-    comp2["shape"] = "circular"
-    comp3 = {}
-    #comp3["color"] = "grey"
-    comp3["shape"] = "square"
-    relation1 = ["left-of", "component1", "component2"]
-    relation2 = ["left-of", "component1", "component3"]
-    relation3 = ["on", "component3", "component2"]
-    right_stack["component1"] = comp1 
-    right_stack["component2"] = comp2 
-    right_stack["component3"] = comp3 
-    right_stack["relation1"] = relation1 
-    right_stack["relation2"] = relation2 
-    right_stack["relation3"] = relation3 
-    test["Rightstack-2"] = right_stack
-    print(t.predict(test))
+    n = 1 
+    runs = []
+    for i in range(0,n):
+        print("run %i" % i)
+        t = Trestle()
+        runs.append(t.sequential_prediction("towers_small_trestle.json", 40))
 
+    print(runs)
+    for i in range(0,len(runs[0])):
+        a = []
+        for r in runs:
+            a.append(r[i])
+        print("mean: %0.2f, std: %0.2f" % (Trestle()._mean(a),
+                                           Trestle()._std(a)))
