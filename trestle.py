@@ -77,13 +77,14 @@ class Trestle(Labyrinth):
             temp = temp.parent
         return False
 
-    def _common_ancestor(self, other_concept):
-        temp = self
-        while temp != None:
-            if temp._is_parent(other_concept):
-                return temp 
-            temp = temp.parent
-        print("ERROR Concepts not being compared in the same tree")
+    # DEPRECIATED
+    #def _common_ancestor(self, other_concept):
+    #    temp = self
+    #    while temp != None:
+    #        if temp._is_parent(other_concept):
+    #            return temp 
+    #        temp = temp.parent
+    #    print("ERROR Concepts not being compared in the same tree")
 
     def _hungarian_match(self, instance):
         from_name = [attr for attr in instance if isinstance(instance[attr],
@@ -123,11 +124,15 @@ class Trestle(Labyrinth):
                     #print((1.0 * self.av_counts[to_name[col_index]][val]) / self.count)
                     #print(from_val._probability_given(val))
 
-                    ancestor = from_val._common_ancestor(val)
+
                     reward += (((1.0 * self.av_counts[to_name[col_index]][val]) /
                               self.count) *
-                             from_val._probability_given(ancestor) *
-                             val._probability_given(ancestor))
+                             from_val._probability_given(val))
+                    #ancestor = from_val._common_ancestor(val)
+                    #reward += (((1.0 * self.av_counts[to_name[col_index]][val]) /
+                    #          self.count) *
+                    #         from_val._probability_given(ancestor) *
+                    #         val._probability_given(ancestor))
                     
                     # Additional bonus for part of a relational match
                     for attr in instance:
@@ -226,25 +231,38 @@ class Trestle(Labyrinth):
 
     def _probability_given(self, other):
         """
-        The probability that the current node would be reached from another
-        provided node.
+        The probability of the current node given we are at the other node. If
+        self is a parent of other, then there is 100% prob. if other is a
+        parent, than we need to compute the likelihood that it would be the
+        current node. 
         """
         if self == other:
             return 1.0
-        elif self.parent == None:
-            return 0.0
+        if self._is_parent(other):
+            return 1.0
+        elif other._is_parent(self):
+            return (1.0 * self.count) / other.count
 
-        prob = ((self.count / (self.parent.count * 1.0)) *
-                self.parent._probability_given(other))
-        
-        if(prob > 1.0):
-            print(prob)
-            print(self)
-            print(self.parent)
-        assert(prob <= 1.0)
-        
+    #def _probability_given(self, other):
+    #    """
+    #    The probability that the current node would be reached from another
+    #    provided node.
+    #    """
+    #    if self == other:
+    #        return 1.0
+    #    elif self.parent == None:
+    #        return 0.0
 
-        return prob
+    #    prob = ((self.count / (self.parent.count * 1.0)) *
+    #            self.parent._probability_given(other))
+    #    
+    #    if(prob > 1.0):
+    #        print(prob)
+    #        print(self)
+    #        print(self.parent)
+    #    assert(prob <= 1.0)
+    #    
+    #    return prob
 
     # TODO I don't think I need to predict the relational attributes?
     #def _prob_attr_value(self, instance, attr, val):
@@ -290,12 +308,16 @@ class Trestle(Labyrinth):
             prob = 0.0
             for val2 in self.av_counts[attr]:
                 if isinstance(val2, Trestle):
-                    ancestor = val._common_ancestor(val2)
 
                     prob += (((1.0 * self.av_counts[attr][val2]) /
                               self.count) *
-                             val._probability_given(ancestor) *
-                             val2._probability_given(ancestor))
+                             val._probability_given(val2))
+                    #ancestor = val._common_ancestor(val2)
+
+                    #prob += (((1.0 * self.av_counts[attr][val2]) /
+                    #          self.count) *
+                    #         val._probability_given(ancestor) *
+                    #         val2._probability_given(ancestor))
             return prob
 
         if isinstance(val, float):
@@ -420,12 +442,15 @@ class Trestle(Labyrinth):
                         prob = 0.0
                         for val2 in self.av_counts[attr]:
                             if isinstance(val2, Trestle):
-                                ancestor = val._common_ancestor(val2)
-
                                 prob += (((1.0 * self.av_counts[attr][val2]) /
                                           self.count) *
-                                         val._probability_given(ancestor) *
-                                         val2._probability_given(ancestor))
+                                         val._probability_given(val2))
+                                #ancestor = val._common_ancestor(val2)
+
+                                #prob += (((1.0 * self.av_counts[attr][val2]) /
+                                #          self.count) *
+                                #         val._probability_given(ancestor) *
+                                #         val2._probability_given(ancestor))
                     else:
                         prob = ((1.0 * self.av_counts[attr][val]) / self.count)
                     #prob = ((1.0 * self.av_counts[attr][val]) / self.count)

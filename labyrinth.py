@@ -488,7 +488,7 @@ if __name__ == "__main__":
         print("run %i" % i)
         t = Labyrinth()
         runs.append(t.sequential_prediction("towers_trestle.json",
-                                           30))
+                                           2))
         print(json.dumps(t._output_json()))
         #runs.append(t.sequential_prediction("really_small.json", 10))
 

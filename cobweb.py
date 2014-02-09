@@ -227,9 +227,6 @@ class CobwebTree:
         temp._increment_counts(instance)
         temp._create_new_child(instance)
 
-        print(temp._category_utility())
-        print(temp)
-
         return temp._category_utility()
 
     def _cu_for_split(self, best):
@@ -553,7 +550,7 @@ class CobwebTree:
         instances = json.load(json_data)
         instances = instances[0:length]
         accuracy = []
-        for j in range(5):
+        for j in range(10):
             shuffle(instances)
             for n, i in enumerate(instances):
                 if n >= length:
