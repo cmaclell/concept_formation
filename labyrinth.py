@@ -80,6 +80,12 @@ class Labyrinth(Cobweb3Tree):
         return temp_instance
 
     def _hungarian_match(self, instance):
+        """
+        Compute the greedy match between the instance and the current concept.
+        This algorithm is O(n^3) and will return the optimal match if there are
+        no relations. However, when there are relations, then it is only
+        computing the best greedy match (no longer optimal). 
+        """
         from_name = [attr for attr in instance if isinstance(instance[attr],
                                                              Labyrinth)]
         to_name = []
@@ -208,10 +214,11 @@ class Labyrinth(Cobweb3Tree):
         temp_instance = self._rename(instance, mapping)
         return temp_instance
 
-    #def _cobweb(self, instance):
-    #    super(Labyrinth, self)._cobweb(instance)
-
     def _output_json(self):
+        """
+        A modification of output_json from cobweb and cobweb3 to handle
+        component values.
+        """
         output = {}
         output['name'] = self.concept_name
         output['size'] = self.count
@@ -233,7 +240,7 @@ class Labyrinth(Cobweb3Tree):
                 mean = attr + "_mean = %0.2f (%0.2f)" % (self._mean(float_vals),
                                                 self._std(float_vals))
                 temp[mean] = len(float_vals)
-
+                
         for child in self.children:
             output['children'].append(child._output_json())
 
@@ -242,14 +249,17 @@ class Labyrinth(Cobweb3Tree):
         return output
 
     def _labyrinth_categorize(self, instance):
+        """
+        The labyrinth categorize function, this labyrinth categorizes all the
+        sub-components before categorizing itself.
+        """
         temp_instance = {}
         for attr in instance:
             if isinstance(instance[attr], dict):
                 temp_instance[attr] = self._labyrinth_categorize(instance[attr])
             elif isinstance(instance[attr], list):
-                #pass
                 temp_instance[attr] = tuple(instance[attr])
-            else:#COVERTEN
+            else:
                 temp_instance[attr] = instance[attr]
 
         # should be able to match just at the root, if the matchings change
@@ -260,11 +270,14 @@ class Labyrinth(Cobweb3Tree):
         return self._cobweb_categorize(temp_instance)
 
     def ifit(self, instance):
+        """
+        A modification of ifit to call labyrinth instead.
+        """
         self._labyrinth(instance)
 
     def _pretty_print(self, depth=0):
         """
-        Prints the categorization tree.
+        Prints the categorization tree. Modified for component values.
         """
         tabs = "\t" * depth
         if self.parent:
@@ -305,44 +318,21 @@ class Labyrinth(Cobweb3Tree):
 
         return ret
 
-    def _get_probability(self, attr, val):
-        if attr not in self.av_counts:
-            return 0.0
-
-        if isinstance(val, Labyrinth):
-            raise Exception("can't get probability of component value.")
-
-        if isinstance(val, float):
-            # acuity the smallest allowed standard deviation; default = 1.0 
-            acuity = 1.0
-            float_values = []
-
-            for fv in self.av_counts[attr]:
-                if isinstance(fv, float):
-                    float_values += [fv] * self.av_counts[attr][fv]
-
-            if len(float_values) == 0:
-                return 0.0
-
-            mean = self._mean(float_values)
-            std = self._std(float_values)
-            if std < acuity:
-                std = acuity
-
-            point = abs((val - mean) / (std))
-            #print(point)
-            return (1.0 - math.erf(point / math.sqrt(2)))#/2.0
-        
-        if val in self.av_counts[attr]:
-            return (1.0 * self.av_counts[attr][val]) / self.count
-
-        return 0.0
-
     def _concept_attr_value(self, instance, attr, val):
+        """
+        A modification to call labyrinth categorize instead of cobweb
+        categorize.
+        """
         concept = self._labyrinth_categorize(instance)
         return concept._get_probability(attr, val)
 
     def _flexible_prediction(self, instance, guessing=False):
+        """
+        A modification of flexible prediction to handle component values.
+        The flexible prediction task is called on all subcomponents. To compute
+        the accuracy for each subcomponent.
+        """
+        
         probs = []
         for attr in instance:
             #TODO add support for relational attribute values 
@@ -368,7 +358,7 @@ class Labyrinth(Cobweb3Tree):
     def predict(self, instance):
         """
         Given an instance predict any missing attribute values without
-        modifying the tree.
+        modifying the tree. A modification for component values.
         """
         prediction = {}
 
@@ -380,9 +370,9 @@ class Labyrinth(Cobweb3Tree):
             else:
                 prediction[attr] = instance[attr]
 
-        prediction = self._match(prediction)
         concept = self._labyrinth_categorize(prediction)
         #print(concept)
+        #print(self)
         
         for attr in concept.av_counts:
             if attr in prediction:
@@ -422,11 +412,44 @@ class Labyrinth(Cobweb3Tree):
 
         return prediction
 
+    def cluster(self, filename, length):
+        """
+        Used to provide a clustering of a set of examples provided in a JSON
+        file. It starts by incorporating the examples into the categorization
+        tree multiple times. After incorporating the instances it then
+        categorizes each example (without updating the tree) and returns the
+        concept it was assoicated with.
+        """
+        json_data = open(filename, "r")
+        instances = json.load(json_data)
+        o_instances = instances.copy()
+        json_data.close()
+        instances = instances[0:length]
+        clusters = []
+        diff = 1
+        while diff > 0:
+        #for j in range(iterations):
+            before = self._num_concepts()
+            shuffle(instances)
+            for n, i in enumerate(instances):
+                if n >= length:
+                    break
+                self.ifit(i)
+            print(self._num_concepts())
+            diff = abs(before - self._num_concepts())
+        for n, i in enumerate(o_instances):
+            clusters.append(self._labyrinth_categorize(i).concept_name)
+        return clusters
+
 if __name__ == "__main__":
 
-    #print(Labyrinth().cluster("towers_small_trestle.json", 15))
-    Labyrinth().predictions("towers_small_trestle.json", 10, 1)
-    Labyrinth().baseline_guesser("towers_small_trestle.json", 10, 1)
+    print(Labyrinth().cluster("towers_small_trestle.json", 15))
+    #Labyrinth().predictions("towers_small_trestle.json", 10, 5)
+    #Labyrinth().baseline_guesser("towers_small_trestle.json", 10, 1)
+
+    #t = Labyrinth()
+    #t.sequential_prediction("towers_small_trestle.json", 10)
+    #print(t.predict({"success": "1"}))
 
 
 

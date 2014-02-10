@@ -1,14 +1,14 @@
 import math
-import json
 from random import normalvariate
 from random import choice
 from random import random
-from random import shuffle
 from cobweb import CobwebTree
 
 class Cobweb3Tree(CobwebTree):
 
-    acuity = 1.0
+    # no longer used for creating clusters, just for predictive accuracy
+    # computations. 
+    acuity = 1 
 
     def _expected_correct_guesses(self):
         """
@@ -36,10 +36,18 @@ class Cobweb3Tree(CobwebTree):
 
             std = self._std(float_values)
 
-            if std < self.acuity:
-                std = self.acuity
+            if std == 0.0:
+                # TODO  if everything is the same then treat it as a nominal?
+                prob = ((1.0 * self.av_counts[attr][val]) / self.count)
+                correct_guesses += (prob * prob)
+            else:
+                correct_guesses += (1.0 / (2.0 * math.sqrt(math.pi) * std))
 
-            correct_guesses += (1.0 / (2.0 * math.sqrt(math.pi) * std))
+            # overwritten - this is an improvement.
+            #if std < self.acuity:
+            #    std = self.acuity
+            #correct_guesses += (1.0 / (2.0 * math.sqrt(math.pi) * std))
+
 
         return correct_guesses
          
@@ -121,8 +129,6 @@ class Cobweb3Tree(CobwebTree):
             return 0.0
 
         if isinstance(val, float):
-            # acuity the smallest allowed standard deviation; default = 1.0 
-            #acuity = 1.0
             float_values = []
 
             for val in self.av_counts[attr]:
@@ -134,11 +140,17 @@ class Cobweb3Tree(CobwebTree):
 
             mean = self._mean(float_values)
             std = self._std(float_values)
+            #if std == 0.0:
+            #    if val in self.av_counts[attr]:
+            #        return (1.0 * self.av_counts[attr][val]) / self.count
+            #else:
+            #    point = abs((val - mean) / (std))
+            #    return (1.0 - math.erf(point / math.sqrt(2)))#/2.0
+
+            #if std == 0.0:
             if std < self.acuity:
                 std = self.acuity
-
             point = abs((val - mean) / (std))
-            #print(point)
             return (1.0 - math.erf(point / math.sqrt(2)))#/2.0
         
         if val in self.av_counts[attr]:
@@ -147,6 +159,9 @@ class Cobweb3Tree(CobwebTree):
         return 0.0
 
     def _output_json(self):
+        """
+        A modification of the cobweb output json to handle numeric values.
+        """
         output = {}
         output['name'] = self.concept_name
         output['size'] = self.count
@@ -174,8 +189,8 @@ class Cobweb3Tree(CobwebTree):
 
 if __name__ == "__main__":
 
-    Cobweb3Tree().predictions("cobweb3_test.json", 10, 100)
-    Cobweb3Tree().baseline_guesser("cobweb3_test.json", 10, 100)
+    Cobweb3Tree().predictions("cobweb3_test.json", 30, 100)
+    #Cobweb3Tree().baseline_guesser("cobweb3_test.json", 10, 100)
     #print(Cobweb3Tree().cluster("cobweb3_test.json", 10, 1))
 
 

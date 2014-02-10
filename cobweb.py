@@ -375,8 +375,7 @@ class CobwebTree:
         Sorts an instance in the categorization tree defined at the current
         node without modifying the counts of the tree.
 
-        Uses the new and best operations; when new is the best operation it
-        returns the current node otherwise it iterates on the best node. 
+        This version always goes to a leaf.
         """
         current = self
         while current:
@@ -384,16 +383,33 @@ class CobwebTree:
                 return current
 
             best1, best2 = current._two_best_children(instance)
-            action_cu, best_action = current._get_best_operation(instance,
-                                                                 best1, best2,
-                                                                 ["best",
-                                                                  "new"]) 
             best1_cu, best1 = best1
+            current = best1
 
-            if best_action == "new":
-                return current
-            elif best_action == "best":
-                current = best1
+    #def _cobweb_categorize(self, instance):
+    #    """
+    #    Sorts an instance in the categorization tree defined at the current
+    #    node without modifying the counts of the tree.
+
+    #    Uses the new and best operations; when new is the best operation it
+    #    returns the current node otherwise it iterates on the best node. 
+    #    """
+    #    current = self
+    #    while current:
+    #        if not current.children:
+    #            return current
+
+    #        best1, best2 = current._two_best_children(instance)
+    #        action_cu, best_action = current._get_best_operation(instance,
+    #                                                             best1, best2,
+    #                                                             ["best",
+    #                                                              "new"]) 
+    #        best1_cu, best1 = best1
+
+    #        if best_action == "new":
+    #            return current
+    #        elif best_action == "best":
+    #            current = best1
 
     def _expected_correct_guesses(self):
         """
@@ -582,7 +598,7 @@ class CobwebTree:
         json_data.close()
         return accuracy, nodes
 
-    def cluster(self, filename, length, iterations):
+    def cluster(self, filename, length, iterations=1):
         """
         Used to provide a clustering of a set of examples provided in a JSON
         file. It starts by incorporating the examples into the categorization
@@ -601,6 +617,7 @@ class CobwebTree:
                 if n >= length:
                     break
                 self.ifit(i)
+            print(self._num_concepts())
         for n, i in enumerate(instances):
             clusters.append(self._cobweb_categorize(i).concept_name)
         return clusters
