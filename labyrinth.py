@@ -504,12 +504,12 @@ class Labyrinth(Cobweb3Tree):
         return clusters
 
     def predictions(self, filename, length):
-        n = 3 
+        n = 1 
         runs = []
         for i in range(0,n):
             print("run %i" % i)
             t = Labyrinth()
-            runs.append(t.sequential_prediction("towers_small_trestle.json",
+            runs.append(t.sequential_prediction(filename,
                                                length))
             print(json.dumps(t._output_json()))
             #runs.append(t.sequential_prediction("really_small.json", 10))
@@ -537,8 +537,8 @@ if __name__ == "__main__":
 
     #t.train_from_json("labyrinth_test.json")
     #t.train_from_json("towers_small_trestle.json")
-    print(Labyrinth().cluster("towers_small_trestle.json", 15))
-    #print(Labyrinth().predictions("towers_small_trestle.json", 15))
+    #print(Labyrinth().cluster("towers_small_trestle.json", 15))
+    print(Labyrinth().predictions("towers_small_trestle.json", 15))
 
 
     #print(t)

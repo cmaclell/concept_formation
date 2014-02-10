@@ -463,7 +463,8 @@ class Trestle(Labyrinth):
                             if isinstance(val2, Trestle):
                                 prob += (((1.0 * self.av_counts[attr][val2]) /
                                           self.count) *
-                                         val._probability_given(val2))
+                                         val._probability_given(val2) *
+                                         val2._probability_given(val))
                                 #ancestor = val._common_ancestor(val2)
 
                                 #prob += (((1.0 * self.av_counts[attr][val2]) /
@@ -492,14 +493,14 @@ class Trestle(Labyrinth):
     #def ifit(self, instance):
     #    self._trestle(instance)
     def predictions(self, filename, length):
-        n = 3 
+        n = 10 
         runs = []
         for i in range(0,n):
             print("run %i" % i)
             t = Trestle()
             runs.append(t.sequential_prediction(filename,
                                                length))
-            print(json.dumps(t._output_json()))
+            #print(json.dumps(t._output_json()))
             #runs.append(t.sequential_prediction("really_small.json", 10))
 
         #print(runs)
@@ -527,8 +528,8 @@ if __name__ == "__main__":
     #t.train_from_json("labyrinth_test.json")
     #t.train_from_json("towers_small_trestle.json")
 
-    #print(Trestle().predictions("towers_small_trestle.json", 15))
-    print(Trestle().cluster("towers_small_trestle.json", 15))
+    print(Trestle().predictions("towers_small_trestle.json", 15))
+    #print(Trestle().cluster("towers_small_trestle.json", 15))
 
     #t.train_from_json("towers_small_trestle-continuous.json")
     #t.train_from_json("towers_trestle.json")

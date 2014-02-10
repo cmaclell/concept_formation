@@ -21,7 +21,7 @@ class Cobweb3Tree(CobwebTree):
         numeric attribute values.
         """
         # acuity the smallest allowed standard deviation; default = 1.0 
-        acuity = 1.0
+        acuity = 1.0 
         correct_guesses = 0.0
 
         for attr in self.av_counts:

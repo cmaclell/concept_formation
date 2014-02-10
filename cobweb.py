@@ -316,7 +316,7 @@ class CobwebTree:
     def _cobweb(self, instance):
         """
         Incrementally integrates an instance into the categorization tree
-        defined by the current node. This function operates recursively to
+        defined by the current node. This function operates iteratively to
         integrate this instance and uses category utility as the heuristic to
         make decisions.
         """
@@ -329,7 +329,7 @@ class CobwebTree:
             # systems to achieve more complex fringe behavior. 
             if not current.children and current._cu_for_fringe_split(instance) <= 0:
                 current._increment_counts(instance)
-                #print(self)
+                #print(current)
                 return current 
 
             elif not current.children:
@@ -349,7 +349,9 @@ class CobwebTree:
                 if best2:
                     best2_cu, best2 = best2
 
-                if action_cu == 0.0 or best_action == 'best':
+                if action_cu < 0.0:
+                    print("BELOW 0!")
+                if action_cu <= 0.0 or best_action == 'best':
                     current._increment_counts(instance)
                     current = best1
                     #return best1._cobweb(instance)
@@ -391,7 +393,6 @@ class CobwebTree:
 
         # pick the best operation
         operations.sort(reverse=True)
-        print(operations)
 
         return operations[0]
         
@@ -585,7 +586,7 @@ class CobwebTree:
         json_data = open(filename, "r")
         instances = json.load(json_data)
         json_data.close()
-        instances = instances[0:length]
+        #instances = instances[0:length]
         clusters = []
         for j in range(3):
             shuffle(instances)
