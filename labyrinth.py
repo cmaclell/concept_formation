@@ -96,8 +96,9 @@ class Labyrinth(Cobweb3Tree):
         length = max(len(from_name), len(to_name))
 
         # some reasonably large constant when dealing with really small
-        # probabilities
-        max_cost = 2.0
+        # probabilities + bonuses for relations, which mean a given match may
+        # be greater than 1.0.
+        max_cost = 1000.0
         
         cost_matrix = []
         for row_index in range(length):
@@ -117,31 +118,38 @@ class Labyrinth(Cobweb3Tree):
                     reward = (((1.0 * self.av_counts[to_name[col_index]][from_val]) /
                               self.count))
 
+                    # Additional bonus for part of a relational match
+                    for attr in instance:
+                        if not isinstance(attr, tuple):
+                            continue
+                        for attr2 in self.av_counts:
+                            if not isinstance(attr2, tuple):
+                                continue
+                            if len(attr) != len(attr2):
+                                continue
+                            if attr[0] != attr2[0]:
+                                continue
+                            for i in range(1, len(attr)):
+                                if (attr[i] == from_name[row_index] and attr2[i]
+                                    == to_name[col_index]):
+                                    reward += ((1.0 *
+                                                self.av_counts[attr2][True] /
+                                                self.count) * (1.0 /
+                                                               len(attr2)))
                 row.append(max_cost - (reward*reward))
                     
             cost_matrix.append(row)
 
+        # Note: "a" is modified by hungarian.
         a = numpy.array(cost_matrix)
-
-        # may be able to eliminate this duplicate
-        b = numpy.array(cost_matrix)
-
-        #depreciated c library approach
-        #assignment1 = hungarian.lap(a)[0]
-
-        ### substitute hungarian method ####
         assignment = hungarianNative.hungarian(a)
-        
-        ### substitute hungarian method ####
+
         mapping = {}
-        
         for index, val in enumerate(assignment):
             if (index >= len(from_name)):
                 continue
             elif (val >= len(to_name)):
                 mapping[from_name[index]] = "component" + self._gensym()
-            #elif (b[index][val] == max_cost):
-            #    mapping[from_name[index]] = "component" + self._gensym()
             else:
                 mapping[from_name[index]] = to_name[val]
                 
@@ -232,31 +240,6 @@ class Labyrinth(Cobweb3Tree):
         output['counts'] = temp
 
         return output
-
-    #def _output_json(self):
-    #    output = {}
-    #    output['name'] = self.concept_name
-    #    output['size'] = self.count
-    #    for attr in self.av_counts:
-    #        name = attr
-    #        if isinstance(name, tuple):
-    #           name = "(" + " ".join(name) + ")"
-    #        for value in self.av_counts[attr]:
-    #            vname = value
-    #            if isinstance(vname, Labyrinth):
-    #                vname = vname.concept_name
-    #            output[name] = str(vname) #+ "(" + str(self.av_counts[attr][value]) + ")"
-    #    if len(self.children) > 0:
-    #        output['children'] = []
-    #        for child in self.children:
-    #            output['children'].append(child._output_json())
-    #    else:
-    #        if 'guid' in self.av_counts:
-    #            for v in self.av_counts['guid']:
-    #                output['guid'] = v
-
-    #    return output
-
 
     def _labyrinth_categorize(self, instance):
         temp_instance = {}
@@ -357,48 +340,7 @@ class Labyrinth(Cobweb3Tree):
 
     def _concept_attr_value(self, instance, attr, val):
         concept = self._labyrinth_categorize(instance)
-
-        #TODO don't think I need this.  
-        #if isinstance(val, list):
-        #    temp_instance = {}
-
-        #    for attr in instance:
-        #        if isinstance(instance[attr], dict):
-        #            temp_instance[attr] = self._labyrinth(instance[attr])
-        #        elif isinstance(instance[attr], list):
-        #            temp_instance[tuple(instance[attr])] = True
-        #        else:
-        #            temp_instance[attr] = instance[attr]
-
-        #    mapping = self._exhaustive_match(temp_instance)
-        #    print(mapping)
-
-        #    new_val = []
-        #    for i in range(len(val)):
-        #        if i == 0:
-        #            new_val.append(val[i])
-        #            continue
-        #        new_val.append(mapping[val[i]])
-        #    attr = tuple(new_val)
-        #    val = True
-        #    return concept._get_probability(attr, val)
-
         return concept._get_probability(attr, val)
-
-    #def _specific_prediction(self, instance, attr):
-    #    if attr in instance:
-    #        #TODO add support for relational attribute values 
-    #        if isinstance(instance[attr], list):
-    #            return
-    #        if isinstance(instance[attr], dict):
-    #            #probs.append(self._flexible_prediction(instance[attr]))
-    #            return
-    #        temp = {}
-    #        for attr2 in instance:
-    #            if attr == attr2:
-    #                continue
-    #            temp[attr2] = instance[attr2]
-    #        return self._prob_attr_value(temp, attr, instance[attr])
 
     def _flexible_prediction(self, instance, guessing=False):
         probs = []
