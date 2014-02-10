@@ -3,25 +3,23 @@ import json
 from random import normalvariate
 from random import choice
 from random import random
+from random import shuffle
 from cobweb import CobwebTree
 
 class Cobweb3Tree(CobwebTree):
 
-    def _mean(self, values):
-        return sum(values) / len(values)
-
-    def _std(self, values):
-        return math.sqrt(sum([(v - self._mean(values))**2 for v in
-                                       values])/len(values))
+    acuity = 1.0
 
     def _expected_correct_guesses(self):
         """
         Computes the number of attribute values that would be correctly guessed
         in the current concept. This extension supports both nominal and
-        numeric attribute values.
+        numeric attribute values. The acuity parameter should be set based on
+        the domain cobweb is being used on. The acuity is set as a global
+        parameter now. 
         """
         # acuity the smallest allowed standard deviation; default = 1.0 
-        acuity = 1.0 
+        #acuity = 1.0 
         correct_guesses = 0.0
 
         for attr in self.av_counts:
@@ -38,8 +36,8 @@ class Cobweb3Tree(CobwebTree):
 
             std = self._std(float_values)
 
-            if std < acuity:
-                std = acuity
+            if std < self.acuity:
+                std = self.acuity
 
             correct_guesses += (1.0 / (2.0 * math.sqrt(math.pi) * std))
 
@@ -80,7 +78,8 @@ class Cobweb3Tree(CobwebTree):
     def predict(self, instance):
         """
         Given an instance predict any missing attribute values without
-        modifying the tree.
+        modifying the tree. This has been modified to make predictions about
+        nominal and numeric attribute values. 
         """
         prediction = {}
 
@@ -113,12 +112,17 @@ class Cobweb3Tree(CobwebTree):
         return prediction
 
     def _get_probability(self, attr, val):
+        """
+        Gets the probability of a particular attribute value. This has been
+        modified to support numeric and nominal values. The acuity is set as a
+        global parameter now. 
+        """
         if attr not in self.av_counts:
             return 0.0
 
         if isinstance(val, float):
             # acuity the smallest allowed standard deviation; default = 1.0 
-            acuity = 1.0
+            #acuity = 1.0
             float_values = []
 
             for val in self.av_counts[attr]:
@@ -130,8 +134,8 @@ class Cobweb3Tree(CobwebTree):
 
             mean = self._mean(float_values)
             std = self._std(float_values)
-            if std < acuity:
-                std = acuity
+            if std < self.acuity:
+                std = self.acuity
 
             point = abs((val - mean) / (std))
             #print(point)
@@ -170,45 +174,8 @@ class Cobweb3Tree(CobwebTree):
 
 if __name__ == "__main__":
 
-    n = 1 
-    runs = []
-    for i in range(0,n):
-        print("run %i" % i)
-        t = Cobweb3Tree()
-        runs.append(t.sequential_prediction("cobweb3_test.json", 10))
-        print(json.dumps(t._output_json()))
-
-    print(runs)
-    for i in range(0,len(runs[0])):
-        a = []
-        for r in runs:
-            a.append(r[i])
-        print("mean: %0.2f, std: %0.2f" % (Cobweb3Tree()._mean(a),
-                                           Cobweb3Tree()._std(a)))
-
-    #t = Cobweb3Tree()
-
-    ##instances = []
-
-    ##for v in np.random.randn(10):
-    ##    r = {}
-    ##    r['x'] = v
-    ##    r['sample_mean'] = "0"
-    ##    instances.append(r)
-
-    ##for v in (40 + np.random.randn(10)):
-    ##    r = {}
-    ##    r['x'] = v
-    ##    r['sample_mean'] = "40"
-    ##    instances.append(r)
-
-    #t.train_from_json("cobweb3_test.json")
-    #t.verify_counts()
-    #print(t)
-    #print()
-
-    #test = {}
-    #test['sample_mean'] = "40"
-    #print(t.predict(test))
+    Cobweb3Tree().predictions("cobweb3_test.json", 10, 100)
+    Cobweb3Tree().baseline_guesser("cobweb3_test.json", 10, 100)
+    #print(Cobweb3Tree().cluster("cobweb3_test.json", 10, 1))
 
 

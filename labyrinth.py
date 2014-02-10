@@ -355,7 +355,7 @@ class Labyrinth(Cobweb3Tree):
 
         return 0.0
 
-    def _prob_attr_value(self, instance, attr, val):
+    def _concept_attr_value(self, instance, attr, val):
         concept = self._labyrinth_categorize(instance)
 
         #TODO don't think I need this.  
@@ -385,41 +385,39 @@ class Labyrinth(Cobweb3Tree):
 
         return concept._get_probability(attr, val)
 
-    def _specific_prediction(self, instance, attr):
-        if attr in instance:
-            #TODO add support for relational attribute values 
-            if isinstance(instance[attr], list):
-                return
-            if isinstance(instance[attr], dict):
-                #probs.append(self._flexible_prediction(instance[attr]))
-                return
-            temp = {}
-            for attr2 in instance:
-                if attr == attr2:
-                    continue
-                temp[attr2] = instance[attr2]
-            return self._prob_attr_value(temp, attr, instance[attr])
+    #def _specific_prediction(self, instance, attr):
+    #    if attr in instance:
+    #        #TODO add support for relational attribute values 
+    #        if isinstance(instance[attr], list):
+    #            return
+    #        if isinstance(instance[attr], dict):
+    #            #probs.append(self._flexible_prediction(instance[attr]))
+    #            return
+    #        temp = {}
+    #        for attr2 in instance:
+    #            if attr == attr2:
+    #                continue
+    #            temp[attr2] = instance[attr2]
+    #        return self._prob_attr_value(temp, attr, instance[attr])
 
-    def _flexible_prediction(self, instance):
+    def _flexible_prediction(self, instance, guessing=False):
         probs = []
         for attr in instance:
             #TODO add support for relational attribute values 
             if isinstance(instance[attr], list):
                 continue
             if isinstance(instance[attr], dict):
-                #temp = self._flexible_prediction(instance[attr])
-                #if temp == -1:
-                #    print(instance)
-                #else:
-                #    probs.append(temp)
-                probs.append(self._flexible_prediction(instance[attr]))
+                probs.append(self._flexible_prediction(instance[attr], guessing))
                 continue
             temp = {}
             for attr2 in instance:
                 if attr == attr2:
                     continue
                 temp[attr2] = instance[attr2]
-            probs.append(self._prob_attr_value(temp, attr, instance[attr]))
+            if guessing:
+                probs.append(self._get_probability(attr, instance[attr]))
+            else:
+                probs.append(self._concept_attr_value(temp, attr, instance[attr]))
         if len(probs) == 0:
             print(instance)
             return -1 
@@ -482,89 +480,11 @@ class Labyrinth(Cobweb3Tree):
 
         return prediction
 
-    def cluster(self, filename, length):
-        json_data = open(filename, "r")
-        instances = json.load(json_data)
-        json_data.close()
-        instances = instances[0:length]
-        clusters = []
-        for j in range(3):
-            print("run %i" % j)
-            shuffle(instances)
-            for n, i in enumerate(instances):
-                if n >= length:
-                    break
-                self.ifit(i)
-        print(json.dumps(self._output_json()))
-        for n, i in enumerate(instances):
-            concept = self._labyrinth_categorize(i)
-            if len(concept.children) == 0:
-                concept = concept.parent
-            clusters.append(concept.concept_name)
-        return clusters
-
-    def predictions(self, filename, length):
-        n = 1 
-        runs = []
-        nodes = []
-        for i in range(0,n):
-            print("run %i" % i)
-            t = Labyrinth()
-            accuracy, num = t.sequential_prediction(filename, length)
-            runs.append(accuracy)
-            nodes.append(num)
-            print(json.dumps(t._output_json()))
-            #runs.append(t.sequential_prediction("really_small.json", 10))
-
-        #print(runs)
-        print("MEAN Accuracy")
-        for i in range(0,len(runs[0])):
-            a = []
-            for r in runs:
-                a.append(r[i])
-            print("%0.2f" % (Labyrinth()._mean(a)))
-            #print("mean: %0.2f, std: %0.2f" % (Labyrinth()._mean(a),
-            #                                   Labyrinth()._std(a)))
-        print()
-        print("STD Accuracy")
-        for i in range(0,len(runs[0])):
-            a = []
-            for r in runs:
-                a.append(r[i])
-            print("%0.2f" % (Labyrinth()._std(a)))
-
-        print()
-        print("MEAN Concepts")
-        for i in range(0,len(runs[0])):
-            a = []
-            for r in nodes:
-                a.append(r[i])
-            print("%0.2f" % (Labyrinth()._mean(a)))
-            #print("mean: %0.2f, std: %0.2f" % (Labyrinth()._mean(a),
-            #                                   Labyrinth()._std(a)))
-        print()
-        print("STD Concepts")
-        for i in range(0,len(runs[0])):
-            a = []
-            for r in nodes:
-                a.append(r[i])
-            print("%0.2f" % (Labyrinth()._std(a)))
-
-
-
 if __name__ == "__main__":
 
-    #t.train_from_json("labyrinth_test.json")
-    #t.train_from_json("towers_small_trestle.json")
     #print(Labyrinth().cluster("towers_small_trestle.json", 15))
-    print(Labyrinth().predictions("kelly-data.json", 2))
-
-
-    #print(t)
-
-    #test = {}
-    #test['success'] = '1'
-    #print(t.predict(test))
+    Labyrinth().predictions("towers_small_trestle.json", 10, 1)
+    Labyrinth().baseline_guesser("towers_small_trestle.json", 10, 1)
 
 
 

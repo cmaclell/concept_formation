@@ -1,4 +1,5 @@
 import json
+import math
 from random import choice
 from random import shuffle
 
@@ -6,6 +7,19 @@ class CobwebTree:
 
     # static variable for hashing concepts
     counter = 0
+
+    def _mean(self, values):
+        """
+        Computes the mean of a list of values.
+        """
+        return sum(values) / len(values)
+
+    def _std(self, values):
+        """
+        Computes the standard deviation of a list of values.
+        """
+        return math.sqrt(sum([(v - self._mean(values))**2 for v in
+                                       values])/len(values))
 
     def __init__(self, otherTree=None):
         """
@@ -518,7 +532,7 @@ class CobwebTree:
         concept = self._cobweb_categorize(instance)
         return concept._get_probability(attr, val)
 
-    def _flexible_prediction(self, instance):
+    def _flexible_prediction(self, instance, guessing=False):
         """
         Fisher's flexible prediction task. It computes the accuracy of
         correctly predicting each attribute value (removing it from the
@@ -531,7 +545,10 @@ class CobwebTree:
                 if attr == attr2:
                     continue
                 temp[attr2] = instance[attr2]
-            probs.append(self._concept_attr_value(temp, attr, instance[attr]))
+            if guessing:
+                probs.append(self._get_probability(attr, instance[attr]))
+            else:
+                probs.append(self._concept_attr_value(temp, attr, instance[attr]))
         return sum(probs) / len(probs)
 
     def train_from_json(self, filename):
@@ -543,7 +560,7 @@ class CobwebTree:
         self.fit(instances)
         json_data.close()
 
-    def sequential_prediction(self, filename, length):
+    def sequential_prediction(self, filename, length, guessing=False):
         """
         Given a json file, perform an incremental sequential prediction task. 
         Try to flexibly predict each instance before incorporating it into the 
@@ -559,7 +576,7 @@ class CobwebTree:
             for n, i in enumerate(instances):
                 if n >= length:
                     break
-                accuracy.append(self._flexible_prediction(i))
+                accuracy.append(self._flexible_prediction(i, guessing))
                 nodes.append(self._num_concepts())
                 self.ifit(i)
         json_data.close()
@@ -588,17 +605,115 @@ class CobwebTree:
             clusters.append(self._cobweb_categorize(i).concept_name)
         return clusters
 
+    def baseline_guesser(self, filename, length, iterations):
+        """
+        Equivalent of predictions, but just makes predictions from the root of
+        the concept tree. This is the equivalent of guessing the distribution
+        of all attribute values. 
+        """
+        n = iterations
+        runs = []
+        nodes = []
+
+        for i in range(0,n):
+            print("run %i" % i)
+            t = self.__class__()
+            accuracy, num = t.sequential_prediction(filename, length, True)
+            runs.append(accuracy)
+            nodes.append(num)
+            #print(json.dumps(t._output_json()))
+
+        #print(runs)
+        print("MEAN Accuracy")
+        for i in range(0,len(runs[0])):
+            a = []
+            for r in runs:
+                a.append(r[i])
+            print("%0.2f" % (self._mean(a)))
+
+        print()
+        print("STD Accuracy")
+        for i in range(0,len(runs[0])):
+            a = []
+            for r in runs:
+                a.append(r[i])
+            print("%0.2f" % (self._std(a)))
+
+        print()
+        print("MEAN Concepts")
+        for i in range(0,len(runs[0])):
+            a = []
+            for r in nodes:
+                a.append(r[i])
+            print("%0.2f" % (self._mean(a)))
+
+        print()
+        print("STD Concepts")
+        for i in range(0,len(runs[0])):
+            a = []
+            for r in nodes:
+                a.append(r[i])
+            print("%0.2f" % (self._std(a)))
+
+
+    def predictions(self, filename, length, iterations):
+        """
+        Perform the sequential prediction task many times and compute the mean
+        and std of all flexible predictions.
+        """
+        n = iterations 
+        runs = []
+        nodes = []
+        for i in range(0,n):
+            print("run %i" % i)
+            t = self.__class__()
+            accuracy, num = t.sequential_prediction(filename, length)
+            runs.append(accuracy)
+            nodes.append(num)
+            #print(json.dumps(t._output_json()))
+
+        #print(runs)
+        print("MEAN Accuracy")
+        for i in range(0,len(runs[0])):
+            a = []
+            for r in runs:
+                a.append(r[i])
+            print("%0.2f" % (self._mean(a)))
+
+        print()
+        print("STD Accuracy")
+        for i in range(0,len(runs[0])):
+            a = []
+            for r in runs:
+                a.append(r[i])
+            print("%0.2f" % (self._std(a)))
+
+        print()
+        print("MEAN Concepts")
+        for i in range(0,len(runs[0])):
+            a = []
+            for r in nodes:
+                a.append(r[i])
+            print("%0.2f" % (self._mean(a)))
+
+        print()
+        print("STD Concepts")
+        for i in range(0,len(runs[0])):
+            a = []
+            for r in nodes:
+                a.append(r[i])
+            print("%0.2f" % (self._std(a)))
+
 if __name__ == "__main__":
-    t = CobwebTree()
-    #t.train_from_json("cobweb_test.json")
-    print(t.sequential_prediction("cobweb_test.json", 10))
-    print(json.dumps(t._output_json()))
-    t.verify_counts()
-    #print(t)
-    #print()
+    CobwebTree().predictions("cobweb_test.json", 10, 100)
+    CobwebTree().baseline_guesser("cobweb_test.json", 10, 100)
+    #print(CobwebTree().cluster("cobweb_test.json", 10, 1))
+
+    #t = CobwebTree()
+    #print(t.sequential_prediction("cobweb_test.json", 10))
+    #t.verify_counts()
 
     #test = {}
-    #test['HeartChamber'] = "four"
     #print(t.predict(test))
 
 

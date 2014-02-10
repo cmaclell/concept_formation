@@ -492,91 +492,9 @@ class Trestle(Labyrinth):
 
     #def ifit(self, instance):
     #    self._trestle(instance)
-    def predictions(self, filename, length):
-        n = 100 
-        runs = []
-        nodes = []
-        for i in range(0,n):
-            print("run %i" % i)
-            t = Trestle()
-            accuracy, num = t.sequential_prediction(filename, length)
-            runs.append(accuracy)
-            nodes.append(num)
-
-            #print(json.dumps(t._output_json()))
-            #runs.append(t.sequential_prediction("really_small.json", 10))
-
-        #print(runs)
-        print("MEAN Accuracy")
-        for i in range(0,len(runs[0])):
-            a = []
-            for r in runs:
-                a.append(r[i])
-            print("%0.2f" % (Trestle()._mean(a)))
-            #print("mean: %0.2f, std: %0.2f" % (Labyrinth()._mean(a),
-            #                                   Labyrinth()._std(a)))
-        print()
-        print("STD Accuracy")
-        for i in range(0,len(runs[0])):
-            a = []
-            for r in runs:
-                a.append(r[i])
-            print("%0.2f" % (Trestle()._std(a)))
-
-        print("MEAN Concepts")
-        for i in range(0,len(runs[0])):
-            a = []
-            for r in nodes:
-                a.append(r[i])
-            print("%0.2f" % (Trestle()._mean(a)))
-            #print("mean: %0.2f, std: %0.2f" % (Labyrinth()._mean(a),
-            #                                   Labyrinth()._std(a)))
-        print()
-        print("STD Concepts")
-        for i in range(0,len(runs[0])):
-            a = []
-            for r in nodes:
-                a.append(r[i])
-            print("%0.2f" % (Trestle()._std(a)))
-    
 
 if __name__ == "__main__":
 
     #print(Trestle().cluster("towers_trestle.json", 15))
-    #t = Trestle()
-    #t.train_from_json("labyrinth_test.json")
-    #t.train_from_json("towers_small_trestle.json")
-
-    print(Trestle().predictions("towers_small_trestle.json", 15))
-    #print(Trestle().cluster("towers_small_trestle.json", 15))
-
-    #t.train_from_json("towers_small_trestle-continuous.json")
-    #t.train_from_json("towers_trestle.json")
-    #t.verify_counts()
-    ##print(json.dumps(t._output_json()))
-    #
-    ##print("Predicting")
-    ##
-    #test = {}
-    ##right_stack = {}
-    ##comp1 = {}
-    ##comp1["color"] = "blue"
-    ##comp1["shape"] = "odd"
-    ##comp2 = {}
-    ##comp2["color"] = "red"
-    ##comp2["shape"] = "circular"
-    ##comp3 = {}
-    ###comp3["color"] = "grey"
-    ##comp3["shape"] = "square"
-    ##relation1 = ["left-of", "component1", "component2"]
-    ##relation2 = ["left-of", "component1", "component3"]
-    ##relation3 = ["on", "component3", "component2"]
-    ##right_stack["component1"] = comp1 
-    ##right_stack["component2"] = comp2 
-    ##right_stack["component3"] = comp3 
-    ##right_stack["relation1"] = relation1 
-    ##right_stack["relation2"] = relation2 
-    ##right_stack["relation3"] = relation3 
-    ##test["Rightstack-2"] = right_stack
-    #print(t.predict(test))
+    Trestle().predictions("towers_small_trestle.json", 10, 1)
 
