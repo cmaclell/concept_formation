@@ -506,16 +506,18 @@ class Labyrinth(Cobweb3Tree):
     def predictions(self, filename, length):
         n = 1 
         runs = []
+        nodes = []
         for i in range(0,n):
             print("run %i" % i)
             t = Labyrinth()
-            runs.append(t.sequential_prediction(filename,
-                                               length))
+            accuracy, num = t.sequential_prediction(filename, length)
+            runs.append(accuracy)
+            nodes.append(num)
             print(json.dumps(t._output_json()))
             #runs.append(t.sequential_prediction("really_small.json", 10))
 
         #print(runs)
-        print("MEAN")
+        print("MEAN Accuracy")
         for i in range(0,len(runs[0])):
             a = []
             for r in runs:
@@ -524,10 +526,27 @@ class Labyrinth(Cobweb3Tree):
             #print("mean: %0.2f, std: %0.2f" % (Labyrinth()._mean(a),
             #                                   Labyrinth()._std(a)))
         print()
-        print("STD")
+        print("STD Accuracy")
         for i in range(0,len(runs[0])):
             a = []
             for r in runs:
+                a.append(r[i])
+            print("%0.2f" % (Labyrinth()._std(a)))
+
+        print()
+        print("MEAN Concepts")
+        for i in range(0,len(runs[0])):
+            a = []
+            for r in nodes:
+                a.append(r[i])
+            print("%0.2f" % (Labyrinth()._mean(a)))
+            #print("mean: %0.2f, std: %0.2f" % (Labyrinth()._mean(a),
+            #                                   Labyrinth()._std(a)))
+        print()
+        print("STD Concepts")
+        for i in range(0,len(runs[0])):
+            a = []
+            for r in nodes:
                 a.append(r[i])
             print("%0.2f" % (Labyrinth()._std(a)))
 
@@ -538,7 +557,7 @@ if __name__ == "__main__":
     #t.train_from_json("labyrinth_test.json")
     #t.train_from_json("towers_small_trestle.json")
     #print(Labyrinth().cluster("towers_small_trestle.json", 15))
-    print(Labyrinth().predictions("towers_small_trestle.json", 15))
+    print(Labyrinth().predictions("kelly-data.json", 2))
 
 
     #print(t)

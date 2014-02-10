@@ -6,14 +6,11 @@ class CobwebTree:
 
     # static variable for hashing concepts
     counter = 0
-    #root = None
 
-    def __init__(self, tree=None):
+    def __init__(self, otherTree=None):
         """
         The constructor.
         """
-        #if self.__class__.root == None:
-        #    self.__class__.root = self
         self.concept_name = "Concept" + self._gensym()
         self.count = 0
         self.av_counts = {}
@@ -21,11 +18,11 @@ class CobwebTree:
         self.parent = None
 
         # check if the constructor is being used as a copy constructor
-        if tree:
-            self._update_counts_from_node(tree)
-            self.parent = tree.parent
+        if otherTree:
+            self._update_counts_from_node(otherTree)
+            self.parent = otherTree.parent
 
-            for child in tree.children:
+            for child in otherTree.children:
                 self.children.append(self.__class__(child))
 
     def __hash__(self):
@@ -61,7 +58,6 @@ class CobwebTree:
         input:
             instance: {a1: v1, a2: v2, ...} - a hashtable of attr and values. 
         """
-        #TODO do counts need to be floats?
         self.count += 1 
         for attr in instance:
             self.av_counts[attr] = self.av_counts.setdefault(attr,{})
@@ -178,12 +174,6 @@ class CobwebTree:
     def _cu_for_merge(self, best1, best2, instance):
         """
         Returns the category utility for merging the two best children.
-        NOTE! - I decided that testing a merge does not incorporate the latest
-        instance, but waits for a second call of cobweb on the root. The
-        original paper says that I should incorporate the instance into the
-        merged node, but since we don't do something like this for split I
-        didn't do it here. This gives the option to merge multiple nodes before
-        incorporating the instance. 
 
         input:
             best1: the best child in the children array.
@@ -220,15 +210,19 @@ class CobwebTree:
             self.children.append(child)
 
     def _cu_for_fringe_split(self, instance):
+        """
+        Determine the category utility of performing a fringe split (i.e.,
+        adding a leaf to a leaf). It turns out that this is useful for
+        identifying unnecessary fringe splits, when the two leaves are
+        essentially identical. It can be used to keep the tree from growing and
+        to increase the tree's predictive accuracy.
+        """
         temp = self.__class__()
         temp._update_counts_from_node(self)
         
         temp._create_child_with_current_counts()
         temp._increment_counts(instance)
         temp._create_new_child(instance)
-
-        #print("CU for fringe: %0.2f" % temp._category_utility())
-        #print("EQ 0? %i" % (temp._category_utility() == 0))
 
         return temp._category_utility()
 
@@ -256,7 +250,9 @@ class CobwebTree:
     def verify_counts(self):
         """
         Checks the property that the counts of the children sum to the same
-        count as the parent. This is/was useful when debugging.
+        count as the parent. This is/was useful when debugging. If you are
+        doing some kind of matching at each step in the categorization (i.e.,
+        renaming such as with Labyrinth) then this will start throwing errors.
         """
         if len(self.children) == 0:
             return 
@@ -286,33 +282,6 @@ class CobwebTree:
         for child in self.children:
             child.verify_counts()
 
-    # DEPRECIATED
-    #def _is_concept(self, instance):
-    #    """
-    #    Checks to see if the current node perfectly represents the instance (all
-    #    of the attribute values the instance has are probability 1.0 and here
-    #    are no extra attribute values).
-    #    """
-    #    for attribute in self.av_counts:
-    #        for value in self.av_counts[attribute]:
-    #            if (self.av_counts[attribute][value] / (1.0 * self.count)) != 1.0:
-    #                return False
-    #            if attribute not in instance:
-    #                return False
-    #            if instance[attribute] != value:
-    #                return False
-    #    
-    #    for attribute in instance:
-    #        if attribute not in self.av_counts:
-    #            return False
-    #        if instance[attribute] not in self.av_counts[attribute]:
-    #            return False
-    #        if ((self.av_counts[attribute][instance[attribute]] / 
-    #             (1.0 * self.count)) != 1.0):
-    #            return False
-    #    
-    #    return True
-
     def _cobweb(self, instance):
         """
         Incrementally integrates an instance into the categorization tree
@@ -329,14 +298,11 @@ class CobwebTree:
             # systems to achieve more complex fringe behavior. 
             if not current.children and current._cu_for_fringe_split(instance) <= 0:
                 current._increment_counts(instance)
-                #print(current)
                 return current 
 
             elif not current.children:
                 current._create_child_with_current_counts()
                 current._increment_counts(instance)
-                #print("SPLIT")
-                #print(self)
                 return current._create_new_child(instance)
                 
             else:
@@ -349,24 +315,18 @@ class CobwebTree:
                 if best2:
                     best2_cu, best2 = best2
 
-                if action_cu < 0.0:
-                    print("BELOW 0!")
                 if action_cu <= 0.0 or best_action == 'best':
                     current._increment_counts(instance)
                     current = best1
-                    #return best1._cobweb(instance)
                 elif best_action == 'new':
                     current._increment_counts(instance)
                     return current._create_new_child(instance)
-                    #return self._create_new_child(instance)
                 elif best_action == 'merge':
                     current._increment_counts(instance)
                     new_child = current._merge(best1, best2, instance)
                     current = new_child
-                    #return new_child._cobweb(instance)
                 elif best_action == 'split':
                     current._split(best1)
-                    #return self._cobweb(instance)
                 else:
                     raise Exception("Should never get here.")
 
@@ -402,10 +362,9 @@ class CobwebTree:
         node without modifying the counts of the tree.
 
         Uses the new and best operations; when new is the best operation it
-        returns the current node otherwise it recurses on the best node. 
+        returns the current node otherwise it iterates on the best node. 
         """
         current = self
-
         while current:
             if not current.children:
                 return current
@@ -421,9 +380,13 @@ class CobwebTree:
                 return current
             elif best_action == "best":
                 current = best1
-                #return best1._cobweb_categorize(instance)
 
     def _expected_correct_guesses(self):
+        """
+        Returns the number of correct guesses that are expected from the given
+        concept. This is the sum of the probability of each attribute value
+        squared. 
+        """
         correct_guesses = 0.0
         for attr in self.av_counts:
             for val in self.av_counts[attr]:
@@ -432,6 +395,11 @@ class CobwebTree:
         return correct_guesses
 
     def _category_utility(self):
+        """
+        Returns the category utility of a particular division of a concept into
+        its children. This is used as the heuristic to guide the concept
+        formation.
+        """
         if len(self.children) == 0:
             return 0.0
 
@@ -467,6 +435,10 @@ class CobwebTree:
         return ret
 
     def _output_json(self):
+        """
+        Outputs the categorization tree in JSON form so that it can be
+        displayed, I usually visualize it with d3js in a web browser.
+        """
         output = {}
         output['name'] = self.concept_name
         output['size'] = self.count
@@ -530,15 +502,28 @@ class CobwebTree:
         return prediction
 
     def _get_probability(self, attr, val):
+        """
+        Gets the probability of a particular attribute value at the given
+        concept.
+        """
         if attr not in self.av_counts or val not in self.av_counts[attr]:
             return 0.0
         return (1.0 * self.av_counts[attr][val]) / self.count
 
-    def _prob_attr_value(self, instance, attr, val):
+    def _concept_attr_value(self, instance, attr, val):
+        """
+        Gets the probability of a particular attribute value for the concept
+        associated with a given instance.
+        """
         concept = self._cobweb_categorize(instance)
         return concept._get_probability(attr, val)
 
     def _flexible_prediction(self, instance):
+        """
+        Fisher's flexible prediction task. It computes the accuracy of
+        correctly predicting each attribute value (removing it from the
+        instance first). It then returns the average accuracy. 
+        """
         probs = []
         for attr in instance:
             temp = {}
@@ -546,49 +531,54 @@ class CobwebTree:
                 if attr == attr2:
                     continue
                 temp[attr2] = instance[attr2]
-            probs.append(self._prob_attr_value(temp, attr, instance[attr]))
+            probs.append(self._concept_attr_value(temp, attr, instance[attr]))
         return sum(probs) / len(probs)
 
-    #depreciated
-    #def predict_all(self, instances):
-    #    """
-    #    Predicts missing attribute values of all instances in the give
-    #    list.
-    #    """
-    #    predictions = [self.predict(instance) for instance in instances]
-    #    return predictions
-
     def train_from_json(self, filename):
+        """
+        Build the concept tree from a set of examples in a provided json file.
+        """
         json_data = open(filename, "r")
         instances = json.load(json_data)
         self.fit(instances)
         json_data.close()
 
     def sequential_prediction(self, filename, length):
+        """
+        Given a json file, perform an incremental sequential prediction task. 
+        Try to flexibly predict each instance before incorporating it into the 
+        tree. This will give a type of cross validated result.
+        """
         json_data = open(filename, "r")
         instances = json.load(json_data)
-        instances = instances[0:length]
+        #instances = instances[0:length]
         accuracy = []
+        nodes = []
         for j in range(1):
             shuffle(instances)
             for n, i in enumerate(instances):
                 if n >= length:
                     break
                 accuracy.append(self._flexible_prediction(i))
-                #print(self._num_concepts())
-                #print(self.root._num_concepts())
-                #print(self.root)
+                nodes.append(self._num_concepts())
                 self.ifit(i)
         json_data.close()
-        return accuracy
+        return accuracy, nodes
 
-    def cluster(self, filename, length):
+    def cluster(self, filename, length, iterations):
+        """
+        Used to provide a clustering of a set of examples provided in a JSON
+        file. It starts by incorporating the examples into the categorization
+        tree multiple times. After incorporating the instances it then
+        categorizes each example (without updating the tree) and returns the
+        concept it was assoicated with.
+        """
         json_data = open(filename, "r")
         instances = json.load(json_data)
         json_data.close()
         #instances = instances[0:length]
         clusters = []
-        for j in range(3):
+        for j in range(iterations):
             shuffle(instances)
             for n, i in enumerate(instances):
                 if n >= length:

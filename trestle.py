@@ -493,18 +493,21 @@ class Trestle(Labyrinth):
     #def ifit(self, instance):
     #    self._trestle(instance)
     def predictions(self, filename, length):
-        n = 10 
+        n = 100 
         runs = []
+        nodes = []
         for i in range(0,n):
             print("run %i" % i)
             t = Trestle()
-            runs.append(t.sequential_prediction(filename,
-                                               length))
+            accuracy, num = t.sequential_prediction(filename, length)
+            runs.append(accuracy)
+            nodes.append(num)
+
             #print(json.dumps(t._output_json()))
             #runs.append(t.sequential_prediction("really_small.json", 10))
 
         #print(runs)
-        print("MEAN")
+        print("MEAN Accuracy")
         for i in range(0,len(runs[0])):
             a = []
             for r in runs:
@@ -513,10 +516,26 @@ class Trestle(Labyrinth):
             #print("mean: %0.2f, std: %0.2f" % (Labyrinth()._mean(a),
             #                                   Labyrinth()._std(a)))
         print()
-        print("STD")
+        print("STD Accuracy")
         for i in range(0,len(runs[0])):
             a = []
             for r in runs:
+                a.append(r[i])
+            print("%0.2f" % (Trestle()._std(a)))
+
+        print("MEAN Concepts")
+        for i in range(0,len(runs[0])):
+            a = []
+            for r in nodes:
+                a.append(r[i])
+            print("%0.2f" % (Trestle()._mean(a)))
+            #print("mean: %0.2f, std: %0.2f" % (Labyrinth()._mean(a),
+            #                                   Labyrinth()._std(a)))
+        print()
+        print("STD Concepts")
+        for i in range(0,len(runs[0])):
+            a = []
+            for r in nodes:
                 a.append(r[i])
             print("%0.2f" % (Trestle()._std(a)))
     
