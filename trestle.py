@@ -69,14 +69,6 @@ class Trestle(Labyrinth):
         temp_instance = self._match(temp_instance)
         return self._cobweb_categorize(temp_instance)
 
-    def _is_parent(self, other_concept):
-        temp = other_concept
-        while temp != None:
-            if temp == self:
-                return True
-            temp = temp.parent
-        return False
-
     # DEPRECIATED
     #def _common_ancestor(self, other_concept):
     #    temp = self
@@ -496,5 +488,7 @@ class Trestle(Labyrinth):
 if __name__ == "__main__":
 
     #print(Trestle().cluster("towers_trestle.json", 15))
-    Trestle().predictions("towers_small_trestle.json", 10, 1)
+    #print(Trestle().cluster("data_files/rb_s_07.json", 1, 3))
+    Labyrinth().predictions("data_files/rb_s_07.json", 15, 4)
+    #Trestle().predictions("towers_small_trestle.json", 10, 1)
 

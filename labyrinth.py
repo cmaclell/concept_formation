@@ -1,8 +1,8 @@
 import itertools
-import math
 import hungarianNative
 import numpy
 import json
+import copy
 from random import normalvariate
 from random import choice
 from random import random
@@ -10,6 +10,14 @@ from random import shuffle
 from cobweb3 import Cobweb3Tree
 
 class Labyrinth(Cobweb3Tree):
+
+    def _is_parent(self, other_concept):
+        temp = other_concept
+        while temp != None:
+            if temp == self:
+                return True
+            temp = temp.parent
+        return False
 
     def _labyrinth(self, instance):
         """
@@ -25,8 +33,8 @@ class Labyrinth(Cobweb3Tree):
             if isinstance(instance[attr], dict):
                 temp_instance[attr] = self._labyrinth(instance[attr])
             elif isinstance(instance[attr], list):
-                #pass
-                temp_instance[tuple(instance[attr])] = True
+                pass
+                #temp_instance[tuple(instance[attr])] = True
             else:
                 temp_instance[attr] = instance[attr]
 
@@ -86,6 +94,19 @@ class Labyrinth(Cobweb3Tree):
         no relations. However, when there are relations, then it is only
         computing the best greedy match (no longer optimal). 
         """
+
+        # FOR DEBUGGING
+        #print("INSTANCE")
+        #for attr in instance:
+        #    if isinstance(instance[attr], Labyrinth):
+        #        print(attr + ": " + str(instance[attr].concept_name))
+
+        #print("CONCEPT")
+        #for attr in self.av_counts:
+        #    for val in self.av_counts[attr]:
+        #        if isinstance(val, Labyrinth):
+        #            print(attr + ": " + str(val.concept_name))
+
         from_name = [attr for attr in instance if isinstance(instance[attr],
                                                              Labyrinth)]
         to_name = []
@@ -149,16 +170,18 @@ class Labyrinth(Cobweb3Tree):
         # Note: "a" is modified by hungarian.
         a = numpy.array(cost_matrix)
         assignment = hungarianNative.hungarian(a)
+        #print(assignment)
 
         mapping = {}
-        for index, val in enumerate(assignment):
-            if (index >= len(from_name)):
+        for index in assignment:
+            if index >= len(from_name):
                 continue
-            elif (val >= len(to_name)):
-                mapping[from_name[index]] = "component" + self._gensym()
+            elif assignment[index] >= len(to_name):
+                  mapping[from_name[index]] = "component" + self._gensym()
             else:
-                mapping[from_name[index]] = to_name[val]
-                
+                mapping[from_name[index]] = to_name[assignment[index]]
+
+        #print(mapping)
         return mapping 
 
     def _exhaustive_match(self, instance):
@@ -220,17 +243,17 @@ class Labyrinth(Cobweb3Tree):
         component values.
         """
         output = {}
-        output['name'] = self.concept_name
-        output['size'] = self.count
-        output['children'] = []
+        output["name"] = self.concept_name
+        output["size"] = self.count
+        output["children"] = []
 
         temp = {}
         for attr in self.av_counts:
-            if isinstance(attr, tuple):
-                continue
             float_vals = []
             for value in self.av_counts[attr]:
-                if isinstance(value, float):
+                if isinstance(attr, tuple):
+                    temp["[" + " ".join(attr) + "]"] = self.av_counts[attr][True]
+                elif isinstance(value, float):
                     float_vals.append(value)
                 elif isinstance(value, Labyrinth): 
                     temp[attr + " = " + value.concept_name] = self.av_counts[attr][value]
@@ -242,9 +265,9 @@ class Labyrinth(Cobweb3Tree):
                 temp[mean] = len(float_vals)
                 
         for child in self.children:
-            output['children'].append(child._output_json())
+            output["children"].append(child._output_json())
 
-        output['counts'] = temp
+        output["counts"] = temp
 
         return output
 
@@ -412,7 +435,32 @@ class Labyrinth(Cobweb3Tree):
 
         return prediction
 
-    def cluster(self, filename, length):
+    def sequential_prediction(self, filename, length, guessing=False):
+        """
+        Given a json file, perform an incremental sequential prediction task. 
+        Try to flexibly predict each instance before incorporating it into the 
+        tree. This will give a type of cross validated result.
+        """
+        json_data = open(filename, "r")
+        instances = json.load(json_data)
+        #instances = instances[0:length]
+        for instance in instances:
+            if "guid" in instance:
+                del instance['guid']
+        accuracy = []
+        nodes = []
+        for j in range(1):
+            shuffle(instances)
+            for n, i in enumerate(instances):
+                if n >= length:
+                    break
+                accuracy.append(self._flexible_prediction(i, guessing))
+                nodes.append(self._num_concepts())
+                self.ifit(i)
+        json_data.close()
+        return accuracy, nodes
+
+    def cluster(self, filename, length, iterations=100):
         """
         Used to provide a clustering of a set of examples provided in a JSON
         file. It starts by incorporating the examples into the categorization
@@ -422,30 +470,48 @@ class Labyrinth(Cobweb3Tree):
         """
         json_data = open(filename, "r")
         instances = json.load(json_data)
-        o_instances = instances.copy()
-        json_data.close()
+        shuffle(instances)
         instances = instances[0:length]
-        clusters = []
+        o_instances = copy.deepcopy(instances)
+        for instance in instances:
+            if "guid" in instance:
+                del instance['guid']
+        json_data.close()
+        clusters = {}
         diff = 1
-        while diff > 0:
-        #for j in range(iterations):
+        counter = 0
+        #while diff > 0 and counter < iterations:
+        #    counter += 1
+        for j in range(iterations):
             before = self._num_concepts()
             shuffle(instances)
             for n, i in enumerate(instances):
                 if n >= length:
                     break
+                print("instance: " + str(n))
                 self.ifit(i)
             print(self._num_concepts())
             diff = abs(before - self._num_concepts())
-        for n, i in enumerate(o_instances):
-            clusters.append(self._labyrinth_categorize(i).concept_name)
+       
+        print(json.dumps(self._output_json()))
+
+        for idx, inst in enumerate(o_instances):
+            instance = copy.deepcopy(inst)
+            if "guid" in instance:
+                del instance['guid']
+            #print(inst['guid'])
+            print(self._labyrinth_categorize(instance).parent.concept_name)
+            clusters[inst['guid']] = self._labyrinth_categorize(instance).parent.concept_name
+
         return clusters
 
 if __name__ == "__main__":
 
-    print(Labyrinth().cluster("towers_small_trestle.json", 15))
-    #Labyrinth().predictions("towers_small_trestle.json", 10, 5)
-    #Labyrinth().baseline_guesser("towers_small_trestle.json", 10, 1)
+    #print(Labyrinth().cluster("data_files/rb_com_11_noCheck.json", 20, 15))
+    #print(Labyrinth().cluster("data_files/rb_s_07.json", 10, 3))
+    #print(Labyrinth().cluster("data_files/jenny_graph_data.json", 50, 1))
+    Labyrinth().predictions("data_files/rb_com_11_noCheck.json", 15, 3)
+    #Labyrinth().baseline_guesser("data_files/rb_com_11_noCheck.json", 10, 1)
 
     #t = Labyrinth()
     #t.sequential_prediction("towers_small_trestle.json", 10)

@@ -584,7 +584,9 @@ class CobwebTree:
         """
         json_data = open(filename, "r")
         instances = json.load(json_data)
+        #shuffle(instances)
         #instances = instances[0:length]
+
         accuracy = []
         nodes = []
         for j in range(1):
@@ -598,7 +600,7 @@ class CobwebTree:
         json_data.close()
         return accuracy, nodes
 
-    def cluster(self, filename, length, iterations=1):
+    def cluster(self, filename, length, iterations):
         """
         Used to provide a clustering of a set of examples provided in a JSON
         file. It starts by incorporating the examples into the categorization
@@ -608,17 +610,24 @@ class CobwebTree:
         """
         json_data = open(filename, "r")
         instances = json.load(json_data)
+        instances = instances[0:length]
+        o_instances = instances.copy()
         json_data.close()
-        #instances = instances[0:length]
         clusters = []
-        for j in range(iterations):
+        diff = 1
+        counter = 0
+        while diff > 0 and counter < iterations:
+            counter += 1
+        #for j in range(iterations):
+            before = self._num_concepts()
             shuffle(instances)
             for n, i in enumerate(instances):
                 if n >= length:
                     break
                 self.ifit(i)
             print(self._num_concepts())
-        for n, i in enumerate(instances):
+            diff = abs(before - self._num_concepts())
+        for n, i in enumerate(o_instances):
             clusters.append(self._cobweb_categorize(i).concept_name)
         return clusters
 

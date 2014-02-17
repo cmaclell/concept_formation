@@ -6,9 +6,10 @@ from cobweb import CobwebTree
 
 class Cobweb3Tree(CobwebTree):
 
-    # no longer used for creating clusters, just for predictive accuracy
-    # computations. 
-    acuity = 1 
+    #acuity = 1.0
+    acuity = 1.0 / math.sqrt(2.0 * math.pi)
+    #acuity = 0.5
+    #acuity = 0.0000001
 
     def _expected_correct_guesses(self):
         """
@@ -18,8 +19,6 @@ class Cobweb3Tree(CobwebTree):
         the domain cobweb is being used on. The acuity is set as a global
         parameter now. 
         """
-        # acuity the smallest allowed standard deviation; default = 1.0 
-        #acuity = 1.0 
         correct_guesses = 0.0
 
         for attr in self.av_counts:
@@ -34,23 +33,28 @@ class Cobweb3Tree(CobwebTree):
             if len(float_values) == 0:
                 continue
 
-            std = self._std(float_values)
+            mean = self._mean(float_values)
 
-            if std == 0.0:
-                # TODO  if everything is the same then treat it as a nominal?
-                prob = ((1.0 * self.av_counts[attr][val]) / self.count)
-                correct_guesses += (prob * prob)
+            if len(float_values) == 1:
+                std = self.acuity
+                #prob = ((1.0 * self.av_counts[attr][val]) / self.count)
+                #correct_guesses += (prob * prob)
             else:
-                correct_guesses += (1.0 / (2.0 * math.sqrt(math.pi) * std))
+                #with correction for unknown mean and variance
+                #mean = self._mean(float_values)
+                c4n = (math.sqrt(2.0 / (len(float_values) - 1)) *
+                       (math.gamma(len(float_values)/2.0) /
+                        math.gamma((len(float_values) - 1)/2.0)))
+                std = (math.sqrt(sum([(x - mean) * (x - mean) for x in
+                                      float_values]) / (len(float_values) - 1))
+                       * c4n)
 
-            # overwritten - this is an improvement.
-            #if std < self.acuity:
-            #    std = self.acuity
-            #correct_guesses += (1.0 / (2.0 * math.sqrt(math.pi) * std))
-
+            if std < self.acuity:
+                std = self.acuity
+            correct_guesses += (1.0 / (2.0 * math.sqrt(math.pi) * std))
 
         return correct_guesses
-         
+
     def _pretty_print(self, depth=0):
         """
         Prints the categorization tree.
@@ -135,11 +139,23 @@ class Cobweb3Tree(CobwebTree):
                 if isinstance(val, float):
                     float_values += [val] * self.av_counts[attr][val]
 
-            if len(float_values) == 0:
-                return 0.0
+            #if len(float_values) == 0:
+            #    return 0.0
+            
+            if len(float_values) == 1:
+                #if val in self.av_counts[attr]:
+                #    return 1.0
+                mean = val
+                std = self.acuity
+            else:
 
-            mean = self._mean(float_values)
-            std = self._std(float_values)
+                mean = self._mean(float_values)
+                c4n = (math.sqrt(2.0 / (len(float_values) - 1)) *
+                       (math.gamma(len(float_values)/2.0) /
+                        math.gamma((len(float_values) - 1)/2.0)))
+                std = (math.sqrt(sum([(x - mean) * (x - mean) for x in
+                                      float_values]) / (len(float_values) - 1)) *
+                       c4n)
             #if std == 0.0:
             #    if val in self.av_counts[attr]:
             #        return (1.0 * self.av_counts[attr][val]) / self.count
@@ -148,10 +164,14 @@ class Cobweb3Tree(CobwebTree):
             #    return (1.0 - math.erf(point / math.sqrt(2)))#/2.0
 
             #if std == 0.0:
-            if std < self.acuity:
-                std = self.acuity
-            point = abs((val - mean) / (std))
-            return (1.0 - math.erf(point / math.sqrt(2)))#/2.0
+                if std < self.acuity:
+                    std = self.acuity
+
+            return ((1.0 / (std * math.sqrt(2.0 * math.pi))) * 
+                    math.exp(-((val - mean) * (val - mean)) / (2.0 * std * std)))
+                                                                           
+            #point = abs((val - mean) / (std))
+            #return (1.0 - math.erf(point / math.sqrt(2)))#/2.0
         
         if val in self.av_counts[attr]:
             return (1.0 * self.av_counts[attr][val]) / self.count
@@ -189,8 +209,8 @@ class Cobweb3Tree(CobwebTree):
 
 if __name__ == "__main__":
 
-    Cobweb3Tree().predictions("cobweb3_test.json", 30, 100)
-    #Cobweb3Tree().baseline_guesser("cobweb3_test.json", 10, 100)
+    Cobweb3Tree().predictions("data_files/cobweb3_test2.json", 100, 50)
+    #Cobweb3Tree().baseline_guesser("data_files/cobweb3_test.json", 30, 100)
     #print(Cobweb3Tree().cluster("cobweb3_test.json", 10, 1))
 
 
