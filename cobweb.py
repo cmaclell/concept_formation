@@ -7,7 +7,7 @@ class CobwebTree:
 
     # static variable for hashing concepts
     counter = 0
-    min_cu_gain = 0.1
+    min_cu_gain = 0.15
 
     def _mean(self, values):
         """

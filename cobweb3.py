@@ -141,9 +141,9 @@ class Cobweb3Tree(CobwebTree):
         if isinstance(val, float):
             float_values = []
 
-            for val in self.av_counts[attr]:
-                if isinstance(val, float):
-                    float_values += [val] * self.av_counts[attr][val]
+            for av in self.av_counts[attr]:
+                if isinstance(av, float):
+                    float_values += [av] * self.av_counts[attr][av]
 
             #if len(float_values) == 0:
             #    return 0.0
@@ -151,10 +151,9 @@ class Cobweb3Tree(CobwebTree):
             if len(float_values) == 1:
                 #if val in self.av_counts[attr]:
                 #    return 1.0
-                mean = val
+                mean = self._mean(float_values)
                 std = self.acuity
             else:
-
                 mean = self._mean(float_values)
                 c4n = 1.0
                 if len(float_values) > 30:
@@ -175,11 +174,17 @@ class Cobweb3Tree(CobwebTree):
                 if std < self.acuity:
                     std = self.acuity
 
+            #print("get prob")
+            #print("%0.2f, %0.2f (%0.2f)" % (val, mean, std))
+            #print(((1.0 / (std * math.sqrt(2.0 * math.pi))) * 
+            #        math.exp(-((val - mean) * (val - mean)) / (2.0 * std *
+            #                                                   std))))
+
             return ((1.0 / (std * math.sqrt(2.0 * math.pi))) * 
                     math.exp(-((val - mean) * (val - mean)) / (2.0 * std * std)))
                                                                            
             #point = abs((val - mean) / (std))
-            #return (1.0 - math.erf(point / math.sqrt(2)))#/2.0
+            #return 1.0 - (1.0 + math.erf((-1.0 * point) / math.sqrt(2)))#/2.0
         
         if val in self.av_counts[attr]:
             return (1.0 * self.av_counts[attr][val]) / self.count
@@ -217,7 +222,7 @@ class Cobweb3Tree(CobwebTree):
 
 if __name__ == "__main__":
 
-    Cobweb3Tree().predictions("data_files/cobweb3_test2.json", 100, 50)
+    Cobweb3Tree().predictions("data_files/cobweb3_test2.json", 50, 20)
     #Cobweb3Tree().baseline_guesser("data_files/cobweb3_test.json", 30, 100)
     #print(Cobweb3Tree().cluster("cobweb3_test.json", 10, 1))
 
