@@ -7,6 +7,7 @@ class CobwebTree:
 
     # static variable for hashing concepts
     counter = 0
+    min_cu_gain = 0.1
 
     def _mean(self, values):
         """
@@ -310,7 +311,9 @@ class CobwebTree:
             # check to see if category utility is increased by fringe splitting.
             # this is more generally and will be used by the Labyrinth/Trestle
             # systems to achieve more complex fringe behavior. 
-            if not current.children and current._cu_for_fringe_split(instance) <= 0:
+            if (not current.children and current._cu_for_fringe_split(instance)
+                <= current.min_cu_gain):
+                #TODO this is new
                 current._increment_counts(instance)
                 return current 
 
@@ -329,6 +332,13 @@ class CobwebTree:
                 if best2:
                     best2_cu, best2 = best2
 
+                if action_cu <= current.min_cu_gain:
+                    #TODO this is new
+                    #If the best action results in a cu below the min cu gain
+                    #then prune the branch
+                    current._increment_counts(instance)
+                    current.children = []
+                    return current
                 if action_cu <= 0.0 or best_action == 'best':
                     current._increment_counts(instance)
                     current = best1
@@ -696,7 +706,7 @@ class CobwebTree:
             accuracy, num = t.sequential_prediction(filename, length)
             runs.append(accuracy)
             nodes.append(num)
-            #print(json.dumps(t._output_json()))
+            print(json.dumps(t._output_json()))
 
         #print(runs)
         print("MEAN Accuracy")

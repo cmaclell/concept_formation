@@ -42,15 +42,21 @@ class Cobweb3Tree(CobwebTree):
             else:
                 #with correction for unknown mean and variance
                 #mean = self._mean(float_values)
-                c4n = (math.sqrt(2.0 / (len(float_values) - 1)) *
-                       (math.gamma(len(float_values)/2.0) /
-                        math.gamma((len(float_values) - 1)/2.0)))
+
+                #correction for sample size
+                c4n = 1.0
+
+                # don't really need to calculate it above 30
+                if (len(float_values) < 30):
+                    c4n = (math.sqrt(2.0 / (len(float_values) - 1)) *
+                           (math.gamma(len(float_values)/2.0) /
+                            math.gamma((len(float_values) - 1)/2.0)))
                 std = (math.sqrt(sum([(x - mean) * (x - mean) for x in
                                       float_values]) / (len(float_values) - 1))
                        * c4n)
 
-            if std < self.acuity:
-                std = self.acuity
+                if std < self.acuity:
+                    std = self.acuity
             correct_guesses += (1.0 / (2.0 * math.sqrt(math.pi) * std))
 
         return correct_guesses
@@ -150,12 +156,14 @@ class Cobweb3Tree(CobwebTree):
             else:
 
                 mean = self._mean(float_values)
-                c4n = (math.sqrt(2.0 / (len(float_values) - 1)) *
-                       (math.gamma(len(float_values)/2.0) /
-                        math.gamma((len(float_values) - 1)/2.0)))
+                c4n = 1.0
+                if len(float_values) > 30:
+                    c4n = (math.sqrt(2.0 / (len(float_values) - 1)) *
+                           (math.gamma(len(float_values)/2.0) /
+                            math.gamma((len(float_values) - 1)/2.0)))
                 std = (math.sqrt(sum([(x - mean) * (x - mean) for x in
-                                      float_values]) / (len(float_values) - 1)) *
-                       c4n)
+                                      float_values]) / (len(float_values) - 1))
+                       * c4n)
             #if std == 0.0:
             #    if val in self.av_counts[attr]:
             #        return (1.0 * self.av_counts[attr][val]) / self.count
