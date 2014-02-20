@@ -7,7 +7,7 @@ class CobwebTree:
 
     # static variable for hashing concepts
     counter = 0
-    min_cu_gain = 0.17
+    min_cu_gain = 0.0
 
     def _mean(self, values):
         """
@@ -186,7 +186,7 @@ class CobwebTree:
 
         return new_child
 
-    def _cu_for_merge(self, best1, best2):
+    def _cu_for_merge(self, best1, best2, instance):
         """
         Returns the category utility for merging the two best children.
 
@@ -198,12 +198,12 @@ class CobwebTree:
         """
         temp = self.__class__()
         temp._update_counts_from_node(self)
-        #temp._increment_counts(instance)
+        temp._increment_counts(instance)
 
         new_child = self.__class__()
         new_child._update_counts_from_node(best1)
         new_child._update_counts_from_node(best2)
-        #new_child._increment_counts(instance)
+        new_child._increment_counts(instance)
         temp.children.append(new_child)
 
         for c in self.children:
@@ -213,8 +213,6 @@ class CobwebTree:
             temp_child._update_counts_from_node(c)
             temp.children.append(temp_child)
 
-        print("mergeCU")
-        print(temp)
         return temp._category_utility()
 
     def _split(self, best):
@@ -261,9 +259,6 @@ class CobwebTree:
             temp_child = self.__class__()
             temp_child._update_counts_from_node(c)
             temp.children.append(temp_child)
-
-        print("SPLIT cu")
-        print(temp)
 
         return temp._category_utility()
 
@@ -333,21 +328,28 @@ class CobwebTree:
                 return current._create_new_child(instance)
                 
             else:
-                
-                #consider merges and splits separately?
-
                 #TODO is there a cleaner way to do this?
                 best1, best2 = current._two_best_children(instance)
-                #action_cu, best_action = current._get_best_operation(instance,
-                #                                                     best1,
-                #                                                     best2)
                 action_cu, best_action = current._get_best_operation(instance,
-                                                                     best1, best2,
-                                                                     ["best",
-                                                                      "new"]) 
+                                                                     best1,
+                                                                     best2)
+
+                # for separate merging and splitting
+                #action_cu, best_action = current._get_best_operation(instance,
+                #                                                     best1, best2,
+                #                                                     ["best",
+                #                                                      "new"]) 
+
                 best1_cu, best1 = best1
                 if best2:
                     best2_cu, best2 = best2
+
+                # for separate splitting and merging
+                #current_cu = current._category_utility()
+                #if best2 and (current._cu_for_merge(best1, best2) - current_cu) > 0.0:
+                #    current._merge(best1, best2)
+                #elif best1.children and (current._cu_for_split(best1) - current_cu) > 0.0:
+                #    current._split(best1)
 
                 if action_cu <= current.min_cu_gain:
                     #TODO this is new
@@ -356,25 +358,17 @@ class CobwebTree:
                     current._increment_counts(instance)
                     current.children = []
                     return current
-                if action_cu <= 0.0 or best_action == 'best':
+                elif best_action == 'best':
                     current._increment_counts(instance)
                     current = best1
                 elif best_action == 'new':
                     current._increment_counts(instance)
                     return current._create_new_child(instance)
                 elif best_action == 'merge':
-                    #current._increment_counts(instance)
-                    print("merging")
-                    print(current)
-                    print(best1)
-                    print(best2)
-                    print(action_cu)
-                    current._merge(best1, best2)
-                    #new_child = current._merge(best1, best2)
-                    #current = new_child
+                    current._increment_counts(instance)
+                    new_child = current._merge(best1, best2)
+                    current = new_child
                 elif best_action == 'split':
-                    print("splitting")
-                    print(action_cu)
                     current._split(best1)
                 else:
                     raise Exception("Should never get here.")
@@ -395,13 +389,13 @@ class CobwebTree:
         if "new" in possible_ops: 
             operations.append((self._cu_for_new_child(instance),'new'))
         if "merge" in possible_ops and best2:
-            operations.append((self._cu_for_merge(best1, best2),'merge'))
+            operations.append((self._cu_for_merge(best1, best2, instance),'merge'))
         if "split" in possible_ops and len(best1.children) > 0:
             operations.append((self._cu_for_split(best1),'split'))
 
         # pick the best operation
         operations.sort(reverse=True)
-        print(operations)
+        #print(operations)
 
         return operations[0]
         

@@ -512,9 +512,10 @@ class Labyrinth(Cobweb3Tree):
             print(diff)
             #print(self._num_concepts())
             #diff = abs(before - self._num_concepts())
+            #print(json.dumps(self._output_json()))
        
 
-        self._remove_singletons()
+        #self._remove_singletons()
         print(json.dumps(self._output_json()))
         for idx, inst in enumerate(o_instances):
             instance = copy.deepcopy(inst)
