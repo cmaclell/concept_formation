@@ -296,7 +296,7 @@ class Labyrinth(Cobweb3Tree):
         """
         A modification of ifit to call labyrinth instead.
         """
-        self._labyrinth(instance)
+        return self._labyrinth(instance)
 
     def _pretty_print(self, depth=0):
         """
@@ -460,6 +460,13 @@ class Labyrinth(Cobweb3Tree):
         json_data.close()
         return accuracy, nodes
 
+    def _flatten_instance(self, instance):
+        duplicate = copy.deepcopy(instance)
+        for attr in duplicate:
+            if isinstance(duplicate[attr], dict):
+                duplicate[attr] = self._flatten_instance(duplicate[attr])
+        return repr(sorted(duplicate.items()))
+
     def cluster(self, filename, length, iterations=100):
         """
         Used to provide a clustering of a set of examples provided in a JSON
@@ -480,37 +487,54 @@ class Labyrinth(Cobweb3Tree):
         clusters = {}
         diff = 1
         counter = 0
-        #while diff > 0 and counter < iterations:
-        #    counter += 1
-        for j in range(iterations):
-            before = self._num_concepts()
-            shuffle(instances)
-            for n, i in enumerate(instances):
-                if n >= length:
-                    break
-                print("instance: " + str(n))
-                self.ifit(i)
-            print(self._num_concepts())
-            diff = abs(before - self._num_concepts())
-       
-        print(json.dumps(self._output_json()))
+        
+        previous = {}
+        for i in instances:
+            previous[self._flatten_instance(i)] = None
 
+        while diff > 0 and counter < iterations:
+            counter += 1
+        #for j in range(iterations):
+            #before = self._num_concepts()
+            shuffle(instances)
+            diff = 0
+            for n, i in enumerate(instances):
+                print("training instance: " + str(n))
+                self.ifit(i)
+
+            for n, i in enumerate(instances):
+                print("categorizing instance: " + str(n))
+                cluster = self._labyrinth_categorize(i).parent
+                if (previous[self._flatten_instance(i)] != cluster):
+                    diff += 1
+                    previous[self._flatten_instance(i)] = cluster
+
+            print(diff)
+            #print(self._num_concepts())
+            #diff = abs(before - self._num_concepts())
+       
+
+        self._remove_singletons()
+        print(json.dumps(self._output_json()))
         for idx, inst in enumerate(o_instances):
             instance = copy.deepcopy(inst)
             if "guid" in instance:
                 del instance['guid']
             #print(inst['guid'])
-            print(self._labyrinth_categorize(instance).parent.concept_name)
-            clusters[inst['guid']] = self._labyrinth_categorize(instance).parent.concept_name
+            #print(previous[self._flatten_instance(instance)].concept_name)
+            concept = self._labyrinth_categorize(instance).parent.concept_name
+            print(concept)
+            #clusters[inst['guid']] = self._labyrinth_categorize(instance).parent.concept_name
+            clusters[inst['guid']] = concept
 
         return clusters
 
 if __name__ == "__main__":
 
-    #print(Labyrinth().cluster("data_files/rb_com_11_noCheck.json", 20, 15))
+    print(Labyrinth().cluster("data_files/rb_com_11_noCheck.json", 40, 100))
     #print(Labyrinth().cluster("data_files/rb_s_07.json", 10, 3))
     #print(Labyrinth().cluster("data_files/jenny_graph_data.json", 50, 1))
-    Labyrinth().predictions("data_files/rb_com_11_noCheck.json", 15, 3)
+    #Labyrinth().predictions("data_files/rb_com_11_noCheck.json", 15, 3)
     #Labyrinth().baseline_guesser("data_files/rb_com_11_noCheck.json", 10, 1)
 
     #t = Labyrinth()

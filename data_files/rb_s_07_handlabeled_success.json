@@ -4,25 +4,8 @@
  "type": "plat0", "l": 0, "r": 3, "b": 0 , "t": 1}
 , "component1": {
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
-, "component2": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component5": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component6": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component7": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
 , "component8": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component5",
- "component6"
-]
 }, 
 {
 "guid": "2fda0bde-95a7-4bda-9851-785275c3f56d", "success": "1", "component0": {
@@ -31,51 +14,16 @@
  "type": "plat90", "l": 0, "r": 1, "b": 0 , "t": 3}
 , "component2": {
  "type": "plat90", "l": 2, "r": 3, "b": 0 , "t": 3}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 4 , "t": 5}
-, "component4": {
- "type": "space", "l": 1, "r": 2, "b": 0 , "t": 1}
-, "component5": {
- "type": "space", "l": 1, "r": 2, "b": 1 , "t": 2}
-, "component6": {
- "type": "space", "l": 1, "r": 2, "b": 2 , "t": 3}
 , "component7": {
  "type": "ufoo0", "l": 1, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "horizontal",
- "component3",
- "component7"
-]
-, "relation2": [
- "vertical",
- "component4",
- "component5"
-]
 }, 
 {
 "guid": "fcf5e997-1bb3-4ed5-96e2-0003c726861d", "success": "0", "component0": {
  "type": "plat0", "l": 0, "r": 3, "b": 0 , "t": 1}
 , "component1": {
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
-, "component2": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component5": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component6": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component7": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
 , "component8": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component5",
- "component6"
-]
 }, 
 {
 "guid": "8077101b-ce7a-4b41-ab5b-0ee83e76039a", "success": "1", "component0": {
@@ -84,23 +32,12 @@
  "type": "plat90", "l": 0, "r": 1, "b": 1 , "t": 4}
 , "component2": {
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
-, "component3": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component4": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component5": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
 , "component6": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
 , "relation1": [
  "horizontal",
  "component1",
  "component2"
-]
-, "relation2": [
- "vertical",
- "component3",
- "component4"
 ]
 }, 
 {
@@ -110,19 +47,8 @@
  "type": "plat90", "l": 0, "r": 1, "b": 0 , "t": 3}
 , "component2": {
  "type": "plat90", "l": 2, "r": 3, "b": 0 , "t": 3}
-, "component3": {
- "type": "space", "l": 1, "r": 2, "b": 0 , "t": 1}
-, "component4": {
- "type": "space", "l": 1, "r": 2, "b": 1 , "t": 2}
-, "component5": {
- "type": "space", "l": 1, "r": 2, "b": 2 , "t": 3}
 , "component6": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component3",
- "component4"
-]
 }, 
 {
 "guid": "8382c37f-e00c-4df8-b4fd-fe316360ad0a", "success": "0", "component0": {
@@ -135,44 +61,16 @@
  "type": "plat90", "l": 0, "r": 1, "b": 0 , "t": 3}
 , "component2": {
  "type": "plat90", "l": 2, "r": 3, "b": 0 , "t": 3}
-, "component3": {
- "type": "space", "l": 1, "r": 2, "b": 0 , "t": 1}
-, "component4": {
- "type": "space", "l": 1, "r": 2, "b": 1 , "t": 2}
-, "component5": {
- "type": "space", "l": 1, "r": 2, "b": 2 , "t": 3}
 , "component6": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component3",
- "component4"
-]
 }, 
 {
 "guid": "3ccc238c-0db4-47b9-b004-be524a492cbf", "success": "0", "component0": {
  "type": "plat0", "l": 0, "r": 3, "b": 0 , "t": 1}
 , "component1": {
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
-, "component2": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component5": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component6": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component7": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
 , "component8": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component5",
- "component6"
-]
 }, 
 {
 "guid": "827504a3-b036-4b7b-9d77-7c3f727ab8e7", "success": "1", "component0": {
@@ -181,19 +79,8 @@
  "type": "plat90", "l": 0, "r": 1, "b": 0 , "t": 3}
 , "component2": {
  "type": "plat90", "l": 2, "r": 3, "b": 0 , "t": 3}
-, "component3": {
- "type": "space", "l": 1, "r": 2, "b": 0 , "t": 1}
-, "component4": {
- "type": "space", "l": 1, "r": 2, "b": 1 , "t": 2}
-, "component5": {
- "type": "space", "l": 1, "r": 2, "b": 2 , "t": 3}
 , "component6": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component3",
- "component4"
-]
 }, 
 {
 "guid": "a7070c51-3902-4fb5-9b03-2bb3cf3224eb", "success": "1", "component0": {
@@ -202,19 +89,8 @@
  "type": "plat90", "l": 0, "r": 1, "b": 0 , "t": 3}
 , "component2": {
  "type": "plat90", "l": 2, "r": 3, "b": 0 , "t": 3}
-, "component3": {
- "type": "space", "l": 1, "r": 2, "b": 0 , "t": 1}
-, "component4": {
- "type": "space", "l": 1, "r": 2, "b": 1 , "t": 2}
-, "component5": {
- "type": "space", "l": 1, "r": 2, "b": 2 , "t": 3}
 , "component6": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component3",
- "component4"
-]
 }, 
 {
 "guid": "62837f23-1d42-4e6b-8198-f4ef2ad0f13d", "success": "1", "component0": {
@@ -223,44 +99,16 @@
  "type": "plat90", "l": 0, "r": 1, "b": 0 , "t": 3}
 , "component2": {
  "type": "plat90", "l": 2, "r": 3, "b": 0 , "t": 3}
-, "component3": {
- "type": "space", "l": 1, "r": 2, "b": 0 , "t": 1}
-, "component4": {
- "type": "space", "l": 1, "r": 2, "b": 1 , "t": 2}
-, "component5": {
- "type": "space", "l": 1, "r": 2, "b": 2 , "t": 3}
 , "component6": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component3",
- "component4"
-]
 }, 
 {
 "guid": "b5e342bf-7c43-4d3d-9bb2-4b8ac8e70a7e", "success": "0", "component0": {
  "type": "plat0", "l": 0, "r": 3, "b": 0 , "t": 1}
 , "component1": {
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
-, "component2": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component5": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component6": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component7": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
 , "component8": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component5",
- "component6"
-]
 }, 
 {
 "guid": "e77f50b3-7781-4b35-a677-839944ec54d8", "success": "1", "component0": {
@@ -269,12 +117,6 @@
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
 , "component2": {
  "type": "plat90", "l": 2, "r": 3, "b": 1 , "t": 4}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component5": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
 , "component6": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
 , "relation1": [
@@ -288,25 +130,8 @@
  "type": "plat0", "l": 0, "r": 3, "b": 0 , "t": 1}
 , "component1": {
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
-, "component2": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component5": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component6": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component7": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
 , "component8": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component5",
- "component6"
-]
 }, 
 {
 "guid": "2b0c468e-131d-4001-9708-5522153f2f79", "success": "1", "component0": {
@@ -315,12 +140,6 @@
  "type": "plat90", "l": 0, "r": 1, "b": 1 , "t": 4}
 , "component2": {
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
-, "component3": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component4": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component5": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
 , "component6": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
 , "relation1": [
@@ -328,61 +147,22 @@
  "component1",
  "component2"
 ]
-, "relation2": [
- "vertical",
- "component3",
- "component4"
-]
 }, 
 {
 "guid": "57bfbf99-312e-4902-805e-b8ec0c32aced", "success": "0", "component0": {
  "type": "plat0", "l": 0, "r": 3, "b": 0 , "t": 1}
 , "component1": {
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
-, "component2": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component5": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component6": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component7": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
 , "component8": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component5",
- "component6"
-]
 }, 
 {
 "guid": "ef8593b2-a510-4edd-945d-89690a0ccb79", "success": "0", "component0": {
  "type": "plat0", "l": 0, "r": 3, "b": 0 , "t": 1}
 , "component1": {
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
-, "component2": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component5": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component6": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component7": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
 , "component8": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component5",
- "component6"
-]
 }, 
 {
 "guid": "d76953e5-956c-473d-968d-d97d672ce3f0", "success": "0", "component0": {
@@ -391,118 +171,12 @@
  "type": "plat0", "l": 3, "r": 6, "b": 0 , "t": 1}
 , "component2": {
  "type": "plat90", "l": 4, "r": 5, "b": 1 , "t": 4}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component5": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component6": {
- "type": "space", "l": 0, "r": 1, "b": 4 , "t": 5}
-, "component7": {
- "type": "space", "l": 1, "r": 2, "b": 1 , "t": 2}
-, "component8": {
- "type": "space", "l": 1, "r": 2, "b": 2 , "t": 3}
-, "component9": {
- "type": "space", "l": 1, "r": 2, "b": 3 , "t": 4}
-, "component10": {
- "type": "space", "l": 1, "r": 2, "b": 4 , "t": 5}
-, "component11": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component12": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component13": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
-, "component14": {
- "type": "space", "l": 2, "r": 3, "b": 4 , "t": 5}
-, "component15": {
- "type": "space", "l": 3, "r": 4, "b": 1 , "t": 2}
-, "component16": {
- "type": "space", "l": 3, "r": 4, "b": 2 , "t": 3}
-, "component17": {
- "type": "space", "l": 3, "r": 4, "b": 3 , "t": 4}
-, "component18": {
- "type": "space", "l": 5, "r": 6, "b": 1 , "t": 2}
-, "component19": {
- "type": "space", "l": 5, "r": 6, "b": 2 , "t": 3}
-, "component20": {
- "type": "space", "l": 5, "r": 6, "b": 3 , "t": 4}
 , "component21": {
  "type": "ufoo0", "l": 3, "r": 6, "b": 4 , "t": 5}
 , "relation1": [
  "horizontal",
  "component0",
  "component1"
-]
-, "relation2": [
- "horizontal",
- "component3",
- "component7"
-]
-, "relation3": [
- "horizontal",
- "component4",
- "component8"
-]
-, "relation4": [
- "horizontal",
- "component5",
- "component9"
-]
-, "relation5": [
- "horizontal",
- "component6",
- "component10"
-]
-, "relation6": [
- "horizontal",
- "component7",
- "component11"
-]
-, "relation7": [
- "horizontal",
- "component8",
- "component12"
-]
-, "relation8": [
- "horizontal",
- "component9",
- "component13"
-]
-, "relation9": [
- "horizontal",
- "component10",
- "component14"
-]
-, "relation10": [
- "vertical",
- "component11",
- "component12"
-]
-, "relation11": [
- "horizontal",
- "component11",
- "component15"
-]
-, "relation12": [
- "horizontal",
- "component12",
- "component16"
-]
-, "relation13": [
- "horizontal",
- "component13",
- "component17"
-]
-, "relation14": [
- "horizontal",
- "component14",
- "component21"
-]
-, "relation15": [
- "vertical",
- "component16",
- "component17"
 ]
 }, 
 {
@@ -512,154 +186,8 @@
  "type": "plat0", "l": 4, "r": 7, "b": 0 , "t": 1}
 , "component2": {
  "type": "plat90", "l": 3, "r": 4, "b": 1 , "t": 4}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component5": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component6": {
- "type": "space", "l": 0, "r": 1, "b": 4 , "t": 5}
-, "component7": {
- "type": "space", "l": 1, "r": 2, "b": 1 , "t": 2}
-, "component8": {
- "type": "space", "l": 1, "r": 2, "b": 2 , "t": 3}
-, "component9": {
- "type": "space", "l": 1, "r": 2, "b": 3 , "t": 4}
-, "component10": {
- "type": "space", "l": 1, "r": 2, "b": 4 , "t": 5}
-, "component11": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component12": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component13": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
-, "component14": {
- "type": "space", "l": 3, "r": 4, "b": 0 , "t": 1}
-, "component15": {
- "type": "space", "l": 4, "r": 5, "b": 1 , "t": 2}
-, "component16": {
- "type": "space", "l": 4, "r": 5, "b": 2 , "t": 3}
-, "component17": {
- "type": "space", "l": 4, "r": 5, "b": 3 , "t": 4}
-, "component18": {
- "type": "space", "l": 5, "r": 6, "b": 1 , "t": 2}
-, "component19": {
- "type": "space", "l": 5, "r": 6, "b": 2 , "t": 3}
-, "component20": {
- "type": "space", "l": 5, "r": 6, "b": 3 , "t": 4}
-, "component21": {
- "type": "space", "l": 5, "r": 6, "b": 4 , "t": 5}
-, "component22": {
- "type": "space", "l": 6, "r": 7, "b": 1 , "t": 2}
-, "component23": {
- "type": "space", "l": 6, "r": 7, "b": 2 , "t": 3}
-, "component24": {
- "type": "space", "l": 6, "r": 7, "b": 3 , "t": 4}
-, "component25": {
- "type": "space", "l": 6, "r": 7, "b": 4 , "t": 5}
 , "component26": {
  "type": "ufoo0", "l": 2, "r": 5, "b": 4 , "t": 5}
-, "relation1": [
- "horizontal",
- "component0",
- "component14"
-]
-, "relation2": [
- "horizontal",
- "component3",
- "component7"
-]
-, "relation3": [
- "horizontal",
- "component4",
- "component8"
-]
-, "relation4": [
- "horizontal",
- "component5",
- "component9"
-]
-, "relation5": [
- "horizontal",
- "component6",
- "component10"
-]
-, "relation6": [
- "horizontal",
- "component7",
- "component11"
-]
-, "relation7": [
- "horizontal",
- "component8",
- "component12"
-]
-, "relation8": [
- "horizontal",
- "component9",
- "component13"
-]
-, "relation9": [
- "horizontal",
- "component10",
- "component26"
-]
-, "relation10": [
- "vertical",
- "component11",
- "component12"
-]
-, "relation11": [
- "horizontal",
- "component14",
- "component1"
-]
-, "relation12": [
- "horizontal",
- "component15",
- "component18"
-]
-, "relation13": [
- "horizontal",
- "component16",
- "component19"
-]
-, "relation14": [
- "horizontal",
- "component17",
- "component20"
-]
-, "relation15": [
- "vertical",
- "component17",
- "component26"
-]
-, "relation16": [
- "horizontal",
- "component18",
- "component22"
-]
-, "relation17": [
- "horizontal",
- "component19",
- "component23"
-]
-, "relation18": [
- "horizontal",
- "component20",
- "component24"
-]
-, "relation19": [
- "horizontal",
- "component21",
- "component25"
-]
-, "relation20": [
- "horizontal",
- "component26",
- "component21"
-]
 }, 
 {
 "guid": "e103efce-9cf4-4891-8217-36713ac46386", "success": "0", "component0": {
@@ -668,118 +196,12 @@
  "type": "plat0", "l": 3, "r": 6, "b": 0 , "t": 1}
 , "component2": {
  "type": "plat90", "l": 2, "r": 3, "b": 1 , "t": 4}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component5": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component6": {
- "type": "space", "l": 0, "r": 1, "b": 4 , "t": 5}
-, "component7": {
- "type": "space", "l": 1, "r": 2, "b": 1 , "t": 2}
-, "component8": {
- "type": "space", "l": 1, "r": 2, "b": 2 , "t": 3}
-, "component9": {
- "type": "space", "l": 1, "r": 2, "b": 3 , "t": 4}
-, "component10": {
- "type": "space", "l": 3, "r": 4, "b": 1 , "t": 2}
-, "component11": {
- "type": "space", "l": 3, "r": 4, "b": 2 , "t": 3}
-, "component12": {
- "type": "space", "l": 3, "r": 4, "b": 3 , "t": 4}
-, "component13": {
- "type": "space", "l": 4, "r": 5, "b": 1 , "t": 2}
-, "component14": {
- "type": "space", "l": 4, "r": 5, "b": 2 , "t": 3}
-, "component15": {
- "type": "space", "l": 4, "r": 5, "b": 3 , "t": 4}
-, "component16": {
- "type": "space", "l": 4, "r": 5, "b": 4 , "t": 5}
-, "component17": {
- "type": "space", "l": 5, "r": 6, "b": 1 , "t": 2}
-, "component18": {
- "type": "space", "l": 5, "r": 6, "b": 2 , "t": 3}
-, "component19": {
- "type": "space", "l": 5, "r": 6, "b": 3 , "t": 4}
-, "component20": {
- "type": "space", "l": 5, "r": 6, "b": 4 , "t": 5}
 , "component21": {
  "type": "ufoo0", "l": 1, "r": 4, "b": 4 , "t": 5}
 , "relation1": [
  "horizontal",
  "component0",
  "component1"
-]
-, "relation2": [
- "horizontal",
- "component3",
- "component7"
-]
-, "relation3": [
- "horizontal",
- "component4",
- "component8"
-]
-, "relation4": [
- "horizontal",
- "component5",
- "component9"
-]
-, "relation5": [
- "horizontal",
- "component6",
- "component21"
-]
-, "relation6": [
- "horizontal",
- "component10",
- "component13"
-]
-, "relation7": [
- "vertical",
- "component11",
- "component12"
-]
-, "relation8": [
- "horizontal",
- "component11",
- "component14"
-]
-, "relation9": [
- "horizontal",
- "component12",
- "component15"
-]
-, "relation10": [
- "horizontal",
- "component13",
- "component17"
-]
-, "relation11": [
- "horizontal",
- "component14",
- "component18"
-]
-, "relation12": [
- "vertical",
- "component15",
- "component16"
-]
-, "relation13": [
- "horizontal",
- "component15",
- "component19"
-]
-, "relation14": [
- "horizontal",
- "component16",
- "component20"
-]
-, "relation15": [
- "horizontal",
- "component21",
- "component16"
 ]
 }, 
 {
@@ -789,44 +211,8 @@
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
 , "component2": {
  "type": "plat90", "l": 3, "r": 4, "b": 0 , "t": 3}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component5": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component6": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component7": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component8": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
-, "component9": {
- "type": "space", "l": 3, "r": 4, "b": 3 , "t": 4}
-, "component10": {
- "type": "space", "l": 3, "r": 4, "b": 4 , "t": 5}
 , "component11": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component2",
- "component9"
-]
-, "relation2": [
- "vertical",
- "component6",
- "component7"
-]
-, "relation3": [
- "horizontal",
- "component8",
- "component9"
-]
-, "relation4": [
- "horizontal",
- "component11",
- "component10"
-]
 }, 
 {
 "guid": "e0c6966e-6130-4ecc-88ab-8f0449d9feef", "success": "1", "component0": {
@@ -835,94 +221,32 @@
  "type": "plat90", "l": 0, "r": 1, "b": 0 , "t": 3}
 , "component2": {
  "type": "plat90", "l": 2, "r": 3, "b": 0 , "t": 3}
-, "component3": {
- "type": "space", "l": 1, "r": 2, "b": 0 , "t": 1}
-, "component4": {
- "type": "space", "l": 1, "r": 2, "b": 1 , "t": 2}
-, "component5": {
- "type": "space", "l": 1, "r": 2, "b": 2 , "t": 3}
 , "component6": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component3",
- "component4"
-]
 }, 
 {
 "guid": "6a8fec38-9aeb-493b-b3a0-d2202b12063c", "success": "0", "component0": {
  "type": "plat0", "l": 0, "r": 3, "b": 0 , "t": 1}
 , "component1": {
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
-, "component2": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component5": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component6": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component7": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
 , "component8": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component5",
- "component6"
-]
 }, 
 {
 "guid": "3ad6cc73-7e2c-40cf-a1cd-d008f9de9568", "success": "0", "component0": {
  "type": "plat0", "l": 0, "r": 3, "b": 0 , "t": 1}
 , "component1": {
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
-, "component2": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component5": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component6": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component7": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
 , "component8": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component5",
- "component6"
-]
 }, 
 {
 "guid": "5a4049c5-c7d5-4b58-a0e2-411957779087", "success": "0", "component0": {
  "type": "plat0", "l": 0, "r": 3, "b": 0 , "t": 1}
 , "component1": {
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
-, "component2": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component5": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component6": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component7": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
 , "component8": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component5",
- "component6"
-]
 }, 
 {
 "guid": "7132b528-7add-4efd-95d6-6b772f5f2990", "success": "1", "component0": {
@@ -931,23 +255,12 @@
  "type": "plat90", "l": 0, "r": 1, "b": 1 , "t": 4}
 , "component2": {
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
-, "component3": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component4": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component5": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
 , "component6": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
 , "relation1": [
  "horizontal",
  "component1",
  "component2"
-]
-, "relation2": [
- "vertical",
- "component3",
- "component4"
 ]
 }, 
 {
@@ -957,44 +270,16 @@
  "type": "plat90", "l": 0, "r": 1, "b": 0 , "t": 3}
 , "component2": {
  "type": "plat90", "l": 2, "r": 3, "b": 0 , "t": 3}
-, "component3": {
- "type": "space", "l": 1, "r": 2, "b": 0 , "t": 1}
-, "component4": {
- "type": "space", "l": 1, "r": 2, "b": 1 , "t": 2}
-, "component5": {
- "type": "space", "l": 1, "r": 2, "b": 2 , "t": 3}
 , "component6": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component3",
- "component4"
-]
 }, 
 {
 "guid": "20fa6cbd-ff38-4928-b9fe-899616a3fc4d", "success": "0", "component0": {
  "type": "plat0", "l": 0, "r": 3, "b": 0 , "t": 1}
 , "component1": {
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
-, "component2": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component5": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component6": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component7": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
 , "component8": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component5",
- "component6"
-]
 }, 
 {
 "guid": "3eb2f9eb-5c72-494d-8ac3-58de595dc679", "success": "1", "component0": {
@@ -1003,44 +288,16 @@
  "type": "plat90", "l": 0, "r": 1, "b": 0 , "t": 3}
 , "component2": {
  "type": "plat90", "l": 2, "r": 3, "b": 0 , "t": 3}
-, "component3": {
- "type": "space", "l": 1, "r": 2, "b": 0 , "t": 1}
-, "component4": {
- "type": "space", "l": 1, "r": 2, "b": 1 , "t": 2}
-, "component5": {
- "type": "space", "l": 1, "r": 2, "b": 2 , "t": 3}
 , "component6": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component3",
- "component4"
-]
 }, 
 {
 "guid": "92909385-a1d6-41c1-9304-68a73e1a61bd", "success": "0", "component0": {
  "type": "plat0", "l": 0, "r": 3, "b": 0 , "t": 1}
 , "component1": {
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
-, "component2": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component5": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component6": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component7": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
 , "component8": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component5",
- "component6"
-]
 }, 
 {
 "guid": "c4878371-6aaa-4b3b-9c08-b703598675a3", "success": "1", "component0": {
@@ -1049,44 +306,16 @@
  "type": "plat90", "l": 0, "r": 1, "b": 0 , "t": 3}
 , "component2": {
  "type": "plat90", "l": 2, "r": 3, "b": 0 , "t": 3}
-, "component3": {
- "type": "space", "l": 1, "r": 2, "b": 0 , "t": 1}
-, "component4": {
- "type": "space", "l": 1, "r": 2, "b": 1 , "t": 2}
-, "component5": {
- "type": "space", "l": 1, "r": 2, "b": 2 , "t": 3}
 , "component6": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component3",
- "component4"
-]
 }, 
 {
 "guid": "35475109-56b1-4d88-bbe6-3d0812200e5f", "success": "0", "component0": {
  "type": "plat0", "l": 0, "r": 3, "b": 0 , "t": 1}
 , "component1": {
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
-, "component2": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component5": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component6": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component7": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
 , "component8": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component5",
- "component6"
-]
 }, 
 {
 "guid": "e9cb7a46-aa56-4992-ac98-62b6626ec54c", "success": "0", "component0": {
@@ -1097,25 +326,8 @@
  "type": "plat0", "l": 0, "r": 3, "b": 0 , "t": 1}
 , "component1": {
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
-, "component2": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component5": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component6": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component7": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
 , "component8": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component5",
- "component6"
-]
 }, 
 {
 "guid": "3dfdf15b-47ba-490a-adb0-7187d5121933", "success": "0", "component0": {
@@ -1124,44 +336,8 @@
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
 , "component2": {
  "type": "plat90", "l": 3, "r": 4, "b": 0 , "t": 3}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component5": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component6": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component7": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component8": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
-, "component9": {
- "type": "space", "l": 3, "r": 4, "b": 3 , "t": 4}
-, "component10": {
- "type": "space", "l": 3, "r": 4, "b": 4 , "t": 5}
 , "component11": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component2",
- "component9"
-]
-, "relation2": [
- "vertical",
- "component6",
- "component7"
-]
-, "relation3": [
- "horizontal",
- "component8",
- "component9"
-]
-, "relation4": [
- "horizontal",
- "component11",
- "component10"
-]
 }, 
 {
 "guid": "794fe0f6-8cf9-4312-ab8f-f44a22062e74", "success": "1", "component0": {
@@ -1170,69 +346,24 @@
  "type": "plat90", "l": 0, "r": 1, "b": 0 , "t": 3}
 , "component2": {
  "type": "plat90", "l": 2, "r": 3, "b": 0 , "t": 3}
-, "component3": {
- "type": "space", "l": 1, "r": 2, "b": 0 , "t": 1}
-, "component4": {
- "type": "space", "l": 1, "r": 2, "b": 1 , "t": 2}
-, "component5": {
- "type": "space", "l": 1, "r": 2, "b": 2 , "t": 3}
 , "component6": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component3",
- "component4"
-]
 }, 
 {
 "guid": "a8f3dbd7-f7e6-4222-9de6-ca0e231acc72", "success": "0", "component0": {
  "type": "plat0", "l": 0, "r": 3, "b": 0 , "t": 1}
 , "component1": {
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
-, "component2": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component5": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component6": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component7": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
 , "component8": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component5",
- "component6"
-]
 }, 
 {
 "guid": "614986e3-fbbc-492a-86d5-e8a489aeb7d5", "success": "0", "component0": {
  "type": "plat0", "l": 0, "r": 3, "b": 0 , "t": 1}
 , "component1": {
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
-, "component2": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component5": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component6": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component7": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
 , "component8": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component5",
- "component6"
-]
 }, 
 {
 "guid": "2311a212-7495-4a4b-aadb-1606070effb8", "success": "1", "component0": {
@@ -1241,25 +372,12 @@
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
 , "component2": {
  "type": "plat90", "l": 2, "r": 3, "b": 1 , "t": 4}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component5": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component6": {
- "type": "space", "l": 0, "r": 1, "b": 4 , "t": 5}
 , "component7": {
  "type": "ufoo0", "l": 1, "r": 3, "b": 4 , "t": 5}
 , "relation1": [
  "horizontal",
  "component1",
  "component2"
-]
-, "relation2": [
- "horizontal",
- "component6",
- "component7"
 ]
 }, 
 {
@@ -1269,12 +387,6 @@
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
 , "component2": {
  "type": "plat90", "l": 2, "r": 3, "b": 1 , "t": 4}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component5": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
 , "component6": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
 , "relation1": [
@@ -1290,12 +402,6 @@
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
 , "component2": {
  "type": "plat90", "l": 2, "r": 3, "b": 1 , "t": 4}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component5": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
 , "component6": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
 , "relation1": [
@@ -1309,100 +415,32 @@
  "type": "plat0", "l": 0, "r": 3, "b": 0 , "t": 1}
 , "component1": {
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
-, "component2": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component5": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component6": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component7": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
 , "component8": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component5",
- "component6"
-]
 }, 
 {
 "guid": "5f2caa82-6d05-41da-8245-bc40a74fab5a", "success": "0", "component0": {
  "type": "plat0", "l": 0, "r": 3, "b": 0 , "t": 1}
 , "component1": {
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
-, "component2": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component5": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component6": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component7": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
 , "component8": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component5",
- "component6"
-]
 }, 
 {
 "guid": "4b1261db-645e-45b1-a758-49c1b15d97ab", "success": "0", "component0": {
  "type": "plat0", "l": 0, "r": 3, "b": 0 , "t": 1}
 , "component1": {
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
-, "component2": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component5": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component6": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component7": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
 , "component8": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component5",
- "component6"
-]
 }, 
 {
 "guid": "6cc923db-9630-4e2f-8a09-ddb29184be35", "success": "0", "component0": {
  "type": "plat0", "l": 0, "r": 3, "b": 0 , "t": 1}
 , "component1": {
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
-, "component2": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component5": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component6": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component7": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
 , "component8": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component5",
- "component6"
-]
 }, 
 {
 "guid": "7ddd6647-1c4e-4018-8101-e2323a5fef02", "success": "0", "component0": {
@@ -1411,118 +449,12 @@
  "type": "plat0", "l": 3, "r": 6, "b": 0 , "t": 1}
 , "component2": {
  "type": "plat90", "l": 4, "r": 5, "b": 1 , "t": 4}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component5": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component6": {
- "type": "space", "l": 0, "r": 1, "b": 4 , "t": 5}
-, "component7": {
- "type": "space", "l": 1, "r": 2, "b": 1 , "t": 2}
-, "component8": {
- "type": "space", "l": 1, "r": 2, "b": 2 , "t": 3}
-, "component9": {
- "type": "space", "l": 1, "r": 2, "b": 3 , "t": 4}
-, "component10": {
- "type": "space", "l": 1, "r": 2, "b": 4 , "t": 5}
-, "component11": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component12": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component13": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
-, "component14": {
- "type": "space", "l": 2, "r": 3, "b": 4 , "t": 5}
-, "component15": {
- "type": "space", "l": 3, "r": 4, "b": 1 , "t": 2}
-, "component16": {
- "type": "space", "l": 3, "r": 4, "b": 2 , "t": 3}
-, "component17": {
- "type": "space", "l": 3, "r": 4, "b": 3 , "t": 4}
-, "component18": {
- "type": "space", "l": 5, "r": 6, "b": 1 , "t": 2}
-, "component19": {
- "type": "space", "l": 5, "r": 6, "b": 2 , "t": 3}
-, "component20": {
- "type": "space", "l": 5, "r": 6, "b": 3 , "t": 4}
 , "component21": {
  "type": "ufoo0", "l": 3, "r": 6, "b": 4 , "t": 5}
 , "relation1": [
  "horizontal",
  "component0",
  "component1"
-]
-, "relation2": [
- "horizontal",
- "component3",
- "component7"
-]
-, "relation3": [
- "horizontal",
- "component4",
- "component8"
-]
-, "relation4": [
- "horizontal",
- "component5",
- "component9"
-]
-, "relation5": [
- "horizontal",
- "component6",
- "component10"
-]
-, "relation6": [
- "horizontal",
- "component7",
- "component11"
-]
-, "relation7": [
- "horizontal",
- "component8",
- "component12"
-]
-, "relation8": [
- "horizontal",
- "component9",
- "component13"
-]
-, "relation9": [
- "horizontal",
- "component10",
- "component14"
-]
-, "relation10": [
- "vertical",
- "component11",
- "component12"
-]
-, "relation11": [
- "horizontal",
- "component11",
- "component15"
-]
-, "relation12": [
- "horizontal",
- "component12",
- "component16"
-]
-, "relation13": [
- "horizontal",
- "component13",
- "component17"
-]
-, "relation14": [
- "horizontal",
- "component14",
- "component21"
-]
-, "relation15": [
- "vertical",
- "component16",
- "component17"
 ]
 }, 
 {
@@ -1532,125 +464,12 @@
  "type": "plat0", "l": 3, "r": 6, "b": 0 , "t": 1}
 , "component2": {
  "type": "plat90", "l": 3, "r": 4, "b": 1 , "t": 4}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component5": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component6": {
- "type": "space", "l": 0, "r": 1, "b": 4 , "t": 5}
-, "component7": {
- "type": "space", "l": 1, "r": 2, "b": 1 , "t": 2}
-, "component8": {
- "type": "space", "l": 1, "r": 2, "b": 2 , "t": 3}
-, "component9": {
- "type": "space", "l": 1, "r": 2, "b": 3 , "t": 4}
-, "component10": {
- "type": "space", "l": 1, "r": 2, "b": 4 , "t": 5}
-, "component11": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component12": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component13": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
-, "component14": {
- "type": "space", "l": 4, "r": 5, "b": 1 , "t": 2}
-, "component15": {
- "type": "space", "l": 4, "r": 5, "b": 2 , "t": 3}
-, "component16": {
- "type": "space", "l": 4, "r": 5, "b": 3 , "t": 4}
-, "component17": {
- "type": "space", "l": 4, "r": 5, "b": 4 , "t": 5}
-, "component18": {
- "type": "space", "l": 5, "r": 6, "b": 1 , "t": 2}
-, "component19": {
- "type": "space", "l": 5, "r": 6, "b": 2 , "t": 3}
-, "component20": {
- "type": "space", "l": 5, "r": 6, "b": 3 , "t": 4}
-, "component21": {
- "type": "space", "l": 5, "r": 6, "b": 4 , "t": 5}
 , "component22": {
  "type": "ufoo0", "l": 2, "r": 4, "b": 4 , "t": 5}
 , "relation1": [
  "horizontal",
  "component0",
  "component1"
-]
-, "relation2": [
- "horizontal",
- "component3",
- "component7"
-]
-, "relation3": [
- "horizontal",
- "component4",
- "component8"
-]
-, "relation4": [
- "horizontal",
- "component5",
- "component9"
-]
-, "relation5": [
- "horizontal",
- "component6",
- "component10"
-]
-, "relation6": [
- "horizontal",
- "component7",
- "component11"
-]
-, "relation7": [
- "horizontal",
- "component8",
- "component12"
-]
-, "relation8": [
- "horizontal",
- "component9",
- "component13"
-]
-, "relation9": [
- "horizontal",
- "component10",
- "component22"
-]
-, "relation10": [
- "vertical",
- "component11",
- "component12"
-]
-, "relation11": [
- "horizontal",
- "component14",
- "component18"
-]
-, "relation12": [
- "horizontal",
- "component15",
- "component19"
-]
-, "relation13": [
- "vertical",
- "component16",
- "component17"
-]
-, "relation14": [
- "horizontal",
- "component16",
- "component20"
-]
-, "relation15": [
- "horizontal",
- "component17",
- "component21"
-]
-, "relation16": [
- "horizontal",
- "component22",
- "component17"
 ]
 }, 
 {
@@ -1660,12 +479,6 @@
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
 , "component2": {
  "type": "plat90", "l": 2, "r": 3, "b": 1 , "t": 4}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component5": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
 , "component6": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
 , "relation1": [
@@ -1679,25 +492,8 @@
  "type": "plat0", "l": 0, "r": 3, "b": 0 , "t": 1}
 , "component1": {
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
-, "component2": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component5": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component6": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component7": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
 , "component8": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component5",
- "component6"
-]
 }, 
 {
 "guid": "1dfa3bd1-33bd-4bde-9021-4bb6b534d778", "success": "1", "component0": {
@@ -1706,23 +502,12 @@
  "type": "plat90", "l": 0, "r": 1, "b": 1 , "t": 4}
 , "component2": {
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
-, "component3": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component4": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component5": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
 , "component6": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
 , "relation1": [
  "horizontal",
  "component1",
  "component2"
-]
-, "relation2": [
- "vertical",
- "component3",
- "component4"
 ]
 }, 
 {
@@ -1732,23 +517,12 @@
  "type": "plat90", "l": 0, "r": 1, "b": 1 , "t": 4}
 , "component2": {
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
-, "component3": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component4": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component5": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
 , "component6": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
 , "relation1": [
  "horizontal",
  "component1",
  "component2"
-]
-, "relation2": [
- "vertical",
- "component3",
- "component4"
 ]
 }, 
 {
@@ -1758,12 +532,6 @@
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
 , "component2": {
  "type": "plat90", "l": 2, "r": 3, "b": 1 , "t": 4}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component5": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
 , "component6": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
 , "relation1": [
@@ -1779,23 +547,12 @@
  "type": "plat90", "l": 0, "r": 1, "b": 1 , "t": 4}
 , "component2": {
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
-, "component3": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component4": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component5": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
 , "component6": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
 , "relation1": [
  "horizontal",
  "component1",
  "component2"
-]
-, "relation2": [
- "vertical",
- "component3",
- "component4"
 ]
 }, 
 {
@@ -1805,19 +562,8 @@
  "type": "plat90", "l": 0, "r": 1, "b": 0 , "t": 3}
 , "component2": {
  "type": "plat90", "l": 2, "r": 3, "b": 0 , "t": 3}
-, "component3": {
- "type": "space", "l": 1, "r": 2, "b": 0 , "t": 1}
-, "component4": {
- "type": "space", "l": 1, "r": 2, "b": 1 , "t": 2}
-, "component5": {
- "type": "space", "l": 1, "r": 2, "b": 2 , "t": 3}
 , "component6": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component3",
- "component4"
-]
 }, 
 {
 "guid": "eb752f8f-7368-4421-801d-a4493326b94e", "success": "1", "component0": {
@@ -1826,19 +572,8 @@
  "type": "plat90", "l": 0, "r": 1, "b": 0 , "t": 3}
 , "component2": {
  "type": "plat90", "l": 2, "r": 3, "b": 0 , "t": 3}
-, "component3": {
- "type": "space", "l": 1, "r": 2, "b": 0 , "t": 1}
-, "component4": {
- "type": "space", "l": 1, "r": 2, "b": 1 , "t": 2}
-, "component5": {
- "type": "space", "l": 1, "r": 2, "b": 2 , "t": 3}
 , "component6": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component3",
- "component4"
-]
 }, 
 {
 "guid": "438eb07c-92c1-4c9f-a898-d6ece6f14378", "success": "1", "component0": {
@@ -1847,19 +582,8 @@
  "type": "plat90", "l": 0, "r": 1, "b": 0 , "t": 3}
 , "component2": {
  "type": "plat90", "l": 2, "r": 3, "b": 0 , "t": 3}
-, "component3": {
- "type": "space", "l": 1, "r": 2, "b": 0 , "t": 1}
-, "component4": {
- "type": "space", "l": 1, "r": 2, "b": 1 , "t": 2}
-, "component5": {
- "type": "space", "l": 1, "r": 2, "b": 2 , "t": 3}
 , "component6": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component3",
- "component4"
-]
 }, 
 {
 "guid": "d83a4428-9f75-4d92-90e3-c042ffd8e7b9", "success": "1", "component0": {
@@ -1868,19 +592,8 @@
  "type": "plat90", "l": 0, "r": 1, "b": 0 , "t": 3}
 , "component2": {
  "type": "plat90", "l": 2, "r": 3, "b": 0 , "t": 3}
-, "component3": {
- "type": "space", "l": 1, "r": 2, "b": 0 , "t": 1}
-, "component4": {
- "type": "space", "l": 1, "r": 2, "b": 1 , "t": 2}
-, "component5": {
- "type": "space", "l": 1, "r": 2, "b": 2 , "t": 3}
 , "component6": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component3",
- "component4"
-]
 }, 
 {
 "guid": "3c6f925a-21c4-483f-b40d-93128f61421b", "success": "1", "component0": {
@@ -1889,19 +602,8 @@
  "type": "plat90", "l": 0, "r": 1, "b": 0 , "t": 3}
 , "component2": {
  "type": "plat90", "l": 2, "r": 3, "b": 0 , "t": 3}
-, "component3": {
- "type": "space", "l": 1, "r": 2, "b": 0 , "t": 1}
-, "component4": {
- "type": "space", "l": 1, "r": 2, "b": 1 , "t": 2}
-, "component5": {
- "type": "space", "l": 1, "r": 2, "b": 2 , "t": 3}
 , "component6": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component3",
- "component4"
-]
 }, 
 {
 "guid": "1516f335-5a66-4d9e-9f67-67a3cc65a5ba", "success": "1", "component0": {
@@ -1910,69 +612,24 @@
  "type": "plat90", "l": 0, "r": 1, "b": 0 , "t": 3}
 , "component2": {
  "type": "plat90", "l": 2, "r": 3, "b": 0 , "t": 3}
-, "component3": {
- "type": "space", "l": 1, "r": 2, "b": 0 , "t": 1}
-, "component4": {
- "type": "space", "l": 1, "r": 2, "b": 1 , "t": 2}
-, "component5": {
- "type": "space", "l": 1, "r": 2, "b": 2 , "t": 3}
 , "component6": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component3",
- "component4"
-]
 }, 
 {
 "guid": "25401124-50ea-4f52-b30d-ba6fac9e1c14", "success": "0", "component0": {
  "type": "plat0", "l": 0, "r": 3, "b": 0 , "t": 1}
 , "component1": {
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
-, "component2": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component5": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component6": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component7": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
 , "component8": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component5",
- "component6"
-]
 }, 
 {
 "guid": "660ac76d-93b3-4ce7-8a15-a3213e9103f5", "success": "0", "component0": {
  "type": "plat0", "l": 0, "r": 3, "b": 0 , "t": 1}
 , "component1": {
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
-, "component2": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component5": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component6": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component7": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
 , "component8": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component5",
- "component6"
-]
 }, 
 {
 "guid": "701ce881-ccb3-427f-960c-887216b59d51", "success": "1", "component0": {
@@ -1981,19 +638,8 @@
  "type": "plat90", "l": 0, "r": 1, "b": 0 , "t": 3}
 , "component2": {
  "type": "plat90", "l": 2, "r": 3, "b": 0 , "t": 3}
-, "component3": {
- "type": "space", "l": 1, "r": 2, "b": 0 , "t": 1}
-, "component4": {
- "type": "space", "l": 1, "r": 2, "b": 1 , "t": 2}
-, "component5": {
- "type": "space", "l": 1, "r": 2, "b": 2 , "t": 3}
 , "component6": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component3",
- "component4"
-]
 }, 
 {
 "guid": "780adfe3-570a-4e6c-a900-e15d5176f767", "success": "1", "component0": {
@@ -2002,23 +648,12 @@
  "type": "plat90", "l": 0, "r": 1, "b": 1 , "t": 4}
 , "component2": {
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
-, "component3": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component4": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component5": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
 , "component6": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
 , "relation1": [
  "horizontal",
  "component1",
  "component2"
-]
-, "relation2": [
- "vertical",
- "component3",
- "component4"
 ]
 }, 
 {
@@ -2028,69 +663,24 @@
  "type": "plat90", "l": 0, "r": 1, "b": 0 , "t": 3}
 , "component2": {
  "type": "plat90", "l": 2, "r": 3, "b": 0 , "t": 3}
-, "component3": {
- "type": "space", "l": 1, "r": 2, "b": 0 , "t": 1}
-, "component4": {
- "type": "space", "l": 1, "r": 2, "b": 1 , "t": 2}
-, "component5": {
- "type": "space", "l": 1, "r": 2, "b": 2 , "t": 3}
 , "component6": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component3",
- "component4"
-]
 }, 
 {
 "guid": "ebe2f9af-9146-45aa-a646-11baf01ac0dd", "success": "0", "component0": {
  "type": "plat0", "l": 0, "r": 3, "b": 0 , "t": 1}
 , "component1": {
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
-, "component2": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component5": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component6": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component7": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
 , "component8": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component5",
- "component6"
-]
 }, 
 {
 "guid": "4c8ab231-130a-4123-bd89-7aeab934024f", "success": "0", "component0": {
  "type": "plat0", "l": 0, "r": 3, "b": 0 , "t": 1}
 , "component1": {
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
-, "component2": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component5": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component6": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component7": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
 , "component8": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component5",
- "component6"
-]
 }, 
 {
 "guid": "44b2006d-ac52-48fb-aade-42d06f20d1ac", "success": "1", "component0": {
@@ -2099,19 +689,8 @@
  "type": "plat90", "l": 0, "r": 1, "b": 0 , "t": 3}
 , "component2": {
  "type": "plat90", "l": 2, "r": 3, "b": 0 , "t": 3}
-, "component3": {
- "type": "space", "l": 1, "r": 2, "b": 0 , "t": 1}
-, "component4": {
- "type": "space", "l": 1, "r": 2, "b": 1 , "t": 2}
-, "component5": {
- "type": "space", "l": 1, "r": 2, "b": 2 , "t": 3}
 , "component6": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component3",
- "component4"
-]
 }, 
 {
 "guid": "7f25e9c2-03eb-46e4-b182-a58421c7bb14", "success": "1", "component0": {
@@ -2120,23 +699,12 @@
  "type": "plat90", "l": 0, "r": 1, "b": 1 , "t": 4}
 , "component2": {
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
-, "component3": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component4": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component5": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
 , "component6": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
 , "relation1": [
  "horizontal",
  "component1",
  "component2"
-]
-, "relation2": [
- "vertical",
- "component3",
- "component4"
 ]
 }, 
 {
@@ -2146,12 +714,6 @@
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
 , "component2": {
  "type": "plat90", "l": 2, "r": 3, "b": 1 , "t": 4}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component5": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
 , "component6": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
 , "relation1": [
@@ -2175,25 +737,8 @@
  "type": "plat0", "l": 0, "r": 3, "b": 0 , "t": 1}
 , "component1": {
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
-, "component2": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component5": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component6": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component7": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
 , "component8": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component5",
- "component6"
-]
 }, 
 {
 "guid": "dcdb91c1-d1d4-43a1-9484-e031568a360b", "success": "1", "component0": {
@@ -2202,19 +747,8 @@
  "type": "plat90", "l": 0, "r": 1, "b": 0 , "t": 3}
 , "component2": {
  "type": "plat90", "l": 2, "r": 3, "b": 0 , "t": 3}
-, "component3": {
- "type": "space", "l": 1, "r": 2, "b": 0 , "t": 1}
-, "component4": {
- "type": "space", "l": 1, "r": 2, "b": 1 , "t": 2}
-, "component5": {
- "type": "space", "l": 1, "r": 2, "b": 2 , "t": 3}
 , "component6": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component3",
- "component4"
-]
 }, 
 {
 "guid": "af92d949-2d16-4f07-b822-bff35ec4ae4d", "success": "1", "component0": {
@@ -2223,12 +757,6 @@
  "type": "plat90", "l": 0, "r": 1, "b": 1 , "t": 4}
 , "component2": {
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
-, "component3": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component4": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component5": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
 , "component6": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
 , "relation1": [
@@ -2236,36 +764,14 @@
  "component1",
  "component2"
 ]
-, "relation2": [
- "vertical",
- "component3",
- "component4"
-]
 }, 
 {
 "guid": "1b19be75-ac28-4bbf-ba75-8effc3a26502", "success": "0", "component0": {
  "type": "plat0", "l": 0, "r": 3, "b": 0 , "t": 1}
 , "component1": {
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
-, "component2": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component5": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component6": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component7": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
 , "component8": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component5",
- "component6"
-]
 }, 
 {
 "guid": "8a43f004-9360-4c81-9080-d0fa9ecd2fcf", "success": "0", "component0": {
@@ -2274,154 +780,8 @@
  "type": "plat0", "l": 4, "r": 7, "b": 0 , "t": 1}
 , "component2": {
  "type": "plat90", "l": 3, "r": 4, "b": 1 , "t": 4}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component5": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component6": {
- "type": "space", "l": 0, "r": 1, "b": 4 , "t": 5}
-, "component7": {
- "type": "space", "l": 1, "r": 2, "b": 1 , "t": 2}
-, "component8": {
- "type": "space", "l": 1, "r": 2, "b": 2 , "t": 3}
-, "component9": {
- "type": "space", "l": 1, "r": 2, "b": 3 , "t": 4}
-, "component10": {
- "type": "space", "l": 1, "r": 2, "b": 4 , "t": 5}
-, "component11": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component12": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component13": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
-, "component14": {
- "type": "space", "l": 3, "r": 4, "b": 0 , "t": 1}
-, "component15": {
- "type": "space", "l": 4, "r": 5, "b": 1 , "t": 2}
-, "component16": {
- "type": "space", "l": 4, "r": 5, "b": 2 , "t": 3}
-, "component17": {
- "type": "space", "l": 4, "r": 5, "b": 3 , "t": 4}
-, "component18": {
- "type": "space", "l": 5, "r": 6, "b": 1 , "t": 2}
-, "component19": {
- "type": "space", "l": 5, "r": 6, "b": 2 , "t": 3}
-, "component20": {
- "type": "space", "l": 5, "r": 6, "b": 3 , "t": 4}
-, "component21": {
- "type": "space", "l": 5, "r": 6, "b": 4 , "t": 5}
-, "component22": {
- "type": "space", "l": 6, "r": 7, "b": 1 , "t": 2}
-, "component23": {
- "type": "space", "l": 6, "r": 7, "b": 2 , "t": 3}
-, "component24": {
- "type": "space", "l": 6, "r": 7, "b": 3 , "t": 4}
-, "component25": {
- "type": "space", "l": 6, "r": 7, "b": 4 , "t": 5}
 , "component26": {
  "type": "ufoo0", "l": 2, "r": 5, "b": 4 , "t": 5}
-, "relation1": [
- "horizontal",
- "component0",
- "component14"
-]
-, "relation2": [
- "horizontal",
- "component3",
- "component7"
-]
-, "relation3": [
- "horizontal",
- "component4",
- "component8"
-]
-, "relation4": [
- "horizontal",
- "component5",
- "component9"
-]
-, "relation5": [
- "horizontal",
- "component6",
- "component10"
-]
-, "relation6": [
- "horizontal",
- "component7",
- "component11"
-]
-, "relation7": [
- "horizontal",
- "component8",
- "component12"
-]
-, "relation8": [
- "horizontal",
- "component9",
- "component13"
-]
-, "relation9": [
- "horizontal",
- "component10",
- "component26"
-]
-, "relation10": [
- "vertical",
- "component11",
- "component12"
-]
-, "relation11": [
- "horizontal",
- "component14",
- "component1"
-]
-, "relation12": [
- "horizontal",
- "component15",
- "component18"
-]
-, "relation13": [
- "horizontal",
- "component16",
- "component19"
-]
-, "relation14": [
- "horizontal",
- "component17",
- "component20"
-]
-, "relation15": [
- "vertical",
- "component17",
- "component26"
-]
-, "relation16": [
- "horizontal",
- "component18",
- "component22"
-]
-, "relation17": [
- "horizontal",
- "component19",
- "component23"
-]
-, "relation18": [
- "horizontal",
- "component20",
- "component24"
-]
-, "relation19": [
- "horizontal",
- "component21",
- "component25"
-]
-, "relation20": [
- "horizontal",
- "component26",
- "component21"
-]
 }, 
 {
 "guid": "5c650be5-8737-405f-bd95-f534d1cac1b0", "success": "1", "component0": {
@@ -2430,19 +790,8 @@
  "type": "plat90", "l": 0, "r": 1, "b": 0 , "t": 3}
 , "component2": {
  "type": "plat90", "l": 2, "r": 3, "b": 0 , "t": 3}
-, "component3": {
- "type": "space", "l": 1, "r": 2, "b": 0 , "t": 1}
-, "component4": {
- "type": "space", "l": 1, "r": 2, "b": 1 , "t": 2}
-, "component5": {
- "type": "space", "l": 1, "r": 2, "b": 2 , "t": 3}
 , "component6": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component3",
- "component4"
-]
 }, 
 {
 "guid": "414e0cb8-f78e-4751-8e6f-5f49958b55f8", "success": "1", "component0": {
@@ -2451,169 +800,56 @@
  "type": "plat90", "l": 0, "r": 1, "b": 0 , "t": 3}
 , "component2": {
  "type": "plat90", "l": 2, "r": 3, "b": 0 , "t": 3}
-, "component3": {
- "type": "space", "l": 1, "r": 2, "b": 0 , "t": 1}
-, "component4": {
- "type": "space", "l": 1, "r": 2, "b": 1 , "t": 2}
-, "component5": {
- "type": "space", "l": 1, "r": 2, "b": 2 , "t": 3}
 , "component6": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component3",
- "component4"
-]
 }, 
 {
 "guid": "929c3be2-76a4-48c4-a84c-ad63b2fd0299", "success": "0", "component0": {
  "type": "plat0", "l": 0, "r": 3, "b": 0 , "t": 1}
 , "component1": {
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
-, "component2": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component5": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component6": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component7": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
 , "component8": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component5",
- "component6"
-]
 }, 
 {
 "guid": "e5d1c2f2-a012-48e3-b9ff-34389a474b9d", "success": "0", "component0": {
  "type": "plat0", "l": 0, "r": 3, "b": 0 , "t": 1}
 , "component1": {
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
-, "component2": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component5": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component6": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component7": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
 , "component8": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component5",
- "component6"
-]
 }, 
 {
 "guid": "92605347-e313-4a8c-ace9-56f9798c1173", "success": "0", "component0": {
  "type": "plat0", "l": 0, "r": 3, "b": 0 , "t": 1}
 , "component1": {
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
-, "component2": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component5": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component6": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component7": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
 , "component8": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component5",
- "component6"
-]
 }, 
 {
 "guid": "5eb7be52-bb09-4cf2-95bb-c77089a48b29", "success": "0", "component0": {
  "type": "plat0", "l": 0, "r": 3, "b": 0 , "t": 1}
 , "component1": {
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
-, "component2": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component5": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component6": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component7": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
 , "component8": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component5",
- "component6"
-]
 }, 
 {
 "guid": "841c6f04-1203-49f7-9fcb-a4ed53e6693d", "success": "0", "component0": {
  "type": "plat0", "l": 0, "r": 3, "b": 0 , "t": 1}
 , "component1": {
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
-, "component2": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component5": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component6": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component7": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
 , "component8": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component5",
- "component6"
-]
 }, 
 {
 "guid": "89d29dfc-d6b6-427b-a872-2166fd4aac9b", "success": "0", "component0": {
  "type": "plat0", "l": 0, "r": 3, "b": 0 , "t": 1}
 , "component1": {
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
-, "component2": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component5": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component6": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component7": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
 , "component8": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component5",
- "component6"
-]
 }, 
 {
 "guid": "f267fc61-2e06-4771-b812-e027b52c6dac", "success": "0", "component0": {
@@ -2622,42 +858,6 @@
  "type": "plat0", "l": 3, "r": 6, "b": 0 , "t": 1}
 , "component2": {
  "type": "plat90", "l": 4, "r": 5, "b": 1 , "t": 4}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component5": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component6": {
- "type": "space", "l": 0, "r": 1, "b": 4 , "t": 5}
-, "component7": {
- "type": "space", "l": 1, "r": 2, "b": 1 , "t": 2}
-, "component8": {
- "type": "space", "l": 1, "r": 2, "b": 2 , "t": 3}
-, "component9": {
- "type": "space", "l": 1, "r": 2, "b": 3 , "t": 4}
-, "component10": {
- "type": "space", "l": 1, "r": 2, "b": 4 , "t": 5}
-, "component11": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component12": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component13": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
-, "component14": {
- "type": "space", "l": 2, "r": 3, "b": 4 , "t": 5}
-, "component15": {
- "type": "space", "l": 3, "r": 4, "b": 1 , "t": 2}
-, "component16": {
- "type": "space", "l": 3, "r": 4, "b": 2 , "t": 3}
-, "component17": {
- "type": "space", "l": 3, "r": 4, "b": 3 , "t": 4}
-, "component18": {
- "type": "space", "l": 5, "r": 6, "b": 1 , "t": 2}
-, "component19": {
- "type": "space", "l": 5, "r": 6, "b": 2 , "t": 3}
-, "component20": {
- "type": "space", "l": 5, "r": 6, "b": 3 , "t": 4}
 , "component21": {
  "type": "ufoo0", "l": 3, "r": 6, "b": 4 , "t": 5}
 , "relation1": [
@@ -2665,101 +865,14 @@
  "component0",
  "component1"
 ]
-, "relation2": [
- "horizontal",
- "component3",
- "component7"
-]
-, "relation3": [
- "horizontal",
- "component4",
- "component8"
-]
-, "relation4": [
- "horizontal",
- "component5",
- "component9"
-]
-, "relation5": [
- "horizontal",
- "component6",
- "component10"
-]
-, "relation6": [
- "horizontal",
- "component7",
- "component11"
-]
-, "relation7": [
- "horizontal",
- "component8",
- "component12"
-]
-, "relation8": [
- "horizontal",
- "component9",
- "component13"
-]
-, "relation9": [
- "horizontal",
- "component10",
- "component14"
-]
-, "relation10": [
- "vertical",
- "component11",
- "component12"
-]
-, "relation11": [
- "horizontal",
- "component11",
- "component15"
-]
-, "relation12": [
- "horizontal",
- "component12",
- "component16"
-]
-, "relation13": [
- "horizontal",
- "component13",
- "component17"
-]
-, "relation14": [
- "horizontal",
- "component14",
- "component21"
-]
-, "relation15": [
- "vertical",
- "component16",
- "component17"
-]
 }, 
 {
 "guid": "2a842e9b-e3dc-4974-bfa2-7c4b094c0e96", "success": "0", "component0": {
  "type": "plat0", "l": 0, "r": 3, "b": 0 , "t": 1}
 , "component1": {
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
-, "component2": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component5": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component6": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component7": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
 , "component8": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component5",
- "component6"
-]
 }, 
 {
 "guid": "0e94714c-914f-4a1f-9dd9-d70435486428", "success": "0", "component0": {
@@ -2768,44 +881,6 @@
  "type": "plat0", "l": 3, "r": 6, "b": 0 , "t": 1}
 , "component2": {
  "type": "plat90", "l": 3, "r": 4, "b": 1 , "t": 4}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component5": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component6": {
- "type": "space", "l": 0, "r": 1, "b": 4 , "t": 5}
-, "component7": {
- "type": "space", "l": 1, "r": 2, "b": 1 , "t": 2}
-, "component8": {
- "type": "space", "l": 1, "r": 2, "b": 2 , "t": 3}
-, "component9": {
- "type": "space", "l": 1, "r": 2, "b": 3 , "t": 4}
-, "component10": {
- "type": "space", "l": 1, "r": 2, "b": 4 , "t": 5}
-, "component11": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component12": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component13": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
-, "component14": {
- "type": "space", "l": 4, "r": 5, "b": 1 , "t": 2}
-, "component15": {
- "type": "space", "l": 4, "r": 5, "b": 2 , "t": 3}
-, "component16": {
- "type": "space", "l": 4, "r": 5, "b": 3 , "t": 4}
-, "component17": {
- "type": "space", "l": 4, "r": 5, "b": 4 , "t": 5}
-, "component18": {
- "type": "space", "l": 5, "r": 6, "b": 1 , "t": 2}
-, "component19": {
- "type": "space", "l": 5, "r": 6, "b": 2 , "t": 3}
-, "component20": {
- "type": "space", "l": 5, "r": 6, "b": 3 , "t": 4}
-, "component21": {
- "type": "space", "l": 5, "r": 6, "b": 4 , "t": 5}
 , "component22": {
  "type": "ufoo0", "l": 2, "r": 4, "b": 4 , "t": 5}
 , "relation1": [
@@ -2813,106 +888,14 @@
  "component0",
  "component1"
 ]
-, "relation2": [
- "horizontal",
- "component3",
- "component7"
-]
-, "relation3": [
- "horizontal",
- "component4",
- "component8"
-]
-, "relation4": [
- "horizontal",
- "component5",
- "component9"
-]
-, "relation5": [
- "horizontal",
- "component6",
- "component10"
-]
-, "relation6": [
- "horizontal",
- "component7",
- "component11"
-]
-, "relation7": [
- "horizontal",
- "component8",
- "component12"
-]
-, "relation8": [
- "horizontal",
- "component9",
- "component13"
-]
-, "relation9": [
- "horizontal",
- "component10",
- "component22"
-]
-, "relation10": [
- "vertical",
- "component11",
- "component12"
-]
-, "relation11": [
- "horizontal",
- "component14",
- "component18"
-]
-, "relation12": [
- "horizontal",
- "component15",
- "component19"
-]
-, "relation13": [
- "vertical",
- "component16",
- "component17"
-]
-, "relation14": [
- "horizontal",
- "component16",
- "component20"
-]
-, "relation15": [
- "horizontal",
- "component17",
- "component21"
-]
-, "relation16": [
- "horizontal",
- "component22",
- "component17"
-]
 }, 
 {
 "guid": "57ac68d2-2ad5-4cd6-a1a3-feb3e5778e20", "success": "0", "component0": {
  "type": "plat0", "l": 0, "r": 3, "b": 0 , "t": 1}
 , "component1": {
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
-, "component2": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component5": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component6": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component7": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
 , "component8": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component5",
- "component6"
-]
 }, 
 {
 "guid": "ea8c0b63-5690-4a6d-a63d-c831301ceba7", "success": "0", "component0": {
@@ -2921,42 +904,6 @@
  "type": "plat0", "l": 3, "r": 6, "b": 0 , "t": 1}
 , "component2": {
  "type": "plat90", "l": 3, "r": 4, "b": 1 , "t": 4}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component5": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component6": {
- "type": "space", "l": 0, "r": 1, "b": 4 , "t": 5}
-, "component7": {
- "type": "space", "l": 1, "r": 2, "b": 1 , "t": 2}
-, "component8": {
- "type": "space", "l": 1, "r": 2, "b": 2 , "t": 3}
-, "component9": {
- "type": "space", "l": 1, "r": 2, "b": 3 , "t": 4}
-, "component10": {
- "type": "space", "l": 1, "r": 2, "b": 4 , "t": 5}
-, "component11": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component12": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component13": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
-, "component14": {
- "type": "space", "l": 4, "r": 5, "b": 1 , "t": 2}
-, "component15": {
- "type": "space", "l": 4, "r": 5, "b": 2 , "t": 3}
-, "component16": {
- "type": "space", "l": 4, "r": 5, "b": 3 , "t": 4}
-, "component17": {
- "type": "space", "l": 5, "r": 6, "b": 1 , "t": 2}
-, "component18": {
- "type": "space", "l": 5, "r": 6, "b": 2 , "t": 3}
-, "component19": {
- "type": "space", "l": 5, "r": 6, "b": 3 , "t": 4}
-, "component20": {
- "type": "space", "l": 5, "r": 6, "b": 4 , "t": 5}
 , "component21": {
  "type": "ufoo0", "l": 2, "r": 5, "b": 4 , "t": 5}
 , "relation1": [
@@ -2964,101 +911,14 @@
  "component0",
  "component1"
 ]
-, "relation2": [
- "horizontal",
- "component3",
- "component7"
-]
-, "relation3": [
- "horizontal",
- "component4",
- "component8"
-]
-, "relation4": [
- "horizontal",
- "component5",
- "component9"
-]
-, "relation5": [
- "horizontal",
- "component6",
- "component10"
-]
-, "relation6": [
- "horizontal",
- "component7",
- "component11"
-]
-, "relation7": [
- "horizontal",
- "component8",
- "component12"
-]
-, "relation8": [
- "horizontal",
- "component9",
- "component13"
-]
-, "relation9": [
- "horizontal",
- "component10",
- "component21"
-]
-, "relation10": [
- "vertical",
- "component11",
- "component12"
-]
-, "relation11": [
- "horizontal",
- "component14",
- "component17"
-]
-, "relation12": [
- "horizontal",
- "component15",
- "component18"
-]
-, "relation13": [
- "horizontal",
- "component16",
- "component19"
-]
-, "relation14": [
- "vertical",
- "component16",
- "component21"
-]
-, "relation15": [
- "horizontal",
- "component21",
- "component20"
-]
 }, 
 {
 "guid": "a9ec9b95-908a-48bd-852b-082d4c609a0f", "success": "0", "component0": {
  "type": "plat0", "l": 0, "r": 3, "b": 0 , "t": 1}
 , "component1": {
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
-, "component2": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component5": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component6": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component7": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
 , "component8": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component5",
- "component6"
-]
 }, 
 {
 "guid": "51aba565-bc2b-414c-926d-83ce12a01ddf", "success": "0", "component0": {
@@ -3067,118 +927,12 @@
  "type": "plat0", "l": 3, "r": 6, "b": 0 , "t": 1}
 , "component2": {
  "type": "plat90", "l": 4, "r": 5, "b": 1 , "t": 4}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component5": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component6": {
- "type": "space", "l": 0, "r": 1, "b": 4 , "t": 5}
-, "component7": {
- "type": "space", "l": 1, "r": 2, "b": 1 , "t": 2}
-, "component8": {
- "type": "space", "l": 1, "r": 2, "b": 2 , "t": 3}
-, "component9": {
- "type": "space", "l": 1, "r": 2, "b": 3 , "t": 4}
-, "component10": {
- "type": "space", "l": 1, "r": 2, "b": 4 , "t": 5}
-, "component11": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component12": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component13": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
-, "component14": {
- "type": "space", "l": 2, "r": 3, "b": 4 , "t": 5}
-, "component15": {
- "type": "space", "l": 3, "r": 4, "b": 1 , "t": 2}
-, "component16": {
- "type": "space", "l": 3, "r": 4, "b": 2 , "t": 3}
-, "component17": {
- "type": "space", "l": 3, "r": 4, "b": 3 , "t": 4}
-, "component18": {
- "type": "space", "l": 5, "r": 6, "b": 1 , "t": 2}
-, "component19": {
- "type": "space", "l": 5, "r": 6, "b": 2 , "t": 3}
-, "component20": {
- "type": "space", "l": 5, "r": 6, "b": 3 , "t": 4}
 , "component21": {
  "type": "ufoo0", "l": 3, "r": 6, "b": 4 , "t": 5}
 , "relation1": [
  "horizontal",
  "component0",
  "component1"
-]
-, "relation2": [
- "horizontal",
- "component3",
- "component7"
-]
-, "relation3": [
- "horizontal",
- "component4",
- "component8"
-]
-, "relation4": [
- "horizontal",
- "component5",
- "component9"
-]
-, "relation5": [
- "horizontal",
- "component6",
- "component10"
-]
-, "relation6": [
- "horizontal",
- "component7",
- "component11"
-]
-, "relation7": [
- "horizontal",
- "component8",
- "component12"
-]
-, "relation8": [
- "horizontal",
- "component9",
- "component13"
-]
-, "relation9": [
- "horizontal",
- "component10",
- "component14"
-]
-, "relation10": [
- "vertical",
- "component11",
- "component12"
-]
-, "relation11": [
- "horizontal",
- "component11",
- "component15"
-]
-, "relation12": [
- "horizontal",
- "component12",
- "component16"
-]
-, "relation13": [
- "horizontal",
- "component13",
- "component17"
-]
-, "relation14": [
- "horizontal",
- "component14",
- "component21"
-]
-, "relation15": [
- "vertical",
- "component16",
- "component17"
 ]
 }, 
 {
@@ -3188,118 +942,12 @@
  "type": "plat0", "l": 3, "r": 6, "b": 0 , "t": 1}
 , "component2": {
  "type": "plat90", "l": 3, "r": 4, "b": 1 , "t": 4}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component5": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component6": {
- "type": "space", "l": 0, "r": 1, "b": 4 , "t": 5}
-, "component7": {
- "type": "space", "l": 1, "r": 2, "b": 1 , "t": 2}
-, "component8": {
- "type": "space", "l": 1, "r": 2, "b": 2 , "t": 3}
-, "component9": {
- "type": "space", "l": 1, "r": 2, "b": 3 , "t": 4}
-, "component10": {
- "type": "space", "l": 1, "r": 2, "b": 4 , "t": 5}
-, "component11": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component12": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component13": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
-, "component14": {
- "type": "space", "l": 4, "r": 5, "b": 1 , "t": 2}
-, "component15": {
- "type": "space", "l": 4, "r": 5, "b": 2 , "t": 3}
-, "component16": {
- "type": "space", "l": 4, "r": 5, "b": 3 , "t": 4}
-, "component17": {
- "type": "space", "l": 5, "r": 6, "b": 1 , "t": 2}
-, "component18": {
- "type": "space", "l": 5, "r": 6, "b": 2 , "t": 3}
-, "component19": {
- "type": "space", "l": 5, "r": 6, "b": 3 , "t": 4}
-, "component20": {
- "type": "space", "l": 5, "r": 6, "b": 4 , "t": 5}
 , "component21": {
  "type": "ufoo0", "l": 2, "r": 5, "b": 4 , "t": 5}
 , "relation1": [
  "horizontal",
  "component0",
  "component1"
-]
-, "relation2": [
- "horizontal",
- "component3",
- "component7"
-]
-, "relation3": [
- "horizontal",
- "component4",
- "component8"
-]
-, "relation4": [
- "horizontal",
- "component5",
- "component9"
-]
-, "relation5": [
- "horizontal",
- "component6",
- "component10"
-]
-, "relation6": [
- "horizontal",
- "component7",
- "component11"
-]
-, "relation7": [
- "horizontal",
- "component8",
- "component12"
-]
-, "relation8": [
- "horizontal",
- "component9",
- "component13"
-]
-, "relation9": [
- "horizontal",
- "component10",
- "component21"
-]
-, "relation10": [
- "vertical",
- "component11",
- "component12"
-]
-, "relation11": [
- "horizontal",
- "component14",
- "component17"
-]
-, "relation12": [
- "horizontal",
- "component15",
- "component18"
-]
-, "relation13": [
- "horizontal",
- "component16",
- "component19"
-]
-, "relation14": [
- "vertical",
- "component16",
- "component21"
-]
-, "relation15": [
- "horizontal",
- "component21",
- "component20"
 ]
 }, 
 {
@@ -3309,19 +957,8 @@
  "type": "plat90", "l": 0, "r": 1, "b": 0 , "t": 3}
 , "component2": {
  "type": "plat90", "l": 2, "r": 3, "b": 0 , "t": 3}
-, "component3": {
- "type": "space", "l": 1, "r": 2, "b": 0 , "t": 1}
-, "component4": {
- "type": "space", "l": 1, "r": 2, "b": 1 , "t": 2}
-, "component5": {
- "type": "space", "l": 1, "r": 2, "b": 2 , "t": 3}
 , "component6": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component3",
- "component4"
-]
 }, 
 {
 "guid": "fb0dc6df-6a93-49ac-8d26-c39d1ad4adeb", "success": "1", "component0": {
@@ -3330,19 +967,8 @@
  "type": "plat90", "l": 0, "r": 1, "b": 0 , "t": 3}
 , "component2": {
  "type": "plat90", "l": 2, "r": 3, "b": 0 , "t": 3}
-, "component3": {
- "type": "space", "l": 1, "r": 2, "b": 0 , "t": 1}
-, "component4": {
- "type": "space", "l": 1, "r": 2, "b": 1 , "t": 2}
-, "component5": {
- "type": "space", "l": 1, "r": 2, "b": 2 , "t": 3}
 , "component6": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component3",
- "component4"
-]
 }, 
 {
 "guid": "9cdfd352-82c8-44e9-86a9-2acb9609bdb2", "success": "1", "component0": {
@@ -3351,69 +977,24 @@
  "type": "plat90", "l": 0, "r": 1, "b": 0 , "t": 3}
 , "component2": {
  "type": "plat90", "l": 2, "r": 3, "b": 0 , "t": 3}
-, "component3": {
- "type": "space", "l": 1, "r": 2, "b": 0 , "t": 1}
-, "component4": {
- "type": "space", "l": 1, "r": 2, "b": 1 , "t": 2}
-, "component5": {
- "type": "space", "l": 1, "r": 2, "b": 2 , "t": 3}
 , "component6": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component3",
- "component4"
-]
 }, 
 {
 "guid": "fc6455a4-5841-415b-8fd6-0648ead74cdb", "success": "0", "component0": {
  "type": "plat0", "l": 0, "r": 3, "b": 0 , "t": 1}
 , "component1": {
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
-, "component2": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component5": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component6": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component7": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
 , "component8": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component5",
- "component6"
-]
 }, 
 {
 "guid": "a5096a31-b5a8-4c58-89f8-cca6f8e0eaf6", "success": "0", "component0": {
  "type": "plat0", "l": 0, "r": 3, "b": 0 , "t": 1}
 , "component1": {
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
-, "component2": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component5": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component6": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component7": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
 , "component8": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component5",
- "component6"
-]
 }, 
 {
 "guid": "35aa4a04-cfb7-41d1-9bdd-1b685afde6be", "success": "0", "component0": {
@@ -3422,118 +1003,12 @@
  "type": "plat0", "l": 3, "r": 6, "b": 0 , "t": 1}
 , "component2": {
  "type": "plat90", "l": 2, "r": 3, "b": 1 , "t": 4}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component5": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component6": {
- "type": "space", "l": 0, "r": 1, "b": 4 , "t": 5}
-, "component7": {
- "type": "space", "l": 1, "r": 2, "b": 1 , "t": 2}
-, "component8": {
- "type": "space", "l": 1, "r": 2, "b": 2 , "t": 3}
-, "component9": {
- "type": "space", "l": 1, "r": 2, "b": 3 , "t": 4}
-, "component10": {
- "type": "space", "l": 3, "r": 4, "b": 1 , "t": 2}
-, "component11": {
- "type": "space", "l": 3, "r": 4, "b": 2 , "t": 3}
-, "component12": {
- "type": "space", "l": 3, "r": 4, "b": 3 , "t": 4}
-, "component13": {
- "type": "space", "l": 4, "r": 5, "b": 1 , "t": 2}
-, "component14": {
- "type": "space", "l": 4, "r": 5, "b": 2 , "t": 3}
-, "component15": {
- "type": "space", "l": 4, "r": 5, "b": 3 , "t": 4}
-, "component16": {
- "type": "space", "l": 4, "r": 5, "b": 4 , "t": 5}
-, "component17": {
- "type": "space", "l": 5, "r": 6, "b": 1 , "t": 2}
-, "component18": {
- "type": "space", "l": 5, "r": 6, "b": 2 , "t": 3}
-, "component19": {
- "type": "space", "l": 5, "r": 6, "b": 3 , "t": 4}
-, "component20": {
- "type": "space", "l": 5, "r": 6, "b": 4 , "t": 5}
 , "component21": {
  "type": "ufoo0", "l": 1, "r": 4, "b": 4 , "t": 5}
 , "relation1": [
  "horizontal",
  "component0",
  "component1"
-]
-, "relation2": [
- "horizontal",
- "component3",
- "component7"
-]
-, "relation3": [
- "horizontal",
- "component4",
- "component8"
-]
-, "relation4": [
- "horizontal",
- "component5",
- "component9"
-]
-, "relation5": [
- "horizontal",
- "component6",
- "component21"
-]
-, "relation6": [
- "horizontal",
- "component10",
- "component13"
-]
-, "relation7": [
- "vertical",
- "component11",
- "component12"
-]
-, "relation8": [
- "horizontal",
- "component11",
- "component14"
-]
-, "relation9": [
- "horizontal",
- "component12",
- "component15"
-]
-, "relation10": [
- "horizontal",
- "component13",
- "component17"
-]
-, "relation11": [
- "horizontal",
- "component14",
- "component18"
-]
-, "relation12": [
- "vertical",
- "component15",
- "component16"
-]
-, "relation13": [
- "horizontal",
- "component15",
- "component19"
-]
-, "relation14": [
- "horizontal",
- "component16",
- "component20"
-]
-, "relation15": [
- "horizontal",
- "component21",
- "component16"
 ]
 }, 
 {
@@ -3543,44 +1018,8 @@
  "type": "plat90", "l": 0, "r": 1, "b": 0 , "t": 3}
 , "component2": {
  "type": "plat90", "l": 2, "r": 3, "b": 1 , "t": 4}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 4 , "t": 5}
-, "component5": {
- "type": "space", "l": 1, "r": 2, "b": 1 , "t": 2}
-, "component6": {
- "type": "space", "l": 1, "r": 2, "b": 2 , "t": 3}
-, "component7": {
- "type": "space", "l": 1, "r": 2, "b": 3 , "t": 4}
-, "component8": {
- "type": "space", "l": 3, "r": 4, "b": 1 , "t": 2}
-, "component9": {
- "type": "space", "l": 3, "r": 4, "b": 2 , "t": 3}
-, "component10": {
- "type": "space", "l": 3, "r": 4, "b": 3 , "t": 4}
 , "component11": {
  "type": "ufoo0", "l": 1, "r": 4, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component0",
- "component8"
-]
-, "relation2": [
- "horizontal",
- "component3",
- "component7"
-]
-, "relation3": [
- "horizontal",
- "component4",
- "component11"
-]
-, "relation4": [
- "vertical",
- "component9",
- "component10"
-]
 }, 
 {
 "guid": "88418132-8139-49ac-a7e9-e36003d22895", "success": "1", "component0": {
@@ -3589,44 +1028,16 @@
  "type": "plat90", "l": 0, "r": 1, "b": 0 , "t": 3}
 , "component2": {
  "type": "plat90", "l": 2, "r": 3, "b": 0 , "t": 3}
-, "component3": {
- "type": "space", "l": 1, "r": 2, "b": 0 , "t": 1}
-, "component4": {
- "type": "space", "l": 1, "r": 2, "b": 1 , "t": 2}
-, "component5": {
- "type": "space", "l": 1, "r": 2, "b": 2 , "t": 3}
 , "component6": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component3",
- "component4"
-]
 }, 
 {
 "guid": "a5bf568c-f7a6-4055-9f75-28844df88239", "success": "0", "component0": {
  "type": "plat0", "l": 0, "r": 3, "b": 0 , "t": 1}
 , "component1": {
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
-, "component2": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component5": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component6": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component7": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
 , "component8": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component5",
- "component6"
-]
 }, 
 {
 "guid": "5cf4d12a-02e2-448d-ba6c-19f445de3ec7", "success": "0", "component0": {
@@ -3635,118 +1046,12 @@
  "type": "plat0", "l": 3, "r": 6, "b": 0 , "t": 1}
 , "component2": {
  "type": "plat90", "l": 2, "r": 3, "b": 1 , "t": 4}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component5": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component6": {
- "type": "space", "l": 0, "r": 1, "b": 4 , "t": 5}
-, "component7": {
- "type": "space", "l": 1, "r": 2, "b": 1 , "t": 2}
-, "component8": {
- "type": "space", "l": 1, "r": 2, "b": 2 , "t": 3}
-, "component9": {
- "type": "space", "l": 1, "r": 2, "b": 3 , "t": 4}
-, "component10": {
- "type": "space", "l": 3, "r": 4, "b": 1 , "t": 2}
-, "component11": {
- "type": "space", "l": 3, "r": 4, "b": 2 , "t": 3}
-, "component12": {
- "type": "space", "l": 3, "r": 4, "b": 3 , "t": 4}
-, "component13": {
- "type": "space", "l": 4, "r": 5, "b": 1 , "t": 2}
-, "component14": {
- "type": "space", "l": 4, "r": 5, "b": 2 , "t": 3}
-, "component15": {
- "type": "space", "l": 4, "r": 5, "b": 3 , "t": 4}
-, "component16": {
- "type": "space", "l": 4, "r": 5, "b": 4 , "t": 5}
-, "component17": {
- "type": "space", "l": 5, "r": 6, "b": 1 , "t": 2}
-, "component18": {
- "type": "space", "l": 5, "r": 6, "b": 2 , "t": 3}
-, "component19": {
- "type": "space", "l": 5, "r": 6, "b": 3 , "t": 4}
-, "component20": {
- "type": "space", "l": 5, "r": 6, "b": 4 , "t": 5}
 , "component21": {
  "type": "ufoo0", "l": 1, "r": 4, "b": 4 , "t": 5}
 , "relation1": [
  "horizontal",
  "component0",
  "component1"
-]
-, "relation2": [
- "horizontal",
- "component3",
- "component7"
-]
-, "relation3": [
- "horizontal",
- "component4",
- "component8"
-]
-, "relation4": [
- "horizontal",
- "component5",
- "component9"
-]
-, "relation5": [
- "horizontal",
- "component6",
- "component21"
-]
-, "relation6": [
- "horizontal",
- "component10",
- "component13"
-]
-, "relation7": [
- "vertical",
- "component11",
- "component12"
-]
-, "relation8": [
- "horizontal",
- "component11",
- "component14"
-]
-, "relation9": [
- "horizontal",
- "component12",
- "component15"
-]
-, "relation10": [
- "horizontal",
- "component13",
- "component17"
-]
-, "relation11": [
- "horizontal",
- "component14",
- "component18"
-]
-, "relation12": [
- "vertical",
- "component15",
- "component16"
-]
-, "relation13": [
- "horizontal",
- "component15",
- "component19"
-]
-, "relation14": [
- "horizontal",
- "component16",
- "component20"
-]
-, "relation15": [
- "horizontal",
- "component21",
- "component16"
 ]
 }, 
 {
@@ -3756,42 +1061,6 @@
  "type": "plat0", "l": 3, "r": 6, "b": 0 , "t": 1}
 , "component2": {
  "type": "plat90", "l": 4, "r": 5, "b": 1 , "t": 4}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component5": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component6": {
- "type": "space", "l": 0, "r": 1, "b": 4 , "t": 5}
-, "component7": {
- "type": "space", "l": 1, "r": 2, "b": 1 , "t": 2}
-, "component8": {
- "type": "space", "l": 1, "r": 2, "b": 2 , "t": 3}
-, "component9": {
- "type": "space", "l": 1, "r": 2, "b": 3 , "t": 4}
-, "component10": {
- "type": "space", "l": 1, "r": 2, "b": 4 , "t": 5}
-, "component11": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component12": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component13": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
-, "component14": {
- "type": "space", "l": 2, "r": 3, "b": 4 , "t": 5}
-, "component15": {
- "type": "space", "l": 3, "r": 4, "b": 1 , "t": 2}
-, "component16": {
- "type": "space", "l": 3, "r": 4, "b": 2 , "t": 3}
-, "component17": {
- "type": "space", "l": 3, "r": 4, "b": 3 , "t": 4}
-, "component18": {
- "type": "space", "l": 5, "r": 6, "b": 1 , "t": 2}
-, "component19": {
- "type": "space", "l": 5, "r": 6, "b": 2 , "t": 3}
-, "component20": {
- "type": "space", "l": 5, "r": 6, "b": 3 , "t": 4}
 , "component21": {
  "type": "ufoo0", "l": 3, "r": 6, "b": 4 , "t": 5}
 , "relation1": [
@@ -3799,168 +1068,36 @@
  "component0",
  "component1"
 ]
-, "relation2": [
- "horizontal",
- "component3",
- "component7"
-]
-, "relation3": [
- "horizontal",
- "component4",
- "component8"
-]
-, "relation4": [
- "horizontal",
- "component5",
- "component9"
-]
-, "relation5": [
- "horizontal",
- "component6",
- "component10"
-]
-, "relation6": [
- "horizontal",
- "component7",
- "component11"
-]
-, "relation7": [
- "horizontal",
- "component8",
- "component12"
-]
-, "relation8": [
- "horizontal",
- "component9",
- "component13"
-]
-, "relation9": [
- "horizontal",
- "component10",
- "component14"
-]
-, "relation10": [
- "vertical",
- "component11",
- "component12"
-]
-, "relation11": [
- "horizontal",
- "component11",
- "component15"
-]
-, "relation12": [
- "horizontal",
- "component12",
- "component16"
-]
-, "relation13": [
- "horizontal",
- "component13",
- "component17"
-]
-, "relation14": [
- "horizontal",
- "component14",
- "component21"
-]
-, "relation15": [
- "vertical",
- "component16",
- "component17"
-]
 }, 
 {
 "guid": "274117fe-41ad-43a2-8261-af5c5573d7c7", "success": "0", "component0": {
  "type": "plat90", "l": 0, "r": 1, "b": 0 , "t": 3}
-, "component1": {
- "type": "space", "l": 1, "r": 2, "b": 0 , "t": 1}
-, "component2": {
- "type": "space", "l": 1, "r": 2, "b": 1 , "t": 2}
-, "component3": {
- "type": "space", "l": 1, "r": 2, "b": 2 , "t": 3}
 , "component4": {
  "type": "ufoo0", "l": 0, "r": 2, "b": 3 , "t": 4}
-, "relation1": [
- "vertical",
- "component1",
- "component2"
-]
 }, 
 {
 "guid": "2bf4c392-ce68-4522-a87e-ed709a71e670", "success": "0", "component0": {
  "type": "plat0", "l": 0, "r": 3, "b": 0 , "t": 1}
 , "component1": {
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
-, "component2": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component5": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component6": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component7": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
 , "component8": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component5",
- "component6"
-]
 }, 
 {
 "guid": "4ce8d8e9-083f-4c6c-87a3-f09bd58f80bc", "success": "0", "component0": {
  "type": "plat0", "l": 0, "r": 3, "b": 0 , "t": 1}
 , "component1": {
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
-, "component2": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component5": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component6": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component7": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
 , "component8": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component5",
- "component6"
-]
 }, 
 {
 "guid": "c6441ae8-824d-4588-9711-04862593bd1e", "success": "0", "component0": {
  "type": "plat0", "l": 0, "r": 3, "b": 0 , "t": 1}
 , "component1": {
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
-, "component2": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component5": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component6": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component7": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
 , "component8": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component5",
- "component6"
-]
 }, 
 {
 "guid": "bc362d1c-e73c-426d-9ea5-a1a73304391f", "success": "0", "component0": {
@@ -3969,118 +1106,12 @@
  "type": "plat0", "l": 3, "r": 6, "b": 0 , "t": 1}
 , "component2": {
  "type": "plat90", "l": 2, "r": 3, "b": 1 , "t": 4}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component5": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component6": {
- "type": "space", "l": 0, "r": 1, "b": 4 , "t": 5}
-, "component7": {
- "type": "space", "l": 1, "r": 2, "b": 1 , "t": 2}
-, "component8": {
- "type": "space", "l": 1, "r": 2, "b": 2 , "t": 3}
-, "component9": {
- "type": "space", "l": 1, "r": 2, "b": 3 , "t": 4}
-, "component10": {
- "type": "space", "l": 3, "r": 4, "b": 1 , "t": 2}
-, "component11": {
- "type": "space", "l": 3, "r": 4, "b": 2 , "t": 3}
-, "component12": {
- "type": "space", "l": 3, "r": 4, "b": 3 , "t": 4}
-, "component13": {
- "type": "space", "l": 4, "r": 5, "b": 1 , "t": 2}
-, "component14": {
- "type": "space", "l": 4, "r": 5, "b": 2 , "t": 3}
-, "component15": {
- "type": "space", "l": 4, "r": 5, "b": 3 , "t": 4}
-, "component16": {
- "type": "space", "l": 4, "r": 5, "b": 4 , "t": 5}
-, "component17": {
- "type": "space", "l": 5, "r": 6, "b": 1 , "t": 2}
-, "component18": {
- "type": "space", "l": 5, "r": 6, "b": 2 , "t": 3}
-, "component19": {
- "type": "space", "l": 5, "r": 6, "b": 3 , "t": 4}
-, "component20": {
- "type": "space", "l": 5, "r": 6, "b": 4 , "t": 5}
 , "component21": {
  "type": "ufoo0", "l": 1, "r": 4, "b": 4 , "t": 5}
 , "relation1": [
  "horizontal",
  "component0",
  "component1"
-]
-, "relation2": [
- "horizontal",
- "component3",
- "component7"
-]
-, "relation3": [
- "horizontal",
- "component4",
- "component8"
-]
-, "relation4": [
- "horizontal",
- "component5",
- "component9"
-]
-, "relation5": [
- "horizontal",
- "component6",
- "component21"
-]
-, "relation6": [
- "horizontal",
- "component10",
- "component13"
-]
-, "relation7": [
- "vertical",
- "component11",
- "component12"
-]
-, "relation8": [
- "horizontal",
- "component11",
- "component14"
-]
-, "relation9": [
- "horizontal",
- "component12",
- "component15"
-]
-, "relation10": [
- "horizontal",
- "component13",
- "component17"
-]
-, "relation11": [
- "horizontal",
- "component14",
- "component18"
-]
-, "relation12": [
- "vertical",
- "component15",
- "component16"
-]
-, "relation13": [
- "horizontal",
- "component15",
- "component19"
-]
-, "relation14": [
- "horizontal",
- "component16",
- "component20"
-]
-, "relation15": [
- "horizontal",
- "component21",
- "component16"
 ]
 }, 
 {
@@ -4090,118 +1121,12 @@
  "type": "plat0", "l": 3, "r": 6, "b": 0 , "t": 1}
 , "component2": {
  "type": "plat90", "l": 2, "r": 3, "b": 1 , "t": 4}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component5": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component6": {
- "type": "space", "l": 0, "r": 1, "b": 4 , "t": 5}
-, "component7": {
- "type": "space", "l": 1, "r": 2, "b": 1 , "t": 2}
-, "component8": {
- "type": "space", "l": 1, "r": 2, "b": 2 , "t": 3}
-, "component9": {
- "type": "space", "l": 1, "r": 2, "b": 3 , "t": 4}
-, "component10": {
- "type": "space", "l": 3, "r": 4, "b": 1 , "t": 2}
-, "component11": {
- "type": "space", "l": 3, "r": 4, "b": 2 , "t": 3}
-, "component12": {
- "type": "space", "l": 3, "r": 4, "b": 3 , "t": 4}
-, "component13": {
- "type": "space", "l": 4, "r": 5, "b": 1 , "t": 2}
-, "component14": {
- "type": "space", "l": 4, "r": 5, "b": 2 , "t": 3}
-, "component15": {
- "type": "space", "l": 4, "r": 5, "b": 3 , "t": 4}
-, "component16": {
- "type": "space", "l": 4, "r": 5, "b": 4 , "t": 5}
-, "component17": {
- "type": "space", "l": 5, "r": 6, "b": 1 , "t": 2}
-, "component18": {
- "type": "space", "l": 5, "r": 6, "b": 2 , "t": 3}
-, "component19": {
- "type": "space", "l": 5, "r": 6, "b": 3 , "t": 4}
-, "component20": {
- "type": "space", "l": 5, "r": 6, "b": 4 , "t": 5}
 , "component21": {
  "type": "ufoo0", "l": 1, "r": 4, "b": 4 , "t": 5}
 , "relation1": [
  "horizontal",
  "component0",
  "component1"
-]
-, "relation2": [
- "horizontal",
- "component3",
- "component7"
-]
-, "relation3": [
- "horizontal",
- "component4",
- "component8"
-]
-, "relation4": [
- "horizontal",
- "component5",
- "component9"
-]
-, "relation5": [
- "horizontal",
- "component6",
- "component21"
-]
-, "relation6": [
- "horizontal",
- "component10",
- "component13"
-]
-, "relation7": [
- "vertical",
- "component11",
- "component12"
-]
-, "relation8": [
- "horizontal",
- "component11",
- "component14"
-]
-, "relation9": [
- "horizontal",
- "component12",
- "component15"
-]
-, "relation10": [
- "horizontal",
- "component13",
- "component17"
-]
-, "relation11": [
- "horizontal",
- "component14",
- "component18"
-]
-, "relation12": [
- "vertical",
- "component15",
- "component16"
-]
-, "relation13": [
- "horizontal",
- "component15",
- "component19"
-]
-, "relation14": [
- "horizontal",
- "component16",
- "component20"
-]
-, "relation15": [
- "horizontal",
- "component21",
- "component16"
 ]
 }, 
 {
@@ -4211,118 +1136,12 @@
  "type": "plat0", "l": 3, "r": 6, "b": 0 , "t": 1}
 , "component2": {
  "type": "plat90", "l": 3, "r": 4, "b": 1 , "t": 4}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component5": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component6": {
- "type": "space", "l": 0, "r": 1, "b": 4 , "t": 5}
-, "component7": {
- "type": "space", "l": 1, "r": 2, "b": 1 , "t": 2}
-, "component8": {
- "type": "space", "l": 1, "r": 2, "b": 2 , "t": 3}
-, "component9": {
- "type": "space", "l": 1, "r": 2, "b": 3 , "t": 4}
-, "component10": {
- "type": "space", "l": 1, "r": 2, "b": 4 , "t": 5}
-, "component11": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component12": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component13": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
-, "component14": {
- "type": "space", "l": 4, "r": 5, "b": 1 , "t": 2}
-, "component15": {
- "type": "space", "l": 4, "r": 5, "b": 2 , "t": 3}
-, "component16": {
- "type": "space", "l": 4, "r": 5, "b": 3 , "t": 4}
-, "component17": {
- "type": "space", "l": 5, "r": 6, "b": 1 , "t": 2}
-, "component18": {
- "type": "space", "l": 5, "r": 6, "b": 2 , "t": 3}
-, "component19": {
- "type": "space", "l": 5, "r": 6, "b": 3 , "t": 4}
-, "component20": {
- "type": "space", "l": 5, "r": 6, "b": 4 , "t": 5}
 , "component21": {
  "type": "ufoo0", "l": 2, "r": 5, "b": 4 , "t": 5}
 , "relation1": [
  "horizontal",
  "component0",
  "component1"
-]
-, "relation2": [
- "horizontal",
- "component3",
- "component7"
-]
-, "relation3": [
- "horizontal",
- "component4",
- "component8"
-]
-, "relation4": [
- "horizontal",
- "component5",
- "component9"
-]
-, "relation5": [
- "horizontal",
- "component6",
- "component10"
-]
-, "relation6": [
- "horizontal",
- "component7",
- "component11"
-]
-, "relation7": [
- "horizontal",
- "component8",
- "component12"
-]
-, "relation8": [
- "horizontal",
- "component9",
- "component13"
-]
-, "relation9": [
- "horizontal",
- "component10",
- "component21"
-]
-, "relation10": [
- "vertical",
- "component11",
- "component12"
-]
-, "relation11": [
- "horizontal",
- "component14",
- "component17"
-]
-, "relation12": [
- "horizontal",
- "component15",
- "component18"
-]
-, "relation13": [
- "horizontal",
- "component16",
- "component19"
-]
-, "relation14": [
- "vertical",
- "component16",
- "component21"
-]
-, "relation15": [
- "horizontal",
- "component21",
- "component20"
 ]
 }, 
 {
@@ -4332,12 +1151,6 @@
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
 , "component2": {
  "type": "plat90", "l": 2, "r": 3, "b": 1 , "t": 4}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component5": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
 , "component6": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
 , "relation1": [
@@ -4353,12 +1166,6 @@
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
 , "component2": {
  "type": "plat90", "l": 2, "r": 3, "b": 1 , "t": 4}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component5": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
 , "component6": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
 , "relation1": [
@@ -4374,12 +1181,6 @@
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
 , "component2": {
  "type": "plat90", "l": 2, "r": 3, "b": 1 , "t": 4}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component5": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
 , "component6": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
 , "relation1": [
@@ -4395,14 +1196,6 @@
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
 , "component2": {
  "type": "plat90", "l": 2, "r": 3, "b": 1 , "t": 4}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component5": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component6": {
- "type": "space", "l": 0, "r": 1, "b": 4 , "t": 5}
 , "component7": {
  "type": "ufoo0", "l": 1, "r": 3, "b": 4 , "t": 5}
 , "relation1": [
@@ -4410,36 +1203,14 @@
  "component1",
  "component2"
 ]
-, "relation2": [
- "horizontal",
- "component6",
- "component7"
-]
 }, 
 {
 "guid": "58ab7539-d07d-48dc-be2b-968620c521db", "success": "0", "component0": {
  "type": "plat0", "l": 0, "r": 3, "b": 0 , "t": 1}
 , "component1": {
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
-, "component2": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component5": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component6": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component7": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
 , "component8": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component5",
- "component6"
-]
 }, 
 {
 "guid": "d2eff55d-1487-4b2c-9ea3-3eaa22623c34", "success": "1", "component0": {
@@ -4448,69 +1219,24 @@
  "type": "plat90", "l": 0, "r": 1, "b": 0 , "t": 3}
 , "component2": {
  "type": "plat90", "l": 2, "r": 3, "b": 0 , "t": 3}
-, "component3": {
- "type": "space", "l": 1, "r": 2, "b": 0 , "t": 1}
-, "component4": {
- "type": "space", "l": 1, "r": 2, "b": 1 , "t": 2}
-, "component5": {
- "type": "space", "l": 1, "r": 2, "b": 2 , "t": 3}
 , "component6": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component3",
- "component4"
-]
 }, 
 {
 "guid": "6ff5c9f7-3131-453d-86d3-f858537ebcc7", "success": "0", "component0": {
  "type": "plat0", "l": 0, "r": 3, "b": 0 , "t": 1}
 , "component1": {
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
-, "component2": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component5": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component6": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component7": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
 , "component8": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component5",
- "component6"
-]
 }, 
 {
 "guid": "ecfc35e2-5f3a-4cf0-b601-77b431314607", "success": "0", "component0": {
  "type": "plat0", "l": 0, "r": 3, "b": 0 , "t": 1}
 , "component1": {
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
-, "component2": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component5": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component6": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component7": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
 , "component8": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component5",
- "component6"
-]
 }, 
 {
 "guid": "a828875b-1eed-4adf-8bc6-bc1d66873ea7", "success": "1", "component0": {
@@ -4519,19 +1245,8 @@
  "type": "plat90", "l": 0, "r": 1, "b": 0 , "t": 3}
 , "component2": {
  "type": "plat90", "l": 2, "r": 3, "b": 0 , "t": 3}
-, "component3": {
- "type": "space", "l": 1, "r": 2, "b": 0 , "t": 1}
-, "component4": {
- "type": "space", "l": 1, "r": 2, "b": 1 , "t": 2}
-, "component5": {
- "type": "space", "l": 1, "r": 2, "b": 2 , "t": 3}
 , "component6": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component3",
- "component4"
-]
 }, 
 {
 "guid": "046392f2-58f3-4137-a787-46e68e13ee23", "success": "1", "component0": {
@@ -4540,23 +1255,12 @@
  "type": "plat90", "l": 0, "r": 1, "b": 1 , "t": 4}
 , "component2": {
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
-, "component3": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component4": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component5": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
 , "component6": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
 , "relation1": [
  "horizontal",
  "component1",
  "component2"
-]
-, "relation2": [
- "vertical",
- "component3",
- "component4"
 ]
 }, 
 {
@@ -4566,23 +1270,12 @@
  "type": "plat90", "l": 0, "r": 1, "b": 1 , "t": 4}
 , "component2": {
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
-, "component3": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component4": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component5": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
 , "component6": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
 , "relation1": [
  "horizontal",
  "component1",
  "component2"
-]
-, "relation2": [
- "vertical",
- "component3",
- "component4"
 ]
 }, 
 {
@@ -4592,154 +1285,8 @@
  "type": "plat0", "l": 4, "r": 7, "b": 0 , "t": 1}
 , "component2": {
  "type": "plat90", "l": 3, "r": 4, "b": 1 , "t": 4}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component5": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component6": {
- "type": "space", "l": 0, "r": 1, "b": 4 , "t": 5}
-, "component7": {
- "type": "space", "l": 1, "r": 2, "b": 1 , "t": 2}
-, "component8": {
- "type": "space", "l": 1, "r": 2, "b": 2 , "t": 3}
-, "component9": {
- "type": "space", "l": 1, "r": 2, "b": 3 , "t": 4}
-, "component10": {
- "type": "space", "l": 1, "r": 2, "b": 4 , "t": 5}
-, "component11": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component12": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component13": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
-, "component14": {
- "type": "space", "l": 3, "r": 4, "b": 0 , "t": 1}
-, "component15": {
- "type": "space", "l": 4, "r": 5, "b": 1 , "t": 2}
-, "component16": {
- "type": "space", "l": 4, "r": 5, "b": 2 , "t": 3}
-, "component17": {
- "type": "space", "l": 4, "r": 5, "b": 3 , "t": 4}
-, "component18": {
- "type": "space", "l": 5, "r": 6, "b": 1 , "t": 2}
-, "component19": {
- "type": "space", "l": 5, "r": 6, "b": 2 , "t": 3}
-, "component20": {
- "type": "space", "l": 5, "r": 6, "b": 3 , "t": 4}
-, "component21": {
- "type": "space", "l": 5, "r": 6, "b": 4 , "t": 5}
-, "component22": {
- "type": "space", "l": 6, "r": 7, "b": 1 , "t": 2}
-, "component23": {
- "type": "space", "l": 6, "r": 7, "b": 2 , "t": 3}
-, "component24": {
- "type": "space", "l": 6, "r": 7, "b": 3 , "t": 4}
-, "component25": {
- "type": "space", "l": 6, "r": 7, "b": 4 , "t": 5}
 , "component26": {
  "type": "ufoo0", "l": 2, "r": 5, "b": 4 , "t": 5}
-, "relation1": [
- "horizontal",
- "component0",
- "component14"
-]
-, "relation2": [
- "horizontal",
- "component3",
- "component7"
-]
-, "relation3": [
- "horizontal",
- "component4",
- "component8"
-]
-, "relation4": [
- "horizontal",
- "component5",
- "component9"
-]
-, "relation5": [
- "horizontal",
- "component6",
- "component10"
-]
-, "relation6": [
- "horizontal",
- "component7",
- "component11"
-]
-, "relation7": [
- "horizontal",
- "component8",
- "component12"
-]
-, "relation8": [
- "horizontal",
- "component9",
- "component13"
-]
-, "relation9": [
- "horizontal",
- "component10",
- "component26"
-]
-, "relation10": [
- "vertical",
- "component11",
- "component12"
-]
-, "relation11": [
- "horizontal",
- "component14",
- "component1"
-]
-, "relation12": [
- "horizontal",
- "component15",
- "component18"
-]
-, "relation13": [
- "horizontal",
- "component16",
- "component19"
-]
-, "relation14": [
- "horizontal",
- "component17",
- "component20"
-]
-, "relation15": [
- "vertical",
- "component17",
- "component26"
-]
-, "relation16": [
- "horizontal",
- "component18",
- "component22"
-]
-, "relation17": [
- "horizontal",
- "component19",
- "component23"
-]
-, "relation18": [
- "horizontal",
- "component20",
- "component24"
-]
-, "relation19": [
- "horizontal",
- "component21",
- "component25"
-]
-, "relation20": [
- "horizontal",
- "component26",
- "component21"
-]
 }, 
 {
 "guid": "eb173385-a6c4-4cdf-80d9-642af396ca78", "success": "0", "component0": {
@@ -4748,124 +1295,16 @@
  "type": "plat90", "l": 0, "r": 1, "b": 0 , "t": 3}
 , "component2": {
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component4": {
- "type": "space", "l": 1, "r": 2, "b": 0 , "t": 1}
-, "component5": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component6": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component7": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
-, "component8": {
- "type": "space", "l": 3, "r": 4, "b": 1 , "t": 2}
-, "component9": {
- "type": "space", "l": 3, "r": 4, "b": 2 , "t": 3}
-, "component10": {
- "type": "space", "l": 3, "r": 4, "b": 3 , "t": 4}
-, "component11": {
- "type": "space", "l": 3, "r": 4, "b": 4 , "t": 5}
-, "component12": {
- "type": "space", "l": 4, "r": 5, "b": 1 , "t": 2}
-, "component13": {
- "type": "space", "l": 4, "r": 5, "b": 2 , "t": 3}
-, "component14": {
- "type": "space", "l": 4, "r": 5, "b": 3 , "t": 4}
-, "component15": {
- "type": "space", "l": 4, "r": 5, "b": 4 , "t": 5}
 , "component16": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "horizontal",
- "component4",
- "component0"
-]
-, "relation2": [
- "vertical",
- "component4",
- "component2"
-]
-, "relation3": [
- "vertical",
- "component5",
- "component6"
-]
-, "relation4": [
- "horizontal",
- "component5",
- "component8"
-]
-, "relation5": [
- "horizontal",
- "component6",
- "component9"
-]
-, "relation6": [
- "horizontal",
- "component7",
- "component10"
-]
-, "relation7": [
- "horizontal",
- "component8",
- "component12"
-]
-, "relation8": [
- "vertical",
- "component9",
- "component10"
-]
-, "relation9": [
- "horizontal",
- "component9",
- "component13"
-]
-, "relation10": [
- "horizontal",
- "component10",
- "component14"
-]
-, "relation11": [
- "horizontal",
- "component11",
- "component15"
-]
-, "relation12": [
- "vertical",
- "component14",
- "component15"
-]
-, "relation13": [
- "horizontal",
- "component16",
- "component11"
-]
 }, 
 {
 "guid": "1bc99a42-aba1-4dc7-85e8-60279637a678", "success": "0", "component0": {
  "type": "plat0", "l": 0, "r": 3, "b": 0 , "t": 1}
 , "component1": {
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
-, "component2": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component5": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component6": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component7": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
 , "component8": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component5",
- "component6"
-]
 }, 
 {
 "guid": "08f65c03-81fb-4be5-aca0-1126bc0c0023", "success": "1", "component0": {
@@ -4874,19 +1313,8 @@
  "type": "plat90", "l": 0, "r": 1, "b": 0 , "t": 3}
 , "component2": {
  "type": "plat90", "l": 2, "r": 3, "b": 0 , "t": 3}
-, "component3": {
- "type": "space", "l": 1, "r": 2, "b": 0 , "t": 1}
-, "component4": {
- "type": "space", "l": 1, "r": 2, "b": 1 , "t": 2}
-, "component5": {
- "type": "space", "l": 1, "r": 2, "b": 2 , "t": 3}
 , "component6": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component3",
- "component4"
-]
 }, 
 {
 "guid": "a6e79feb-36c8-4106-89cd-7316688eec54", "success": "1", "component0": {
@@ -4895,44 +1323,16 @@
  "type": "plat90", "l": 0, "r": 1, "b": 0 , "t": 3}
 , "component2": {
  "type": "plat90", "l": 2, "r": 3, "b": 0 , "t": 3}
-, "component3": {
- "type": "space", "l": 1, "r": 2, "b": 0 , "t": 1}
-, "component4": {
- "type": "space", "l": 1, "r": 2, "b": 1 , "t": 2}
-, "component5": {
- "type": "space", "l": 1, "r": 2, "b": 2 , "t": 3}
 , "component6": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component3",
- "component4"
-]
 }, 
 {
 "guid": "57d4a8fa-a1c6-482f-8fac-e8724861b253", "success": "0", "component0": {
  "type": "plat0", "l": 0, "r": 3, "b": 0 , "t": 1}
 , "component1": {
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
-, "component2": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component5": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component6": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component7": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
 , "component8": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component5",
- "component6"
-]
 }, 
 {
 "guid": "17f517c2-4b8d-418d-ad77-af75e934978e", "success": "1", "component0": {
@@ -4941,19 +1341,8 @@
  "type": "plat90", "l": 0, "r": 1, "b": 0 , "t": 3}
 , "component2": {
  "type": "plat90", "l": 2, "r": 3, "b": 0 , "t": 3}
-, "component3": {
- "type": "space", "l": 1, "r": 2, "b": 0 , "t": 1}
-, "component4": {
- "type": "space", "l": 1, "r": 2, "b": 1 , "t": 2}
-, "component5": {
- "type": "space", "l": 1, "r": 2, "b": 2 , "t": 3}
 , "component6": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component3",
- "component4"
-]
 }, 
 {
 "guid": "a1ee5ac2-4b96-421d-90e9-83856442c529", "success": "1", "component0": {
@@ -4962,19 +1351,8 @@
  "type": "plat90", "l": 0, "r": 1, "b": 0 , "t": 3}
 , "component2": {
  "type": "plat90", "l": 2, "r": 3, "b": 0 , "t": 3}
-, "component3": {
- "type": "space", "l": 1, "r": 2, "b": 0 , "t": 1}
-, "component4": {
- "type": "space", "l": 1, "r": 2, "b": 1 , "t": 2}
-, "component5": {
- "type": "space", "l": 1, "r": 2, "b": 2 , "t": 3}
 , "component6": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component3",
- "component4"
-]
 }, 
 {
 "guid": "6851d0a2-1a1b-4f31-8c50-a1038a324fbc", "success": "0", "component0": {
@@ -4983,42 +1361,6 @@
  "type": "plat0", "l": 3, "r": 6, "b": 0 , "t": 1}
 , "component2": {
  "type": "plat90", "l": 3, "r": 4, "b": 1 , "t": 4}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component5": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component6": {
- "type": "space", "l": 0, "r": 1, "b": 4 , "t": 5}
-, "component7": {
- "type": "space", "l": 1, "r": 2, "b": 1 , "t": 2}
-, "component8": {
- "type": "space", "l": 1, "r": 2, "b": 2 , "t": 3}
-, "component9": {
- "type": "space", "l": 1, "r": 2, "b": 3 , "t": 4}
-, "component10": {
- "type": "space", "l": 1, "r": 2, "b": 4 , "t": 5}
-, "component11": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component12": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component13": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
-, "component14": {
- "type": "space", "l": 4, "r": 5, "b": 1 , "t": 2}
-, "component15": {
- "type": "space", "l": 4, "r": 5, "b": 2 , "t": 3}
-, "component16": {
- "type": "space", "l": 4, "r": 5, "b": 3 , "t": 4}
-, "component17": {
- "type": "space", "l": 5, "r": 6, "b": 1 , "t": 2}
-, "component18": {
- "type": "space", "l": 5, "r": 6, "b": 2 , "t": 3}
-, "component19": {
- "type": "space", "l": 5, "r": 6, "b": 3 , "t": 4}
-, "component20": {
- "type": "space", "l": 5, "r": 6, "b": 4 , "t": 5}
 , "component21": {
  "type": "ufoo0", "l": 2, "r": 5, "b": 4 , "t": 5}
 , "relation1": [
@@ -5026,108 +1368,14 @@
  "component0",
  "component1"
 ]
-, "relation2": [
- "horizontal",
- "component3",
- "component7"
-]
-, "relation3": [
- "horizontal",
- "component4",
- "component8"
-]
-, "relation4": [
- "horizontal",
- "component5",
- "component9"
-]
-, "relation5": [
- "horizontal",
- "component6",
- "component10"
-]
-, "relation6": [
- "horizontal",
- "component7",
- "component11"
-]
-, "relation7": [
- "horizontal",
- "component8",
- "component12"
-]
-, "relation8": [
- "horizontal",
- "component9",
- "component13"
-]
-, "relation9": [
- "horizontal",
- "component10",
- "component21"
-]
-, "relation10": [
- "vertical",
- "component11",
- "component12"
-]
-, "relation11": [
- "horizontal",
- "component14",
- "component17"
-]
-, "relation12": [
- "horizontal",
- "component15",
- "component18"
-]
-, "relation13": [
- "horizontal",
- "component16",
- "component19"
-]
-, "relation14": [
- "vertical",
- "component16",
- "component21"
-]
-, "relation15": [
- "horizontal",
- "component21",
- "component20"
-]
 }, 
 {
 "guid": "b2f47fd0-54d6-4573-ac3a-f27357a2b418", "success": "0", "component0": {
  "type": "plat0", "l": 0, "r": 3, "b": 0 , "t": 1}
 , "component1": {
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
-, "component2": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component5": {
- "type": "space", "l": 0, "r": 1, "b": 4 , "t": 5}
-, "component6": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component7": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component8": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
 , "component9": {
  "type": "ufoo0", "l": 1, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "horizontal",
- "component5",
- "component9"
-]
-, "relation2": [
- "vertical",
- "component6",
- "component7"
-]
 }, 
 {
 "guid": "f6feff5e-1dbc-46d0-a5bb-ea5d4a25614f", "success": "1", "component0": {
@@ -5136,23 +1384,12 @@
  "type": "plat90", "l": 0, "r": 1, "b": 1 , "t": 4}
 , "component2": {
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
-, "component3": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component4": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component5": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
 , "component6": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
 , "relation1": [
  "horizontal",
  "component1",
  "component2"
-]
-, "relation2": [
- "vertical",
- "component3",
- "component4"
 ]
 }, 
 {
@@ -5162,12 +1399,6 @@
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
 , "component2": {
  "type": "plat90", "l": 2, "r": 3, "b": 1 , "t": 4}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component5": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
 , "component6": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
 , "relation1": [
@@ -5183,44 +1414,16 @@
  "type": "plat90", "l": 0, "r": 1, "b": 0 , "t": 3}
 , "component2": {
  "type": "plat90", "l": 2, "r": 3, "b": 0 , "t": 3}
-, "component3": {
- "type": "space", "l": 1, "r": 2, "b": 0 , "t": 1}
-, "component4": {
- "type": "space", "l": 1, "r": 2, "b": 1 , "t": 2}
-, "component5": {
- "type": "space", "l": 1, "r": 2, "b": 2 , "t": 3}
 , "component6": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component3",
- "component4"
-]
 }, 
 {
 "guid": "c023394d-ce45-4899-8be1-1a7d7476eb32", "success": "0", "component0": {
  "type": "plat0", "l": 0, "r": 3, "b": 0 , "t": 1}
 , "component1": {
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
-, "component2": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component5": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component6": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component7": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
 , "component8": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component5",
- "component6"
-]
 }, 
 {
 "guid": "f43820b3-e4ef-45cb-9e4c-ed79667be070", "success": "1", "component0": {
@@ -5229,25 +1432,12 @@
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
 , "component2": {
  "type": "plat90", "l": 2, "r": 3, "b": 1 , "t": 4}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component5": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component6": {
- "type": "space", "l": 0, "r": 1, "b": 4 , "t": 5}
 , "component7": {
  "type": "ufoo0", "l": 1, "r": 3, "b": 4 , "t": 5}
 , "relation1": [
  "horizontal",
  "component1",
  "component2"
-]
-, "relation2": [
- "horizontal",
- "component6",
- "component7"
 ]
 }, 
 {
@@ -5257,44 +1447,16 @@
  "type": "plat90", "l": 0, "r": 1, "b": 0 , "t": 3}
 , "component2": {
  "type": "plat90", "l": 2, "r": 3, "b": 0 , "t": 3}
-, "component3": {
- "type": "space", "l": 1, "r": 2, "b": 0 , "t": 1}
-, "component4": {
- "type": "space", "l": 1, "r": 2, "b": 1 , "t": 2}
-, "component5": {
- "type": "space", "l": 1, "r": 2, "b": 2 , "t": 3}
 , "component6": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component3",
- "component4"
-]
 }, 
 {
 "guid": "6373ddcd-7115-4819-bc4b-f288ce1f9040", "success": "0", "component0": {
  "type": "plat0", "l": 0, "r": 3, "b": 0 , "t": 1}
 , "component1": {
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
-, "component2": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component5": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component6": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component7": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
 , "component8": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component5",
- "component6"
-]
 }, 
 {
 "guid": "5dd554d6-06b5-44a8-ac6e-b53ade124c36", "success": "1", "component0": {
@@ -5303,12 +1465,6 @@
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
 , "component2": {
  "type": "plat90", "l": 2, "r": 3, "b": 1 , "t": 4}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component5": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
 , "component6": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
 , "relation1": [
@@ -5322,50 +1478,16 @@
  "type": "plat0", "l": 0, "r": 3, "b": 0 , "t": 1}
 , "component1": {
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
-, "component2": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component5": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component6": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component7": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
 , "component8": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component5",
- "component6"
-]
 }, 
 {
 "guid": "9cd0d01e-72c5-4979-9b83-85fecefcb716", "success": "0", "component0": {
  "type": "plat0", "l": 0, "r": 3, "b": 0 , "t": 1}
 , "component1": {
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
-, "component2": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
-, "component5": {
- "type": "space", "l": 2, "r": 3, "b": 1 , "t": 2}
-, "component6": {
- "type": "space", "l": 2, "r": 3, "b": 2 , "t": 3}
-, "component7": {
- "type": "space", "l": 2, "r": 3, "b": 3 , "t": 4}
 , "component8": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
-, "relation1": [
- "vertical",
- "component5",
- "component6"
-]
 }, 
 {
 "guid": "69132ac1-fedb-4359-b961-d3109a794192", "success": "1", "component0": {
@@ -5374,12 +1496,6 @@
  "type": "plat90", "l": 1, "r": 2, "b": 1 , "t": 4}
 , "component2": {
  "type": "plat90", "l": 2, "r": 3, "b": 1 , "t": 4}
-, "component3": {
- "type": "space", "l": 0, "r": 1, "b": 1 , "t": 2}
-, "component4": {
- "type": "space", "l": 0, "r": 1, "b": 2 , "t": 3}
-, "component5": {
- "type": "space", "l": 0, "r": 1, "b": 3 , "t": 4}
 , "component6": {
  "type": "ufoo0", "l": 0, "r": 3, "b": 4 , "t": 5}
 , "relation1": [
@@ -5389,3 +1505,4 @@
 ]
 }
 ]
+

@@ -53,7 +53,6 @@ class Cobweb3Tree(CobwebTree):
                 continue
 
             std = self._unbiased_std(float_values)
-
             correct_guesses += (1.0 / (2.0 * math.sqrt(math.pi) * std))
 
         return correct_guesses
@@ -197,7 +196,7 @@ class Cobweb3Tree(CobwebTree):
 
 if __name__ == "__main__":
 
-    Cobweb3Tree().predictions("data_files/cobweb3_test2.json", 100, 20)
+    Cobweb3Tree().predictions("data_files/cobweb3_test3.json", 10, 20)
     #Cobweb3Tree().baseline_guesser("data_files/cobweb3_test.json", 30, 100)
     #print(Cobweb3Tree().cluster("cobweb3_test.json", 10, 1))
 

@@ -7,7 +7,7 @@ class CobwebTree:
 
     # static variable for hashing concepts
     counter = 0
-    min_cu_gain = 0.15
+    min_cu_gain = 0.17
 
     def _mean(self, values):
         """
@@ -162,7 +162,7 @@ class CobwebTree:
         temp._create_new_child(instance)
         return temp._category_utility()
 
-    def _merge(self, best1, best2, instance):
+    def _merge(self, best1, best2):
         """
         Merge the two specified nodes.
 
@@ -186,7 +186,7 @@ class CobwebTree:
 
         return new_child
 
-    def _cu_for_merge(self, best1, best2, instance):
+    def _cu_for_merge(self, best1, best2):
         """
         Returns the category utility for merging the two best children.
 
@@ -198,12 +198,12 @@ class CobwebTree:
         """
         temp = self.__class__()
         temp._update_counts_from_node(self)
-        temp._increment_counts(instance)
+        #temp._increment_counts(instance)
 
         new_child = self.__class__()
         new_child._update_counts_from_node(best1)
         new_child._update_counts_from_node(best2)
-        new_child._increment_counts(instance)
+        #new_child._increment_counts(instance)
         temp.children.append(new_child)
 
         for c in self.children:
@@ -213,6 +213,8 @@ class CobwebTree:
             temp_child._update_counts_from_node(c)
             temp.children.append(temp_child)
 
+        print("mergeCU")
+        print(temp)
         return temp._category_utility()
 
     def _split(self, best):
@@ -260,6 +262,9 @@ class CobwebTree:
             temp_child._update_counts_from_node(c)
             temp.children.append(temp_child)
 
+        print("SPLIT cu")
+        print(temp)
+
         return temp._category_utility()
 
     def verify_counts(self):
@@ -303,6 +308,11 @@ class CobwebTree:
         defined by the current node. This function operates iteratively to
         integrate this instance and uses category utility as the heuristic to
         make decisions.
+
+        Some modifications to the original algorithm. This one can merge and
+        split multiple nodes at each point before continuing. Also, it doesn't
+        fringe split if it is below the min_cu_gain. Lastly, it prunes branches
+        that drop below the min_cu_gain.
         """
         current = self
 
@@ -323,11 +333,18 @@ class CobwebTree:
                 return current._create_new_child(instance)
                 
             else:
+                
+                #consider merges and splits separately?
+
                 #TODO is there a cleaner way to do this?
                 best1, best2 = current._two_best_children(instance)
+                #action_cu, best_action = current._get_best_operation(instance,
+                #                                                     best1,
+                #                                                     best2)
                 action_cu, best_action = current._get_best_operation(instance,
-                                                                     best1,
-                                                                     best2)
+                                                                     best1, best2,
+                                                                     ["best",
+                                                                      "new"]) 
                 best1_cu, best1 = best1
                 if best2:
                     best2_cu, best2 = best2
@@ -346,10 +363,18 @@ class CobwebTree:
                     current._increment_counts(instance)
                     return current._create_new_child(instance)
                 elif best_action == 'merge':
-                    current._increment_counts(instance)
-                    new_child = current._merge(best1, best2, instance)
-                    current = new_child
+                    #current._increment_counts(instance)
+                    print("merging")
+                    print(current)
+                    print(best1)
+                    print(best2)
+                    print(action_cu)
+                    current._merge(best1, best2)
+                    #new_child = current._merge(best1, best2)
+                    #current = new_child
                 elif best_action == 'split':
+                    print("splitting")
+                    print(action_cu)
                     current._split(best1)
                 else:
                     raise Exception("Should never get here.")
@@ -370,13 +395,13 @@ class CobwebTree:
         if "new" in possible_ops: 
             operations.append((self._cu_for_new_child(instance),'new'))
         if "merge" in possible_ops and best2:
-            operations.append((self._cu_for_merge(best1, best2,
-                                                 instance),'merge'))
+            operations.append((self._cu_for_merge(best1, best2),'merge'))
         if "split" in possible_ops and len(best1.children) > 0:
             operations.append((self._cu_for_split(best1),'split'))
 
         # pick the best operation
         operations.sort(reverse=True)
+        print(operations)
 
         return operations[0]
         
@@ -506,7 +531,7 @@ class CobwebTree:
         """
         Given an instance incrementally update the categorization tree.
         """
-        self._cobweb(instance)
+        return self._cobweb(instance)
 
     def fit(self, list_of_instances):
         """
@@ -691,6 +716,36 @@ class CobwebTree:
                 a.append(r[i])
             print("%0.2f" % (self._std(a)))
 
+    def _remove_singletons(self):
+        """
+        Only done at the end. This screws up the counts and the parent
+        pointers.
+        """
+        if not self.children:
+            return 
+
+        new_children = []
+        for child in self.children:
+            count = 0
+            
+            for c in child.children:
+                if c.count > 1:
+                    count += 1
+
+            if count == 1:
+                for c in child.children:
+                    new_children.append(c)
+            else:
+                new_children.append(child)
+
+        self.children = new_children
+
+        self.children = [child for child in self.children if child.count > 1]
+
+        for child in self.children:
+            child.parent = self
+            if child.children:
+                child._remove_singletons()
 
     def predictions(self, filename, length, iterations):
         """
