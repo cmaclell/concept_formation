@@ -516,23 +516,46 @@ class Labyrinth(Cobweb3Tree):
        
 
         #self._remove_singletons()
-        print(json.dumps(self._output_json()))
+        mapping = {}
         for idx, inst in enumerate(o_instances):
             instance = copy.deepcopy(inst)
             if "guid" in instance:
                 del instance['guid']
             #print(inst['guid'])
             #print(previous[self._flatten_instance(instance)].concept_name)
-            concept = self._labyrinth_categorize(instance).parent.concept_name
-            print(concept)
+            mapping[inst['guid']] = self._labyrinth_categorize(instance)
+            #concept = mapping[inst['guid']].parent.concept_name
+            #print(concept)
             #clusters[inst['guid']] = self._labyrinth_categorize(instance).parent.concept_name
-            clusters[inst['guid']] = concept
+            #clusters[inst['guid']] = concept
+
+        for g in mapping:
+            curr = mapping[g]
+            while curr:
+                curr.av_counts['has-guid'] = {"1":True}
+                if 'guid' not in curr.av_counts:
+                    curr.av_counts['guid'] = {}
+                curr.av_counts['guid'][g] = True
+                curr = curr.parent
+        
+        for g in mapping:
+            cluster = mapping[g]
+            num = 1
+            while num <= 1 and cluster.parent:
+                cluster = cluster.parent
+                num = 0
+                for c in cluster.children:
+                    if 'has-guid' in c.av_counts:
+                        num += 1
+            clusters[g] = cluster.concept_name
+
+        print(json.dumps(self._output_json()))
 
         return clusters
 
 if __name__ == "__main__":
 
-    print(Labyrinth().cluster("data_files/rb_com_11_noCheck.json", 40, 100))
+    print(Labyrinth().cluster("data_files/rb_com_11_noCheck.json", 20, 100))
     #print(Labyrinth().cluster("data_files/rb_s_07.json", 10, 3))
     #print(Labyrinth().cluster("data_files/jenny_graph_data.json", 50, 1))
     #Labyrinth().predictions("data_files/rb_com_11_noCheck.json", 15, 3)

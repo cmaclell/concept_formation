@@ -344,7 +344,7 @@ class CobwebTree:
                 if best2:
                     best2_cu, best2 = best2
 
-                # for separate splitting and merging
+                #for separate splitting and merging
                 #current_cu = current._category_utility()
                 #if best2 and (current._cu_for_merge(best1, best2) - current_cu) > 0.0:
                 #    current._merge(best1, best2)
