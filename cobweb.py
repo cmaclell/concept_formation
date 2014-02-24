@@ -297,17 +297,33 @@ class CobwebTree:
         for child in self.children:
             child.verify_counts()
 
+    def _remove(self):
+        for c in self.children:
+            c._remove()
+        self.parent.children.remove(self)
+
+    def _exact_match(self, instance):
+        for attr in instance:
+            if attr not in self.av_counts:
+                return False
+            if instance[attr] not in self.av_counts[attr]:
+                return False
+            if not (((1.0 * self.av_counts[attr][instance[attr]]) / self.count)
+                    == 1.0):
+                return False
+
+        for attr in self.av_counts:
+            if attr not in instance:
+                return False
+
+        return True
+
     def _cobweb(self, instance):
         """
         Incrementally integrates an instance into the categorization tree
         defined by the current node. This function operates iteratively to
         integrate this instance and uses category utility as the heuristic to
         make decisions.
-
-        Some modifications to the original algorithm. This one can merge and
-        split multiple nodes at each point before continuing. Also, it doesn't
-        fringe split if it is below the min_cu_gain. Lastly, it prunes branches
-        that drop below the min_cu_gain.
         """
         current = self
 
@@ -316,9 +332,13 @@ class CobwebTree:
             # check to see if category utility is increased by fringe splitting.
             # this is more generally and will be used by the Labyrinth/Trestle
             # systems to achieve more complex fringe behavior. 
+            #if (not current.children and current._exact_match(instance)):
             if (not current.children and current._cu_for_fringe_split(instance)
                 <= current.min_cu_gain):
+
+                #print("FRINGE PRUNE")
                 #TODO this is new
+                #print(current._cu_for_fringe_split(instance))
                 current._increment_counts(instance)
                 return current 
 
@@ -334,31 +354,23 @@ class CobwebTree:
                                                                      best1,
                                                                      best2)
 
-                # for separate merging and splitting
-                #action_cu, best_action = current._get_best_operation(instance,
-                #                                                     best1, best2,
-                #                                                     ["best",
-                #                                                      "new"]) 
-
                 best1_cu, best1 = best1
                 if best2:
                     best2_cu, best2 = best2
 
-                #for separate splitting and merging
-                #current_cu = current._category_utility()
-                #if best2 and (current._cu_for_merge(best1, best2) - current_cu) > 0.0:
-                #    current._merge(best1, best2)
-                #elif best1.children and (current._cu_for_split(best1) - current_cu) > 0.0:
-                #    current._split(best1)
+                #if action_cu <= current.min_cu_gain:
+                #    #TODO this is new
+                #    #If the best action results in a cu below the min cu gain
+                #    #then prune the branch
+                #    print("PRUNING BRANCH!")
+                #    print(action_cu)
+                #    current._increment_counts(instance)
+                #    for c in current.children:
+                #        c._remove()
+                #    #current.children = []
+                #    return current
 
-                if action_cu <= current.min_cu_gain:
-                    #TODO this is new
-                    #If the best action results in a cu below the min cu gain
-                    #then prune the branch
-                    current._increment_counts(instance)
-                    current.children = []
-                    return current
-                elif best_action == 'best':
+                if best_action == 'best':
                     current._increment_counts(instance)
                     current = best1
                 elif best_action == 'new':
@@ -388,7 +400,7 @@ class CobwebTree:
             operations.append((best1_cu,"best"))
         if "new" in possible_ops: 
             operations.append((self._cu_for_new_child(instance),'new'))
-        if "merge" in possible_ops and best2:
+        if "merge" in possible_ops and len(self.children) > 2 and best2:
             operations.append((self._cu_for_merge(best1, best2, instance),'merge'))
         if "split" in possible_ops and len(best1.children) > 0:
             operations.append((self._cu_for_split(best1),'split'))

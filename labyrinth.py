@@ -467,7 +467,33 @@ class Labyrinth(Cobweb3Tree):
                 duplicate[attr] = self._flatten_instance(duplicate[attr])
         return repr(sorted(duplicate.items()))
 
-    def cluster(self, filename, length, iterations=100):
+    def order_towers(self):
+        """
+        Given a number of towers with GUIDs added return a better
+        training ordering.
+        """
+        L = []
+        if not self.children:
+            if 'guid' in self.av_counts:
+                for guid in self.av_counts['guid']:
+                    L.append(guid)
+            return L
+        else:
+            sorted_c = sorted(self.children, key=lambda c: -1 * c.count)
+            lists = []
+
+            for c in sorted_c:
+                lists.append(c.order_towers())
+
+            while lists:
+                for l in lists:
+                    if l:
+                        L.append(l.pop())
+                        
+                lists = [l for l in lists if l]
+            return L
+
+    def cluster(self, filename, length):
         """
         Used to provide a clustering of a set of examples provided in a JSON
         file. It starts by incorporating the examples into the categorization
@@ -485,50 +511,30 @@ class Labyrinth(Cobweb3Tree):
                 del instance['guid']
         json_data.close()
         clusters = {}
-        diff = 1
-        counter = 0
-        
         previous = {}
+        g_instances = {}
+
         for i in instances:
             previous[self._flatten_instance(i)] = None
 
-        while diff > 0 and counter < iterations:
-            counter += 1
-        #for j in range(iterations):
-            #before = self._num_concepts()
-            shuffle(instances)
-            diff = 0
-            for n, i in enumerate(instances):
-                print("training instance: " + str(n))
-                self.ifit(i)
+        # train initially
+        shuffle(instances)
+        for n, i in enumerate(instances):
+            print("training instance: " + str(n))
+            self.ifit(i)
 
-            for n, i in enumerate(instances):
-                print("categorizing instance: " + str(n))
-                cluster = self._labyrinth_categorize(i).parent
-                if (previous[self._flatten_instance(i)] != cluster):
-                    diff += 1
-                    previous[self._flatten_instance(i)] = cluster
-
-            print(diff)
-            #print(self._num_concepts())
-            #diff = abs(before - self._num_concepts())
-            #print(json.dumps(self._output_json()))
-       
-
-        #self._remove_singletons()
+        # add categorize for adding guids
         mapping = {}
         for idx, inst in enumerate(o_instances):
+            print("categorizing instance: %i" % idx)
             instance = copy.deepcopy(inst)
             if "guid" in instance:
                 del instance['guid']
-            #print(inst['guid'])
-            #print(previous[self._flatten_instance(instance)].concept_name)
-            mapping[inst['guid']] = self._labyrinth_categorize(instance)
-            #concept = mapping[inst['guid']].parent.concept_name
-            #print(concept)
-            #clusters[inst['guid']] = self._labyrinth_categorize(instance).parent.concept_name
-            #clusters[inst['guid']] = concept
+            g_instances[inst['guid']] = instance
 
+            mapping[inst['guid']] = self._labyrinth_categorize(instance)
+
+        # add guids
         for g in mapping:
             curr = mapping[g]
             while curr:
@@ -538,15 +544,40 @@ class Labyrinth(Cobweb3Tree):
                 curr.av_counts['guid'][g] = True
                 curr = curr.parent
         
+        ## get ordering
+        #guid_order = self.order_towers()
+        #self = self.__class__()
+
+        ## second time sorting
+        #count = 0
+        #for guid in guid_order:
+        #    count += 1
+        #    print("training instance: " + str(count))
+        #    self.ifit(g_instances[guid])
+
+        ## add categorize for adding guids
+        #mapping = {}
+        #for idx, inst in enumerate(o_instances):
+        #    print("categorizing instance: %i" % idx)
+        #    instance = copy.deepcopy(inst)
+        #    if "guid" in instance:
+        #        del instance['guid']
+
+        #    mapping[inst['guid']] = self._labyrinth_categorize(instance)
+
+        ## add guids
+        #for g in mapping:
+        #    curr = mapping[g]
+        #    while curr:
+        #        curr.av_counts['has-guid'] = {"1":True}
+        #        if 'guid' not in curr.av_counts:
+        #            curr.av_counts['guid'] = {}
+        #        curr.av_counts['guid'][g] = True
+        #        curr = curr.parent
+        
         for g in mapping:
             cluster = mapping[g]
-            num = 1
-            while num <= 1 and cluster.parent:
-                cluster = cluster.parent
-                num = 0
-                for c in cluster.children:
-                    if 'has-guid' in c.av_counts:
-                        num += 1
+            cluster = cluster.parent
             clusters[g] = cluster.concept_name
 
         print(json.dumps(self._output_json()))
@@ -555,7 +586,7 @@ class Labyrinth(Cobweb3Tree):
 
 if __name__ == "__main__":
 
-    print(Labyrinth().cluster("data_files/rb_com_11_noCheck.json", 20, 100))
+    print(Labyrinth().cluster("data_files/rb_com_11_noCheck.json", 300))
     #print(Labyrinth().cluster("data_files/rb_s_07.json", 10, 3))
     #print(Labyrinth().cluster("data_files/jenny_graph_data.json", 50, 1))
     #Labyrinth().predictions("data_files/rb_com_11_noCheck.json", 15, 3)

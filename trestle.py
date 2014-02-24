@@ -1,8 +1,6 @@
-import json
 import math
 import numpy
 import hungarianNative
-#import hungarian # depreciated
 from labyrinth import Labyrinth
 
 class Trestle(Labyrinth):
@@ -69,15 +67,6 @@ class Trestle(Labyrinth):
         temp_instance = self._match(temp_instance)
         return self._cobweb_categorize(temp_instance)
 
-    # DEPRECIATED
-    #def _common_ancestor(self, other_concept):
-    #    temp = self
-    #    while temp != None:
-    #        if temp._is_parent(other_concept):
-    #            return temp 
-    #        temp = temp.parent
-    #    print("ERROR Concepts not being compared in the same tree")
-
     def _hungarian_match(self, instance):
         from_name = [attr for attr in instance if isinstance(instance[attr],
                                                              Labyrinth)]
@@ -96,7 +85,7 @@ class Trestle(Labyrinth):
 
         # some reasonably large constant when dealing with really small
         # probabilities
-        max_cost = 100.0
+        max_cost = 1000.0
         
         cost_matrix = []
         for row_index in range(length):
@@ -113,21 +102,11 @@ class Trestle(Labyrinth):
                 reward = 0.0
                 from_val = instance[from_name[row_index]]
                 for val in self.av_counts[to_name[col_index]]:
-                    #print((1.0 * self.av_counts[to_name[col_index]][val]) / self.count)
-                    #print(from_val._probability_given(val))
-
-                    #print((((1.0 * self.av_counts[to_name[col_index]][val]) /
-                    #        self.count) * from_val._probability_given(val) *
-                    #       val._probability_given(from_val)))
                     reward += (((1.0 * self.av_counts[to_name[col_index]][val])
                                 / self.count) *
-                               from_val._probability_given(val) *
-                               val._probability_given(from_val))
-                    #ancestor = from_val._common_ancestor(val)
-                    #reward += (((1.0 * self.av_counts[to_name[col_index]][val]) /
-                    #          self.count) *
-                    #         from_val._probability_given(ancestor) *
-                    #         val._probability_given(ancestor))
+                               from_val._probability_given(val))
+                    #*
+                    #           val._probability_given(from_val))
                     
                     # Additional bonus for part of a relational match
                     for attr in instance:
@@ -152,40 +131,21 @@ class Trestle(Labyrinth):
                     
             cost_matrix.append(row)
 
+        # Note: "a" is modified by hungarian.
         a = numpy.array(cost_matrix)
-
-        # may be able to eliminate this duplicate
-        b = numpy.array(cost_matrix)
-
-        #depreciated c library approach
-        #assignment1 = hungarian.lap(a)[0]
-
-        ### substitute hungarian method ####
         assignment = hungarianNative.hungarian(a)
-
-        #print("MATCHING")
-        #print(b)
-        #print(instance)
-        #print(from_name)
-        #print(self)
-        #print(to_name)
         #print(assignment)
-        
-        ### substitute hungarian method ####
+
         mapping = {}
-        
-        for index, val in enumerate(assignment):
-            if (index >= len(from_name)):
+        for index in assignment:
+            if index >= len(from_name):
                 continue
-            elif (val >= len(to_name)):
-                mapping[from_name[index]] = "component" + self._gensym()
+            elif assignment[index] >= len(to_name):
+                  mapping[from_name[index]] = "component" + self._gensym()
             else:
-                mapping[from_name[index]] = to_name[val]
-            #print("match cost: %0.3f" % b[index][val])
+                mapping[from_name[index]] = to_name[assignment[index]]
 
-            #elif (b[index][val] == max_cost):
-            #    mapping[from_name[index]] = "component" + self._gensym()
-
+        #print(mapping)
         return mapping 
 
     def _match(self, instance):
@@ -225,6 +185,22 @@ class Trestle(Labyrinth):
         else:
             return self.parent._get_root()
 
+    def _remove(self):
+        """
+        Specialized version of remove for trestle. This removes all references
+        to a particular concept from the tree. It replaces these references
+        with a reference to the parent concept
+        """
+        # call recursively
+        for c in self.children:
+            c._remove()
+
+        # replace references to deleted concept with parent concept
+        self._get_root()._replace(self, self.parent)
+
+        # deletes the child
+        self.parent.children.remove(self)
+
     def _split(self, best):
         """
         Specialized version of split for labyrinth. This removes all references
@@ -245,73 +221,25 @@ class Trestle(Labyrinth):
         """
         if self == other:
             return 1.0
-        if (self.count >= other.count):
+
+        if (self.count > other.count):
             if self._is_parent(other):
                 return 1.0
             else:
                 return 0.0
+
         elif (self.count < other.count):
-            if other._is_parent(other):
+            if other._is_parent(self):
                 return (1.0 * self.count) / other.count
 
-    #def _probability_given(self, other):
-    #    """
-    #    The probability that the current node would be reached from another
-    #    provided node.
-    #    """
-    #    if self == other:
-    #        return 1.0
-    #    elif self.parent == None:
-    #        return 0.0
-
-    #    prob = ((self.count / (self.parent.count * 1.0)) *
-    #            self.parent._probability_given(other))
-    #    
-    #    if(prob > 1.0):
-    #        print(prob)
-    #        print(self)
-    #        print(self.parent)
-    #    assert(prob <= 1.0)
-    #    
-    #    return prob
-
-    # TODO I don't think I need to predict the relational attributes?
-    #def _prob_attr_value(self, instance, attr, val):
-    #    concept = self._labyrinth_categorize(instance)
-
-    #    if isinstance(val, list):
-    #        temp_instance = {}
-
-    #        for attr in instance:
-    #            if isinstance(instance[attr], dict):
-    #                temp_instance[attr] = self._labyrinth(instance[attr])
-    #            elif isinstance(instance[attr], list):
-    #                temp_instance[tuple(instance[attr])] = True
-    #            else:
-    #                temp_instance[attr] = instance[attr]
-
-    #        mapping = self._hungarian_match(temp_instance)
-    #        #print(mapping)
-
-    #        new_val = []
-    #        for i in range(len(val)):
-    #            if i == 0:
-    #                new_val.append(val[i])
-    #                continue
-    #            if val[i] in mapping:
-    #                new_val.append(mapping[val[i]])
-    #            else:
-    #                new_val.append(val[i])
-    #        attr = tuple(new_val)
-    #        val = True
-    #        print(attr)
-    #        print(concept)
-    #        #print(concept._get_probability(attr,val))
-    #        return concept._get_probability(attr, val)
-
-    #    return concept._get_probability(attr, val)
+        return 0.0
 
     def _get_probability(self, attr, val):
+        """
+        Gets the probability of a particular attribute value. This has been
+        modified to support numeric and nominal values. The acuity is set as a
+        global parameter now. 
+        """
         if attr not in self.av_counts:
             return 0.0
 
@@ -323,34 +251,24 @@ class Trestle(Labyrinth):
                     prob += (((1.0 * self.av_counts[attr][val2]) /
                               self.count) *
                              val._probability_given(val2))
-                    #ancestor = val._common_ancestor(val2)
+                    #* 
+                    #         val2._probability_given(val))
 
-                    #prob += (((1.0 * self.av_counts[attr][val2]) /
-                    #          self.count) *
-                    #         val._probability_given(ancestor) *
-                    #         val2._probability_given(ancestor))
             return prob
 
         if isinstance(val, float):
-            # acuity the smallest allowed standard deviation; default = 1.0 
-            acuity = 1.0
             float_values = []
 
-            for fv in self.av_counts[attr]:
-                if isinstance(fv, float):
-                    float_values += [fv] * self.av_counts[attr][fv]
-
-            if len(float_values) == 0:
-                return 0.0
+            for av in self.av_counts[attr]:
+                if isinstance(av, float):
+                    float_values += [av] * self.av_counts[attr][av]
 
             mean = self._mean(float_values)
-            std = self._std(float_values)
-            if std < acuity:
-                std = acuity
+            std = self._unbiased_std(float_values)
 
-            point = abs((val - mean) / (std))
-            return (1.0 - math.erf(point / math.sqrt(2)))#/2.0
-
+            # assign 100% accuracy to the mean
+            return (math.exp(-((val - mean) * (val - mean)) / (2.0 * std * std)))
+        
         if val in self.av_counts[attr]:
             return (1.0 * self.av_counts[attr][val]) / self.count
 
@@ -366,81 +284,23 @@ class Trestle(Labyrinth):
             prob *= self._get_probability(attr, instance[attr])
         return prob
 
-    #def _prob_attribute_value(self, attr, val):
-    #    """
-    #    Returns the probability of a given attribute value pair in the current
-    #    concept (self).
-
-    #    NOTE: not used in category utility... just for prediction error.
-    #    """
-    #    if attr not in self.av_counts:
-    #        return 0.0
-
-    #    if isinstance(val, float):
-    #        float_values = []
-    #        for v in self.av_counts[attr]:
-    #            if isinstance(v, float):
-    #                float_values.append(v)
-    #            
-    #        # handle the float values
-    #        if len(float_values) == 0:
-    #            return 0.0
-    #        mean = self._mean(float_values)
-    #        std = self._std(float_values)
-
-    #        # return the probability that the point (or a point further from
-    #        # the mean) would be generated given the mean and std
-    #        point = abs((val - mean) / (std))
-    #        return (1.0 - math.erf(point / math.sqrt(2)))/2.0
-
-    #    elif isinstance(val, Trestle):
-    #        for v in self.av_counts[attr]:
-    #            prob = 0.0
-    #            if isinstance(v, Trestle):
-    #                prob += (((1.0 * self.av_counts[attr][v]) / self.count) *
-    #                         val._probability_given(v))
-    #        return prob
-
-    #    else:
-    #        if val not in self.av_counts[attr]:
-    #            return 0.0
-    #        return (1.0 * self.av_counts[attr][val]) / self.count
-
-    #def _cobweb_categorize(self, instance):
-    #    """
-    #    Sorts an instance in the categorization tree defined at the current
-    #    node without modifying the counts of the tree.
-
-    #    Uses the new and best operations; when new is the best operation it
-    #    returns the current node otherwise it recurses on the best node. 
-    #    """
-    #    if not self.children:
-    #        return self
-
-    #    best1, best2 = self._two_best_children(instance)
-    #    action_cu, best_action = self._get_best_operation(instance, best1,
-    #                                                      best2, ["best",
-    #                                                              "new"]) 
-    #    best1_cu, best1 = best1
-
-    #    if best_action == "new":
-    #        return self
-    #    elif best_action == "best":
-    #        # Only recurse if we increase the probability in the best.
-    #        if (best1._probability_instance(instance) >
-    #            self._probability_instance(instance)):
-    #            return best1._cobweb_categorize(instance)
-    #        
-    #        return self
+    def _get_parents(self):
+        parents = {}
+        parents[self] = 1.0
+        current = self
+        while current.parent:
+            parents[current.parent] = (self.count * 1.0) / current.parent.count
+            current = current.parent
+        return parents
 
     def _expected_correct_guesses(self):
         """
         Computes the number of attribute values that would be correctly guessed
         in the current concept. This extension supports both nominal and
-        numeric attribute values.
+        numeric attribute values. The acuity parameter should be set based on
+        the domain cobweb is being used on. The acuity is set as a global
+        parameter now. 
         """
-        # acuity the smallest allowed standard deviation; default = 1.0 
-        acuity = 1.0
         correct_guesses = 0.0
 
         for attr in self.av_counts:
@@ -448,32 +308,40 @@ class Trestle(Labyrinth):
             for val in self.av_counts[attr]:
                 if isinstance(val, float):
                     float_values += [val] * int(self.av_counts[attr][val])
+                elif isinstance(val, Trestle):
+                    prob = 0.0
+
+                    parents = val._get_parents()
+                    for val2 in self.av_counts[attr]:
+                        if val2 in parents:
+                            prob += ((1.0 * self.av_counts[attr][val2]) /
+                                     self.count) * parents[val2]
+
+                    # only consider 6 biggest additional values
+                    #prob += (((1.0 * self.av_counts[attr][val]) / self.count))
+                    #values = sorted([val2 for val2 in
+                    #                 self.av_counts[attr] if val2 != val and
+                    #                 isinstance(val2, Trestle)],
+                    #                key=lambda v: v.count)
+                    #values = values[:6]
+                    #for val2 in values:
+
+                    #for val2 in self.av_counts[attr]:
+                    #    if isinstance(val2, Trestle):
+                    #    
+                    #        prob += (((1.0 * self.av_counts[attr][val2]) /
+                    #                  self.count) *
+                    #                 val._probability_given(val2))
+
                 else:
-                    if isinstance(val, Trestle):
-                        prob = 0.0
-                        for val2 in self.av_counts[attr]:
-                            if isinstance(val2, Trestle):
-                                prob += (((1.0 * self.av_counts[attr][val2]) /
-                                          self.count) *
-                                         val._probability_given(val2) *
-                                         val2._probability_given(val))
-                                #ancestor = val._common_ancestor(val2)
+                    prob = ((1.0 * self.av_counts[attr][val]) / self.count)
 
-                                #prob += (((1.0 * self.av_counts[attr][val2]) /
-                                #          self.count) *
-                                #         val._probability_given(ancestor) *
-                                #         val2._probability_given(ancestor))
-                    else:
-                        prob = ((1.0 * self.av_counts[attr][val]) / self.count)
-                    #prob = ((1.0 * self.av_counts[attr][val]) / self.count)
-                    correct_guesses += (prob * prob)
+                correct_guesses += (prob * prob)
 
-            # handle the float values
             if len(float_values) == 0:
                 continue
-            std = self._std(float_values)
-            if std < acuity:
-                std = acuity
+
+            std = self._unbiased_std(float_values)
             correct_guesses += (1.0 / (2.0 * math.sqrt(math.pi) * std))
 
         return correct_guesses
@@ -487,7 +355,7 @@ class Trestle(Labyrinth):
 
 if __name__ == "__main__":
 
-    print(Trestle().cluster("data_files/rb_com_11_noCheck.json", 20, 100))
+    print(Trestle().cluster("data_files/rb_com_11_noCheck.json", 300))
     #print(Trestle().cluster("towers_trestle.json", 15))
     #print(Trestle().cluster("data_files/rb_s_07.json", 1, 3))
     #Labyrinth().predictions("data_files/rb_s_07.json", 15, 4)

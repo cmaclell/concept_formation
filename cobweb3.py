@@ -132,7 +132,7 @@ class Cobweb3Tree(CobwebTree):
         global parameter now. 
         """
         if attr not in self.av_counts:
-            return 0.<0
+            return 0.0
 
         if isinstance(val, float):
             float_values = []
