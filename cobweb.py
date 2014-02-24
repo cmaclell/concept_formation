@@ -332,6 +332,7 @@ class CobwebTree:
             # check to see if category utility is increased by fringe splitting.
             # this is more generally and will be used by the Labyrinth/Trestle
             # systems to achieve more complex fringe behavior. 
+
             #if (not current.children and current._exact_match(instance)):
             if (not current.children and current._cu_for_fringe_split(instance)
                 <= current.min_cu_gain):
@@ -358,17 +359,17 @@ class CobwebTree:
                 if best2:
                     best2_cu, best2 = best2
 
-                #if action_cu <= current.min_cu_gain:
-                #    #TODO this is new
-                #    #If the best action results in a cu below the min cu gain
-                #    #then prune the branch
-                #    print("PRUNING BRANCH!")
-                #    print(action_cu)
-                #    current._increment_counts(instance)
-                #    for c in current.children:
-                #        c._remove()
-                #    #current.children = []
-                #    return current
+                if action_cu <= current.min_cu_gain:
+                    #TODO this is new
+                    #If the best action results in a cu below the min cu gain
+                    #then prune the branch
+                    print("PRUNING BRANCH!")
+                    print(action_cu)
+                    current._increment_counts(instance)
+                    for c in current.children:
+                        c._remove()
+                    #current.children = []
+                    return current
 
                 if best_action == 'best':
                     current._increment_counts(instance)

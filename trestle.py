@@ -314,8 +314,8 @@ class Trestle(Labyrinth):
                     parents = val._get_parents()
                     for val2 in self.av_counts[attr]:
                         if val2 in parents:
-                            prob += ((1.0 * self.av_counts[attr][val2]) /
-                                     self.count) * parents[val2]
+                            prob += (((1.0 * self.av_counts[attr][val2]) /
+                                     self.count) * parents[val2])
 
                     # only consider 6 biggest additional values
                     #prob += (((1.0 * self.av_counts[attr][val]) / self.count))
