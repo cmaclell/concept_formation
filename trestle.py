@@ -355,7 +355,9 @@ class Trestle(Labyrinth):
 
 if __name__ == "__main__":
 
-    print(Trestle().cluster("data_files/rb_com_11_noCheck.json", 300))
+    t = Trestle()
+    print(t.cluster("data_files/rb_com_11_noCheck.json", 60))
+
     #print(Trestle().cluster("towers_trestle.json", 15))
     #print(Trestle().cluster("data_files/rb_s_07.json", 1, 3))
     #Labyrinth().predictions("data_files/rb_s_07.json", 15, 4)

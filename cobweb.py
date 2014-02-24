@@ -288,10 +288,17 @@ class CobwebTree:
                     assert val in temp[attr]
                     temp[attr][val] -= child.av_counts[attr][val]
 
+        if temp_count != 0:
+            print(self.count)
+            for child in self.children:
+                print(child.count)
         assert temp_count == 0
 
         for attr in temp:
             for val in temp[attr]:
+                if temp[attr][val] != 0.0:
+                    print(self)
+
                 assert temp[attr][val] == 0.0
 
         for child in self.children:

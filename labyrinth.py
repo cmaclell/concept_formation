@@ -523,6 +523,9 @@ class Labyrinth(Cobweb3Tree):
             print("training instance: " + str(n))
             self.ifit(i)
 
+        #TODO for debugging
+        self.verify_counts()
+
         # add categorize for adding guids
         mapping = {}
         for idx, inst in enumerate(o_instances):
@@ -586,7 +589,7 @@ class Labyrinth(Cobweb3Tree):
 
 if __name__ == "__main__":
 
-    print(Labyrinth().cluster("data_files/rb_com_11_noCheck.json", 300))
+    print(Labyrinth().cluster("data_files/rb_com_11_noCheck.json", 60))
     #print(Labyrinth().cluster("data_files/rb_s_07.json", 10, 3))
     #print(Labyrinth().cluster("data_files/jenny_graph_data.json", 50, 1))
     #Labyrinth().predictions("data_files/rb_com_11_noCheck.json", 15, 3)
