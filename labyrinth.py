@@ -230,13 +230,51 @@ class Labyrinth(Cobweb3Tree):
                 continue
 
             val = instance[attr]
-            cvals = [cval for cval in self.av_counts[attr] if val !=
-                              cval]
 
             #TODO consider splitting the cvals here.
             #split values first.
+#            cvals = list(set([cval for cval in self.av_counts[attr] if val !=
+#                              cval]))
+#            while cvals:
+#
+#                cval = cvals.pop()
+#                if not cval.children:
+#                    continue
+#
+#                temp_parent = self.__class__()
+#                temp_parent._update_counts_from_node(self.parent)
+#                temp_child = self.__class__()
+#                temp_child._update_counts_from_node(self)
+#                temp_child.parent = temp_parent
+#
+#                general_cu = temp_child.attr_val_cu(attr, cval.children + [cval])
+#                
+#                # specialize the values
+#                for c in cval.children:
+#                    if c not in temp_parent.av_counts[attr]:
+#                        temp_parent.av_counts[attr][c] = 0.0
+#                    if c not in temp_child.av_counts[attr]:
+#                        temp_child.av_counts[attr][c] = 0.0
 
+#                    if c != cval:
+#                        if cval in temp_parent.av_counts[attr]:
+#                            temp_parent.av_counts[attr][ancestor] += temp_parent.av_counts[attr][val]
+#                        temp_child.av_counts[attr][ancestor] += temp_child.av_counts[attr][val]
+#                        temp_parent.av_counts[attr][val] = 0.0
+#                        temp_child.av_counts[attr][val] = 0.0
+#
+#                    if cval != ancestor:
+#                        if cval in temp_parent.av_counts[attr]:
+#                            temp_parent.av_counts[attr][ancestor] += temp_parent.av_counts[attr][cval]
+#                        temp_child.av_counts[attr][ancestor] += temp_child.av_counts[attr][cval]
+#                        temp_parent.av_counts[attr][cval] = 0.0
+#                        temp_child.av_counts[attr][cval] = 0.0
+
+#                general_cu = temp_child.attr_val_cu(attr, [ancestor, val, cval])
+                
             # merge values
+            cvals = list(set([cval for cval in self.av_counts[attr] if val !=
+                              cval]))
             while cvals:
 
                 assert val not in cvals
@@ -446,28 +484,31 @@ class Labyrinth(Cobweb3Tree):
 
                 # match based on match to values with shared ancestory.
                 for val in self.av_counts[to_name[col_index]]:
-                    reward += (((1.0 * self.av_counts[to_name[col_index]][val]) /
-                              self.count) * from_val.probability_given(val))
+                    ancestor = self.common_ancestor(from_val, val)
+                    reward += (((1.0 * self.av_counts[to_name[col_index]][val])
+                                / self.count) *
+                               from_val.probability_given(ancestor) *
+                               val.probability_given(ancestor))
 
-                    # Additional bonus for part of a relational match
-                    for attr in instance:
-                        if not isinstance(attr, tuple):
+                # Additional bonus for part of a relational match
+                for attr in instance:
+                    if not isinstance(attr, tuple):
+                        continue
+                    for attr2 in self.av_counts:
+                        if not isinstance(attr2, tuple):
                             continue
-                        for attr2 in self.av_counts:
-                            if not isinstance(attr2, tuple):
-                                continue
-                            if len(attr) != len(attr2):
-                                continue
-                            if attr[0] != attr2[0]:
-                                continue
-                            for i in range(1, len(attr)):
-                                if (attr[i] == from_name[row_index] and 
-                                    attr2[i] == to_name[col_index]):
-                                    reward += ((1.0 *
-                                                self.av_counts[attr2][True] /
-                                                self.count) * (1.0 /
-                                                               len(attr2)))
-                row.append(max_cost - (reward*reward))
+                        if len(attr) != len(attr2):
+                            continue
+                        if attr[0] != attr2[0]:
+                            continue
+                        for i in range(1, len(attr)):
+                            if (attr[i] == from_name[row_index] and 
+                                attr2[i] == to_name[col_index]):
+                                reward += ((1.0 *
+                                            self.av_counts[attr2][True] /
+                                            self.count) * (1.0 /
+                                                           len(attr2)))
+                row.append(max_cost - (reward))
                     
             cost_matrix.append(row)
 
