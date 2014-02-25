@@ -11,83 +11,89 @@ from cobweb3 import Cobweb3Tree
 
 class Labyrinth(Cobweb3Tree):
 
-    #def _cobweb(self, instance):
-    #    """
-    #    Incrementally integrates an instance into the categorization tree
-    #    defined by the current node. This function operates iteratively to
-    #    integrate this instance and uses category utility as the heuristic to
-    #    make decisions.
-    #    """
-    #    current = self
-    #    #self.verify_counts()
+    def _cobweb(self, instance):
+        """
+        Incrementally integrates an instance into the categorization tree
+        defined by the current node. This function operates iteratively to
+        integrate this instance and uses category utility as the heuristic to
+        make decisions.
+        """
+        current = self
+        #self.verify_counts()
 
-    #    while current:
-    #       
-    #        #debug checks
-    #        self.verify_parent_pointers()
-    #        #for attr in current.av_counts:
-    #        #    for val in current.av_counts[attr]:
-    #        #        if isinstance(val, Labyrinth):
-    #        #            assert not val.children
+        while current:
+           
+            #debug checks
+            self.verify_parent_pointers()
+            #for attr in current.av_counts:
+            #    for val in current.av_counts[attr]:
+            #        if isinstance(val, Labyrinth):
+            #            assert not val.children
 
-    #        # instead of checking if the instance is the fringe concept, I
-    #        # check to see if category utility is increased by fringe splitting.
-    #        # this is more generally and will be used by the Labyrinth/Trestle
-    #        # systems to achieve more complex fringe behavior. 
+            # instead of checking if the instance is the fringe concept, I
+            # check to see if category utility is increased by fringe splitting.
+            # this is more generally and will be used by the Labyrinth/Trestle
+            # systems to achieve more complex fringe behavior. 
 
-    #        #if (not current.children and current._exact_match(instance)):
-    #        if (not current.children and current._cu_for_fringe_split(instance)
-    #            <= current.min_cu_gain):
-    #            #TODO this is new
-    #            current._increment_counts(instance)
-    #            return current 
+            #if (not current.children and current._exact_match(instance)):
+            if (not current.children and current._cu_for_fringe_split(instance)
+                <= current.min_cu_gain):
+                #TODO this is new
+                current._increment_counts(instance)
+                current.attribute_generalize(instance)
+                return current 
 
-    #        elif not current.children:
-    #            # TODO can this be cleaned up, I do it to ensure the previous
-    #            # leaf is still a leaf, for all the concepts that refer to this
-    #            # in labyrinth.
-    #            current._create_child_with_current_counts()
-    #            current._increment_counts(instance)
-    #            return current._create_new_child(instance)
-    #            
-    #        else:
-    #            #TODO is there a cleaner way to do this?
-    #            best1, best2 = current._two_best_children(instance)
-    #            action_cu, best_action = current._get_best_operation(instance,
-    #                                                                 best1,
-    #                                                                 best2)
+            elif not current.children:
+                # TODO can this be cleaned up, I do it to ensure the previous
+                # leaf is still a leaf, for all the concepts that refer to this
+                # in labyrinth.
+                current._create_child_with_current_counts()
+                current._increment_counts(instance)
+                current.attribute_generalize(instance)
+                return current._create_new_child(instance)
+                
+            else:
+                #TODO is there a cleaner way to do this?
+                best1, best2 = current._two_best_children(instance)
+                action_cu, best_action = current._get_best_operation(instance,
+                                                                     best1,
+                                                                     best2)
 
-    #            best1_cu, best1 = best1
-    #            if best2:
-    #                best2_cu, best2 = best2
+                best1_cu, best1 = best1
+                if best2:
+                    best2_cu, best2 = best2
 
-    #            if action_cu <= current.min_cu_gain:
-    #                #TODO this is new
-    #                #If the best action results in a cu below the min cu gain
-    #                #then prune the branch
-    #                print("PRUNING BRANCH!")
-    #                print(best_action)
-    #                print(action_cu)
-    #                current._increment_counts(instance)
-    #                for c in current.children:
-    #                    c._remove_reference(current)
-    #                current.children = []
-    #                return current
+                if action_cu <= current.min_cu_gain:
+                    #TODO this is new
+                    #If the best action results in a cu below the min cu gain
+                    #then prune the branch
+                    print("PRUNING BRANCH!")
+                    print(best_action)
+                    print(action_cu)
+                    current._increment_counts(instance)
+                    current.attribute_generalize(instance)
+                    for c in current.children:
+                        c._remove_reference(current)
+                    current.children = []
+                    return current
 
-    #            if best_action == 'best':
-    #                current._increment_counts(instance)
-    #                current = best1
-    #            elif best_action == 'new':
-    #                current._increment_counts(instance)
-    #                return current._create_new_child(instance)
-    #            elif best_action == 'merge':
-    #                current._increment_counts(instance)
-    #                new_child = current._merge(best1, best2)
-    #                current = new_child
-    #            elif best_action == 'split':
-    #                current._split(best1)
-    #            else:
-    #                raise Exception("Should never get here.")
+                if best_action == 'best':
+                    current._increment_counts(instance)
+                    current.attribute_generalize(instance)
+                    current = best1
+                elif best_action == 'new':
+                    current._increment_counts(instance)
+                    current.attribute_generalize(instance)
+                    return current._create_new_child(instance)
+                elif best_action == 'merge':
+                    current._increment_counts(instance)
+                    current.attribute_generalize(instance)
+                    new_child = current._merge(best1, best2)
+                    current = new_child
+                elif best_action == 'split':
+                    current._split(best1)
+                else:
+                    raise Exception("Should never get here.")
 
     def _remove_reference(self, node):
         """
@@ -126,60 +132,167 @@ class Labyrinth(Cobweb3Tree):
             ancestor = ancestor.parent
         return ancestor
 
+    def _cu_for_insert(self, child, instance):
+        """
+        Computer the category utility of adding the instance to the specified
+        child w/ av generalization.
+        """
+        temp = self.__class__()
+        temp._update_counts_from_node(self)
+        temp._increment_counts(instance)
+
+        for c in self.children:
+            temp_child = self.__class__()
+            temp_child.parent = temp
+            temp_child._update_counts_from_node(c)
+            temp.children.append(temp_child)
+            if c == child:
+                temp_child._increment_counts(instance)
+                temp_child.attribute_generalize(instance)
+
+        return temp._category_utility()
+
+    def _cu_for_merge(self, best1, best2, instance):
+        """
+        Returns the category utility for merging the two best children.
+
+        input:
+            best1: the best child in the children array.
+            best2: the second best child in the children array.
+        output:
+            0.02 - the category utility for the merge of best1 and best2.
+        """
+        temp = self.__class__()
+        temp._update_counts_from_node(self)
+        temp._increment_counts(instance)
+
+        new_child = self.__class__()
+        new_child.parent = temp
+        new_child._update_counts_from_node(best1)
+        new_child._update_counts_from_node(best2)
+        new_child._increment_counts(instance)
+        temp.children.append(new_child)
+        new_child.attribute_generalize(instance)
+
+        for c in self.children:
+            if c == best1 or c == best2:
+                continue
+            temp_child = self.__class__()
+            temp_child._update_counts_from_node(c)
+            temp.children.append(temp_child)
+
+        return temp._category_utility()
+
+    def attr_val_cu(self, attr, vals):
+        """
+        Given a set of values for an attribute. Return the number of expected
+        correct guesses for that attribute over the parent.
+        """
+        assert self.parent
+        assert attr in self.av_counts
+        assert attr in self.parent.av_counts
+
+        c_guesses = 0.0
+        p_guesses = 0.0
+        
+        # remove duplicates
+        vals = set(vals)
+
+        for v in vals:
+            c_prob = 0.0
+            p_prob = 0.0
+           
+            if v in self.av_counts[attr]:
+                c_prob = (1.0 * self.av_counts[attr][v]) / self.count
+            if v in self.parent.av_counts[attr]:
+                p_prob = (1.0 * self.parent.av_counts[attr][v]) / self.parent.count
+
+            c_guesses += c_prob * c_prob
+            p_guesses += p_prob * p_prob
+
+            assert c_guesses <= 1.0
+            assert p_guesses <= 1.0
+
+        return c_guesses - p_guesses
+
     def attribute_generalize(self, instance):
+        """
+        This is called after an instance has been added, but before computing
+        the category utility.
+        """
         if self.parent == None:
             return
 
         for attr in instance:
             if not isinstance(instance[attr], Labyrinth):
                 continue
-            val = instance[attr]
-
             if attr not in self.av_counts:
-                return 
+                continue
 
-            cvals = [cval for cval in self.av_counts[attr] if cval != val]
+            val = instance[attr]
+            cvals = [cval for cval in self.av_counts[attr] if val !=
+                              cval]
+
+            #TODO consider splitting the cvals here.
+            #split values first.
+
+            # merge values
             while cvals:
-                cval = cvals.pop()
 
+                assert val not in cvals
+
+                cval = cvals.pop()
                 ancestor = self.common_ancestor(val, cval)
                 
-                # need to include prob of ancestor in the general score.
-                p_cval = ((1.0 * self.av_counts[attr][cval]) / self.count)
-                p_val = ((1.0 * self.av_counts[attr][val]) / self.count)
+                temp_parent = self.__class__()
+                temp_parent._update_counts_from_node(self.parent)
+                temp_child = self.__class__()
+                temp_child._update_counts_from_node(self)
+                temp_child.parent = temp_parent
 
-                if cval in self.parent.av_counts[attr]:
-                    p_cval_parent = ((1.0 * self.parent.av_counts[attr][cval]) /
-                                     self.parent.count)
-                else:
-                    p_cval_parent = 0.0
+                specific_cu = temp_child.attr_val_cu(attr, [ancestor, val, cval])
 
-                if val in self.parent.av_counts[attr]:
-                    p_val_parent = ((1.0 * self.parent.av_counts[attr][val]) /
-                                    self.parent.count)
-                else:
-                    p_val_parent = 0.0
+                # generalize the values
+                if ancestor not in temp_parent.av_counts[attr]:
+                    temp_parent.av_counts[attr][ancestor] = 0.0
+                if ancestor not in temp_child.av_counts[attr]:
+                    temp_child.av_counts[attr][ancestor] = 0.0
 
-                general_cu = (((p_cval + p_val) * (p_cval + p_val)) -
-                              ((p_cval_parent + p_val_parent) * (p_cval_parent +
-                                                                 p_val_parent)))
-                specific_cu = ((p_cval * p_cval + p_val * p_val) - (p_cval_parent *
-                                                                    p_cval_parent +
-                                                                    p_val_parent *
-                                                                    p_val_parent))
+                if val != ancestor:
+                    if val in temp_parent.av_counts[attr]:
+                        temp_parent.av_counts[attr][ancestor] += temp_parent.av_counts[attr][val]
+                    temp_child.av_counts[attr][ancestor] += temp_child.av_counts[attr][val]
+                    temp_parent.av_counts[attr][val] = 0.0
+                    temp_child.av_counts[attr][val] = 0.0
+
+                if cval != ancestor:
+                    if cval in temp_parent.av_counts[attr]:
+                        temp_parent.av_counts[attr][ancestor] += temp_parent.av_counts[attr][cval]
+                    temp_child.av_counts[attr][ancestor] += temp_child.av_counts[attr][cval]
+                    temp_parent.av_counts[attr][cval] = 0.0
+                    temp_child.av_counts[attr][cval] = 0.0
+
+                general_cu = temp_child.attr_val_cu(attr, [ancestor, val, cval])
+
+                #print("general_cu: %0.2f" % general_cu)
+                #print("specific_cu: %0.2f" % specific_cu)
 
                 if general_cu >= specific_cu:
+                    #print("GENERALIZE")
                     if ancestor not in self.av_counts[attr]:
                         self.av_counts[attr][ancestor] = 0.0
-                    self.av_counts[attr][ancestor] += self.av_counts[attr][val]
-                    self.av_counts[attr][ancestor] += self.av_counts[attr][cval]
-                    self.av_counts[attr][val] = 0.0
-                    self.av_counts[attr][cval] = 0.0
-                    val = ancestor
-                    if val in cvals:
-                        cvals.remove(val)
-                    #print(ancestor)
 
+                    if val != ancestor:
+                        self.av_counts[attr][ancestor] += self.av_counts[attr][val]
+                        del self.av_counts[attr][val]
+                    if cval != ancestor:
+                        self.av_counts[attr][ancestor] += self.av_counts[attr][cval]
+                        del self.av_counts[attr][cval]
+
+                    val = ancestor
+
+                    while val in cvals:
+                        cvals.remove(val)
 
     def _labyrinth(self, instance):
         """
@@ -199,14 +312,6 @@ class Labyrinth(Cobweb3Tree):
                 #temp_instance[tuple(instance[attr])] = True
             else:
                 temp_instance[attr] = instance[attr]
-
-        # need to ensure the instance has only leaf objects before
-        # categorizing.
-        for attr in temp_instance:
-            if isinstance(temp_instance[attr], Labyrinth):
-                if temp_instance[attr].children:
-                    temp_instance[attr] = temp_instance[attr]._labyrinth_categorize(instance[attr])
-                assert not temp_instance[attr].children
 
         # should be able to match just at the root, if the matchings change
         # than the counts between parent and child will be thrown off which is
@@ -256,6 +361,28 @@ class Labyrinth(Cobweb3Tree):
             temp_instance[tuple(temp)] = True
 
         return temp_instance
+
+    def probability_given(self, other):
+        """
+        The probability of the current node given we are at the other node. If
+        self is a parent of other, then there is 100% prob. if other is a
+        parent, than we need to compute the likelihood that it would be the
+        current node. 
+        """
+        if self == other:
+            return 1.0
+
+        if (self.count > other.count):
+            if self._is_parent(other):
+                return 1.0
+            else:
+                return 0.0
+
+        elif (self.count < other.count):
+            if other._is_parent(self):
+                return (1.0 * self.count) / other.count
+
+        return 0.0
 
     def _hungarian_match(self, instance):
         """
@@ -311,9 +438,16 @@ class Labyrinth(Cobweb3Tree):
 
                 reward = 0.0
                 from_val = instance[from_name[row_index]]
-                if from_val in self.av_counts[to_name[col_index]]:
-                    reward = (((1.0 * self.av_counts[to_name[col_index]][from_val]) /
-                              self.count))
+
+                #normal labyrinth nominal style match
+                #if from_val in self.av_counts[to_name[col_index]]:
+                #    reward = (((1.0 * self.av_counts[to_name[col_index]][from_val]) /
+                #              self.count))
+
+                # match based on match to values with shared ancestory.
+                for val in self.av_counts[to_name[col_index]]:
+                    reward += (((1.0 * self.av_counts[to_name[col_index]][val]) /
+                              self.count) * from_val.probability_given(val))
 
                     # Additional bonus for part of a relational match
                     for attr in instance:
@@ -327,8 +461,8 @@ class Labyrinth(Cobweb3Tree):
                             if attr[0] != attr2[0]:
                                 continue
                             for i in range(1, len(attr)):
-                                if (attr[i] == from_name[row_index] and attr2[i]
-                                    == to_name[col_index]):
+                                if (attr[i] == from_name[row_index] and 
+                                    attr2[i] == to_name[col_index]):
                                     reward += ((1.0 *
                                                 self.av_counts[attr2][True] /
                                                 self.count) * (1.0 /
@@ -695,19 +829,20 @@ class Labyrinth(Cobweb3Tree):
         else:
             return self.parent._get_root()
 
-    def _create_child_with_current_counts(self):
-        """
-        Creates a new child (to the current node) with the counts initialized by
-        the current node's counts.
-        """
-        if self.count > 0:
-            new = self.__class__(self)
-            new.parent = self
-            self.children.append(new)
-            # TODO may be a more efficient way to do this, just ensure the
-            # pointer stays a leaf in the main cobweb alg. for instance.
-            self._get_root()._replace(self, new)
-            return new
+    #def _create_child_with_current_counts(self):
+    #    """
+    #    Creates a new child (to the current node) with the counts initialized by
+    #    the current node's counts.
+    #    """
+    #    if self.count > 0:
+    #        new = self.__class__(self)
+    #        new.parent = self
+    #        self.children.append(new)
+
+    #        # TODO may be a more efficient way to do this, just ensure the
+    #        # pointer stays a leaf in the main cobweb alg. for instance.
+    #        self._get_root()._replace(self, new)
+    #        return new
 
     #def _split(self, best):
     #    """
