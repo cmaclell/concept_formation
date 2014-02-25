@@ -11,13 +11,175 @@ from cobweb3 import Cobweb3Tree
 
 class Labyrinth(Cobweb3Tree):
 
+    #def _cobweb(self, instance):
+    #    """
+    #    Incrementally integrates an instance into the categorization tree
+    #    defined by the current node. This function operates iteratively to
+    #    integrate this instance and uses category utility as the heuristic to
+    #    make decisions.
+    #    """
+    #    current = self
+    #    #self.verify_counts()
+
+    #    while current:
+    #       
+    #        #debug checks
+    #        self.verify_parent_pointers()
+    #        #for attr in current.av_counts:
+    #        #    for val in current.av_counts[attr]:
+    #        #        if isinstance(val, Labyrinth):
+    #        #            assert not val.children
+
+    #        # instead of checking if the instance is the fringe concept, I
+    #        # check to see if category utility is increased by fringe splitting.
+    #        # this is more generally and will be used by the Labyrinth/Trestle
+    #        # systems to achieve more complex fringe behavior. 
+
+    #        #if (not current.children and current._exact_match(instance)):
+    #        if (not current.children and current._cu_for_fringe_split(instance)
+    #            <= current.min_cu_gain):
+    #            #TODO this is new
+    #            current._increment_counts(instance)
+    #            return current 
+
+    #        elif not current.children:
+    #            # TODO can this be cleaned up, I do it to ensure the previous
+    #            # leaf is still a leaf, for all the concepts that refer to this
+    #            # in labyrinth.
+    #            current._create_child_with_current_counts()
+    #            current._increment_counts(instance)
+    #            return current._create_new_child(instance)
+    #            
+    #        else:
+    #            #TODO is there a cleaner way to do this?
+    #            best1, best2 = current._two_best_children(instance)
+    #            action_cu, best_action = current._get_best_operation(instance,
+    #                                                                 best1,
+    #                                                                 best2)
+
+    #            best1_cu, best1 = best1
+    #            if best2:
+    #                best2_cu, best2 = best2
+
+    #            if action_cu <= current.min_cu_gain:
+    #                #TODO this is new
+    #                #If the best action results in a cu below the min cu gain
+    #                #then prune the branch
+    #                print("PRUNING BRANCH!")
+    #                print(best_action)
+    #                print(action_cu)
+    #                current._increment_counts(instance)
+    #                for c in current.children:
+    #                    c._remove_reference(current)
+    #                current.children = []
+    #                return current
+
+    #            if best_action == 'best':
+    #                current._increment_counts(instance)
+    #                current = best1
+    #            elif best_action == 'new':
+    #                current._increment_counts(instance)
+    #                return current._create_new_child(instance)
+    #            elif best_action == 'merge':
+    #                current._increment_counts(instance)
+    #                new_child = current._merge(best1, best2)
+    #                current = new_child
+    #            elif best_action == 'split':
+    #                current._split(best1)
+    #            else:
+    #                raise Exception("Should never get here.")
+
+    def _remove_reference(self, node):
+        """
+        Specialized version of remove for labyrinth. This removes all references
+        to a particular concept from the tree. It replaces these references
+        with a reference to the parent concept
+        """
+        # call recursively
+        for c in self.children:
+            c._remove_reference(node)
+
+        # replace references to deleted concept with parent concept
+        self._get_root()._replace(self, node)
+
     def _is_parent(self, other_concept):
+        """
+        Returns True if self is a parent of other concept.
+        """
         temp = other_concept
         while temp != None:
             if temp == self:
                 return True
             temp = temp.parent
         return False
+
+    def common_ancestor(self, val1, val2):
+        """
+        Returns the nearest common ancestor of val1 and val2.
+        """
+        if val1._is_parent(val2):
+            return val1
+        ancestor = val2
+        while ancestor.parent:
+            if ancestor._is_parent(val1):
+                return ancestor
+            ancestor = ancestor.parent
+        return ancestor
+
+    def attribute_generalize(self, instance):
+        if self.parent == None:
+            return
+
+        for attr in instance:
+            if not isinstance(instance[attr], Labyrinth):
+                continue
+            val = instance[attr]
+
+            if attr not in self.av_counts:
+                return 
+
+            cvals = [cval for cval in self.av_counts[attr] if cval != val]
+            while cvals:
+                cval = cvals.pop()
+
+                ancestor = self.common_ancestor(val, cval)
+                
+                # need to include prob of ancestor in the general score.
+                p_cval = ((1.0 * self.av_counts[attr][cval]) / self.count)
+                p_val = ((1.0 * self.av_counts[attr][val]) / self.count)
+
+                if cval in self.parent.av_counts[attr]:
+                    p_cval_parent = ((1.0 * self.parent.av_counts[attr][cval]) /
+                                     self.parent.count)
+                else:
+                    p_cval_parent = 0.0
+
+                if val in self.parent.av_counts[attr]:
+                    p_val_parent = ((1.0 * self.parent.av_counts[attr][val]) /
+                                    self.parent.count)
+                else:
+                    p_val_parent = 0.0
+
+                general_cu = (((p_cval + p_val) * (p_cval + p_val)) -
+                              ((p_cval_parent + p_val_parent) * (p_cval_parent +
+                                                                 p_val_parent)))
+                specific_cu = ((p_cval * p_cval + p_val * p_val) - (p_cval_parent *
+                                                                    p_cval_parent +
+                                                                    p_val_parent *
+                                                                    p_val_parent))
+
+                if general_cu >= specific_cu:
+                    if ancestor not in self.av_counts[attr]:
+                        self.av_counts[attr][ancestor] = 0.0
+                    self.av_counts[attr][ancestor] += self.av_counts[attr][val]
+                    self.av_counts[attr][ancestor] += self.av_counts[attr][cval]
+                    self.av_counts[attr][val] = 0.0
+                    self.av_counts[attr][cval] = 0.0
+                    val = ancestor
+                    if val in cvals:
+                        cvals.remove(val)
+                    #print(ancestor)
+
 
     def _labyrinth(self, instance):
         """
@@ -37,6 +199,14 @@ class Labyrinth(Cobweb3Tree):
                 #temp_instance[tuple(instance[attr])] = True
             else:
                 temp_instance[attr] = instance[attr]
+
+        # need to ensure the instance has only leaf objects before
+        # categorizing.
+        for attr in temp_instance:
+            if isinstance(temp_instance[attr], Labyrinth):
+                if temp_instance[attr].children:
+                    temp_instance[attr] = temp_instance[attr]._labyrinth_categorize(instance[attr])
+                assert not temp_instance[attr].children
 
         # should be able to match just at the root, if the matchings change
         # than the counts between parent and child will be thrown off which is
@@ -245,6 +415,8 @@ class Labyrinth(Cobweb3Tree):
         output = {}
         output["name"] = self.concept_name
         output["size"] = self.count
+        if self.children:
+            output["CU"] = self._category_utility()
         output["children"] = []
 
         temp = {}
@@ -493,6 +665,74 @@ class Labyrinth(Cobweb3Tree):
                 lists = [l for l in lists if l]
             return L
 
+    def _replace(self, old, new):
+        """
+        Traverse the tree and replace all references to concept old with
+        concept new.
+        """
+        temp_counts = {}
+        for attr in self.av_counts:
+            temp_counts[attr] = {}
+            for val in self.av_counts[attr]:
+                x = val
+                if val == old:
+                    x = new
+                if x not in temp_counts[attr]:
+                    temp_counts[attr][x] = 0
+                temp_counts[attr][x] += self.av_counts[attr][val] 
+
+        self.av_counts = temp_counts
+
+        for c in self.children:
+            c._replace(old,new)
+
+    def _get_root(self):
+        """
+        Gets the root of the categorization tree.
+        """
+        if self.parent == None:
+            return self
+        else:
+            return self.parent._get_root()
+
+    def _create_child_with_current_counts(self):
+        """
+        Creates a new child (to the current node) with the counts initialized by
+        the current node's counts.
+        """
+        if self.count > 0:
+            new = self.__class__(self)
+            new.parent = self
+            self.children.append(new)
+            # TODO may be a more efficient way to do this, just ensure the
+            # pointer stays a leaf in the main cobweb alg. for instance.
+            self._get_root()._replace(self, new)
+            return new
+
+    #def _split(self, best):
+    #    """
+    #    Specialized version of split for labyrinth. This removes all references
+    #    to a particular concept from the tree. It replaces these references
+    #    with a reference to the parent concept
+    #    """
+    #    super(Labyrinth, self)._split(best)
+    #    
+    #    # replace references to deleted concept with parent concept
+    #    self._get_root()._replace(best, self)
+
+    def verify_component_values(self):
+        for attr in self.av_counts:
+            for val in self.av_counts[attr]:
+                if isinstance(val, Labyrinth):
+                    assert not val.children
+        for c in self.children:
+            c.verify_component_values()
+
+    def verify_parent_pointers(self):
+        for c in self.children:
+            assert c.parent == self
+            c.verify_parent_pointers()
+
     def cluster(self, filename, length):
         """
         Used to provide a clustering of a set of examples provided in a JSON
@@ -524,7 +764,8 @@ class Labyrinth(Cobweb3Tree):
             self.ifit(i)
 
         #TODO for debugging
-        self.verify_counts()
+        #self.verify_counts()
+        #self.verify_component_values()
 
         # add categorize for adding guids
         mapping = {}
@@ -589,7 +830,7 @@ class Labyrinth(Cobweb3Tree):
 
 if __name__ == "__main__":
 
-    print(Labyrinth().cluster("data_files/rb_com_11_noCheck.json", 60))
+    print(Labyrinth().cluster("data_files/rb_com_11_noCheck.json", 300))
     #print(Labyrinth().cluster("data_files/rb_s_07.json", 10, 3))
     #print(Labyrinth().cluster("data_files/jenny_graph_data.json", 50, 1))
     #Labyrinth().predictions("data_files/rb_com_11_noCheck.json", 15, 3)

@@ -151,6 +151,7 @@ class CobwebTree:
             new = self.__class__(self)
             new.parent = self
             self.children.append(new)
+            return new
 
     def _cu_for_new_child(self, instance):
         """
@@ -304,10 +305,8 @@ class CobwebTree:
         for child in self.children:
             child.verify_counts()
 
-    def _remove(self):
-        for c in self.children:
-            c._remove()
-        self.parent.children.remove(self)
+    def _remove_reference(self, node):
+        pass
 
     def _exact_match(self, instance):
         for attr in instance:
@@ -341,16 +340,17 @@ class CobwebTree:
             # systems to achieve more complex fringe behavior. 
 
             #if (not current.children and current._exact_match(instance)):
+
             if (not current.children and current._cu_for_fringe_split(instance)
                 <= current.min_cu_gain):
-
-                #print("FRINGE PRUNE")
                 #TODO this is new
-                #print(current._cu_for_fringe_split(instance))
                 current._increment_counts(instance)
                 return current 
 
             elif not current.children:
+                # TODO can this be cleaned up, I do it to ensure the previous
+                # leaf is still a leaf, for all the concepts that refer to this
+                # in labyrinth.
                 current._create_child_with_current_counts()
                 current._increment_counts(instance)
                 return current._create_new_child(instance)
@@ -371,11 +371,12 @@ class CobwebTree:
                     #If the best action results in a cu below the min cu gain
                     #then prune the branch
                     print("PRUNING BRANCH!")
+                    print(best_action)
                     print(action_cu)
                     current._increment_counts(instance)
                     for c in current.children:
-                        c._remove()
-                    #current.children = []
+                        c._remove_reference(current)
+                    current.children = []
                     return current
 
                 if best_action == 'best':
@@ -810,8 +811,8 @@ class CobwebTree:
             print("%0.2f" % (self._std(a)))
 
 if __name__ == "__main__":
-    CobwebTree().predictions("cobweb_test.json", 10, 100)
-    CobwebTree().baseline_guesser("cobweb_test.json", 10, 100)
+    CobwebTree().predictions("data_files/cobweb_test.json", 10, 100)
+    #CobwebTree().baseline_guesser("cobweb_test.json", 10, 100)
     #print(CobwebTree().cluster("cobweb_test.json", 10, 1))
 
     #t = CobwebTree()

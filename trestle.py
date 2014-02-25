@@ -158,60 +158,6 @@ class Trestle(Labyrinth):
         temp_instance = self._rename(instance, mapping)
         return temp_instance
 
-    def _replace(self, old, new):
-        """
-        Traverse the tree and replace all references to concept old with
-        concept new.
-        """
-        temp_counts = {}
-        for attr in self.av_counts:
-            temp_counts[attr] = {}
-            for val in self.av_counts[attr]:
-                x = val
-                if val == old:
-                    x = new
-                if x not in temp_counts[attr]:
-                    temp_counts[attr][x] = 0
-                temp_counts[attr][x] += self.av_counts[attr][val] 
-
-        self.av_counts = temp_counts
-
-        for c in self.children:
-            c._replace(old,new)
-
-    def _get_root(self):
-        if self.parent == None:
-            return self
-        else:
-            return self.parent._get_root()
-
-    def _remove(self):
-        """
-        Specialized version of remove for trestle. This removes all references
-        to a particular concept from the tree. It replaces these references
-        with a reference to the parent concept
-        """
-        # call recursively
-        for c in self.children:
-            c._remove()
-
-        # replace references to deleted concept with parent concept
-        self._get_root()._replace(self, self.parent)
-
-        # deletes the child
-        self.parent.children.remove(self)
-
-    def _split(self, best):
-        """
-        Specialized version of split for labyrinth. This removes all references
-        to a particular concept from the tree. It replaces these references
-        with a reference to the parent concept
-        """
-        super(Trestle, self)._split(best)
-
-        # replace references to deleted concept with parent concept
-        self._get_root()._replace(best, self)
-
     def _probability_given(self, other):
         """
         The probability of the current node given we are at the other node. If
@@ -311,11 +257,16 @@ class Trestle(Labyrinth):
                 elif isinstance(val, Trestle):
                     prob = 0.0
 
+                    p1 = 0.0
                     parents = val._get_parents()
+                    #print(parents)
                     for val2 in self.av_counts[attr]:
                         if val2 in parents:
-                            prob += (((1.0 * self.av_counts[attr][val2]) /
-                                     self.count) * parents[val2])
+                            x = (((1.0 * self.av_counts[attr][val2]) /
+                                    self.count) * parents[val2])
+                            #print("p1: %s %0.2f" % (val2.concept_name, x))
+                            p1 += (((1.0 * self.av_counts[attr][val2]) /
+                                    self.count) * parents[val2])
 
                     # only consider 6 biggest additional values
                     #prob += (((1.0 * self.av_counts[attr][val]) / self.count))
@@ -326,12 +277,21 @@ class Trestle(Labyrinth):
                     #values = values[:6]
                     #for val2 in values:
 
-                    #for val2 in self.av_counts[attr]:
-                    #    if isinstance(val2, Trestle):
-                    #    
-                    #        prob += (((1.0 * self.av_counts[attr][val2]) /
-                    #                  self.count) *
-                    #                 val._probability_given(val2))
+                    p2 = 0.0
+                    for val2 in self.av_counts[attr]:
+                        if isinstance(val2, Trestle):
+                    #        print(val2._is_parent(val))
+                    #        print(val._is_parent(val2))
+                    #        x = (((1.0 * self.av_counts[attr][val2]) /
+                    #                self.count) * val._probability_given(val2))
+                    #        print("p2: %s %0.2f" % (val2.concept_name, x)) 
+                            p2 += (((1.0 * self.av_counts[attr][val2]) /
+                                    self.count) * val._probability_given(val2))
+                    #if p1 != p2:
+                    #    print(p1)
+                    #    print(p2)
+                    #assert p1 == p2
+                    prob = p2
 
                 else:
                     prob = ((1.0 * self.av_counts[attr][val]) / self.count)
