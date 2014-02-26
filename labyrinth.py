@@ -11,6 +11,28 @@ from cobweb3 import Cobweb3Tree
 
 class Labyrinth(Cobweb3Tree):
 
+    def _category_utility(self):
+        """
+        Returns the category utility of a particular division of a concept into
+        its children. This is used as the heuristic to guide the concept
+        formation.
+
+        Because of the attribute value generalization, you need to get fancy in
+        how you do your computation of category utility. You need to use the
+        sum counts of the children as the parent counts.
+        """
+        if len(self.children) == 0:
+            return 0.0
+
+        category_utility = 0.0
+
+        for child in self.children:
+            p_of_child = child.count / (1.0 * self.count)
+            category_utility += (p_of_child *
+                                 (child._expected_correct_guesses()
+                                  - self._expected_correct_guesses()))
+        return category_utility / (1.0 * len(self.children))
+
     def val_check(self):
         for attr in self.av_counts:
             for val in self.av_counts[attr]:
@@ -229,6 +251,15 @@ class Labyrinth(Cobweb3Tree):
 
         return c_guesses - p_guesses
 
+    def conceptual_relation_score(self, ival, cval):
+        assert isinstance(ival, Labyrinth)
+        assert isinstance(cval, Labyrinth)
+
+        ancestor = self.common_ancestor(ival, cval)
+
+        #return ival.probability_given(ancestor) * cval.probability_given(ancestor)
+        return ival.probability_given(ancestor)
+
     def attribute_generalize(self, instance):
         """
         This is called after an instance has been added, but before computing
@@ -289,6 +320,8 @@ class Labyrinth(Cobweb3Tree):
             # merge values
             cvals = list(set([cval for cval in self.av_counts[attr] if val !=
                               cval]))
+            cvals.sort(key=lambda x: (-1.0 *
+                                      self.conceptual_relation_score(val,x)))
             while cvals:
 
                 assert val not in cvals
@@ -297,12 +330,15 @@ class Labyrinth(Cobweb3Tree):
                 ancestor = self.common_ancestor(val, cval)
                 
                 temp_parent = self.__class__()
-                temp_parent._update_counts_from_node(self.parent)
+                # make a parent with the sum counts of its children
+                for child in self.parent.children:
+                    temp_parent._update_counts_from_node(child)
+                #temp_parent._update_counts_from_node(self.parent)
                 temp_child = self.__class__()
                 temp_child._update_counts_from_node(self)
                 temp_child.parent = temp_parent
 
-                specific_cu = temp_child.attr_val_cu(attr, [ancestor, val, cval])
+                specific_cu = temp_child.attr_val_cu(attr, [val, cval])
 
                 # generalize the values
                 if ancestor not in temp_parent.av_counts[attr]:
@@ -324,7 +360,7 @@ class Labyrinth(Cobweb3Tree):
                     temp_parent.av_counts[attr][cval] = 0.0
                     temp_child.av_counts[attr][cval] = 0.0
 
-                general_cu = temp_child.attr_val_cu(attr, [ancestor, val, cval])
+                general_cu = temp_child.attr_val_cu(attr, [ancestor])
 
                 #print("general_cu: %0.2f" % general_cu)
                 #print("specific_cu: %0.2f" % specific_cu)
@@ -1027,7 +1063,7 @@ class Labyrinth(Cobweb3Tree):
 
 if __name__ == "__main__":
 
-    #Labyrinth().predictions("data_files/rb_com_11_noCheck.json", 60, 3)
+    #Labyrinth().predictions("data_files/rb_com_11_noCheck.json", 15, 5)
     print(Labyrinth().cluster("data_files/rb_com_11_noCheck.json", 300))
 
     #Labyrinth().predictions("data_files/kelly-data.json", 5, 1)
