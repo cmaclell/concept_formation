@@ -11,27 +11,31 @@ from cobweb3 import Cobweb3Tree
 
 class Labyrinth(Cobweb3Tree):
 
-    def _category_utility(self):
-        """
-        Returns the category utility of a particular division of a concept into
-        its children. This is used as the heuristic to guide the concept
-        formation.
+    #def _category_utility(self):
+    #    """
+    #    Returns the category utility of a particular division of a concept into
+    #    its children. This is used as the heuristic to guide the concept
+    #    formation.
 
-        Because of the attribute value generalization, you need to get fancy in
-        how you do your computation of category utility. You need to use the
-        sum counts of the children as the parent counts.
-        """
-        if len(self.children) == 0:
-            return 0.0
+    #    Because of the attribute value generalization, you need to get fancy in
+    #    how you do your computation of category utility. You need to use the
+    #    sum counts of the children as the parent counts.
+    #    """
+    #    if len(self.children) == 0:
+    #        return 0.0
 
-        category_utility = 0.0
+    #    category_utility = 0.0
 
-        for child in self.children:
-            p_of_child = child.count / (1.0 * self.count)
-            category_utility += (p_of_child *
-                                 (child._expected_correct_guesses()
-                                  - self._expected_correct_guesses()))
-        return category_utility / (1.0 * len(self.children))
+    #    temp = self.__class__()
+    #    for child in self.children:
+    #        temp._update_counts_from_node(child)
+
+    #    for child in self.children:
+    #        p_of_child = child.count / (1.0 * temp.count)
+    #        category_utility += (p_of_child *
+    #                             (child._expected_correct_guesses()
+    #                              - temp._expected_correct_guesses()))
+    #    return category_utility / (1.0 * len(self.children))
 
     def val_check(self):
         for attr in self.av_counts:
@@ -257,8 +261,54 @@ class Labyrinth(Cobweb3Tree):
 
         ancestor = self.common_ancestor(ival, cval)
 
-        #return ival.probability_given(ancestor) * cval.probability_given(ancestor)
-        return ival.probability_given(ancestor)
+        return ival.probability_given(ancestor) * cval.probability_given(ancestor)
+        #return ival.probability_given(ancestor)
+
+    def cu_gain_for_av_generalize(self, attr, v1, v2, ancestor):
+        assert self.parent
+        assert v1 in self.av_counts[attr]
+        assert v2 in self.av_counts[attr]
+
+        temp_child = self.__class__()
+        temp_child._update_counts_from_node(self)
+
+        temp_parent = self.__class__()
+        temp_parent._update_counts_from_node(self.parent)
+
+        temp_parent.children.append(temp_child)
+        for child in self.parent.children:
+            if child == self:
+                continue
+            temp = self.__class__()
+            temp._update_counts_from_node(child)
+            temp_parent.children.append(temp)
+
+        current_cu = temp_parent._category_utility()
+
+        if ancestor not in temp_child.av_counts[attr]:
+            temp_child.av_counts[attr][ancestor] = 0.0
+        #if ancestor not in temp_parent.av_counts[attr]:
+        #    temp_parent.av_counts[attr][ancestor] = 0.0
+
+        if v1 != ancestor:
+            temp_child.av_counts[attr][ancestor] += temp_child.av_counts[attr][v1]
+            del temp_child.av_counts[attr][v1]
+
+            #if v1 in temp_parent.av_counts[attr]:
+            #    temp_parent.av_counts[attr][ancestor] += temp_parent.av_counts[attr][v1]
+            #    del temp_parent.av_counts[attr][v1]
+
+        if v2 != ancestor:
+            temp_child.av_counts[attr][ancestor] += temp_child.av_counts[attr][v2]
+            del temp_child.av_counts[attr][v2]
+
+            #if v2 in temp_parent.av_counts[attr]:
+            #    temp_parent.av_counts[attr][ancestor] += temp_parent.av_counts[attr][v2]
+            #    del temp_parent.av_counts[attr][v2]
+       
+        general_cu = temp_parent._category_utility()
+
+        return general_cu - current_cu
 
     def attribute_generalize(self, instance):
         """
@@ -276,47 +326,6 @@ class Labyrinth(Cobweb3Tree):
 
             val = instance[attr]
 
-            #TODO consider splitting the cvals here.
-            #split values first.
-#            cvals = list(set([cval for cval in self.av_counts[attr] if val !=
-#                              cval]))
-#            while cvals:
-#
-#                cval = cvals.pop()
-#                if not cval.children:
-#                    continue
-#
-#                temp_parent = self.__class__()
-#                temp_parent._update_counts_from_node(self.parent)
-#                temp_child = self.__class__()
-#                temp_child._update_counts_from_node(self)
-#                temp_child.parent = temp_parent
-#
-#                general_cu = temp_child.attr_val_cu(attr, cval.children + [cval])
-#                
-#                # specialize the values
-#                for c in cval.children:
-#                    if c not in temp_parent.av_counts[attr]:
-#                        temp_parent.av_counts[attr][c] = 0.0
-#                    if c not in temp_child.av_counts[attr]:
-#                        temp_child.av_counts[attr][c] = 0.0
-
-#                    if c != cval:
-#                        if cval in temp_parent.av_counts[attr]:
-#                            temp_parent.av_counts[attr][ancestor] += temp_parent.av_counts[attr][val]
-#                        temp_child.av_counts[attr][ancestor] += temp_child.av_counts[attr][val]
-#                        temp_parent.av_counts[attr][val] = 0.0
-#                        temp_child.av_counts[attr][val] = 0.0
-#
-#                    if cval != ancestor:
-#                        if cval in temp_parent.av_counts[attr]:
-#                            temp_parent.av_counts[attr][ancestor] += temp_parent.av_counts[attr][cval]
-#                        temp_child.av_counts[attr][ancestor] += temp_child.av_counts[attr][cval]
-#                        temp_parent.av_counts[attr][cval] = 0.0
-#                        temp_child.av_counts[attr][cval] = 0.0
-
-#                general_cu = temp_child.attr_val_cu(attr, [ancestor, val, cval])
-                
             # merge values
             cvals = list(set([cval for cval in self.av_counts[attr] if val !=
                               cval]))
@@ -328,44 +337,49 @@ class Labyrinth(Cobweb3Tree):
 
                 cval = cvals.pop()
                 ancestor = self.common_ancestor(val, cval)
+
                 
-                temp_parent = self.__class__()
-                # make a parent with the sum counts of its children
-                for child in self.parent.children:
-                    temp_parent._update_counts_from_node(child)
-                #temp_parent._update_counts_from_node(self.parent)
-                temp_child = self.__class__()
-                temp_child._update_counts_from_node(self)
-                temp_child.parent = temp_parent
+                #temp_parent = self.__class__()
+                ## make a parent with the sum counts of its children
+                #for child in self.parent.children:
+                #    temp_parent._update_counts_from_node(child)
+                ##temp_parent._update_counts_from_node(self.parent)
+                #temp_child = self.__class__()
+                #temp_child._update_counts_from_node(self)
+                #temp_child.parent = temp_parent
 
-                specific_cu = temp_child.attr_val_cu(attr, [val, cval])
+                #specific_cu = temp_child.attr_val_cu(attr, [val, cval])
 
-                # generalize the values
-                if ancestor not in temp_parent.av_counts[attr]:
-                    temp_parent.av_counts[attr][ancestor] = 0.0
-                if ancestor not in temp_child.av_counts[attr]:
-                    temp_child.av_counts[attr][ancestor] = 0.0
+                ## generalize the values
+                #if ancestor not in temp_parent.av_counts[attr]:
+                #    temp_parent.av_counts[attr][ancestor] = 0.0
+                #if ancestor not in temp_child.av_counts[attr]:
+                #    temp_child.av_counts[attr][ancestor] = 0.0
 
-                if val != ancestor:
-                    if val in temp_parent.av_counts[attr]:
-                        temp_parent.av_counts[attr][ancestor] += temp_parent.av_counts[attr][val]
-                    temp_child.av_counts[attr][ancestor] += temp_child.av_counts[attr][val]
-                    temp_parent.av_counts[attr][val] = 0.0
-                    temp_child.av_counts[attr][val] = 0.0
+                #if val != ancestor:
+                #    if val in temp_parent.av_counts[attr]:
+                #        temp_parent.av_counts[attr][ancestor] += temp_parent.av_counts[attr][val]
+                #    temp_child.av_counts[attr][ancestor] += temp_child.av_counts[attr][val]
+                #    temp_parent.av_counts[attr][val] = 0.0
+                #    temp_child.av_counts[attr][val] = 0.0
 
-                if cval != ancestor:
-                    if cval in temp_parent.av_counts[attr]:
-                        temp_parent.av_counts[attr][ancestor] += temp_parent.av_counts[attr][cval]
-                    temp_child.av_counts[attr][ancestor] += temp_child.av_counts[attr][cval]
-                    temp_parent.av_counts[attr][cval] = 0.0
-                    temp_child.av_counts[attr][cval] = 0.0
+                #if cval != ancestor:
+                #    if cval in temp_parent.av_counts[attr]:
+                #        temp_parent.av_counts[attr][ancestor] += temp_parent.av_counts[attr][cval]
+                #    temp_child.av_counts[attr][ancestor] += temp_child.av_counts[attr][cval]
+                #    temp_parent.av_counts[attr][cval] = 0.0
+                #    temp_child.av_counts[attr][cval] = 0.0
 
-                general_cu = temp_child.attr_val_cu(attr, [ancestor])
+                #general_cu = temp_child.attr_val_cu(attr, [ancestor])
 
-                #print("general_cu: %0.2f" % general_cu)
-                #print("specific_cu: %0.2f" % specific_cu)
+                ##print("general_cu: %0.2f" % general_cu)
+                ##print("specific_cu: %0.2f" % specific_cu)
 
-                if general_cu >= specific_cu:
+                #print(self.cu_gain_for_av_generalize(attr, val, cval, ancestor))
+                if (self.cu_gain_for_av_generalize(attr, val, cval, ancestor)
+                    >= 0.0):
+
+                #if general_cu >= specific_cu:
                     #print("GENERALIZE")
                     if ancestor not in self.av_counts[attr]:
                         self.av_counts[attr][ancestor] = 0.0
