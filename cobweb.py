@@ -776,7 +776,7 @@ class CobwebTree:
             accuracy, num = t.sequential_prediction(filename, length)
             runs.append(accuracy)
             nodes.append(num)
-            print(json.dumps(t._output_json()))
+            #print(json.dumps(t._output_json()))
 
         #print(runs)
         print("MEAN Accuracy")

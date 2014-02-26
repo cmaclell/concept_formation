@@ -11,6 +11,19 @@ from cobweb3 import Cobweb3Tree
 
 class Labyrinth(Cobweb3Tree):
 
+    def val_check(self):
+        for attr in self.av_counts:
+            for val in self.av_counts[attr]:
+                if isinstance(val, Labyrinth):
+                    for val2 in self.av_counts[attr]:
+                        if isinstance(val2, Labyrinth):
+                            if val == val2:
+                                continue
+                            assert not val._is_parent(val2)
+                            assert not val2._is_parent(val)
+        for c in self.children:
+            c.val_check()
+
     def _cobweb(self, instance):
         """
         Incrementally integrates an instance into the categorization tree
@@ -24,7 +37,8 @@ class Labyrinth(Cobweb3Tree):
         while current:
            
             #debug checks
-            self.verify_parent_pointers()
+            #self.verify_parent_pointers()
+            #self.val_check()
             #for attr in current.av_counts:
             #    for val in current.av_counts[attr]:
             #        if isinstance(val, Labyrinth):
@@ -350,6 +364,12 @@ class Labyrinth(Cobweb3Tree):
                 #temp_instance[tuple(instance[attr])] = True
             else:
                 temp_instance[attr] = instance[attr]
+
+        ## Ensure all components are leaves
+        #for attr in temp_instance:
+        #    if (isinstance(temp_instance[attr], Labyrinth) and
+        #        temp_instance[attr].children):
+        #        temp_instance[attr] = temp_instance[attr]._labyrinth_categorize(instance[attr])
 
         # should be able to match just at the root, if the matchings change
         # than the counts between parent and child will be thrown off which is
@@ -870,31 +890,31 @@ class Labyrinth(Cobweb3Tree):
         else:
             return self.parent._get_root()
 
-    #def _create_child_with_current_counts(self):
-    #    """
-    #    Creates a new child (to the current node) with the counts initialized by
-    #    the current node's counts.
-    #    """
-    #    if self.count > 0:
-    #        new = self.__class__(self)
-    #        new.parent = self
-    #        self.children.append(new)
+    def _create_child_with_current_counts(self):
+        """
+        Creates a new child (to the current node) with the counts initialized by
+        the current node's counts.
+        """
+        if self.count > 0:
+            new = self.__class__(self)
+            new.parent = self
+            self.children.append(new)
 
-    #        # TODO may be a more efficient way to do this, just ensure the
-    #        # pointer stays a leaf in the main cobweb alg. for instance.
-    #        self._get_root()._replace(self, new)
-    #        return new
+            # TODO may be a more efficient way to do this, just ensure the
+            # pointer stays a leaf in the main cobweb alg. for instance.
+            self._get_root()._replace(self, new)
+            return new
 
-    #def _split(self, best):
-    #    """
-    #    Specialized version of split for labyrinth. This removes all references
-    #    to a particular concept from the tree. It replaces these references
-    #    with a reference to the parent concept
-    #    """
-    #    super(Labyrinth, self)._split(best)
-    #    
-    #    # replace references to deleted concept with parent concept
-    #    self._get_root()._replace(best, self)
+    def _split(self, best):
+        """
+        Specialized version of split for labyrinth. This removes all references
+        to a particular concept from the tree. It replaces these references
+        with a reference to the parent concept
+        """
+        super(Labyrinth, self)._split(best)
+        
+        # replace references to deleted concept with parent concept
+        self._get_root()._replace(best, self)
 
     def verify_component_values(self):
         for attr in self.av_counts:
@@ -934,16 +954,17 @@ class Labyrinth(Cobweb3Tree):
             previous[self._flatten_instance(i)] = None
 
         # train initially
-        shuffle(instances)
-        for n, i in enumerate(instances):
-            print("training instance: " + str(n))
-            self.ifit(i)
+        for x in range(1):
+            shuffle(instances)
+            for n, i in enumerate(instances):
+                print("training instance: " + str(n))
+                self.ifit(i)
 
         #TODO for debugging
         #self.verify_counts()
         #self.verify_component_values()
 
-        # add categorize for adding guids
+        #add categorize for adding guids
         mapping = {}
         for idx, inst in enumerate(o_instances):
             print("categorizing instance: %i" % idx)
@@ -1006,11 +1027,15 @@ class Labyrinth(Cobweb3Tree):
 
 if __name__ == "__main__":
 
+    #Labyrinth().predictions("data_files/rb_com_11_noCheck.json", 60, 3)
     print(Labyrinth().cluster("data_files/rb_com_11_noCheck.json", 300))
+
+    #Labyrinth().predictions("data_files/kelly-data.json", 5, 1)
+    #print(Labyrinth().cluster("data_files/kelly-data.json", 10))
+    #Labyrinth().baseline_guesser("data_files/rb_com_11_noCheck.json", 10, 1)
+
     #print(Labyrinth().cluster("data_files/rb_s_07.json", 10, 3))
     #print(Labyrinth().cluster("data_files/jenny_graph_data.json", 50, 1))
-    #Labyrinth().predictions("data_files/rb_com_11_noCheck.json", 15, 3)
-    #Labyrinth().baseline_guesser("data_files/rb_com_11_noCheck.json", 10, 1)
 
     #t = Labyrinth()
     #t.sequential_prediction("towers_small_trestle.json", 10)
