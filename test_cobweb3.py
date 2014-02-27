@@ -6,7 +6,7 @@ class TestCobweb(unittest.TestCase):
     def setUp(self):
         self.tree = Cobweb3()
     
-    def test_cobweb(self):
+    def test_cobweb3(self):
 
         # test backwards compatiblity
         self.tree.train_from_json('data_files/cobweb_test.json')
