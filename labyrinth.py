@@ -1077,8 +1077,8 @@ class Labyrinth(Cobweb3Tree):
 
 if __name__ == "__main__":
 
-    #Labyrinth().predictions("data_files/rb_com_11_noCheck.json", 15, 5)
-    print(Labyrinth().cluster("data_files/rb_com_11_noCheck.json", 300))
+    Labyrinth().predictions("data_files/rb_com_11_noCheck.json", 15, 20)
+    #print(Labyrinth().cluster("data_files/rb_com_11_noCheck.json", 300))
 
     #Labyrinth().predictions("data_files/kelly-data.json", 5, 1)
     #print(Labyrinth().cluster("data_files/kelly-data.json", 10))
