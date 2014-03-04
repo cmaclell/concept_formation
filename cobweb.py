@@ -797,7 +797,8 @@ class Cobweb:
             print("%0.2f" % (self.std(a)))
 
 if __name__ == "__main__":
-    Cobweb().predictions("data_files/cobweb_test.json", 10, 100)
+    #Cobweb().predictions("data_files/cobweb_test.json", 10, 100)
+    Cobweb().predictions("data_files/mushrooms.json", 20, 10)
     #Cobweb().baseline_guesser("data_files/cobweb_test.json", 10, 100)
     #print(Cobweb().cluster("cobweb_test.json", 10, 1))
 
