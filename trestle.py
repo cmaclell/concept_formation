@@ -104,6 +104,17 @@ class Trestle(Cobweb3):
         for c in self.children:
             c.val_existance_check()
 
+    def val_leaves_check(self):
+        """
+        Used to ensure all values are leaves.
+        """
+        for attr in self.av_counts:
+            for val in self.av_counts[attr]:
+                if isinstance(val, Trestle):
+                    assert not val.children
+        for c in self.children:
+            c.val_leaves_check()
+
     def val_representation_check(self):
         """
         Used to ensure he level of representation of a component attribute is
