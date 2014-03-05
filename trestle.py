@@ -3,6 +3,7 @@ import hungarianNative
 import numpy
 import json
 import copy
+#from itertools import combinations
 from random import normalvariate
 from random import choice
 from random import random
@@ -11,79 +12,99 @@ from cobweb3 import Cobweb3
 
 class Trestle(Cobweb3):
 
-    
-    def cobweb(self, instance):
+    def replace_value(self, attr, old, new):
         """
-        Incrementally integrates an instance into the categorization tree
-        defined by the current node. This function operates iteratively to
-        integrate this instance and uses category utility as the heuristic to
-        make decisions.
+        Replaces the old value of an attribute with a new value.
+        """
+        if old == new:
+            return
+        if attr not in self.av_counts:
+            return
+        if old not in self.av_counts[attr]:
+            return
+
+        if new not in self.av_counts[attr]:
+            self.av_counts[attr][new] = 0.0
+
+        self.av_counts[attr][new] += self.av_counts[attr][old]
+        del self.av_counts[attr][old]
+
+    def attribute_generalize(self):
+        """
+        This function will hill climb over the possible av generalizations
+        until no further category utility gain is possible.
         """
         current = self
+        current_cu = super(Trestle, self).category_utility()
 
-        while current:
-            current.val_check()
-            # instead of checking if the instance is the fringe concept, I
-            # check to see if category utility is increased by fringe splitting.
-            # this is more generally and will be used by the Labyrinth/Trestle
-            # systems to achieve more complex fringe behavior. 
+        for attr in self.av_counts:
+            values = [v for v in self.av_counts[attr] if isinstance(v, Trestle)]
+            possible_generalizations = []
 
-            #if (not current.children and current.exact_match(instance)):
+            for v in values:
+                count = 0
+                curr = v
+                possible_generalizations.append((count, curr))
+                while curr.parent:
+                    count += 1
+                    possible_generalizations.append((count, curr.parent))
+                    curr = curr.parent
 
-            if (not current.children and current.cu_for_fringe_split(instance)
-                <= current.min_cu):
-                #TODO this is new
-                current.increment_counts(instance)
-                return current 
+            #possible_generalizations = set([self.common_ancestor(v1,v2)
+            #                                     for (v1,v2) in
+            #                                     combinations(values,2)])
 
-            elif not current.children:
-                # TODO can this be cleaned up, I do it to ensure the previous
-                # leaf is still a leaf, for all the concepts that refer to this
-                # in labyrinth.
-                current.create_child_with_current_counts()
-                current.increment_counts(instance)
-                return current.create_new_child(instance)
+            possible_generalizations = sorted(list(
+                set(possible_generalizations)), key=lambda x: x[0])
+            #print(possible_generalizations2)
+
+            while possible_generalizations:
+                count, new = possible_generalizations.pop()
+            #for new in possible_generalizations:
+                temp = current.shallow_copy()
                 
-            else:
-                #TODO is there a cleaner way to do this?
-                best1, best2 = current.two_best_children(instance)
-                action_cu, best_action = current.get_best_operation(instance,
-                                                                     best1,
-                                                                     best2)
+                #old_values = set([v for c in temp.children if attr in
+                #                  c.av_counts for v in c.av_counts[attr]])
+                old_values = [v for v in temp.av_counts[attr]]
+                for old in old_values:
+                    if not new.is_parent(old):
+                        continue
+                    temp.replace_value(attr, old, new)
+                    for c in temp.children:
+                        c.replace_value(attr, old, new)
+                cu = super(Trestle, temp).category_utility()
+                
+                if cu >= current_cu:
+                    for c,v in possible_generalizations:
+                        if new.is_parent(v):
+                            possible_generalizations.remove((c,v))
+                    current_cu = cu
+                    current = temp
+                
+        return (current, current_cu)
 
-                best1_cu, best1 = best1
-                if best2:
-                    best2_cu, best2 = best2
+    def category_utility(self):
+        """
+        Performs attribute value generalization before computing traditional
+        CU.
+        """
+        temp = self.shallow_copy()
+        temp, cu = self.attribute_generalize()
+        return cu
 
-                if action_cu <= current.min_cu:
-                    #TODO this is new
-                    #If the best action results in a cu below the min cu gain
-                    #then prune the branch
-                    #print("PRUNING BRANCH!")
-                    #print(best_action)
-                    #print(action_cu)
-                    current.increment_counts(instance)
-                    for c in current.children:
-                        c.remove_reference(current)
-                    current.children = []
-                    return current
+    def val_existance_check(self):
+        """
+        Used to ensure that all the values in the tree exist in the tree.
+        """
+        root = self.get_root()
+        for attr in self.av_counts:
+            for val in self.av_counts[attr]:
+                if isinstance(val, Trestle):
+                    assert val.get_root() == root
+        for c in self.children:
+            c.val_existance_check()
 
-                if best_action == 'best':
-                    current.increment_counts(instance)
-                    current = best1
-                elif best_action == 'new':
-                    current.increment_counts(instance)
-                    return current.create_new_child(instance)
-                elif best_action == 'merge':
-                    current.increment_counts(instance)
-                    new_child = current.merge(best1, best2)
-                    current = new_child
-                elif best_action == 'split':
-                    current.split(best1)
-                else:
-                    raise Exception("Should never get here.")
-
-    def val_check(self):
+    def val_representation_check(self):
         """
         Used to ensure he level of representation of a component attribute is
         consistent.
@@ -98,7 +119,7 @@ class Trestle(Cobweb3):
                             assert not val.is_parent(val2)
                             assert not val2.is_parent(val)
         for c in self.children:
-            c.val_check()
+            c.val_representation_check()
 
     def remove_reference(self, node):
         """
@@ -136,93 +157,6 @@ class Trestle(Cobweb3):
                 return ancestor
             ancestor = ancestor.parent
         return ancestor
-
-    def attr_val_cu(self, attr, vals):
-        """
-        Given a set of values for an attribute. Return the number of expected
-        correct guesses for that attribute over the parent.
-        """
-        assert self.parent
-        assert attr in self.av_counts
-        assert attr in self.parent.av_counts
-
-        c_guesses = 0.0
-        p_guesses = 0.0
-        
-        # remove duplicates
-        vals = set(vals)
-
-        for v in vals:
-            c_prob = 0.0
-            p_prob = 0.0
-           
-            if v in self.av_counts[attr]:
-                c_prob = (1.0 * self.av_counts[attr][v]) / self.count
-            if v in self.parent.av_counts[attr]:
-                p_prob = (1.0 * self.parent.av_counts[attr][v]) / self.parent.count
-
-            c_guesses += c_prob * c_prob
-            p_guesses += p_prob * p_prob
-
-            assert c_guesses <= 1.0
-            assert p_guesses <= 1.0
-
-        return c_guesses - p_guesses
-
-    def conceptual_relation_score(self, ival, cval):
-        assert isinstance(ival, Trestle)
-        assert isinstance(cval, Trestle)
-
-        ancestor = self.common_ancestor(ival, cval)
-
-        return ival.probability_given(ancestor) * cval.probability_given(ancestor)
-        #return ival.probability_given(ancestor)
-
-    def cu_gain_for_av_generalize(self, attr, v1, v2, ancestor):
-        assert self.parent
-        assert v1 in self.av_counts[attr]
-        assert v2 in self.av_counts[attr]
-
-        temp_child = self.__class__()
-        temp_child.update_counts_from_node(self)
-
-        temp_parent = self.__class__()
-        temp_parent.update_counts_from_node(self.parent)
-
-        temp_parent.children.append(temp_child)
-        for child in self.parent.children:
-            if child == self:
-                continue
-            temp = self.__class__()
-            temp.update_counts_from_node(child)
-            temp_parent.children.append(temp)
-
-        current_cu = temp_parent.category_utility()
-
-        if ancestor not in temp_child.av_counts[attr]:
-            temp_child.av_counts[attr][ancestor] = 0.0
-        #if ancestor not in temp_parent.av_counts[attr]:
-        #    temp_parent.av_counts[attr][ancestor] = 0.0
-
-        if v1 != ancestor:
-            temp_child.av_counts[attr][ancestor] += temp_child.av_counts[attr][v1]
-            del temp_child.av_counts[attr][v1]
-
-            #if v1 in temp_parent.av_counts[attr]:
-            #    temp_parent.av_counts[attr][ancestor] += temp_parent.av_counts[attr][v1]
-            #    del temp_parent.av_counts[attr][v1]
-
-        if v2 != ancestor:
-            temp_child.av_counts[attr][ancestor] += temp_child.av_counts[attr][v2]
-            del temp_child.av_counts[attr][v2]
-
-            #if v2 in temp_parent.av_counts[attr]:
-            #    temp_parent.av_counts[attr][ancestor] += temp_parent.av_counts[attr][v2]
-            #    del temp_parent.av_counts[attr][v2]
-       
-        general_cu = temp_parent.category_utility()
-
-        return general_cu - current_cu
 
     def Trestle(self, instance):
         """
@@ -492,6 +426,9 @@ class Trestle(Cobweb3):
             output["CU"] = self.category_utility()
         output["children"] = []
 
+        # generalize av counts
+        gself, cu = self.attribute_generalize()
+
         temp = {}
         for attr in self.av_counts:
             float_vals = []
@@ -508,11 +445,29 @@ class Trestle(Cobweb3):
                 mean = attr + "_mean = %0.2f (%0.2f)" % (self._mean(float_vals),
                                                 self._std(float_vals))
                 temp[mean] = len(float_vals)
+
+        temp2 = {}
+        for attr in gself.av_counts:
+            float_vals = []
+            for value in gself.av_counts[attr]:
+                if isinstance(attr, tuple):
+                    temp2["[" + " ".join(attr) + "]"] = gself.av_counts[attr][True]
+                elif isinstance(value, float):
+                    float_vals.append(value)
+                elif isinstance(value, Trestle): 
+                    temp2[attr + " = " + value.concept_name] = gself.av_counts[attr][value]
+                else:
+                    temp2[attr + " = " + str(value)] = gself.av_counts[attr][value]
+            if len(float_vals) > 0:
+                mean = attr + "_mean = %0.2f (%0.2f)" % (self._mean(float_vals),
+                                                self._std(float_vals))
+                temp2[mean] = len(float_vals)
                 
         for child in self.children:
             output["children"].append(child.output_json())
 
         output["counts"] = temp
+        output['general counts'] = temp2
 
         return output
 
@@ -905,8 +860,8 @@ class Trestle(Cobweb3):
 
 if __name__ == "__main__":
 
-    Trestle().predictions("data_files/rb_com_11_noCheck.json", 15, 1)
-    #print(Trestle().cluster("data_files/rb_com_11_noCheck.json", 300))
+    #Trestle().predictions("data_files/rb_com_11_noCheck.json", 15, 1)
+    print(Trestle().cluster("data_files/rb_com_11_noCheck.json", 300))
 
     #Trestle().predictions("data_files/kelly-data.json", 5, 1)
     #print(Trestle().cluster("data_files/kelly-data.json", 10))
@@ -918,8 +873,4 @@ if __name__ == "__main__":
     #t = Trestle()
     #t.sequential_prediction("towers_small_trestle.json", 10)
     #print(t.predict({"success": "1"}))
-
-
-
-
 

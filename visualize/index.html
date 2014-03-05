@@ -115,8 +115,9 @@ d3.json("output.json", function(data) {
 });
 
 function zoom(d, i) {
-  console.log(d.CU)
-  console.log(d.counts)
+  console.log(d)
+  //console.log(d.CU)
+  //console.log(d.counts)
   var k = r / d.r / 2;
   x.domain([d.x - d.r, d.x + d.r]);
   y.domain([d.y - d.r, d.y + d.r]);
