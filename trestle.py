@@ -181,7 +181,7 @@ class Trestle(Cobweb3):
         for attr in temp_instance:
             if (isinstance(temp_instance[attr], Trestle) and
                 temp_instance[attr].children):
-                temp_instance[attr] = temp_instance[attr].Trestle_categorize(instance[attr])
+                temp_instance[attr] = temp_instance[attr].trestle_categorize(instance[attr])
 
         # should be able to match just at the root, if the matchings change
         # than the counts between parent and child will be thrown off which is
@@ -471,7 +471,7 @@ class Trestle(Cobweb3):
 
         return output
 
-    def Trestle_categorize(self, instance):
+    def trestle_categorize(self, instance):
         """
         The Trestle categorize function, this Trestle categorizes all the
         sub-components before categorizing itself.
@@ -479,7 +479,7 @@ class Trestle(Cobweb3):
         temp_instance = {}
         for attr in instance:
             if isinstance(instance[attr], dict):
-                temp_instance[attr] = self.Trestle_categorize(instance[attr])
+                temp_instance[attr] = self.trestle_categorize(instance[attr])
             elif isinstance(instance[attr], list):
                 temp_instance[attr] = tuple(instance[attr])
             else:
@@ -546,7 +546,7 @@ class Trestle(Cobweb3):
         A modification to call Trestle categorize instead of cobweb
         categorize.
         """
-        concept = self.Trestle_categorize(instance)
+        concept = self.trestle_categorize(instance)
         return concept.get_probability(attr, val)
 
     def flexible_prediction(self, instance, guessing=False):
@@ -593,7 +593,7 @@ class Trestle(Cobweb3):
             else:
                 prediction[attr] = instance[attr]
 
-        concept = self.Trestle_categorize(prediction)
+        concept = self.trestle_categorize(prediction)
         #print(concept)
         #print(self)
         
@@ -714,6 +714,11 @@ class Trestle(Cobweb3):
         for c in self.children:
             c.replace(old,new)
 
+    def verify_pointers(self):
+        for c in self.children:
+            assert c.parent == self
+            c.verify_pointers()     
+
     def get_root(self):
         """
         Gets the root of the categorization tree.
@@ -735,6 +740,7 @@ class Trestle(Cobweb3):
 
             # TODO may be a more efficient way to do this, just ensure the
             # pointer stays a leaf in the main cobweb alg. for instance.
+
             self.get_root().replace(self, new)
             return new
 
@@ -806,7 +812,7 @@ class Trestle(Cobweb3):
                 del instance['guid']
             g_instances[inst['guid']] = instance
 
-            mapping[inst['guid']] = self.Trestle_categorize(instance)
+            mapping[inst['guid']] = self.trestle_categorize(instance)
 
         # add guids
         for g in mapping:
@@ -837,7 +843,7 @@ class Trestle(Cobweb3):
         #    if "guid" in instance:
         #        del instance['guid']
 
-        #    mapping[inst['guid']] = self.Trestle_categorize(instance)
+        #    mapping[inst['guid']] = self.trestle_categorize(instance)
 
         ## add guids
         #for g in mapping:

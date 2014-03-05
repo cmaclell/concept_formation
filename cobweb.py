@@ -301,6 +301,10 @@ class Cobweb:
             for attr in child.av_counts:
                 assert attr in temp
                 for val in child.av_counts[attr]:
+                    if val not in temp[attr]:
+                        print(val.concept_name)
+                        print(attr)
+                        print(self)
                     assert val in temp[attr]
                     temp[attr][val] -= child.av_counts[attr][val]
 
@@ -366,7 +370,15 @@ class Cobweb:
                 # TODO can this be cleaned up, I do it to ensure the previous
                 # leaf is still a leaf, for all the concepts that refer to this
                 # in labyrinth.
-                current.create_child_with_current_counts()
+                new = current.create_child_with_current_counts()
+
+                #TODO can this logic be added somewhere else?
+                # This code makes sure a fringe split doesn't mess
+                # up component values in labyrinth/trestle.
+                for attr in instance:
+                    if instance[attr] == current:
+                        instance[attr] = new
+
                 current.increment_counts(instance)
                 return current.create_new_child(instance)
                 
