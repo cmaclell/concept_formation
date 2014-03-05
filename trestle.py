@@ -3,7 +3,7 @@ import hungarianNative
 import numpy
 import json
 import copy
-#from itertools import combinations
+from itertools import combinations
 from random import normalvariate
 from random import choice
 from random import random
@@ -29,6 +29,11 @@ class Trestle(Cobweb3):
         self.av_counts[attr][new] += self.av_counts[attr][old]
         del self.av_counts[attr][old]
 
+    def depth(self):
+        if self.parent:
+            return 1 + self.parent.depth()
+        return 0
+
     def attribute_generalize(self):
         """
         This function will hill climb over the possible av generalizations
@@ -39,27 +44,27 @@ class Trestle(Cobweb3):
 
         for attr in self.av_counts:
             values = [v for v in self.av_counts[attr] if isinstance(v, Trestle)]
-            possible_generalizations = []
+            
+            #possible_generalizations = []
+            #for v in values:
+            #    count = 0
+            #    curr = v
+            #    possible_generalizations.append((count, curr))
+            #    while curr.parent:
+            #        count += 1
+            #        possible_generalizations.append((count, curr.parent))
+            #        curr = curr.parent
 
-            for v in values:
-                count = 0
-                curr = v
-                possible_generalizations.append((count, curr))
-                while curr.parent:
-                    count += 1
-                    possible_generalizations.append((count, curr.parent))
-                    curr = curr.parent
-
-            #possible_generalizations = set([self.common_ancestor(v1,v2)
-            #                                     for (v1,v2) in
-            #                                     combinations(values,2)])
+            possible_generalizations = set([self.common_ancestor(v1,v2)
+                                                 for (v1,v2) in
+                                                 combinations(values,2)])
 
             possible_generalizations = sorted(list(
-                set(possible_generalizations)), key=lambda x: x[0])
+                set(possible_generalizations)), key=lambda x: -1.0 * x.depth())
             #print(possible_generalizations2)
 
             while possible_generalizations:
-                count, new = possible_generalizations.pop()
+                new = possible_generalizations.pop()
             #for new in possible_generalizations:
                 temp = current.shallow_copy()
                 
@@ -75,9 +80,9 @@ class Trestle(Cobweb3):
                 cu = super(Trestle, temp).category_utility()
                 
                 if cu >= current_cu:
-                    for c,v in possible_generalizations:
+                    for v in possible_generalizations:
                         if new.is_parent(v):
-                            possible_generalizations.remove((c,v))
+                            possible_generalizations.remove(v)
                     current_cu = cu
                     current = temp
                 
@@ -877,8 +882,9 @@ class Trestle(Cobweb3):
 
 if __name__ == "__main__":
 
-    #Trestle().predictions("data_files/rb_com_11_noCheck.json", 15, 1)
-    print(Trestle().cluster("data_files/rb_com_11_noCheck.json", 300))
+    #Trestle().predictions("data_files/rb_com_11_noCheck.json", 15, 10)
+    #print(Trestle().cluster("data_files/rb_com_11_noCheck.json", 300))
+    print(Trestle().cluster("data_files/rb_test_continuous.json", 300))
 
     #Trestle().predictions("data_files/kelly-data.json", 5, 1)
     #print(Trestle().cluster("data_files/kelly-data.json", 10))

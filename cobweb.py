@@ -646,12 +646,15 @@ class Cobweb:
                 probs.append(self.concept_attr_value(temp, attr, instance[attr]))
         return sum(probs) / len(probs)
 
-    def train_from_json(self, filename):
+    def train_from_json(self, filename, length=None):
         """
         Build the concept tree from a set of examples in a provided json file.
         """
         json_data = open(filename, "r")
         instances = json.load(json_data)
+        if length:
+            shuffle(instances)
+            instances = instances[:length]
         self.fit(instances)
         json_data.close()
 
