@@ -3,6 +3,7 @@ import hungarianNative
 import numpy
 import json
 import copy
+import pickle
 from itertools import combinations
 from random import normalvariate
 from random import choice
@@ -59,6 +60,8 @@ class Trestle(Cobweb3):
                                                  for (v1,v2) in
                                                  combinations(values,2)])
 
+            # TODO Make sure this ordering is correct. I think you might need to
+            # go specific to general
             possible_generalizations = sorted(list(
                 set(possible_generalizations)), key=lambda x: -1.0 * x.depth())
             #print(possible_generalizations2)
@@ -876,15 +879,20 @@ class Trestle(Cobweb3):
             cluster = cluster.parent
             clusters[g] = cluster.concept_name
 
-        print(json.dumps(self.output_json()))
+        with open('visualize/output.json', 'w') as f:
+            f.write(json.dumps(self.output_json()))
+
+        #print(json.dumps(self.output_json()))
 
         return clusters
 
 if __name__ == "__main__":
 
     #Trestle().predictions("data_files/rb_com_11_noCheck.json", 15, 10)
-    #print(Trestle().cluster("data_files/rb_com_11_noCheck.json", 300))
-    print(Trestle().cluster("data_files/rb_test_continuous.json", 300))
+    x = Trestle().cluster("data_files/rb_com_11_noCheck.json", 300)
+
+    pickle.dump(x, open('clustering.pickle', 'wb'))
+    #print(Trestle().cluster("data_files/rb_test_continuous.json", 300))
 
     #Trestle().predictions("data_files/kelly-data.json", 5, 1)
     #print(Trestle().cluster("data_files/kelly-data.json", 10))

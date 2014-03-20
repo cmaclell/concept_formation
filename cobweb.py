@@ -8,7 +8,7 @@ class Cobweb:
     # Global class variables: counter (for gensym) and minimum category utility
     # for a cluster.
     counter = 0
-    min_cu = 0.0
+    min_cu = 0.2
 
     def mean(self, values):
         """
@@ -401,9 +401,11 @@ class Cobweb:
                     #print(best_action)
                     #print(action_cu)
                     current.increment_counts(instance)
-                    for c in current.children:
-                        c.remove_reference(current)
-                    current.children = []
+                    # TODO I think the ClassIt way is to not remove the
+                    # children just stop here.
+                    #for c in current.children:
+                    #    c.remove_reference(current)
+                    #current.children = []
                     return current
 
                 if best_action == 'best':
@@ -459,8 +461,14 @@ class Cobweb:
             if not current.children:
                 return current
 
+            
             best1, best2 = current.two_best_children(instance)
             best1_cu, best1 = best1
+
+            #TODO is this how you stop at an intermediate node?
+            if best1_cu <= self.min_cu:
+                return current
+
             current = best1
 
     #def cobweb_categorize(self, instance):
