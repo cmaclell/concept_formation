@@ -8,7 +8,7 @@ class Cobweb:
     # Global class variables: counter (for gensym) and minimum category utility
     # for a cluster.
     counter = 0
-    min_cu = 0.2
+    min_cu = 0.15
 
     def mean(self, values):
         """
@@ -361,8 +361,8 @@ class Cobweb:
             #if (not current.children and current.exact_match(instance)):
 
             if (not current.children and current.cu_for_fringe_split(instance)
-                <= current.min_cu):
-                #TODO this is new
+                <= 0.0):
+                #TODO modified from min cu to be exact match.
                 current.increment_counts(instance)
                 return current 
 
@@ -393,20 +393,20 @@ class Cobweb:
                 if best2:
                     best2_cu, best2 = best2
 
-                if action_cu <= current.min_cu:
-                    #TODO this is new
-                    #If the best action results in a cu below the min cu gain
-                    #then prune the branch
-                    #print("PRUNING BRANCH!")
-                    #print(best_action)
-                    #print(action_cu)
-                    current.increment_counts(instance)
-                    # TODO I think the ClassIt way is to not remove the
-                    # children just stop here.
-                    #for c in current.children:
-                    #    c.remove_reference(current)
-                    #current.children = []
-                    return current
+                #if action_cu <= current.min_cu:
+                #    #TODO this is new
+                #    #If the best action results in a cu below the min cu gain
+                #    #then prune the branch
+                #    #print("PRUNING BRANCH!")
+                #    #print(best_action)
+                #    #print(action_cu)
+                #    current.increment_counts(instance)
+                #    # TODO I think the ClassIt way is to not remove the
+                #    # children just stop here.
+                #    #for c in current.children:
+                #    #    c.remove_reference(current)
+                #    #current.children = []
+                #    return current
 
                 if best_action == 'best':
                     current.increment_counts(instance)

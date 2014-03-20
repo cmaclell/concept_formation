@@ -96,6 +96,9 @@ d3.json("output.json", function(data) {
                 console.log(d.counts)
                 guid = "X"
             }
+            if (d.children){
+                return guid;
+            }
             if (!d.children && d.counts['success = 1'] > 0 && 
                   !d.counts['success = 0']){
                 return "S " + guid;

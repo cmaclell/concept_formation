@@ -43,6 +43,12 @@ class Trestle(Cobweb3):
         current = self
         current_cu = super(Trestle, self).category_utility()
 
+        # TODO ensure there are no parent/child concept values. here
+        #
+        #  XXXXXXXXXXXXXXX
+        #
+
+
         for attr in self.av_counts:
             values = [v for v in self.av_counts[attr] if isinstance(v, Trestle)]
             
@@ -889,7 +895,7 @@ class Trestle(Cobweb3):
 if __name__ == "__main__":
 
     #Trestle().predictions("data_files/rb_com_11_noCheck.json", 15, 10)
-    x = Trestle().cluster("data_files/rb_com_11_noCheck.json", 300)
+    x = Trestle().cluster("data_files/rb_com_11_noCheck.json", 80)
 
     pickle.dump(x, open('clustering.pickle', 'wb'))
     #print(Trestle().cluster("data_files/rb_test_continuous.json", 300))
