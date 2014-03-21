@@ -713,7 +713,7 @@ class Trestle(Cobweb3):
             while lists:
                 for l in lists:
                     if l:
-                        L.append(l.pop())
+                        L.append(l.pop(0))
                         
                 lists = [l for l in lists if l]
             return L
@@ -835,6 +835,8 @@ class Trestle(Cobweb3):
         for idx, inst in enumerate(o_instances):
             print("categorizing instance: %i" % idx)
             instance = copy.deepcopy(inst)
+            if "success" in instance:
+                del instance['success']
             if "guid" in instance:
                 del instance['guid']
             g_instances[inst['guid']] = instance
@@ -851,36 +853,39 @@ class Trestle(Cobweb3):
                 curr.av_counts['guid'][g] = True
                 curr = curr.parent
         
-        ## get ordering
-        #guid_order = self.order_towers()
-        #self = self.__class__()
+        #for i in range(3):
+        #    # get ordering
+        #    guid_order = self.order_towers()
+        #    self = self.__class__()
 
-        ## second time sorting
-        #count = 0
-        #for guid in guid_order:
-        #    count += 1
-        #    print("training instance: " + str(count))
-        #    self.ifit(g_instances[guid])
+        #    # second time sorting
+        #    count = 0
+        #    for guid in guid_order:
+        #        count += 1
+        #        print("training instance: " + str(count))
+        #        self.ifit(g_instances[guid])
 
-        ## add categorize for adding guids
-        #mapping = {}
-        #for idx, inst in enumerate(o_instances):
-        #    print("categorizing instance: %i" % idx)
-        #    instance = copy.deepcopy(inst)
-        #    if "guid" in instance:
-        #        del instance['guid']
+        #    # add categorize for adding guids
+        #    mapping = {}
+        #    for idx, inst in enumerate(o_instances):
+        #        print("categorizing instance: %i" % idx)
+        #        instance = copy.deepcopy(inst)
+        #        if "success" in instance:
+        #            del instance['success']
+        #        if "guid" in instance:
+        #            del instance['guid']
 
-        #    mapping[inst['guid']] = self.trestle_categorize(instance)
+        #        mapping[inst['guid']] = self.trestle_categorize(instance)
 
-        ## add guids
-        #for g in mapping:
-        #    curr = mapping[g]
-        #    while curr:
-        #        curr.av_counts['has-guid'] = {"1":True}
-        #        if 'guid' not in curr.av_counts:
-        #            curr.av_counts['guid'] = {}
-        #        curr.av_counts['guid'][g] = True
-        #        curr = curr.parent
+        #    # add guids
+        #    for g in mapping:
+        #        curr = mapping[g]
+        #        while curr:
+        #            curr.av_counts['has-guid'] = {"1":True}
+        #            if 'guid' not in curr.av_counts:
+        #                curr.av_counts['guid'] = {}
+        #            curr.av_counts['guid'][g] = True
+        #            curr = curr.parent
         
         for g in mapping:
             cluster = mapping[g]
@@ -913,4 +918,5 @@ if __name__ == "__main__":
     #t = Trestle()
     #t.sequential_prediction("towers_small_trestle.json", 10)
     #print(t.predict({"success": "1"}))
+
 
