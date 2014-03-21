@@ -343,13 +343,16 @@ class Cobweb:
 
         return True
 
-    def cobweb(self, instance):
+    def cobweb(self, instance, cutoff=None):
         """
         Incrementally integrates an instance into the categorization tree
         defined by the current node. This function operates iteratively to
         integrate this instance and uses category utility as the heuristic to
         make decisions.
         """
+        if not cutoff:
+            cutoff = self.min_cu
+
         current = self
 
         while current:
@@ -361,8 +364,7 @@ class Cobweb:
             #if (not current.children and current.exact_match(instance)):
 
             if (not current.children and current.cu_for_fringe_split(instance)
-                <= 0.0):
-                #TODO modified from min cu to be exact match.
+                <= self.min_cu):
                 current.increment_counts(instance)
                 return current 
 
@@ -393,20 +395,13 @@ class Cobweb:
                 if best2:
                     best2_cu, best2 = best2
 
-                #if action_cu <= current.min_cu:
-                #    #TODO this is new
-                #    #If the best action results in a cu below the min cu gain
-                #    #then prune the branch
-                #    #print("PRUNING BRANCH!")
-                #    #print(best_action)
-                #    #print(action_cu)
-                #    current.increment_counts(instance)
-                #    # TODO I think the ClassIt way is to not remove the
-                #    # children just stop here.
-                #    #for c in current.children:
-                #    #    c.remove_reference(current)
-                #    #current.children = []
-                #    return current
+                if action_cu <= current.min_cu:
+                    #TODO this is new
+                    current.increment_counts(instance)
+                    for c in current.children:
+                        c.remove_reference(current)
+                    current.children = []
+                    return current
 
                 if best_action == 'best':
                     current.increment_counts(instance)
@@ -466,8 +461,8 @@ class Cobweb:
             best1_cu, best1 = best1
 
             #TODO is this how you stop at an intermediate node?
-            if best1_cu <= self.min_cu:
-                return current
+            #if best1_cu <= self.min_cu:
+            #    return current
 
             current = best1
 

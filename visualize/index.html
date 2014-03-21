@@ -81,6 +81,22 @@ d3.json("output.json", function(data) {
       .on("click", function(d) { return zoom(node == d ? root : d); });
       //.style("opacity", function(d) { return (d.r > 100) ? 1 : 0; });
 
+  vis.selectAll("image.tower")
+  .data(nodes.filter(function(d){
+          if (d.children || !d.guid){ 
+            return false; 
+          } else {
+            return true;
+          }}))
+    .enter().append("image")
+        .attr('class', 'tower')
+        .attr("xlink:href", function(d) { return "images/" + d.guid +
+                ".png"})
+    .attr("width", function(d) { return (1.33 * d.r); })
+    .attr("height", function(d) { return d.r; })
+    .attr("x", function(d) { return d.x - ((1.33 * d.r)/2); })
+    .attr("y", function(d) { return d.y - (d.r/2); });
+ 
   vis.selectAll("text")
       .data(nodes)
     .enter().append("svg:text")
@@ -95,9 +111,6 @@ d3.json("output.json", function(data) {
             if (d.counts['has-guid = 1']){
                 console.log(d.counts)
                 guid = "X"
-            }
-            if (d.children){
-                return guid;
             }
             if (!d.children && d.counts['success = 1'] > 0 && 
                   !d.counts['success = 0']){
@@ -127,7 +140,13 @@ function zoom(d, i) {
 
   var t = vis.transition()
       .duration(d3.event.altKey ? 7500 : 750);
-  
+
+  t.selectAll("image.tower")
+      .attr("width", function(d) { return (1.33 * k * d.r); })
+      .attr("height", function(d) { return k * d.r; })
+      .attr("x", function(d) { return x(d.x) - ((1.33 * k * d.r)/2); })
+      .attr("y", function(d) { return y(d.y) - ((k * d.r)/2); });
+
   t.selectAll("circle")
       .attr("cx", function(d) { return x(d.x); })
       .attr("cy", function(d) { return y(d.y); })

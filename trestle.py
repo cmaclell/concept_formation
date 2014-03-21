@@ -43,12 +43,6 @@ class Trestle(Cobweb3):
         current = self
         current_cu = super(Trestle, self).category_utility()
 
-        # TODO ensure there are no parent/child concept values. here
-        #
-        #  XXXXXXXXXXXXXXX
-        #
-
-
         for attr in self.av_counts:
             values = [v for v in self.av_counts[attr] if isinstance(v, Trestle)]
             
@@ -97,14 +91,14 @@ class Trestle(Cobweb3):
                 
         return (current, current_cu)
 
-    def category_utility(self):
-        """
-        Performs attribute value generalization before computing traditional
-        CU.
-        """
-        temp = self.shallow_copy()
-        temp, cu = self.attribute_generalize()
-        return cu
+    #def category_utility(self):
+    #    """
+    #    Performs attribute value generalization before computing traditional
+    #    CU.
+    #    """
+    #    temp = self.shallow_copy()
+    #    temp, cu = self.attribute_generalize()
+    #    return cu
 
     def val_existance_check(self):
         """
@@ -196,6 +190,7 @@ class Trestle(Cobweb3):
         #for attr in instance:
             if isinstance(instance[attr], dict):
                 temp_instance[attr] = self.Trestle(instance[attr])
+
             elif isinstance(instance[attr], list):
                 pass
                 #temp_instance[tuple(instance[attr])] = True
@@ -213,6 +208,7 @@ class Trestle(Cobweb3):
         # not allowed to happen so for now don't worry about it.
         # TODO check if this needs to be changed
         temp_instance = self.match(temp_instance)
+
         ret = self.cobweb(temp_instance)
 
         return ret
@@ -449,6 +445,10 @@ class Trestle(Cobweb3):
         output["size"] = self.count
         if self.children:
             output["CU"] = self.category_utility()
+        elif "guid" in self.av_counts:
+            for val in self.av_counts['guid']:
+                output["guid"] = val
+           
         output["children"] = []
 
         # generalize av counts
@@ -807,6 +807,8 @@ class Trestle(Cobweb3):
         instances = instances[0:length]
         o_instances = copy.deepcopy(instances)
         for instance in instances:
+            if "success" in instance:
+                del instance['success']
             if "guid" in instance:
                 del instance['guid']
         json_data.close()
@@ -895,7 +897,8 @@ class Trestle(Cobweb3):
 if __name__ == "__main__":
 
     #Trestle().predictions("data_files/rb_com_11_noCheck.json", 15, 10)
-    x = Trestle().cluster("data_files/rb_com_11_noCheck.json", 80)
+    x = Trestle().cluster("data_files/rb_com_11_noCheck.json", 300)
+    #x = Trestle().cluster("data_files/rb_s_07.json", 300)
 
     pickle.dump(x, open('clustering.pickle', 'wb'))
     #print(Trestle().cluster("data_files/rb_test_continuous.json", 300))
