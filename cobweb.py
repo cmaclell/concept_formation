@@ -8,7 +8,7 @@ class Cobweb:
     # Global class variables: counter (for gensym) and minimum category utility
     # for a cluster.
     counter = 0
-    min_cu = 0.145
+    min_cu = 0.0
 
     def mean(self, values):
         """

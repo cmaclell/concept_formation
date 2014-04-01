@@ -73,7 +73,8 @@ class Trestle(Cobweb3):
                 
                 #old_values = set([v for c in temp.children if attr in
                 #                  c.av_counts for v in c.av_counts[attr]])
-                old_values = [v for v in temp.av_counts[attr]]
+                old_values = [v for v in temp.av_counts[attr] if isinstance(v,
+                                                                            Trestle)]
                 for old in old_values:
                     if not new.is_parent(old):
                         continue
@@ -161,7 +162,11 @@ class Trestle(Cobweb3):
         while temp != None:
             if temp == self:
                 return True
-            temp = temp.parent
+            try:
+                temp = temp.parent
+            except:
+                print(temp)
+                assert False
         return False
 
     def common_ancestor(self, val1, val2):
@@ -192,8 +197,8 @@ class Trestle(Cobweb3):
                 temp_instance[attr] = self.Trestle(instance[attr])
 
             elif isinstance(instance[attr], list):
-                pass
-                #temp_instance[tuple(instance[attr])] = True
+                temp_instance[tuple(instance[attr])] = True
+                #pass
             else:
                 temp_instance[attr] = instance[attr]
 
@@ -337,6 +342,8 @@ class Trestle(Cobweb3):
 
                 # match based on match to values with shared ancestory.
                 for val in self.av_counts[to_name[col_index]]:
+                    if not isinstance(val, Trestle):
+                        continue
                     ancestor = self.common_ancestor(from_val, val)
                     reward += (((1.0 * self.av_counts[to_name[col_index]][val])
                                 / self.count) *
@@ -467,8 +474,8 @@ class Trestle(Cobweb3):
                 else:
                     temp[attr + " = " + str(value)] = self.av_counts[attr][value]
             if len(float_vals) > 0:
-                mean = attr + "_mean = %0.2f (%0.2f)" % (self._mean(float_vals),
-                                                self._std(float_vals))
+                mean = attr + "_mean = %0.2f (%0.2f)" % (self.mean(float_vals),
+                                                self.std(float_vals))
                 temp[mean] = len(float_vals)
 
         temp2 = {}
@@ -484,8 +491,8 @@ class Trestle(Cobweb3):
                 else:
                     temp2[attr + " = " + str(value)] = gself.av_counts[attr][value]
             if len(float_vals) > 0:
-                mean = attr + "_mean = %0.2f (%0.2f)" % (self._mean(float_vals),
-                                                self._std(float_vals))
+                mean = attr + "_mean = %0.2f (%0.2f)" % (self.mean(float_vals),
+                                                self.std(float_vals))
                 temp2[mean] = len(float_vals)
                 
         for child in self.children:
@@ -554,8 +561,8 @@ class Trestle(Cobweb3):
                                   str(self.av_counts[attr][val]))
 
             if float_values:
-                values.append("'mean':" + str(self._mean(float_values)))
-                values.append("'std':" + str(self._std(float_values)))
+                values.append("'mean':" + str(self.mean(float_values)))
+                values.append("'std':" + str(self.std(float_values)))
 
             attributes.append("'" + str(attr) + "': {" + ", ".join(values) + "}")
                   
@@ -655,8 +662,8 @@ class Trestle(Cobweb3):
                           len(float_values))):
                 prediction[attr] = choice(component_values).predict({})
             else:
-                prediction[attr] = normalvariate(self._mean(float_values),
-                                                 self._std(float_values))
+                prediction[attr] = normalvariate(self.mean(float_values),
+                                                 self.std(float_values))
 
         return prediction
 
@@ -830,6 +837,12 @@ class Trestle(Cobweb3):
         #self.verify_counts()
         #self.verify_component_values()
 
+        # dont need to add guids back
+        #with open('visualize/output.json', 'w') as f:
+        #    f.write(json.dumps(self.output_json()))
+
+        #return clusters
+
         #add categorize for adding guids
         mapping = {}
         for idx, inst in enumerate(o_instances):
@@ -889,7 +902,8 @@ class Trestle(Cobweb3):
         
         for g in mapping:
             cluster = mapping[g]
-            cluster = cluster.parent
+            if cluster.parent:
+                cluster = cluster.parent
             clusters[g] = cluster.concept_name
 
         with open('visualize/output.json', 'w') as f:
@@ -901,11 +915,14 @@ class Trestle(Cobweb3):
 
 if __name__ == "__main__":
 
-    #Trestle().predictions("data_files/rb_com_11_noCheck.json", 15, 10)
-    x = Trestle().cluster("data_files/rb_com_11_noCheck.json", 300)
-    #x = Trestle().cluster("data_files/rb_s_07.json", 300)
+    #Trestle().predictions("data_files/rb_wb_03_noCheck.json", 15, 10)
 
-    pickle.dump(x, open('clustering.pickle', 'wb'))
+    x = Trestle().cluster("data_files/rb_com_11_noCheck.json", 300)
+    #x = Trestle().cluster("data_files/rb_s_13_noCheck.json", 300)
+    #x = Trestle().cluster("data_files/rb_wb_03_noCheck.json", 300)
+    #x = Trestle().cluster("data_files/s_07_step.json", 500)
+    #pickle.dump(x, open('clustering.pickle', 'wb'))
+
     #print(Trestle().cluster("data_files/rb_test_continuous.json", 300))
 
     #Trestle().predictions("data_files/kelly-data.json", 5, 1)
