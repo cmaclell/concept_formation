@@ -513,7 +513,8 @@ class Trestle(Cobweb3):
             if isinstance(instance[attr], dict):
                 temp_instance[attr] = self.trestle_categorize(instance[attr])
             elif isinstance(instance[attr], list):
-                temp_instance[attr] = tuple(instance[attr])
+                #temp_instance[attr] = tuple(instance[attr])
+                pass
             else:
                 temp_instance[attr] = instance[attr]
 

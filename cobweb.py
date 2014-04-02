@@ -395,13 +395,13 @@ class Cobweb:
                 if best2:
                     best2_cu, best2 = best2
 
-                if action_cu <= current.min_cu:
-                    #TODO this is new
-                    current.increment_counts(instance)
-                    for c in current.children:
-                        c.remove_reference(current)
-                    current.children = []
-                    return current
+               # if action_cu <= current.min_cu:
+               #     #TODO this is new
+               #     current.increment_counts(instance)
+               #     #for c in current.children:
+               #     #    c.remove_reference(current)
+               #     #current.children = []
+               #     return current
 
                 if best_action == 'best':
                     current.increment_counts(instance)
@@ -461,8 +461,8 @@ class Cobweb:
             best1_cu, best1 = best1
 
             #TODO is this how you stop at an intermediate node?
-            #if best1_cu <= self.min_cu:
-            #    return current
+            if best1_cu <= self.min_cu:
+                return current
 
             current = best1
 
