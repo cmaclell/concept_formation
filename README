@@ -9,6 +9,57 @@ algorithms are implemented. The system accepts a stream of instances, which are
 represented as hash tables of attributes and values (where values can be both
 numeric and nominal), and learns a concept hierarchy.
 
-Current plans are to extend this library to include the LABYRINTH
+The system includes the LABYRINTH
 (http://www.isle.org/~langley/papers/labyrinth.cfb.pdf) algorithm for learning
-structured concepts with relations and components.
+structured concepts with relations and components as well. However, the
+algorithm seemed underdeveloped in a couple of regards and so has been
+expanded in the TRESTLE system.
+
+First, we have included a single matching (structure-mapping) step at the root,
+instead of at every node in the search, as LABYRINTH did. This matching step
+uses the Hungarian Algorithm to match objects based on their conceptual
+relations (optimal for objects alone). It also includes a greedy approach to
+matching relations. 
+
+Second, we have been very very careful about how we handle component features
+(features that whose values refer to other concepts in the tree). At this time
+we ensure that all values refer to leaves of the concept tree. There are no
+intermediate nodes at this time. This is nice because we maintain maximal
+information. We are currently in the process of exploring different approaches
+to abstracting component features during categorization, but have not committed
+to any best approach yet. 
+
+Third, in terms of the COBWEB3 algorithm, we have made a few improvements to
+correct for situations where the number of datapoints is low (we now use an
+unbiased estimation for STD:
+https://en.wikipedia.org/wiki/Unbiased_estimation_of_standard_deviation). We
+are currently considering a modification that normalizes the continuous values
+during each category utility calculation. This will help the system to deal
+with small differences between data points, they will adjust based on the
+nature of the domain. We have also added a category utility cutoff, which
+triggers counts of the current node to be updated without creating an
+additional leaf/node. 
+
+Lastly, we are considering a mechanism that filters out concepts that do not
+share features with a given instance that is being categorized. This would
+prevent weird "mixed" clusters. This would be particularly relevant when 
+
+
+New features we are exploring:
+
+1) Normalization of continuous values at each node during category utility
+calculation.
+
+2) A mechanism for abstracting component features.
+
+3) Consider different approaches for selective filtering out concepts. 
+
+Thoughts:
+
+1) Maybe the matching process should be a parse and match process. Then this
+could be repeated at each node so that the parsing is driven by the current
+top-down process as well as the bottom up parsing process. 
+
+2) How is structure provided to the system? Is it at all? Or should it be given
+a flat representation and structure learned?
+
