@@ -198,7 +198,6 @@ class Trestle(Cobweb3):
 
             elif isinstance(instance[attr], list):
                 temp_instance[tuple(instance[attr])] = True
-                #pass
             else:
                 temp_instance[attr] = instance[attr]
 
@@ -513,8 +512,7 @@ class Trestle(Cobweb3):
             if isinstance(instance[attr], dict):
                 temp_instance[attr] = self.trestle_categorize(instance[attr])
             elif isinstance(instance[attr], list):
-                #temp_instance[attr] = tuple(instance[attr])
-                pass
+                temp_instance[attr] = tuple(instance[attr])
             else:
                 temp_instance[attr] = instance[attr]
 
@@ -828,7 +826,7 @@ class Trestle(Cobweb3):
             previous[self.flatten_instance(i)] = None
 
         # train initially
-        for x in range(1):
+        for x in range(5):
             shuffle(instances)
             for n, i in enumerate(instances):
                 print("training instance: " + str(n))
@@ -922,7 +920,7 @@ if __name__ == "__main__":
     #x = Trestle().cluster("data_files/rb_s_13_noCheck.json", 300)
     #x = Trestle().cluster("data_files/rb_wb_03_noCheck.json", 300)
     #x = Trestle().cluster("data_files/s_07_step.json", 500)
-    #pickle.dump(x, open('clustering.pickle', 'wb'))
+    pickle.dump(x, open('clustering.pickle', 'wb'))
 
     #print(Trestle().cluster("data_files/rb_test_continuous.json", 300))
 

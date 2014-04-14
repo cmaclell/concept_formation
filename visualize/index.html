@@ -131,7 +131,8 @@ d3.json("output.json", function(data) {
 });
 
 function zoom(d, i) {
-  console.log(d)
+  console.log(d);
+  scale = 1.0;
   //console.log(d.CU)
   //console.log(d.counts)
   var k = r / d.r / 2;
@@ -142,20 +143,20 @@ function zoom(d, i) {
       .duration(d3.event.altKey ? 7500 : 750);
 
   t.selectAll("image.tower")
-      .attr("width", function(d) { return (1.33 * k * d.r); })
-      .attr("height", function(d) { return k * d.r; })
-      .attr("x", function(d) { return x(d.x) - ((1.33 * k * d.r)/2); })
-      .attr("y", function(d) { return y(d.y) - ((k * d.r)/2); });
+      .attr("width", function(d) { return (scale * 1.33 * k * d.r); })
+      .attr("height", function(d) { return scale * k * d.r; })
+      .attr("x", function(d) { return scale * (x(d.x) - ((1.33 * k * d.r)/2)); })
+      .attr("y", function(d) { return scale * (y(d.y) - ((k * d.r)/2)); });
 
   t.selectAll("circle")
-      .attr("cx", function(d) { return x(d.x); })
-      .attr("cy", function(d) { return y(d.y); })
-      .attr("r", function(d) { return k * d.r; });
+      .attr("cx", function(d) { return scale * x(d.x); })
+      .attr("cy", function(d) { return scale * y(d.y); })
+      .attr("r", function(d) { return scale * k * d.r; });
       //.style("opacity", function(d) { return (k * d.r > 100) ? 1 : 0; });
 
   t.selectAll("text")
-      .attr("x", function(d) { return x(d.x); })
-      .attr("y", function(d) { return y(d.y); })
+      .attr("x", function(d) { return scale * x(d.x); })
+      .attr("y", function(d) { return scale * y(d.y); })
       //.style("opacity", function(d) { return (k * d.r > 100 && k * d.r < 200) ? 1 : 0; });
 
   node = d;

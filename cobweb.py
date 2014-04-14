@@ -8,7 +8,9 @@ class Cobweb:
     # Global class variables: counter (for gensym) and minimum category utility
     # for a cluster.
     counter = 0
-    min_cu = 0.0
+
+    # The number of correct guesses per attribute that must be achieved.
+    pruning_constant = 0.14
 
     def mean(self, values):
         """
@@ -106,6 +108,16 @@ class Cobweb:
                 self.av_counts[attr][val] = (self.av_counts[attr].get(val,0) +
                                      node.av_counts[attr][val])
 
+    def relevant_to_instance(self, instance):
+        """
+        Returns True if the concept contains attributes that are in the
+        instance.
+        """
+        for attr in self.av_counts:
+            if attr in instance:
+                return True
+        return False
+    
     def two_best_children(self, instance):
         """
         Returns the two best children to incorporate the instance
@@ -121,8 +133,11 @@ class Cobweb:
             raise Exception("No children!")
 
         children_cu = [(self.cu_for_insert(child, instance), child) for child
-                       in self.children]
+                       in self.children if child.relevant_to_instance(instance)]
         children_cu.sort(key=lambda x: x[0],reverse=True)
+
+        if len(children_cu) == 0:
+            return None, None
 
         if len(children_cu) == 1:
             return children_cu[0], None 
@@ -144,7 +159,7 @@ class Cobweb:
             temp.children.append(temp_child)
             if c == child:
                 temp_child.increment_counts(instance)
-        return temp.category_utility()
+        return temp.category_utility(instance)
 
     def create_new_child(self, instance):
         """
@@ -176,7 +191,7 @@ class Cobweb:
         temp = self.shallow_copy()
         temp.increment_counts(instance)
         temp.create_new_child(instance)
-        return temp.category_utility()
+        return temp.category_utility(instance)
 
     def merge(self, best1, best2):
         """
@@ -229,7 +244,7 @@ class Cobweb:
             temp_child.update_counts_from_node(c)
             temp.children.append(temp_child)
 
-        return temp.category_utility()
+        return temp.category_utility(instance)
 
     def split(self, best):
         """
@@ -255,9 +270,9 @@ class Cobweb:
         temp.increment_counts(instance)
         temp.create_new_child(instance)
 
-        return temp.category_utility()
+        return temp.category_utility(instance)
 
-    def cu_for_split(self, best):
+    def cu_for_split(self, best, instance):
         """
         Return the category utility for splitting the best child.
         
@@ -276,7 +291,7 @@ class Cobweb:
             temp_child.update_counts_from_node(c)
             temp.children.append(temp_child)
 
-        return temp.category_utility()
+        return temp.category_utility(instance)
 
     def verify_counts(self):
         """
@@ -343,16 +358,22 @@ class Cobweb:
 
         return True
 
-    def cobweb(self, instance, cutoff=None):
+    def min_cu(self):
+        #special case for beginning.
+        if self.count == 0:
+            return 0.0
+
+        cu = len(self.av_counts) * self.pruning_constant * (1.0 / self.count)
+        #print(cu)
+        return cu
+
+    def cobweb(self, instance):
         """
         Incrementally integrates an instance into the categorization tree
         defined by the current node. This function operates iteratively to
         integrate this instance and uses category utility as the heuristic to
         make decisions.
         """
-        if not cutoff:
-            cutoff = self.min_cu
-
         current = self
 
         while current:
@@ -364,7 +385,7 @@ class Cobweb:
             #if (not current.children and current.exact_match(instance)):
 
             if (not current.children and current.cu_for_fringe_split(instance)
-                <= self.min_cu):
+                <= current.min_cu()):
                 current.increment_counts(instance)
                 return current 
 
@@ -391,17 +412,24 @@ class Cobweb:
                                                                      best1,
                                                                      best2)
 
-                best1_cu, best1 = best1
+                if action_cu <= current.min_cu():
+                    #TODO this is new
+                    #I think it makes sense to actually merge these if they
+                    #are very very very similar.
+                    # The problem is that when things start getting merged,
+                    # then they are similar to other things... this pruning
+                    # process can get a bit carried away.
+                    print("PRUNING")
+                    current.increment_counts(instance)
+                    for c in current.children:
+                        c.remove_reference(current)
+                    current.children = []
+                    return current
+
+                if best1:
+                    best1_cu, best1 = best1
                 if best2:
                     best2_cu, best2 = best2
-
-               # if action_cu <= current.min_cu:
-               #     #TODO this is new
-               #     current.increment_counts(instance)
-               #     #for c in current.children:
-               #     #    c.remove_reference(current)
-               #     #current.children = []
-               #     return current
 
                 if best_action == 'best':
                     current.increment_counts(instance)
@@ -424,7 +452,12 @@ class Cobweb:
         Given a set of possible operations, find the best and return its cu and
         the action name.
         """
-        best1_cu, best1 = best1
+        # If there is no best, then create a new child.
+        if not best1:
+            return (self.cu_for_new_child(instance), 'new')
+
+        if best1:
+            best1_cu, best1 = best1
         if best2:
             best2_cu, best2 = best2
         operations = []
@@ -436,7 +469,7 @@ class Cobweb:
         if "merge" in possible_ops and len(self.children) > 2 and best2:
             operations.append((self.cu_for_merge(best1, best2, instance),'merge'))
         if "split" in possible_ops and len(best1.children) > 0:
-            operations.append((self.cu_for_split(best1),'split'))
+            operations.append((self.cu_for_split(best1, instance),'split'))
 
         # pick the best operation
         operations.sort(reverse=True)
@@ -444,52 +477,55 @@ class Cobweb:
 
         return operations[0]
         
-    def cobweb_categorize(self, instance):
-        """
-        Sorts an instance in the categorization tree defined at the current
-        node without modifying the counts of the tree.
-
-        This version always goes to a leaf.
-        """
-        current = self
-        while current:
-            if not current.children:
-                return current
-
-            
-            best1, best2 = current.two_best_children(instance)
-            best1_cu, best1 = best1
-
-            #TODO is this how you stop at an intermediate node?
-            if best1_cu <= self.min_cu:
-                return current
-
-            current = best1
-
-    #def cobweb_categorize(self, instance):
+    #def cobweb_categorize(self, instance, leaf=True):
     #    """
     #    Sorts an instance in the categorization tree defined at the current
     #    node without modifying the counts of the tree.
 
-    #    Uses the new and best operations; when new is the best operation it
-    #    returns the current node otherwise it iterates on the best node. 
+    #    This version always goes to a leaf.
     #    """
     #    current = self
     #    while current:
     #        if not current.children:
     #            return current
 
+    #        
     #        best1, best2 = current.two_best_children(instance)
-    #        action_cu, best_action = current.get_best_operation(instance,
-    #                                                             best1, best2,
-    #                                                             ["best",
-    #                                                              "new"]) 
-    #        best1_cu, best1 = best1
 
-    #        if best_action == "new":
-    #            return current
-    #        elif best_action == "best":
+    #        if best1:
+    #            best1_cu, best1 = best1
     #            current = best1
+    #        else:
+    #            return current
+
+    def cobweb_categorize(self, instance):
+        """
+        Sorts an instance in the categorization tree defined at the current
+        node without modifying the counts of the tree.
+
+        Uses the new and best operations; when new is the best operation it
+        returns the current node otherwise it iterates on the best node. 
+        """
+        current = self
+        while current:
+            if not current.children:
+                return current
+
+            best1, best2 = current.two_best_children(instance)
+            action_cu, best_action = current.get_best_operation(instance,
+                                                                 best1, best2,
+                                                                 ["best",
+                                                                  "new"]) 
+            if best1:
+                best1_cu, best1 = best1
+            else:
+                return current
+
+            if best_action == "new":
+                print("INTERMEDIATE")
+                return current
+            elif best_action == "best":
+                current = best1
 
     def expected_correct_guesses(self):
         """
@@ -504,23 +540,42 @@ class Cobweb:
                 correct_guesses += (prob * prob)
         return correct_guesses
 
-    def category_utility(self):
+    def category_utility(self, instance=None):
         """
         Returns the category utility of a particular division of a concept into
         its children. This is used as the heuristic to guide the concept
         formation.
+
+        Only computed in terms of the attribute values of a given instance. If
+        no instance is provided, then it uses all attribute values. 
         """
-        if len(self.children) == 0:
+        temp = self.shallow_copy()
+
+        if instance:
+            temp.av_counts = {a: temp.av_counts[a] for a in temp.av_counts if a
+                              in instance}
+            #for attr in temp.av_counts:
+            #    if attr not in instance:
+            #        del temp.av_counts[attr]
+            for child in temp.children:
+                child.av_counts = {a: child.av_counts[a] for a in
+                                   child.av_counts if a in instance}
+                #for attr in child.av_counts:
+                #    if attr not in instance:
+                #        del child.av_counts[attr]
+            temp.children = [c for c in temp.children if len(c.av_counts) > 0]
+
+        if len(temp.children) == 0:
             return 0.0
 
         category_utility = 0.0
 
-        for child in self.children:
-            p_of_child = child.count / (1.0 * self.count)
+        for child in temp.children:
+            p_of_child = child.count / (1.0 * temp.count)
             category_utility += (p_of_child *
                                  (child.expected_correct_guesses()
-                                  - self.expected_correct_guesses()))
-        return category_utility / (1.0 * len(self.children))
+                                  - temp.expected_correct_guesses()))
+        return category_utility / (1.0 * len(temp.children))
 
     def num_concepts(self):
         """
