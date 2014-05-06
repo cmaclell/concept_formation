@@ -457,9 +457,6 @@ class Trestle(Cobweb3):
            
         output["children"] = []
 
-        # generalize av counts
-        gself, cu = self.attribute_generalize()
-
         temp = {}
         for attr in self.av_counts:
             float_vals = []
@@ -477,28 +474,10 @@ class Trestle(Cobweb3):
                                                 self.std(float_vals))
                 temp[mean] = len(float_vals)
 
-        temp2 = {}
-        for attr in gself.av_counts:
-            float_vals = []
-            for value in gself.av_counts[attr]:
-                if isinstance(attr, tuple):
-                    temp2["[" + " ".join(attr) + "]"] = gself.av_counts[attr][True]
-                elif isinstance(value, float):
-                    float_vals.append(value)
-                elif isinstance(value, Trestle): 
-                    temp2[attr + " = " + value.concept_name] = gself.av_counts[attr][value]
-                else:
-                    temp2[attr + " = " + str(value)] = gself.av_counts[attr][value]
-            if len(float_vals) > 0:
-                mean = attr + "_mean = %0.2f (%0.2f)" % (self.mean(float_vals),
-                                                self.std(float_vals))
-                temp2[mean] = len(float_vals)
-                
         for child in self.children:
             output["children"].append(child.output_json())
 
         output["counts"] = temp
-        output['general counts'] = temp2
 
         return output
 
@@ -580,11 +559,21 @@ class Trestle(Cobweb3):
         concept = self.trestle_categorize(instance)
         return concept.get_probability(attr, val)
 
+    def specific_prediction(self, instance, attr, guessing=False):
+        """
+        Uses the TRESTLE algorithm to make a prediction about the given
+        attribute. 
+        """
+        concept = self.trestle_categorize(instance)
+        return concept.get_probability(attr, instance[attr])
+
     def flexible_prediction(self, instance, guessing=False):
         """
         A modification of flexible prediction to handle component values.
         The flexible prediction task is called on all subcomponents. To compute
         the accuracy for each subcomponent.
+
+        Guessing is the basecase that just returns the root probability
         """
         
         probs = []
@@ -595,15 +584,19 @@ class Trestle(Cobweb3):
             if isinstance(instance[attr], dict):
                 probs.append(self.flexible_prediction(instance[attr], guessing))
                 continue
+
+            # construct an object with missing attribute
             temp = {}
             for attr2 in instance:
                 if attr == attr2:
                     continue
                 temp[attr2] = instance[attr2]
+
             if guessing:
                 probs.append(self.get_probability(attr, instance[attr]))
             else:
                 probs.append(self.concept_attr_value(temp, attr, instance[attr]))
+
         if len(probs) == 0:
             print(instance)
             return -1 
@@ -666,7 +659,7 @@ class Trestle(Cobweb3):
 
         return prediction
 
-    def sequential_prediction(self, filename, length, guessing=False):
+    def sequential_prediction(self, filename, length, attr=None, guessing=False):
         """
         Given a json file, perform an incremental sequential prediction task. 
         Try to flexibly predict each instance before incorporating it into the 
@@ -685,7 +678,10 @@ class Trestle(Cobweb3):
             for n, i in enumerate(instances):
                 if n >= length:
                     break
-                accuracy.append(self.flexible_prediction(i, guessing))
+                if attr:
+                    accuracy.append(self.specific_prediction(i, attr, guessing))
+                else:
+                    accuracy.append(self.flexible_prediction(i, guessing))
                 nodes.append(self.num_concepts())
                 self.ifit(i)
         json_data.close()
@@ -826,7 +822,7 @@ class Trestle(Cobweb3):
             previous[self.flatten_instance(i)] = None
 
         # train initially
-        for x in range(5):
+        for x in range(1):
             shuffle(instances)
             for n, i in enumerate(instances):
                 print("training instance: " + str(n))
@@ -908,31 +904,51 @@ class Trestle(Cobweb3):
         with open('visualize/output.json', 'w') as f:
             f.write(json.dumps(self.output_json()))
 
+        # Output data for datashop KC labeling
+        guidKcs = []
+        for g in mapping:
+            kcs = []
+            temp = mapping[g]
+            kcs.append(temp.concept_name)
+            while temp.parent:
+                temp = temp.parent
+                kcs.append(temp.concept_name)
+            kcs.append(g) 
+            kcs.reverse()
+            guidKcs.append(kcs)
+
+        with open('kc-labels.csv', 'w') as f:
+            max_len = 0
+            for kc in guidKcs:
+                if len(kc) > max_len:
+                    max_len = len(kc)
+
+            output = []
+            for kc in guidKcs:
+                for i in range(max_len - len(kc)):
+                    kc.append(kc[-1])
+                output.append(",".join(kc))
+
+            f.write("\n".join(output))
+
         #print(json.dumps(self.output_json()))
 
         return clusters
 
 if __name__ == "__main__":
 
-    #Trestle().predictions("data_files/rb_wb_03_noCheck.json", 15, 10)
+    ## Prediction
+    #accuracy, nodes = Trestle().sequential_prediction("data_files/rb_com_11_noCheck.json", 20,
+    #                                attr='success')
+    #print(accuracy)
+    #print(Trestle().mean(accuracy))
 
-    x = Trestle().cluster("data_files/rb_com_11_noCheck.json", 300)
-    #x = Trestle().cluster("data_files/rb_s_13_noCheck.json", 300)
-    #x = Trestle().cluster("data_files/rb_wb_03_noCheck.json", 300)
-    #x = Trestle().cluster("data_files/s_07_step.json", 500)
+    # Clustering
+
+    #x = Trestle().cluster("data_files/rb_com_11_noCheck.json", 300)
+    #x = Trestle().cluster("data_files/rb_wb_03_noCheck_noDuplicates.json", 300)
+    x = Trestle().cluster("data_files/instant-test-processed.json", 1000)
     pickle.dump(x, open('clustering.pickle', 'wb'))
 
-    #print(Trestle().cluster("data_files/rb_test_continuous.json", 300))
-
-    #Trestle().predictions("data_files/kelly-data.json", 5, 1)
-    #print(Trestle().cluster("data_files/kelly-data.json", 10))
-    #Trestle().baseline_guesser("data_files/rb_com_11_noCheck.json", 10, 1)
-
-    #print(Trestle().cluster("data_files/rb_s_07.json", 10, 3))
-    #print(Trestle().cluster("data_files/jenny_graph_data.json", 50, 1))
-
-    #t = Trestle()
-    #t.sequential_prediction("towers_small_trestle.json", 10)
-    #print(t.predict({"success": "1"}))
 
 

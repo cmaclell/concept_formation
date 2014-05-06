@@ -10,7 +10,7 @@ class Cobweb:
     counter = 0
 
     # The number of correct guesses per attribute that must be achieved.
-    pruning_constant = 0.14
+    pruning_constant = 0.0
 
     def mean(self, values):
         """
@@ -419,7 +419,7 @@ class Cobweb:
                     # The problem is that when things start getting merged,
                     # then they are similar to other things... this pruning
                     # process can get a bit carried away.
-                    print("PRUNING")
+                    #print("PRUNING")
                     current.increment_counts(instance)
                     for c in current.children:
                         c.remove_reference(current)
@@ -522,7 +522,7 @@ class Cobweb:
                 return current
 
             if best_action == "new":
-                print("INTERMEDIATE")
+                #print("INTERMEDIATE")
                 return current
             elif best_action == "best":
                 current = best1
@@ -672,9 +672,16 @@ class Cobweb:
         """
         Gets the probability of a particular attribute value at the given
         concept.
+
         """
-        if attr not in self.av_counts or val not in self.av_counts[attr]:
+        while attr not in self.av_counts:
+            if not self.parent:
+                return 0.0
+            self = self.parent
+
+        if val not in self.av_counts[attr]:
             return 0.0
+
         return (1.0 * self.av_counts[attr][val]) / self.count
 
     def concept_attr_value(self, instance, attr, val):
