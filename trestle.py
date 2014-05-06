@@ -628,29 +628,36 @@ class Trestle(Cobweb3):
             
             nominal_values = []
             component_values = []
-            float_values = []
 
-            for val in concept.av_counts[attr]:
-                if isinstance(val, float):
-                    float_values += [val] * concept.av_counts[attr][val]
-                elif isinstance(val, Trestle):
-                    component_values += [val] * concept.av_counts[attr][val] 
-                else:
-                    nominal_values += [val] * concept.av_counts[attr][val]
+            float_num = 0.0
+            float_mean = 0.0
+            float_std = 0.0
+            
+            if isinstance(concept.av_counts[attr], ContinuousValue):
+                float_num = concept.av_counts[attr].num
+                float_mean = concept.av_counts[attr].mean
+                float_std = concept.av_counts[attr].std
+
+            else:
+                for val in concept.av_counts[attr]:
+                    if isinstance(val, Trestle):
+                        component_values += [val] * concept.av_counts[attr][val] 
+                    else:
+                        nominal_values += [val] * concept.av_counts[attr][val]
 
             rand = random()
 
             if rand < ((len(nominal_values) * 1.0) / (len(nominal_values) +
                                                       len(component_values) +
-                                                      len(float_values))):
+                                                      float_num)):
                 prediction[attr] = choice(nominal_values)
             elif rand < ((len(nominal_values) + len(component_values) * 1.0) /
                          (len(nominal_values) + len(component_values) +
-                          len(float_values))):
+                          float_num)):
                 prediction[attr] = choice(component_values).predict({})
             else:
-                prediction[attr] = normalvariate(self.mean(float_values),
-                                                 self.std(float_values))
+                prediction[attr] = normalvariate(float_mean,
+                                                 float_std)
 
         return prediction
 
@@ -944,8 +951,14 @@ if __name__ == "__main__":
 
     #x = Trestle().cluster("data_files/rb_com_11_noCheck.json", 300)
     #x = Trestle().cluster("data_files/rb_wb_03_noCheck_noDuplicates.json", 300)
-    x = Trestle().cluster("data_files/instant-test-processed.json", 100)
-    pickle.dump(x, open('clustering.pickle', 'wb'))
+    tree = Trestle()
+    #x = tree.cluster("data_files/instant-test-processed.json", 100)
+    #pickle.dump(x, open('clustering.pickle', 'wb'))
+
+    tree.ifit({'b1': {'x': 1.5}})
+    tree.ifit({'b1': {'x': 70.0}})
+    print(json.dumps(tree.output_json()))
+
 
 
 

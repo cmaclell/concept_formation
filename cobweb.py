@@ -473,7 +473,7 @@ class Cobweb:
 
         # pick the best operation
         operations.sort(reverse=True)
-        #print(operations)
+        print(operations)
 
         return operations[0]
         
