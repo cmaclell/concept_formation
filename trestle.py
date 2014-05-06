@@ -947,7 +947,7 @@ if __name__ == "__main__":
 
     #x = Trestle().cluster("data_files/rb_com_11_noCheck.json", 300)
     #x = Trestle().cluster("data_files/rb_wb_03_noCheck_noDuplicates.json", 300)
-    x = Trestle().cluster("data_files/instant-test-processed.json", 1000)
+    x = Trestle().cluster("data_files/instant-test-processed.json", 100)
     pickle.dump(x, open('clustering.pickle', 'wb'))
 
 
