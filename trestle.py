@@ -10,6 +10,7 @@ from random import choice
 from random import random
 from random import shuffle
 from cobweb3 import Cobweb3
+from cobweb3 import ContinuousValue
 
 class Trestle(Cobweb3):
 
@@ -303,6 +304,8 @@ class Trestle(Cobweb3):
                                                              Trestle)]
         to_name = []
         for attr in self.av_counts:
+            if isinstance(self.av_counts[attr], ContinuousValue):
+                continue
             for val in self.av_counts[attr]:
                 if isinstance(val, Trestle):
                     to_name.append(attr)
@@ -459,20 +462,16 @@ class Trestle(Cobweb3):
 
         temp = {}
         for attr in self.av_counts:
-            float_vals = []
-            for value in self.av_counts[attr]:
-                if isinstance(attr, tuple):
-                    temp["[" + " ".join(attr) + "]"] = self.av_counts[attr][True]
-                elif isinstance(value, float):
-                    float_vals.append(value)
-                elif isinstance(value, Trestle): 
-                    temp[attr + " = " + value.concept_name] = self.av_counts[attr][value]
-                else:
-                    temp[attr + " = " + str(value)] = self.av_counts[attr][value]
-            if len(float_vals) > 0:
-                mean = attr + "_mean = %0.2f (%0.2f)" % (self.mean(float_vals),
-                                                self.std(float_vals))
-                temp[mean] = len(float_vals)
+            if isinstance(self.av_counts[attr], ContinuousValue):
+                temp[attr + " = " + str(self.av_counts[attr])] = self.av_counts[attr].num
+            else:
+                for value in self.av_counts[attr]:
+                    if isinstance(attr, tuple):
+                        temp["[" + " ".join(attr) + "]"] = self.av_counts[attr][True]
+                    elif isinstance(value, Trestle): 
+                        temp[attr + " = " + value.concept_name] = self.av_counts[attr][value]
+                    else:
+                        temp[attr + " = " + str(value)] = self.av_counts[attr][value]
 
         for child in self.children:
             output["children"].append(child.output_json())
@@ -525,22 +524,18 @@ class Trestle(Cobweb3):
         attributes = []
 
         for attr in self.av_counts:
-            float_values = []
             values = []
-
-            for val in self.av_counts[attr]:
-                if isinstance(val, float):
-                    float_values.append(val)
-                elif isinstance(val, Trestle):
-                    values.append("'" + val.concept_name + "': " + 
-                                  str(self.av_counts[attr][val]))
-                else:
-                    values.append("'" + str(val) + "': " +
-                                  str(self.av_counts[attr][val]))
-
-            if float_values:
-                values.append("'mean':" + str(self.mean(float_values)))
-                values.append("'std':" + str(self.std(float_values)))
+            if isinstance(self.av_counts[attr], ContinuousValue):
+                values.append("'" + str(self.av_counts[attr]) + "': " +
+                              str(self.av_counts[attr].num))
+            else:
+                for val in self.av_counts[attr]:
+                    if isinstance(val, Trestle):
+                        values.append("'" + val.concept_name + "': " + 
+                                      str(self.av_counts[attr][val]))
+                    else:
+                        values.append("'" + str(val) + "': " +
+                                      str(self.av_counts[attr][val]))
 
             attributes.append("'" + str(attr) + "': {" + ", ".join(values) + "}")
                   
@@ -728,6 +723,8 @@ class Trestle(Cobweb3):
         temp_counts = {}
         for attr in self.av_counts:
             temp_counts[attr] = {}
+            if isinstance(self.av_counts[attr], ContinuousValue):
+                continue
             for val in self.av_counts[attr]:
                 x = val
                 if val == old:
@@ -947,7 +944,7 @@ if __name__ == "__main__":
 
     #x = Trestle().cluster("data_files/rb_com_11_noCheck.json", 300)
     #x = Trestle().cluster("data_files/rb_wb_03_noCheck_noDuplicates.json", 300)
-    x = Trestle().cluster("data_files/instant-test-processed.json", 200)
+    x = Trestle().cluster("data_files/instant-test-processed.json", 100)
     pickle.dump(x, open('clustering.pickle', 'wb'))
 
 
