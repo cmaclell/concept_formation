@@ -1,10 +1,27 @@
 import math
+import json
 from random import normalvariate
 from random import choice
 from random import random
 from cobweb import Cobweb
 
 class ContinuousValue():
+
+    # a hash table for fast c4n value lookup
+    c4n_table = {2: 0.7978845608028654, 3: 0.886226925452758, 4:
+                 0.9213177319235613, 5: 0.9399856029866254, 6:
+                 0.9515328619481445, 7: 0.9593687886998328, 8:
+                 0.9650304561473722, 9: 0.9693106997139539, 10:
+                 0.9726592741215884, 11: 0.9753500771452293, 12:
+                 0.9775593518547722, 13: 0.9794056043142177, 14:
+                 0.9809714367555161, 15: 0.9823161771626504, 16:
+                 0.9834835316158412, 17: 0.9845064054718315, 18:
+                 0.985410043808079, 19: 0.9862141368601935, 20:
+                 0.9869342675246552, 21: 0.9875829288261562, 22:
+                 0.9881702533158311, 23: 0.988704545233999, 24:
+                 0.9891926749585048, 25: 0.9896403755857028, 26:
+                 0.9900524688409107, 27: 0.990433039209448, 28:
+                 0.9907855696217323, 29: 0.9911130482419843}
 
     def __init__(self, mean, std, num):
         self.mean = mean
@@ -15,9 +32,9 @@ class ContinuousValue():
         return hash("#ContinuousValue#")
 
     def __str__(self):
-        return "%0.4f (%0.4f) [%i]" % (self.mean, self.std, self.n)
+        return "%0.4f (%0.4f) [%i]" % (self.mean, self.std, self.num)
 
-    def combined_mean(m1,n1,m2,n2):
+    def combined_mean(self, m1,n1,m2,n2):
         """
         Function to compute the combined means given two means and the number
         of samples for each mean.
@@ -62,6 +79,15 @@ class ContinuousValue():
 
         return uc_std / c4n
 
+    def update(self, n):
+        self.combine_update(ContinuousValue(n, 0, 1))
+
+    def combine_update(self, other):
+        val = self.combine(other)
+        self.mean = val.mean
+        self.std = val.std
+        self.num = val.num
+
     def combine(self, other):
         meanBoth = self.combined_mean(self.mean, self.num, other.mean,
                                       other.num)
@@ -92,6 +118,51 @@ class Cobweb3(Cobweb):
                  0.9900524688409107, 27: 0.990433039209448, 28:
                  0.9907855696217323, 29: 0.9911130482419843}
 
+    def increment_counts(self, instance):
+        """
+        A modified version of increment counts that handles floats properly
+
+        input:
+            instance: {a1: v1, a2: v2, ...} - a hashtable of attr and values. 
+        """
+        self.count += 1 
+            
+        for attr in instance:
+            if isinstance(instance[attr], float):
+                if (attr not in self.av_counts or 
+                    not isinstance(self.av_counts[attr], ContinuousValue)):
+                    # TODO currently overrides nominals if a float comes in.
+                    self.av_counts[attr] = ContinuousValue(instance[attr], 0, 1)
+                else:
+                    self.av_counts[attr].update(instance[attr])
+
+            else:
+                self.av_counts[attr] = self.av_counts.setdefault(attr,{})
+                self.av_counts[attr][instance[attr]] = (self.av_counts[attr].get(instance[attr], 0) + 1)
+
+    def update_counts_from_node(self, node):
+        """
+        modified to handle floats
+        Increments the counts of the current node by the amount in the specified
+        node.
+        """
+        self.count += node.count
+        for attr in node.av_counts:
+            if isinstance(node.av_counts[attr], ContinuousValue):
+                if (attr not in self.av_counts or 
+                    not isinstance(self.av_counts[attr], ContinuousValue)):
+                    # TODO currently overrides nominals if a float comes in.
+                    oldval = node.av_counts[attr]
+                    self.av_counts[attr] = ContinuousValue(oldval.mean,
+                                                           oldval.std,
+                                                           oldval.num)
+                else:
+                    self.av_counts[attr].combine_update(node.av_counts[attr])
+            else:
+                for val in node.av_counts[attr]:
+                    self.av_counts[attr] = self.av_counts.setdefault(attr,{})
+                    self.av_counts[attr][val] = (self.av_counts[attr].get(val,0) +
+                                         node.av_counts[attr][val])
     
     def unbiased_std(self, sample):
         """
@@ -140,29 +211,15 @@ class Cobweb3(Cobweb):
         correct_guesses = 0.0
 
         for attr in self.av_counts:
-            #float_values = []
-            for val in self.av_counts[attr]:
-                if isinstance(val, ContinuousValue):
-                    std = val.std
-                    if std < self.acuity:
-                        std = self.acuity
-                    correct_guesses += (1.0 / 2.0 * math.sqrt(math.pi) * std)
-
-                #if isinstance(val, float):
-                #    float_values += [val] * int(self.av_counts[attr][val])
-                else:
+            if isinstance(self.av_counts[attr], ContinuousValue):
+                std = self.av_counts[attr].std
+                if std < self.acuity:
+                    std = self.acuity
+                correct_guesses += (1.0 / (2.0 * math.sqrt(math.pi) * std))
+            else:
+                for val in self.av_counts[attr]:
                     prob = ((1.0 * self.av_counts[attr][val]) / self.count)
                     correct_guesses += (prob * prob)
-
-            #if len(float_values) == 0:
-            #    continue
-
-            #std = self.unbiased_std(float_values)
-
-            #if std < self.acuity:
-            #    std = self.acuity
-
-            #correct_guesses += (1.0 / (2.0 * math.sqrt(math.pi) * std))
 
         return correct_guesses
 
@@ -209,20 +266,25 @@ class Cobweb3(Cobweb):
                 continue
             
             nominal_values = []
-            float_values = []
+            #float_values = []
 
+            num_floats = 0
+            mean = 0.0
+            std = 0.0
             for val in concept.av_counts[attr]:
-                if isinstance(val, float):
-                    float_values += [val] * concept.av_counts[attr][val]
+                if isinstance(val, ContinuousValue):
+                    num_floats = val.num
+                    mean = val.mean
+                    std = val.std
                 else:
                     nominal_values += [val] * concept.av_counts[attr][val]
 
             if random() < ((len(nominal_values) * 1.0) / (len(nominal_values) +
-                                                          len(float_values))):
+                                                          num_floats)):
                 prediction[attr] = choice(nominal_values)
             else:
-                prediction[attr] = normalvariate(self.mean(float_values),
-                                                 self._std(float_values))
+                prediction[attr] = normalvariate(mean,
+                                                 std)
 
         return prediction
 
@@ -235,15 +297,17 @@ class Cobweb3(Cobweb):
         if attr not in self.av_counts:
             return 0.0
 
-        if isinstance(val, float):
-            float_values = []
+        if isinstance(val, ContinuousValue):
+            #float_values = []
 
-            for av in self.av_counts[attr]:
-                if isinstance(av, float):
-                    float_values += [av] * self.av_counts[attr][av]
+            #for av in self.av_counts[attr]:
+            #    if isinstance(av, float):
+            #        float_values += [av] * self.av_counts[attr][av]
 
-            mean = self.mean(float_values)
-            std = self.unbiased_std(float_values)
+            #mean = self.mean(float_values)
+            #std = self.unbiased_std(float_values)
+            mean = val.mean
+            std = val.std
 
             if std < self.acuity:
                 std = self.acuity
@@ -262,27 +326,23 @@ class Cobweb3(Cobweb):
         A modification of the cobweb output json to handle numeric values.
         """
         output = {}
-        output['name'] = self.concept_name
-        output['size'] = self.count
-        output['children'] = []
+        output["name"] = self.concept_name
+        output["size"] = self.count
+        output["children"] = []
 
         temp = {}
         for attr in self.av_counts:
-            float_vals = []
-            for value in self.av_counts[attr]:
-                if isinstance(value, float):
-                    float_vals.append(value)
-                else:
+            #float_vals = []
+            if isinstance(self.av_counts[attr], ContinuousValue):
+                temp[attr + " = " + str(self.av_counts[attr])] = self.av_counts[attr].num
+            else:
+                for value in self.av_counts[attr]:
                     temp[attr + " = " + str(value)] = self.av_counts[attr][value]
-            if len(float_vals) > 0:
-                mean = attr + "mean = %0.2f (%0.2f)" % (self.mean(float_vals),
-                                                self.unbiased_std(float_vals))
-                temp[mean] = len(float_vals)
 
         for child in self.children:
-            output['children'].append(child.output_json())
+            output["children"].append(child.output_json())
 
-        output['counts'] = temp
+        output["counts"] = temp
 
         return output
 
@@ -292,6 +352,7 @@ if __name__ == "__main__":
     #Cobweb3Tree().baseline_guesser("data_files/cobweb3_test.json", 30, 100)
     tree = Cobweb3()
     print(tree.cluster("data_files/cobweb3_test.json", 100, 1))
-    print(tree.output_json())
+    print(json.dumps(tree.output_json()))
+
 
 
