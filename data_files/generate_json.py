@@ -35,7 +35,7 @@ if __name__ == "__main__":
                 if isinstance(tower[name], dict):
                     for v in tower[name]:
                         if isinstance(tower[name][v], float):
-                            tower[name][v] = int(tower[name][v])
+                            #tower[name][v] = int(tower[name][v])
                             if tower[name][v] < 0:
                                 remove.append(name)
             if remove:
