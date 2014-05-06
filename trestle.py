@@ -729,16 +729,18 @@ class Trestle(Cobweb3):
         """
         temp_counts = {}
         for attr in self.av_counts:
-            temp_counts[attr] = {}
             if isinstance(self.av_counts[attr], ContinuousValue):
-                continue
-            for val in self.av_counts[attr]:
-                x = val
-                if val == old:
-                    x = new
-                if x not in temp_counts[attr]:
-                    temp_counts[attr][x] = 0
-                temp_counts[attr][x] += self.av_counts[attr][val] 
+                v = self.av_counts[attr]
+                temp_counts[attr] = ContinuousValue(v.mean, v.std, v.num)
+            else:
+                temp_counts[attr] = {}
+                for val in self.av_counts[attr]:
+                    x = val
+                    if val == old:
+                        x = new
+                    if x not in temp_counts[attr]:
+                        temp_counts[attr][x] = 0
+                    temp_counts[attr][x] += self.av_counts[attr][val] 
 
         self.av_counts = temp_counts
 
@@ -809,6 +811,7 @@ class Trestle(Cobweb3):
         """
         json_data = open(filename, "r")
         instances = json.load(json_data)
+        print("%i Instances." % len(instances))
         shuffle(instances)
         instances = instances[0:length]
         o_instances = copy.deepcopy(instances)
@@ -952,12 +955,8 @@ if __name__ == "__main__":
     #x = Trestle().cluster("data_files/rb_com_11_noCheck.json", 300)
     #x = Trestle().cluster("data_files/rb_wb_03_noCheck_noDuplicates.json", 300)
     tree = Trestle()
-    #x = tree.cluster("data_files/instant-test-processed.json", 100)
-    #pickle.dump(x, open('clustering.pickle', 'wb'))
-
-    tree.ifit({'b1': {'x': 1.5}})
-    tree.ifit({'b1': {'x': 70.0}})
-    print(json.dumps(tree.output_json()))
+    x = tree.cluster("data_files/instant-test-processed.json", 17000)
+    pickle.dump(x, open('clustering.pickle', 'wb'))
 
 
 
