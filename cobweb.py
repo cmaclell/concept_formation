@@ -477,26 +477,26 @@ class Cobweb:
 
         return operations[0]
         
-    #def cobweb_categorize(self, instance, leaf=True):
-    #    """
-    #    Sorts an instance in the categorization tree defined at the current
-    #    node without modifying the counts of the tree.
+    def cobweb_categorize_leaf(self, instance, leaf=True):
+        """
+        Sorts an instance in the categorization tree defined at the current
+        node without modifying the counts of the tree.
 
-    #    This version always goes to a leaf.
-    #    """
-    #    current = self
-    #    while current:
-    #        if not current.children:
-    #            return current
+        This version always goes to a leaf.
+        """
+        current = self
+        while current:
+            if not current.children:
+                return current
 
-    #        
-    #        best1, best2 = current.two_best_children(instance)
+            
+            best1, best2 = current.two_best_children(instance)
 
-    #        if best1:
-    #            best1_cu, best1 = best1
-    #            current = best1
-    #        else:
-    #            return current
+            if best1:
+                best1_cu, best1 = best1
+                current = best1
+            else:
+                return current
 
     def cobweb_categorize(self, instance):
         """

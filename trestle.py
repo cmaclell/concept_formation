@@ -202,11 +202,19 @@ class Trestle(Cobweb3):
             else:
                 temp_instance[attr] = instance[attr]
 
+        # Ensure none of the components got split due to pruning
+        for attr in temp_instance:
+            if isinstance(temp_instance[attr], Trestle):
+                while (temp_instance[attr].parent and temp_instance[attr] not
+                       in temp_instance[attr].parent.children):
+                    temp_instance[attr] = temp_instance[attr].parent
+
         # Ensure all components are leaves
         for attr in temp_instance:
-            if (isinstance(temp_instance[attr], Trestle) and
+            while (isinstance(temp_instance[attr], Trestle) and
                 temp_instance[attr].children):
-                temp_instance[attr] = temp_instance[attr].trestle_categorize(instance[attr])
+                #print("fixing fringe split.")
+                temp_instance[attr] = temp_instance[attr].trestle_categorize_leaf(instance[attr])
 
         # should be able to match just at the root, if the matchings change
         # than the counts between parent and child will be thrown off which is
@@ -217,6 +225,16 @@ class Trestle(Cobweb3):
         ret = self.cobweb(temp_instance)
 
         return ret
+
+    def exists(self, concept):
+        if self == concept:
+            return True
+        
+        for child in self.children:
+            if child.exists(concept):
+                return True
+
+        return False
 
     def rename(self, instance, mapping):
         """
@@ -463,15 +481,15 @@ class Trestle(Cobweb3):
         temp = {}
         for attr in self.av_counts:
             if isinstance(self.av_counts[attr], ContinuousValue):
-                temp[attr + " = " + str(self.av_counts[attr])] = self.av_counts[attr].num
+                temp[attr + " = " + str(self.av_counts[attr])] = (self.av_counts[attr].num / self.count)
             else:
                 for value in self.av_counts[attr]:
                     if isinstance(attr, tuple):
-                        temp["[" + " ".join(attr) + "]"] = self.av_counts[attr][True]
+                        temp["[" + " ".join(attr) + "]"] = (self.av_counts[attr][True] / self.count)
                     elif isinstance(value, Trestle): 
-                        temp[attr + " = " + value.concept_name] = self.av_counts[attr][value]
+                        temp[attr + " = " + value.concept_name] = (self.av_counts[attr][value] / self.count)
                     else:
-                        temp[attr + " = " + str(value)] = self.av_counts[attr][value]
+                        temp[attr + " = " + str(value)] = (self.av_counts[attr][value] / self.count)
 
         for child in self.children:
             output["children"].append(child.output_json())
@@ -479,6 +497,26 @@ class Trestle(Cobweb3):
         output["counts"] = temp
 
         return output
+
+    def trestle_categorize_leaf(self, instance):
+        """
+        This verion of the trestle categorize function always goes to a leaf.
+        """
+        temp_instance = {}
+        for attr in instance:
+            if isinstance(instance[attr], dict):
+                temp_instance[attr] = self.trestle_categorize_leaf(instance[attr])
+            elif isinstance(instance[attr], list):
+                temp_instance[attr] = tuple(instance[attr])
+            else:
+                temp_instance[attr] = instance[attr]
+
+        # should be able to match just at the root, if the matchings change
+        # than the counts between parent and child will be thrown off which is
+        # not allowed to happen so for now don't worry about it.
+        # TODO check if this needs to be changed
+        temp_instance = self.match(temp_instance)
+        return self.cobweb_categorize_leaf(temp_instance)
 
     def trestle_categorize(self, instance):
         """
@@ -488,7 +526,9 @@ class Trestle(Cobweb3):
         temp_instance = {}
         for attr in instance:
             if isinstance(instance[attr], dict):
-                temp_instance[attr] = self.trestle_categorize(instance[attr])
+                # in this case I ensure the leaves go all the way down so they
+                # match against previous cases.
+                temp_instance[attr] = self.trestle_categorize_leaf(instance[attr])
             elif isinstance(instance[attr], list):
                 temp_instance[attr] = tuple(instance[attr])
             else:
@@ -773,8 +813,8 @@ class Trestle(Cobweb3):
 
             # TODO may be a more efficient way to do this, just ensure the
             # pointer stays a leaf in the main cobweb alg. for instance.
-
             self.get_root().replace(self, new)
+
             return new
 
     def split(self, best):
@@ -816,8 +856,8 @@ class Trestle(Cobweb3):
         instances = instances[0:length]
         o_instances = copy.deepcopy(instances)
         for instance in instances:
-            if "success" in instance:
-                del instance['success']
+            #if "success" in instance:
+            #    del instance['success']
             if "guid" in instance:
                 del instance['guid']
         json_data.close()
@@ -850,8 +890,12 @@ class Trestle(Cobweb3):
         for idx, inst in enumerate(o_instances):
             print("categorizing instance: %i" % idx)
             instance = copy.deepcopy(inst)
-            if "success" in instance:
-                del instance['success']
+
+            # we want the KCS for only the correct productions.
+            instance['Outcome'] = 'CORRECT'
+
+            #if "success" in instance:
+            #    del instance['success']
             if "guid" in instance:
                 del instance['guid']
             g_instances[inst['guid']] = instance
@@ -942,6 +986,111 @@ class Trestle(Cobweb3):
 
         return clusters
 
+    def kc_label(self, filename, length):
+        """
+        Used to provide a clustering of a set of examples provided in a JSON
+        file. It starts by incorporating the examples into the categorization
+        tree multiple times. After incorporating the instances it then
+        categorizes each example (without updating the tree) and returns the
+        concept it was assoicated with.
+        """
+        json_data = open(filename, "r")
+        instances = json.load(json_data)
+        print("%i Instances." % len(instances))
+        shuffle(instances)
+        instances = instances[0:length]
+        o_instances = copy.deepcopy(instances)
+        for instance in instances:
+            #if "success" in instance:
+            #    del instance['success']
+            if "guid" in instance:
+                del instance['guid']
+        json_data.close()
+        clusters = {}
+        previous = {}
+        g_instances = {}
+
+        for i in instances:
+            previous[self.flatten_instance(i)] = None
+
+        # train initially
+        for x in range(1):
+            shuffle(instances)
+            for n, i in enumerate(instances):
+                print("training instance: " + str(n))
+                self.ifit(i)
+
+        #add categorize for adding guids
+        mapping = {}
+        for idx, inst in enumerate(o_instances):
+            print("categorizing instance: %i" % idx)
+            instance = copy.deepcopy(inst)
+
+            # we want the KCS for only the correct productions.
+            instance['Outcome'] = 'CORRECT'
+            del instance['action']
+            del instance['destination']
+            del instance['r1']
+            del instance['r2']
+
+            #if "success" in instance:
+            #    del instance['success']
+            if "guid" in instance:
+                del instance['guid']
+            g_instances[inst['guid']] = instance
+
+            mapping[inst['guid']] = self.trestle_categorize_leaf(instance)
+
+        # add guids
+        for g in mapping:
+            curr = mapping[g]
+            while curr:
+                curr.av_counts['has-guid'] = {"1":True}
+                if 'guid' not in curr.av_counts:
+                    curr.av_counts['guid'] = {}
+                curr.av_counts['guid'][g] = True
+                curr = curr.parent
+        
+        for g in mapping:
+            cluster = mapping[g]
+            if cluster.parent:
+                cluster = cluster.parent
+            clusters[g] = cluster.concept_name
+
+        with open('visualize/output.json', 'w') as f:
+            f.write(json.dumps(self.output_json()))
+
+        # Output data for datashop KC labeling
+        guidKcs = []
+        for g in mapping:
+            kcs = []
+            temp = mapping[g]
+            kcs.append(temp.concept_name)
+            while temp.parent:
+                temp = temp.parent
+                kcs.append(temp.concept_name)
+            kcs.append(g) 
+            kcs.reverse()
+            guidKcs.append(kcs)
+
+        with open('kc-labels.csv', 'w') as f:
+            max_len = 0
+            for kc in guidKcs:
+                if len(kc) > max_len:
+                    max_len = len(kc)
+
+            output = []
+            for kc in guidKcs:
+                for i in range(max_len - len(kc)):
+                    kc.append(kc[-1])
+                output.append(",".join(kc))
+
+            f.write("\n".join(output))
+
+        #print(json.dumps(self.output_json()))
+
+        return clusters
+
 if __name__ == "__main__":
 
     ## Prediction
@@ -955,7 +1104,7 @@ if __name__ == "__main__":
     #x = Trestle().cluster("data_files/rb_com_11_noCheck.json", 300)
     #x = Trestle().cluster("data_files/rb_wb_03_noCheck_noDuplicates.json", 300)
     tree = Trestle()
-    x = tree.cluster("data_files/instant-test-processed.json", 17000)
+    x = tree.cluster("data_files/instant-test-processed2.json", 7000)
     pickle.dump(x, open('clustering.pickle', 'wb'))
 
 

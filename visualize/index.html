@@ -107,10 +107,11 @@ d3.json("output.json", function(data) {
       .attr("text-anchor", "middle")
       //.style("opacity", function(d) { return (d.r > 100 && d.r < 200) ? 1 : 0; })
       .text(function(d) { 
+            //return d.name;
             guid = "";
             if (d.counts['has-guid = 1']){
-                console.log(d.counts)
-                guid = "X"
+                console.log(d.counts);
+                guid = "X";
             }
             if (!d.children && d.counts['success = 1'] > 0 && 
                   !d.counts['success = 0']){
