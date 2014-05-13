@@ -61,6 +61,7 @@ if __name__ == "__main__":
                 tower['r2'] = ["parameter2", "action", "inventory"]
             else:
                 tower['destination'] = {}
+                tower['destination']['type'] = action['to']['type']
                 tower['destination']['x'] = action['to']['x']
                 tower['destination']['y'] = action['to']['y']
                 tower['destination']['rotation'] = action['to']['rotation']
