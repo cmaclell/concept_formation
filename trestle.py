@@ -529,8 +529,6 @@ class Trestle(Cobweb3):
         The Trestle categorize function, this Trestle categorizes all the
         sub-components before categorizing itself.
         """
-        print("currently not sure if this works without categorizing to a leaf")
-        assert False
         temp_instance = {}
         for attr in instance:
             if isinstance(instance[attr], dict):
@@ -1088,6 +1086,8 @@ class Trestle(Cobweb3):
         for idx, inst in enumerate(o_instances):
             print("categorizing instance: %i" % idx)
             instance = copy.deepcopy(inst)
+            
+            #print(instance)
 
             # we want the KCS for only the correct productions.
             instance['Outcome'] = 'CORRECT'
@@ -1103,7 +1103,11 @@ class Trestle(Cobweb3):
                 del instance['guid']
             g_instances[inst['guid']] = instance
 
-            mapping[inst['guid']] = self.trestle_categorize_leaf(instance)
+            print(instance)
+            
+            #print()
+            mapping[inst['guid']] = self.trestle_categorize(instance)
+            print(mapping[inst['guid']].concept_name)
 
         # add guids
         for g in mapping:
@@ -1168,7 +1172,7 @@ if __name__ == "__main__":
     #x = Trestle().cluster("data_files/rb_com_11_noCheck.json", 300)
     #x = Trestle().cluster("data_files/rb_wb_03_noCheck_noDuplicates.json", 300)
     tree = Trestle()
-    x = tree.kc_label("data_files/instant-test-processed2.json", 7000)
+    x = tree.kc_label("data_files/instant-test-processed2.json", 100)
     pickle.dump(x, open('clustering.pickle', 'wb'))
 
 

@@ -53,7 +53,10 @@ if __name__ == "__main__":
             tower['action'] = action['action']
 
             if action['from'] == 'Inventory':
-                tower['r1'] = ["parameter1", "action", "inventory"]
+                block = "".join([i for i in row[key['ActionSel']] if not
+                                 i.isdigit()])
+                tower['r1'] = ["parameter1", "action", "inventory-" + block]
+
             else:
                 tower['r1'] = ['parameter1', 'action', row[key['ActionSel']]]
             
@@ -61,7 +64,7 @@ if __name__ == "__main__":
                 tower['r2'] = ["parameter2", "action", "inventory"]
             else:
                 tower['destination'] = {}
-                tower['destination']['type'] = action['to']['type']
+                #tower['destination']['type'] = action['to']['type']
                 tower['destination']['x'] = action['to']['x']
                 tower['destination']['y'] = action['to']['y']
                 tower['destination']['rotation'] = action['to']['rotation']
