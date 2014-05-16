@@ -1085,6 +1085,12 @@ class Trestle(Cobweb3):
         mapping = {}
         for idx, inst in enumerate(o_instances):
             print("categorizing instance: %i" % idx)
+
+            if inst['guid'] in mapping:
+                # ignore duplicate states.
+                print("skipping duplicate guid")
+                continue
+
             instance = copy.deepcopy(inst)
             
             #print(instance)
@@ -1103,11 +1109,11 @@ class Trestle(Cobweb3):
                 del instance['guid']
             g_instances[inst['guid']] = instance
 
-            print(instance)
+            #print(instance)
             
             #print()
             mapping[inst['guid']] = self.trestle_categorize(instance)
-            print(mapping[inst['guid']].concept_name)
+            #print(mapping[inst['guid']].concept_name)
 
         # add guids
         for g in mapping:
@@ -1172,7 +1178,7 @@ if __name__ == "__main__":
     #x = Trestle().cluster("data_files/rb_com_11_noCheck.json", 300)
     #x = Trestle().cluster("data_files/rb_wb_03_noCheck_noDuplicates.json", 300)
     tree = Trestle()
-    x = tree.kc_label("data_files/instant-test-processed2.json", 100)
+    x = tree.kc_label("data_files/instant-test-processed2.json", 17000)
     pickle.dump(x, open('clustering.pickle', 'wb'))
 
 

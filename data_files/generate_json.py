@@ -25,7 +25,8 @@ def approx_match(b1, b2):
 
 if __name__ == "__main__":
 
-    towers = {}
+    #towers = {}
+    towers = []
     file_name = '40-student-datashop-no-endstate.txt'
     with open(file_name, newline='') as csvfile:
         reader = csv.reader(csvfile, delimiter='\t')
@@ -85,11 +86,12 @@ if __name__ == "__main__":
                 for name in remove:
                     del tower[name]
 
-            towers[row[key['Step Name']]] = tower
+            towers.append(tower)
+            #towers[row[key['Step Name']]] = tower
             
         print("Removed %i blocks." % removal_count)
 
-    towers = [towers[s] for s in towers]
+    #towers = [towers[s] for s in towers]
 
     with open('instant-test-processed2.json', 'w') as f:
         f.write(json.dumps(towers))
