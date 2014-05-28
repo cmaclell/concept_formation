@@ -1,5 +1,6 @@
 import csv
 import json
+import copy
 
 def approx_match(b1, b2):
     if 'x' not in b1 or 'x' not in b2:
@@ -25,8 +26,9 @@ def approx_match(b1, b2):
 
 if __name__ == "__main__":
 
-    #towers = {}
-    towers = []
+    towers = {}
+    tower_actions = {}
+    #towers = []
     file_name = '40-student-datashop-no-endstate.txt'
     with open(file_name, newline='') as csvfile:
         reader = csv.reader(csvfile, delimiter='\t')
@@ -51,25 +53,35 @@ if __name__ == "__main__":
             #else:
             #    del tower['UFO']
             action = json.loads(row[key['Input']])
-            tower['action'] = action['action']
+            action_relation = []
+            action_relation.append(action['action'])
+
+            #tower['action'] = action['action']
 
             if action['from'] == 'Inventory':
                 block = "".join([i for i in row[key['ActionSel']] if not
                                  i.isdigit()])
-                tower['r1'] = ["parameter1", "action", "inventory-" + block]
+                action_relation.append("inventory-" + block)
+                #tower['r1'] = ["parameter1", "action", "inventory-" + block]
 
             else:
-                tower['r1'] = ['parameter1', 'action', row[key['ActionSel']]]
+                #tower['r1'] = ['parameter1', 'action', row[key['ActionSel']]]
+                action_relation.append(row[key['ActionSel']])
             
             if action['to'] == 'Inventory':
-                tower['r2'] = ["parameter2", "action", "inventory"]
+                block = "".join([i for i in row[key['ActionSel']] if not
+                                 i.isdigit()])
+                action_relation.append("inventory-" + block)
+                #tower['r2'] = ["parameter2", "action", "inventory"]
             else:
                 tower['destination'] = {}
-                #tower['destination']['type'] = action['to']['type']
+                tower['destination']['type'] = action['to']['type']
                 tower['destination']['x'] = action['to']['x']
                 tower['destination']['y'] = action['to']['y']
                 tower['destination']['rotation'] = action['to']['rotation']
-                tower['r2'] = ['parameter2', 'action', 'destination']
+                action_relation.append('destination')
+
+                #tower['r2'] = ['parameter2', 'action', 'destination']
 
             remove = []
 
@@ -86,15 +98,29 @@ if __name__ == "__main__":
                 for name in remove:
                     del tower[name]
 
-            towers.append(tower)
+            tower['action'] = action_relation
+            if tower['guid'] not in tower_actions:
+                tower_actions[tower['guid']] = set()
+            tower_actions[tower['guid']].add(tuple(action_relation))
+
+            towers[tower['guid']] = tower
+            #towers.append(tower)
             #towers[row[key['Step Name']]] = tower
             
         print("Removed %i blocks." % removal_count)
 
     #towers = [towers[s] for s in towers]
 
+    tower_action_pairs = []
+    for guid in tower_actions:
+        for action in tower_actions[guid]:
+            tower = copy.deepcopy(towers[guid])
+            tower['action']
+            tower_action_pairs.append(tower)
+
+
     with open('instant-test-processed2.json', 'w') as f:
-        f.write(json.dumps(towers))
+        f.write(json.dumps(tower_action_pairs))
     
 
 

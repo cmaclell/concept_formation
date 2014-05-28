@@ -902,150 +902,150 @@ class Trestle(Cobweb3):
             assert c.parent == self
             c.verify_parent_pointers()
 
-    #def cluster(self, filename, length):
-    #    """
-    #    Used to provide a clustering of a set of examples provided in a JSON
-    #    file. It starts by incorporating the examples into the categorization
-    #    tree multiple times. After incorporating the instances it then
-    #    categorizes each example (without updating the tree) and returns the
-    #    concept it was assoicated with.
-    #    """
-    #    json_data = open(filename, "r")
-    #    instances = json.load(json_data)
-    #    print("%i Instances." % len(instances))
-    #    shuffle(instances)
-    #    instances = instances[0:length]
-    #    o_instances = copy.deepcopy(instances)
-    #    for instance in instances:
-    #        #if "success" in instance:
-    #        #    del instance['success']
-    #        if "guid" in instance:
-    #            del instance['guid']
-    #    json_data.close()
-    #    clusters = {}
-    #    previous = {}
-    #    g_instances = {}
+    def cluster(self, filename, length):
+        """
+        Used to provide a clustering of a set of examples provided in a JSON
+        file. It starts by incorporating the examples into the categorization
+        tree multiple times. After incorporating the instances it then
+        categorizes each example (without updating the tree) and returns the
+        concept it was assoicated with.
+        """
+        json_data = open(filename, "r")
+        instances = json.load(json_data)
+        print("%i Instances." % len(instances))
+        shuffle(instances)
+        instances = instances[0:length]
+        o_instances = copy.deepcopy(instances)
+        for instance in instances:
+            #if "success" in instance:
+            #    del instance['success']
+            if "guid" in instance:
+                del instance['guid']
+        json_data.close()
+        clusters = {}
+        previous = {}
+        g_instances = {}
 
-    #    for i in instances:
-    #        previous[self.flatten_instance(i)] = None
+        for i in instances:
+            previous[self.flatten_instance(i)] = None
 
-    #    # train initially
-    #    for x in range(1):
-    #        shuffle(instances)
-    #        for n, i in enumerate(instances):
-    #            print("training instance: " + str(n))
-    #            self.ifit(i)
+        # train initially
+        for x in range(1):
+            shuffle(instances)
+            for n, i in enumerate(instances):
+                print("training instance: " + str(n))
+                self.ifit(i)
 
-    #    #TODO for debugging
-    #    #self.verify_counts()
-    #    #self.verify_component_values()
+        #TODO for debugging
+        #self.verify_counts()
+        #self.verify_component_values()
 
-    #    # dont need to add guids back
-    #    #with open('visualize/output.json', 'w') as f:
-    #    #    f.write(json.dumps(self.output_json()))
+        # dont need to add guids back
+        #with open('visualize/output.json', 'w') as f:
+        #    f.write(json.dumps(self.output_json()))
 
-    #    #return clusters
+        #return clusters
 
-    #    #add categorize for adding guids
-    #    mapping = {}
-    #    for idx, inst in enumerate(o_instances):
-    #        print("categorizing instance: %i" % idx)
-    #        instance = copy.deepcopy(inst)
+        #add categorize for adding guids
+        mapping = {}
+        for idx, inst in enumerate(o_instances):
+            print("categorizing instance: %i" % idx)
+            instance = copy.deepcopy(inst)
 
-    #        # we want the KCS for only the correct productions.
-    #        instance['Outcome'] = 'CORRECT'
+            # we want the KCS for only the correct productions.
+            instance['Outcome'] = 'CORRECT'
 
-    #        #if "success" in instance:
-    #        #    del instance['success']
-    #        if "guid" in instance:
-    #            del instance['guid']
-    #        g_instances[inst['guid']] = instance
+            #if "success" in instance:
+            #    del instance['success']
+            if "guid" in instance:
+                del instance['guid']
+            g_instances[inst['guid']] = instance
 
-    #        mapping[inst['guid']] = self.trestle_categorize_leaf(instance)
+            mapping[inst['guid']] = self.trestle_categorize_leaf(instance)
 
-    #    # add guids
-    #    for g in mapping:
-    #        curr = mapping[g]
-    #        while curr:
-    #            curr.av_counts['has-guid'] = {"1":True}
-    #            if 'guid' not in curr.av_counts:
-    #                curr.av_counts['guid'] = {}
-    #            curr.av_counts['guid'][g] = True
-    #            curr = curr.parent
-    #    
-    #    #for i in range(3):
-    #    #    # get ordering
-    #    #    guid_order = self.order_towers()
-    #    #    self = self.__class__()
+        # add guids
+        for g in mapping:
+            curr = mapping[g]
+            while curr:
+                curr.av_counts['has-guid'] = {"1":True}
+                if 'guid' not in curr.av_counts:
+                    curr.av_counts['guid'] = {}
+                curr.av_counts['guid'][g] = True
+                curr = curr.parent
+        
+        #for i in range(3):
+        #    # get ordering
+        #    guid_order = self.order_towers()
+        #    self = self.__class__()
 
-    #    #    # second time sorting
-    #    #    count = 0
-    #    #    for guid in guid_order:
-    #    #        count += 1
-    #    #        print("training instance: " + str(count))
-    #    #        self.ifit(g_instances[guid])
+        #    # second time sorting
+        #    count = 0
+        #    for guid in guid_order:
+        #        count += 1
+        #        print("training instance: " + str(count))
+        #        self.ifit(g_instances[guid])
 
-    #    #    # add categorize for adding guids
-    #    #    mapping = {}
-    #    #    for idx, inst in enumerate(o_instances):
-    #    #        print("categorizing instance: %i" % idx)
-    #    #        instance = copy.deepcopy(inst)
-    #    #        if "success" in instance:
-    #    #            del instance['success']
-    #    #        if "guid" in instance:
-    #    #            del instance['guid']
+        #    # add categorize for adding guids
+        #    mapping = {}
+        #    for idx, inst in enumerate(o_instances):
+        #        print("categorizing instance: %i" % idx)
+        #        instance = copy.deepcopy(inst)
+        #        if "success" in instance:
+        #            del instance['success']
+        #        if "guid" in instance:
+        #            del instance['guid']
 
-    #    #        mapping[inst['guid']] = self.trestle_categorize(instance)
+        #        mapping[inst['guid']] = self.trestle_categorize(instance)
 
-    #    #    # add guids
-    #    #    for g in mapping:
-    #    #        curr = mapping[g]
-    #    #        while curr:
-    #    #            curr.av_counts['has-guid'] = {"1":True}
-    #    #            if 'guid' not in curr.av_counts:
-    #    #                curr.av_counts['guid'] = {}
-    #    #            curr.av_counts['guid'][g] = True
-    #    #            curr = curr.parent
-    #    
-    #    for g in mapping:
-    #        cluster = mapping[g]
-    #        if cluster.parent:
-    #            cluster = cluster.parent
-    #        clusters[g] = cluster.concept_name
+        #    # add guids
+        #    for g in mapping:
+        #        curr = mapping[g]
+        #        while curr:
+        #            curr.av_counts['has-guid'] = {"1":True}
+        #            if 'guid' not in curr.av_counts:
+        #                curr.av_counts['guid'] = {}
+        #            curr.av_counts['guid'][g] = True
+        #            curr = curr.parent
+        
+        for g in mapping:
+            cluster = mapping[g]
+            if cluster.parent:
+                cluster = cluster.parent
+            clusters[g] = cluster.concept_name
 
-    #    with open('visualize/output.json', 'w') as f:
-    #        f.write(json.dumps(self.output_json()))
+        with open('visualize/output.json', 'w') as f:
+            f.write(json.dumps(self.output_json()))
 
-    #    # Output data for datashop KC labeling
-    #    guidKcs = []
-    #    for g in mapping:
-    #        kcs = []
-    #        temp = mapping[g]
-    #        kcs.append(temp.concept_name)
-    #        while temp.parent:
-    #            temp = temp.parent
-    #            kcs.append(temp.concept_name)
-    #        kcs.append(g) 
-    #        kcs.reverse()
-    #        guidKcs.append(kcs)
+        # Output data for datashop KC labeling
+        guidKcs = []
+        for g in mapping:
+            kcs = []
+            temp = mapping[g]
+            kcs.append(temp.concept_name)
+            while temp.parent:
+                temp = temp.parent
+                kcs.append(temp.concept_name)
+            kcs.append(g) 
+            kcs.reverse()
+            guidKcs.append(kcs)
 
-    #    with open('kc-labels.csv', 'w') as f:
-    #        max_len = 0
-    #        for kc in guidKcs:
-    #            if len(kc) > max_len:
-    #                max_len = len(kc)
+        with open('kc-labels.csv', 'w') as f:
+            max_len = 0
+            for kc in guidKcs:
+                if len(kc) > max_len:
+                    max_len = len(kc)
 
-    #        output = []
-    #        for kc in guidKcs:
-    #            for i in range(max_len - len(kc)):
-    #                kc.append(kc[-1])
-    #            output.append(",".join(kc))
+            output = []
+            for kc in guidKcs:
+                for i in range(max_len - len(kc)):
+                    kc.append(kc[-1])
+                output.append(",".join(kc))
 
-    #        f.write("\n".join(output))
+            f.write("\n".join(output))
 
-    #    #print(json.dumps(self.output_json()))
+        #print(json.dumps(self.output_json()))
 
-    #    return clusters
+        return clusters
 
     def kc_label(self, filename, length):
         """
@@ -1081,7 +1081,7 @@ class Trestle(Cobweb3):
                 print("training instance: " + str(n))
                 self.ifit(i)
 
-        #add categorize for adding guids
+        # categorize to add guids
         mapping = {}
         for idx, inst in enumerate(o_instances):
             print("categorizing instance: %i" % idx)
@@ -1097,11 +1097,14 @@ class Trestle(Cobweb3):
 
             # we want the KCS for only the correct productions.
             instance['Outcome'] = 'CORRECT'
-            del instance['action']
-            if 'destination' in instance:
-                del instance['destination']
-            del instance['r1']
-            del instance['r2']
+            # for now just make the action correct, but leave the action.. so
+            # closest action that is correct.
+            #del instance['action']
+            #if 'destination' in instance:
+            #    del instance['destination']
+
+            #del instance['r1']
+            #del instance['r2']
 
             #if "success" in instance:
             #    del instance['success']
@@ -1178,7 +1181,7 @@ if __name__ == "__main__":
     #x = Trestle().cluster("data_files/rb_com_11_noCheck.json", 300)
     #x = Trestle().cluster("data_files/rb_wb_03_noCheck_noDuplicates.json", 300)
     tree = Trestle()
-    x = tree.kc_label("data_files/instant-test-processed2.json", 17000)
+    x = tree.kc_label("data_files/instant-test-processed2.json", 9000)
     pickle.dump(x, open('clustering.pickle', 'wb'))
 
 
