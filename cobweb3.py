@@ -75,6 +75,7 @@ class ContinuousValue():
         # rounding correction due to summing small squares
         # this value was computed empirically with 1000 samples on 4/6/14
         # -Maclellan
+        # TODO I'm not sure if this is a valid thing to do.
         uc_std = uc_std / 1.0112143858578193
 
         return uc_std / c4n
@@ -117,6 +118,54 @@ class Cobweb3(Cobweb):
                  0.9891926749585048, 25: 0.9896403755857028, 26:
                  0.9900524688409107, 27: 0.990433039209448, 28:
                  0.9907855696217323, 29: 0.9911130482419843}
+
+    def verify_counts(self):
+        """
+        Checks the property that the counts of the children sum to the same
+        count as the parent. This is/was useful when debugging. If you are
+        doing some kind of matching at each step in the categorization (i.e.,
+        renaming such as with Labyrinth) then this will start throwing errors.
+        """
+        if len(self.children) == 0:
+            return 
+
+        temp = {}
+        temp_count = self.count
+        for attr in self.av_counts:
+            if isinstance(self.av_counts[attr], ContinuousValue):
+                temp[attr] = self.av_counts[attr].num
+            else:
+                if attr not in temp:
+                    temp[attr] = {}
+                for val in self.av_counts[attr]:
+                    temp[attr][val] = self.av_counts[attr][val]
+
+        for child in self.children:
+            temp_count -= child.count
+            for attr in child.av_counts:
+                assert attr in temp
+                if isinstance(child.av_counts[attr], ContinuousValue):
+                    temp[attr] -= child.av_counts[attr].num
+                else:
+                    for val in child.av_counts[attr]:
+                        if val not in temp[attr]:
+                            print(val.concept_name)
+                            print(attr)
+                            print(self)
+                        assert val in temp[attr]
+                        temp[attr][val] -= child.av_counts[attr][val]
+
+        assert temp_count == 0
+
+        for attr in temp:
+            if isinstance(temp[attr], int):
+                assert temp[attr] == 0.0
+            else:
+                for val in temp[attr]:
+                    assert temp[attr][val] == 0.0
+
+        for child in self.children:
+            child.verify_counts()
 
     def increment_counts(self, instance):
         """
@@ -215,7 +264,12 @@ class Cobweb3(Cobweb):
                 std = self.av_counts[attr].std
                 if std < self.acuity:
                     std = self.acuity
-                correct_guesses += (1.0 / (2.0 * math.sqrt(math.pi) * std))
+                # this is implicit in the nominal case, but here it must be
+                # computed explicitly in addition to the std based cu calc. 
+                # -CM
+                prob_attr = ((1.0 * self.av_counts[attr].num) / self.count)
+                correct_guesses += ((prob_attr * prob_attr) * 
+                                    (1.0 / (2.0 * math.sqrt(math.pi) * std)))
             else:
                 for val in self.av_counts[attr]:
                     prob = ((1.0 * self.av_counts[attr][val]) / self.count)
@@ -232,13 +286,19 @@ class Cobweb3(Cobweb):
         attributes = []
 
         for attr in self.av_counts:
-            values = []
+            if isinstance(self.av_counts[attr], ContinuousValue):
+                attributes.append("'%s': { %0.3f (%0.3f) [%i] }" % (attr,
+                                                                    self.av_counts[attr].mean,
+                                                                    self.av_counts[attr].std,
+                                                                    self.av_counts[attr].num))
+            else:
+                values = []
 
-            for val in self.av_counts[attr]:
-                values.append("'" + str(val) + "': " +
-                              str(self.av_counts[attr][val]))
+                for val in self.av_counts[attr]:
+                    values.append("'" + str(val) + "': " +
+                                  str(self.av_counts[attr][val]))
 
-            attributes.append("'" + attr + "': {" + ", ".join(values) + "}")
+                attributes.append("'" + attr + "': {" + ", ".join(values) + "}")
                   
         ret += "{" + ", ".join(attributes) + "}: " + str(self.count) + '\n'
         
