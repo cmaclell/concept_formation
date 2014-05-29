@@ -898,7 +898,7 @@ class Trestle(Cobweb3):
         for c in self.children:
             c.verify_component_values()
 
-    def cluster(self, instances, depth=2):
+    def cluster(self, instances, depth=1):
         """
         Used to provide a clustering of a set of examples provided in a JSON
         file. It starts by incorporating the examples into the categorization
@@ -917,8 +917,19 @@ class Trestle(Cobweb3):
             while (isinstance(c, Trestle) and c.children):
                 c = c.trestle_categorize_leaf(instances[i])
 
-            while c and c.parent and c.parent.parent:
-                c = c.parent
+            promote = True
+            while c.parent and promote:
+
+                promote = True
+                n = c
+                for i in range(depth+2):
+                    if not n:
+                        promote = False
+                        break
+                    n = n.parent
+
+                if promote:
+                    c = c.parent
 
             clusters.append(c.concept_name)
 
@@ -1119,6 +1130,8 @@ def noise_experiments():
                     noisy.append(temp)
 
                 clusters = tree.cluster(noisy)
+                print(set(clusters))
+                return
 
                 ari.append(metrics.adjusted_rand_score(labels_true, clusters))
 
@@ -1129,11 +1142,17 @@ def noise_experiments():
 
 if __name__ == "__main__":
 
+    noise_experiments()
 
     # KC labeling
     tree = Trestle()
-    x = tree.kc_label("data_files/instant-test-processed2.json", 20)
-    pickle.dump(x, open('clustering.pickle', 'wb'))
+
+    json_data = open('data_files/instant-test-processed2.json', "r")
+    instances = json.load(json_data)
+    print(set(tree.cluster(instances[:20])))
+
+    #x = tree.kc_label("data_files/instant-test-processed2.json", 20)
+    #pickle.dump(x, open('clustering.pickle', 'wb'))
 
 
 
