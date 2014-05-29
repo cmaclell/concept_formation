@@ -900,13 +900,11 @@ class Trestle(Cobweb3):
 
     def cluster(self, instances, depth=1):
         """
-        Used to provide a clustering of a set of examples provided in a JSON
-        file. It starts by incorporating the examples into the categorization
-        tree multiple times. After incorporating the instances it then
-        categorizes each example (without updating the tree) and returns the
-        concept it was assoicated with.
+        Used to cluster examples incrementally and return the cluster labels.
+        The final cluster labels are at a depth of 'depth' from the root. This
+        defaults to 1, which takes the first split, but it might need to be 2
+        or greater in cases where more distinction is needed.
         """
-        #print("%i Instances." % len(instances))
 
         temp_clusters = [self.ifit(instance) for instance in instances]
 
@@ -1130,8 +1128,6 @@ def noise_experiments():
                     noisy.append(temp)
 
                 clusters = tree.cluster(noisy)
-                print(set(clusters))
-                return
 
                 ari.append(metrics.adjusted_rand_score(labels_true, clusters))
 
@@ -1142,14 +1138,12 @@ def noise_experiments():
 
 if __name__ == "__main__":
 
-    noise_experiments()
-
     # KC labeling
     tree = Trestle()
 
-    json_data = open('data_files/instant-test-processed2.json', "r")
-    instances = json.load(json_data)
-    print(set(tree.cluster(instances[:20])))
+    with open('data_files/rb_com_11_noCheck.json', "r") as json_data:
+        instances = json.load(json_data)
+    print(set(tree.cluster(instances, 3)))
 
     #x = tree.kc_label("data_files/instant-test-processed2.json", 20)
     #pickle.dump(x, open('clustering.pickle', 'wb'))
