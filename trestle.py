@@ -190,7 +190,7 @@ class Trestle(Cobweb3):
             ancestor = ancestor.parent
         return ancestor
 
-    def Trestle(self, instance):
+    def trestle(self, instance):
         """
         Recursively calls Trestle on all of the components in a depth-first
         traversal. Once all of the components have been classified then then it
@@ -202,7 +202,7 @@ class Trestle(Cobweb3):
         for attr in attributes:
         #for attr in instance:
             if isinstance(instance[attr], dict):
-                temp_instance[attr] = self.Trestle(instance[attr])
+                temp_instance[attr] = self.trestle(instance[attr])
 
             elif isinstance(instance[attr], list):
                 temp_instance[tuple(instance[attr])] = True
@@ -552,7 +552,7 @@ class Trestle(Cobweb3):
         """
         A modification of ifit to call Trestle instead.
         """
-        return self.Trestle(instance)
+        return self.trestle(instance)
 
     def pretty_print(self, depth=0):
         """
