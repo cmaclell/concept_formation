@@ -52,6 +52,37 @@ def substructure(s1, s2, ufo=False):
 def stateMatch(s1, s2):
     return substructure(s1, s2, True) and substructure(s2, s1, True)
 
+def actionMatch(a1, a2):
+    if a1['from'] == "Inventory" and a2['from'] != "Inventory":
+        return False
+    if a2['from'] == "Inventory" and a1['from'] != "Inventory":
+        return False
+
+    if a1['action'] != a2['action']:
+        return False
+
+    if isinstance(a1['from'], dict) and isinstance(a2['from'], dict):
+        if a1['from']['type'] != a2['from']['type']:
+            return False
+        if abs(a1['from']['x'] - a2['from']['x']) >= 0.5:
+            return False
+        if abs(a1['from']['y'] - a2['from']['y']) >= 0.5:
+            return False
+        if abs(a1['from']['rotation'] - a2['from']['rotation']) >= 10:
+            return False
+
+    if isinstance(a1['to'], dict) and isinstance(a2['to'], dict):
+        if a1['to']['type'] != a2['to']['type']:
+            return False
+        if abs(a1['to']['x'] - a2['to']['x']) >= 0.5:
+            return False
+        if abs(a1['to']['y'] - a2['to']['y']) >= 0.5:
+            return False
+        if abs(a1['to']['rotation'] - a2['to']['rotation']) >= 10:
+            return False
+
+    return True
+
 if __name__ == "__main__":
 
     endStates = {}
@@ -63,8 +94,7 @@ if __name__ == "__main__":
 
     with open(output_intermediate, 'w') as outputfile:
         writer = csv.writer(outputfile, delimiter='\t')
-        file_name = input_file
-        with open(file_name, newline='') as csvfile:
+        with open(input_file, newline='') as csvfile:
             reader = csv.reader(csvfile, delimiter='\t')
             previous = None
             key = {}
@@ -85,14 +115,15 @@ if __name__ == "__main__":
                     state = json.loads(previous[key['Selection']])
                     action = json.loads(previous[key['Input']])
                     #print(state)
-                    #print(update(state, action['from'], action['to']))
+                        #print(update(state, action['from'], action['to']))
                     newState = update(state, action['from'], action['to'])
                     if row[key['Outcome']] == "CORRECT":
                         endStates[row[key['Problem Name']]].append((newState,
                                                                     row[key['Outcome']]))
                     row[key['Selection']] = json.dumps(newState)
 
-                allStates[row[key['Problem Name']]].append(json.loads(row[key['Selection']]))
+                if row[key['Input']]:
+                    allStates[row[key['Problem Name']]].append((json.loads(row[key['Selection']]), json.loads(row[key['Input']])))
                 writer.writerow(row)
                 previous = row
 
@@ -100,8 +131,7 @@ if __name__ == "__main__":
     previous = None
     with open(output_final, 'w') as outputfile:
         writer = csv.writer(outputfile, delimiter='\t')
-        file_name = output_intermediate
-        with open(file_name, newline='') as csvfile:
+        with open(output_intermediate, newline='') as csvfile:
             reader = csv.reader(csvfile, delimiter='\t')
             previous = None
             key = {}
@@ -118,10 +148,21 @@ if __name__ == "__main__":
                     continue
 
                 row[key['Step Name']] = "UNKNOWN"
-                for i,s in enumerate(allStates[row[key['Problem Name']]]):
-                    if stateMatch(s, json.loads(row[key['Selection']])):
-                        row[key['Step Name']] = row[key['Problem Name']] + "_s" + str(i)
-                        break
+                if row[key['Input']]:
+                    for i,s in enumerate(allStates[row[key['Problem Name']]]):
+                        state, action = s
+                        #print(action)
+                        if (stateMatch(state,
+                                       json.loads(row[key['Selection']]))):
+                            if (actionMatch(action, json.loads(row[key['Input']]))):
+                                row[key['Step Name']] = row[key['Problem Name']] + "_s" + str(i)
+                                break
+                            else:
+                                pass
+                                #print("----begin----")
+                                #print(action)
+                                #print(json.loads(row[key['Input']]))
+                                #print("----end----")
 
                 if previous:
                     if previous[key['Action']] != "End_State":
@@ -133,10 +174,11 @@ if __name__ == "__main__":
                                 print(o)
                                 break
 
-                    writer.writerow(previous)
+                        writer.writerow(previous)
 
                 previous = row
 
             #the last guy...
-            writer.writerow(previous)
+            if previous[key['Action']] != "End_State":
+                writer.writerow(previous)
 

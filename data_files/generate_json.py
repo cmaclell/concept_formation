@@ -29,7 +29,7 @@ if __name__ == "__main__":
     towers = {}
     tower_actions = {}
     #towers = []
-    file_name = '40-student-datashop-no-endstate.txt'
+    file_name = 'instant-test-processed.txt'
     with open(file_name, newline='') as csvfile:
         reader = csv.reader(csvfile, delimiter='\t')
         previous = None
@@ -119,7 +119,7 @@ if __name__ == "__main__":
             tower_action_pairs.append(tower)
 
 
-    with open('instant-test-processed2.json', 'w') as f:
+    with open('instant-test-processed.json', 'w') as f:
         f.write(json.dumps(tower_action_pairs))
     
 
