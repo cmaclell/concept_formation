@@ -1141,12 +1141,12 @@ if __name__ == "__main__":
     # KC labeling
     tree = Trestle()
 
-    with open('data_files/rb_com_11_noCheck.json', "r") as json_data:
-        instances = json.load(json_data)
-    print(set(tree.cluster(instances, 3)))
+    #with open('data_files/rb_com_11_noCheck.json', "r") as json_data:
+    #    instances = json.load(json_data)
+    #print(set(tree.cluster(instances, 3)))
 
-    #x = tree.kc_label("data_files/instant-test-processed2.json", 20)
-    #pickle.dump(x, open('clustering.pickle', 'wb'))
+    labels = tree.kc_label("data_files/instant-test-processed.json", 16000)
+    pickle.dump(labels, open('clustering.pickle', 'wb'))
 
 
 

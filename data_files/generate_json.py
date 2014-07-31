@@ -59,18 +59,26 @@ if __name__ == "__main__":
             #tower['action'] = action['action']
 
             if action['from'] == 'Inventory':
-                block = "".join([i for i in row[key['ActionSel']] if not
-                                 i.isdigit()])
+                block = action['to']['type']
+                #block = "".join([i for i in row[key['ActionSel']] if not
+                #                 i.isdigit()])
                 action_relation.append("inventory-" + block)
                 #tower['r1'] = ["parameter1", "action", "inventory-" + block]
 
             else:
+                #TODO do matching to get the correct name from the state!
+                for b in tower:
+                    if approx_match(tower[b], action['from']):
+                        block = b
+                action_relation.append(block)
+
                 #tower['r1'] = ['parameter1', 'action', row[key['ActionSel']]]
-                action_relation.append(row[key['ActionSel']])
+                #action_relation.append(row[key['ActionSel']])
             
             if action['to'] == 'Inventory':
-                block = "".join([i for i in row[key['ActionSel']] if not
-                                 i.isdigit()])
+                block = action['from']['type']
+                #block = "".join([i for i in row[key['ActionSel']] if not
+                #                 i.isdigit()])
                 action_relation.append("inventory-" + block)
                 #tower['r2'] = ["parameter2", "action", "inventory"]
             else:
@@ -85,7 +93,7 @@ if __name__ == "__main__":
 
             remove = []
 
-            # create integer representation?
+            # TODO could create integer representation here
             for name in tower:
                 if isinstance(tower[name], dict):
                     for v in tower[name]:
