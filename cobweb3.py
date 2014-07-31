@@ -75,7 +75,9 @@ class ContinuousValue():
         # rounding correction due to summing small squares
         # this value was computed empirically with 1000 samples on 4/6/14
         # -Maclellan
-        # TODO I'm not sure if this is a valid thing to do.
+        # TODO I'm not sure if this is a valid thing to do. I probably
+        # just need a better algorithm.. see the parallel algorithm here:
+        # https://en.wikipedia.org/wiki/Algorithms_for_calculating_variance#Online_algorithm
         uc_std = uc_std / 1.0112143858578193
 
         return uc_std / c4n

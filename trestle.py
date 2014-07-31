@@ -937,8 +937,6 @@ class Trestle(Cobweb3):
                 c.av_counts['_id'][i] = 1;
                 c = c.parent
 
-
-
         with open('visualize/output.json', 'w') as f:
             f.write(json.dumps(self.output_json()))
 
@@ -1141,12 +1139,12 @@ if __name__ == "__main__":
     # KC labeling
     tree = Trestle()
 
-    #with open('data_files/rb_com_11_noCheck.json', "r") as json_data:
-    #    instances = json.load(json_data)
-    #print(set(tree.cluster(instances, 3)))
+    with open('data_files/rb_com_11_noCheck.json', "r") as json_data:
+        instances = json.load(json_data)
+    print(set(tree.cluster(instances)))
 
-    labels = tree.kc_label("data_files/instant-test-processed.json", 16000)
-    pickle.dump(labels, open('clustering.pickle', 'wb'))
+    #labels = tree.kc_label("data_files/instant-test-processed.json", 16000)
+    #pickle.dump(labels, open('clustering.pickle', 'wb'))
 
 
 
