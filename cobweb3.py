@@ -396,10 +396,10 @@ class Cobweb3(Cobweb):
         for attr in self.av_counts:
             #float_vals = []
             if isinstance(self.av_counts[attr], ContinuousValue):
-                temp[attr + " = " + str(self.av_counts[attr])] = self.av_counts[attr].num
+                temp[str(attr) + " = " + str(self.av_counts[attr])] = self.av_counts[attr].num
             else:
                 for value in self.av_counts[attr]:
-                    temp[attr + " = " + str(value)] = self.av_counts[attr][value]
+                    temp[str(attr) + " = " + str(value)] = self.av_counts[attr][value]
 
         for child in self.children:
             output["children"].append(child.output_json())
