@@ -577,6 +577,26 @@ class Cobweb:
                                   - temp.expected_correct_guesses()))
         return category_utility / (1.0 * len(temp.children))
 
+    def depth(self):
+        if self.parent:
+            return 1 + self.parent.depth()
+        return 0
+
+    def is_parent(self, other_concept):
+        """
+        Returns True if self is a parent of other concept.
+        """
+        temp = other_concept
+        while temp != None:
+            if temp == self:
+                return True
+            try:
+                temp = temp.parent
+            except:
+                print(temp)
+                assert False
+        return False
+
     def num_concepts(self):
         """
         Return the number of concepts contained in the tree defined by the

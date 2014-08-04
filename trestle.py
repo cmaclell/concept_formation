@@ -32,11 +32,6 @@ class Trestle(Cobweb3):
         self.av_counts[attr][new] += self.av_counts[attr][old]
         del self.av_counts[attr][old]
 
-    def depth(self):
-        if self.parent:
-            return 1 + self.parent.depth()
-        return 0
-
     def attribute_generalize(self):
         """
         This function will hill climb over the possible av generalizations
@@ -161,21 +156,6 @@ class Trestle(Cobweb3):
 
         # replace references to deleted concept with parent concept
         self.get_root().replace(self, node)
-
-    def is_parent(self, other_concept):
-        """
-        Returns True if self is a parent of other concept.
-        """
-        temp = other_concept
-        while temp != None:
-            if temp == self:
-                return True
-            try:
-                temp = temp.parent
-            except:
-                print(temp)
-                assert False
-        return False
 
     def common_ancestor(self, val1, val2):
         """
