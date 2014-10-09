@@ -1,27 +1,12 @@
 import math
 import json
+import utils
 from random import normalvariate
 from random import choice
 from random import random
 from cobweb import Cobweb
 
 class ContinuousValue():
-
-    # a hash table for fast c4n value lookup
-    c4n_table = {2: 0.7978845608028654, 3: 0.886226925452758, 4:
-                 0.9213177319235613, 5: 0.9399856029866254, 6:
-                 0.9515328619481445, 7: 0.9593687886998328, 8:
-                 0.9650304561473722, 9: 0.9693106997139539, 10:
-                 0.9726592741215884, 11: 0.9753500771452293, 12:
-                 0.9775593518547722, 13: 0.9794056043142177, 14:
-                 0.9809714367555161, 15: 0.9823161771626504, 16:
-                 0.9834835316158412, 17: 0.9845064054718315, 18:
-                 0.985410043808079, 19: 0.9862141368601935, 20:
-                 0.9869342675246552, 21: 0.9875829288261562, 22:
-                 0.9881702533158311, 23: 0.988704545233999, 24:
-                 0.9891926749585048, 25: 0.9896403755857028, 26:
-                 0.9900524688409107, 27: 0.990433039209448, 28:
-                 0.9907855696217323, 29: 0.9911130482419843}
 
     def __init__(self, mean, std, num):
         self.mean = mean
@@ -34,54 +19,6 @@ class ContinuousValue():
     def __str__(self):
         return "%0.4f (%0.4f) [%i]" % (self.mean, self.std, self.num)
 
-    def combined_mean(self, m1,n1,m2,n2):
-        """
-        Function to compute the combined means given two means and the number
-        of samples for each mean.
-        """
-        return (n1 * m1 + n2 * m2)/(n1 + n2)
-    
-    def combined_unbiased_std(self, s1, m1, n1, s2, m2, n2, mX):
-        """
-        Computes a new mean from two estimated means and variances and n's as
-        well as the combined mean.
-        s1 = estimated std of sample 1
-        m1 = mean of sample 1
-        n1 = number values in sample 1
-
-        s2 = estimated std of sample 2
-        m2 = mean of sample 2
-        n2 = number of values in sample 2
-
-        mX = combined mean of two samples.
-        """
-        uc_s1 = s1
-        uc_s2 = s2
-
-        if n1 > 1 and n1 < 30:
-            uc_s1 = uc_s1 * self.c4n_table[n1]
-        if n2 > 1 and n2 < 30:
-            uc_s2 = uc_s2 * self.c4n_table[n2]
-        
-        uc_std = math.sqrt(
-            ((n1 * (math.pow(uc_s1,2) + math.pow((m1 - mX),2)) + 
-              n2 * (math.pow(uc_s2,2) + math.pow((m2 - mX),2))) /
-             (n1 + n2)))
-
-        c4n = 1.0
-        if (n1 + n2) < 30:
-            c4n = self.c4n_table[n1 + n2]
-
-        # rounding correction due to summing small squares
-        # this value was computed empirically with 1000 samples on 4/6/14
-        # -Maclellan
-        # TODO I'm not sure if this is a valid thing to do. I probably
-        # just need a better algorithm.. see the parallel algorithm here:
-        # https://en.wikipedia.org/wiki/Algorithms_for_calculating_variance#Online_algorithm
-        uc_std = uc_std / 1.0112143858578193
-
-        return uc_std / c4n
-
     def update(self, n):
         self.combine_update(ContinuousValue(n, 0, 1))
 
@@ -92,9 +29,9 @@ class ContinuousValue():
         self.num = val.num
 
     def combine(self, other):
-        meanBoth = self.combined_mean(self.mean, self.num, other.mean,
+        meanBoth = utils.combined_mean(self.mean, self.num, other.mean,
                                       other.num)
-        stdBoth = self.combined_unbiased_std(self.std, self.mean, self.num,
+        stdBoth = utils.combined_unbiased_std(self.std, self.mean, self.num,
                                              other.std, other.mean, other.num,
                                              meanBoth)
 
@@ -104,22 +41,6 @@ class Cobweb3(Cobweb):
 
     # Smallest possible acuity. Below this and probabilities will exceed 1.0
     acuity = 1.0 / math.sqrt(2.0 * math.pi)
-
-    # a hash table for fast c4n value lookup
-    c4n_table = {2: 0.7978845608028654, 3: 0.886226925452758, 4:
-                 0.9213177319235613, 5: 0.9399856029866254, 6:
-                 0.9515328619481445, 7: 0.9593687886998328, 8:
-                 0.9650304561473722, 9: 0.9693106997139539, 10:
-                 0.9726592741215884, 11: 0.9753500771452293, 12:
-                 0.9775593518547722, 13: 0.9794056043142177, 14:
-                 0.9809714367555161, 15: 0.9823161771626504, 16:
-                 0.9834835316158412, 17: 0.9845064054718315, 18:
-                 0.985410043808079, 19: 0.9862141368601935, 20:
-                 0.9869342675246552, 21: 0.9875829288261562, 22:
-                 0.9881702533158311, 23: 0.988704545233999, 24:
-                 0.9891926749585048, 25: 0.9896403755857028, 26:
-                 0.9900524688409107, 27: 0.990433039209448, 28:
-                 0.9907855696217323, 29: 0.9911130482419843}
 
     def verify_counts(self):
         """
@@ -229,11 +150,12 @@ class Cobweb3(Cobweb):
         if len(sample) == 1:
             return 0.0
 
-        m = self.mean(sample)
+        m = utils.mean(sample)
 
-        c4n = 1.0
-        if len(sample) < 30:
-            c4n = self.c4n_table[len(sample)]
+        c4n = utils.c4(len(sample))
+        #c4n = 1.0
+        #if len(sample) < 30:
+        #    c4n = utils.c4n_table[len(sample)]
 
             # use the lookup table it is much faster
             #c4n = (math.sqrt(2.0 / (len(sample) - 1.0)) *
@@ -366,7 +288,7 @@ class Cobweb3(Cobweb):
             #    if isinstance(av, float):
             #        float_values += [av] * self.av_counts[attr][av]
 
-            #mean = self.mean(float_values)
+            #mean = utils.mean(float_values)
             #std = self.unbiased_std(float_values)
             mean = val.mean
             std = val.std

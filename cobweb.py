@@ -1,5 +1,6 @@
 import json
 import math
+import utils
 from random import choice
 from random import shuffle
 
@@ -12,26 +13,6 @@ class Cobweb:
     # The number of correct guesses per attribute that must be achieved.
     pruning_constant = 0.0
 
-    def mean(self, values):
-        """
-        Computes the mean of a list of values.
-        """
-        if len(values) <= 0:
-            raise ValueError("Length of list must be greater than 0.")
-
-        return float(sum(values))/len(values)
-
-    def std(self, values):
-        """
-        Computes the standard deviation of a list of values.
-        """
-        if len(values) <= 0:
-            raise ValueError("Length of list must be greater than 0.")
-
-        mean = self.mean(values)
-        variance =  float(sum([(v - mean) * (v - mean) for v in
-                               values]))/len(values)
-        return math.sqrt(variance)
 
     def __init__(self, otherTree=None):
         """
@@ -822,7 +803,7 @@ class Cobweb:
             a = []
             for r in runs:
                 a.append(r[i])
-            print("%0.2f" % (self.mean(a)))
+            print("%0.2f" % (utils.mean(a)))
 
         print()
         print("STD Accuracy")
@@ -830,7 +811,7 @@ class Cobweb:
             a = []
             for r in runs:
                 a.append(r[i])
-            print("%0.2f" % (self.std(a)))
+            print("%0.2f" % (utils.std(a)))
 
         print()
         print("MEAN Concepts")
@@ -838,7 +819,7 @@ class Cobweb:
             a = []
             for r in nodes:
                 a.append(r[i])
-            print("%0.2f" % (self.mean(a)))
+            print("%0.2f" % (utils.mean(a)))
 
         print()
         print("STD Concepts")
@@ -846,7 +827,7 @@ class Cobweb:
             a = []
             for r in nodes:
                 a.append(r[i])
-            print("%0.2f" % (self.std(a)))
+            print("%0.2f" % (utils.std(a)))
 
     def predictions(self, filename, length, iterations):
         """
@@ -870,7 +851,7 @@ class Cobweb:
             a = []
             for r in runs:
                 a.append(r[i])
-            print("%0.2f" % (self.mean(a)))
+            print("%0.2f" % (utils.mean(a)))
 
         print()
         print("STD Accuracy")
@@ -878,7 +859,7 @@ class Cobweb:
             a = []
             for r in runs:
                 a.append(r[i])
-            print("%0.2f" % (self.std(a)))
+            print("%0.2f" % (utils.std(a)))
 
         print()
         print("MEAN Concepts")
@@ -886,7 +867,7 @@ class Cobweb:
             a = []
             for r in nodes:
                 a.append(r[i])
-            print("%0.2f" % (self.mean(a)))
+            print("%0.2f" % (utils.mean(a)))
 
         print()
         print("STD Concepts")
@@ -894,7 +875,7 @@ class Cobweb:
             a = []
             for r in nodes:
                 a.append(r[i])
-            print("%0.2f" % (self.std(a)))
+            print("%0.2f" % (utils.std(a)))
 
 if __name__ == "__main__":
     #Cobweb().predictions("data_files/cobweb_test.json", 10, 100)
