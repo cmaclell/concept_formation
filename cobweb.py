@@ -135,7 +135,7 @@ class Cobweb:
             temp.children.append(temp_child)
             if c == child:
                 temp_child.increment_counts(instance)
-        return temp.category_utility(instance)
+        return temp.category_utility()
 
     def create_new_child(self, instance):
         """
@@ -167,7 +167,7 @@ class Cobweb:
         temp = self.shallow_copy()
         temp.increment_counts(instance)
         temp.create_new_child(instance)
-        return temp.category_utility(instance)
+        return temp.category_utility()
 
     def merge(self, best1, best2):
         """
@@ -220,7 +220,7 @@ class Cobweb:
             temp_child.update_counts_from_node(c)
             temp.children.append(temp_child)
 
-        return temp.category_utility(instance)
+        return temp.category_utility()
 
     def split(self, best):
         """
@@ -246,9 +246,9 @@ class Cobweb:
         temp.increment_counts(instance)
         temp.create_new_child(instance)
 
-        return temp.category_utility(instance)
+        return temp.category_utility()
 
-    def cu_for_split(self, best, instance):
+    def cu_for_split(self, best):
         """
         Return the category utility for splitting the best child.
         
@@ -267,7 +267,7 @@ class Cobweb:
             temp_child.update_counts_from_node(c)
             temp.children.append(temp_child)
 
-        return temp.category_utility(instance)
+        return temp.category_utility()
 
     def cobweb(self, instance):
         """
@@ -370,7 +370,7 @@ class Cobweb:
         if "merge" in possible_ops and len(self.children) > 2 and best2:
             operations.append((self.cu_for_merge(best1, best2, instance),'merge'))
         if "split" in possible_ops and len(best1.children) > 0:
-            operations.append((self.cu_for_split(best1, instance),'split'))
+            operations.append((self.cu_for_split(best1),'split'))
 
         # pick the best operation
         operations.sort(reverse=True)
@@ -435,13 +435,15 @@ class Cobweb:
         squared. 
         """
         correct_guesses = 0.0
+
         for attr in self.av_counts:
             for val in self.av_counts[attr]:
                 prob = (self.av_counts[attr][val] / (1.0 * self.count))
                 correct_guesses += (prob * prob)
+
         return correct_guesses
 
-    def category_utility_old(self, instance=None):
+    def category_utility(self):
         """
         Returns the category utility of a particular division of a concept into
         its children. This is used as the heuristic to guide the concept
@@ -450,70 +452,17 @@ class Cobweb:
         Only computed in terms of the attribute values of a given instance. If
         no instance is provided, then it uses all attribute values. 
         """
-        temp = self.shallow_copy()
-
-        if instance:
-            temp.av_counts = {a: temp.av_counts[a] for a in temp.av_counts if a
-                              in instance}
-            #for attr in temp.av_counts:
-            #    if attr not in instance:
-            #        del temp.av_counts[attr]
-            for child in temp.children:
-                child.av_counts = {a: child.av_counts[a] for a in
-                                   child.av_counts if a in instance}
-                #for attr in child.av_counts:
-                #    if attr not in instance:
-                #        del child.av_counts[attr]
-            temp.children = [c for c in temp.children if len(c.av_counts) > 0]
-
-        if len(temp.children) == 0:
+        if len(self.children) == 0:
             return 0.0
 
-        category_utility = 0.0
+        child_correct_guesses = 0.0
 
-        for child in temp.children:
-            p_of_child = child.count / (1.0 * temp.count)
-            category_utility += (p_of_child *
-                                 (child.expected_correct_guesses()
-                                  - temp.expected_correct_guesses()))
-        return category_utility / (1.0 * len(temp.children))
+        for child in self.children:
+            p_of_child = child.count / (1.0 * self.count)
+            child_correct_guesses += p_of_child * child.expected_correct_guesses()
 
-    def category_utility(self, instance=None):
-        """
-        Returns the category utility of a particular division of a concept into
-        its children. This is used as the heuristic to guide the concept
-        formation.
-
-        Only computed in terms of the attribute values of a given instance. If
-        no instance is provided, then it uses all attribute values. 
-        """
-        temp = self.shallow_copy()
-
-        if instance:
-            temp.av_counts = {a: temp.av_counts[a] for a in temp.av_counts if a
-                              in instance}
-            #for attr in temp.av_counts:
-            #    if attr not in instance:
-            #        del temp.av_counts[attr]
-            for child in temp.children:
-                child.av_counts = {a: child.av_counts[a] for a in
-                                   child.av_counts if a in instance}
-                #for attr in child.av_counts:
-                #    if attr not in instance:
-                #        del child.av_counts[attr]
-            temp.children = [c for c in temp.children if len(c.av_counts) > 0]
-
-        if len(temp.children) == 0:
-            return 0.0
-
-        category_utility = 0.0
-
-        for child in temp.children:
-            p_of_child = child.count / (1.0 * temp.count)
-            category_utility += (p_of_child *
-                                 (child.expected_correct_guesses()
-                                  - temp.expected_correct_guesses()))
-        return category_utility / (1.0 * len(temp.children))
+        return ((child_correct_guesses - self.expected_correct_guesses()) /
+                (1.0 * len(self.children)))
 
     def depth(self):
         if self.parent:

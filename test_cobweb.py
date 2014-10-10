@@ -57,17 +57,53 @@ def verify_counts(node):
 
 class TestCobweb(unittest.TestCase):
 
-    def setUp(self):
-        self.tree = Cobweb()
-        self.tree.train_from_json('data_files/cobweb_test.json')
+    def test_expected_correct_guess(self):
+        node = Cobweb()
+        node.count = 10
+        node.av_counts['a1'] = {}
+        node.av_counts['a1']['v1'] = 1 
+        node.av_counts['a1']['v2'] = 3 
+        node.av_counts['a1']['v3'] = 6 
+
+        assert node.expected_correct_guesses() == ((1/10)**2 + (3/10)**2 +
+                                                   (6/10)**2)
 
     def test_category_utility(self):
-        print("Current CU Time: %0.3f" % min(timeit.Timer(self.tree.category_utility).repeat(repeat=10,number=1000)))
-        print("Original CU Time: %0.3f" % min(timeit.Timer(self.tree.category_utility_old).repeat(repeat=10,number=1000)))
-        verify_category_utility(self.tree)
+
+        ## Code for timing
+        #print("Current CU Time: %0.3f" %
+        #      min(timeit.Timer(node.category_utility).repeat(repeat=10,number=1000)))
+        node = Cobweb()
+        node.count = 10
+        node.av_counts['a1'] = {}
+        node.av_counts['a1']['v1'] = 1 
+        node.av_counts['a1']['v2'] = 3 
+        node.av_counts['a1']['v3'] = 6 
+
+        child1 = Cobweb()
+        child1.count = 6
+        child1.av_counts['a1'] = {}
+        child1.av_counts['a1']['v3'] = 6 
+
+        child2 = Cobweb()
+        child2.count = 4
+        child2.av_counts['a1'] = {}
+        child2.av_counts['a1']['v1'] = 1 
+        child2.av_counts['a1']['v2'] = 3 
+
+        node.children = [child1, child2]
+
+        assert node.category_utility() == (( (6/10) * ((1**2) - ((1/10)**2 +
+                                                                (3/10)**2 +
+                                                                (6/10)**2)) +
+                                           (4/10) * (((1/4)**2 + (3/4)**2) -
+                                                     ((1/10)**2 + (3/10)**2 +
+                                                      (6/10)**2))) / 2)
 
     def test_cobweb(self):
-        verify_counts(self.tree)
+        tree = Cobweb()
+        tree.train_from_json('data_files/cobweb_test.json')
+        verify_counts(tree)
 
 if __name__ == "__main__":
     unittest.main()
