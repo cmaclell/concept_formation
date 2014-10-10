@@ -14,7 +14,8 @@ class Cobweb:
         The constructor creates a cobweb node with default values. It can also
         be used as a copy constructor to "deepcopy" a node.
         """
-        self.concept_name = "Concept" + self.gensym()
+        self.concept_id = self.gensym()
+        #self.concept_name = "Concept" + self.gensym()
         self.count = 0
         self.av_counts = {}
         self.children = []
@@ -33,7 +34,7 @@ class Cobweb:
         The basic hash function. This hashes the concept name, which is
         generated to be unique across concepts.
         """
-        return hash(self.concept_name)
+        return hash(self.concept_id)
 
     def gensym(self):
         """
@@ -42,6 +43,79 @@ class Cobweb:
         """
         self.__class__.counter += 1
         return str(self.__class__.counter)
+
+    def depth(self):
+        """
+        Returns the depth of the current node in the tree.
+        """
+        if self.parent:
+            return 1 + self.parent.depth()
+        return 0
+
+    def is_parent(self, other_concept):
+        """
+        Returns True if self is a parent of other concept.
+        """
+        temp = other_concept
+        while temp != None:
+            if temp == self:
+                return True
+            try:
+                temp = temp.parent
+            except:
+                print(temp)
+                assert False
+        return False
+
+    def num_concepts(self):
+        """
+        Return the number of concepts contained in the tree defined by the
+        current node. 
+        """
+        children_count = 0
+        for c in self.children:
+           children_count += c.num_concepts() 
+        return 1 + children_count 
+
+    def pretty_print(self, depth=0):
+        """
+        Prints the categorization tree.
+        """
+        ret = str(('\t' * depth) + "|-" + str(self.av_counts) + ":" +
+                  str(self.count) + '\n')
+        
+        for c in self.children:
+            ret += c.pretty_print(depth+1)
+
+        return ret
+
+    def output_json(self):
+        """
+        Outputs the categorization tree in JSON form so that it can be
+        displayed, I usually visualize it with d3js in a web browser.
+        """
+        output = {}
+        output['name'] = "Concept" + self.concept_id
+        output['size'] = self.count
+        output['children'] = []
+
+        temp = {}
+        for attr in self.av_counts:
+            for value in self.av_counts[attr]:
+                temp[attr + " = " + str(value)] = self.av_counts[attr][value]
+
+        for child in self.children:
+            output['children'].append(child.output_json())
+
+        output['counts'] = temp
+
+        return output
+    
+    def __str__(self):
+        """
+        Converts the categorization tree into a string for printing"
+        """
+        return self.pretty_print()
 
     def shallow_copy(self):
         """
@@ -84,16 +158,6 @@ class Cobweb:
                 self.av_counts[attr][val] = (self.av_counts[attr].get(val,0) +
                                      node.av_counts[attr][val])
 
-    def relevant_to_instance(self, instance):
-        """
-        Returns True if the concept contains attributes that are in the
-        instance.
-        """
-        for attr in self.av_counts:
-            if attr in instance:
-                return True
-        return False
-    
     def two_best_children(self, instance):
         """
         Returns the two best children to incorporate the instance
@@ -108,17 +172,17 @@ class Cobweb:
         if len(self.children) == 0:
             raise Exception("No children!")
 
-        children_cu = [(self.cu_for_insert(child, instance), child) for child
-                       in self.children if child.relevant_to_instance(instance)]
-        children_cu.sort(key=lambda x: x[0],reverse=True)
+        children_cu = [(self.cu_for_insert(child, instance), i, child) for i,
+                       child in enumerate(self.children)]
+        children_cu.sort(reverse=True)
 
         if len(children_cu) == 0:
             return None, None
-
         if len(children_cu) == 1:
-            return children_cu[0], None 
+            return (children_cu[0][0], children_cu[0][2]), None 
 
-        return children_cu[0], children_cu[1]
+        return ((children_cu[0][0], children_cu[0][2]), (children_cu[1][0],
+                                                         children_cu[1][2]))
 
     def cu_for_insert(self, child, instance):
         """
@@ -279,53 +343,19 @@ class Cobweb:
         current = self
 
         while current:
-            # instead of checking if the instance is the fringe concept, I
-            # check to see if category utility is increased by fringe splitting.
-            # this is more generally and will be used by the Labyrinth/Trestle
-            # systems to achieve more complex fringe behavior. 
-
-
             if (not current.children and current.cu_for_fringe_split(instance)
                 <= 0.0):
                 current.increment_counts(instance)
                 return current 
-
             elif not current.children:
-                # TODO can this be cleaned up, I do it to ensure the previous
-                # leaf is still a leaf, for all the concepts that refer to this
-                # in labyrinth.
-                new = current.create_child_with_current_counts()
-
-                #TODO can this logic be added somewhere else?
-                # This code makes sure a fringe split doesn't mess
-                # up component values in labyrinth/trestle.
-                for attr in instance:
-                    if instance[attr] == current:
-                        instance[attr] = new
-
+                current.create_child_with_current_counts()
                 current.increment_counts(instance)
                 return current.create_new_child(instance)
-                
             else:
-                #TODO is there a cleaner way to do this?
                 best1, best2 = current.two_best_children(instance)
                 action_cu, best_action = current.get_best_operation(instance,
-                                                                     best1,
-                                                                     best2)
-
-                if action_cu <= 0.0:
-                    #TODO this is new
-                    #I think it makes sense to actually merge these if they
-                    #are very very very similar.
-                    # The problem is that when things start getting merged,
-                    # then they are similar to other things... this pruning
-                    # process can get a bit carried away.
-                    #print("PRUNING")
-                    current.increment_counts(instance)
-                    for c in current.children:
-                        c.remove_reference(current)
-                    current.children = []
-                    return current
+                                                                    best1,
+                                                                    best2)
 
                 if best1:
                     best1_cu, best1 = best1
@@ -372,13 +402,11 @@ class Cobweb:
         if "split" in possible_ops and len(best1.children) > 0:
             operations.append((self.cu_for_split(best1),'split'))
 
-        # pick the best operation
         operations.sort(reverse=True)
         #print(operations)
-
         return operations[0]
         
-    def cobweb_categorize_leaf(self, instance, leaf=True):
+    def cobweb_categorize_leaf(self, instance):
         """
         Sorts an instance in the categorization tree defined at the current
         node without modifying the counts of the tree.
@@ -389,7 +417,6 @@ class Cobweb:
         while current:
             if not current.children:
                 return current
-
             
             best1, best2 = current.two_best_children(instance)
 
@@ -423,7 +450,6 @@ class Cobweb:
                 return current
 
             if best_action == "new":
-                #print("INTERMEDIATE")
                 return current
             elif best_action == "best":
                 current = best1
@@ -448,9 +474,6 @@ class Cobweb:
         Returns the category utility of a particular division of a concept into
         its children. This is used as the heuristic to guide the concept
         formation.
-
-        Only computed in terms of the attribute values of a given instance. If
-        no instance is provided, then it uses all attribute values. 
         """
         if len(self.children) == 0:
             return 0.0
@@ -464,75 +487,6 @@ class Cobweb:
         return ((child_correct_guesses - self.expected_correct_guesses()) /
                 (1.0 * len(self.children)))
 
-    def depth(self):
-        if self.parent:
-            return 1 + self.parent.depth()
-        return 0
-
-    def is_parent(self, other_concept):
-        """
-        Returns True if self is a parent of other concept.
-        """
-        temp = other_concept
-        while temp != None:
-            if temp == self:
-                return True
-            try:
-                temp = temp.parent
-            except:
-                print(temp)
-                assert False
-        return False
-
-    def num_concepts(self):
-        """
-        Return the number of concepts contained in the tree defined by the
-        current node. 
-        """
-        children_count = 0
-        for c in self.children:
-           children_count += c.num_concepts() 
-        return 1 + children_count 
-
-    def pretty_print(self, depth=0):
-        """
-        Prints the categorization tree.
-        """
-        ret = str(('\t' * depth) + "|-" + str(self.av_counts) + ":" +
-                  str(self.count) + '\n')
-        
-        for c in self.children:
-            ret += c.pretty_print(depth+1)
-
-        return ret
-
-    def output_json(self):
-        """
-        Outputs the categorization tree in JSON form so that it can be
-        displayed, I usually visualize it with d3js in a web browser.
-        """
-        output = {}
-        output['name'] = self.concept_name
-        output['size'] = self.count
-        output['children'] = []
-
-        temp = {}
-        for attr in self.av_counts:
-            for value in self.av_counts[attr]:
-                temp[attr + " = " + str(value)] = self.av_counts[attr][value]
-
-        for child in self.children:
-            output['children'].append(child.output_json())
-
-        output['counts'] = temp
-
-        return output
-    
-    def __str__(self):
-        """
-        Converts the categorization tree into a string for printing"
-        """
-        return self.pretty_print()
 
     def ifit(self, instance):
         """
@@ -785,7 +739,7 @@ class Cobweb:
 
 if __name__ == "__main__":
     #Cobweb().predictions("data_files/cobweb_test.json", 10, 100)
-    Cobweb().predictions("data_files/mushrooms.json", 20, 10)
+    Cobweb().predictions("data_files/mushrooms.json", 30, 10)
     #Cobweb().baseline_guesser("data_files/cobweb_test.json", 10, 100)
     #print(Cobweb().cluster("cobweb_test.json", 10, 1))
 
