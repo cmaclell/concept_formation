@@ -1,41 +1,11 @@
 import math
 import json
 import utils
+from utils import ContinuousValue
 from random import normalvariate
 from random import choice
 from random import random
 from cobweb import Cobweb
-
-class ContinuousValue():
-
-    def __init__(self, mean, std, num):
-        self.mean = mean
-        self.std = std
-        self.num = num
-
-    def __hash__(self):
-        return hash("#ContinuousValue#")
-
-    def __str__(self):
-        return "%0.4f (%0.4f) [%i]" % (self.mean, self.std, self.num)
-
-    def update(self, n):
-        self.combine_update(ContinuousValue(n, 0, 1))
-
-    def combine_update(self, other):
-        val = self.combine(other)
-        self.mean = val.mean
-        self.std = val.std
-        self.num = val.num
-
-    def combine(self, other):
-        meanBoth = utils.combined_mean(self.mean, self.num, other.mean,
-                                      other.num)
-        stdBoth = utils.combined_unbiased_std(self.std, self.mean, self.num,
-                                             other.std, other.mean, other.num,
-                                             meanBoth)
-
-        return ContinuousValue(meanBoth, stdBoth, self.num + other.num)
 
 class Cobweb3(Cobweb):
 
@@ -104,10 +74,8 @@ class Cobweb3(Cobweb):
                 if (attr not in self.av_counts or 
                     not isinstance(self.av_counts[attr], ContinuousValue)):
                     # TODO currently overrides nominals if a float comes in.
-                    self.av_counts[attr] = ContinuousValue(instance[attr], 0, 1)
-                else:
-                    self.av_counts[attr].update(instance[attr])
-
+                    self.av_counts[attr] = ContinuousValue()
+                self.av_counts[attr].update(instance[attr])
             else:
                 self.av_counts[attr] = self.av_counts.setdefault(attr,{})
                 self.av_counts[attr][instance[attr]] = (self.av_counts[attr].get(instance[attr], 0) + 1)
@@ -124,55 +92,14 @@ class Cobweb3(Cobweb):
                 if (attr not in self.av_counts or 
                     not isinstance(self.av_counts[attr], ContinuousValue)):
                     # TODO currently overrides nominals if a float comes in.
-                    oldval = node.av_counts[attr]
-                    self.av_counts[attr] = ContinuousValue(oldval.mean,
-                                                           oldval.std,
-                                                           oldval.num)
-                else:
-                    self.av_counts[attr].combine_update(node.av_counts[attr])
+                    self.av_counts[attr] = ContinuousValue()
+                self.av_counts[attr].combine(node.av_counts[attr])
             else:
                 for val in node.av_counts[attr]:
                     self.av_counts[attr] = self.av_counts.setdefault(attr,{})
                     self.av_counts[attr][val] = (self.av_counts[attr].get(val,0) +
                                          node.av_counts[attr][val])
     
-    def unbiased_std(self, sample):
-        """
-        This is an unbiased estimate of the std, which accounts for sample size
-        if it is less than 30.
-        
-        The details of this unbiased estimate can be found here: 
-            https://en.wikipedia.org/wiki/Unbiased_estimation_of_standard_deviation
-        """
-        if len(sample) <= 0:
-            raise ValueError("No values in sample")
-
-        if len(sample) == 1:
-            return 0.0
-
-        m = utils.mean(sample)
-
-        c4n = utils.c4(len(sample))
-        #c4n = 1.0
-        #if len(sample) < 30:
-        #    c4n = utils.c4n_table[len(sample)]
-
-            # use the lookup table it is much faster
-            #c4n = (math.sqrt(2.0 / (len(sample) - 1.0)) *
-            #       (math.gamma(len(sample)/2.0) /
-            #        math.gamma((len(sample) - 1.0)/2.0)))
-
-        variance = (float(sum([(v - m) * (v - m) for v in sample])) /
-                    (len(sample) - 1.0))
-
-        std = math.sqrt(variance) / c4n
-
-        # dont' need to correct for acuity here do it in CU calc
-        #if std < acuity:
-        #    std = acuity
-
-        return std
-
     def expected_correct_guesses(self):
         """
         Computes the number of attribute values that would be correctly guessed
@@ -185,7 +112,7 @@ class Cobweb3(Cobweb):
 
         for attr in self.av_counts:
             if isinstance(self.av_counts[attr], ContinuousValue):
-                std = self.av_counts[attr].std
+                std = self.av_counts[attr].unbiased_std()
                 if std < self.acuity:
                     std = self.acuity
                 # this is implicit in the nominal case, but here it must be
@@ -213,7 +140,7 @@ class Cobweb3(Cobweb):
             if isinstance(self.av_counts[attr], ContinuousValue):
                 attributes.append("'%s': { %0.3f (%0.3f) [%i] }" % (attr,
                                                                     self.av_counts[attr].mean,
-                                                                    self.av_counts[attr].std,
+                                                                    self.av_counts[attr].unbiased_std(),
                                                                     self.av_counts[attr].num))
             else:
                 values = []
@@ -259,7 +186,7 @@ class Cobweb3(Cobweb):
                 if isinstance(val, ContinuousValue):
                     num_floats = val.num
                     mean = val.mean
-                    std = val.std
+                    std = val.unbiased_std()
                 else:
                     nominal_values += [val] * concept.av_counts[attr][val]
 
@@ -291,7 +218,7 @@ class Cobweb3(Cobweb):
             #mean = utils.mean(float_values)
             #std = self.unbiased_std(float_values)
             mean = val.mean
-            std = val.std
+            std = val.unbiased_std()
 
             if std < self.acuity:
                 std = self.acuity
