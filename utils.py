@@ -66,17 +66,29 @@ def std(values):
 class ContinuousValue():
 
     def __init__(self):
+        """
+        The number of values, the mean of the values, and the squared errors of
+        the values.
+        """
         self.num = 0
         self.mean = 0
         self.meanSq = 0
 
     def biased_std(self):
+        """
+        Returns a biased estimate of the std (i.e., the sample std)
+        """
         return math.sqrt(self.meanSq / (self.num))
 
     def unbiased_std(self):
+        """
+        Returns an unbiased estimate of the std that uses Bessel's correction
+        and Cochran's theorem: 
+            https://en.wikipedia.org/wiki/Unbiased_estimation_of_standard_deviation
+        """
         if self.num < 2:
             return 0.0
-        return math.sqrt(self.meanSq / (self.num - 1)) * c4(self.num)
+        return math.sqrt(self.meanSq / (self.num - 1)) / c4(self.num)
 
     def __hash__(self):
         return hash("#ContinuousValue#")
@@ -88,13 +100,16 @@ class ContinuousValue():
         return "%0.4f (%0.4f) [%i]" % (self.mean, self.unbiased_std(), self.num)
 
     def update_batch(self, data):
+        """
+        Calls the update function on every value in the given dataset
+        """
         for x in data:
             self.update(x)
 
     def update(self, x):
         """
-        Incrementally update the mean and mean squared (meanSq) values in an
-        efficient and practical (no precision problems) way. This uses and
+        Incrementally update the mean and squared mean error (meanSq) values in
+        an efficient and practical (no precision problems) way. This uses and
         algorithm by Knuth, which I found here:
             https://en.wikipedia.org/wiki/Algorithms_for_calculating_variance
         """
@@ -105,8 +120,8 @@ class ContinuousValue():
 
     def combine(self, other):
         """
-        Combine two clusters of means and mean squared (meanSq) values in an
-        efficient and practical (no precision problems) way. This uses the
+        Combine two clusters of means and squared mean error (meanSq) values in
+        an efficient and practical (no precision problems) way. This uses the
         parallel algorithm by Chan et al. found here: 
             https://en.wikipedia.org/wiki/Algorithms_for_calculating_variance
         """

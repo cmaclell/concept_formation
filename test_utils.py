@@ -20,12 +20,12 @@ class TestUtils(unittest.TestCase):
 
     def test_cv_unbiased_std(self):
         for i in range(10):
-            values = [random.normalvariate(0, 1) for i in range(100)] 
+            values = [random.normalvariate(0, 1) for i in range(10)] 
             cv = utils.ContinuousValue()
             cv.update_batch(values) 
-            assert (cv.unbiased_std() - utils.c4(len(values)) * 
-                    (len(values) * utils.std(values) / (len(values) - 1)) <
-                    0.00000000001)
+            assert (cv.unbiased_std() -  
+                    ((len(values) * utils.std(values) / (len(values) - 1)) /
+                     utils.c4(len(values))) < 0.00000000001)
 
     def test_cv_update(self):
         for i in range(10):
