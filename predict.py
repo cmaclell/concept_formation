@@ -1,10 +1,14 @@
 from trestle import Trestle
+from random import random
+from random import normalvariate
 
-
-def predict(tree, instance):
+def predict_missing(tree, instance):
     """
-    Given an instance predict any missing attribute values without
+    Given a tree and an instance predict any missing attribute values without
     modifying the tree. A modification for component values.
+
+    This will return a copy of the instance with any missing values filled in
+    with the appropriate predictions.
     """
     prediction = {}
 
@@ -12,7 +16,7 @@ def predict(tree, instance):
     # call recursively on structured parts
     for attr in instance:
         if isinstance(instance[attr], dict):
-            prediction[attr] = tree.predict(instance[attr])
+            prediction[attr] = tree.predict_missing(instance[attr])
         else:
             prediction[attr] = instance[attr]
 
@@ -58,7 +62,7 @@ def predict(tree, instance):
         elif rand < ((len(nominal_values) + len(component_values) * 1.0) /
                      (len(nominal_values) + len(component_values) +
                       float_num)):
-            prediction[attr] = choice(component_values).predict({})
+            prediction[attr] = choice(component_values).predict_missing({})
         else:
             prediction[attr] = normalvariate(float_mean,
                                              float_std)
@@ -109,20 +113,13 @@ def flexible_prediction(tree, instance, guessing=False):
         return -1 
     return sum(probs) / len(probs)
 
-
-
-def sequential_prediction(tree, filename, length, attr=None, guessing=False):
+def sequential_prediction(instances, length, attr=None, guessing=False):
     """
-    Given a json file, perform an incremental sequential prediction task. 
+    Given a set of instances, perform an incremental sequential prediction task. 
     Try to flexibly predict each instance before incorporating it into the 
     tree. This will give a type of cross validated result.
     """
-    json_data = open(filename, "r")
-    instances = json.load(json_data)
-    #instances = instances[0:length]
-    for instance in instances:
-        if "guid" in instance:
-            del instance['guid']
+    tree = Trestle()
     accuracy = []
     nodes = []
     for j in range(1):
@@ -131,10 +128,9 @@ def sequential_prediction(tree, filename, length, attr=None, guessing=False):
             if n >= length:
                 break
             if attr:
-                accuracy.append(tree.specific_prediction(i, attr, guessing))
+                accuracy.append(specific_prediction(tree,i, attr, guessing))
             else:
-                accuracy.append(tree.flexible_prediction(i, guessing))
+                accuracy.append(flexible_prediction(tree,i, guessing))
             nodes.append(tree.num_concepts())
             tree.ifit(i)
-    json_data.close()
     return accuracy, nodes
