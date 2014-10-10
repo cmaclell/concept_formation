@@ -100,7 +100,8 @@ class Trestle(Cobweb3):
 
     def val_existance_check(self):
         """
-        Used to ensure that all the values in the tree exist in the tree.
+        Used to ensure that all the values in each tree node exist somewhere in
+        the tree. This makes sure we didn't prune a value we were still using.
         """
         root = self.get_root()
         for attr in self.av_counts:
@@ -114,7 +115,8 @@ class Trestle(Cobweb3):
 
     def val_leaves_check(self):
         """
-        Used to ensure all values are leaves.
+        Used to ensure all values in each tree node are leaves of the tree
+        and not intermediate nodes.
         """
         for attr in self.av_counts:
             if isinstance(self.av_counts[attr], ContinuousValue):
@@ -127,7 +129,7 @@ class Trestle(Cobweb3):
 
     def val_representation_check(self):
         """
-        Used to ensure he level of representation of a component attribute is
+        Used to ensure the level of representation of a component attribute is
         consistent.
         """
         for attr in self.av_counts:
@@ -778,6 +780,7 @@ class Trestle(Cobweb3):
                 duplicate[attr] = self.flatten_instance(duplicate[attr])
         return repr(sorted(duplicate.items()))
 
+    ### TODO - This looks like a RumbleBlocks specific feature
     def order_towers(self):
         """
         Given a number of towers with GUIDs added return a better
