@@ -1,28 +1,4 @@
-# This file contains a number of utility functions that existed in the
-# original python file. I've moved them here to simplify the python code.
-
 import math
-
-def mean(values):
-    """
-    Computes the mean of a list of values.
-    """
-    if len(values) <= 0:
-        raise ValueError("Length of list must be greater than 0.")
-
-    return float(sum(values))/len(values)
-
-def std(values):
-    """
-    Computes the standard deviation of a list of values.
-    """
-    if len(values) <= 0:
-        raise ValueError("Length of list must be greater than 0.")
-
-    meanValue = mean(values)
-    variance =  float(sum([(v - meanValue) * (v - meanValue) for v in
-                           values]))/len(values)
-    return math.sqrt(variance)
 
 # A hashtable of vlaues to use in the c4(n) function to apply corrections to
 # estimates of std.
@@ -66,53 +42,79 @@ def c4(n) :
     else :
         return c4n_table[n] if n < 30 else 1.0
 
-def combined_mean(m1,n1,m2,n2):
+def mean(values):
     """
-    Function to compute the combined means given two means and the number
-    of samples for each mean.
+    Computes the mean of a list of values.
     """
-    return (n1 * m1 + n2 * m2)/(n1 + n2)
+    if len(values) <= 0:
+        raise ValueError("Length of list must be greater than 0.")
 
-def combined_unbiased_std(s1, m1, n1, s2, m2, n2, mX):
+    return float(sum(values))/len(values)
+
+def std(values):
     """
-    Computes a new mean from two estimated means and variances and n's as
-    well as the combined mean.
-    s1 = estimated std of sample 1
-    m1 = mean of sample 1
-    n1 = number values in sample 1
-
-    s2 = estimated std of sample 2
-    m2 = mean of sample 2
-    n2 = number of values in sample 2
-
-    mX = combined mean of two samples.
+    Computes the standard deviation of a list of values.
     """
-    uc_s1 = s1
-    uc_s2 = s2
+    if len(values) <= 0:
+        raise ValueError("Length of list must be greater than 0.")
 
-    uc_s1 = uc_s1 * c4(n1)
-    uc_s2 = uc_s2 * c4(n2)
-    #if n1 > 1 and n1 < 30:
-    #    uc_s1 = uc_s1 * utils.c4n_table[n1]
-    #if n2 > 1 and n2 < 30:
-    #    uc_s2 = uc_s2 * utils.c4n_table[n2]
-    
-    uc_std = math.sqrt(
-        ((n1 * (math.pow(uc_s1,2) + math.pow((m1 - mX),2)) + 
-          n2 * (math.pow(uc_s2,2) + math.pow((m2 - mX),2))) /
-         (n1 + n2)))
+    meanValue = mean(values)
+    variance =  float(sum([(v - meanValue) * (v - meanValue) for v in
+                           values]))/len(values)
+    return math.sqrt(variance)
 
-    c4n = c4(n1 + n2)
-    #c4n = 1.0
-    #if (n1 + n2) < 30:
-    #    c4n = utils.c4n_table[n1 + n2]
+class ContinuousValue():
 
-    # rounding correction due to summing small squares
-    # this value was computed empirically with 1000 samples on 4/6/14
-    # -Maclellan
-    # TODO I'm not sure if this is a valid thing to do. I probably
-    # just need a better algorithm.. see the parallel algorithm here:
-    # https://en.wikipedia.org/wiki/Algorithms_for_calculating_variance#Online_algorithm
-    uc_std = uc_std / 1.0112143858578193
+    def __init__(self):
+        self.num = 0
+        self.mean = 0
+        self.meanSq = 0
 
-    return uc_std / c4n
+    def biased_std(self):
+        return math.sqrt(self.meanSq / (self.num))
+
+    def unbiased_std(self):
+        if self.num < 2:
+            return 0.0
+        return math.sqrt(self.meanSq / (self.num - 1)) * c4(self.num)
+
+    def __hash__(self):
+        return hash("#ContinuousValue#")
+
+    def __repr__(self):
+        return repr(self.num) + repr(self.mean) + repr(self.meanSq)
+
+    def __str__(self):
+        return "%0.4f (%0.4f) [%i]" % (self.mean, self.unbiased_std(), self.num)
+
+    def update_batch(self, data):
+        for x in data:
+            self.update(x)
+
+    def update(self, x):
+        """
+        Incrementally update the mean and mean squared (meanSq) values in an
+        efficient and practical (no precision problems) way. This uses and
+        algorithm by Knuth, which I found here:
+            https://en.wikipedia.org/wiki/Algorithms_for_calculating_variance
+        """
+        self.num += 1
+        delta = x - self.mean 
+        self.mean += delta / self.num
+        self.meanSq += delta * (x - self.mean)
+
+    def combine(self, other):
+        """
+        Combine two clusters of means and mean squared (meanSq) values in an
+        efficient and practical (no precision problems) way. This uses the
+        parallel algorithm by Chan et al. found here: 
+            https://en.wikipedia.org/wiki/Algorithms_for_calculating_variance
+        """
+        if not isinstance(other, ContinuousValue):
+            raise ValueError("Can only merge 2 continuous values.")
+        delta = other.mean - self.mean
+        self.meanSq = (self.meanSq + other.meanSq + delta * delta * 
+                       ((self.num * other.num) / (self.num + other.num)))
+        self.mean = ((self.num * self.mean + other.num * other.mean) / 
+                     (self.num + other.num))
+        self.num += other.num
