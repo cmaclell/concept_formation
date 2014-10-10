@@ -37,18 +37,6 @@ class Labyrinth(Cobweb3):
     #                              - temp._expected_correct_guesses()))
     #    return category_utility / (1.0 * len(self.children))
 
-    def val_check(self):
-        for attr in self.av_counts:
-            for val in self.av_counts[attr]:
-                if isinstance(val, Labyrinth):
-                    for val2 in self.av_counts[attr]:
-                        if isinstance(val2, Labyrinth):
-                            if val == val2:
-                                continue
-                            assert not val.is_parent(val2)
-                            assert not val2.is_parent(val)
-        for c in self.children:
-            c.val_check()
 
     def cobweb(self, instance):
         """
@@ -966,18 +954,7 @@ class Labyrinth(Cobweb3):
         # replace references to deleted concept with parent concept
         self.get_root().replace(best, self)
 
-    def verify_component_values(self):
-        for attr in self.av_counts:
-            for val in self.av_counts[attr]:
-                if isinstance(val, Labyrinth):
-                    assert not val.children
-        for c in self.children:
-            c.verify_component_values()
 
-    def verify_parent_pointers(self):
-        for c in self.children:
-            assert c.parent == self
-            c.verify_parent_pointers()
 
     def cluster(self, filename, length):
         """
