@@ -6,13 +6,8 @@ from random import shuffle
 
 class Cobweb:
 
-    # Global class variables: counter (for gensym) and minimum category utility
-    # for a cluster.
+    # Global class variables: counter (for gensym)
     counter = 0
-
-    # The number of correct guesses per attribute that must be achieved.
-    pruning_constant = 0.0
-
 
     def __init__(self, otherTree=None):
         """
@@ -274,80 +269,6 @@ class Cobweb:
 
         return temp.category_utility(instance)
 
-    def verify_counts(self):
-        """
-        Checks the property that the counts of the children sum to the same
-        count as the parent. This is/was useful when debugging. If you are
-        doing some kind of matching at each step in the categorization (i.e.,
-        renaming such as with Labyrinth) then this will start throwing errors.
-        """
-        if len(self.children) == 0:
-            return 
-
-        temp = {}
-        temp_count = self.count
-        for attr in self.av_counts:
-            if attr not in temp:
-                temp[attr] = {}
-            for val in self.av_counts[attr]:
-                temp[attr][val] = self.av_counts[attr][val]
-
-        for child in self.children:
-            temp_count -= child.count
-            for attr in child.av_counts:
-                assert attr in temp
-                for val in child.av_counts[attr]:
-                    if val not in temp[attr]:
-                        print(val.concept_name)
-                        print(attr)
-                        print(self)
-                    assert val in temp[attr]
-                    temp[attr][val] -= child.av_counts[attr][val]
-
-        #if temp_count != 0:
-        #    print(self.count)
-        #    for child in self.children:
-        #        print(child.count)
-        assert temp_count == 0
-
-        for attr in temp:
-            for val in temp[attr]:
-                #if temp[attr][val] != 0.0:
-                #    print(self)
-
-                assert temp[attr][val] == 0.0
-
-        for child in self.children:
-            child.verify_counts()
-
-    def remove_reference(self, node):
-        pass
-
-    def exact_match(self, instance):
-        for attr in instance:
-            if attr not in self.av_counts:
-                return False
-            if instance[attr] not in self.av_counts[attr]:
-                return False
-            if not (((1.0 * self.av_counts[attr][instance[attr]]) / self.count)
-                    == 1.0):
-                return False
-
-        for attr in self.av_counts:
-            if attr not in instance:
-                return False
-
-        return True
-
-    def min_cu(self):
-        #special case for beginning.
-        if self.count == 0:
-            return 0.0
-
-        cu = len(self.av_counts) * self.pruning_constant * (1.0 / self.count)
-        #print(cu)
-        return cu
-
     def cobweb(self, instance):
         """
         Incrementally integrates an instance into the categorization tree
@@ -363,10 +284,9 @@ class Cobweb:
             # this is more generally and will be used by the Labyrinth/Trestle
             # systems to achieve more complex fringe behavior. 
 
-            #if (not current.children and current.exact_match(instance)):
 
             if (not current.children and current.cu_for_fringe_split(instance)
-                <= current.min_cu()):
+                <= 0.0):
                 current.increment_counts(instance)
                 return current 
 
@@ -393,7 +313,7 @@ class Cobweb:
                                                                      best1,
                                                                      best2)
 
-                if action_cu <= current.min_cu():
+                if action_cu <= 0.0:
                     #TODO this is new
                     #I think it makes sense to actually merge these if they
                     #are very very very similar.
@@ -520,6 +440,43 @@ class Cobweb:
                 prob = (self.av_counts[attr][val] / (1.0 * self.count))
                 correct_guesses += (prob * prob)
         return correct_guesses
+
+    def category_utility_old(self, instance=None):
+        """
+        Returns the category utility of a particular division of a concept into
+        its children. This is used as the heuristic to guide the concept
+        formation.
+
+        Only computed in terms of the attribute values of a given instance. If
+        no instance is provided, then it uses all attribute values. 
+        """
+        temp = self.shallow_copy()
+
+        if instance:
+            temp.av_counts = {a: temp.av_counts[a] for a in temp.av_counts if a
+                              in instance}
+            #for attr in temp.av_counts:
+            #    if attr not in instance:
+            #        del temp.av_counts[attr]
+            for child in temp.children:
+                child.av_counts = {a: child.av_counts[a] for a in
+                                   child.av_counts if a in instance}
+                #for attr in child.av_counts:
+                #    if attr not in instance:
+                #        del child.av_counts[attr]
+            temp.children = [c for c in temp.children if len(c.av_counts) > 0]
+
+        if len(temp.children) == 0:
+            return 0.0
+
+        category_utility = 0.0
+
+        for child in temp.children:
+            p_of_child = child.count / (1.0 * temp.count)
+            category_utility += (p_of_child *
+                                 (child.expected_correct_guesses()
+                                  - temp.expected_correct_guesses()))
+        return category_utility / (1.0 * len(temp.children))
 
     def category_utility(self, instance=None):
         """
