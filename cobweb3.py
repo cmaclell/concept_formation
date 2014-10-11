@@ -188,7 +188,7 @@ class Cobweb3(Cobweb):
         A modification of the cobweb output json to handle numeric values.
         """
         output = {}
-        output["name"] = self.concept_name
+        output["name"] = "Concept" + self.concept_id
         output["size"] = self.count
         output["children"] = []
 

@@ -19,18 +19,18 @@ def sort_dissimilar(instances):
 
     data = [a for a in original]
     random.shuffle(data)
-    last_ids = []
-    ids = [a['*id'] for a in data]
+    #last_ids = []
+    #ids = [a['*id'] for a in data]
 
     # not sure how to tell that I have converged... there is no likelihood
     # score to maximize or something... do i do cu at the root?
     for i in range(10):
     #while last_ids != ids:
-        print(levenshtein(last_ids, ids))
-        last_ids = ids
+        #print(levenshtein(last_ids, ids))
+        #last_ids = ids
         tree = Cobweb3()
         tree.fit(data)
-        print(tree.category_utility())
+        #print(tree.category_utility())
         ids = [a for a in order(tree)]
         data = [original[v] for v in ids]
 
@@ -77,18 +77,16 @@ def roundrobin(*iterables):
             pending -= 1
             nexts = cycle(islice(nexts, pending))
 
-def cluster(instances, depth=1):
+def cluster(tree, instances, depth=1):
     """
     Used to cluster examples incrementally and return the cluster labels.
     The final cluster labels are at a depth of 'depth' from the root. This
     defaults to 1, which takes the first split, but it might need to be 2
     or greater in cases where more distinction is needed.
     """
-    tree = Trestle()
-
-
     temp_clusters = [tree.ifit(instance) for instance in instances]
 
+    print([c.concept_id for c in temp_clusters])
     clusters = []
     for i,c in enumerate(temp_clusters):
         while (c.parent and c not in c.parent.children):
@@ -98,8 +96,6 @@ def cluster(instances, depth=1):
 
         promote = True
         while c.parent and promote:
-
-            promote = True
             n = c
             for i in range(depth+2):
                 if not n:
@@ -110,13 +106,7 @@ def cluster(instances, depth=1):
             if promote:
                 c = c.parent
 
-        clusters.append(c.concept_name)
-
-        while c:
-            if not '_id' in c.av_counts:
-                c.av_counts['_id'] = {}
-            c.av_counts['_id'][i] = 1;
-            c = c.parent
+        clusters.append("Concept" + c.concept_id)
 
     with open('visualize/output.json', 'w') as f:
         f.write(json.dumps(tree.output_json()))
@@ -124,10 +114,12 @@ def cluster(instances, depth=1):
     return clusters
 
 if __name__ == "__main__":
-    data = [{'x': random.normalvariate(0,1)} for i in range(20)]
-    data += [{'x': random.normalvariate(1,1)} for i in range(20)]
-    data += [{'x': random.normalvariate(2,1)} for i in range(20)]
-    data += [{'x': random.normalvariate(3,1)} for i in range(20)]
-    print(data)
+    data = [{'x': random.normalvariate(0,1)} for i in range(10)]
+    #data += [{'x': random.normalvariate(2,1)} for i in range(10)]
+    #data += [{'x': random.normalvariate(4,1)} for i in range(10)]
+    data = sort_dissimilar(data)
 
-    print(sort_dissimilar(data))
+    tree = Cobweb3()
+    clusters = cluster(tree, data)
+    print(clusters)
+    print(set(clusters))

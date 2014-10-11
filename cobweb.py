@@ -36,6 +36,15 @@ class Cobweb:
         """
         return hash(self.concept_id)
 
+    def root(self):
+        """
+        Gets the root of the categorization tree.
+        """
+        current = self
+        while current.parent:
+            current = current.parent
+        return current
+
     def gensym(self):
         """
         Generates a unique id and increments the class counter. This is used to
@@ -348,6 +357,19 @@ class Cobweb:
                 current.increment_counts(instance)
                 return current 
             elif not current.children:
+                #new = self.__class__(self)
+                #current.parent = new
+                #new.children.append(current)
+
+                #if new.parent:
+                #    current.parent.children.remove(current)
+                #    current.parent.children.append(new)
+                #
+                #new.increment_counts(instance)
+                #nc = new.create_new_child(instance)
+                #print("NEW CHILD")
+                #return nc
+                
                 current.create_child_with_current_counts()
                 current.increment_counts(instance)
                 return current.create_new_child(instance)
@@ -385,7 +407,8 @@ class Cobweb:
         """
         # If there is no best, then create a new child.
         if not best1:
-            return (self.cu_for_new_child(instance), 'new')
+            raise ValueError("Need at least one best child.")
+            #return (self.cu_for_new_child(instance), 'new')
 
         if best1:
             best1_cu, best1 = best1
@@ -403,7 +426,7 @@ class Cobweb:
             operations.append((self.cu_for_split(best1),'split'))
 
         operations.sort(reverse=True)
-        #print(operations)
+        #print(operations[0])
         return operations[0]
         
     def cobweb_categorize_leaf(self, instance):
