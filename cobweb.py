@@ -463,6 +463,8 @@ class Cobweb:
         correct_guesses = 0.0
 
         for attr in self.av_counts:
+            if attr[0] == "*":
+                continue
             for val in self.av_counts[attr]:
                 prob = (self.av_counts[attr][val] / (1.0 * self.count))
                 correct_guesses += (prob * prob)

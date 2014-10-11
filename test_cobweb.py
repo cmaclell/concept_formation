@@ -1,6 +1,6 @@
 from cobweb import Cobweb
 import unittest
-import timeit
+import random
 
 def verify_category_utility(node):
     if node.children:
@@ -68,6 +68,13 @@ class TestCobweb(unittest.TestCase):
         assert node.expected_correct_guesses() == ((1/10)**2 + (3/10)**2 +
                                                    (6/10)**2)
 
+        node.av_counts['*a2'] = {}
+        node.av_counts['*a2']['v1'] = 1 
+        node.av_counts['*a2']['v2'] = 1
+
+        assert node.expected_correct_guesses() == ((1/10)**2 + (3/10)**2 +
+                                                   (6/10)**2)
+
     def test_category_utility(self):
 
         ## Code for timing
@@ -102,7 +109,11 @@ class TestCobweb(unittest.TestCase):
 
     def test_cobweb(self):
         tree = Cobweb()
-        tree.train_from_json('data_files/cobweb_test.json')
+        for i in range(40):
+            data = {}
+            data['a1'] = random.choice(['v1', 'v2', 'v3', 'v4'])
+            data['a2'] = random.choice(['v1', 'v2', 'v3', 'v4'])
+            tree.ifit(data)
         verify_counts(tree)
 
 if __name__ == "__main__":

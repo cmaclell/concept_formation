@@ -12,60 +12,9 @@ class Cobweb3(Cobweb):
     # Smallest possible acuity. Below this and probabilities will exceed 1.0
     acuity = 1.0 / math.sqrt(2.0 * math.pi)
 
-    def verify_counts(self):
-        """
-        Checks the property that the counts of the children sum to the same
-        count as the parent. This is/was useful when debugging. If you are
-        doing some kind of matching at each step in the categorization (i.e.,
-        renaming such as with Labyrinth) then this will start throwing errors.
-        """
-        if len(self.children) == 0:
-            return 
-
-        temp = {}
-        temp_count = self.count
-        for attr in self.av_counts:
-            if isinstance(self.av_counts[attr], ContinuousValue):
-                temp[attr] = self.av_counts[attr].num
-            else:
-                if attr not in temp:
-                    temp[attr] = {}
-                for val in self.av_counts[attr]:
-                    temp[attr][val] = self.av_counts[attr][val]
-
-        for child in self.children:
-            temp_count -= child.count
-            for attr in child.av_counts:
-                assert attr in temp
-                if isinstance(child.av_counts[attr], ContinuousValue):
-                    temp[attr] -= child.av_counts[attr].num
-                else:
-                    for val in child.av_counts[attr]:
-                        if val not in temp[attr]:
-                            print(val.concept_name)
-                            print(attr)
-                            print(self)
-                        assert val in temp[attr]
-                        temp[attr][val] -= child.av_counts[attr][val]
-
-        assert temp_count == 0
-
-        for attr in temp:
-            if isinstance(temp[attr], int):
-                assert temp[attr] == 0.0
-            else:
-                for val in temp[attr]:
-                    assert temp[attr][val] == 0.0
-
-        for child in self.children:
-            child.verify_counts()
-
     def increment_counts(self, instance):
         """
         A modified version of increment counts that handles floats properly
-
-        input:
-            instance: {a1: v1, a2: v2, ...} - a hashtable of attr and values. 
         """
         self.count += 1 
             
@@ -104,20 +53,22 @@ class Cobweb3(Cobweb):
         """
         Computes the number of attribute values that would be correctly guessed
         in the current concept. This extension supports both nominal and
-        numeric attribute values. The acuity parameter should be set based on
-        the domain cobweb is being used on. The acuity is set as a global
-        parameter now. 
+        numeric attribute values. 
+        
+        The typical cobweb 3 calculation for correct guesses is:
+            P(A_i = V_ij)^2 = 1 / (2 * sqrt(pi) * std)
+
+        However, this does not take into account situations when P(A_i) != 1.0.
+        To account for this we use a modified equation:
+            P(A_i = V_ij)^2 = P(A_i)^2 * (1 / (2 * sqrt(pi) * std))
         """
         correct_guesses = 0.0
 
         for attr in self.av_counts:
-            if isinstance(self.av_counts[attr], ContinuousValue):
-                std = self.av_counts[attr].unbiased_std()
-                if std < self.acuity:
-                    std = self.acuity
-                # this is implicit in the nominal case, but here it must be
-                # computed explicitly in addition to the std based cu calc. 
-                # -CM
+            if attr[0] == "*":
+                continue
+            elif isinstance(self.av_counts[attr], ContinuousValue):
+                std = max(self.av_counts[attr].unbiased_std(), self.acuity)
                 prob_attr = ((1.0 * self.av_counts[attr].num) / self.count)
                 correct_guesses += ((prob_attr * prob_attr) * 
                                     (1.0 / (2.0 * math.sqrt(math.pi) * std)))
