@@ -1,4 +1,4 @@
-from cobweb import Cobweb
+from cobweb import CobwebTree, CobwebNode
 import unittest
 import random
 
@@ -58,7 +58,7 @@ def verify_counts(node):
 class TestCobweb(unittest.TestCase):
 
     def test_expected_correct_guess(self):
-        node = Cobweb()
+        node = CobwebNode()
         node.count = 10
         node.av_counts['a1'] = {}
         node.av_counts['a1']['v1'] = 1 
@@ -80,19 +80,19 @@ class TestCobweb(unittest.TestCase):
         ## Code for timing
         #print("Current CU Time: %0.3f" %
         #      min(timeit.Timer(node.category_utility).repeat(repeat=10,number=1000)))
-        node = Cobweb()
+        node = CobwebNode()
         node.count = 10
         node.av_counts['a1'] = {}
         node.av_counts['a1']['v1'] = 1 
         node.av_counts['a1']['v2'] = 3 
         node.av_counts['a1']['v3'] = 6 
 
-        child1 = Cobweb()
+        child1 = CobwebNode()
         child1.count = 6
         child1.av_counts['a1'] = {}
         child1.av_counts['a1']['v3'] = 6 
 
-        child2 = Cobweb()
+        child2 = CobwebNode()
         child2.count = 4
         child2.av_counts['a1'] = {}
         child2.av_counts['a1']['v1'] = 1 
@@ -108,13 +108,13 @@ class TestCobweb(unittest.TestCase):
                                                       (6/10)**2))) / 2)
 
     def test_cobweb(self):
-        tree = Cobweb()
+        tree = CobwebTree()
         for i in range(40):
             data = {}
             data['a1'] = random.choice(['v1', 'v2', 'v3', 'v4'])
             data['a2'] = random.choice(['v1', 'v2', 'v3', 'v4'])
             tree.ifit(data)
-        verify_counts(tree)
+        verify_counts(tree.root)
 
 if __name__ == "__main__":
     unittest.main()

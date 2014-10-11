@@ -1,5 +1,5 @@
 from utils import ContinuousValue
-from cobweb3 import Cobweb3
+from cobweb3 import Cobweb3Node, Cobweb3Tree
 import unittest
 import random
 import math
@@ -55,25 +55,25 @@ def verify_counts(node):
 class TestCobweb(unittest.TestCase):
 
     def test_cobweb(self):
-        tree = Cobweb3()
+        tree = Cobweb3Tree()
         for i in range(40):
             data = {}
             data['a1'] = random.choice(['v1', 'v2', 'v3', 'v4'])
             data['a2'] = random.choice(['v1', 'v2', 'v3', 'v4'])
             tree.ifit(data)
-        verify_counts(tree)
+        verify_counts(tree.root)
 
     def test_cobweb3(self):
-        tree = Cobweb3()
+        tree = Cobweb3Tree()
         for i in range(40):
             data = {}
             data['x'] = random.normalvariate(0,4)
             data['y'] = random.normalvariate(0,4)
             tree.ifit(data)
-        verify_counts(tree)
+        verify_counts(tree.root)
 
     def test_expected_correct_guess(self):
-        node = Cobweb3()
+        node = Cobweb3Node()
         node.count = 10
         node.av_counts['a1'] = {}
         node.av_counts['a1']['v1'] = 1 
@@ -90,7 +90,7 @@ class TestCobweb(unittest.TestCase):
         assert node.expected_correct_guesses() == ((1/10)**2 + (3/10)**2 +
                                                    (6/10)**2)
 
-        node = Cobweb3()
+        node = Cobweb3Node()
         node.count = 10
         node.av_counts['a1'] = {}
         v1 = ContinuousValue()

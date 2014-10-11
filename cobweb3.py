@@ -1,13 +1,57 @@
 import math
-import json
-import utils
 from utils import ContinuousValue
 from random import normalvariate
 from random import choice
 from random import random
-from cobweb import Cobweb
+from cobweb import CobwebNode, CobwebTree
 
-class Cobweb3(Cobweb):
+class Cobweb3Tree(CobwebTree):
+
+    def __init__(self):
+        self.root = Cobweb3Node()
+
+    def predict(self, instance):
+        """
+        Given an instance predict any missing attribute values without
+        modifying the tree. This has been modified to make predictions about
+        nominal and numeric attribute values. 
+        """
+        prediction = {}
+
+        # make a copy of the instance
+        for attr in instance:
+            prediction[attr] = instance[attr]
+
+        concept = self._cobweb_categorize(instance)
+        
+        for attr in concept.av_counts:
+            if attr in prediction:
+                continue
+            
+            nominal_values = []
+            #float_values = []
+
+            num_floats = 0
+            mean = 0.0
+            std = 0.0
+            for val in concept.av_counts[attr]:
+                if isinstance(val, ContinuousValue):
+                    num_floats = val.num
+                    mean = val.mean
+                    std = val.unbiased_std()
+                else:
+                    nominal_values += [val] * concept.av_counts[attr][val]
+
+            if random() < ((len(nominal_values) * 1.0) / (len(nominal_values) +
+                                                          num_floats)):
+                prediction[attr] = choice(nominal_values)
+            else:
+                prediction[attr] = normalvariate(mean,
+                                                 std)
+
+        return prediction
+
+class Cobweb3Node(CobwebNode):
 
     # Smallest possible acuity. Below this and probabilities will exceed 1.0
     acuity = 1.0 / math.sqrt(2.0 * math.pi)
@@ -91,7 +135,8 @@ class Cobweb3(Cobweb):
             if isinstance(self.av_counts[attr], ContinuousValue):
                 attributes.append("'%s': { %0.3f (%0.3f) [%i] }" % (attr,
                                                                     self.av_counts[attr].mean,
-                                                                    self.av_counts[attr].unbiased_std(),
+                                                                    max(self.acuity,
+                                                                        self.av_counts[attr].unbiased_std()),
                                                                     self.av_counts[attr].num))
             else:
                 values = []
@@ -109,46 +154,6 @@ class Cobweb3(Cobweb):
 
         return ret
 
-    def predict(self, instance):
-        """
-        Given an instance predict any missing attribute values without
-        modifying the tree. This has been modified to make predictions about
-        nominal and numeric attribute values. 
-        """
-        prediction = {}
-
-        # make a copy of the instance
-        for attr in instance:
-            prediction[attr] = instance[attr]
-
-        concept = self._cobweb_categorize(instance)
-        
-        for attr in concept.av_counts:
-            if attr in prediction:
-                continue
-            
-            nominal_values = []
-            #float_values = []
-
-            num_floats = 0
-            mean = 0.0
-            std = 0.0
-            for val in concept.av_counts[attr]:
-                if isinstance(val, ContinuousValue):
-                    num_floats = val.num
-                    mean = val.mean
-                    std = val.unbiased_std()
-                else:
-                    nominal_values += [val] * concept.av_counts[attr][val]
-
-            if random() < ((len(nominal_values) * 1.0) / (len(nominal_values) +
-                                                          num_floats)):
-                prediction[attr] = choice(nominal_values)
-            else:
-                prediction[attr] = normalvariate(mean,
-                                                 std)
-
-        return prediction
 
     def get_probability(self, attr, val):
         """
@@ -212,9 +217,12 @@ if __name__ == "__main__":
 
     #Cobweb3().predictions("data_files/cobweb3_test3.json", 10, 20)
     #Cobweb3Tree().baseline_guesser("data_files/cobweb3_test.json", 30, 100)
-    tree = Cobweb3()
-    print(tree.cluster("data_files/cobweb3_test.json", 100, 1))
-    print(json.dumps(tree.output_json()))
+    tree = Cobweb3Tree()
+    tree.ifit({'x': 1.0})
+    tree.ifit({'x': 10.0})
+    tree.ifit({'x': 11.0})
+    tree.ifit({'x': 1.1})
+    print(tree)
 
 
 
