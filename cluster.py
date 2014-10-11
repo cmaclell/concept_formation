@@ -3,9 +3,9 @@
 # but we can rename it later if we want
 
 import json
-from trestle import Trestle
+#from trestle import Trestle
 #from cobweb import Cobweb
-from cobweb3 import Cobweb3
+from cobweb3 import Cobweb3Tree
 from itertools import cycle, islice
 import copy
 import random
@@ -15,7 +15,7 @@ random.seed(1)
 def sort_dissimilar(instances):
     original = copy.deepcopy(instances)
     for i,d in enumerate(original):
-        d['*id'] = i
+        d['_id'] = i
 
     data = [a for a in original]
     random.shuffle(data)
@@ -28,20 +28,20 @@ def sort_dissimilar(instances):
     #while last_ids != ids:
         #print(levenshtein(last_ids, ids))
         #last_ids = ids
-        tree = Cobweb3()
+        tree = Cobweb3Tree()
         tree.fit(data)
         #print(tree.category_utility())
-        ids = [a for a in order(tree)]
+        ids = [a for a in order(tree.root)]
         data = [original[v] for v in ids]
 
     return data
 
-def order(tree):
-    if not tree.children:
-        return list(tree.av_counts['*id'].keys())
+def order(node):
+    if not node.children:
+        return list(node.av_counts['_id'].keys())
 
-    tree.children.sort(key=lambda x: x.count, reverse=True)
-    items = [order(c) for c in tree.children]
+    node.children.sort(key=lambda x: x.count, reverse=True)
+    items = [order(c) for c in node.children]
     return roundrobin(*items)
 
 def levenshtein(a,b):
@@ -86,13 +86,11 @@ def cluster(tree, instances, depth=1):
     """
     temp_clusters = [tree.ifit(instance) for instance in instances]
 
-    print([c.concept_id for c in temp_clusters])
+    print(len(set([c.concept_id for c in temp_clusters])))
     clusters = []
     for i,c in enumerate(temp_clusters):
         while (c.parent and c not in c.parent.children):
             c = c.parent
-        while (isinstance(c, Trestle) and c.children):
-            c = c.trestle_categorize_leaf(instances[i])
 
         promote = True
         while c.parent and promote:
@@ -109,17 +107,17 @@ def cluster(tree, instances, depth=1):
         clusters.append("Concept" + c.concept_id)
 
     with open('visualize/output.json', 'w') as f:
-        f.write(json.dumps(tree.output_json()))
+        f.write(json.dumps(tree.root.output_json()))
 
     return clusters
 
 if __name__ == "__main__":
-    data = [{'x': random.normalvariate(0,1)} for i in range(10)]
-    #data += [{'x': random.normalvariate(2,1)} for i in range(10)]
-    #data += [{'x': random.normalvariate(4,1)} for i in range(10)]
+    data = [{'x': random.normalvariate(0,0.5)} for i in range(10)]
+    data += [{'x': random.normalvariate(2,0.5)} for i in range(10)]
+    data += [{'x': random.normalvariate(4,0.5)} for i in range(10)]
     data = sort_dissimilar(data)
 
-    tree = Cobweb3()
+    tree = Cobweb3Tree()
     clusters = cluster(tree, data)
     print(clusters)
     print(set(clusters))

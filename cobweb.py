@@ -43,6 +43,7 @@ class CobwebTree:
                 <= 0.0):
                 current.increment_counts(instance)
                 return current 
+
             elif not current.children:
                 new = current.__class__(current)
                 current.parent = new
@@ -53,7 +54,7 @@ class CobwebTree:
                     new.parent.children.append(new)
                 else:
                     self.root = new
-                
+
                 new.increment_counts(instance)
                 return new.create_new_child(instance)
             else:
@@ -155,7 +156,6 @@ class CobwebTree:
 
         return prediction
 
-
     def concept_attr_value(self, instance, attr, val):
         """
         Gets the probability of a particular attribute value for the concept
@@ -219,35 +219,38 @@ class CobwebTree:
         json_data.close()
         return accuracy, nodes
 
-    def cluster(self, filename, length, iterations):
+    def cluster(self, instances, depth=1):
         """
-        Used to provide a clustering of a set of examples provided in a JSON
-        file. It starts by incorporating the examples into the categorization
-        tree multiple times. After incorporating the instances it then
-        categorizes each example (without updating the tree) and returns the
-        concept it was assoicated with.
+        Used to cluster examples incrementally and return the cluster labels.
+        The final cluster labels are at a depth of 'depth' from the root. This
+        defaults to 1, which takes the first split, but it might need to be 2
+        or greater in cases where more distinction is needed.
         """
-        json_data = open(filename, "r")
-        instances = json.load(json_data)
-        instances = instances[0:length]
-        o_instances = instances.copy()
-        json_data.close()
+        temp_clusters = [self.ifit(instance) for instance in instances]
+
+        print(len(set([c.concept_id for c in temp_clusters])))
         clusters = []
-        diff = 1
-        counter = 0
-        while diff > 0 and counter < iterations:
-            counter += 1
-        #for j in range(iterations):
-            before = self.num_concepts()
-            shuffle(instances)
-            for n, i in enumerate(instances):
-                if n >= length:
-                    break
-                self.ifit(i)
-            print(self.num_concepts())
-            diff = abs(before - self.num_concepts())
-        for n, i in enumerate(o_instances):
-            clusters.append(self.cobweb_categorize(i).concept_name)
+        for i,c in enumerate(temp_clusters):
+            while (c.parent and c not in c.parent.children):
+                c = c.parent
+
+            promote = True
+            while c.parent and promote:
+                n = c
+                for i in range(depth+2):
+                    if not n:
+                        promote = False
+                        break
+                    n = n.parent
+
+                if promote:
+                    c = c.parent
+
+            clusters.append("Concept" + c.concept_id)
+
+        with open('visualize/output.json', 'w') as f:
+            f.write(json.dumps(self.root.output_json()))
+
         return clusters
 
     def baseline_guesser(self, filename, length, iterations):
@@ -422,7 +425,7 @@ class CobwebNode:
         correct_guesses = 0.0
 
         for attr in self.av_counts:
-            if attr[0] == "*":
+            if attr[0] == "_":
                 continue
             for val in self.av_counts[attr]:
                 prob = (self.av_counts[attr][val] / (1.0 * self.count))

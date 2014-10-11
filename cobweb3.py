@@ -109,7 +109,7 @@ class Cobweb3Node(CobwebNode):
         correct_guesses = 0.0
 
         for attr in self.av_counts:
-            if attr[0] == "*":
+            if attr[0] == "_":
                 continue
             elif isinstance(self.av_counts[attr], ContinuousValue):
                 std = max(self.av_counts[attr].unbiased_std(), self.acuity)
@@ -153,7 +153,6 @@ class Cobweb3Node(CobwebNode):
             ret += c.pretty_print(depth+1)
 
         return ret
-
 
     def get_probability(self, attr, val):
         """
@@ -215,14 +214,14 @@ class Cobweb3Node(CobwebNode):
 
 if __name__ == "__main__":
 
-    #Cobweb3().predictions("data_files/cobweb3_test3.json", 10, 20)
-    #Cobweb3Tree().baseline_guesser("data_files/cobweb3_test.json", 30, 100)
     tree = Cobweb3Tree()
-    tree.ifit({'x': 1.0})
-    tree.ifit({'x': 10.0})
-    tree.ifit({'x': 11.0})
-    tree.ifit({'x': 1.1})
-    print(tree)
 
+    data = [{'x': normalvariate(0,0.5)} for i in range(10)]
+    data += [{'x': normalvariate(2,0.5)} for i in range(10)]
+    data += [{'x': normalvariate(4,0.5)} for i in range(10)]
+
+    clusters = tree.cluster(data)
+    print(clusters)
+    print(set(clusters))
 
 
