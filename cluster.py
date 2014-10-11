@@ -4,7 +4,78 @@
 
 import json
 from trestle import Trestle
+#from cobweb import Cobweb
+from cobweb3 import Cobweb3
+from itertools import cycle, islice
+import copy
+import random
 
+random.seed(1)
+
+def sort_dissimilar(instances):
+    original = copy.deepcopy(instances)
+    for i,d in enumerate(original):
+        d['*id'] = i
+
+    data = [a for a in original]
+    random.shuffle(data)
+    last_ids = []
+    ids = [a['*id'] for a in data]
+
+    # not sure how to tell that I have converged... there is no likelihood
+    # score to maximize or something... do i do cu at the root?
+    for i in range(10):
+    #while last_ids != ids:
+        print(levenshtein(last_ids, ids))
+        last_ids = ids
+        tree = Cobweb3()
+        tree.fit(data)
+        print(tree.category_utility())
+        ids = [a for a in order(tree)]
+        data = [original[v] for v in ids]
+
+    return data
+
+def order(tree):
+    if not tree.children:
+        return list(tree.av_counts['*id'].keys())
+
+    tree.children.sort(key=lambda x: x.count, reverse=True)
+    items = [order(c) for c in tree.children]
+    return roundrobin(*items)
+
+def levenshtein(a,b):
+    "Calculates the Levenshtein distance between a and b."
+    n, m = len(a), len(b)
+    if n > m:
+        # Make sure n <= m, to use O(min(n,m)) space
+        a,b = b,a
+        n,m = m,n
+        
+    current = range(n+1)
+    for i in range(1,m+1):
+        previous, current = current, [i]+[0]*n
+        for j in range(1,n+1):
+            add, delete = previous[j]+1, current[j-1]+1
+            change = previous[j-1]
+            if a[j-1] != b[i-1]:
+                change = change + 1
+            current[j] = min(add, delete, change)
+            
+    return current[n]
+
+def roundrobin(*iterables):
+    "roundrobin('ABC', 'D', 'EF') --> A D E B F C"
+    # Recipe credited to George Sakkis
+    pending = len(iterables)
+    nexts = cycle(iter(it).__next__ for it in iterables)
+    while pending:
+        try:
+            for next in nexts:
+                yield next()
+        except StopIteration:
+            pending -= 1
+            nexts = cycle(islice(nexts, pending))
 
 def cluster(instances, depth=1):
     """
@@ -51,3 +122,12 @@ def cluster(instances, depth=1):
         f.write(json.dumps(tree.output_json()))
 
     return clusters
+
+if __name__ == "__main__":
+    data = [{'x': random.normalvariate(0,1)} for i in range(20)]
+    data += [{'x': random.normalvariate(1,1)} for i in range(20)]
+    data += [{'x': random.normalvariate(2,1)} for i in range(20)]
+    data += [{'x': random.normalvariate(3,1)} for i in range(20)]
+    print(data)
+
+    print(sort_dissimilar(data))
