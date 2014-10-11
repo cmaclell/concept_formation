@@ -10,10 +10,107 @@ from random import choice
 from random import random
 from random import shuffle
 from random import normalvariate
-from cobweb3 import Cobweb3
+from cobweb3 import Cobweb3Tree, Cobweb3Node
 from cobweb3 import ContinuousValue
 
-class Trestle(Cobweb3):
+class TrestleTree(Cobweb3Tree):
+
+    def __init__(self):
+        self.root = TrestleNode()
+
+    def ifit(self, instance):
+        """
+        A modification of ifit to call Trestle instead.
+        """
+        return self.trestle(instance)
+
+    def trestle_categorize_leaf(self, instance):
+        """
+        This verion of the trestle categorize function always goes to a leaf.
+        """
+        temp_instance = {}
+        for attr in instance:
+            if isinstance(instance[attr], dict):
+                temp_instance[attr] = self.trestle_categorize_leaf(instance[attr])
+            elif isinstance(instance[attr], list):
+                temp_instance[attr] = tuple(instance[attr])
+            else:
+                temp_instance[attr] = instance[attr]
+
+        # should be able to match just at the root, if the matchings change
+        # than the counts between parent and child will be thrown off which is
+        # not allowed to happen so for now don't worry about it.
+        # TODO check if this needs to be changed
+        temp_instance = self.match(temp_instance)
+        return self.cobweb_categorize_leaf(temp_instance)
+
+    def trestle_categorize(self, instance):
+        """
+        The Trestle categorize function, this Trestle categorizes all the
+        sub-components before categorizing itself.
+        """
+        temp_instance = {}
+        for attr in instance:
+            if isinstance(instance[attr], dict):
+                # in this case I ensure the leaves go all the way down so they
+                # match against previous cases.
+                temp_instance[attr] = self.trestle_categorize_leaf(instance[attr])
+            elif isinstance(instance[attr], list):
+                temp_instance[attr] = tuple(instance[attr])
+            else:
+                temp_instance[attr] = instance[attr]
+
+        # should be able to match just at the root, if the matchings change
+        # than the counts between parent and child will be thrown off which is
+        # not allowed to happen so for now don't worry about it.
+        # TODO check if this needs to be changed
+        temp_instance = self.match(temp_instance)
+        return self.cobweb_categorize(temp_instance)
+
+    def trestle(self, instance):
+        """
+        Recursively calls Trestle on all of the components in a depth-first
+        traversal. Once all of the components have been classified then then it
+        classifies the current node.
+        """
+        temp_instance = {}
+        attributes = sorted([attr for attr in instance])
+        shuffle(attributes)
+        for attr in attributes:
+        #for attr in instance:
+            if isinstance(instance[attr], dict):
+                temp_instance[attr] = self.trestle(instance[attr])
+
+            elif isinstance(instance[attr], list):
+                temp_instance[tuple(instance[attr])] = True
+            else:
+                temp_instance[attr] = instance[attr]
+
+        # Ensure none of the components got split due to pruning
+        for attr in temp_instance:
+            if isinstance(temp_instance[attr], TrestleNode):
+                while (temp_instance[attr].parent and temp_instance[attr] not
+                       in temp_instance[attr].parent.children):
+                    temp_instance[attr] = temp_instance[attr].parent
+
+        # Ensure all components are leaves
+        for attr in temp_instance:
+            while (isinstance(temp_instance[attr], TrestleNode) and
+                temp_instance[attr].children):
+                #print("fixing fringe split.")
+                temp_instance[attr] = temp_instance[attr].trestle_categorize_leaf(instance[attr])
+
+        # should be able to match just at the root, if the matchings change
+        # than the counts between parent and child will be thrown off which is
+        # not allowed to happen so for now don't worry about it.
+        # TODO check if this needs to be changed
+        temp_instance = self.root.match(temp_instance)
+
+        ret = self.cobweb(temp_instance)
+
+        return ret
+
+class TrestleNode(Cobweb3Node):
 
     def replace_value(self, attr, old, new):
         """
@@ -172,48 +269,48 @@ class Trestle(Cobweb3):
             ancestor = ancestor.parent
         return ancestor
 
-    def trestle(self, instance):
-        """
-        Recursively calls Trestle on all of the components in a depth-first
-        traversal. Once all of the components have been classified then then it
-        classifies the current node.
-        """
-        temp_instance = {}
-        attributes = sorted([attr for attr in instance])
-        shuffle(attributes)
-        for attr in attributes:
-        #for attr in instance:
-            if isinstance(instance[attr], dict):
-                temp_instance[attr] = self.trestle(instance[attr])
+    #def trestle(self, instance):
+    #    """
+    #    Recursively calls Trestle on all of the components in a depth-first
+    #    traversal. Once all of the components have been classified then then it
+    #    classifies the current node.
+    #    """
+    #    temp_instance = {}
+    #    attributes = sorted([attr for attr in instance])
+    #    shuffle(attributes)
+    #    for attr in attributes:
+    #    #for attr in instance:
+    #        if isinstance(instance[attr], dict):
+    #            temp_instance[attr] = self.trestle(instance[attr])
 
-            elif isinstance(instance[attr], list):
-                temp_instance[tuple(instance[attr])] = True
-            else:
-                temp_instance[attr] = instance[attr]
+    #        elif isinstance(instance[attr], list):
+    #            temp_instance[tuple(instance[attr])] = True
+    #        else:
+    #            temp_instance[attr] = instance[attr]
 
-        # Ensure none of the components got split due to pruning
-        for attr in temp_instance:
-            if isinstance(temp_instance[attr], Trestle):
-                while (temp_instance[attr].parent and temp_instance[attr] not
-                       in temp_instance[attr].parent.children):
-                    temp_instance[attr] = temp_instance[attr].parent
+    #    # Ensure none of the components got split due to pruning
+    #    for attr in temp_instance:
+    #        if isinstance(temp_instance[attr], Trestle):
+    #            while (temp_instance[attr].parent and temp_instance[attr] not
+    #                   in temp_instance[attr].parent.children):
+    #                temp_instance[attr] = temp_instance[attr].parent
 
-        # Ensure all components are leaves
-        for attr in temp_instance:
-            while (isinstance(temp_instance[attr], Trestle) and
-                temp_instance[attr].children):
-                #print("fixing fringe split.")
-                temp_instance[attr] = temp_instance[attr].trestle_categorize_leaf(instance[attr])
+    #    # Ensure all components are leaves
+    #    for attr in temp_instance:
+    #        while (isinstance(temp_instance[attr], Trestle) and
+    #            temp_instance[attr].children):
+    #            #print("fixing fringe split.")
+    #            temp_instance[attr] = temp_instance[attr].trestle_categorize_leaf(instance[attr])
 
-        # should be able to match just at the root, if the matchings change
-        # than the counts between parent and child will be thrown off which is
-        # not allowed to happen so for now don't worry about it.
-        # TODO check if this needs to be changed
-        temp_instance = self.match(temp_instance)
+    #    # should be able to match just at the root, if the matchings change
+    #    # than the counts between parent and child will be thrown off which is
+    #    # not allowed to happen so for now don't worry about it.
+    #    # TODO check if this needs to be changed
+    #    temp_instance = self.match(temp_instance)
 
-        ret = self.cobweb(temp_instance)
+    #    ret = self.cobweb(temp_instance)
 
-        return ret
+    #    return ret
 
     def exists(self, concept):
         if self == concept:
@@ -234,7 +331,7 @@ class Trestle(Cobweb3):
         # Ensure it is a complete mapping
         # Might be troublesome if there is a name collision
         for attr in instance:
-            if not isinstance(instance[attr], Trestle):
+            if not isinstance(instance[attr], TrestleNode):
                 continue
             if attr not in mapping:
                 mapping[attr] = attr
@@ -246,7 +343,7 @@ class Trestle(Cobweb3):
         for attr in instance:
             if isinstance(attr, tuple):
                 relations.append(attr)
-            elif isinstance(instance[attr], Trestle):
+            elif isinstance(instance[attr], TrestleNode):
                 mapping[attr]
                 instance[attr]
                 temp_instance[mapping[attr]] = instance[attr]
@@ -308,13 +405,13 @@ class Trestle(Cobweb3):
         #            print(attr + ": " + str(val.concept_name))
 
         from_name = [attr for attr in instance if isinstance(instance[attr],
-                                                             Trestle)]
+                                                             TrestleNode)]
         to_name = []
         for attr in self.av_counts:
             if isinstance(self.av_counts[attr], ContinuousValue):
                 continue
             for val in self.av_counts[attr]:
-                if isinstance(val, Trestle):
+                if isinstance(val, TrestleNode):
                     to_name.append(attr)
                     break
 
@@ -351,7 +448,7 @@ class Trestle(Cobweb3):
 
                 # match based on match to values with shared ancestory.
                 for val in self.av_counts[to_name[col_index]]:
-                    if not isinstance(val, Trestle):
+                    if not isinstance(val, TrestleNode):
                         continue
                     ancestor = self.common_ancestor(from_val, val)
                     reward += (((1.0 * self.av_counts[to_name[col_index]][val])
@@ -457,7 +554,7 @@ class Trestle(Cobweb3):
         component values.
         """
         output = {}
-        output["name"] = self.concept_name
+        output["name"] = "Concept" + self.concept_id
         output["size"] = self.count
         if self.children:
             output["CU"] = self.category_utility()
@@ -475,8 +572,8 @@ class Trestle(Cobweb3):
                 for value in self.av_counts[attr]:
                     if isinstance(attr, tuple):
                         temp["[" + " ".join(attr) + "]"] = (self.av_counts[attr][True] / self.count)
-                    elif isinstance(value, Trestle): 
-                        temp[attr + " = " + value.concept_name] = (self.av_counts[attr][value] / self.count)
+                    elif isinstance(value, TrestleNode): 
+                        temp[attr + " = Concept" + value.concept_id ] = (self.av_counts[attr][value] / self.count)
                     else:
                         temp[attr + " = " + str(value)] = (self.av_counts[attr][value] / self.count)
 
@@ -487,54 +584,6 @@ class Trestle(Cobweb3):
 
         return output
 
-    def trestle_categorize_leaf(self, instance):
-        """
-        This verion of the trestle categorize function always goes to a leaf.
-        """
-        temp_instance = {}
-        for attr in instance:
-            if isinstance(instance[attr], dict):
-                temp_instance[attr] = self.trestle_categorize_leaf(instance[attr])
-            elif isinstance(instance[attr], list):
-                temp_instance[attr] = tuple(instance[attr])
-            else:
-                temp_instance[attr] = instance[attr]
-
-        # should be able to match just at the root, if the matchings change
-        # than the counts between parent and child will be thrown off which is
-        # not allowed to happen so for now don't worry about it.
-        # TODO check if this needs to be changed
-        temp_instance = self.match(temp_instance)
-        return self.cobweb_categorize_leaf(temp_instance)
-
-    def trestle_categorize(self, instance):
-        """
-        The Trestle categorize function, this Trestle categorizes all the
-        sub-components before categorizing itself.
-        """
-        temp_instance = {}
-        for attr in instance:
-            if isinstance(instance[attr], dict):
-                # in this case I ensure the leaves go all the way down so they
-                # match against previous cases.
-                temp_instance[attr] = self.trestle_categorize_leaf(instance[attr])
-            elif isinstance(instance[attr], list):
-                temp_instance[attr] = tuple(instance[attr])
-            else:
-                temp_instance[attr] = instance[attr]
-
-        # should be able to match just at the root, if the matchings change
-        # than the counts between parent and child will be thrown off which is
-        # not allowed to happen so for now don't worry about it.
-        # TODO check if this needs to be changed
-        temp_instance = self.match(temp_instance)
-        return self.cobweb_categorize(temp_instance)
-
-    def ifit(self, instance):
-        """
-        A modification of ifit to call Trestle instead.
-        """
-        return self.trestle(instance)
 
     def pretty_print(self, depth=0):
         """
@@ -868,7 +917,7 @@ class Trestle(Cobweb3):
         to a particular concept from the tree. It replaces these references
         with a reference to the parent concept
         """
-        super(Trestle, self).split(best)
+        super(TrestleNode, self).split(best)
         
         # replace references to deleted concept with parent concept
         self.get_root().replace(best, self)
@@ -1120,11 +1169,13 @@ def noise_experiments():
 if __name__ == "__main__":
 
     # KC labeling
-    tree = Trestle()
+    tree = TrestleTree()
 
     with open('data_files/rb_com_11_noCheck.json', "r") as json_data:
         instances = json.load(json_data)
-    print(set(tree.cluster(instances)))
+    print(len(instances))
+    instances = instances[0:15]
+    print(set(tree.cluster(instances, 2)))
 
     #labels = tree.kc_label("data_files/instant-test-processed.json", 16000)
     #pickle.dump(labels, open('clustering.pickle', 'wb'))
