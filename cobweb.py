@@ -131,6 +131,19 @@ class CobwebTree:
             elif best_action == "best":
                 current = best1
 
+    def predict_attribute(self, instance, attribute):
+        if attribute in instance:
+            raise ValueError("The attribute is present in the instance!")
+        concept = self.cobweb_categorize(instance)
+        current = concept
+
+        while attribute not in concept.av_counts and current.parent:
+            current = current.parent
+        
+        value, count = max(current.av_counts[attribute].items(), key=lambda x:
+                           x[1])
+        return value
+
     def predict(self, instance):
         """
         Given an instance predict any missing attribute values without
@@ -781,4 +794,6 @@ if __name__ == "__main__":
     tree.ifit({'a': 'v'})
     tree.ifit({'a': 'v'})
     print(tree)
+
+    print(tree.predict_attribute({'a': 'v'}, 'b'))
 
