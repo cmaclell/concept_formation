@@ -196,6 +196,21 @@ class CobwebTree:
                 probs.append(self.concept_attr_value(temp, attr, instance[attr]))
         return sum(probs) / len(probs)
 
+    def specific_prediction(self, instance, attr, guessing=False):
+        """
+        Similar to flexible prediction, but for a single attribute.
+        """
+        temp = {}
+        for attr2 in instance:
+            if attr == attr2:
+                continue
+            temp[attr2] = instance[attr2]
+        if guessing:
+            prob = self.get_probability(attr, instance[attr])
+        else:
+            prob = self.concept_attr_value(temp, attr, instance[attr])
+        return prob
+
     def train_from_json(self, filename, length=None):
         """
         Build the concept tree from a set of examples in a provided json file.
@@ -208,7 +223,7 @@ class CobwebTree:
         self.fit(instances)
         json_data.close()
 
-    def sequential_prediction(self, filename, length, guessing=False):
+    def sequential_prediction(self, filename, length, guessing=False, attr=None):
         """
         Given a json file, perform an incremental sequential prediction task. 
         Try to flexibly predict each instance before incorporating it into the 
@@ -226,7 +241,10 @@ class CobwebTree:
             for n, i in enumerate(instances):
                 if n >= length:
                     break
-                accuracy.append(self.flexible_prediction(i, guessing))
+                if not attr:
+                    accuracy.append(self.flexible_prediction(i, guessing))
+                else:
+                    accuracy.append(self.specific_prediction(i, attr, guessing))
                 nodes.append(self.root.num_concepts())
                 self.ifit(i)
         json_data.close()
@@ -316,7 +334,7 @@ class CobwebTree:
                 a.append(r[i])
             print("%0.2f" % (utils.std(a)))
 
-    def predictions(self, filename, length, iterations):
+    def predictions(self, filename, length, iterations, attr=None):
         """
         Perform the sequential prediction task many times and compute the mean
         and std of all flexible predictions.
@@ -327,7 +345,7 @@ class CobwebTree:
         for i in range(0,n):
             print("run %i" % i)
             t = self.__class__()
-            accuracy, num = t.sequential_prediction(filename, length)
+            accuracy, num = t.sequential_prediction(filename, length, attr=attr)
             runs.append(accuracy)
             nodes.append(num)
             #print(json.dumps(t.output_json()))
@@ -763,15 +781,16 @@ class CobwebNode:
         concept.
 
         """
-        while attr not in self.av_counts:
-            if not self.parent:
+        current = self
+        while attr not in current.av_counts:
+            if not current.parent:
                 return 0.0
-            self = self.parent
+            current = current.parent
 
-        if val not in self.av_counts[attr]:
+        if val not in current.av_counts[attr]:
             return 0.0
 
-        return (1.0 * self.av_counts[attr][val]) / self.count
+        return (1.0 * current.av_counts[attr][val]) / current.count
 
 if __name__ == "__main__":
     #Cobweb().predictions("data_files/cobweb_test.json", 10, 100)
@@ -787,7 +806,8 @@ if __name__ == "__main__":
     #print(t.predict(test))
 
     tree = CobwebTree()
-    tree.predictions("data_files/mushrooms.json", 30, 10)
+    tree.predictions("data_files/mushrooms.json", 30, 10, attr="0")
+    #tree.predictions("data_files/mushrooms.json", 30, 10)
 
     #tree.ifit({'a': 'v', 'b': 'v'})
     #tree.ifit({'a': 'v2'})
@@ -795,6 +815,7 @@ if __name__ == "__main__":
     #tree.ifit({'a': 'v'})
     #tree.ifit({'a': 'v'})
     #tree.ifit({'a': 'v'})
+    #print(tree.cobweb_categorize({'a':'v'}))
     #print(tree)
 
     #print(tree.predict_attribute({'a': 'v'}, 'b'))
