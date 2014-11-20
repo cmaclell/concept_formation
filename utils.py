@@ -74,6 +74,12 @@ class ContinuousValue():
         self.mean = 0
         self.meanSq = 0
 
+    def unbiased_mean(self):
+        """
+        Returns the mean value.
+        """
+        return self.mean
+
     def biased_std(self):
         """
         Returns a biased estimate of the std (i.e., the sample std)

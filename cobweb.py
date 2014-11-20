@@ -227,7 +227,7 @@ class CobwebTree:
                 if n >= length:
                     break
                 accuracy.append(self.flexible_prediction(i, guessing))
-                nodes.append(self.num_concepts())
+                nodes.append(self.root.num_concepts())
                 self.ifit(i)
         json_data.close()
         return accuracy, nodes
@@ -787,13 +787,15 @@ if __name__ == "__main__":
     #print(t.predict(test))
 
     tree = CobwebTree()
-    tree.ifit({'a': 'v', 'b': 'v'})
-    tree.ifit({'a': 'v2'})
-    tree.ifit({'a': 'v'})
-    tree.ifit({'a': 'v'})
-    tree.ifit({'a': 'v'})
-    tree.ifit({'a': 'v'})
-    print(tree)
+    tree.predictions("data_files/mushrooms.json", 30, 10)
 
-    print(tree.predict_attribute({'a': 'v'}, 'b'))
+    #tree.ifit({'a': 'v', 'b': 'v'})
+    #tree.ifit({'a': 'v2'})
+    #tree.ifit({'a': 'v'})
+    #tree.ifit({'a': 'v'})
+    #tree.ifit({'a': 'v'})
+    #tree.ifit({'a': 'v'})
+    #print(tree)
+
+    #print(tree.predict_attribute({'a': 'v'}, 'b'))
 
