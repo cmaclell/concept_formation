@@ -1,5 +1,6 @@
 import re
-from search import DepthFGS
+from search import BeamGS, BestFGS, Node
+from cobweb import CobwebTree
 
 gensym_counter = 0;
 
@@ -10,8 +11,8 @@ def gensym():
 
 def standardizeApartNames(instance):
     """
-    Given an input instance (relations are still lists), it renames all the
-    objects so they have unique names.
+    Given an raw input instance (relations are still lists), it renames all the
+    components so they have unique names.
     """
     new_instance = {}
     relations = []
@@ -50,6 +51,40 @@ def getComponentNames(instance):
             names.add(name)
     return list(names)
 
+def renameComponent(attr, mapping):
+    """
+    Takes a component attribute (e.g., o1.o2) and renames the 
+    components.
+    """
+    ignore = False
+    if attr[0] == "_":
+        ignore = True
+    pattr = re.sub("_", "", attr)
+    new_attr = []
+    for name in pattr.split('.')[:-1]:
+        new_attr.append(mapping[name])
+    new_attr.append(pattr.split('.')[-1])
+    if ignore:
+        return "_" + "._".join(new_attr)
+    else:
+        return ".".join(new_attr)
+
+def renameRelation(attr, mapping):
+    """
+    Takes a relational attribute (e.g., (before o1 o2)) and renames
+    the components based on mapping.
+    """
+    temp = []
+    for idx, val in enumerate(attr):
+        if idx == 0:
+            temp.append(val)
+        else:
+            new_attr = []
+            for name in val.split("."):
+                new_attr.append(mapping[name])
+            temp.append(".".join(new_attr))
+    return tuple(temp)
+
 def rename(instance, mapping):
     """
     Given a flattened instance and a mapping (type = dict) rename the
@@ -68,49 +103,17 @@ def rename(instance, mapping):
                 mapping[name] = name
 
     temp_instance = {}
-    relations = []
 
     # rename all attribute values
     for attr in instance:
         if isinstance(attr, tuple):
-            relations.append(attr)
-        elif attr.split('.')[:-1]:
-            ignore = False
-            if attr[0] == "_":
-                ignore = True
-            pattr = re.sub("_", "", attr)
-            new_attr = []
-            for name in pattr.split('.')[:-1]:
-                new_attr.append(mapping[name])
-            new_attr.append(pattr.split('.')[-1])
-            if ignore:
-                temp_instance["_" + "._".join(new_attr)] = instance[attr]
-            else:
-                temp_instance[".".join(new_attr)] = instance[attr]
+            temp_instance[renameRelation] = instance[attr]
+        elif "." in attr:
+            temp_instance[renameComponent] = instance[attr]
         else:
             temp_instance[attr] = instance[attr]
 
-    #rename relations and add them to instance
-    for relation in relations:
-        temp = []
-        for idx, val in enumerate(relation):
-            if idx == 0:
-                temp.append(val)
-            else:
-                new_attr = []
-                for name in val.split("."):
-                    new_attr.append(mapping[name])
-                temp.append(".".join(new_attr))
-        temp_instance[tuple(temp)] = instance[relation]
-
-    #print(instance)
-    #print(mapping)
-    #print(temp_instance)
-    #print(relations)
-    #print()
-
     return temp_instance
-
 
 def flattenJSON(instance):
     """
@@ -195,8 +198,91 @@ def structurizeJSON(instance):
 
     return temp
 
-def mapStructure(concept, instance):
-    pass
+def bindAttr(attr, mapping):
+    if isinstance(attr, tuple):
+        for i,v in enumerate(attr):
+            if i == 0:
+                continue
+            for o in v.split('.'):
+                if o not in mapping:
+                    return None
+            return renameRelation(attr, mapping)
+    elif '.' in attr:
+        path = attr.split('.')[:-1]
+        for o in path:
+            if o not in mapping:
+                return None
+        return renameComponent(attr, mapping)
+    else:
+        return attr
+
+def flatMatch(concept, instance):
+    inames = frozenset(getComponentNames(instance))
+    cnames = frozenset(getComponentNames(concept.av_counts))
+
+    if(len(inames) == 0 or
+       len(cnames) == 0):
+        return {}
+     
+    initial = Node((frozenset(), inames, cnames), extra=(concept, instance))
+    #return next(BeamGS(initial, flatMatchSuccessorFn, flatMatchGoalTestFn,
+    #                   flatMatchHeuristicFn), 100)
+    solution = next(BestFGS(initial, flatMatchSuccessorFn, flatMatchGoalTestFn,
+                            flatMatchHeuristicFn))
+
+    if solution:
+        mapping, unnamed, availableNames = solution.state
+        return {a:v for a,v in mapping}
+    else:
+        return None
+
+def flatMatchSuccessorFn(node):
+    mapping, inames, availableNames = node.state
+    concept, instance = node.extra
+
+    for n in inames:
+        reward = 0
+        m = {a:v for a,v in mapping}
+        m[n] = n
+        for attr in instance:
+            new_attr = bindAttr(attr, m)
+            if new_attr:
+                reward -= concept.attr_val_guess_gain(new_attr, instance[attr])
+
+        yield Node((mapping.union(frozenset([(n, n)])), inames -
+                    frozenset([n]), availableNames), node, n + ":" + n,
+                   node.cost + reward, node.depth + 1, node.extra)
+
+        for new in availableNames:
+            reward = 0
+            m = {a:v for a,v in mapping}
+            m[n] = new
+            for attr in instance:
+                new_attr = bindAttr(attr, m)
+                if new_attr:
+                    reward -= concept.attr_val_guess_gain(new_attr,
+                                                          instance[attr])
+            yield Node((mapping.union(frozenset([(n, new)])), inames -
+                                      frozenset([n]), availableNames -
+                                      frozenset([new])), node, n + ":" + new,
+                        node.cost + reward, node.depth + 1, node.extra)
+
+def flatMatchHeuristicFn(node):
+    mapping, unnamed, availableNames = node.state
+    concept, instance = node.extra
+
+    h = 0
+    m = {a:v for a,v in mapping}
+    for attr in instance:
+        new_attr = bindAttr(attr, m)
+        if not new_attr:
+            h -= 1
+
+    return h
+
+def flatMatchGoalTestFn(node):
+    mapping, unnamed, availableNames = node.state
+    return len(unnamed) == 0
 
 if __name__ == "__main__":
 
@@ -206,7 +292,18 @@ if __name__ == "__main__":
 
     fo = flattenJSON(o)
     print(fo)
+    #so = structurizeJSON(fo)
+    #print(so)
 
-    so = structurizeJSON(fo)
-    print(so)
+    tree = CobwebTree()
+    tree.ifit(fo)
+
+    o2 = {'ob0': {'x':1, 'y': 1}, 'ob01': {'ob02': {'inner':1},
+                                           'ob03':{'inner':2}}}
+    fo2 = flattenJSON(o2)
+    print(fo2)
+    print(tree)
+    sol = flatMatch(tree.root, fo2)
+    print(sol)
+
 

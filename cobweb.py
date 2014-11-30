@@ -447,6 +447,40 @@ class CobwebNode:
                 self.av_counts[attr][val] = (self.av_counts[attr].get(val,0) +
                                      node.av_counts[attr][val])
 
+    def attr_val_guess_gain(self, attr, val):
+        """
+        Returns the gain in number of correct guesses if a particular attr/val
+        was added to a concept.
+        """
+        if attr[0] == "_":
+            return 0.0
+        if attr not in self.av_counts:
+            return 0.0
+        if val not in self.av_counts[attr]:
+            return 0.0
+
+        before_prob = (self.av_counts[attr][val] / (self.count + 1.0))
+        after_prob = (self.av_counts[attr][val] + 1) / (self.count + 1.0)
+
+        return (after_prob * after_prob) - (before_prob * before_prob)
+
+    #def expected_correct_guesses_attr_val(self, attr, val):
+    #    """
+    #    Returns the number of correct guesses that are expected from the given
+    #    concept for the given attr. This is the probability of the attribute
+    #    value squared.
+    #    """
+    #    if attr[0] == "_":
+    #        return 0.0
+    #    if attr not in self.av_counts:
+    #        return 0.0
+    #    if val not in self.av_counts[attr]:
+    #        return 0.0
+
+    #    prob = (self.av_counts[attr][val] / (1.0 * self.count))
+    #    return (prob * prob)
+
+
     def expected_correct_guesses(self):
         """
         Returns the number of correct guesses that are expected from the given

@@ -93,6 +93,56 @@ class Cobweb3Node(CobwebNode):
                     self.av_counts[attr][val] = (self.av_counts[attr].get(val,0) +
                                          node.av_counts[attr][val])
     
+    def attr_val_guess_gain(self, attr, val):
+        """
+        Returns the gain in number of correct guesses if a particular attr/val
+        was added to a concept.
+        """
+        if attr[0] == "_":
+            return 0.0
+        elif attr not in self.av_counts:
+            return 0.0
+        elif isinstance(self.av_counts[attr], ContinuousValue):
+            before_std = max(self.av_counts[attr].unbiased_std(), self.acuity)
+            before_prob = ((1.0 * self.av_counts[attr].num) / (self.count + 1.0))
+            before_count = ((before_prob * before_prob) * 
+                            (1.0 / (2.0 * math.sqrt(math.pi) * before_std)))
+            temp = self.av_counts[attr].copy()
+            temp.update(val)
+            after_std = max(temp.unbiased_std(), self.acuity)
+            after_prob = ((1.0 + self.av_counts[attr].num) / (self.count + 1.0))
+            after_count = ((after_prob * after_prob) * 
+                            (1.0 / (2.0 * math.sqrt(math.pi) * after_std)))
+            return after_count - before_count
+        elif val not in self.av_counts[attr]:
+            return 0.0
+        else:
+            before_prob = (self.av_counts[attr][val] / (self.count + 1.0))
+            after_prob = (self.av_counts[attr][val] + 1) / (self.count + 1.0)
+
+            return (after_prob * after_prob) - (before_prob * before_prob)
+
+    #def expected_correct_guesses_attr_val(self, attr, val):
+    #    """
+    #    Returns the number of correct guesses that are expected from the given
+    #    concept for the given attr. This is the probability of the attribute
+    #    value squared.
+    #    """
+    #    if attr[0] == "_":
+    #        return 0.0
+    #    elif attr not in self.av_counts:
+    #        return 0.0
+    #    elif isinstance(self.av_counts[attr], ContinuousValue):
+    #        std = max(self.av_counts[attr].unbiased_std(), self.acuity)
+    #        prob_attr = ((1.0 * self.av_counts[attr].num) / self.count)
+    #        return ((prob_attr * prob_attr) * (1.0 / (2.0 * math.sqrt(math.pi)
+    #                                                  * std)))
+    #    elif val not in self.av_counts[attr]:
+    #        return 0.0
+    #    else:
+    #        prob = ((1.0 * self.av_counts[attr][val]) / self.count)
+    #        return (prob * prob)
+
     def expected_correct_guesses(self):
         """
         Computes the number of attribute values that would be correctly guessed

@@ -5,8 +5,10 @@ import random
 
 class Node:
     
-    def __init__(self, state, parent=None, action=None, cost=0, depth=0):
+    def __init__(self, state, parent=None, action=None, cost=0, depth=0,
+                 extra=None):
         self.state = state
+        self.extra = extra
         self.parent = parent
         self.action = action
         self.cost = cost
@@ -22,7 +24,7 @@ class Node:
         return actions
 
     def __str__(self):
-        return str(self.state)
+        return str(self.state) + str(self.extra)
 
     def __repr__(self):
         return repr(self.state)
