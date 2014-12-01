@@ -216,11 +216,20 @@ def bindFlatAttr(attr, mapping):
     else:
         return attr
 
-def structureMatch(concept, instance):
-    inames = frozienset([a for a in instance if isinstance(instance[a], LabyrinthNode)])
-    cnames = frozienset([a for a in concept if isinstance(a, LabyrinthNode)])
-
-    pass
+def containsComponent(component, attr):
+    if isinstance(attr, tuple):
+        for i,v in enumerate(attr):
+            if i == 0:
+                continue
+            for o in v.split('.'):
+                if o == component:
+                    return True
+    elif "." in attr:
+        for o in attr.split('.')[:-1]:
+            if o == component:
+                return True
+    else:
+        return False
 
 def flatMatch(concept, instance):
     inames = frozenset(getComponentNames(instance))
@@ -232,7 +241,7 @@ def flatMatch(concept, instance):
      
     initial = Node((frozenset(), inames, cnames), extra=(concept, instance))
     solution = next(BeamGS(initial, flatMatchSuccessorFn, flatMatchGoalTestFn,
-                       flatMatchHeuristicFn), 10)
+                       flatMatchHeuristicFn), 3)
     #solution = next(BestFGS(initial, flatMatchSuccessorFn, flatMatchGoalTestFn,
     #                        flatMatchHeuristicFn))
     #print(solution.cost)
@@ -252,46 +261,89 @@ def flatMatchSuccessorFn(node):
         m = {a:v for a,v in mapping}
         m[n] = n
         for attr in instance:
+            if not containsComponent(n, attr):
+                continue
             new_attr = bindFlatAttr(attr, m)
             if new_attr:
-                reward -= concept.attr_val_guess_gain(new_attr, instance[attr])
+                reward += concept.attr_val_guess_gain(new_attr, instance[attr])
 
         yield Node((mapping.union(frozenset([(n, n)])), inames -
                     frozenset([n]), availableNames), node, n + ":" + n,
-                   node.cost + reward, node.depth + 1, node.extra)
+                   node.cost - reward, node.depth + 1, node.extra)
 
         for new in availableNames:
             reward = 0
             m = {a:v for a,v in mapping}
             m[n] = new
             for attr in instance:
+                if not containsComponent(n, attr):
+                    continue
                 new_attr = bindFlatAttr(attr, m)
                 if new_attr:
-                    reward -= concept.attr_val_guess_gain(new_attr,
+                    reward += concept.attr_val_guess_gain(new_attr,
                                                           instance[attr])
             yield Node((mapping.union(frozenset([(n, new)])), inames -
                                       frozenset([n]), availableNames -
                                       frozenset([new])), node, n + ":" + new,
-                        node.cost + reward, node.depth + 1, node.extra)
+                        node.cost - reward, node.depth + 1, node.extra)
 
 def flatMatchHeuristicFn(node):
     mapping, unnamed, availableNames = node.state
     concept, instance = node.extra
 
-    # TODO come up with a better heuristic than just 1 correct
-    # guess for each unbound attribute.
     h = 0
     m = {a:v for a,v in mapping}
     for attr in instance:
         new_attr = bindFlatAttr(attr, m)
         if not new_attr:
-            h -= 1
+            best_attr_h = [concept.attr_val_guess_gain(cAttr, instance[attr]) for
+                               cAttr in concept.av_counts if
+                               isPartialMatch(attr, cAttr, m)]
+            #print(best_attr_h)
+            if len(best_attr_h) != 0:
+                h -= max(best_attr_h)
+            #h -= 1
 
     return h
 
 def flatMatchGoalTestFn(node):
     mapping, unnamed, availableNames = node.state
     return len(unnamed) == 0
+
+def isPartialMatch(iAttr, cAttr, mapping):
+
+    if type(iAttr) != type(cAttr):
+        return False
+    if isinstance(iAttr, tuple) and len(iAttr) != len(cAttr):
+        return False
+
+    if isinstance(iAttr, tuple):
+        if iAttr[0] != cAttr[0]:
+            return False
+        for i,v in enumerate(iAttr):
+            if i == 0:
+                continue
+            iSplit = v.split('.')
+            cSplit = cAttr[i].split('.')
+            if len(iSplit) != len(cSplit):
+                return False
+            for j,v2 in enumerate(iSplit):
+                if v2 in mapping and mapping[v2] != cSplit[j]:
+                    return False
+    elif "." not in cAttr:
+        return False
+    else:
+        iSplit = iAttr.split('.')
+        cSplit = cAttr.split('.')
+        if len(iSplit) != len(cSplit):
+            return False
+        if iSplit[-1] != cSplit[-1]:
+            return False
+        for i,v in enumerate(iSplit[:-1]):
+            if v in mapping and mapping[v] != cSplit[i]:
+                return False
+
+    return True
 
 if __name__ == "__main__":
 
