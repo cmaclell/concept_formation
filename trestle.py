@@ -1,5 +1,6 @@
+import json
 from cobweb3 import Cobweb3Tree, Cobweb3Node
-from structure_mapper import *
+from structure_mapper import flatMatch, renameFlat, flattenJSON
 
 class TrestleTree(Cobweb3Tree):
 
@@ -19,7 +20,7 @@ class TrestleTree(Cobweb3Tree):
         """
         temp_instance = flattenJSON(instance)
         mapping = flatMatch(self.root, temp_instance)
-        temp_instance = rename(temp_instance, mapping)
+        temp_instance = renameFlat(temp_instance, mapping)
         return self.cobweb_categorize(temp_instance)
 
     def trestle(self, instance):
@@ -30,7 +31,7 @@ class TrestleTree(Cobweb3Tree):
         """
         temp_instance = flattenJSON(instance)
         mapping = flatMatch(self.root, temp_instance)
-        temp_instance = rename(temp_instance, mapping)
+        temp_instance = renameFlat(temp_instance, mapping)
         return self.cobweb(temp_instance)
 
 if __name__ == "__main__":
@@ -38,10 +39,10 @@ if __name__ == "__main__":
     # KC labeling
     tree = TrestleTree()
 
-    with open('data_files/rb_com_11_noCheck.json', "r") as json_data:
+    with open('data_files/rb_s_07_continuous.json', "r") as json_data:
         instances = json.load(json_data)
     print(len(instances))
-    #instances = instances[0:15]
+    #instances = instances[0:5]
     print(set(tree.cluster(instances, 2)))
 
     #labels = tree.kc_label("data_files/instant-test-processed.json", 16000)

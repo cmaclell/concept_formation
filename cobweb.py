@@ -259,7 +259,7 @@ class CobwebTree:
         """
         temp_clusters = [self.ifit(instance) for instance in instances]
 
-        print(len(set([c.concept_id for c in temp_clusters])))
+        #print(len(set([c.concept_id for c in temp_clusters])))
         clusters = []
         for i,c in enumerate(temp_clusters):
             while (c.parent and c not in c.parent.children):

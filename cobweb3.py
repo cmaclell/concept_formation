@@ -122,27 +122,6 @@ class Cobweb3Node(CobwebNode):
 
             return (after_prob * after_prob) - (before_prob * before_prob)
 
-    #def expected_correct_guesses_attr_val(self, attr, val):
-    #    """
-    #    Returns the number of correct guesses that are expected from the given
-    #    concept for the given attr. This is the probability of the attribute
-    #    value squared.
-    #    """
-    #    if attr[0] == "_":
-    #        return 0.0
-    #    elif attr not in self.av_counts:
-    #        return 0.0
-    #    elif isinstance(self.av_counts[attr], ContinuousValue):
-    #        std = max(self.av_counts[attr].unbiased_std(), self.acuity)
-    #        prob_attr = ((1.0 * self.av_counts[attr].num) / self.count)
-    #        return ((prob_attr * prob_attr) * (1.0 / (2.0 * math.sqrt(math.pi)
-    #                                                  * std)))
-    #    elif val not in self.av_counts[attr]:
-    #        return 0.0
-    #    else:
-    #        prob = ((1.0 * self.av_counts[attr][val]) / self.count)
-    #        return (prob * prob)
-
     def expected_correct_guesses(self):
         """
         Computes the number of attribute values that would be correctly guessed
@@ -214,14 +193,6 @@ class Cobweb3Node(CobwebNode):
             return 0.0
 
         if isinstance(val, ContinuousValue):
-            #float_values = []
-
-            #for av in self.av_counts[attr]:
-            #    if isinstance(av, float):
-            #        float_values += [av] * self.av_counts[attr][av]
-
-            #mean = utils.mean(float_values)
-            #std = self.unbiased_std(float_values)
             mean = val.mean
             std = val.unbiased_std()
 
@@ -242,6 +213,9 @@ class Cobweb3Node(CobwebNode):
         A modification of the cobweb output json to handle numeric values.
         """
         output = {}
+        if "_guid" in self.av_counts:
+            for guid in self.av_counts['_guid']:
+                output['guid'] = guid
         output["name"] = "Concept" + self.concept_id
         output["size"] = self.count
         output["children"] = []

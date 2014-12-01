@@ -2,387 +2,20 @@ import itertools
 import hungarianNative
 import numpy
 import json
-import copy
-from random import normalvariate
-from random import choice
-from random import random
-from random import shuffle
-from cobweb3 import Cobweb3
+from utils import ContinuousValue
+from cobweb3 import Cobweb3Tree, Cobweb3Node
+from structure_mapper import standardizeApartNames
 
-class Labyrinth(Cobweb3):
+class LabyrinthTree(Cobweb3Tree):
 
-    #def category_utility(self):
-    #    """
-    #    Returns the category utility of a particular division of a concept into
-    #    its children. This is used as the heuristic to guide the concept
-    #    formation.
+    def __init__(self):
+        self.root = LabyrinthNode()
 
-    #    Because of the attribute value generalization, you need to get fancy in
-    #    how you do your computation of category utility. You need to use the
-    #    sum counts of the children as the parent counts.
-    #    """
-    #    if len(self.children) == 0:
-    #        return 0.0
-
-    #    category_utility = 0.0
-
-    #    temp = self.__class__()
-    #    for child in self.children:
-    #        temp.update_counts_from_node(child)
-
-    #    for child in self.children:
-    #        p_of_child = child.count / (1.0 * temp.count)
-    #        category_utility += (p_of_child *
-    #                             (child._expected_correct_guesses()
-    #                              - temp._expected_correct_guesses()))
-    #    return category_utility / (1.0 * len(self.children))
-
-
-    def cobweb(self, instance):
+    def ifit(self, instance):
         """
-        Incrementally integrates an instance into the categorization tree
-        defined by the current node. This function operates iteratively to
-        integrate this instance and uses category utility as the heuristic to
-        make decisions.
+        A modification of ifit to call labyrinth instead.
         """
-        current = self
-        #self.verify_counts()
-
-        while current:
-           
-            #debug checks
-            #self.verify_parent_pointers()
-            #self.val_check()
-            #for attr in current.av_counts:
-            #    for val in current.av_counts[attr]:
-            #        if isinstance(val, Labyrinth):
-            #            assert not val.children
-
-            # instead of checking if the instance is the fringe concept, I
-            # check to see if category utility is increased by fringe splitting.
-            # this is more generally and will be used by the Labyrinth/Trestle
-            # systems to achieve more complex fringe behavior. 
-
-            #if (not current.children and current._exactmatch(instance)):
-            if (not current.children and current.cu_for_fringe_split(instance)
-                <= current.min_cu):
-                #TODO this is new
-                current.increment_counts(instance)
-                current.attribute_generalize(instance)
-                return current 
-
-            elif not current.children:
-                # TODO can this be cleaned up, I do it to ensure the previous
-                # leaf is still a leaf, for all the concepts that refer to this
-                # in labyrinth.
-                current.create_child_with_current_counts()
-                current.increment_counts(instance)
-                current.attribute_generalize(instance)
-                return current.create_new_child(instance)
-                
-            else:
-                #TODO is there a cleaner way to do this?
-                best1, best2 = current.two_best_children(instance)
-                action_cu, best_action = current.get_best_operation(instance,
-                                                                     best1,
-                                                                     best2)
-
-                best1_cu, best1 = best1
-                if best2:
-                    best2_cu, best2 = best2
-
-                if action_cu <= current.min_cu:
-                    #TODO this is new
-                    #If the best action results in a cu below the min cu gain
-                    #then prune the branch
-                    print("PRUNING BRANCH!")
-                    print(best_action)
-                    print(action_cu)
-                    current.increment_counts(instance)
-                    current.attribute_generalize(instance)
-                    for c in current.children:
-                        c.remove_reference(current)
-                    current.children = []
-                    return current
-
-                if best_action == 'best':
-                    current.increment_counts(instance)
-                    current.attribute_generalize(instance)
-                    current = best1
-                elif best_action == 'new':
-                    current.increment_counts(instance)
-                    current.attribute_generalize(instance)
-                    return current.create_new_child(instance)
-                elif best_action == 'merge':
-                    current.increment_counts(instance)
-                    current.attribute_generalize(instance)
-                    new_child = current.merge(best1, best2)
-                    current = new_child
-                elif best_action == 'split':
-                    current.split(best1)
-                else:
-                    raise Exception("Should never get here.")
-
-    def remove_reference(self, node):
-        """
-        Specialized version of remove for labyrinth. This removes all references
-        to a particular concept from the tree. It replaces these references
-        with a reference to the parent concept
-        """
-        # call recursively
-        for c in self.children:
-            c.remove_reference(node)
-
-        # replace references to deleted concept with parent concept
-        self.get_root().replace(self, node)
-
-    def is_parent(self, other_concept):
-        """
-        Returns True if self is a parent of other concept.
-        """
-        temp = other_concept
-        while temp != None:
-            if temp == self:
-                return True
-            temp = temp.parent
-        return False
-
-    def common_ancestor(self, val1, val2):
-        """
-        Returns the nearest common ancestor of val1 and val2.
-        """
-        if val1.is_parent(val2):
-            return val1
-        ancestor = val2
-        while ancestor.parent:
-            if ancestor.is_parent(val1):
-                return ancestor
-            ancestor = ancestor.parent
-        return ancestor
-
-    def cu_for_insert(self, child, instance):
-        """
-        Computer the category utility of adding the instance to the specified
-        child w/ av generalization.
-        """
-        temp = self.__class__()
-        temp.update_counts_from_node(self)
-        temp.increment_counts(instance)
-
-        for c in self.children:
-            temp_child = self.__class__()
-            temp_child.parent = temp
-            temp_child.update_counts_from_node(c)
-            temp.children.append(temp_child)
-            if c == child:
-                temp_child.increment_counts(instance)
-                temp_child.attribute_generalize(instance)
-
-        return temp.category_utility()
-
-    def cu_for_merge(self, best1, best2, instance):
-        """
-        Returns the category utility for merging the two best children.
-
-        input:
-            best1: the best child in the children array.
-            best2: the second best child in the children array.
-        output:
-            0.02 - the category utility for the merge of best1 and best2.
-        """
-        temp = self.__class__()
-        temp.update_counts_from_node(self)
-        temp.increment_counts(instance)
-
-        new_child = self.__class__()
-        new_child.parent = temp
-        new_child.update_counts_from_node(best1)
-        new_child.update_counts_from_node(best2)
-        new_child.increment_counts(instance)
-        temp.children.append(new_child)
-        new_child.attribute_generalize(instance)
-
-        for c in self.children:
-            if c == best1 or c == best2:
-                continue
-            temp_child = self.__class__()
-            temp_child.update_counts_from_node(c)
-            temp.children.append(temp_child)
-
-        return temp.category_utility()
-
-    def attr_val_cu(self, attr, vals):
-        """
-        Given a set of values for an attribute. Return the number of expected
-        correct guesses for that attribute over the parent.
-        """
-        assert self.parent
-        assert attr in self.av_counts
-        assert attr in self.parent.av_counts
-
-        c_guesses = 0.0
-        p_guesses = 0.0
-        
-        # remove duplicates
-        vals = set(vals)
-
-        for v in vals:
-            c_prob = 0.0
-            p_prob = 0.0
-           
-            if v in self.av_counts[attr]:
-                c_prob = (1.0 * self.av_counts[attr][v]) / self.count
-            if v in self.parent.av_counts[attr]:
-                p_prob = (1.0 * self.parent.av_counts[attr][v]) / self.parent.count
-
-            c_guesses += c_prob * c_prob
-            p_guesses += p_prob * p_prob
-
-            assert c_guesses <= 1.0
-            assert p_guesses <= 1.0
-
-        return c_guesses - p_guesses
-
-    def conceptual_relation_score(self, ival, cval):
-        assert isinstance(ival, Labyrinth)
-        assert isinstance(cval, Labyrinth)
-
-        ancestor = self.common_ancestor(ival, cval)
-
-        return ival.probability_given(ancestor) * cval.probability_given(ancestor)
-        #return ival.probability_given(ancestor)
-
-    def cu_gain_for_av_generalize(self, attr, v1, v2, ancestor):
-        assert self.parent
-        assert v1 in self.av_counts[attr]
-        assert v2 in self.av_counts[attr]
-
-        temp_child = self.__class__()
-        temp_child.update_counts_from_node(self)
-
-        temp_parent = self.__class__()
-        temp_parent.update_counts_from_node(self.parent)
-
-        temp_parent.children.append(temp_child)
-        for child in self.parent.children:
-            if child == self:
-                continue
-            temp = self.__class__()
-            temp.update_counts_from_node(child)
-            temp_parent.children.append(temp)
-
-        current_cu = temp_parent.category_utility()
-
-        if ancestor not in temp_child.av_counts[attr]:
-            temp_child.av_counts[attr][ancestor] = 0.0
-        #if ancestor not in temp_parent.av_counts[attr]:
-        #    temp_parent.av_counts[attr][ancestor] = 0.0
-
-        if v1 != ancestor:
-            temp_child.av_counts[attr][ancestor] += temp_child.av_counts[attr][v1]
-            del temp_child.av_counts[attr][v1]
-
-            #if v1 in temp_parent.av_counts[attr]:
-            #    temp_parent.av_counts[attr][ancestor] += temp_parent.av_counts[attr][v1]
-            #    del temp_parent.av_counts[attr][v1]
-
-        if v2 != ancestor:
-            temp_child.av_counts[attr][ancestor] += temp_child.av_counts[attr][v2]
-            del temp_child.av_counts[attr][v2]
-
-            #if v2 in temp_parent.av_counts[attr]:
-            #    temp_parent.av_counts[attr][ancestor] += temp_parent.av_counts[attr][v2]
-            #    del temp_parent.av_counts[attr][v2]
-       
-        general_cu = temp_parent.category_utility()
-
-        return general_cu - current_cu
-
-    def attribute_generalize(self, instance):
-        """
-        This is called after an instance has been added, but before computing
-        the category utility.
-        """
-        if self.parent == None:
-            return
-
-        for attr in instance:
-            if not isinstance(instance[attr], Labyrinth):
-                continue
-            if attr not in self.av_counts:
-                continue
-
-            val = instance[attr]
-
-            # merge values
-            cvals = list(set([cval for cval in self.av_counts[attr] if val !=
-                              cval]))
-            cvals.sort(key=lambda x: (-1.0 *
-                                      self.conceptual_relation_score(val,x)))
-            while cvals:
-
-                assert val not in cvals
-
-                cval = cvals.pop()
-                ancestor = self.common_ancestor(val, cval)
-
-                
-                #temp_parent = self.__class__()
-                ## make a parent with the sum counts of its children
-                #for child in self.parent.children:
-                #    temp_parent.update_counts_from_node(child)
-                ##temp_parent.update_counts_from_node(self.parent)
-                #temp_child = self.__class__()
-                #temp_child.update_counts_from_node(self)
-                #temp_child.parent = temp_parent
-
-                #specific_cu = temp_child.attr_val_cu(attr, [val, cval])
-
-                ## generalize the values
-                #if ancestor not in temp_parent.av_counts[attr]:
-                #    temp_parent.av_counts[attr][ancestor] = 0.0
-                #if ancestor not in temp_child.av_counts[attr]:
-                #    temp_child.av_counts[attr][ancestor] = 0.0
-
-                #if val != ancestor:
-                #    if val in temp_parent.av_counts[attr]:
-                #        temp_parent.av_counts[attr][ancestor] += temp_parent.av_counts[attr][val]
-                #    temp_child.av_counts[attr][ancestor] += temp_child.av_counts[attr][val]
-                #    temp_parent.av_counts[attr][val] = 0.0
-                #    temp_child.av_counts[attr][val] = 0.0
-
-                #if cval != ancestor:
-                #    if cval in temp_parent.av_counts[attr]:
-                #        temp_parent.av_counts[attr][ancestor] += temp_parent.av_counts[attr][cval]
-                #    temp_child.av_counts[attr][ancestor] += temp_child.av_counts[attr][cval]
-                #    temp_parent.av_counts[attr][cval] = 0.0
-                #    temp_child.av_counts[attr][cval] = 0.0
-
-                #general_cu = temp_child.attr_val_cu(attr, [ancestor])
-
-                ##print("general_cu: %0.2f" % general_cu)
-                ##print("specific_cu: %0.2f" % specific_cu)
-
-                #print(self.cu_gain_for_av_generalize(attr, val, cval, ancestor))
-                if (self.cu_gain_for_av_generalize(attr, val, cval, ancestor)
-                    >= 0.0):
-
-                #if general_cu >= specific_cu:
-                    #print("GENERALIZE")
-                    if ancestor not in self.av_counts[attr]:
-                        self.av_counts[attr][ancestor] = 0.0
-
-                    if val != ancestor:
-                        self.av_counts[attr][ancestor] += self.av_counts[attr][val]
-                        del self.av_counts[attr][val]
-                    if cval != ancestor:
-                        self.av_counts[attr][ancestor] += self.av_counts[attr][cval]
-                        del self.av_counts[attr][cval]
-
-                    val = ancestor
-
-                    while val in cvals:
-                        cvals.remove(val)
+        return self.labyrinth(instance)
 
     def labyrinth(self, instance):
         """
@@ -390,33 +23,38 @@ class Labyrinth(Cobweb3):
         traversal. Once all of the components have been classified then then it
         classifies the current node.
         """
+        instance = standardizeApartNames(instance)
         temp_instance = {}
-        attributes = sorted([attr for attr in instance])
-        shuffle(attributes)
-        for attr in attributes:
-        #for attr in instance:
+        for attr in instance:
             if isinstance(instance[attr], dict):
                 temp_instance[attr] = self.labyrinth(instance[attr])
             elif isinstance(instance[attr], list):
-                pass
-                #temp_instance[tuple(instance[attr])] = True
+                temp_instance[tuple(instance[attr])] = True
             else:
                 temp_instance[attr] = instance[attr]
 
-        ## Ensure all components are leaves
-        #for attr in temp_instance:
-        #    if (isinstance(temp_instance[attr], Labyrinth) and
-        #        temp_instance[attr].children):
-        #        temp_instance[attr] = temp_instance[attr].labyrinth_categorize(instance[attr])
+        temp_instance = self.root.match(temp_instance)
+        return self.cobweb(temp_instance)
 
-        # should be able to match just at the root, if the matchings change
-        # than the counts between parent and child will be thrown off which is
-        # not allowed to happen so for now don't worry about it.
-        # TODO check if this needs to be changed
-        temp_instance = self.match(temp_instance)
-        ret = self.cobweb(temp_instance)
+    def labyrinth_categorize(self, instance):
+        """
+        The labyrinth categorize function, this labyrinth categorizes all the
+        sub-components before categorizing itself.
+        """
+        instance = standardizeApartNames(instance)
+        temp_instance = {}
+        for attr in instance:
+            if isinstance(instance[attr], dict):
+                temp_instance[attr] = self.labyrinth_categorize(instance[attr])
+            elif isinstance(instance[attr], list):
+                temp_instance[attr] = tuple(instance[attr])
+            else:
+                temp_instance[attr] = instance[attr]
 
-        return ret
+        temp_instance = self.root.match(temp_instance)
+        return self.cobweb_categorize(temp_instance)
+
+class LabyrinthNode(Cobweb3Node):
 
     def rename(self, instance, mapping):
         """
@@ -427,7 +65,7 @@ class Labyrinth(Cobweb3):
         # Ensure it is a complete mapping
         # Might be troublesome if there is a name collision
         for attr in instance:
-            if not isinstance(instance[attr], Labyrinth):
+            if not isinstance(instance[attr], LabyrinthNode):
                 continue
             if attr not in mapping:
                 mapping[attr] = attr
@@ -439,7 +77,7 @@ class Labyrinth(Cobweb3):
         for attr in instance:
             if isinstance(attr, tuple):
                 relations.append(attr)
-            elif isinstance(instance[attr], Labyrinth):
+            elif isinstance(instance[attr], LabyrinthNode):
                 mapping[attr]
                 instance[attr]
                 temp_instance[mapping[attr]] = instance[attr]
@@ -501,11 +139,13 @@ class Labyrinth(Cobweb3):
         #            print(attr + ": " + str(val.concept_name))
 
         from_name = [attr for attr in instance if isinstance(instance[attr],
-                                                             Labyrinth)]
+                                                             LabyrinthNode)]
         to_name = []
         for attr in self.av_counts:
+            if isinstance(self.av_counts[attr], ContinuousValue):
+                continue
             for val in self.av_counts[attr]:
-                if isinstance(val, Labyrinth):
+                if isinstance(val, LabyrinthNode):
                     to_name.append(attr)
                     break
 
@@ -593,11 +233,11 @@ class Labyrinth(Cobweb3):
         won't scale very well.
         """
         from_name = [attr for attr in instance if isinstance(instance[attr],
-                                                             Labyrinth)]
+                                                             LabyrinthNode)]
         to_name = []
         for attr in self.av_counts:
             for val in self.av_counts[attr]:
-                if isinstance(val, Labyrinth):
+                if isinstance(val, LabyrinthNode):
                     to_name.append(attr)
                     break
 
@@ -640,433 +280,37 @@ class Labyrinth(Cobweb3):
         temp_instance = self.rename(instance, mapping)
         return temp_instance
 
-    def output_json(self):
+    def is_parent(self, other_concept):
         """
-        A modification of output_json from cobweb and cobweb3 to handle
-        component values.
+        Returns True if self is a parent of other concept.
         """
-        output = {}
-        output["name"] = self.concept_name
-        output["size"] = self.count
-        if self.children:
-            output["CU"] = self.category_utility()
-        output["children"] = []
+        temp = other_concept
+        while temp != None:
+            if temp == self:
+                return True
+            temp = temp.parent
+        return False
 
-        temp = {}
-        for attr in self.av_counts:
-            float_vals = []
-            for value in self.av_counts[attr]:
-                if isinstance(attr, tuple):
-                    temp["[" + " ".join(attr) + "]"] = self.av_counts[attr][True]
-                elif isinstance(value, float):
-                    float_vals.append(value)
-                elif isinstance(value, Labyrinth): 
-                    temp[attr + " = " + value.concept_name] = self.av_counts[attr][value]
-                else:
-                    temp[attr + " = " + str(value)] = self.av_counts[attr][value]
-            if len(float_vals) > 0:
-                mean = attr + "_mean = %0.2f (%0.2f)" % (self._mean(float_vals),
-                                                self._std(float_vals))
-                temp[mean] = len(float_vals)
-                
-        for child in self.children:
-            output["children"].append(child.output_json())
-
-        output["counts"] = temp
-
-        return output
-
-    def labyrinth_categorize(self, instance):
+    def common_ancestor(self, val1, val2):
         """
-        The labyrinth categorize function, this labyrinth categorizes all the
-        sub-components before categorizing itself.
+        Returns the nearest common ancestor of val1 and val2.
         """
-        temp_instance = {}
-        for attr in instance:
-            if isinstance(instance[attr], dict):
-                temp_instance[attr] = self.labyrinth_categorize(instance[attr])
-            elif isinstance(instance[attr], list):
-                temp_instance[attr] = tuple(instance[attr])
-            else:
-                temp_instance[attr] = instance[attr]
-
-        # should be able to match just at the root, if the matchings change
-        # than the counts between parent and child will be thrown off which is
-        # not allowed to happen so for now don't worry about it.
-        # TODO check if this needs to be changed
-        temp_instance = self.match(temp_instance)
-        return self.cobweb_categorize(temp_instance)
-
-    def ifit(self, instance):
-        """
-        A modification of ifit to call labyrinth instead.
-        """
-        return self.labyrinth(instance)
-
-    def pretty_print(self, depth=0):
-        """
-        Prints the categorization tree. Modified for component values.
-        """
-        tabs = "\t" * depth
-        if self.parent:
-            ret = str(('\t' * depth) + "|-" + "[" + self.concept_name + "(" +
-                      self.parent.concept_name + ")]: " +
-                      str(self.count) + "\n" + tabs + "  ")
-        else:
-            ret = str(('\t' * depth) + "|-" + "[" + self.concept_name + "(" +
-                      "None)]: " +
-                      str(self.count) + "\n" + tabs + "  ")
-
-        attributes = []
-
-        for attr in self.av_counts:
-            float_values = []
-            values = []
-
-            for val in self.av_counts[attr]:
-                if isinstance(val, float):
-                    float_values.append(val)
-                elif isinstance(val, Labyrinth):
-                    values.append("'" + val.concept_name + "': " + 
-                                  str(self.av_counts[attr][val]))
-                else:
-                    values.append("'" + str(val) + "': " +
-                                  str(self.av_counts[attr][val]))
-
-            if float_values:
-                values.append("'mean':" + str(self._mean(float_values)))
-                values.append("'std':" + str(self._std(float_values)))
-
-            attributes.append("'" + str(attr) + "': {" + ", ".join(values) + "}")
-                  
-        ret += "{" + (",\n" + tabs + "   ").join(attributes) + "}\n"
-        
-        for c in self.children:
-            ret += c.pretty_print(depth+1)
-
-        return ret
-
-    def concept_attr_value(self, instance, attr, val):
-        """
-        A modification to call labyrinth categorize instead of cobweb
-        categorize.
-        """
-        concept = self.labyrinth_categorize(instance)
-        return concept.get_probability(attr, val)
-
-    def flexible_prediction(self, instance, guessing=False):
-        """
-        A modification of flexible prediction to handle component values.
-        The flexible prediction task is called on all subcomponents. To compute
-        the accuracy for each subcomponent.
-        """
-        
-        probs = []
-        for attr in instance:
-            #TODO add support for relational attribute values 
-            if isinstance(instance[attr], list):
-                continue
-            if isinstance(instance[attr], dict):
-                probs.append(self.flexible_prediction(instance[attr], guessing))
-                continue
-            temp = {}
-            for attr2 in instance:
-                if attr == attr2:
-                    continue
-                temp[attr2] = instance[attr2]
-            if guessing:
-                probs.append(self.get_probability(attr, instance[attr]))
-            else:
-                probs.append(self.concept_attr_value(temp, attr, instance[attr]))
-        if len(probs) == 0:
-            print(instance)
-            return -1 
-        return sum(probs) / len(probs)
-
-    def predict(self, instance):
-        """
-        Given an instance predict any missing attribute values without
-        modifying the tree. A modification for component values.
-        """
-        prediction = {}
-
-        # make a copy of the instance
-        # call recursively on structured parts
-        for attr in instance:
-            if isinstance(instance[attr], dict):
-                prediction[attr] = self.predict(instance[attr])
-            else:
-                prediction[attr] = instance[attr]
-
-        concept = self.labyrinth_categorize(prediction)
-        #print(concept)
-        #print(self)
-        
-        for attr in concept.av_counts:
-            if attr in prediction:
-                continue
-           
-            # sample to determine if the attribute should be included
-            num_attr = sum([concept.av_counts[attr][val] for val in
-                            concept.av_counts[attr]])
-            if random() > (1.0 * num_attr) / concept.count:
-                continue
-            
-            nominal_values = []
-            component_values = []
-            float_values = []
-
-            for val in concept.av_counts[attr]:
-                if isinstance(val, float):
-                    float_values += [val] * concept.av_counts[attr][val]
-                elif isinstance(val, Labyrinth):
-                    component_values += [val] * concept.av_counts[attr][val] 
-                else:
-                    nominal_values += [val] * concept.av_counts[attr][val]
-
-            rand = random()
-
-            if rand < ((len(nominal_values) * 1.0) / (len(nominal_values) +
-                                                      len(component_values) +
-                                                      len(float_values))):
-                prediction[attr] = choice(nominal_values)
-            elif rand < ((len(nominal_values) + len(component_values) * 1.0) /
-                         (len(nominal_values) + len(component_values) +
-                          len(float_values))):
-                prediction[attr] = choice(component_values).predict({})
-            else:
-                prediction[attr] = normalvariate(self._mean(float_values),
-                                                 self._std(float_values))
-
-        return prediction
-
-    def sequential_prediction(self, filename, length, guessing=False):
-        """
-        Given a json file, perform an incremental sequential prediction task. 
-        Try to flexibly predict each instance before incorporating it into the 
-        tree. This will give a type of cross validated result.
-        """
-        json_data = open(filename, "r")
-        instances = json.load(json_data)
-        #instances = instances[0:length]
-        for instance in instances:
-            if "guid" in instance:
-                del instance['guid']
-        accuracy = []
-        nodes = []
-        for j in range(1):
-            shuffle(instances)
-            for n, i in enumerate(instances):
-                if n >= length:
-                    break
-                accuracy.append(self.flexible_prediction(i, guessing))
-                nodes.append(self.num_concepts())
-                self.ifit(i)
-        json_data.close()
-        return accuracy, nodes
-
-    def flatten_instance(self, instance):
-        duplicate = copy.deepcopy(instance)
-        for attr in duplicate:
-            if isinstance(duplicate[attr], dict):
-                duplicate[attr] = self.flatten_instance(duplicate[attr])
-        return repr(sorted(duplicate.items()))
-
-    def order_towers(self):
-        """
-        Given a number of towers with GUIDs added return a better
-        training ordering.
-        """
-        L = []
-        if not self.children:
-            if 'guid' in self.av_counts:
-                for guid in self.av_counts['guid']:
-                    L.append(guid)
-            return L
-        else:
-            sorted_c = sorted(self.children, key=lambda c: -1 * c.count)
-            lists = []
-
-            for c in sorted_c:
-                lists.append(c.order_towers())
-
-            while lists:
-                for l in lists:
-                    if l:
-                        L.append(l.pop())
-                        
-                lists = [l for l in lists if l]
-            return L
-
-    def replace(self, old, new):
-        """
-        Traverse the tree and replace all references to concept old with
-        concept new.
-        """
-        temp_counts = {}
-        for attr in self.av_counts:
-            temp_counts[attr] = {}
-            for val in self.av_counts[attr]:
-                x = val
-                if val == old:
-                    x = new
-                if x not in temp_counts[attr]:
-                    temp_counts[attr][x] = 0
-                temp_counts[attr][x] += self.av_counts[attr][val] 
-
-        self.av_counts = temp_counts
-
-        for c in self.children:
-            c.replace(old,new)
-
-    def get_root(self):
-        """
-        Gets the root of the categorization tree.
-        """
-        if self.parent == None:
-            return self
-        else:
-            return self.parent.get_root()
-
-    def create_child_with_current_counts(self):
-        """
-        Creates a new child (to the current node) with the counts initialized by
-        the current node's counts.
-        """
-        if self.count > 0:
-            new = self.__class__(self)
-            new.parent = self
-            self.children.append(new)
-
-            # TODO may be a more efficient way to do this, just ensure the
-            # pointer stays a leaf in the main cobweb alg. for instance.
-            self.get_root().replace(self, new)
-            return new
-
-    def split(self, best):
-        """
-        Specialized version of split for labyrinth. This removes all references
-        to a particular concept from the tree. It replaces these references
-        with a reference to the parent concept
-        """
-        super(Labyrinth, self).split(best)
-        
-        # replace references to deleted concept with parent concept
-        self.get_root().replace(best, self)
-
-
-
-    def cluster(self, filename, length):
-        """
-        Used to provide a clustering of a set of examples provided in a JSON
-        file. It starts by incorporating the examples into the categorization
-        tree multiple times. After incorporating the instances it then
-        categorizes each example (without updating the tree) and returns the
-        concept it was assoicated with.
-        """
-        json_data = open(filename, "r")
-        instances = json.load(json_data)
-        shuffle(instances)
-        instances = instances[0:length]
-        o_instances = copy.deepcopy(instances)
-        for instance in instances:
-            if "guid" in instance:
-                del instance['guid']
-        json_data.close()
-        clusters = {}
-        previous = {}
-        g_instances = {}
-
-        for i in instances:
-            previous[self.flatten_instance(i)] = None
-
-        # train initially
-        for x in range(1):
-            shuffle(instances)
-            for n, i in enumerate(instances):
-                print("training instance: " + str(n))
-                self.ifit(i)
-
-        #TODO for debugging
-        #self.verify_counts()
-        #self.verify_component_values()
-
-        #add categorize for adding guids
-        mapping = {}
-        for idx, inst in enumerate(o_instances):
-            print("categorizing instance: %i" % idx)
-            instance = copy.deepcopy(inst)
-            if "guid" in instance:
-                del instance['guid']
-            g_instances[inst['guid']] = instance
-
-            mapping[inst['guid']] = self.labyrinth_categorize(instance)
-
-        # add guids
-        for g in mapping:
-            curr = mapping[g]
-            while curr:
-                curr.av_counts['has-guid'] = {"1":True}
-                if 'guid' not in curr.av_counts:
-                    curr.av_counts['guid'] = {}
-                curr.av_counts['guid'][g] = True
-                curr = curr.parent
-        
-        ## get ordering
-        #guid_order = self.order_towers()
-        #self = self.__class__()
-
-        ## second time sorting
-        #count = 0
-        #for guid in guid_order:
-        #    count += 1
-        #    print("training instance: " + str(count))
-        #    self.ifit(g_instances[guid])
-
-        ## add categorize for adding guids
-        #mapping = {}
-        #for idx, inst in enumerate(o_instances):
-        #    print("categorizing instance: %i" % idx)
-        #    instance = copy.deepcopy(inst)
-        #    if "guid" in instance:
-        #        del instance['guid']
-
-        #    mapping[inst['guid']] = self.labyrinth_categorize(instance)
-
-        ## add guids
-        #for g in mapping:
-        #    curr = mapping[g]
-        #    while curr:
-        #        curr.av_counts['has-guid'] = {"1":True}
-        #        if 'guid' not in curr.av_counts:
-        #            curr.av_counts['guid'] = {}
-        #        curr.av_counts['guid'][g] = True
-        #        curr = curr.parent
-        
-        for g in mapping:
-            cluster = mapping[g]
-            cluster = cluster.parent
-            clusters[g] = cluster.concept_name
-
-        print(json.dumps(self.output_json()))
-
-        return clusters
+        if val1.is_parent(val2):
+            return val1
+        ancestor = val2
+        while ancestor.parent:
+            if ancestor.is_parent(val1):
+                return ancestor
+            ancestor = ancestor.parent
+        return ancestor
 
 if __name__ == "__main__":
 
-    Labyrinth().predictions("data_files/rb_com_11_noCheck.json", 15, 20)
-    #print(Labyrinth().cluster("data_files/rb_com_11_noCheck.json", 300))
+    tree = LabyrinthTree()
 
-    #Labyrinth().predictions("data_files/kelly-data.json", 5, 1)
-    #print(Labyrinth().cluster("data_files/kelly-data.json", 10))
-    #Labyrinth().baseline_guesser("data_files/rb_com_11_noCheck.json", 10, 1)
-
-    #print(Labyrinth().cluster("data_files/rb_s_07.json", 10, 3))
-    #print(Labyrinth().cluster("data_files/jenny_graph_data.json", 50, 1))
-
-    #t = Labyrinth()
-    #t.sequential_prediction("towers_small_trestle.json", 10)
-    #print(t.predict({"success": "1"}))
-
-
+    with open('data_files/rb_s_07_continuous.json', "r") as json_data:
+        instances = json.load(json_data)
+    print(len(instances))
+    instances = instances[0:20]
+    print(set(tree.cluster(instances, 2)))
 

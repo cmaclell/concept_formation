@@ -1,5 +1,7 @@
 import re
-from search import BeamGS, BestFGS, Node
+from search import BeamGS
+from search import BestFGS
+from search import Node
 from cobweb import CobwebTree
 
 gensym_counter = 0;
@@ -85,7 +87,7 @@ def renameRelation(attr, mapping):
             temp.append(".".join(new_attr))
     return tuple(temp)
 
-def rename(instance, mapping):
+def renameFlat(instance, mapping):
     """
     Given a flattened instance and a mapping (type = dict) rename the
     components and relations and return the renamed instance.
@@ -196,7 +198,7 @@ def structurizeJSON(instance):
 
     return temp
 
-def bindAttr(attr, mapping):
+def bindFlatAttr(attr, mapping):
     if isinstance(attr, tuple):
         for i,v in enumerate(attr):
             if i == 0:
@@ -213,6 +215,12 @@ def bindAttr(attr, mapping):
         return renameComponent(attr, mapping)
     else:
         return attr
+
+def structureMatch(concept, instance):
+    inames = frozienset([a for a in instance if isinstance(instance[a], LabyrinthNode)])
+    cnames = frozienset([a for a in concept if isinstance(a, LabyrinthNode)])
+
+    pass
 
 def flatMatch(concept, instance):
     inames = frozenset(getComponentNames(instance))
@@ -244,7 +252,7 @@ def flatMatchSuccessorFn(node):
         m = {a:v for a,v in mapping}
         m[n] = n
         for attr in instance:
-            new_attr = bindAttr(attr, m)
+            new_attr = bindFlatAttr(attr, m)
             if new_attr:
                 reward -= concept.attr_val_guess_gain(new_attr, instance[attr])
 
@@ -257,7 +265,7 @@ def flatMatchSuccessorFn(node):
             m = {a:v for a,v in mapping}
             m[n] = new
             for attr in instance:
-                new_attr = bindAttr(attr, m)
+                new_attr = bindFlatAttr(attr, m)
                 if new_attr:
                     reward -= concept.attr_val_guess_gain(new_attr,
                                                           instance[attr])
@@ -270,10 +278,12 @@ def flatMatchHeuristicFn(node):
     mapping, unnamed, availableNames = node.state
     concept, instance = node.extra
 
+    # TODO come up with a better heuristic than just 1 correct
+    # guess for each unbound attribute.
     h = 0
     m = {a:v for a,v in mapping}
     for attr in instance:
-        new_attr = bindAttr(attr, m)
+        new_attr = bindFlatAttr(attr, m)
         if not new_attr:
             h -= 1
 

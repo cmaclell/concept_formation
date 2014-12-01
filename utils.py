@@ -74,6 +74,16 @@ class ContinuousValue():
         self.mean = 0
         self.meanSq = 0
 
+    def copy(self):
+        """
+        Returns a deep copy of itself.
+        """
+        v = ContinuousValue()
+        v.num = self.num
+        v.mean = self.mean
+        v.meanSq = self.meanSq
+        return v
+
     def unbiased_mean(self):
         """
         Returns the mean value.
