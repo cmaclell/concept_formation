@@ -93,11 +93,9 @@ def rename(instance, mapping):
     # Ensure it is a complete mapping
     # Might be troublesome if there is a name collision
     for attr in instance:
-        #TODO need to handle ignores better.
-        if attr[0] == "_":
-            continue
         if isinstance(attr, tuple):
             continue
+        attr = re.sub("_", "", attr)
         for name in attr.split('.')[:-1]:
             if name not in mapping:
                 mapping[name] = name
@@ -107,9 +105,9 @@ def rename(instance, mapping):
     # rename all attribute values
     for attr in instance:
         if isinstance(attr, tuple):
-            temp_instance[renameRelation] = instance[attr]
+            temp_instance[renameRelation(attr, mapping)] = instance[attr]
         elif "." in attr:
-            temp_instance[renameComponent] = instance[attr]
+            temp_instance[renameComponent(attr, mapping)] = instance[attr]
         else:
             temp_instance[attr] = instance[attr]
 
@@ -206,7 +204,7 @@ def bindAttr(attr, mapping):
             for o in v.split('.'):
                 if o not in mapping:
                     return None
-            return renameRelation(attr, mapping)
+        return renameRelation(attr, mapping)
     elif '.' in attr:
         path = attr.split('.')[:-1]
         for o in path:
@@ -225,10 +223,11 @@ def flatMatch(concept, instance):
         return {}
      
     initial = Node((frozenset(), inames, cnames), extra=(concept, instance))
-    #return next(BeamGS(initial, flatMatchSuccessorFn, flatMatchGoalTestFn,
-    #                   flatMatchHeuristicFn), 100)
-    solution = next(BestFGS(initial, flatMatchSuccessorFn, flatMatchGoalTestFn,
-                            flatMatchHeuristicFn))
+    solution = next(BeamGS(initial, flatMatchSuccessorFn, flatMatchGoalTestFn,
+                       flatMatchHeuristicFn), 10)
+    #solution = next(BestFGS(initial, flatMatchSuccessorFn, flatMatchGoalTestFn,
+    #                        flatMatchHeuristicFn))
+    #print(solution.cost)
 
     if solution:
         mapping, unnamed, availableNames = solution.state

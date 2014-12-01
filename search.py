@@ -3,6 +3,7 @@ from heapq import heappush,heappop,heapify
 #import queue
 import random
 
+
 class Node:
     
     def __init__(self, state, parent=None, action=None, cost=0, depth=0,
@@ -456,8 +457,8 @@ def BeamGS(initial, successorFn, goalTestFn, heuristicFn, initialBeamWidth=1):
             closedList[current] = cost
 
             if goalTestFn(current):
-                print("Succeeded!")
-                print("Nodes evaluated: %i" % nodeCount)
+                #print("Succeeded!")
+                #print("Nodes evaluated: %i" % nodeCount)
                 yield current
 
             for s in successorFn(current):
