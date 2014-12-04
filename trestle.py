@@ -42,7 +42,7 @@ if __name__ == "__main__":
     with open('data_files/rb_s_07_continuous.json', "r") as json_data:
         instances = json.load(json_data)
     print(len(instances))
-    #instances = instances[0:5]
+    #instances = instances[0:20]
     print(set(tree.cluster(instances, 2)))
 
     #labels = tree.kc_label("data_files/instant-test-processed.json", 16000)
