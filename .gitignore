@@ -5,3 +5,5 @@
 # ignore compiled python files
 *.pyc
 
+# ignore specific files
+./visualize/output.json
