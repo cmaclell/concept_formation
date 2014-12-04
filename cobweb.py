@@ -250,6 +250,17 @@ class CobwebTree:
         json_data.close()
         return accuracy, nodes
 
+    def cluster_from_json(self, filename, depth=1):
+        """
+        Cluster a set of examples in a provided json file
+        """
+        json_data = open(filename,"r")
+        instances = json.load(json_data)
+        shuffle(instances)
+        clustering = self.cluster(instances,depth)
+        json_data.close()
+        return zip(instances,clustering)
+
     def cluster(self, instances, depth=1):
         """
         Used to cluster examples incrementally and return the cluster labels.
