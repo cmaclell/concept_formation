@@ -1,3 +1,4 @@
+import re
 import json
 import utils
 from random import choice
@@ -37,6 +38,10 @@ class CobwebTree:
         category utility as the heuristic to make decisions.
         """
         current = self.root
+
+        # Force a caching of the correct guesses
+        if not current.cached_guess_count:
+            current.expected_correct_guesses()
 
         while current:
             if (not current.children and current.cu_for_fringe_split(instance)
@@ -264,6 +269,17 @@ class CobwebTree:
         json_data.close()
         return zip(instances,clustering)
 
+    def generate_d3_visualization(self):
+        """
+        Generates the .js file that is used by index.html to generate the d3 tree.
+        """
+        #with open('visualize/output.json', 'w') as f:
+        #    f.write(json.dumps(self.root.output_json()))
+        with open('visualize/output.js', 'w') as f:
+            f.write("var output = '"+re.sub("'", '',
+                                            json.dumps(self.root.output_json()))+"';")
+
+
     def cluster(self, instances, depth=1):
         """
         Used to cluster examples incrementally and return the cluster labels.
@@ -293,11 +309,7 @@ class CobwebTree:
 
             clusters.append("Concept" + c.concept_id)
 
-        with open('visualize/output.json', 'w') as f:
-            f.write(json.dumps(self.root.output_json()))
-
-        with open('visualize/output.js', 'w') as f:
-            f.write("var output = '"+json.dumps(self.root.output_json())+"';")
+        self.generate_d3_visualization()
 
         return clusters
 
@@ -410,6 +422,7 @@ class CobwebNode:
         """
         self.concept_id = self.gensym()
         #self.concept_name = "Concept" + self.gensym()
+        self.cached_guess_count = None
         self.count = 0
         self.av_counts = {}
         self.children = []
@@ -430,11 +443,12 @@ class CobwebNode:
         """
         temp = self.__class__()
         temp.update_counts_from_node(self)
+        temp.cached_guess_count = self.cached_guess_count
 
-        for child in self.children:
-            temp_child = self.__class__()
-            temp_child.update_counts_from_node(child)
-            temp.children.append(temp_child)
+        #for child in self.children:
+        #    temp_child = self.__class__()
+        #    temp_child.update_counts_from_node(child)
+        #    temp.children.append(temp_child)
 
         return temp
 
@@ -446,6 +460,7 @@ class CobwebNode:
         input:
             instance: {a1: v1, a2: v2, ...} - a hashtable of attr and values. 
         """
+        self.cached_guess_count = None
         self.count += 1 
         for attr in instance:
             self.av_counts[attr] = self.av_counts.setdefault(attr,{})
@@ -457,6 +472,7 @@ class CobwebNode:
         Increments the counts of the current node by the amount in the specified
         node.
         """
+        self.cached_guess_count = None
         self.count += node.count
         for attr in node.av_counts:
             for val in node.av_counts[attr]:
@@ -481,29 +497,15 @@ class CobwebNode:
 
         return (after_prob * after_prob) - (before_prob * before_prob)
 
-    #def expected_correct_guesses_attr_val(self, attr, val):
-    #    """
-    #    Returns the number of correct guesses that are expected from the given
-    #    concept for the given attr. This is the probability of the attribute
-    #    value squared.
-    #    """
-    #    if attr[0] == "_":
-    #        return 0.0
-    #    if attr not in self.av_counts:
-    #        return 0.0
-    #    if val not in self.av_counts[attr]:
-    #        return 0.0
-
-    #    prob = (self.av_counts[attr][val] / (1.0 * self.count))
-    #    return (prob * prob)
-
-
     def expected_correct_guesses(self):
         """
         Returns the number of correct guesses that are expected from the given
         concept. This is the sum of the probability of each attribute value
         squared. 
         """
+        if self.cached_guess_count:
+            return self.cached_guess_count
+
         correct_guesses = 0.0
 
         for attr in self.av_counts:
@@ -513,6 +515,10 @@ class CobwebNode:
                 prob = (self.av_counts[attr][val] / (1.0 * self.count))
                 correct_guesses += (prob * prob)
 
+        #if self.cached_guess_count:
+        #    assert self.cached_guess_count == correct_guesses
+
+        self.cached_guess_count = correct_guesses
         return correct_guesses
 
     def category_utility(self):
@@ -551,17 +557,19 @@ class CobwebNode:
         operations = []
 
         if "best" in possible_ops:
-            operations.append((best1_cu,"best"))
+            operations.append((best1_cu, 2, "best"))
         if "new" in possible_ops: 
-            operations.append((self.cu_for_new_child(instance),'new'))
+            operations.append((self.cu_for_new_child(instance), 3, 'new'))
         if "merge" in possible_ops and len(self.children) > 2 and best2:
-            operations.append((self.cu_for_merge(best1, best2, instance),'merge'))
+            operations.append((self.cu_for_merge(best1, best2, instance), 1,'merge'))
         if "split" in possible_ops and len(best1.children) > 0:
-            operations.append((self.cu_for_split(best1),'split'))
+            operations.append((self.cu_for_split(best1),4, 'split'))
 
         operations.sort(reverse=True)
-        #print(operations[0])
-        return operations[0]
+        #print(operations)
+        best_op = (operations[0][0], operations[0][2])
+        #print(best_op)
+        return best_op
 
     def two_best_children(self, instance):
         """
@@ -577,30 +585,32 @@ class CobwebNode:
         if len(self.children) == 0:
             raise Exception("No children!")
 
-        children_cu = [(self.cu_for_insert(child, instance), i, child) for i,
+        # Sort childrent by CU, then by Size, then by Recency. 
+        children_cu = [(self.cu_for_insert(child, instance), child.count, i, child) for i,
                        child in enumerate(self.children)]
         children_cu.sort(reverse=True)
+
+        #if children_cu[0][0] == children_cu[1][0]:
+        #    print(children_cu)
 
         if len(children_cu) == 0:
             return None, None
         if len(children_cu) == 1:
-            return (children_cu[0][0], children_cu[0][2]), None 
+            return (children_cu[0][0], children_cu[0][3]), None 
 
-        return ((children_cu[0][0], children_cu[0][2]), (children_cu[1][0],
-                                                         children_cu[1][2]))
+        return ((children_cu[0][0], children_cu[0][3]), (children_cu[1][0],
+                                                         children_cu[1][3]))
 
     def cu_for_insert(self, child, instance):
         """
         Computer the category utility of adding the instance to the specified
         child.
         """
-        temp = self.__class__()
-        temp.update_counts_from_node(self)
+        temp = self.shallow_copy()
         temp.increment_counts(instance)
 
         for c in self.children:
-            temp_child = self.__class__()
-            temp_child.update_counts_from_node(c)
+            temp_child = c.shallow_copy()
             temp.children.append(temp_child)
             if c == child:
                 temp_child.increment_counts(instance)
@@ -634,6 +644,11 @@ class CobwebNode:
         particular instance.
         """
         temp = self.shallow_copy()
+        for c in self.children:
+            temp.children.append(c.shallow_copy())
+
+        #temp = self.shallow_copy()
+        
         temp.increment_counts(instance)
         temp.create_new_child(instance)
         return temp.category_utility()
@@ -672,8 +687,7 @@ class CobwebNode:
         output:
             0.02 - the category utility for the merge of best1 and best2.
         """
-        temp = self.__class__()
-        temp.update_counts_from_node(self)
+        temp = self.shallow_copy()
         temp.increment_counts(instance)
 
         new_child = self.__class__()
@@ -685,8 +699,7 @@ class CobwebNode:
         for c in self.children:
             if c == best1 or c == best2:
                 continue
-            temp_child = self.__class__()
-            temp_child.update_counts_from_node(c)
+            temp_child = c.shallow_copy()
             temp.children.append(temp_child)
 
         return temp.category_utility()
@@ -708,8 +721,7 @@ class CobwebNode:
         essentially identical. It can be used to keep the tree from growing and
         to increase the tree's predictive accuracy.
         """
-        temp = self.__class__()
-        temp.update_counts_from_node(self)
+        temp = self.shallow_copy()
         
         temp.create_child_with_current_counts()
         temp.increment_counts(instance)
@@ -726,14 +738,12 @@ class CobwebNode:
         output:
             0.03 - the category utility for the split of best1.
         """
-        temp = self.__class__()
-        temp.update_counts_from_node(self)
+        temp = self.shallow_copy()
 
         for c in self.children + best.children:
             if c == best:
                 continue
-            temp_child = self.__class__()
-            temp_child.update_counts_from_node(c)
+            temp_child = c.shallow_copy()
             temp.children.append(temp_child)
 
         return temp.category_utility()
