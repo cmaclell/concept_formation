@@ -60,6 +60,7 @@ class Cobweb3Node(CobwebNode):
         """
         A modified version of increment counts that handles floats properly
         """
+        self.cached_guess_count = None
         self.count += 1 
             
         for attr in instance:
@@ -79,6 +80,7 @@ class Cobweb3Node(CobwebNode):
         Increments the counts of the current node by the amount in the specified
         node.
         """
+        self.cached_guess_count = None
         self.count += node.count
         for attr in node.av_counts:
             if isinstance(node.av_counts[attr], ContinuousValue):
@@ -135,8 +137,8 @@ class Cobweb3Node(CobwebNode):
         To account for this we use a modified equation:
             P(A_i = V_ij)^2 = P(A_i)^2 * (1 / (2 * sqrt(pi) * std))
         """
-        #if self.cached_guess_count:
-        #    return self.cached_guess_count
+        if self.cached_guess_count:
+            return self.cached_guess_count
 
         correct_guesses = 0.0
 
@@ -153,8 +155,8 @@ class Cobweb3Node(CobwebNode):
                     prob = ((1.0 * self.av_counts[attr][val]) / self.count)
                     correct_guesses += (prob * prob)
 
-        if self.cached_guess_count:
-            assert self.cached_guess_count == correct_guesses
+        #if self.cached_guess_count:
+        #    assert abs(self.cached_guess_count - correct_guesses) < 0.00001
         self.cached_guess_count = correct_guesses
 
         return correct_guesses

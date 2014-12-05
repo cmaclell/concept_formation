@@ -43,7 +43,7 @@ if __name__ == "__main__":
         instances = json.load(json_data)
     print(len(instances))
     #instances = instances[0:20]
-    print(set(tree.cluster(instances, 2)))
+    print(set(tree.cluster(instances)))
 
     #labels = tree.kc_label("data_files/instant-test-processed.json", 16000)
     #pickle.dump(labels, open('clustering.pickle', 'wb'))

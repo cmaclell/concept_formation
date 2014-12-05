@@ -39,6 +39,10 @@ class CobwebTree:
         """
         current = self.root
 
+        # Force a caching of the correct guesses
+        if not current.cached_guess_count:
+            current.expected_correct_guesses()
+
         while current:
             if (not current.children and current.cu_for_fringe_split(instance)
                 <= 0.0):
@@ -552,13 +556,13 @@ class CobwebNode:
         operations = []
 
         if "best" in possible_ops:
-            operations.append((best1_cu, 3, "best"))
+            operations.append((best1_cu, 2, "best"))
         if "new" in possible_ops: 
-            operations.append((self.cu_for_new_child(instance), 4, 'new'))
+            operations.append((self.cu_for_new_child(instance), 3, 'new'))
         if "merge" in possible_ops and len(self.children) > 2 and best2:
             operations.append((self.cu_for_merge(best1, best2, instance), 1,'merge'))
         if "split" in possible_ops and len(best1.children) > 0:
-            operations.append((self.cu_for_split(best1),2, 'split'))
+            operations.append((self.cu_for_split(best1),4, 'split'))
 
         operations.sort(reverse=True)
         #print(operations)
@@ -601,13 +605,11 @@ class CobwebNode:
         Computer the category utility of adding the instance to the specified
         child.
         """
-        temp = self.__class__()
-        temp.update_counts_from_node(self)
+        temp = self.shallow_copy()
         temp.increment_counts(instance)
 
         for c in self.children:
-            temp_child = self.__class__()
-            temp_child.update_counts_from_node(c)
+            temp_child = c.shallow_copy()
             temp.children.append(temp_child)
             if c == child:
                 temp_child.increment_counts(instance)
@@ -684,8 +686,7 @@ class CobwebNode:
         output:
             0.02 - the category utility for the merge of best1 and best2.
         """
-        temp = self.__class__()
-        temp.update_counts_from_node(self)
+        temp = self.shallow_copy()
         temp.increment_counts(instance)
 
         new_child = self.__class__()
@@ -697,8 +698,7 @@ class CobwebNode:
         for c in self.children:
             if c == best1 or c == best2:
                 continue
-            temp_child = self.__class__()
-            temp_child.update_counts_from_node(c)
+            temp_child = c.shallow_copy()
             temp.children.append(temp_child)
 
         return temp.category_utility()
@@ -720,8 +720,7 @@ class CobwebNode:
         essentially identical. It can be used to keep the tree from growing and
         to increase the tree's predictive accuracy.
         """
-        temp = self.__class__()
-        temp.update_counts_from_node(self)
+        temp = self.shallow_copy()
         
         temp.create_child_with_current_counts()
         temp.increment_counts(instance)
@@ -738,14 +737,12 @@ class CobwebNode:
         output:
             0.03 - the category utility for the split of best1.
         """
-        temp = self.__class__()
-        temp.update_counts_from_node(self)
+        temp = self.shallow_copy()
 
         for c in self.children + best.children:
             if c == best:
                 continue
-            temp_child = self.__class__()
-            temp_child.update_counts_from_node(c)
+            temp_child = c.shallow_copy()
             temp.children.append(temp_child)
 
         return temp.category_utility()
