@@ -269,6 +269,57 @@ class CobwebTree:
         json_data.close()
         return zip(instances,clustering)
 
+
+    def kc_model_from_datashop(self, filename, stateField='Input', depth=1):
+        """
+        Reads in a datashop export file and generates a KC model based on the concept tree
+        """
+        datashop = csv.reader(open(filename,'r'),delimiter='\t')
+        h = None
+        instances = []
+        mapping = {}
+
+        for row in datashop :
+            if not h:
+                h = {}
+                for i,v in enumerate(row):
+                    h[v] = i
+                continue
+
+            instance = json.load(row[h[stateField]])
+            concept = self.ifit(instance)
+            mapping[row[h['Transaction Id']]] = concept
+
+        datashop.close()
+
+        #categorize with state action pairs
+        #drop the actions 
+        #group all of them by the same state
+        #clusters of the ones that were successful
+        #those are the positive actions that belong in that cluster
+        
+        # ensure that the final concept is actually in the tree and not a merged/split node
+        for id in mapping :
+            while mapping[id] not in mapping[id].parent.children:
+                mapping[id] = parent
+        
+
+
+        #wanted the correct actions on each problem
+
+        #{
+        #   final state...    
+        #   step1:{
+        #       sel:""
+        #       act:""
+        #       inp:""
+        #   }
+        #   step2:{...}
+        #   (ordered step1 step2):T
+        #}
+        #
+        #
+
     def generate_d3_visualization(self):
         """
         Generates the .js file that is used by index.html to generate the d3 tree.
@@ -278,7 +329,6 @@ class CobwebTree:
         with open('visualize/output.js', 'w') as f:
             f.write("var output = '"+re.sub("'", '',
                                             json.dumps(self.root.output_json()))+"';")
-
 
     def cluster(self, instances, depth=1):
         """
