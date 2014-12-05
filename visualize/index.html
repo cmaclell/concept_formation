@@ -45,7 +45,8 @@ circle.parent:hover {
     </style>
   </head>
   <body>
-    <script type="text/javascript" src="d3.v3.min.js"></script>
+      <script type="text/javascript" src="d3.v3.min.js"></script>
+      <script type="text/javascript" src="output.js"></script>
     <script type="text/javascript">
 
 var w = 1280,
@@ -66,7 +67,9 @@ var vis = d3.select("body").insert("svg:svg", "h2")
   .append("svg:g")
     .attr("transform", "translate(" + (w - r) / 2 + "," + (h - r) / 2 + ")");
 
-d3.json("output.json", function(data) {
+    var data = JSON.parse(output);
+
+//d3.json(output, function(data) {
   node = root = data;
 
   var nodes = pack.nodes(root);
@@ -130,7 +133,7 @@ d3.json("output.json", function(data) {
             });
 
   d3.select(window).on("click", function() { zoom(root); });
-});
+//});
 
 function zoom(d, i) {
   console.log(d);

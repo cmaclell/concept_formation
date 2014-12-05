@@ -250,13 +250,15 @@ class CobwebTree:
         json_data.close()
         return accuracy, nodes
 
-    def cluster_from_json(self, filename, depth=1):
+    def cluster_from_json(self, filename, depth=1, length=-1):
         """
         Cluster a set of examples in a provided json file
         """
         json_data = open(filename,"r")
         instances = json.load(json_data)
         shuffle(instances)
+        if length > 0 and length < len(instances) :
+            instances = instances[:length]
         clustering = self.cluster(instances,depth)
         json_data.close()
         return zip(instances,clustering)
@@ -292,6 +294,9 @@ class CobwebTree:
 
         with open('visualize/output.json', 'w') as f:
             f.write(json.dumps(self.root.output_json()))
+
+        with open('visualize/output.js', 'w') as f:
+            f.write("var output = '"+json.dumps(self.root.output_json())+"';")
 
         return clusters
 
