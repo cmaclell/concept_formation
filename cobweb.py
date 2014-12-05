@@ -1,3 +1,4 @@
+import re
 import json
 import utils
 from random import choice
@@ -263,6 +264,17 @@ class CobwebTree:
         json_data.close()
         return zip(instances,clustering)
 
+    def generate_d3_visualization(self):
+        """
+        Generates the .js file that is used by index.html to generate the d3 tree.
+        """
+        #with open('visualize/output.json', 'w') as f:
+        #    f.write(json.dumps(self.root.output_json()))
+        with open('visualize/output.js', 'w') as f:
+            f.write("var output = '"+re.sub("'", '"',
+                                            json.dumps(self.root.output_json()))+"';")
+
+
     def cluster(self, instances, depth=1):
         """
         Used to cluster examples incrementally and return the cluster labels.
@@ -292,11 +304,7 @@ class CobwebTree:
 
             clusters.append("Concept" + c.concept_id)
 
-        with open('visualize/output.json', 'w') as f:
-            f.write(json.dumps(self.root.output_json()))
-
-        with open('visualize/output.js', 'w') as f:
-            f.write("var output = '"+json.dumps(self.root.output_json())+"';")
+        self.generate_d3_visualization()
 
         return clusters
 
