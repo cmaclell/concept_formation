@@ -135,6 +135,9 @@ class Cobweb3Node(CobwebNode):
         To account for this we use a modified equation:
             P(A_i = V_ij)^2 = P(A_i)^2 * (1 / (2 * sqrt(pi) * std))
         """
+        #if self.cached_guess_count:
+        #    return self.cached_guess_count
+
         correct_guesses = 0.0
 
         for attr in self.av_counts:
@@ -149,6 +152,10 @@ class Cobweb3Node(CobwebNode):
                 for val in self.av_counts[attr]:
                     prob = ((1.0 * self.av_counts[attr][val]) / self.count)
                     correct_guesses += (prob * prob)
+
+        if self.cached_guess_count:
+            assert self.cached_guess_count == correct_guesses
+        self.cached_guess_count = correct_guesses
 
         return correct_guesses
 
