@@ -39,10 +39,6 @@ class CobwebTree:
         """
         current = self.root
 
-        # Force a caching of the correct guesses
-        if not current.cached_guess_count:
-            current.expected_correct_guesses()
-
         while current:
             if (not current.children and current.cu_for_fringe_split(instance)
                 <= 0.0):
@@ -330,38 +326,44 @@ class CobwebTree:
             f.write("var output = '"+re.sub("'", '',
                                             json.dumps(self.root.output_json()))+"';")
 
-    def cluster(self, instances, depth=1):
+    def cluster(self, instances, minsplit=1, maxsplit=1):
         """
-        Used to cluster examples incrementally and return the cluster labels.
-        The final cluster labels are at a depth of 'depth' from the root. This
-        defaults to 1, which takes the first split, but it might need to be 2
-        or greater in cases where more distinction is needed.
+        Returns a list of clusterings. the size of the list will be (1 +
+        maxsplit - minsplit). The first clustering will be if the root was
+        split, then each subsequent clustering will be if the least coupled
+        cluster (in terms of category utility) is split. This might stop early
+        if you reach the case where there are no more clusters to split (each
+        instance in its own cluster). 
         """
         temp_clusters = [self.ifit(instance) for instance in instances]
 
-        #print(len(set([c.concept_id for c in temp_clusters])))
-        clusters = []
-        for i,c in enumerate(temp_clusters):
-            while (c.parent and c not in c.parent.children):
-                c = c.parent
+        clusterings = []
+        for nth_split in range(minsplit, maxsplit+1):
+            #print(len(set([c.concept_id for c in temp_clusters])))
 
-            promote = True
-            while c.parent and promote:
-                n = c
-                for i in range(depth+2):
-                    if not n:
-                        promote = False
-                        break
-                    n = n.parent
-
-                if promote:
+            clusters = []
+            for i,c in enumerate(temp_clusters):
+                while (c.parent and c.parent.parent):
                     c = c.parent
+                clusters.append("Concept" + c.concept_id)
+            clusterings.append(clusters)
 
-            clusters.append("Concept" + c.concept_id)
+            split_cus = sorted([(self.root.cu_for_split(c) -
+                                 self.root.category_utility(), i, c) for i,c in
+                                enumerate(self.root.children) if c.children])
+
+            # Exit early, we don't need to re-reun the following part for the
+            # last time through
+            if nth_split == maxsplit or not split_cus:
+                break
+
+            #print(self.root.category_utility())
+            #print(split_cus)
+            self.root.split(split_cus[-1][2])
 
         self.generate_d3_visualization()
 
-        return clusters
+        return clusterings
 
     def baseline_guesser(self, filename, length, iterations):
         """
@@ -465,7 +467,7 @@ class CobwebNode:
 
     counter = 0
 
-    def __init__(self, otherTree=None):
+    def __init__(self, otherNode=None):
         """
         The constructor creates a cobweb node with default values. It can also
         be used as a copy constructor to "deepcopy" a node.
@@ -479,11 +481,12 @@ class CobwebNode:
         self.parent = None
 
         # check if the constructor is being used as a copy constructor
-        if otherTree:
-            self.update_counts_from_node(otherTree)
-            self.parent = otherTree.parent
+        if otherNode:
+            self.update_counts_from_node(otherNode)
+            self.parent = otherNode.parent
+            self.cached_guess_count = otherNode.expected_correct_guesses()
 
-            for child in otherTree.children:
+            for child in otherNode.children:
                 self.children.append(self.__class__(child))
 
     def shallow_copy(self):
@@ -493,7 +496,7 @@ class CobwebNode:
         """
         temp = self.__class__()
         temp.update_counts_from_node(self)
-        temp.cached_guess_count = self.cached_guess_count
+        temp.cached_guess_count = self.expected_correct_guesses()
 
         #for child in self.children:
         #    temp_child = self.__class__()
@@ -607,11 +610,11 @@ class CobwebNode:
         operations = []
 
         if "best" in possible_ops:
-            operations.append((best1_cu, 2, "best"))
+            operations.append((best1_cu, 1, "best"))
         if "new" in possible_ops: 
             operations.append((self.cu_for_new_child(instance), 3, 'new'))
         if "merge" in possible_ops and len(self.children) > 2 and best2:
-            operations.append((self.cu_for_merge(best1, best2, instance), 1,'merge'))
+            operations.append((self.cu_for_merge(best1, best2, instance), 2,'merge'))
         if "split" in possible_ops and len(best1.children) > 0:
             operations.append((self.cu_for_split(best1),4, 'split'))
 
