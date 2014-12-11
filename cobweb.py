@@ -1,6 +1,7 @@
 import re
 import json
 import utils
+from math import floor
 from random import choice
 from random import shuffle
 
@@ -132,6 +133,15 @@ class CobwebTree:
             elif best_action == "best":
                 current = best1
 
+    def categorize(self, instance):
+        """
+        A categorize function that can be used polymorphicaly without 
+        having to worry about the type of the underlying object.
+
+        In Cobweb's case this calls cobweb_categorize()
+        """
+        return self.cobweb_categorize(instance)
+    
     def predict_attribute(self, instance, attribute):
         if attribute in instance:
             raise ValueError("The attribute is present in the instance!")
@@ -326,18 +336,33 @@ class CobwebTree:
             f.write("var output = '"+re.sub("'", '',
                                             json.dumps(self.root.output_json()))+"';")
 
-    def cluster(self, instances, minsplit=1, maxsplit=1):
+    def cluster(self, instances, minsplit=1, maxsplit=1, samplesize=-1):
         """
         Returns a list of clusterings. the size of the list will be (1 +
         maxsplit - minsplit). The first clustering will be if the root was
         split, then each subsequent clustering will be if the least coupled
         cluster (in terms of category utility) is split. This might stop early
         if you reach the case where there are no more clusters to split (each
-        instance in its own cluster). 
+        instance in its own cluster).
+
+        The sample parameter can be used to specify a percentage (0.0-1.0) of 
+        the instances to use to build the initial concept tree against which 
+        all of the instances will be categorized for clustering. If no sample
+        value is specified then the tree will be built from all instances.
+        Sampling is not random but based on taking an inital sublist. If
+        random sampling is desired then shuffle the input list.
         """
-        temp_clusters = [self.ifit(instance) for instance in instances]
+        
+        if samplesize > 0.0 and samplesize < 1.0 :
+            temp_clusters = [self.ifit(instance) for instance in instances[:floor(len(instances)*samplesize)]]
+            temp_clusters.extend([self.categorize(instance) for instance in instances[floor(len(instances)*samplesize):]])
+        else:
+            temp_clusters = [self.ifit(instance) for instance in instances]
 
         clusterings = []
+        
+        self.generate_d3_visualization()
+
         for nth_split in range(minsplit, maxsplit+1):
             #print(len(set([c.concept_id for c in temp_clusters])))
 
@@ -361,7 +386,6 @@ class CobwebTree:
             #print(split_cus)
             self.root.split(split_cus[-1][2])
 
-        self.generate_d3_visualization()
 
         return clusterings
 

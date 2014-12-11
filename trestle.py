@@ -23,6 +23,15 @@ class TrestleTree(Cobweb3Tree):
         temp_instance = renameFlat(temp_instance, mapping)
         return self.cobweb_categorize(temp_instance)
 
+    def categorize(self, instance):
+        """
+        A categorize function that can be used polymorphicaly without 
+        having to worry about the type of the underlying object.
+
+        In Trestle's case this calls trestle_categorize()
+        """
+        return self.trestle_categorize(instance)
+
     def trestle(self, instance):
         """
         Recursively calls Trestle on all of the components in a depth-first
