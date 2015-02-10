@@ -1,6 +1,6 @@
 import json
 import random
-from trestle import Trestle
+from trestle import TrestleTree
 
 class TicTacToe:
     
@@ -151,14 +151,14 @@ def query_user(game, x, y):
 
 if __name__ == "__main__":
 
-    model = Trestle()
+    model = TrestleTree()
 
     while True:
         game = TicTacToe()
         while game.winner() == None:
             #concept = model.trestle_categorize(game.game_state())
-            with open('visualize/output.json', 'w') as f:
-                f.write(json.dumps(model.output_json()))
+            #with open('visualize/output.json', 'w') as f:
+            #    f.write(json.dumps(model.output_json()))
             
             # human player - ai learns from their moves.
             x,y = get_user_move()

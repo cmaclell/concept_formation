@@ -1,6 +1,7 @@
 import re
 import json
 import utils
+import csv
 from math import floor
 from random import choice
 from random import shuffle
@@ -382,10 +383,8 @@ class CobwebTree:
             if nth_split == maxsplit or not split_cus:
                 break
 
-            #print(self.root.category_utility())
-            #print(split_cus)
+            # Split the least cohesive cluster
             self.root.split(split_cus[-1][2])
-
 
         return clusterings
 
