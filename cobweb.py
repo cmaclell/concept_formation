@@ -361,7 +361,7 @@ class CobwebTree:
 
         clusterings = []
         
-        self.generate_d3_visualization('output')
+        self.generate_d3_visualization('output-pre')
 
         for nth_split in range(minsplit, maxsplit+1):
             #print(len(set([c.concept_id for c in temp_clusters])))
@@ -384,7 +384,10 @@ class CobwebTree:
 
             # Split the least cohesive cluster
             self.root.split(split_cus[-1][2])
-
+        
+        self.generate_d3_visualization('output-post')
+        self.generate_d3_visualization('output')
+    
         return clusterings
 
     def baseline_guesser(self, filename, length, iterations):
@@ -463,7 +466,7 @@ class CobwebTree:
                 an = []
                 for r in nodes:
                     an.append(r[i])
-                fout.write(','.join([str(utils.mean(a)),str(utils.std(a)),
+                fout.write(','.join([str(i),str(utils.mean(a)),str(utils.std(a)),
                     str(utils.mean(an)),str(utils.std(an))])+'\n')
         
 
