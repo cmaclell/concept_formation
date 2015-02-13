@@ -9,6 +9,7 @@ class Cobweb3Tree(CobwebTree):
 
     def __init__(self):
         self.root = Cobweb3Node()
+        self.root.root = self.root
 
     def predict(self, instance):
         """
@@ -142,18 +143,37 @@ class Cobweb3Node(CobwebNode):
 
         correct_guesses = 0.0
 
-        for attr in self.av_counts:
+        for attr in self.root.av_counts:
             if attr[0] == "_":
                 continue
-            elif isinstance(self.av_counts[attr], ContinuousValue):
-                std = max(self.av_counts[attr].unbiased_std(), self.acuity)
-                prob_attr = ((1.0 * self.av_counts[attr].num) / self.count)
-                correct_guesses += ((prob_attr * prob_attr) * 
-                                    (1.0 / (2.0 * math.sqrt(math.pi) * std)))
+            elif isinstance(self.root.av_counts[attr], ContinuousValue):
+                if attr not in self.av_counts :
+                    prob = 0
+                    val_count = 0
+                else:
+                    val_count = self.av_counts[attr].num
+                    std = max(self.av_counts[attr].unbiased_std(), self.acuity)
+                    prob_attr = ((1.0 * self.av_counts[attr].num) / self.count)
+                    correct_guesses += ((prob_attr * prob_attr) * 
+                                        (1.0 / (2.0 * math.sqrt(math.pi) * std)))
+
+                #Factors in the probability mass of missing values
+                prob = ((self.count - val_count) / (1.0 * self.count))
+                correct_guesses += (prob * prob)
+
             else:
-                for val in self.av_counts[attr]:
-                    prob = ((1.0 * self.av_counts[attr][val]) / self.count)
+                val_count = 0
+                for val in self.root.av_counts[attr]:
+                    if attr not in self.av_counts or val not in self.av_counts[attr]:
+                        prob = 0
+                    else:
+                        val_count += self.av_counts[attr][val]
+                        prob = (self.av_counts[attr][val] / (1.0 * self.count))
                     correct_guesses += (prob * prob)
+
+                #Factors in the probability mass of missing values
+                prob = ((self.count - val_count) / (1.0*self.count))
+                correct_guesses += (prob * prob)
 
         #if self.cached_guess_count:
         #    assert abs(self.cached_guess_count - correct_guesses) < 0.00001

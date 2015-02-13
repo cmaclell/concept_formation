@@ -13,6 +13,7 @@ class CobwebTree:
         Initialize the tree with a CobwebNode
         """
         self.root = CobwebNode()
+        self.root.root = self.root
 
     def __str__(self):
         return str(self.root)
@@ -57,6 +58,7 @@ class CobwebTree:
                     new.parent.children.append(new)
                 else:
                     self.root = new
+                    self.root.root = new
 
                 new.increment_counts(instance)
                 return new.create_new_child(instance)
@@ -186,7 +188,7 @@ class CobwebTree:
         Gets the probability of a particular attribute value for the concept
         associated with a given instance.
         """
-        concept = self.cobweb_categorize(instance)
+        concept = self.categorize(instance)
         return concept.get_probability(attr, val)
 
     def flexible_prediction(self, instance, guessing=False):
@@ -241,25 +243,21 @@ class CobwebTree:
         Try to flexibly predict each instance before incorporating it into the 
         tree. This will give a type of cross validated result.
         """
-        json_data = open(filename, "r")
-        instances = json.load(json_data)
-        #shuffle(instances)
-        #instances = instances[0:length]
+        
+        with open(filename, 'r') as json_data:
+            instances = json.load(json_data)
+        shuffle(instances)
+        instances = instances[0:length]
 
         accuracy = []
         nodes = []
-        for j in range(1):
-            shuffle(instances)
-            for n, i in enumerate(instances):
-                if n >= length:
-                    break
-                if not attr:
-                    accuracy.append(self.flexible_prediction(i, guessing))
-                else:
-                    accuracy.append(self.specific_prediction(i, attr, guessing))
-                nodes.append(self.root.num_concepts())
-                self.ifit(i)
-        json_data.close()
+        for n, i in enumerate(instances):
+            if not attr:
+                accuracy.append(self.flexible_prediction(i, guessing))
+            else:
+                accuracy.append(self.specific_prediction(i, attr, guessing))
+            nodes.append(self.root.num_concepts())
+            self.ifit(i)
         return accuracy, nodes
 
     def cluster_from_json(self, filename, ordered=True, depth=1, length=-1):
@@ -327,13 +325,14 @@ class CobwebTree:
         #
         #
 
-    def generate_d3_visualization(self):
+    def generate_d3_visualization(self, fileName):
         """
         Generates the .js file that is used by index.html to generate the d3 tree.
         """
         #with open('visualize/output.json', 'w') as f:
         #    f.write(json.dumps(self.root.output_json()))
-        with open('visualize/output.js', 'w') as f:
+        fname = 'visualize/'+fileName+'.js'
+        with open(fname, 'w') as f:
             f.write("var output = '"+re.sub("'", '',
                                             json.dumps(self.root.output_json()))+"';")
 
@@ -362,7 +361,7 @@ class CobwebTree:
 
         clusterings = []
         
-        self.generate_d3_visualization()
+        self.generate_d3_visualization('output')
 
         for nth_split in range(minsplit, maxsplit+1):
             #print(len(set([c.concept_id for c in temp_clusters])))
@@ -401,6 +400,7 @@ class CobwebTree:
         for i in range(0,n):
             print("run %i" % i)
             t = self.__class__()
+            t.root = self.root
             accuracy, num = t.sequential_prediction(filename, length, True)
             runs.append(accuracy)
             nodes.append(num)
@@ -453,38 +453,51 @@ class CobwebTree:
             runs.append(accuracy)
             nodes.append(num)
             #print(json.dumps(t.output_json()))
+        
+        with open('accuracy.csv','w') as fout:
+            fout.write('instances,mean accuracy,std accuracy,mean concepts,std concepts\n')
+            for i in range(0, len(runs[0])):
+                a = []
+                for r in runs:
+                    a.append(r[i])
+                an = []
+                for r in nodes:
+                    an.append(r[i])
+                fout.write(','.join([str(utils.mean(a)),str(utils.std(a)),
+                    str(utils.mean(an)),str(utils.std(an))])+'\n')
+        
 
         #print(runs)
-        print("MEAN Accuracy")
-        for i in range(0,len(runs[0])):
-            a = []
-            for r in runs:
-                a.append(r[i])
-            print("%0.2f" % (utils.mean(a)))
+        #print("MEAN Accuracy")
+        #for i in range(0,len(runs[0])):
+        #    a = []
+        #    for r in runs:
+        #        a.append(r[i])
+        #    print("%0.2f" % (utils.mean(a)))
 
-        print()
-        print("STD Accuracy")
-        for i in range(0,len(runs[0])):
-            a = []
-            for r in runs:
-                a.append(r[i])
-            print("%0.2f" % (utils.std(a)))
+        #print()
+        #print("STD Accuracy")
+        #for i in range(0,len(runs[0])):
+        #    a = []
+        #    for r in runs:
+        #        a.append(r[i])
+        #    print("%0.2f" % (utils.std(a)))
 
-        print()
-        print("MEAN Concepts")
-        for i in range(0,len(runs[0])):
-            a = []
-            for r in nodes:
-                a.append(r[i])
-            print("%0.2f" % (utils.mean(a)))
+        #print()
+        #print("MEAN Concepts")
+        #for i in range(0,len(runs[0])):
+        #    a = []
+        #    for r in nodes:
+        #        a.append(r[i])
+        #    print("%0.2f" % (utils.mean(a)))
 
-        print()
-        print("STD Concepts")
-        for i in range(0,len(runs[0])):
-            a = []
-            for r in nodes:
-                a.append(r[i])
-            print("%0.2f" % (utils.std(a)))
+        #print()
+        #print("STD Concepts")
+        #for i in range(0,len(runs[0])):
+        #    a = []
+        #    for r in nodes:
+        #        a.append(r[i])
+        #    print("%0.2f" % (utils.std(a)))
 
 class CobwebNode:
 
@@ -502,11 +515,13 @@ class CobwebNode:
         self.av_counts = {}
         self.children = []
         self.parent = None
+        self.root = None
 
         # check if the constructor is being used as a copy constructor
         if otherNode:
             self.update_counts_from_node(otherNode)
             self.parent = otherNode.parent
+            self.root = otherNode.root
             self.cached_guess_count = otherNode.expected_correct_guesses()
 
             for child in otherNode.children:
@@ -518,6 +533,7 @@ class CobwebNode:
         children)
         """
         temp = self.__class__()
+        temp.root = self.root
         temp.update_counts_from_node(self)
         temp.cached_guess_count = self.expected_correct_guesses()
 
@@ -584,12 +600,21 @@ class CobwebNode:
 
         correct_guesses = 0.0
 
-        for attr in self.av_counts:
+        for attr in self.root.av_counts:
             if attr[0] == "_":
                 continue
-            for val in self.av_counts[attr]:
-                prob = (self.av_counts[attr][val] / (1.0 * self.count))
+            val_count = 0
+            for val in self.root.av_counts[attr]:
+                if attr not in self.av_counts or val not in self.av_counts[attr]:
+                    prob = 0
+                else:
+                    val_count += self.av_counts[attr][val]
+                    prob = (self.av_counts[attr][val] / (1.0 * self.count))
                 correct_guesses += (prob * prob)
+
+            #Factors in the probability mass of missing values
+            prob = ((self.count - val_count) / (1.0*self.count))
+            correct_guesses += (prob * prob)
 
         #if self.cached_guess_count:
         #    assert self.cached_guess_count == correct_guesses
@@ -602,7 +627,7 @@ class CobwebNode:
         Returns the category utility of a particular division of a concept into
         its children. This is used as the heuristic to guide the concept
         formation.
-        """
+       """
         if len(self.children) == 0:
             return 0.0
 
@@ -699,6 +724,7 @@ class CobwebNode:
         """
         new_child = self.__class__()
         new_child.parent = self
+        new_child.root = self.root
         new_child.increment_counts(instance)
         self.children.append(new_child)
         return new_child
@@ -711,6 +737,7 @@ class CobwebNode:
         if self.count > 0:
             new = self.__class__(self)
             new.parent = self
+            new.root = self.root
             self.children.append(new)
             return new
 
@@ -741,10 +768,13 @@ class CobwebNode:
         """
         new_child = self.__class__()
         new_child.parent = self
+        new_child.root = self.root
         new_child.update_counts_from_node(best1)
         new_child.update_counts_from_node(best2)
         best1.parent = new_child
+        best1.root = new_child.root
         best2.parent = new_child
+        best2.root = new_child.root
         new_child.children.append(best1)
         new_child.children.append(best2)
         self.children.remove(best1)
@@ -767,6 +797,7 @@ class CobwebNode:
         temp.increment_counts(instance)
 
         new_child = self.__class__()
+        new_child.root = self.root
         new_child.update_counts_from_node(best1)
         new_child.update_counts_from_node(best2)
         new_child.increment_counts(instance)
@@ -787,6 +818,7 @@ class CobwebNode:
         self.children.remove(best)
         for child in best.children:
             child.parent = self
+            child.root = self.root
             self.children.append(child)
 
     def cu_for_fringe_split(self, instance):

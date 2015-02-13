@@ -6,6 +6,7 @@ class TrestleTree(Cobweb3Tree):
 
     def __init__(self):
         self.root = Cobweb3Node()
+        self.root.root = self.root
 
     def ifit(self, instance):
         """
@@ -47,7 +48,8 @@ if __name__ == "__main__":
 
     # KC labeling
     tree = TrestleTree()
-
+    tree.predictions('data_files/rb_s_07_continuous.json', 50, 10, attr='success')
+    
     with open('data_files/rb_s_07_continuous.json', "r") as json_data:
         instances = json.load(json_data)
     print(len(instances))
