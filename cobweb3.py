@@ -125,7 +125,7 @@ class Cobweb3Node(CobwebNode):
 
             return (after_prob * after_prob) - (before_prob * before_prob)
 
-    def expected_correct_guesses(self):
+    def expected_correct_guesses(self, alpha=0.01):
         """
         Computes the number of attribute values that would be correctly guessed
         in the current concept. This extension supports both nominal and
@@ -147,32 +147,42 @@ class Cobweb3Node(CobwebNode):
             if attr[0] == "_":
                 continue
             elif isinstance(self.root.av_counts[attr], ContinuousValue):
+                n_values = 2
                 if attr not in self.av_counts :
                     prob = 0
+                    if alpha > 0:
+                        prob = alpha / (alpha * n_values)
                     val_count = 0
                 else:
                     val_count = self.av_counts[attr].num
                     std = max(self.av_counts[attr].unbiased_std(), self.acuity)
-                    prob_attr = ((1.0 * self.av_counts[attr].num) / self.count)
+                    prob_attr = ((1.0 * self.av_counts[attr].num + alpha) /
+                                 (self.count + alpha * n_values ))
                     correct_guesses += ((prob_attr * prob_attr) * 
                                         (1.0 / (2.0 * math.sqrt(math.pi) * std)))
 
                 #Factors in the probability mass of missing values
-                prob = ((self.count - val_count) / (1.0 * self.count))
+                prob = ((self.count - val_count + alpha) / (1.0 * self.count +
+                                                            alpha * 2))
                 correct_guesses += (prob * prob)
 
             else:
                 val_count = 0
+                n_values = len(self.root.av_counts[attr]) + 1
                 for val in self.root.av_counts[attr]:
                     if attr not in self.av_counts or val not in self.av_counts[attr]:
                         prob = 0
+                        if alpha > 0:
+                            prob = alpha / (alpha * n_values)
                     else:
                         val_count += self.av_counts[attr][val]
-                        prob = (self.av_counts[attr][val] / (1.0 * self.count))
+                        prob = ((self.av_counts[attr][val] + alpha) / (1.0 * self.count + 
+                                                                       alpha * n_values))
                     correct_guesses += (prob * prob)
 
                 #Factors in the probability mass of missing values
-                prob = ((self.count - val_count) / (1.0*self.count))
+                prob = ((self.count - val_count + alpha) / (1.0*self.count + alpha *
+                                                    n_values))
                 correct_guesses += (prob * prob)
 
         #if self.cached_guess_count:

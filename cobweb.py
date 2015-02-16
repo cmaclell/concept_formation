@@ -458,7 +458,7 @@ class CobwebTree:
             #print(json.dumps(t.output_json()))
         
         with open('accuracy.csv','w') as fout:
-            fout.write('instances,mean accuracy,std accuracy,mean concepts,std concepts\n')
+            fout.write('mean accuracy,std accuracy,mean concepts,std concepts\n')
             for i in range(0, len(runs[0])):
                 a = []
                 for r in runs:
@@ -592,7 +592,7 @@ class CobwebNode:
 
         return (after_prob * after_prob) - (before_prob * before_prob)
 
-    def expected_correct_guesses(self):
+    def expected_correct_guesses(self, alpha=0.01):
         """
         Returns the number of correct guesses that are expected from the given
         concept. This is the sum of the probability of each attribute value
@@ -607,16 +607,20 @@ class CobwebNode:
             if attr[0] == "_":
                 continue
             val_count = 0
+            n_values = len(self.root.av_counts[attr]) + 1
             for val in self.root.av_counts[attr]:
                 if attr not in self.av_counts or val not in self.av_counts[attr]:
                     prob = 0
+                    if alpha > 0:
+                        prob = alpha / (alpha * n_values)
                 else:
                     val_count += self.av_counts[attr][val]
-                    prob = (self.av_counts[attr][val] / (1.0 * self.count))
+                    prob = ((self.av_counts[attr][val] + alpha) / (1.0 * self.count
+                                                              + alpha * n_values))
                 correct_guesses += (prob * prob)
 
             #Factors in the probability mass of missing values
-            prob = ((self.count - val_count) / (1.0*self.count))
+            prob = ((self.count - val_count + alpha) / (1.0*self.count + alpha * n_values))
             correct_guesses += (prob * prob)
 
         #if self.cached_guess_count:

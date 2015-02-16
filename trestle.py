@@ -48,7 +48,7 @@ if __name__ == "__main__":
 
     # KC labeling
     tree = TrestleTree()
-    #tree.predictions('data_files/rb_s_07_continuous.json', 100, 20, attr='success')
+    #tree.predictions('data_files/rb_s_07_continuous.json', 30, 20, attr='success')
     
     with open('data_files/rb_s_07_continuous.json', "r") as json_data:
         instances = json.load(json_data)
