@@ -458,16 +458,22 @@ class CobwebTree:
             #print(json.dumps(t.output_json()))
         
         with open('accuracy.csv','w') as fout:
-            fout.write('mean accuracy,std accuracy,mean concepts,std concepts\n')
-            for i in range(0, len(runs[0])):
-                a = []
-                for r in runs:
-                    a.append(r[i])
-                an = []
-                for r in nodes:
-                    an.append(r[i])
-                fout.write(','.join([str(i),str(utils.mean(a)),str(utils.std(a)),
-                    str(utils.mean(an)),str(utils.std(an))])+'\n')
+            fout.write('run,accuracy,opp\n')
+            for i, run in enumerate(runs):
+                for opp, acc in enumerate(run):
+                    fout.write(",".join([str(i), str(acc), str(opp+1)]) + "\n")
+
+
+            #fout.write('mean accuracy,std accuracy,mean concepts,std concepts\n')
+            #for i in range(0, len(runs[0])):
+            #    a = []
+            #    for r in runs:
+            #        a.append(r[i])
+            #    an = []
+            #    for r in nodes:
+            #        an.append(r[i])
+            #    fout.write(','.join([str(i),str(utils.mean(a)),str(utils.std(a)),
+            #        str(utils.mean(an)),str(utils.std(an))])+'\n')
         
 
         #print(runs)
@@ -592,7 +598,7 @@ class CobwebNode:
 
         return (after_prob * after_prob) - (before_prob * before_prob)
 
-    def expected_correct_guesses(self, alpha=0.01):
+    def expected_correct_guesses(self, alpha=0.001):
         """
         Returns the number of correct guesses that are expected from the given
         concept. This is the sum of the probability of each attribute value

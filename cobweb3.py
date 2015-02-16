@@ -125,7 +125,7 @@ class Cobweb3Node(CobwebNode):
 
             return (after_prob * after_prob) - (before_prob * before_prob)
 
-    def expected_correct_guesses(self, alpha=0.01):
+    def expected_correct_guesses(self, alpha=0.001):
         """
         Computes the number of attribute values that would be correctly guessed
         in the current concept. This extension supports both nominal and

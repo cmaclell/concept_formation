@@ -46,15 +46,13 @@ class TrestleTree(Cobweb3Tree):
 
 if __name__ == "__main__":
 
-    # KC labeling
     tree = TrestleTree()
-    #tree.predictions('data_files/rb_s_07_continuous.json', 30, 20, attr='success')
     
     with open('data_files/rb_s_07_continuous.json', "r") as json_data:
         instances = json.load(json_data)
-   # print(len(instances))
-   #instances = instances[0:20]
-    print([set(x) for x in tree.cluster(instances, maxsplit=2)])
+    # print(len(instances))
+    #instances = instances[0:20]
+    print([set(x) for x in tree.cluster(instances, maxsplit=3)])
 
     #labels = tree.kc_label("data_files/instant-test-processed.json", 16000)
     #pickle.dump(labels, open('clustering.pickle', 'wb'))
