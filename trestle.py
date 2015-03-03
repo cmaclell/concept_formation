@@ -48,7 +48,7 @@ if __name__ == "__main__":
 
     tree = TrestleTree()
     
-    with open('data_files/rb_s_07_continuous.json', "r") as json_data:
+    with open('data_files/rb_s_13_noCheck_continuous.json', "r") as json_data:
         instances = json.load(json_data)
     # print(len(instances))
     #instances = instances[0:20]

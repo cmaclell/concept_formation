@@ -24,6 +24,32 @@ class CobwebTree:
         """
         return self.cobweb(instance)
 
+    def burnin(self, instances, iterations = 1, shuffle_iterations = True):
+        """
+        This is a batch ifit function that takes a collection of instances
+        and categorizes all of them. This function does not return anything.
+
+        instances -- a collection of instances
+
+        iteractions -- the number of iterations to perform
+
+        shuffle_iterations -- whether or not to shuffle the list between iterations.
+        Note that the first iteration is not shuffled.
+        """
+        
+        for i in instances:
+            self.ifit(i)
+
+        if iterations > 1:
+            if shuffle_iterations:
+                instances = copy.deepcopy(instances)
+            for x in range(iterations-1):
+                if shuffle_iterations:
+                    random.shuffle(instances)
+                for i in instances:
+                    self.ifit(i)
+
+
     def fit(self, list_of_instances):
         """
         Call incremental fit on each element in a list of instances.
@@ -272,7 +298,7 @@ class CobwebTree:
             instances = instances[:length]
         clustering = self.cluster(instances,depth)
         json_data.close()
-        return zip(instances,clustering)
+        return [instances,clustering]
 
 
     def kc_model_from_datashop(self, filename, stateField='Input', depth=1):
@@ -389,6 +415,45 @@ class CobwebTree:
         self.generate_d3_visualization('output')
     
         return clusterings
+
+    def kc_label(self,instances,fit=True):
+        """
+        Returns a multi-level Q-matrix for a set of instances where each column
+        KC label is a different level of the hierarchy. It returns a 2D matrix
+        that is len(instances) X max(numConceptParents). If an instance doesn't
+        have enough parent concepts it will contain empty cells.
+        
+        instances -- a collection of instances
+
+        fit -- a flag for whether or not the labeling should come from
+        fitting (i.e. modifying) the instances or categorizing 
+        (i.e. non-modifying) the instances.
+        """
+
+        if fit:
+            temp_labels = [self.ifit(instance) for instance in instances]
+        else:
+            temp_labels = [self.categorize(instance) for instance in instances]
+
+        final_labels = []
+        max_labels = 0
+        for t in temp_labels:
+            labs = []
+            count = 0
+            label = t
+            while label.parent:
+                labs.append("Concept" + label.concept_id)
+                count += 1
+                label = label.parent
+            final_labels.append(labs)
+            if count > max_labels:
+                max_labels = count
+       
+        for f in final_labels:
+           while len(f) < max_labels:
+               f.append("")
+
+        return final_labels
 
     def baseline_guesser(self, filename, length, iterations):
         """
