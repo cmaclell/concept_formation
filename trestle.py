@@ -1,6 +1,9 @@
 import json
-from cobweb3 import Cobweb3Tree, Cobweb3Node
-from structure_mapper import flatMatch, renameFlat, flattenJSON
+from cobweb3 import Cobweb3Tree
+from cobweb3 import Cobweb3Node
+from structure_mapper import flatMatch
+from structure_mapper import renameFlat
+from structure_mapper import flattenJSON
 
 class TrestleTree(Cobweb3Tree):
 

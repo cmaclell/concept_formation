@@ -276,6 +276,7 @@ def CLBFS(initial, successorFn, goalTestFn, heuristicFn,
     fringe = []
     openList = {}
     heappush(fringe, (0, nodeCount, initial))
+    openList[initial] = 0
 
     while fringe:
         cost, counter, current = heappop(fringe)
@@ -384,7 +385,7 @@ def BestFGS(initial, successorFn, goalTestFn, heuristicFn):
 
 def BeamS(initial, successorFn, goalTestFn, heuristicFn, initialBeamWidth=1):
     """
-    Beam Grid Search (no duplicates)
+    Beam Search (allows duplicates)
     """
     nodeCount = 1
     beamMax = False
@@ -492,7 +493,7 @@ def BeamGS(initial, successorFn, goalTestFn, heuristicFn, initialBeamWidth=1):
                 beamMax = False
         
         beamWidth += 1
-        #print("Increasing beam width to: %i" % beamWidth)
+        print("Increasing beam width to: %i" % beamWidth)
 
     print("Failed")
     print("Nodes evaluated: %i" % nodeCount)
