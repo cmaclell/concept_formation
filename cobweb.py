@@ -1,6 +1,7 @@
 import re
 import json
 import utils
+import copy
 import csv
 from math import floor
 from random import choice
@@ -45,7 +46,7 @@ class CobwebTree:
                 instances = copy.deepcopy(instances)
             for x in range(iterations-1):
                 if shuffle_iterations:
-                    random.shuffle(instances)
+                    shuffle(instances)
                 for i in instances:
                     self.ifit(i)
 
@@ -362,7 +363,7 @@ class CobwebTree:
             f.write("var output = '"+re.sub("'", '',
                                             json.dumps(self.root.output_json()))+"';")
 
-    def cluster(self, instances, minsplit=1, maxsplit=1, samplesize=-1):
+    def cluster(self, instances, minsplit=1, maxsplit=1, samplesize=-1, mod=True):
         """
         Returns a list of clusterings. the size of the list will be (1 +
         maxsplit - minsplit). The first clustering will be if the root was
@@ -379,11 +380,14 @@ class CobwebTree:
         random sampling is desired then shuffle the input list.
         """
         
-        if samplesize > 0.0 and samplesize < 1.0 :
-            temp_clusters = [self.ifit(instance) for instance in instances[:floor(len(instances)*samplesize)]]
-            temp_clusters.extend([self.categorize(instance) for instance in instances[floor(len(instances)*samplesize):]])
+        if mod:
+            if samplesize > 0.0 and samplesize < 1.0 :
+                temp_clusters = [self.ifit(instance) for instance in instances[:floor(len(instances)*samplesize)]]
+                temp_clusters.extend([self.categorize(instance) for instance in instances[floor(len(instances)*samplesize):]])
+            else:
+                temp_clusters = [self.ifit(instance) for instance in instances]
         else:
-            temp_clusters = [self.ifit(instance) for instance in instances]
+            temp_clusters = [self.categorize(instance) for instance in instances]
 
         clusterings = []
         
@@ -416,12 +420,13 @@ class CobwebTree:
     
         return clusterings
 
-    def kc_label(self,instances,fit=True):
+    def h_label(self,instances,fit=True):
         """
-        Returns a multi-level Q-matrix for a set of instances where each column
-        KC label is a different level of the hierarchy. It returns a 2D matrix
-        that is len(instances) X max(numConceptParents). If an instance doesn't
-        have enough parent concepts it will contain empty cells.
+        Returns a hierarchical labeling of each instance from the root down
+        to the most specific leaf. It returns a 2D matrix that is 
+        len(instances) X max(numConceptParents). Labels are provided general
+        to specific across each row If an instance was categorized shallower in
+        the tree its labeling row will contain empty cells. 
         
         instances -- a collection of instances
 
@@ -445,11 +450,14 @@ class CobwebTree:
                 labs.append("Concept" + label.concept_id)
                 count += 1
                 label = label.parent
+            labs.append("Concept" + label.concept_id)
+            count += 1
             final_labels.append(labs)
             if count > max_labels:
                 max_labels = count
        
         for f in final_labels:
+           f.reverse()
            while len(f) < max_labels:
                f.append("")
 
