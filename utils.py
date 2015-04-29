@@ -1,4 +1,5 @@
 import math
+import uuid
 
 # A hashtable of vlaues to use in the c4(n) function to apply corrections to
 # estimates of std.
@@ -149,3 +150,61 @@ class ContinuousValue():
         self.mean = ((self.num * self.mean + other.num * other.mean) / 
                      (self.num + other.num))
         self.num += other.num
+
+def listsToRelations(instance, relationName="Ordered", appendAttr=True):
+    """
+    Takes a structured instance containing lists and returns the same instance
+    with all list elements converted to a series of relations that describe the
+    ordering of elements. This process will be applied recurrsively to any
+    commponent attributes of the instance.
+
+    Example:
+    
+        {
+            "list1":["a","b",c","d"]
+        }
+
+        becomes-
+
+        {
+            "uuid1":["Ordered", "a", "b"],
+            "uuid2":["Ordered", "b", "c"],
+            "uuid3":["Ordered", "c", "d"]
+        }
+
+    relationName -- The name that should be used to describe the relation, by
+    default "Ordred" is used by a new name can be provided if that conflicts with
+    other relations in the data already.
+
+    appendAttr -- if True appends the original list's attribute name to the 
+    relationName this is to prevent the matcher from over generalizing ordering
+    when there are multiple lists in an object.
+    """
+
+    newInstance = {}
+    for attr in instance:
+        if isinstance(instance[attr], list):
+            for i in range(len(instance[attr])-1):
+                if appendAttr:
+                    newInstance[str(uuid.uuid4())] = [str(relationName+attr),
+                        instance[attr][i],
+                        instance[attr][i+1]]
+                else:
+                    newInstance[str(uuid.uuid4())] = [str(relationName),
+                        instance[attr][i],
+                        instance[attr][i+1]]
+        elif isinstance(instance[attr],dict):
+            newInstance[attr] = listsToRelations(instance[attr],relationName,appendAttr)
+        else:
+            newInstance[attr] = instance[attr]
+    return newInstance
+
+def batchListsToRelations(instances,relationName="Ordered",appendAttr=True):
+    """
+    Takes a list of structured instances that contain lists and batch converts
+    all the list elements to a relation format expected by TRESTLE
+    """
+
+    for i in len(instances):
+        instances[i] = listsToRelations(instances[i],relationName,appendAttr)
+    return instances
