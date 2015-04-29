@@ -38,7 +38,7 @@ def verify_counts(tres, from_root=False):
                     if val not in temp[attr]:
                         print(val.concept_name)
                         print(attr)
-                        print(tres.
+                        print(tres)
                     assert val in temp[attr]
                     temp[attr][val] -= child.av_counts[attr][val]
 
