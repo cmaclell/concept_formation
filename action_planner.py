@@ -1,5 +1,5 @@
 import inspect
-from itertools import permutations
+from itertools import product
 
 import numpy as np
 
@@ -68,7 +68,7 @@ class ActionPlanner:
         state, goal = node.state
         for action in self.actions:
             num_args = len(inspect.getargspec(self.actions[action]).args)
-            for tupled_args in permutations(state, num_args):
+            for tupled_args in product(state, repeat=num_args):
                 names = [a for a, v in tupled_args]
                 values = [v for a, v in tupled_args]
                 new_state = list(state)
@@ -76,8 +76,8 @@ class ActionPlanner:
                 try:
                     new_state.append((action_name, self.actions[action](*values)))
                     yield Node((tuple(new_state), goal), node, action_name, node.cost+1, node.depth+1)
-                except TypeError:
-                    print("type error")
+                except Exception as e:
+                    print(e)
 
     def testfn(self, node):
         s, goal = node.state
@@ -136,6 +136,9 @@ def multiply(x,y):
 def divide(x,y):
     return x/y
 
+def toFloat(x):
+    return float(x)
+
 if __name__ == "__main__":
     ap = ActionPlanner({'add': add,
                         'subtract': subtract,
@@ -145,7 +148,7 @@ if __name__ == "__main__":
                         'cdr': cdr,
                         'append': append,
                         'tostring': tostring})
-    print(ap.explain_value({'x': "1", 'y': "2"}, "12"))
+    print(ap.explain_value({'v1': "5", 'v2': "3"}, tostring(5*5+3)))
 
 
 

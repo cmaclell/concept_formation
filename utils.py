@@ -1,7 +1,7 @@
 import math
 import uuid
 
-# A hashtable of vlaues to use in the c4(n) function to apply corrections to
+# A hashtable of values to use in the c4(n) function to apply corrections to
 # estimates of std.
 c4n_table = {2: 0.7978845608028654, 
       3:  0.886226925452758, 
@@ -36,7 +36,10 @@ def c4(n) :
     """
     Returns the correction factor to apply to unbias estimates of standard 
     deviation in low sample sizes. This implementation is based on a lookup 
-    table for n in [2-29] and returns 1.0 for vlaues >= 30.
+    table for n in [2-29] and returns 1.0 for values >= 30.
+
+    >>> c4(3)
+    0.886226925452758
     """
     if n <= 1 :
         raise ValueError("Cannot apply correction for a sample size of 1.")
@@ -46,6 +49,9 @@ def c4(n) :
 def mean(values):
     """
     Computes the mean of a list of values.
+
+    >>> mean([600, 470, 170, 430, 300])
+    394.0
     """
     if len(values) <= 0:
         raise ValueError("Length of list must be greater than 0.")
@@ -55,6 +61,9 @@ def mean(values):
 def std(values):
     """
     Computes the standard deviation of a list of values.
+
+    >>> std([600, 470, 170, 430, 300])
+    147.32277488562318
     """
     if len(values) <= 0:
         raise ValueError("Length of list must be greater than 0.")
@@ -65,11 +74,16 @@ def std(values):
     return math.sqrt(variance)
 
 class ContinuousValue():
+    """ 
+    This class scores the number of samples, the mean of the samples, and the
+    squared error of the samples. It can be used to perform incremental
+    estimation of the mean, std, and unbiased std.
+    """
 
     def __init__(self):
         """
-        The number of values, the mean of the values, and the squared errors of
-        the values.
+        Initializes the number of values, the mean of the values, and the
+        squared errors of the values to 0.
         """
         self.num = 0
         self.mean = 0
@@ -108,12 +122,23 @@ class ContinuousValue():
         return math.sqrt(self.meanSq / (self.num - 1)) / c4(self.num)
 
     def __hash__(self):
+        """
+        This hashing function returns the hash of a constant string, so that
+        all lookups of a continuous value in a dictionary get mapped to the
+        same entry. 
+        """
         return hash("#ContinuousValue#")
 
     def __repr__(self):
+        """
+        The representation of a continuous value.
+        """
         return repr(self.num) + repr(self.mean) + repr(self.meanSq)
 
     def __str__(self):
+        """
+        The string format for a continuous value."
+        """
         return "%0.4f (%0.4f) [%i]" % (self.mean, self.unbiased_std(), self.num)
 
     def update_batch(self, data):
@@ -158,39 +183,34 @@ def listsToRelations(instance, relationName="Ordered", appendAttr=True):
     ordering of elements. This process will be applied recurrsively to any
     commponent attributes of the instance.
 
-    Example:
-    
-        {
-            "list1":["a","b",c","d"]
-        }
+    Arguments: 
 
-        becomes-
+        relationName -- The name that should be used to describe the relation,
+        by default "Orderd" is used. However, a new name can be provided if
+        that conflicts with other relations in the data already.
 
-        {
-            "uuid1":["Ordered", "a", "b"],
-            "uuid2":["Ordered", "b", "c"],
-            "uuid3":["Ordered", "c", "d"]
-        }
+        appendAttr -- if True appends the original list's attribute name to the
+        relationName this is to prevent the matcher from over generalizing
+        ordering when there are multiple lists in an object.
 
-    relationName -- The name that should be used to describe the relation, by
-    default "Ordred" is used by a new name can be provided if that conflicts with
-    other relations in the data already.
+    >>> import pprint
+    >>> pprint.pprint(listsToRelations({"list1":['a','b','c']}))
+    {'list1-0': ['Orderedlist1', 'a', 'b'], 'list1-1': ['Orderedlist1', 'b', 'c']}
 
-    appendAttr -- if True appends the original list's attribute name to the 
-    relationName this is to prevent the matcher from over generalizing ordering
-    when there are multiple lists in an object.
+    >>> import pprint
+    >>> pprint.pprint(listsToRelations({"list1":['a','b','c']}, appendAttr=False))
+    {'list1-0': ['Ordered', 'a', 'b'], 'list1-1': ['Ordered', 'b', 'c']}
     """
-
     newInstance = {}
     for attr in instance:
         if isinstance(instance[attr], list):
             for i in range(len(instance[attr])-1):
                 if appendAttr:
-                    newInstance[str(uuid.uuid4())] = [str(relationName+attr),
+                    newInstance[str(attr)+"-"+str(i)] = [str(relationName+attr),
                         instance[attr][i],
                         instance[attr][i+1]]
                 else:
-                    newInstance[str(uuid.uuid4())] = [str(relationName),
+                    newInstance[str(attr)+"-"+str(i)] = [str(relationName),
                         instance[attr][i],
                         instance[attr][i+1]]
         elif isinstance(instance[attr],dict):
@@ -199,12 +219,10 @@ def listsToRelations(instance, relationName="Ordered", appendAttr=True):
             newInstance[attr] = instance[attr]
     return newInstance
 
-def batchListsToRelations(instances,relationName="Ordered",appendAttr=True):
+def batchListsToRelations(instances, relationName="Ordered", appendAttr=True):
     """
     Takes a list of structured instances that contain lists and batch converts
-    all the list elements to a relation format expected by TRESTLE
+    all the list elements to a relation format expected by TRESTLE.
     """
-
-    for i in len(instances):
-        instances[i] = listsToRelations(instances[i],relationName,appendAttr)
-    return instances
+    return [listsToRelations(instance, relationName, appendAttr) for instance
+            in instances]
