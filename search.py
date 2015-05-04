@@ -1,5 +1,7 @@
 from collections import deque
-from heapq import heappush,heappop,heapify
+from heapq import heappush
+from heapq import heappop
+from heapq import heapify
 #import queue
 import random
 

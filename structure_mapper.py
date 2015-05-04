@@ -1,24 +1,28 @@
-import re
-from search import BeamGS
-from search import BestFGS
-from search import Node
-from cobweb import CobwebTree
+import search
 
 gensym_counter = 0;
 
 def gensym():
+    """
+    Generates unique names for naming renaming apart objects.
+    """
     global gensym_counter
     gensym_counter += 1
     return 'o' + str(gensym_counter)
 
 def standardizeApartNames(instance):
     """
-    Given an raw input instance (relations are still lists), it renames all the
-    components so they have unique names.
+    Given an raw input instance (i.e., relations are still lists, object is
+    still structured), it renames all the components so they have unique names.
+
+    >>> import pprint
+    >>> pprint.pprint(standardizeApartNames({'a': {}, 'r1': ['is-good', 'a']}))
+    {'o2': {}, 'r1': ['is-good', 'o2']}
     """
     new_instance = {}
     relations = []
     mapping = {}
+
     for attr in instance:
         if isinstance(instance[attr], list):
             relations.append((attr, instance[attr]))
@@ -41,32 +45,50 @@ def standardizeApartNames(instance):
 
 def getComponentNames(instance):
     """
-    Given a flat representation of an instance or concept.av_counts
+    Given a flattened representation of an instance or concept.av_counts
     return a list of all of the component names.
+
+    >>> sorted(getComponentNames({'c1.a': 0, 'c2.a': 0, '_c3._a': 0}))
+    ['c1', 'c2', 'c3']
     """
     names = set()
     for attr in instance:
         if isinstance(attr, tuple):
             continue
-        attr = re.sub("_", "", attr)
+
         for name in attr.split(".")[:-1]:
-            names.add(name)
+            if name[0] == "_":
+                names.add(name[1:])
+            else:
+                names.add(name)
+
     return list(names)
 
 def renameComponent(attr, mapping):
     """
     Takes a component attribute (e.g., o1.o2) and renames the 
-    components.
+    components given a mapping.
+
+    >>> renameComponent("c1.c2.a", {'c1': 'o1', 'c2': 'o2'})
+    'o1.o2.a'
+
+    >>> renameComponent("_c1._c2._a", {'c1': 'o1', 'c2': 'o2'})
+    '_o1._o2._a'
     """
-    ignore = False
-    if attr[0] == "_":
-        ignore = True
-    pattr = re.sub("_", "", attr)
     new_attr = []
-    for name in pattr.split('.')[:-1]:
-        new_attr.append(mapping[name])
-    new_attr.append(pattr.split('.')[-1])
-    if ignore:
+    att_split = attr.split('.')
+    for name in att_split[:-1]:
+        if name[0] == "_":
+            new_attr.append(mapping[name[1:]])
+        else:
+            new_attr.append(mapping[name])
+
+    if att_split[-1][0] == "_":
+        new_attr.append(att_split[-1][1:])
+    else:
+        new_attr.append(att_split[-1])
+
+    if attr[0] == "_":
         return "_" + "._".join(new_attr)
     else:
         return ".".join(new_attr)
@@ -75,6 +97,9 @@ def renameRelation(attr, mapping):
     """
     Takes a relational attribute (e.g., (before o1 o2)) and renames
     the components based on mapping.
+
+    >>> renameRelation(('before', 'c1', 'c2'),  {'c1': 'o1', 'c2': 'o2'})
+    ('before', 'o1', 'o2')
     """
     temp = []
     for idx, val in enumerate(attr):
@@ -90,21 +115,23 @@ def renameRelation(attr, mapping):
 def renameFlat(instance, mapping):
     """
     Given a flattened instance and a mapping (type = dict) rename the
-    components and relations and return the renamed instance.
+    components and relations and return the renamed instance. 
+
+    >>> import pprint
+    >>> pprint.pprint(renameFlat({'c1.a': 1, ('good', 'c1'): True}, {'c1': 'o1'}))
+    {'o1.a': 1, ('good', 'o1'): True}
     """
-    # Ensure it is a complete mapping
-    # Might be troublesome if there is a name collision
     for attr in instance:
         if isinstance(attr, tuple):
             continue
-        attr = re.sub("_", "", attr)
         for name in attr.split('.')[:-1]:
+            if name[0] == "_":
+                name = name[1:]
             if name not in mapping:
                 mapping[name] = name
 
     temp_instance = {}
 
-    # rename all attribute values
     for attr in instance:
         if isinstance(attr, tuple):
             temp_instance[renameRelation(attr, mapping)] = instance[attr]
@@ -117,9 +144,13 @@ def renameFlat(instance, mapping):
 
 def flattenJSON(instance):
     """
-    Takes a hierarchical instance and flattens it. It represents
-    hierarchy with periods in variable names. It also converts the 
-    relations into tuples with values.
+    Takes a raw hierarchical JSON instance, standardizes apart the component
+    names, and flattens it. It represents hierarchy with periods between variable
+    names. It also converts the relations into tuples with values.
+
+    >>> import pprint
+    >>> pprint.pprint(flattenJSON({'a': 1, 'c1': {'b': 1}}))
+    {'a': 1, 'o1.b': 1}
     """
     instance = standardizeApartNames(instance)
     temp = {}
@@ -136,7 +167,6 @@ def flattenJSON(instance):
                             relation.append(attr + "." + val)
                     temp[tuple(relation)] = True
                 elif so_attr[0] == "_":
-                    # propagate ignore up.
                     temp["_" + attr + "." + so_attr] = subobject[so_attr]
                 else:
                     temp[attr + "." + so_attr] = subobject[so_attr]
@@ -151,6 +181,12 @@ def traverseStructure(path, instance):
     """
     Given an instance (hashmap) to the given subobject for the given path.
     Creates subobjects if they do not exist.
+
+    >>> x = {}
+    >>> traverseStructure(['c1', 'c2'], x)
+    {}
+    >>> x
+    {'c1': {'c2': {}}}
     """
     curr = instance
     for obj in path:
@@ -163,11 +199,13 @@ def structurizeJSON(instance):
     """
     Takes a flattened instance and adds the structure back in. This essentially
     "undoes" the flattening process. 
+
+    >>> structurizeJSON({'c1.c2.a': 1})
+    {'c1': {'c2': {'a': 1}}}
     """
     temp = {}
     for attr in instance:
         if isinstance(attr, tuple):
-            #attr.split('.')[:-1]
             relation = []
             path = []
             for i,v in enumerate(attr):
@@ -181,17 +219,14 @@ def structurizeJSON(instance):
             obj[tuple(relation)] = True
 
         elif "." in attr:
-            # handle ignore
-            ignore = ""
-            if attr[0] == "_":
-                ignore = "_"
-
-            pattr = re.sub("_", "", attr)
-            path = pattr.split('.')
+            path = [p[1:] if p[0] == "_" else p for p in attr.split('.')]
             subatt = path[-1]
             path = path[:-1]
             curr = traverseStructure(path, temp)
-            curr[ignore + subatt] = instance[attr]
+            if attr[0] == "_":
+                curr["_" + subatt] = instance[attr]
+            else:
+                curr[subatt] = instance[attr]
 
         else:
             temp[attr] = instance[attr]
@@ -199,6 +234,16 @@ def structurizeJSON(instance):
     return temp
 
 def bindFlatAttr(attr, mapping):
+    """
+    Renames the attribute given the mapping.
+
+    >>> bindFlatAttr(('before', 'c1', 'c2'), {'c1': 'o1', 'c2':'o2'})
+    ('before', 'o1', 'o2')
+
+    If the mapping is incomplete then returns None (nothing) 
+    >>> bindFlatAttr(('before', 'c1', 'c2'), {'c1': 'o1'}) is None
+    True
+    """
     if isinstance(attr, tuple):
         for i,v in enumerate(attr):
             if i == 0:
@@ -217,6 +262,15 @@ def bindFlatAttr(attr, mapping):
         return attr
 
 def containsComponent(component, attr):
+    """
+    Check if the given component is in the attribute.
+    
+    >>> containsComponent('c1', 'c2.c1.a')
+    True
+
+    >>> containsComponent('c3', ('before', 'c1', 'c2'))
+    False
+    """
     if isinstance(attr, tuple):
         for i,v in enumerate(attr):
             if i == 0:
@@ -228,10 +282,15 @@ def containsComponent(component, attr):
         for o in attr.split('.')[:-1]:
             if o == component:
                 return True
-    else:
-        return False
 
-def flatMatch(concept, instance):
+    return False
+
+def flatMatch(concept, instance, optimal=True):
+    """
+    Given a concept and instance this function returns a mapping (dictionary)
+    that can be used to rename the instance. The mapping returned maximizes
+    similarity between the instance and the concept.
+    """
     inames = frozenset(getComponentNames(instance))
     cnames = frozenset(getComponentNames(concept.av_counts))
 
@@ -239,11 +298,13 @@ def flatMatch(concept, instance):
        len(cnames) == 0):
         return {}
      
-    initial = Node((frozenset(), inames, cnames), extra=(concept, instance))
-    solution = next(BeamGS(initial, flatMatchSuccessorFn, flatMatchGoalTestFn,
-                       flatMatchHeuristicFn), 3)
-    #solution = next(BestFGS(initial, flatMatchSuccessorFn, flatMatchGoalTestFn,
-    #                        flatMatchHeuristicFn))
+    initial = search.Node((frozenset(), inames, cnames), extra=(concept, instance))
+    if optimal:
+        solution = next(search.BestFGS(initial, flatMatchSuccessorFn, flatMatchGoalTestFn,
+                                flatMatchHeuristicFn))
+    else:
+        solution = next(search.BeamGS(initial, flatMatchSuccessorFn, flatMatchGoalTestFn,
+                           flatMatchHeuristicFn), initialBeamWidth=3)
     #print(solution.cost)
 
     if solution:
@@ -253,6 +314,11 @@ def flatMatch(concept, instance):
         return None
 
 def flatMatchSuccessorFn(node):
+    """
+    Given a node (mapping, instance, concept), this function computes the
+    successor nodes where an additional mapping has been added for each
+    possible additional mapping. See the search library for more details.
+    """
     mapping, inames, availableNames = node.state
     concept, instance = node.extra
 
@@ -267,7 +333,7 @@ def flatMatchSuccessorFn(node):
             if new_attr:
                 reward += concept.attr_val_guess_gain(new_attr, instance[attr])
 
-        yield Node((mapping.union(frozenset([(n, n)])), inames -
+        yield search.Node((mapping.union(frozenset([(n, n)])), inames -
                     frozenset([n]), availableNames), node, n + ":" + n,
                    node.cost - reward, node.depth + 1, node.extra)
 
@@ -282,12 +348,17 @@ def flatMatchSuccessorFn(node):
                 if new_attr:
                     reward += concept.attr_val_guess_gain(new_attr,
                                                           instance[attr])
-            yield Node((mapping.union(frozenset([(n, new)])), inames -
+            yield search.Node((mapping.union(frozenset([(n, new)])), inames -
                                       frozenset([n]), availableNames -
                                       frozenset([new])), node, n + ":" + new,
                         node.cost - reward, node.depth + 1, node.extra)
 
 def flatMatchHeuristicFn(node):
+    """
+    Considers all partial matches for each unbound attribute and assumes that
+    you get the highest guess_gain match. This provides an over estimation of
+    the possible reward (i.e., is admissible).
+    """
     mapping, unnamed, availableNames = node.state
     concept, instance = node.extra
 
@@ -299,19 +370,25 @@ def flatMatchHeuristicFn(node):
             best_attr_h = [concept.attr_val_guess_gain(cAttr, instance[attr]) for
                                cAttr in concept.av_counts if
                                isPartialMatch(attr, cAttr, m)]
-            #print(best_attr_h)
+
             if len(best_attr_h) != 0:
                 h -= max(best_attr_h)
-            #h -= 1
 
     return h
 
 def flatMatchGoalTestFn(node):
+    """
+    Returns True if every component in the original instance has been renamed
+    in the given node.
+    """
     mapping, unnamed, availableNames = node.state
     return len(unnamed) == 0
 
 def isPartialMatch(iAttr, cAttr, mapping):
-
+    """
+    Returns True if the instance attribute (iAttr) partially matches the
+    concept attribute (cAttr) given the mapping.
+    """
     if type(iAttr) != type(cAttr):
         return False
     if isinstance(iAttr, tuple) and len(iAttr) != len(cAttr):
@@ -344,27 +421,3 @@ def isPartialMatch(iAttr, cAttr, mapping):
                 return False
 
     return True
-
-if __name__ == "__main__":
-
-    o = {'ob1': {'x':1, 'y': 1}, 
-         'ob2': {'ob3': {'_ignore': 'a', 'inner':1}, 'ob4':{'inner':2},
-         "r1": ["before", "ob3", "ob4"]}}
-
-    fo = flattenJSON(o)
-    print(fo)
-    #so = structurizeJSON(fo)
-    #print(so)
-
-    tree = CobwebTree()
-    tree.ifit(fo)
-
-    o2 = {'ob0': {'x':1, 'y': 1}, 'ob01': {'ob02': {'inner':1},
-                                           'ob03':{'inner':2}}}
-    fo2 = flattenJSON(o2)
-    print(fo2)
-    print(tree)
-    sol = flatMatch(tree.root, fo2)
-    print(sol)
-
-

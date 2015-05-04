@@ -1,11 +1,11 @@
 import re
 import json
 import utils
-import copy
 import csv
 from math import floor
 from random import choice
 from random import shuffle
+from random import random
 
 class CobwebTree:
 
@@ -25,41 +25,23 @@ class CobwebTree:
         """
         return self.cobweb(instance)
 
-    def burnin(self, instances, iterations = 1, shuffle_iterations = True):
+    def fit(self, instances, iterations=1, shuffle=True):
         """
         This is a batch ifit function that takes a collection of instances
         and categorizes all of them. This function does not return anything.
 
         instances -- a collection of instances
+        iterations -- the number of iterations to perform
+        shuffle -- whether or not to shuffle the list between iterations.
 
-        iteractions -- the number of iterations to perform
-
-        shuffle_iterations -- whether or not to shuffle the list between iterations.
         Note that the first iteration is not shuffled.
         """
-        
-        for i in instances:
-            self.ifit(i)
-
-        if iterations > 1:
-            if shuffle_iterations:
-                instances = copy.deepcopy(instances)
-            for x in range(iterations-1):
-                if shuffle_iterations:
-                    shuffle(instances)
-                for i in instances:
-                    self.ifit(i)
-
-
-    def fit(self, list_of_instances):
-        """
-        Call incremental fit on each element in a list of instances.
-        """
-        # TODO rewrite this to get the optimal fit by continually reclustering
-        # until no change.
-        for i, instance in enumerate(list_of_instances):
-            #print("instance %i of %i" % (i, len(list_of_instances)))
-            self.ifit(instance)
+        instances = [i for i in instances]
+        for x in range(iterations):
+            for i in instances:
+                self.ifit(i)
+            if shuffle:
+                shuffle(instances)
 
     def cobweb(self, instance):
         """
@@ -115,26 +97,6 @@ class CobwebTree:
                 else:
                     raise Exception("Should never get here.")
 
-    def cobweb_categorize_leaf(self, instance):
-        """
-        Sorts an instance in the categorization tree defined at the current
-        node without modifying the counts of the tree.
-
-        This version always goes to a leaf.
-        """
-        current = self.root
-        while current:
-            if not current.children:
-                return current
-            
-            best1, best2 = current.two_best_children(instance)
-
-            if best1:
-                best1_cu, best1 = best1
-                current = best1
-            else:
-                return current
-
     def cobweb_categorize(self, instance):
         """
         Sorts an instance in the categorization tree defined at the current
@@ -173,6 +135,13 @@ class CobwebTree:
         return self.cobweb_categorize(instance)
     
     def predict_attribute(self, instance, attribute):
+        """
+        Given an instance and attribute, this categorizes the instance into a
+        concept and then predictes the attribute value to be the most likely
+        value for the given attribute in the concept. If the attribute is not
+        in the concept it keeps popping up the category tree until it finds a
+        concept with the attribute, it then uses this concept for prediction.
+        """
         if attribute in instance:
             raise ValueError("The attribute is present in the instance!")
         concept = self.cobweb_categorize(instance)
@@ -191,8 +160,6 @@ class CobwebTree:
         modifying the tree.
         """
         prediction = {}
-
-        # make a copy of the instance
         for attr in instance:
             prediction[attr] = instance[attr]
 
@@ -591,20 +558,16 @@ class CobwebNode:
         be used as a copy constructor to "deepcopy" a node.
         """
         self.concept_id = self.gensym()
-        #self.concept_name = "Concept" + self.gensym()
-        self.cached_guess_count = None
         self.count = 0
         self.av_counts = {}
         self.children = []
         self.parent = None
         self.root = None
 
-        # check if the constructor is being used as a copy constructor
         if otherNode:
             self.update_counts_from_node(otherNode)
             self.parent = otherNode.parent
             self.root = otherNode.root
-            self.cached_guess_count = otherNode.expected_correct_guesses()
 
             for child in otherNode.children:
                 self.children.append(self.__class__(child))
@@ -617,7 +580,6 @@ class CobwebNode:
         temp = self.__class__()
         temp.root = self.root
         temp.update_counts_from_node(self)
-        temp.cached_guess_count = self.expected_correct_guesses()
 
         #for child in self.children:
         #    temp_child = self.__class__()
@@ -634,7 +596,6 @@ class CobwebNode:
         input:
             instance: {a1: v1, a2: v2, ...} - a hashtable of attr and values. 
         """
-        self.cached_guess_count = None
         self.count += 1 
         for attr in instance:
             self.av_counts[attr] = self.av_counts.setdefault(attr,{})
@@ -646,7 +607,6 @@ class CobwebNode:
         Increments the counts of the current node by the amount in the specified
         node.
         """
-        self.cached_guess_count = None
         self.count += node.count
         for attr in node.av_counts:
             for val in node.av_counts[attr]:
@@ -677,16 +637,16 @@ class CobwebNode:
         concept. This is the sum of the probability of each attribute value
         squared. 
         """
-        if self.cached_guess_count:
-            return self.cached_guess_count
-
         correct_guesses = 0.0
 
         for attr in self.root.av_counts:
             if attr[0] == "_":
                 continue
             val_count = 0
+
+            # the +1 is for the "missing" value
             n_values = len(self.root.av_counts[attr]) + 1
+
             for val in self.root.av_counts[attr]:
                 if attr not in self.av_counts or val not in self.av_counts[attr]:
                     prob = 0
@@ -702,10 +662,6 @@ class CobwebNode:
             prob = ((self.count - val_count + alpha) / (1.0*self.count + alpha * n_values))
             correct_guesses += (prob * prob)
 
-        #if self.cached_guess_count:
-        #    assert self.cached_guess_count == correct_guesses
-
-        self.cached_guess_count = correct_guesses
         return correct_guesses
 
     def category_utility(self):
@@ -713,7 +669,7 @@ class CobwebNode:
         Returns the category utility of a particular division of a concept into
         its children. This is used as the heuristic to guide the concept
         formation.
-       """
+        """
         if len(self.children) == 0:
             return 0.0
 
@@ -729,13 +685,13 @@ class CobwebNode:
     def get_best_operation(self, instance, best1, best2, 
                             possible_ops=["best", "new", "merge", "split"]):
         """
-        Given a set of possible operations, find the best and return its cu and
-        the action name.
+        Given a set of possible operations, find the operator that produces the
+        highest category utility, and then returns the cu and the action name
+        for the best operation. In the case of ties, an operator is randomly
+        chosen.
         """
-        # If there is no best, then create a new child.
         if not best1:
             raise ValueError("Need at least one best child.")
-            #return (self.cu_for_new_child(instance), 'new')
 
         if best1:
             best1_cu, best1 = best1
@@ -744,13 +700,14 @@ class CobwebNode:
         operations = []
 
         if "best" in possible_ops:
-            operations.append((best1_cu, 1, "best"))
+            operations.append((best1_cu, random(), "best"))
         if "new" in possible_ops: 
-            operations.append((self.cu_for_new_child(instance), 3, 'new'))
+            operations.append((self.cu_for_new_child(instance), random(), 'new'))
         if "merge" in possible_ops and len(self.children) > 2 and best2:
-            operations.append((self.cu_for_merge(best1, best2, instance), 2,'merge'))
+            operations.append((self.cu_for_merge(best1, best2, instance),
+                               random(),'merge'))
         if "split" in possible_ops and len(best1.children) > 0:
-            operations.append((self.cu_for_split(best1),4, 'split'))
+            operations.append((self.cu_for_split(best1), random(), 'split'))
 
         operations.sort(reverse=True)
         #print(operations)
@@ -761,7 +718,8 @@ class CobwebNode:
     def two_best_children(self, instance):
         """
         Returns the two best children to incorporate the instance
-        into in terms of category utility.
+        into in terms of category utility. When selecting the best children it
+        sorts first by CU, then by Size, then randomly. 
 
         input:
             instance: {a1: v1, a2: v2,...} - a hashtable of attr. and values. 
@@ -772,13 +730,9 @@ class CobwebNode:
         if len(self.children) == 0:
             raise Exception("No children!")
 
-        # Sort childrent by CU, then by Size, then by Recency. 
-        children_cu = [(self.cu_for_insert(child, instance), child.count, i, child) for i,
-                       child in enumerate(self.children)]
+        children_cu = [(self.cu_for_insert(child, instance), child.count,
+                        random(), child) for child in self.children]
         children_cu.sort(reverse=True)
-
-        #if children_cu[0][0] == children_cu[1][0]:
-        #    print(children_cu)
 
         if len(children_cu) == 0:
             return None, None
@@ -1046,32 +1000,3 @@ class CobwebNode:
             return 0.0
 
         return (1.0 * current.av_counts[attr][val]) / current.count
-
-if __name__ == "__main__":
-    #Cobweb().predictions("data_files/cobweb_test.json", 10, 100)
-    #Cobweb().predictions("data_files/mushrooms.json", 30, 10)
-    #Cobweb().baseline_guesser("data_files/cobweb_test.json", 10, 100)
-    #print(Cobweb().cluster("cobweb_test.json", 10, 1))
-
-    #t = Cobweb()
-    #print(t.sequential_prediction("cobweb_test.json", 10))
-    #t.verify_counts()
-
-    #test = {}
-    #print(t.predict(test))
-
-    tree = CobwebTree()
-    tree.predictions("data_files/mushrooms.json", 30, 10, attr="0")
-    #tree.predictions("data_files/mushrooms.json", 30, 10)
-
-    #tree.ifit({'a': 'v', 'b': 'v'})
-    #tree.ifit({'a': 'v2'})
-    #tree.ifit({'a': 'v'})
-    #tree.ifit({'a': 'v'})
-    #tree.ifit({'a': 'v'})
-    #tree.ifit({'a': 'v'})
-    #print(tree.cobweb_categorize({'a':'v'}))
-    #print(tree)
-
-    #print(tree.predict_attribute({'a': 'v'}, 'b'))
-
