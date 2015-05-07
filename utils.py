@@ -121,6 +121,19 @@ class ContinuousValue():
             return 0.0
         return math.sqrt(self.meanSq / (self.num - 1)) / c4(self.num)
 
+    def scaled_unbiased_std(self, scale):
+        """
+        Returns an unbiased estimate of the std (see comments on unbiased_std),
+        but also adjusts the std given a scale parameter. This is used to
+        return std values that have been normalized by some value.
+
+        For edge cases, if scale is less than or equal to 0, then scaling is
+        disabled (i.e., scale = 1.0).
+        """
+        if scale <= 0:
+            scale = 1.0
+        return self.unbiased_std() / scale
+
     def __hash__(self):
         """
         This hashing function returns the hash of a constant string, so that

@@ -125,7 +125,7 @@ class Cobweb3Node(CobwebNode):
 
             return (after_prob * after_prob) - (before_prob * before_prob)
 
-    def expected_correct_guesses(self, alpha=0.001):
+    def expected_correct_guesses(self, scale=True, alpha=0.001):
         """
         Computes the number of attribute values that would be correctly guessed
         in the current concept. This extension supports both nominal and
@@ -155,7 +155,14 @@ class Cobweb3Node(CobwebNode):
                     val_count = 0
                 else:
                     val_count = self.av_counts[attr].num
-                    std = max(self.av_counts[attr].unbiased_std(), self.acuity)
+
+                    # Turns on online normalization based on the std of the
+                    # continuous attributes at the  root.
+                    if scale:
+                        std = max(self.av_counts[attr].scaled_unbiased_std(self.root.av_counts[attr].unbiased_std()), self.acuity)
+                    else:
+                        std = max(self.av_counts[attr].unbiased_std(), self.acuity)
+
                     prob_attr = ((1.0 * self.av_counts[attr].num + alpha) /
                                  (self.count + alpha * n_values ))
                     correct_guesses += ((prob_attr * prob_attr) * 
