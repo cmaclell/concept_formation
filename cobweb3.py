@@ -96,23 +96,33 @@ class Cobweb3Node(CobwebNode):
                     self.av_counts[attr][val] = (self.av_counts[attr].get(val,0) +
                                          node.av_counts[attr][val])
     
-    def attr_val_guess_gain(self, attr, val):
+    def attr_val_guess_gain(self, attr, val, scaling=True):
         """
         Returns the gain in number of correct guesses if a particular attr/val
         was added to a concept.
+
+        The scaling parameter determines whether online normalization is used.
+        This approach computes the amount of scaling prior to incorporating the
+        new attribute value.
         """
         if attr[0] == "_":
             return 0.0
         elif attr not in self.av_counts:
             return 0.0
         elif isinstance(self.av_counts[attr], ContinuousValue):
-            before_std = max(self.av_counts[attr].unbiased_std(), self.acuity)
+            if scaling:
+                scale = self.root.av_counts[attr].unbiased_std()
+            else:
+                scale = 1.0
+
+            before_std = max(self.av_counts[attr].scaled_unbiased_std(scale), self.acuity)
             before_prob = ((1.0 * self.av_counts[attr].num) / (self.count + 1.0))
             before_count = ((before_prob * before_prob) * 
                             (1.0 / (2.0 * math.sqrt(math.pi) * before_std)))
+
             temp = self.av_counts[attr].copy()
             temp.update(val)
-            after_std = max(temp.unbiased_std(), self.acuity)
+            after_std = max(temp.scaled_unbiased_std(scale), self.acuity)
             after_prob = ((1.0 + self.av_counts[attr].num) / (self.count + 1.0))
             after_count = ((after_prob * after_prob) * 
                             (1.0 / (2.0 * math.sqrt(math.pi) * after_std)))
@@ -125,7 +135,7 @@ class Cobweb3Node(CobwebNode):
 
             return (after_prob * after_prob) - (before_prob * before_prob)
 
-    def expected_correct_guesses(self, scale=True, alpha=0.001):
+    def expected_correct_guesses(self, alpha=0.001, scaling=True):
         """
         Computes the number of attribute values that would be correctly guessed
         in the current concept. This extension supports both nominal and
@@ -137,6 +147,15 @@ class Cobweb3Node(CobwebNode):
         However, this does not take into account situations when P(A_i) != 1.0.
         To account for this we use a modified equation:
             P(A_i = V_ij)^2 = P(A_i)^2 * (1 / (2 * sqrt(pi) * std))
+
+        The alpha parameter is the parameter used for laplacian smoothing. The
+        higher the value, the higher the prior that all attributes/values are
+        equally likely. By default a minor smoothing is used: 0.001.
+
+        The scaling parameter determines whether online normalization of
+        continuous attributes is used. By default scaling is used. Scaling
+        divides the std of each attribute by the std of the attribute in the
+        root node. 
         """
         if self.cached_guess_count:
             return self.cached_guess_count
@@ -156,13 +175,13 @@ class Cobweb3Node(CobwebNode):
                 else:
                     val_count = self.av_counts[attr].num
 
-                    # Turns on online normalization based on the std of the
-                    # continuous attributes at the  root.
-                    if scale:
-                        std = max(self.av_counts[attr].scaled_unbiased_std(self.root.av_counts[attr].unbiased_std()), self.acuity)
+                    if scaling:
+                        scale = self.root.av_counts[attr].unbiased_std()
                     else:
-                        std = max(self.av_counts[attr].unbiased_std(), self.acuity)
+                        scale = 1.0
 
+                    std = max(self.av_counts[attr].scaled_unbiased_std(scale),
+                              self.acuity)
                     prob_attr = ((1.0 * self.av_counts[attr].num + alpha) /
                                  (self.count + alpha * n_values ))
                     correct_guesses += ((prob_attr * prob_attr) * 
