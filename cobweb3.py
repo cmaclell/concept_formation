@@ -2,10 +2,9 @@ from math import sqrt
 from math import pi
 from math import exp
 from numbers import Number
-from utils import c4
 from random import normalvariate
-from random import choice
-from random import random
+
+from utils import c4
 from cobweb import CobwebNode, CobwebTree
 
 class Cobweb3Tree(CobwebTree):
@@ -13,47 +12,6 @@ class Cobweb3Tree(CobwebTree):
     def __init__(self):
         self.root = Cobweb3Node()
         self.root.root = self.root
-
-    def predict(self, instance):
-        """
-        Given an instance predict any missing attribute values without
-        modifying the tree. This has been modified to make predictions about
-        nominal and numeric attribute values. 
-        """
-        prediction = {}
-
-        # make a copy of the instance
-        for attr in instance:
-            prediction[attr] = instance[attr]
-
-        concept = self._cobweb_categorize(instance)
-        
-        for attr in concept.av_counts:
-            if attr in prediction:
-                continue
-            
-            nominal_values = []
-            #float_values = []
-
-            num_floats = 0
-            mean = 0.0
-            std = 0.0
-            for val in concept.av_counts[attr]:
-                if isinstance(val, ContinuousValue):
-                    num_floats = val.num
-                    mean = val.mean
-                    std = val.unbiased_std()
-                else:
-                    nominal_values += [val] * concept.av_counts[attr][val]
-
-            if random() < ((len(nominal_values) * 1.0) / (len(nominal_values) +
-                                                          num_floats)):
-                prediction[attr] = choice(nominal_values)
-            else:
-                prediction[attr] = normalvariate(mean,
-                                                 std)
-
-        return prediction
 
 class Cobweb3Node(CobwebNode):
 
@@ -116,6 +74,7 @@ class Cobweb3Node(CobwebNode):
             else:
                 scale = 1.0
 
+            # TODO consider incorporating laplace smoothing (alpha).
             before_std = max(self.av_counts[attr].scaled_unbiased_std(scale), self.acuity)
             before_prob = ((1.0 * self.av_counts[attr].num) / (self.count + 1.0))
             before_count = ((before_prob * before_prob) * 
@@ -187,7 +146,7 @@ class Cobweb3Node(CobwebNode):
 
                 #Factors in the probability mass of missing values
                 prob = ((self.count - val_count + alpha) / (1.0 * self.count +
-                                                            alpha * 2))
+                                                            alpha * n_values))
                 correct_guesses += (prob * prob)
 
             else:
@@ -317,6 +276,9 @@ class ContinuousValue():
         self.num = 0.0
         self.mean = 0.0
         self.meanSq = 0.0
+
+    def __len__(self):
+        return 1
 
     def copy(self):
         """
