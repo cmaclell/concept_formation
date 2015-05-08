@@ -1,65 +1,51 @@
+# Overview
+
 This is a python library of algorithms that perform concept formation written by
-Christopher MacLellan (http://www.christopia.net) and Erik Harpstead (http://www.erikharpstead.net).  
+Christopher MacLellan (http://www.christopia.net) and Erik Harpstead
+(http://www.erikharpstead.net).  
 
-In this library, the COBWEB
-(http://axon.cs.byu.edu/~martinez/classes/678/Papers/Fisher_Cobweb.pdf) and
-COBWEB/3
-(http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.97.4676&rep=rep1&type=pdf)
-algorithms are implemented. The system accepts a stream of instances, which are
-represented as hash tables of attributes and values (where values can be both
-numeric and nominal), and learns a concept hierarchy.
+In this library, the
+[COBWEB](http://axon.cs.byu.edu/~martinez/classes/678/Papers/Fisher_Cobweb.pdf)
+and
+[COBWEB/3](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.97.4676&rep=rep1&type=pdf)
+algorithms are implemented. These systems accept a stream of instances, which are
+represented as dictionaries of attributes and values (where values can be
+nominal for COBWEB and either numeric or nominal for COBWEB/3), and learns a
+concept hierarchy. The resulting hierarchy can be used for clustering and
+prediction.
 
-The system includes the LABYRINTH
-(http://www.isle.org/~langley/papers/labyrinth.cfb.pdf) algorithm for learning
-structured concepts with relations and components as well. However, the
-algorithm seemed underdeveloped in a couple of regards and so has been
-expanded in the TRESTLE system.
+This library also includes
+[TRESTLE]((http://christopia.net/data/articles/publications/maclellan1-2015.pdf),
+an extension of COBWEB and COBWEB/3 that support structured and relational data
+objects. This system employs partial matching to rename new objects to align
+with previous examples, then categorizes these renamed objects.
 
-First, we have included a single matching (structure-mapping) step at the root,
-instead of at every node in the search, as LABYRINTH did. This matching step
-uses the Hungarian Algorithm to match objects based on their conceptual
-relations (optimal for objects alone). It also includes a greedy approach to
-matching relations. 
+Lastly, we have extended the COBWEB/3 algorithm to support two key
+improvements. First, COBWEB/3 now uses an [unbiased
+estimator](https://en.wikipedia.org/wiki/Unbiased_estimation_of_standard_deviation)
+to calculate the standard deviation of numeric values. This is particularly
+useful in situations where the number of available data points is low. Second,
+COBWEB/3 supports online normalization of the continuous values, which is useful
+in situations where numeric values are on different scales and helps to 
+ensure that numeric values do not impact the model more than nominal values.
 
-Second, we have been very very careful about how we handle component features
-(features that whose values refer to other concepts in the tree). At this time
-we ensure that all values refer to leaves of the concept tree. There are no
-intermediate nodes at this time. This is nice because we maintain maximal
-information. We are currently in the process of exploring different approaches
-to abstracting component features during categorization, but have not committed
-to any best approach yet. 
+# Citing TRESTLE
 
-Third, in terms of the COBWEB3 algorithm, we have made a few improvements to
-correct for situations where the number of datapoints is low (we now use an
-unbiased estimation for STD:
-https://en.wikipedia.org/wiki/Unbiased_estimation_of_standard_deviation). We
-are currently considering a modification that normalizes the continuous values
-during each category utility calculation. This will help the system to deal
-with small differences between data points, they will adjust based on the
-nature of the domain. We have also added a category utility cutoff, which
-triggers counts of the current node to be updated without creating an
-additional leaf/node. 
+If you use this software in a scientific publiction, then we would appreciate
+citation of the following paper:
 
-Lastly, we are considering a mechanism that filters out concepts that do not
-share features with a given instance that is being categorized. This would
-prevent weird "mixed" clusters. This would be particularly relevant when 
+MacLellan, C.J., Harpstead, E., Aleven, V., Koedinger, K.R. (2015) [TRESTLE:
+Incremental Learning in Structured Domains using Partial Matching and
+Categorization.](http://christopia.net/data/articles/publications/maclellan1-2015.pdf)
+The Third Annual Conference on Advances in Cognitive Systems.
+Atlanta, GA. May 28-31, 2015.
 
-
-New features we are exploring:
-
-1) Normalization of continuous values at each node during category utility
-calculation.
-
-2) A mechanism for abstracting component features.
-
-3) Consider different approaches for selective filtering out concepts. 
-
-Thoughts:
-
-1) Maybe the matching process should be a parse and match process. Then this
-could be repeated at each node so that the parsing is driven by the current
-top-down process as well as the bottom up parsing process. 
-
-2) How is structure provided to the system? Is it at all? Or should it be given
-a flat representation and structure learned?
+Bibtex entry:
+> @inproceedings{trestle:2015a,
+> author={MacLellan, C.J. and Harpstead, E. and Aleven, V. and Koedinger, K.R.},
+> title={TRESTLE: Incremental Learning in Structured Domains using Partial
+>        Matching and Categorization.},
+> booktitle = {The Third Conference on Advances in Cognitive Systems},
+> year={2015}
+> }
 
