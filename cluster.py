@@ -3,6 +3,7 @@
 # but we can rename it later if we want
 
 import json
+import re
 #from trestle import Trestle
 #from cobweb import Cobweb
 from cobweb3 import Cobweb3Tree
@@ -77,39 +78,116 @@ def roundrobin(*iterables):
             pending -= 1
             nexts = cycle(islice(nexts, pending))
 
-def cluster(tree, instances, depth=1):
+def cluster(self, instances, minsplit=1, maxsplit=1, samplesize=-1, mod=True):
     """
-    Used to cluster examples incrementally and return the cluster labels.
-    The final cluster labels are at a depth of 'depth' from the root. This
-    defaults to 1, which takes the first split, but it might need to be 2
-    or greater in cases where more distinction is needed.
+    Returns a list of clusterings. the size of the list will be (1 +
+    maxsplit - minsplit). The first clustering will be if the root was
+    split, then each subsequent clustering will be if the least coupled
+    cluster (in terms of category utility) is split. This might stop early
+    if you reach the case where there are no more clusters to split (each
+    instance in its own cluster).
+
+    The sample parameter can be used to specify a percentage (0.0-1.0) of 
+    the instances to use to build the initial concept tree against which 
+    all of the instances will be categorized for clustering. If no sample
+    value is specified then the tree will be built from all instances.
+    Sampling is not random but based on taking an inital sublist. If
+    random sampling is desired then shuffle the input list.
     """
-    temp_clusters = [tree.ifit(instance) for instance in instances]
+    
+    if mod:
+        if samplesize > 0.0 and samplesize < 1.0 :
+            temp_clusters = [self.ifit(instance) for instance in instances[:floor(len(instances)*samplesize)]]
+            temp_clusters.extend([self.categorize(instance) for instance in instances[floor(len(instances)*samplesize):]])
+        else:
+            temp_clusters = [self.ifit(instance) for instance in instances]
+    else:
+        temp_clusters = [self.categorize(instance) for instance in instances]
 
-    print(len(set([c.concept_id for c in temp_clusters])))
-    clusters = []
-    for i,c in enumerate(temp_clusters):
-        while (c.parent and c not in c.parent.children):
-            c = c.parent
+    clusterings = []
+    
+    self.generate_d3_visualization('output-pre')
 
-        promote = True
-        while c.parent and promote:
-            n = c
-            for i in range(depth+2):
-                if not n:
-                    promote = False
-                    break
-                n = n.parent
+    for nth_split in range(minsplit, maxsplit+1):
+        #print(len(set([c.concept_id for c in temp_clusters])))
 
-            if promote:
+        clusters = []
+        for i,c in enumerate(temp_clusters):
+            while (c.parent and c.parent.parent):
                 c = c.parent
+            clusters.append("Concept" + c.concept_id)
+        clusterings.append(clusters)
 
-        clusters.append("Concept" + c.concept_id)
+        split_cus = sorted([(self.root.cu_for_split(c) -
+                             self.root.category_utility(), i, c) for i,c in
+                            enumerate(self.root.children) if c.children])
 
-    with open('visualize/output.json', 'w') as f:
-        f.write(json.dumps(tree.root.output_json()))
+        # Exit early, we don't need to re-reun the following part for the
+        # last time through
+        if nth_split == maxsplit or not split_cus:
+            break
 
-    return clusters
+        # Split the least cohesive cluster
+        self.root.split(split_cus[-1][2])
+    
+    self.generate_d3_visualization('output-post')
+    self.generate_d3_visualization('output')
+
+    return clusterings
+
+def generate_d3_visualization(tree, fileName):
+    """
+    Generates the .js file that is used by index.html to generate the d3 tree.
+    """
+    #with open('visualize/output.json', 'w') as f:
+    #    f.write(json.dumps(self.root.output_json()))
+    fname = 'visualize/'+fileName+'.js'
+    with open(fname, 'w') as f:
+        f.write("var output = '"+re.sub("'", '',
+                                        json.dumps(tree.root.output_json()))+"';")
+
+def h_label(self,instances,fit=True):
+    """
+    Returns a hierarchical labeling of each instance from the root down
+    to the most specific leaf. It returns a 2D matrix that is 
+    len(instances) X max(numConceptParents). Labels are provided general
+    to specific across each row If an instance was categorized shallower in
+    the tree its labeling row will contain empty cells. 
+    
+    instances -- a collection of instances
+
+    fit -- a flag for whether or not the labeling should come from
+    fitting (i.e. modifying) the instances or categorizing 
+    (i.e. non-modifying) the instances.
+    """
+
+    if fit:
+        temp_labels = [self.ifit(instance) for instance in instances]
+    else:
+        temp_labels = [self.categorize(instance) for instance in instances]
+
+    final_labels = []
+    max_labels = 0
+    for t in temp_labels:
+        labs = []
+        count = 0
+        label = t
+        while label.parent:
+            labs.append("Concept" + label.concept_id)
+            count += 1
+            label = label.parent
+        labs.append("Concept" + label.concept_id)
+        count += 1
+        final_labels.append(labs)
+        if count > max_labels:
+            max_labels = count
+   
+    for f in final_labels:
+       f.reverse()
+       while len(f) < max_labels:
+           f.append("")
+
+    return final_labels
 
 if __name__ == "__main__":
     data = [{'x': random.normalvariate(0,0.5)} for i in range(10)]

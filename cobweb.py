@@ -134,91 +134,6 @@ class CobwebTree:
         """
         return self.cobweb_categorize(instance)
     
-    def predict_attribute(self, instance, attribute):
-        """
-        Given an instance and attribute, this categorizes the instance into a
-        concept and then predictes the attribute value to be the most likely
-        value for the given attribute in the concept. If the attribute is not
-        in the concept it keeps popping up the category tree until it finds a
-        concept with the attribute, it then uses this concept for prediction.
-        """
-        if attribute in instance:
-            raise ValueError("The attribute is present in the instance!")
-        concept = self.cobweb_categorize(instance)
-        current = concept
-
-        while attribute not in concept.av_counts and current.parent:
-            current = current.parent
-        
-        value, count = max(current.av_counts[attribute].items(), key=lambda x:
-                           x[1])
-        return value
-
-    def predict(self, instance):
-        """
-        Given an instance predict any missing attribute values without
-        modifying the tree.
-        """
-        prediction = {}
-        for attr in instance:
-            prediction[attr] = instance[attr]
-
-        concept = self.cobweb_categorize(instance)
-        
-        for attr in concept.av_counts:
-            if attr in prediction:
-                continue
-            
-            values = []
-            for val in concept.av_counts[attr]:
-                values += [val] * concept.av_counts[attr][val]
-
-            prediction[attr] = choice(values)
-
-        return prediction
-
-    def concept_attr_value(self, instance, attr, val):
-        """
-        Gets the probability of a particular attribute value for the concept
-        associated with a given instance.
-        """
-        concept = self.categorize(instance)
-        return concept.get_probability(attr, val)
-
-    def flexible_prediction(self, instance, guessing=False):
-        """
-        Fisher's flexible prediction task. It computes the accuracy of
-        correctly predicting each attribute value (removing it from the
-        instance first). It then returns the average accuracy. 
-        """
-        probs = []
-        for attr in instance:
-            temp = {}
-            for attr2 in instance:
-                if attr == attr2:
-                    continue
-                temp[attr2] = instance[attr2]
-            if guessing:
-                probs.append(self.get_probability(attr, instance[attr]))
-            else:
-                probs.append(self.concept_attr_value(temp, attr, instance[attr]))
-        return sum(probs) / len(probs)
-
-    def specific_prediction(self, instance, attr, guessing=False):
-        """
-        Similar to flexible prediction, but for a single attribute.
-        """
-        temp = {}
-        for attr2 in instance:
-            if attr == attr2:
-                continue
-            temp[attr2] = instance[attr2]
-        if guessing:
-            prob = self.get_probability(attr, instance[attr])
-        else:
-            prob = self.concept_attr_value(temp, attr, instance[attr])
-        return prob
-
     def train_from_json(self, filename, length=None):
         """
         Build the concept tree from a set of examples in a provided json file.
@@ -230,323 +145,6 @@ class CobwebTree:
             instances = instances[:length]
         self.fit(instances)
         json_data.close()
-
-    def sequential_prediction(self, filename, length, guessing=False, attr=None):
-        """
-        Given a json file, perform an incremental sequential prediction task. 
-        Try to flexibly predict each instance before incorporating it into the 
-        tree. This will give a type of cross validated result.
-        """
-        
-        with open(filename, 'r') as json_data:
-            instances = json.load(json_data)
-        shuffle(instances)
-        instances = instances[0:length]
-
-        accuracy = []
-        nodes = []
-        for n, i in enumerate(instances):
-            if not attr:
-                accuracy.append(self.flexible_prediction(i, guessing))
-            else:
-                accuracy.append(self.specific_prediction(i, attr, guessing))
-            nodes.append(self.root.num_concepts())
-            self.ifit(i)
-        return accuracy, nodes
-
-    def cluster_from_json(self, filename, ordered=True, depth=1, length=-1):
-        """
-        Cluster a set of examples in a provided json file
-        """
-        json_data = open(filename,"r")
-        instances = json.load(json_data)
-        if not ordered:
-            shuffle(instances)
-        if length > 0 and length < len(instances) :
-            instances = instances[:length]
-        clustering = self.cluster(instances,depth)
-        json_data.close()
-        return [instances,clustering]
-
-
-    def kc_model_from_datashop(self, filename, stateField='Input', depth=1):
-        """
-        Reads in a datashop export file and generates a KC model based on the concept tree
-        """
-        datashop = csv.reader(open(filename,'r'),delimiter='\t')
-        h = None
-        instances = []
-        mapping = {}
-
-        for row in datashop :
-            if not h:
-                h = {}
-                for i,v in enumerate(row):
-                    h[v] = i
-                continue
-
-            instance = json.load(row[h[stateField]])
-            concept = self.ifit(instance)
-            mapping[row[h['Transaction Id']]] = concept
-
-        datashop.close()
-
-        #categorize with state action pairs
-        #drop the actions 
-        #group all of them by the same state
-        #clusters of the ones that were successful
-        #those are the positive actions that belong in that cluster
-        
-        # ensure that the final concept is actually in the tree and not a merged/split node
-        for id in mapping :
-            while mapping[id] not in mapping[id].parent.children:
-                mapping[id] = parent
-        
-
-
-        #wanted the correct actions on each problem
-
-        #{
-        #   final state...    
-        #   step1:{
-        #       sel:""
-        #       act:""
-        #       inp:""
-        #   }
-        #   step2:{...}
-        #   (ordered step1 step2):T
-        #}
-        #
-        #
-
-    def generate_d3_visualization(self, fileName):
-        """
-        Generates the .js file that is used by index.html to generate the d3 tree.
-        """
-        #with open('visualize/output.json', 'w') as f:
-        #    f.write(json.dumps(self.root.output_json()))
-        fname = 'visualize/'+fileName+'.js'
-        with open(fname, 'w') as f:
-            f.write("var output = '"+re.sub("'", '',
-                                            json.dumps(self.root.output_json()))+"';")
-
-    def cluster(self, instances, minsplit=1, maxsplit=1, samplesize=-1, mod=True):
-        """
-        Returns a list of clusterings. the size of the list will be (1 +
-        maxsplit - minsplit). The first clustering will be if the root was
-        split, then each subsequent clustering will be if the least coupled
-        cluster (in terms of category utility) is split. This might stop early
-        if you reach the case where there are no more clusters to split (each
-        instance in its own cluster).
-
-        The sample parameter can be used to specify a percentage (0.0-1.0) of 
-        the instances to use to build the initial concept tree against which 
-        all of the instances will be categorized for clustering. If no sample
-        value is specified then the tree will be built from all instances.
-        Sampling is not random but based on taking an inital sublist. If
-        random sampling is desired then shuffle the input list.
-        """
-        
-        if mod:
-            if samplesize > 0.0 and samplesize < 1.0 :
-                temp_clusters = [self.ifit(instance) for instance in instances[:floor(len(instances)*samplesize)]]
-                temp_clusters.extend([self.categorize(instance) for instance in instances[floor(len(instances)*samplesize):]])
-            else:
-                temp_clusters = [self.ifit(instance) for instance in instances]
-        else:
-            temp_clusters = [self.categorize(instance) for instance in instances]
-
-        clusterings = []
-        
-        self.generate_d3_visualization('output-pre')
-
-        for nth_split in range(minsplit, maxsplit+1):
-            #print(len(set([c.concept_id for c in temp_clusters])))
-
-            clusters = []
-            for i,c in enumerate(temp_clusters):
-                while (c.parent and c.parent.parent):
-                    c = c.parent
-                clusters.append("Concept" + c.concept_id)
-            clusterings.append(clusters)
-
-            split_cus = sorted([(self.root.cu_for_split(c) -
-                                 self.root.category_utility(), i, c) for i,c in
-                                enumerate(self.root.children) if c.children])
-
-            # Exit early, we don't need to re-reun the following part for the
-            # last time through
-            if nth_split == maxsplit or not split_cus:
-                break
-
-            # Split the least cohesive cluster
-            self.root.split(split_cus[-1][2])
-        
-        self.generate_d3_visualization('output-post')
-        self.generate_d3_visualization('output')
-    
-        return clusterings
-
-    def h_label(self,instances,fit=True):
-        """
-        Returns a hierarchical labeling of each instance from the root down
-        to the most specific leaf. It returns a 2D matrix that is 
-        len(instances) X max(numConceptParents). Labels are provided general
-        to specific across each row If an instance was categorized shallower in
-        the tree its labeling row will contain empty cells. 
-        
-        instances -- a collection of instances
-
-        fit -- a flag for whether or not the labeling should come from
-        fitting (i.e. modifying) the instances or categorizing 
-        (i.e. non-modifying) the instances.
-        """
-
-        if fit:
-            temp_labels = [self.ifit(instance) for instance in instances]
-        else:
-            temp_labels = [self.categorize(instance) for instance in instances]
-
-        final_labels = []
-        max_labels = 0
-        for t in temp_labels:
-            labs = []
-            count = 0
-            label = t
-            while label.parent:
-                labs.append("Concept" + label.concept_id)
-                count += 1
-                label = label.parent
-            labs.append("Concept" + label.concept_id)
-            count += 1
-            final_labels.append(labs)
-            if count > max_labels:
-                max_labels = count
-       
-        for f in final_labels:
-           f.reverse()
-           while len(f) < max_labels:
-               f.append("")
-
-        return final_labels
-
-    def baseline_guesser(self, filename, length, iterations):
-        """
-        Equivalent of predictions, but just makes predictions from the root of
-        the concept tree. This is the equivalent of guessing the distribution
-        of all attribute values. 
-        """
-        n = iterations
-        runs = []
-        nodes = []
-
-        for i in range(0,n):
-            print("run %i" % i)
-            t = self.__class__()
-            t.root = self.root
-            accuracy, num = t.sequential_prediction(filename, length, True)
-            runs.append(accuracy)
-            nodes.append(num)
-            #print(json.dumps(t.output_json()))
-
-        #print(runs)
-        print("MEAN Accuracy")
-        for i in range(0,len(runs[0])):
-            a = []
-            for r in runs:
-                a.append(r[i])
-            print("%0.2f" % (utils.mean(a)))
-
-        print()
-        print("STD Accuracy")
-        for i in range(0,len(runs[0])):
-            a = []
-            for r in runs:
-                a.append(r[i])
-            print("%0.2f" % (utils.std(a)))
-
-        print()
-        print("MEAN Concepts")
-        for i in range(0,len(runs[0])):
-            a = []
-            for r in nodes:
-                a.append(r[i])
-            print("%0.2f" % (utils.mean(a)))
-
-        print()
-        print("STD Concepts")
-        for i in range(0,len(runs[0])):
-            a = []
-            for r in nodes:
-                a.append(r[i])
-            print("%0.2f" % (utils.std(a)))
-
-    def predictions(self, filename, length, iterations, attr=None):
-        """
-        Perform the sequential prediction task many times and compute the mean
-        and std of all flexible predictions.
-        """
-        n = iterations 
-        runs = []
-        nodes = []
-        for i in range(0,n):
-            print("run %i" % i)
-            t = self.__class__()
-            accuracy, num = t.sequential_prediction(filename, length, attr=attr)
-            runs.append(accuracy)
-            nodes.append(num)
-            #print(json.dumps(t.output_json()))
-        
-        with open('accuracy.csv','w') as fout:
-            fout.write('run,accuracy,opp\n')
-            for i, run in enumerate(runs):
-                for opp, acc in enumerate(run):
-                    fout.write(",".join([str(i), str(acc), str(opp+1)]) + "\n")
-
-
-            #fout.write('mean accuracy,std accuracy,mean concepts,std concepts\n')
-            #for i in range(0, len(runs[0])):
-            #    a = []
-            #    for r in runs:
-            #        a.append(r[i])
-            #    an = []
-            #    for r in nodes:
-            #        an.append(r[i])
-            #    fout.write(','.join([str(i),str(utils.mean(a)),str(utils.std(a)),
-            #        str(utils.mean(an)),str(utils.std(an))])+'\n')
-        
-
-        #print(runs)
-        #print("MEAN Accuracy")
-        #for i in range(0,len(runs[0])):
-        #    a = []
-        #    for r in runs:
-        #        a.append(r[i])
-        #    print("%0.2f" % (utils.mean(a)))
-
-        #print()
-        #print("STD Accuracy")
-        #for i in range(0,len(runs[0])):
-        #    a = []
-        #    for r in runs:
-        #        a.append(r[i])
-        #    print("%0.2f" % (utils.std(a)))
-
-        #print()
-        #print("MEAN Concepts")
-        #for i in range(0,len(runs[0])):
-        #    a = []
-        #    for r in nodes:
-        #        a.append(r[i])
-        #    print("%0.2f" % (utils.mean(a)))
-
-        #print()
-        #print("STD Concepts")
-        #for i in range(0,len(runs[0])):
-        #    a = []
-        #    for r in nodes:
-        #        a.append(r[i])
-        #    print("%0.2f" % (utils.std(a)))
 
 class CobwebNode:
 
@@ -574,18 +172,11 @@ class CobwebNode:
 
     def shallow_copy(self):
         """
-        Creates a copy of the current node and its children (but not their
-        children)
+        Creates a shallow copy of the current node (and not its children)
         """
         temp = self.__class__()
         temp.root = self.root
         temp.update_counts_from_node(self)
-
-        #for child in self.children:
-        #    temp_child = self.__class__()
-        #    temp_child.update_counts_from_node(child)
-        #    temp.children.append(temp_child)
-
         return temp
 
     def increment_counts(self, instance):
@@ -613,23 +204,6 @@ class CobwebNode:
                 self.av_counts[attr] = self.av_counts.setdefault(attr,{})
                 self.av_counts[attr][val] = (self.av_counts[attr].get(val,0) +
                                      node.av_counts[attr][val])
-
-    def attr_val_guess_gain(self, attr, val):
-        """
-        Returns the gain in number of correct guesses if a particular attr/val
-        was added to a concept.
-        """
-        if attr[0] == "_":
-            return 0.0
-        if attr not in self.av_counts:
-            return 0.0
-        if val not in self.av_counts[attr]:
-            return 0.0
-
-        before_prob = (self.av_counts[attr][val] / (self.count + 1.0))
-        after_prob = (self.av_counts[attr][val] + 1) / (self.count + 1.0)
-
-        return (after_prob * after_prob) - (before_prob * before_prob)
 
     def expected_correct_guesses(self, alpha=0.001):
         """
@@ -984,19 +558,43 @@ class CobwebNode:
 
         return output
 
-    def get_probability(self, attr, val):
+    def get_probability(self, attr, val, alpha=0.001):
         """
         Gets the probability of a particular attribute value at the given
-        concept.
-
+        concept. This takes into account the possibilities that an attribute
+        can take any of the values available at the root, or be missing.
+        Laplace smoothing is used to place a prior over these possibilites.
+        Alpha determines the strength of this prior.
         """
-        current = self
-        while attr not in current.av_counts:
-            if not current.parent:
-                return 0.0
-            current = current.parent
-
-        if val not in current.av_counts[attr]:
+        if attr not in self.av_counts:
             return 0.0
 
-        return (1.0 * current.av_counts[attr][val]) / current.count
+        if val not in self.av_counts[attr]:
+            return 0.0
+
+        n_values = len(self.root.av_counts[attr]) + 1
+
+        return ((self.av_counts[attr][val] + alpha) / 
+                (1.0 * self.count + alpha * n_values))
+
+    def get_probability_missing(self, attr, alpha=0.001):
+        """
+        Gets the probability of a particular attribute value at the given
+        concept. This takes into account the possibilities that an attribute
+        can take any of the values available at the root, or be missing.
+        Laplace smoothing is used to place a prior over these possibilites.
+        Alpha determines the strength of this prior.
+        """
+        # the +1 is for the "missing" value
+        if attr in self.root.av_counts:
+            n_values = len(self.root.av_counts[attr]) + 1
+        else:
+            n_values = 1
+
+        val_count = 0
+        if attr in self.av_counts:
+            for val in self.av_counts[attr]:
+                val_count += self.av_counts[attr][val]
+
+        return ((self.count - val_count + alpha) / (1.0*self.count + alpha * n_values))
+

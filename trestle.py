@@ -17,14 +17,25 @@ class TrestleTree(Cobweb3Tree):
         """
         return self.trestle(instance)
 
+    def structure_map(self, instance):
+        """
+        Flatten the instance, perform structure mapping, rename the instance
+        based on this structure mapping, and return the renamed instance.
+        """
+        temp_instance = flattenJSON(instance)
+        mapping = flatMatch(self.root, temp_instance)
+        temp_instance = renameFlat(temp_instance, mapping)
+        return temp_instance
+
     def trestle_categorize(self, instance):
         """
         The Trestle categorize function, this Trestle categorizes all the
         sub-components before categorizing itself.
         """
-        temp_instance = flattenJSON(instance)
-        mapping = flatMatch(self.root, temp_instance)
-        temp_instance = renameFlat(temp_instance, mapping)
+        #temp_instance = flattenJSON(instance)
+        #mapping = flatMatch(self.root, temp_instance)
+        #temp_instance = renameFlat(temp_instance, mapping)
+        temp_instance = self.structure_map(instance)
         return self.cobweb_categorize(temp_instance)
 
     def categorize(self, instance):
@@ -42,9 +53,10 @@ class TrestleTree(Cobweb3Tree):
         traversal. Once all of the components have been classified then then it
         classifies the current node.
         """
-        temp_instance = flattenJSON(instance)
-        mapping = flatMatch(self.root, temp_instance)
-        temp_instance = renameFlat(temp_instance, mapping)
+        #temp_instance = flattenJSON(instance)
+        #mapping = flatMatch(self.root, temp_instance)
+        #temp_instance = renameFlat(temp_instance, mapping)
+        temp_instance = self.structure_map(instance)
         return self.cobweb(temp_instance)
 
 if __name__ == "__main__":

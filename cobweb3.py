@@ -1,4 +1,5 @@
 import math
+from numbers import Number
 from utils import ContinuousValue
 from random import normalvariate
 from random import choice
@@ -61,11 +62,10 @@ class Cobweb3Node(CobwebNode):
         """
         A modified version of increment counts that handles floats properly
         """
-        self.cached_guess_count = None
         self.count += 1 
             
         for attr in instance:
-            if isinstance(instance[attr], float):
+            if isinstance(instance[attr], Number):
                 if (attr not in self.av_counts or 
                     not isinstance(self.av_counts[attr], ContinuousValue)):
                     # TODO currently overrides nominals if a float comes in.
@@ -81,7 +81,6 @@ class Cobweb3Node(CobwebNode):
         Increments the counts of the current node by the amount in the specified
         node.
         """
-        self.cached_guess_count = None
         self.count += node.count
         for attr in node.av_counts:
             if isinstance(node.av_counts[attr], ContinuousValue):
@@ -157,9 +156,6 @@ class Cobweb3Node(CobwebNode):
         divides the std of each attribute by the std of the attribute in the
         root node. 
         """
-        if self.cached_guess_count:
-            return self.cached_guess_count
-
         correct_guesses = 0.0
 
         for attr in self.root.av_counts:
@@ -211,10 +207,6 @@ class Cobweb3Node(CobwebNode):
                                                     n_values))
                 correct_guesses += (prob * prob)
 
-        #if self.cached_guess_count:
-        #    assert abs(self.cached_guess_count - correct_guesses) < 0.00001
-        self.cached_guess_count = correct_guesses
-
         return correct_guesses
 
     def pretty_print(self, depth=0):
@@ -248,30 +240,37 @@ class Cobweb3Node(CobwebNode):
 
         return ret
 
-    def get_probability(self, attr, val):
+    def get_probability(self, attr, val, alpha=0.001, scaling=True):
         """
-        Gets the probability of a particular attribute value. This has been
-        modified to support numeric and nominal values. The acuity is set as a
-        global parameter now. 
+        Gets the probability of a particular attribute value. This takes into
+        account the possibility that a value is missing, it uses laplacian
+        smoothing (alpha) and it normalizes the values using the root concept
+        if scaling is enabled (scaling).
         """
         if attr not in self.av_counts:
             return 0.0
 
-        if isinstance(val, ContinuousValue):
-            mean = val.mean
-            std = val.unbiased_std()
+        if isinstance(self.av_counts[attr], ContinuousValue):
+            n_values = 2
 
-            if std < self.acuity:
-                std = self.acuity
+            if scaling:
+                scale = self.root.av_counts[attr].unbiased_std()
+                shift = self.root.av_counts[attr].mean
+                val = val - shift
+            else:
+                scale = 1.0
 
-            # assign 100% accuracy to the mean
-            # TODO does this need to be scaled? so the area under the curve=1?
-            return (math.exp(-((val - mean) * (val - mean)) / (2.0 * std * std)))
-                                                                           
-        if val in self.av_counts[attr]:
-            return (1.0 * self.av_counts[attr][val]) / self.count
+            mean = (self.av_counts[attr].mean - shift) / scale
+            std = max(self.av_counts[attr].scaled_unbiased_std(scale),
+                      self.acuity)
 
-        return 0.0
+            prob_attr = ((1.0 * self.av_counts[attr].num + alpha) /
+                         (self.count + alpha * n_values ))
+
+            return (prob_attr * math.exp(-((val - mean) * (val - mean)) / 
+                                         (2.0 * std * std)))
+        else:
+            return super(Cobweb3Node ,self).get_probability(attr, val, alpha)
 
     def output_json(self):
         """

@@ -1,136 +1,69 @@
-from trestle import Trestle
-from random import random
-from random import normalvariate
+from random import shuffle
 
-def predict_missing(tree, instance):
+from utils import mean
+
+def probability_missing(tree, instance, attr):
     """
-    Given a tree and an instance predict any missing attribute values without
-    modifying the tree. A modification for component values.
-
-    This will return a copy of the instance with any missing values filled in
-    with the appropriate predictions.
+    Returns the probability of a particular attribute missing a value in the
+    instance.
     """
-    prediction = {}
+    if attr in instance:
+        instance = {a:instance[a] for a in instance if not a == attr}
+    concept = tree.categorize(instance)
+    return concept.get_probability_missing(attr)
 
-    # make a copy of the instance
-    # call recursively on structured parts
-    for attr in instance:
-        if isinstance(instance[attr], dict):
-            prediction[attr] = tree.predict_missing(instance[attr])
-        else:
-            prediction[attr] = instance[attr]
-
-    concept = tree.trestle_categorize_leaf(prediction)
-    #print(concept)
-    #print(tree)
-    
-    for attr in concept.av_counts:
-        if attr in prediction:
-            continue
-       
-        # sample to determine if the attribute should be included
-        num_attr = sum([concept.av_counts[attr][val] for val in
-                        concept.av_counts[attr]])
-        if random() > (1.0 * num_attr) / concept.count:
-            continue
-        
-        nominal_values = []
-        component_values = []
-
-        float_num = 0.0
-        float_mean = 0.0
-        float_std = 0.0
-        
-        if isinstance(concept.av_counts[attr], ContinuousValue):
-            float_num = concept.av_counts[attr].num
-            float_mean = concept.av_counts[attr].mean
-            float_std = concept.av_counts[attr].std
-
-        else:
-            for val in concept.av_counts[attr]:
-                if isinstance(val, Trestle):
-                    component_values += [val] * concept.av_counts[attr][val] 
-                else:
-                    nominal_values += [val] * concept.av_counts[attr][val]
-
-        rand = random()
-
-        if rand < ((len(nominal_values) * 1.0) / (len(nominal_values) +
-                                                  len(component_values) +
-                                                  float_num)):
-            prediction[attr] = choice(nominal_values)
-        elif rand < ((len(nominal_values) + len(component_values) * 1.0) /
-                     (len(nominal_values) + len(component_values) +
-                      float_num)):
-            prediction[attr] = choice(component_values).predict_missing({})
-        else:
-            prediction[attr] = normalvariate(float_mean,
-                                             float_std)
-
-    return prediction
-
-
-def specific_prediction(tree, instance, attr, guessing=False):
+def probability(tree, instance, attr, val):
     """
-    Uses the TRESTLE algorithm to make a prediction about the given
-    attribute. 
-    """
-    concept = tree.trestle_categorize_leaf(instance)
-    return concept.get_probability(attr, instance[attr])
+    Returns the probability of a particular value of an attribute in the
+    instance.
 
-def flexible_prediction(tree, instance, guessing=False):
+    The instance should not contain the attribute, but if it does then a
+    shallow copy is created that does not have the attribute.
     """
-    A modification of flexible prediction to handle component values.
-    The flexible prediction task is called on all subcomponents. To compute
-    the accuracy for each subcomponent.
+    if attr in instance:
+        instance = {a:instance[a] for a in instance if not a == attr}
+    concept = tree.categorize(instance)
+    return concept.get_probability(attr, val)
 
-    Guessing is the basecase that just returns the root probability
+def flexible_probability(tree, instance, attrs=None):
     """
-    
+    Returns the average probability of each value in the instance (over all
+    attributes).
+    """
+    if attrs is None:
+        attrs = instance.keys()
+
     probs = []
-    for attr in instance:
-        #TODO add support for relational attribute values 
-        if isinstance(instance[attr], list):
-            continue
-        if isinstance(instance[attr], dict):
-            probs.append(tree.flexible_prediction(instance[attr], guessing))
-            continue
-
-        # construct an object with missing attribute
-        temp = {}
-        for attr2 in instance:
-            if attr == attr2:
-                continue
-            temp[attr2] = instance[attr2]
-
-        if guessing:
-            probs.append(tree.get_probability(attr, instance[attr]))
+    for attr in attrs:
+        if attr in instance:
+            val = instance[attr]
+            probs.append(probability(tree, instance, attr, val))
         else:
-            probs.append(tree.concept_attr_value(temp, attr, instance[attr]))
+            probs.append(probability_missing(tree, instance, attr))
+    return mean(probs)
 
-    if len(probs) == 0:
-        print(instance)
-        return -1 
-    return sum(probs) / len(probs)
-
-def sequential_prediction(instances, length, attr=None, guessing=False):
+def incremental_prediction(tree, instances, run_length, runs=1, attr=None):
     """
-    Given a set of instances, perform an incremental sequential prediction task. 
-    Try to flexibly predict each instance before incorporating it into the 
+    Given a set of instances, perform an incremental prediction task; i.e.,
+    try to flexibly predict each instance before incorporating it into the 
     tree. This will give a type of cross validated result.
     """
-    tree = Trestle()
+    if attr is None:
+        possible_attrs = set([k for i in instances for k in i.keys()])
+
     accuracy = []
-    nodes = []
-    for j in range(1):
+    for j in range(runs):
+        # reset the tree each run
+        tree = tree.__class__()
+
+        run_accuracy = []
         shuffle(instances)
-        for n, i in enumerate(instances):
-            if n >= length:
-                break
+        for instance in instances[:run_length]:
             if attr:
-                accuracy.append(specific_prediction(tree,i, attr, guessing))
+                run_accuracy.append(probability(tree, instance, attr, instance[attr]))
             else:
-                accuracy.append(flexible_prediction(tree,i, guessing))
-            nodes.append(tree.num_concepts())
-            tree.ifit(i)
-    return accuracy, nodes
+                run_accuracy.append(flexible_probability(tree, instance,
+                                                         possible_attrs))
+            tree.ifit(instance)
+        accuracy.append(run_accuracy)
+    return accuracy
