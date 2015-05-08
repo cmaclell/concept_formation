@@ -42,11 +42,12 @@ Atlanta, GA. May 28-31, 2015.
 
 Bibtex entry:
 
-    @inproceedings{trestle:2015a,
-    author={MacLellan, C.J. and Harpstead, E. and Aleven, V. and Koedinger, K.R.},
-    title={TRESTLE: Incremental Learning in Structured Domains using Partial
-           Matching and Categorization.},
-    booktitle = {The Third Conference on Advances in Cognitive Systems},
-    year={2015}
-    }
-
+```
+@inproceedings{trestle:2015a,
+author={MacLellan, C.J. and Harpstead, E. and Aleven, V. and Koedinger, K.R.},
+title={TRESTLE: Incremental Learning in Structured Domains using Partial
+       Matching and Categorization.},
+booktitle = {The Third Conference on Advances in Cognitive Systems},
+year={2015}
+}
+```
