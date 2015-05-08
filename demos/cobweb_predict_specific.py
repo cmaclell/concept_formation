@@ -8,8 +8,8 @@ from cobweb import CobwebTree
 from dummy import DummyTree
 
 window = 50 
-num_runs = 30 
-num_examples = 1000 
+num_runs = 10 
+num_examples = 100 
 
 with open('data_files/mushrooms.json') as fin:
     mushrooms = json.load(fin)

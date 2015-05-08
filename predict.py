@@ -1,6 +1,10 @@
+from re import search
 from random import shuffle
 
 from utils import mean
+from structure_mapper import flattenJSON
+from structure_mapper import flatMatch
+from structure_mapper import renameFlat
 
 def probability_missing(tree, instance, attr):
     """
@@ -23,7 +27,17 @@ def probability(tree, instance, attr, val):
     if attr in instance:
         instance = {a:instance[a] for a in instance if not a == attr}
     concept = tree.categorize(instance)
-    return concept.get_probability(attr, val)
+
+    if isinstance(val, dict):
+        temp_instance = flattenJSON(instance)
+        mapping = flatMatch(concept, temp_instance)
+        temp_instance = renameFlat(temp_instance, mapping)
+        probs = [concept.get_probability(sub_attr, temp_instance[sub_attr]) 
+                 for sub_attr in temp_instance 
+                 if search('^' + mapping[attr], sub_attr)]
+        return mean(probs)
+    else:
+        return concept.get_probability(attr, val)
 
 def flexible_probability(tree, instance, attrs=None):
     """
@@ -59,6 +73,7 @@ def incremental_prediction(tree, instances, run_length, runs=1, attr=None):
         run_accuracy = []
         shuffle(instances)
         for instance in instances[:run_length]:
+
             if attr:
                 run_accuracy.append(probability(tree, instance, attr, instance[attr]))
             else:

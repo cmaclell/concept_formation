@@ -1,20 +1,21 @@
-import re
 import json
-import utils
-import csv
-from math import floor
-from random import choice
 from random import shuffle
 from random import random
 
 class CobwebTree:
 
-    def __init__(self):
+    def __init__(self, alpha=0.001):
         """
-        Initialize the tree with a CobwebNode
+        The tree constructor.
+
+        The alpha parameter is the parameter used for laplacian smoothing. The
+        higher the value, the higher the prior that all attributes/values are
+        equally likely. By default a minor smoothing is used: 0.001.
         """
         self.root = CobwebNode()
         self.root.root = self.root
+        self.root.alpha = alpha
+        self.root.scaling = False
 
     def __str__(self):
         return str(self.root)
@@ -66,6 +67,8 @@ class CobwebTree:
                     new.parent.children.remove(current)
                     new.parent.children.append(new)
                 else:
+                    new.alpha = self.root.alpha
+                    new.scaling = self.root.scaling
                     self.root = new
                     self.root.root = new
 
@@ -205,7 +208,7 @@ class CobwebNode:
                 self.av_counts[attr][val] = (self.av_counts[attr].get(val,0) +
                                      node.av_counts[attr][val])
 
-    def expected_correct_guesses(self, alpha=0.001):
+    def expected_correct_guesses(self):
         """
         Returns the number of correct guesses that are expected from the given
         concept. This is the sum of the probability of each attribute value
@@ -224,16 +227,17 @@ class CobwebNode:
             for val in self.root.av_counts[attr]:
                 if attr not in self.av_counts or val not in self.av_counts[attr]:
                     prob = 0
-                    if alpha > 0:
-                        prob = alpha / (alpha * n_values)
+                    if self.root.alpha > 0:
+                        prob = self.root.alpha / (self.root.alpha * n_values)
                 else:
                     val_count += self.av_counts[attr][val]
-                    prob = ((self.av_counts[attr][val] + alpha) / (1.0 * self.count
-                                                              + alpha * n_values))
+                    prob = ((self.av_counts[attr][val] + self.root.alpha) / (1.0 * self.count
+                                                              + self.root.alpha * n_values))
                 correct_guesses += (prob * prob)
 
             #Factors in the probability mass of missing values
-            prob = ((self.count - val_count + alpha) / (1.0*self.count + alpha * n_values))
+            prob = ((self.count - val_count + self.root.alpha) / (1.0*self.count +
+                                                             self.root.alpha * n_values))
             correct_guesses += (prob * prob)
 
         return correct_guesses
@@ -558,7 +562,7 @@ class CobwebNode:
 
         return output
 
-    def get_probability(self, attr, val, alpha=0.001):
+    def get_probability(self, attr, val):
         """
         Gets the probability of a particular attribute value at the given
         concept. This takes into account the possibilities that an attribute
@@ -574,10 +578,10 @@ class CobwebNode:
 
         n_values = len(self.root.av_counts[attr]) + 1
 
-        return ((self.av_counts[attr][val] + alpha) / 
-                (1.0 * self.count + alpha * n_values))
+        return ((self.av_counts[attr][val] + self.root.alpha) / 
+                (1.0 * self.count + self.root.alpha * n_values))
 
-    def get_probability_missing(self, attr, alpha=0.001):
+    def get_probability_missing(self, attr):
         """
         Gets the probability of a particular attribute value at the given
         concept. This takes into account the possibilities that an attribute
@@ -596,5 +600,9 @@ class CobwebNode:
             for val in self.av_counts[attr]:
                 val_count += self.av_counts[attr][val]
 
-        return ((self.count - val_count + alpha) / (1.0*self.count + alpha * n_values))
+        if (1.0 * self.count + self.root.alpha * n_values) == 0:
+            return 0.0
+
+        return ((self.count - val_count + self.root.alpha) / 
+                (1.0 * self.count + self.root.alpha * n_values))
 
