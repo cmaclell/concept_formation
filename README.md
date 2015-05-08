@@ -15,7 +15,7 @@ concept hierarchy. The resulting hierarchy can be used for clustering and
 prediction.
 
 This library also includes
-[TRESTLE]((http://christopia.net/data/articles/publications/maclellan1-2015.pdf),
+[TRESTLE](http://christopia.net/data/articles/publications/maclellan1-2015.pdf),
 an extension of COBWEB and COBWEB/3 that support structured and relational data
 objects. This system employs partial matching to rename new objects to align
 with previous examples, then categorizes these renamed objects.
@@ -29,7 +29,7 @@ COBWEB/3 supports online normalization of the continuous values, which is useful
 in situations where numeric values are on different scales and helps to 
 ensure that numeric values do not impact the model more than nominal values.
 
-# Citing TRESTLE
+# Citing this Library
 
 If you use this software in a scientific publiction, then we would appreciate
 citation of the following paper:
@@ -47,7 +47,7 @@ Bibtex entry:
 author={MacLellan, C.J. and Harpstead, E. and Aleven, V. and Koedinger, K.R.},
 title={TRESTLE: Incremental Learning in Structured Domains using Partial
        Matching and Categorization.},
-booktitle = {The Third Conference on Advances in Cognitive Systems},
+booktitle = {The Annual Third Conference on Advances in Cognitive Systems},
 year={2015}
 }
 ```
