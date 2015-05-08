@@ -1,6 +1,7 @@
 from math import sqrt
 import numpy as np
 from scipy import linalg
+from numbers import Number
 
 # A hashtable of values to use in the c4(n) function to apply corrections to
 # estimates of std.
@@ -74,7 +75,7 @@ def std(values):
                            values]))/len(values)
     return sqrt(variance)
 
-def listsToRelations(instance, relationName="Ordered", appendAttr=True):
+def listsToRelations(instance, relationName="Ordered", appendAttr=True, attrs = None):
     """
     Takes a structured instance containing lists and returns the same instance
     with all list elements converted to a series of relations that describe the
@@ -87,9 +88,12 @@ def listsToRelations(instance, relationName="Ordered", appendAttr=True):
         by default "Orderd" is used. However, a new name can be provided if
         that conflicts with other relations in the data already.
 
-        appendAttr -- if True appends the original list's attribute name to the
+        appendAttr -- if True appends the originzal list's attribute name to the
         relationName this is to prevent the matcher from over generalizing
         ordering when there are multiple lists in an object.
+
+        attrs -- A list of specific attribute names to convert. If no list is
+        provided then all list attributes will be converted
 
     >>> import pprint
     >>> pprint.pprint(listsToRelations({"list1":['a','b','c']}))
@@ -99,9 +103,11 @@ def listsToRelations(instance, relationName="Ordered", appendAttr=True):
     >>> pprint.pprint(listsToRelations({"list1":['a','b','c']}, appendAttr=False))
     {'list1-0': ['Ordered', 'a', 'b'], 'list1-1': ['Ordered', 'b', 'c']}
     """
+    if attrs is None:
+    	attrs = instance.keys()
     newInstance = {}
     for attr in instance:
-        if isinstance(instance[attr], list):
+        if isinstance(instance[attr], list) and attrs in attrs:
             for i in range(len(instance[attr])-1):
                 if appendAttr:
                     newInstance[str(attr)+"-"+str(i)] = [str(relationName+attr),
@@ -112,18 +118,43 @@ def listsToRelations(instance, relationName="Ordered", appendAttr=True):
                         instance[attr][i],
                         instance[attr][i+1]]
         elif isinstance(instance[attr],dict):
-            newInstance[attr] = listsToRelations(instance[attr],relationName,appendAttr)
+            newInstance[attr] = listsToRelations(instance[attr],relationName,appendAttr,attrs)
         else:
             newInstance[attr] = instance[attr]
     return newInstance
 
-def batchListsToRelations(instances, relationName="Ordered", appendAttr=True):
+def batchListsToRelations(instances, relationName="Ordered", appendAttr=True, attrs=None):
     """
     Takes a list of structured instances that contain lists and batch converts
     all the list elements to a relation format expected by TRESTLE.
     """
     return [listsToRelations(instance, relationName, appendAttr) for instance
             in instances]
+
+def numericToNominal(instance, attrs = None):     
+	"""     	
+	Takes a list of instances and converts any attributes that TRESTLE or
+	COBWEB/3 would consider to be numeric attributes to nominal attributes in
+	the case that should be treated as such. This is useful for when data
+	natually contains values that would be numbers but you do not want to
+	entertain that they have a distribution.	
+	"""
+	if attrs is None:
+		attrs = instance.keys()
+	for a in attrs:
+		if isinstance(instance[a],Number):
+			instance[a] = str(instnace[a])
+		if isinstance(instance[a],dict):
+			instance[a] = numericToNominal(instance[a],attrs)
+	return instance
+
+def batchNumericToNominal(instances, attrs = None):
+	"""
+	Takes a list of instances and batch converts any specified numeric
+	attributes within instances to nominal attributes for times when this is the
+	desired behavior
+	"""
+	return [numericToNominal(instance,attrs) for instance in instances]
 
 def moving_average(a, n=3) :
     """
