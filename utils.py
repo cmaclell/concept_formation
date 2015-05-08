@@ -104,10 +104,14 @@ def listsToRelations(instance, relationName="Ordered", appendAttr=True, attrs = 
     {'list1-0': ['Ordered', 'a', 'b'], 'list1-1': ['Ordered', 'b', 'c']}
     """
     if attrs is None:
-    	attrs = instance.keys()
+        attrs = [k for k in instance.keys()]
+
+    if isinstance(attrs,str):
+        attrs = [attrs]
+
     newInstance = {}
     for attr in instance:
-        if isinstance(instance[attr], list) and attrs in attrs:
+        if isinstance(instance[attr], list) and attr in attrs:
             for i in range(len(instance[attr])-1):
                 if appendAttr:
                     newInstance[str(attr)+"-"+str(i)] = [str(relationName+attr),
@@ -131,30 +135,156 @@ def batchListsToRelations(instances, relationName="Ordered", appendAttr=True, at
     return [listsToRelations(instance, relationName, appendAttr) for instance
             in instances]
 
+def extractComponentsFromList(instance, prefix="exob", attrs=None):
+    """
+
+    Extracts object literals from within an list elements and extracts them into
+    their own component attributes. Note that this function does not ad ordering
+    relations so if that behavior is desired follow it up with listToRelation.
+
+    Arguments:
+
+        prefix -- Any objects found within list in the ojbect will be assigned
+        new names of prefix + a sequential counter. This value will eventually
+        be aliased by TRESTLE's structure mapper but it should not collide with
+        any object names that naturally exist wihtin the instance object.
+
+        attrs -- A list of attribute names to specifically target for object
+        extraction. If this is not provided then the process will search within
+        all of the instance's attribtues.
+
+    >>> import pprint
+    >>> pprint.pprint(extractComponentsFromList({"a":"n","l1":["test",{"p":"q","j":"k"},{"n":"m"}]}))
+    {'a': 'n',
+     'exob1': {'j': 'k', 'p': 'q'},
+     'exob2': {'n': 'm'},
+     'l1': ['test', 'exob1', 'exob2']}
+
+    >>> import pprint
+    >>> pprint.pprint(extractComponentsFromList({"a":"n","l1":["test",{"p":"q","j":"k"},{"n":"m"}]},prefix="newobject"))
+    {'a': 'n',
+     'l1': ['test', 'newobject1', 'newobject2'],
+     'newobject1': {'j': 'k', 'p': 'q'},
+     'newobject2': {'n': 'm'}}
+ 
+    """
+    counter = 0
+
+    if attrs is None:
+        attrs = [k for k in instance.keys()]
+
+    if isinstance(attrs,str):
+        attrs = [attrs]
+
+    for a in attrs:
+        if  isinstance(instance[a],list):
+            for i in range(len(instance[a])):
+                if isinstance(instance[a][i],dict):
+                    counter += 1
+                    newName = prefix + str(counter)
+                    instance[newName] = extractComponentsFromList(instance[a][i])
+                    instance[a][i] = newName
+        if isinstance(instance[a],dict):
+            instance[a] = extractComponentsFromList(instance[a])
+    return instance
+
+def batchExtractComponentsFromList(instances, prefix="exob", attrs=None):
+    """
+
+    Takes a list of instances and extracts components from lists within each of
+    them.
+
+    """
+    return [extractComponentsFromList(instance, prefix, attrs) for instance
+            in instances]
+
 def numericToNominal(instance, attrs = None):     
-	"""     	
-	Takes a list of instances and converts any attributes that TRESTLE or
-	COBWEB/3 would consider to be numeric attributes to nominal attributes in
-	the case that should be treated as such. This is useful for when data
-	natually contains values that would be numbers but you do not want to
-	entertain that they have a distribution.	
-	"""
-	if attrs is None:
-		attrs = instance.keys()
-	for a in attrs:
-		if isinstance(instance[a],Number):
-			instance[a] = str(instnace[a])
-		if isinstance(instance[a],dict):
-			instance[a] = numericToNominal(instance[a],attrs)
-	return instance
+    """         
+    Takes a list of instances and converts any attributes that TRESTLE or
+    COBWEB/3 would consider to be numeric attributes to nominal attributes in
+    the case that should be treated as such. This is useful for when data
+    natually contains values that would be numbers but you do not want to
+    entertain that they have a distribution.    
+
+    Arguments:
+
+        attrs -- a list of attribute names to specifically target for
+        conversion. If no list is provided it will default to all of the
+        instance's attributes.
+
+    >>> import pprint
+    >>> pprint.pprint(numericToNominal({"x":12.5,"y":9,"z":"top"}))
+    {'x': '12.5', 'y': '9', 'z': 'top'}
+
+    >>> import pprint
+    >>> pprint.pprint(numericToNominal({"x":12.5,"y":9,"z":"12.6"},attrs=["y","z"]))
+    {'x': 12.5, 'y': '9', 'z': '12.6'}
+
+    >>> import pprint
+    >>> pprint.pprint(numericToNominal({"x":12.5,"y":9,"z":"top"},attrs="y"))
+    {'x': 12.5, 'y': '9', 'z': 'top'}
+
+    """
+    if attrs is None:
+        attrs = [k for k in instance.keys()]
+    if isinstance(attrs,str):
+        attrs = [attrs]
+    for a in attrs:
+        if isinstance(instance[a],Number):
+            instance[a] = str(instance[a])
+        if isinstance(instance[a],dict):
+            instance[a] = numericToNominal(instance[a],attrs)
+    return instance
 
 def batchNumericToNominal(instances, attrs = None):
-	"""
-	Takes a list of instances and batch converts any specified numeric
-	attributes within instances to nominal attributes for times when this is the
-	desired behavior
-	"""
-	return [numericToNominal(instance,attrs) for instance in instances]
+    """
+    Takes a list of instances and batch converts any specified numeric
+    attributes within instances to nominal attributes for times when this is the
+    desired behavior
+    """
+    return [numericToNominal(instance,attrs) for instance in instances]
+
+def santizeJSON(instance,ext_ob_name="extOb",relation_name="Ordered",appendAttr=True,attrs = None):
+    """
+
+    Takes a raw JSON object and applies some transformations to it that convert
+    common structures into an equivalent format that TRESTLE would expect.
+    TRESTLE should run given any arbitrarily structured JSON object but this
+    process makes some conversions that preserve the intent of some JSON
+    notation in a way that TRESTLE would expect. In particular this process will
+    extract an object litterals that are in-line within a list, and break any
+    lists into a series of tuples that describe their order.
+
+    Attributes:
+
+        ext_ob_name -- the prefix to use for objects extracted from in-line lists
+
+        relation_name -- the name to use for ordering relations converted from lists
+
+        appendAttr -- a flag for whether to append the original attribute name to a converted relation list
+
+        attrs -- a list of particular attributes to perform conversion on.
+
+    >>> import pprint
+    >>> pprint.pprint(santizeJSON({"stack":[{"a":1,"b":2,"c":3},{"x":1,"y":2,"z":3},{"i":1,"j":2,"k":3}]}))
+    {'extOb1': {'a': 1, 'b': 2, 'c': 3},
+     'extOb2': {'x': 1, 'y': 2, 'z': 3},
+     'extOb3': {'i': 1, 'j': 2, 'k': 3},
+     'stack-0': ['Orderedstack', 'extOb1', 'extOb2'],
+     'stack-1': ['Orderedstack', 'extOb2', 'extOb3']}
+
+    """    
+
+    return listsToRelations(extractComponentsFromList(instance,prefix=ext_ob_name,
+        attrs=attrs),relationName=relation_name,appendAttr=appendAttr,attrs=attrs)
+
+def santizeJSONList(instances,ext_ob_name="extOb",relation_name="Ordered",appendAttr=True,attrs = None):
+    """
+
+    Applies the santizeJSON function to a list of objects.
+
+    """
+    return [santizeJSON(instance,ext_ob_name,relation_name,appendAttr,attrs) for instance in instances]
 
 def moving_average(a, n=3) :
     """
