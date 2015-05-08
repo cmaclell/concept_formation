@@ -29,7 +29,7 @@ COBWEB/3 supports online normalization of the continuous values, which is useful
 in situations where numeric values are on different scales and helps to 
 ensure that numeric values do not impact the model more than nominal values.
 
-# Citing this Library
+# Citing this Software 
 
 If you use this software in a scientific publiction, then we would appreciate
 citation of the following paper:
