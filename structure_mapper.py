@@ -421,3 +421,13 @@ def isPartialMatch(iAttr, cAttr, mapping):
                 return False
 
     return True
+
+def structure_map(concept, instance):
+    """
+    Flatten the instance, perform structure mapping, rename the instance
+    based on this structure mapping, and return the renamed instance.
+    """
+    temp_instance = flattenJSON(instance)
+    mapping = flatMatch(concept, temp_instance)
+    temp_instance = renameFlat(temp_instance, mapping)
+    return temp_instance
