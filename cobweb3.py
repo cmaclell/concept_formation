@@ -1,6 +1,8 @@
-import math
+from math import sqrt
+from math import pi
+from math import exp
 from numbers import Number
-from utils import ContinuousValue
+from utils import c4
 from random import normalvariate
 from random import choice
 from random import random
@@ -56,7 +58,7 @@ class Cobweb3Tree(CobwebTree):
 class Cobweb3Node(CobwebNode):
 
     # Smallest possible acuity. Below this and probabilities will exceed 1.0
-    acuity = 1.0 / math.sqrt(2.0 * math.pi)
+    acuity = 1.0 / sqrt(2.0 * pi)
 
     def increment_counts(self, instance):
         """
@@ -117,14 +119,14 @@ class Cobweb3Node(CobwebNode):
             before_std = max(self.av_counts[attr].scaled_unbiased_std(scale), self.acuity)
             before_prob = ((1.0 * self.av_counts[attr].num) / (self.count + 1.0))
             before_count = ((before_prob * before_prob) * 
-                            (1.0 / (2.0 * math.sqrt(math.pi) * before_std)))
+                            (1.0 / (2.0 * sqrt(pi) * before_std)))
 
             temp = self.av_counts[attr].copy()
             temp.update(val)
             after_std = max(temp.scaled_unbiased_std(scale), self.acuity)
             after_prob = ((1.0 + self.av_counts[attr].num) / (self.count + 1.0))
             after_count = ((after_prob * after_prob) * 
-                            (1.0 / (2.0 * math.sqrt(math.pi) * after_std)))
+                            (1.0 / (2.0 * sqrt(pi) * after_std)))
             return after_count - before_count
         elif val not in self.av_counts[attr]:
             return 0.0
@@ -181,7 +183,7 @@ class Cobweb3Node(CobwebNode):
                     prob_attr = ((1.0 * self.av_counts[attr].num + alpha) /
                                  (self.count + alpha * n_values ))
                     correct_guesses += ((prob_attr * prob_attr) * 
-                                        (1.0 / (2.0 * math.sqrt(math.pi) * std)))
+                                        (1.0 / (2.0 * sqrt(pi) * std)))
 
                 #Factors in the probability mass of missing values
                 prob = ((self.count - val_count + alpha) / (1.0 * self.count +
@@ -267,7 +269,7 @@ class Cobweb3Node(CobwebNode):
             prob_attr = ((1.0 * self.av_counts[attr].num + alpha) /
                          (self.count + alpha * n_values ))
 
-            return (prob_attr * math.exp(-((val - mean) * (val - mean)) / 
+            return (prob_attr * exp(-((val - mean) * (val - mean)) / 
                                          (2.0 * std * std)))
         else:
             return super(Cobweb3Node ,self).get_probability(attr, val, alpha)
@@ -299,6 +301,122 @@ class Cobweb3Node(CobwebNode):
         output["counts"] = temp
 
         return output
+
+class ContinuousValue():
+    """ 
+    This class scores the number of samples, the mean of the samples, and the
+    squared error of the samples. It can be used to perform incremental
+    estimation of the mean, std, and unbiased std.
+    """
+
+    def __init__(self):
+        """
+        Initializes the number of values, the mean of the values, and the
+        squared errors of the values to 0.
+        """
+        self.num = 0.0
+        self.mean = 0.0
+        self.meanSq = 0.0
+
+    def copy(self):
+        """
+        Returns a deep copy of itself.
+        """
+        v = ContinuousValue()
+        v.num = self.num
+        v.mean = self.mean
+        v.meanSq = self.meanSq
+        return v
+
+    def unbiased_mean(self):
+        """
+        Returns the mean value.
+        """
+        return self.mean
+
+    def biased_std(self):
+        """
+        Returns a biased estimate of the std (i.e., the sample std)
+        """
+        return sqrt(self.meanSq / (self.num))
+
+    def unbiased_std(self):
+        """
+        Returns an unbiased estimate of the std that uses Bessel's correction
+        and Cochran's theorem: 
+            https://en.wikipedia.org/wiki/Unbiased_estimation_of_standard_deviation
+        """
+        if self.num < 2:
+            return 0.0
+        return sqrt(self.meanSq / (self.num - 1)) / c4(self.num)
+
+    def scaled_unbiased_std(self, scale):
+        """
+        Returns an unbiased estimate of the std (see comments on unbiased_std),
+        but also adjusts the std given a scale parameter. This is used to
+        return std values that have been normalized by some value.
+
+        For edge cases, if scale is less than or equal to 0, then scaling is
+        disabled (i.e., scale = 1.0).
+        """
+        if scale <= 0:
+            scale = 1.0
+        return self.unbiased_std() / scale
+
+    def __hash__(self):
+        """
+        This hashing function returns the hash of a constant string, so that
+        all lookups of a continuous value in a dictionary get mapped to the
+        same entry. 
+        """
+        return hash("#ContinuousValue#")
+
+    def __repr__(self):
+        """
+        The representation of a continuous value.
+        """
+        return repr(self.num) + repr(self.mean) + repr(self.meanSq)
+
+    def __str__(self):
+        """
+        The string format for a continuous value."
+        """
+        return "%0.4f (%0.4f) [%i]" % (self.mean, self.unbiased_std(), self.num)
+
+    def update_batch(self, data):
+        """
+        Calls the update function on every value in the given dataset
+        """
+        for x in data:
+            self.update(x)
+
+    def update(self, x):
+        """
+        Incrementally update the mean and squared mean error (meanSq) values in
+        an efficient and practical (no precision problems) way. This uses and
+        algorithm by Knuth, which I found here:
+            https://en.wikipedia.org/wiki/Algorithms_for_calculating_variance
+        """
+        self.num += 1
+        delta = x - self.mean 
+        self.mean += delta / self.num
+        self.meanSq += delta * (x - self.mean)
+
+    def combine(self, other):
+        """
+        Combine two clusters of means and squared mean error (meanSq) values in
+        an efficient and practical (no precision problems) way. This uses the
+        parallel algorithm by Chan et al. found here: 
+            https://en.wikipedia.org/wiki/Algorithms_for_calculating_variance
+        """
+        if not isinstance(other, ContinuousValue):
+            raise ValueError("Can only merge 2 continuous values.")
+        delta = other.mean - self.mean
+        self.meanSq = (self.meanSq + other.meanSq + delta * delta * 
+                       ((self.num * other.num) / (self.num + other.num)))
+        self.mean = ((self.num * self.mean + other.num * other.mean) / 
+                     (self.num + other.num))
+        self.num += other.num
 
 if __name__ == "__main__":
 
