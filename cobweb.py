@@ -600,6 +600,9 @@ class CobwebNode:
             for val in self.av_counts[attr]:
                 val_count += self.av_counts[attr][val]
 
+        if (1.0 * self.count + self.root.alpha * n_values) == 0:
+            return 0.0
+
         return ((self.count - val_count + self.root.alpha) / 
                 (1.0 * self.count + self.root.alpha * n_values))
 
