@@ -211,18 +211,29 @@ class Cobweb3Node(CobwebNode):
         smoothing (alpha) and it normalizes the values using the root concept
         if scaling is enabled (scaling).
         """
-        if attr not in self.av_counts:
+        if attr not in self.root.av_counts:
             return 0.0
 
-        if isinstance(self.av_counts[attr], ContinuousValue):
+        if isinstance(self.root.av_counts[attr], ContinuousValue):
+
+            # TODO not sure what to do here, I did what I thought is the most
+            # reasonable thing, throw an exception. Should use squared error
+            # of predicted value instead.
+            raise Exception("Probability of Continuous Value is nonsensical.")
+
             n_values = 2
 
             if self.root.scaling:
                 scale = self.root.av_counts[attr].unbiased_std()
+
+                if scale == 0:
+                    scale = 1
+
                 shift = self.root.av_counts[attr].mean
                 val = val - shift
             else:
-                scale = 1.0
+                scale = 1.0 
+                shift = 0.0
 
             mean = (self.av_counts[attr].mean - shift) / scale
             std = max(self.av_counts[attr].scaled_unbiased_std(scale),
@@ -233,6 +244,7 @@ class Cobweb3Node(CobwebNode):
 
             return (prob_attr * exp(-((val - mean) * (val - mean)) / 
                                          (2.0 * std * std)))
+
         else:
             return super(Cobweb3Node, self).get_probability(attr, val)
 
@@ -298,6 +310,14 @@ class ContinuousValue():
         Returns the mean value.
         """
         return self.mean
+
+    def scaled_unbiased_mean(self, shift, scale):
+        """
+        Returns the mean shifted and scaled.
+        """
+        if scale <= 0:
+            scale = 1
+        return (self.mean - shift) / scale
 
     def biased_std(self):
         """

@@ -1,27 +1,45 @@
-import json
+from random import normalvariate
+from random import shuffle, uniform
 import numpy as np
 import matplotlib.pyplot as plt
 
 from utils import moving_average
 from predict import incremental_prediction
-from cobweb import CobwebTree
 from dummy import DummyTree
+from cobweb3 import Cobweb3Tree
 
-window = 5 
+window = 50 
 num_runs = 10 
-num_examples = 30 
+num_examples = 200 
 
-with open('data_files/mushrooms.json') as fin:
-    mushrooms = json.load(fin)
+############################ GENERATE SIMULATED DATA ########################
+num_clusters = 2 
+num_samples = 10000
+sigma = 0.1
+
+xmean = [uniform(-100, 100) for i in range(num_clusters)]
+ymean = [uniform(-100, 100) for i in range(num_clusters)]
+label = ['bo', 'go', 'ro', 'co', 'mo', 'yo', 'ko']
+shuffle(label)
+label = label[0:num_clusters]
+
+simulated_data = []
+for i in range(num_clusters):
+    simulated_data += [{'x': normalvariate(0, sigma), 'y':
+                        normalvariate(ymean[i], sigma), 'label': 'l1'} for
+                       j in range(num_samples)]
+    simulated_data += [{'x': normalvariate(2, sigma), 'y':
+                        normalvariate(ymean[i], sigma), 'label': 'l2'} for
+                       j in range(num_samples)]
 
 ############################## GENERATE PREDICTIONS ##########################
 
-naive_accuracy = incremental_prediction(DummyTree(), mushrooms,
+naive_accuracy = incremental_prediction(DummyTree(), simulated_data,
                                   run_length=num_examples,
-                                  runs=num_runs)
-cobweb_accuracy = incremental_prediction(CobwebTree(), mushrooms,
+                                  runs=num_runs, attr="x")
+cobweb_accuracy = incremental_prediction(Cobweb3Tree(), simulated_data,
                                   run_length=num_examples,
-                                  runs=num_runs)
+                                  runs=num_runs, attr="x")
 
 ############################## PLOT RESULTS ##################################
 
@@ -63,11 +81,12 @@ plt.fill_between(x, naive_lower_smooth, naive_upper_smooth, alpha=0.5,
 plt.plot(x, cobweb_y_smooth, label="COBWEB", color="green")
 plt.plot(x, naive_y_smooth, label="Naive Predictor", color="red")
 
-plt.gca().set_ylim([0,1.05])
+#plt.gca().set_ylim([0,1.05])
 plt.gca().set_xlim([0,len(naive_y_smooth)-1])
-plt.title("Incremental Flexible Mushroom Prediction Accuracy")
+plt.title("Incremental Mushroom Edibility Prediction Accuracy")
 plt.xlabel("# of Training Examples")
 plt.ylabel("Accuracy")
 plt.legend(loc=4)
 
 plt.show()
+
