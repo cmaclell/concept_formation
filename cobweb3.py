@@ -8,10 +8,14 @@ from utils import c4
 from cobweb import CobwebNode
 from cobweb import CobwebTree
 
-# Magnify the differences after normalization so a normalized difference of
-# 0.1 is perceptable given the acuity limit.
-perceptible_diff = 0.1
-scale_num_std = 1 /(perceptible_diff * sqrt(2 * pi))
+# Magnify the continuous values so that the just noticable difference
+# of the noramlized values is equal to acuity (i.e., a JND of 8% means that the
+# system is able to perceive a difference of 0.08 after normalizing the data to
+# have std 1). Smaller JND values tend to make categorization slower because
+# the tree will have greater depth due to being able to more finely
+# discriminate between values.
+just_noticable_difference = 0.08
+scale_num_std = 1 /(just_noticable_difference * sqrt(2 * pi))
 scale_proportion = 1 / scale_num_std
 
 class Cobweb3Tree(CobwebTree):

@@ -4,7 +4,7 @@ from structure_mapper import structure_map
 
 class TrestleTree(Cobweb3Tree):
 
-    def __init__(self, alpha=0.001, scaling=True):
+    def __init__(self, alpha=0.001, scaling=False):
         self.root = Cobweb3Node()
         self.root.root = self.root
         self.root.alpha = alpha

@@ -1,1508 +1,4094 @@
 [
-{
-"_guid": "c34da966-b2dc-4f73-9590-64f36fec53fd", "success": "0", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component8": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "2fda0bde-95a7-4bda-9851-785275c3f56d", "success": "1", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 3.0, "t": 4.0}
-, "component1": {
- "type": "plat90", "l": 0.0, "r": 1.0, "b": 0.0, "t": 3.0}
-, "component2": {
- "type": "plat90", "l": 2.0, "r": 3.0, "b": 0.0, "t": 3.0}
-, "component7": {
- "type": "ufoo0", "l": 1.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "fcf5e997-1bb3-4ed5-96e2-0003c726861d", "success": "0", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component8": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "8077101b-ce7a-4b41-ab5b-0ee83e76039a", "success": "1", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 0.0, "r": 1.0, "b": 1.0, "t": 4.0}
-, "component2": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component6": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-, "relation1": [
- "horizontal",
- "component1",
- "component2"
+    {
+        "_guid": "660ac76d-93b3-4ce7-8a15-a3213e9103f5",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component8": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "0"
+    },
+    {
+        "_guid": "a5096a31-b5a8-4c58-89f8-cca6f8e0eaf6",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component8": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "0"
+    },
+    {
+        "_guid": "dcdb91c1-d1d4-43a1-9484-e031568a360b",
+        "component0": {
+            "b": 3.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 4.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 1.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "component2": {
+            "b": 0.0,
+            "l": 2.0,
+            "r": 3.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "component6": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "1"
+    },
+    {
+        "_guid": "3ad6cc73-7e2c-40cf-a1cd-d008f9de9568",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component8": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "0"
+    },
+    {
+        "_guid": "bc362d1c-e73c-426d-9ea5-a1a73304391f",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 0.0,
+            "l": 3.0,
+            "r": 6.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component2": {
+            "b": 1.0,
+            "l": 2.0,
+            "r": 3.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component21": {
+            "b": 4.0,
+            "l": 1.0,
+            "r": 4.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "0"
+    },
+    {
+        "_guid": "25401124-50ea-4f52-b30d-ba6fac9e1c14",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component8": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "0"
+    },
+    {
+        "_guid": "4c8ab231-130a-4123-bd89-7aeab934024f",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component8": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "0"
+    },
+    {
+        "_guid": "58ab7539-d07d-48dc-be2b-968620c521db",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component8": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "0"
+    },
+    {
+        "_guid": "6851d0a2-1a1b-4f31-8c50-a1038a324fbc",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 0.0,
+            "l": 3.0,
+            "r": 6.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component2": {
+            "b": 1.0,
+            "l": 3.0,
+            "r": 4.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component21": {
+            "b": 4.0,
+            "l": 2.0,
+            "r": 5.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "1"
+    },
+    {
+        "_guid": "a5bf568c-f7a6-4055-9f75-28844df88239",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component8": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "0"
+    },
+    {
+        "_guid": "1b19be75-ac28-4bbf-ba75-8effc3a26502",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component8": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "0"
+    },
+    {
+        "_guid": "7f68089d-edb7-4ed7-bc31-0557c1abed9d",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 0.0,
+            "r": 1.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component2": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component6": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "1"
+    },
+    {
+        "_guid": "614986e3-fbbc-492a-86d5-e8a489aeb7d5",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component8": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "0"
+    },
+    {
+        "_guid": "d236fbad-5dd2-42ed-a506-8785e63ab1eb",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component11": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "component2": {
+            "b": 0.0,
+            "l": 3.0,
+            "r": 4.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "success": "0"
+    },
+    {
+        "_guid": "92909385-a1d6-41c1-9304-68a73e1a61bd",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component8": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "0"
+    },
+    {
+        "_guid": "35aa4a04-cfb7-41d1-9bdd-1b685afde6be",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 0.0,
+            "l": 3.0,
+            "r": 6.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component2": {
+            "b": 1.0,
+            "l": 2.0,
+            "r": 3.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component21": {
+            "b": 4.0,
+            "l": 1.0,
+            "r": 4.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "0"
+    },
+    {
+        "_guid": "a7070c51-3902-4fb5-9b03-2bb3cf3224eb",
+        "component0": {
+            "b": 3.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 4.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 1.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "component2": {
+            "b": 0.0,
+            "l": 2.0,
+            "r": 3.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "component6": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "1"
+    },
+    {
+        "_guid": "5c650be5-8737-405f-bd95-f534d1cac1b0",
+        "component0": {
+            "b": 3.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 4.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 1.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "component2": {
+            "b": 0.0,
+            "l": 2.0,
+            "r": 3.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "component6": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "1"
+    },
+    {
+        "_guid": "35475109-56b1-4d88-bbe6-3d0812200e5f",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component8": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "1"
+    },
+    {
+        "_guid": "7132b528-7add-4efd-95d6-6b772f5f2990",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 0.0,
+            "r": 1.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component2": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component6": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "1"
+    },
+    {
+        "_guid": "4b1261db-645e-45b1-a758-49c1b15d97ab",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component8": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "0"
+    },
+    {
+        "_guid": "8077101b-ce7a-4b41-ab5b-0ee83e76039a",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 0.0,
+            "r": 1.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component2": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component6": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "1"
+    },
+    {
+        "_guid": "827504a3-b036-4b7b-9d77-7c3f727ab8e7",
+        "component0": {
+            "b": 3.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 4.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 1.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "component2": {
+            "b": 0.0,
+            "l": 2.0,
+            "r": 3.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "component6": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "1"
+    },
+    {
+        "_guid": "88418132-8139-49ac-a7e9-e36003d22895",
+        "component0": {
+            "b": 3.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 4.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 1.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "component2": {
+            "b": 0.0,
+            "l": 2.0,
+            "r": 3.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "component6": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "1"
+    },
+    {
+        "_guid": "eb752f8f-7368-4421-801d-a4493326b94e",
+        "component0": {
+            "b": 3.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 4.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 1.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "component2": {
+            "b": 0.0,
+            "l": 2.0,
+            "r": 3.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "component6": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "1"
+    },
+    {
+        "_guid": "d2eff55d-1487-4b2c-9ea3-3eaa22623c34",
+        "component0": {
+            "b": 3.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 4.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 1.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "component2": {
+            "b": 0.0,
+            "l": 2.0,
+            "r": 3.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "component6": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "1"
+    },
+    {
+        "_guid": "c34da966-b2dc-4f73-9590-64f36fec53fd",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component8": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "0"
+    },
+    {
+        "_guid": "d44d4b10-49b5-476e-a340-68ce63fb63da",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component8": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "0"
+    },
+    {
+        "_guid": "841c6f04-1203-49f7-9fcb-a4ed53e6693d",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component8": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "0"
+    },
+    {
+        "_guid": "95eb50e5-1f53-4509-8d7e-6c8b030ba2ff",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 2.0,
+            "type": "plat0"
+        },
+        "component2": {
+            "b": 2.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 3.0,
+            "type": "plat0"
+        },
+        "component3": {
+            "b": 3.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 4.0,
+            "type": "ufoo0"
+        },
+        "success": "1"
+    },
+    {
+        "_guid": "ef8593b2-a510-4edd-945d-89690a0ccb79",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component8": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "0"
+    },
+    {
+        "_guid": "d76953e5-956c-473d-968d-d97d672ce3f0",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 0.0,
+            "l": 3.0,
+            "r": 6.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component2": {
+            "b": 1.0,
+            "l": 4.0,
+            "r": 5.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component21": {
+            "b": 4.0,
+            "l": 3.0,
+            "r": 6.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "0"
+    },
+    {
+        "_guid": "b5e342bf-7c43-4d3d-9bb2-4b8ac8e70a7e",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component8": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "0"
+    },
+    {
+        "_guid": "4b18cf32-85e5-4aad-9f1f-7ce5939bd76e",
+        "component0": {
+            "b": 3.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 4.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 1.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "component2": {
+            "b": 0.0,
+            "l": 2.0,
+            "r": 3.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "component6": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "1"
+    },
+    {
+        "_guid": "69132ac1-fedb-4359-b961-d3109a794192",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component2": {
+            "b": 1.0,
+            "l": 2.0,
+            "r": 3.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component6": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "0"
+    },
+    {
+        "_guid": "9cdfd352-82c8-44e9-86a9-2acb9609bdb2",
+        "component0": {
+            "b": 3.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 4.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 1.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "component2": {
+            "b": 0.0,
+            "l": 2.0,
+            "r": 3.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "component6": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "1"
+    },
+    {
+        "_guid": "8382c37f-e00c-4df8-b4fd-fe316360ad0a",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "ufoo0"
+        },
+        "success": "1"
+    },
+    {
+        "_guid": "a45c9ebe-574f-4622-8c13-b8f67e508b24",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 0.0,
+            "l": 4.0,
+            "r": 7.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component2": {
+            "b": 1.0,
+            "l": 3.0,
+            "r": 4.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component26": {
+            "b": 4.0,
+            "l": 2.0,
+            "r": 5.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "1"
+    },
+    {
+        "_guid": "14b1d132-61ab-461e-8306-bc2bc972643e",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component8": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "0"
+    },
+    {
+        "_guid": "c023394d-ce45-4899-8be1-1a7d7476eb32",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component8": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "0"
+    },
+    {
+        "_guid": "b2f47fd0-54d6-4573-ac3a-f27357a2b418",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component9": {
+            "b": 4.0,
+            "l": 1.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "0"
+    },
+    {
+        "_guid": "ebe2f9af-9146-45aa-a646-11baf01ac0dd",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component8": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "0"
+    },
+    {
+        "_guid": "1e6f93a0-b802-44a2-a0da-a47b406a9b45",
+        "component0": {
+            "b": 3.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 4.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 1.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "component2": {
+            "b": 0.0,
+            "l": 2.0,
+            "r": 3.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "component6": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "1"
+    },
+    {
+        "_guid": "51aba565-bc2b-414c-926d-83ce12a01ddf",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 0.0,
+            "l": 3.0,
+            "r": 6.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component2": {
+            "b": 1.0,
+            "l": 4.0,
+            "r": 5.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component21": {
+            "b": 4.0,
+            "l": 3.0,
+            "r": 6.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "0"
+    },
+    {
+        "_guid": "929c3be2-76a4-48c4-a84c-ad63b2fd0299",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component8": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "0"
+    },
+    {
+        "_guid": "afcc5aa4-fa22-4409-ba5c-138246e10394",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 0.0,
+            "r": 1.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component2": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component6": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "1"
+    },
+    {
+        "_guid": "17f517c2-4b8d-418d-ad77-af75e934978e",
+        "component0": {
+            "b": 3.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 4.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 1.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "component2": {
+            "b": 0.0,
+            "l": 2.0,
+            "r": 3.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "component6": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "1"
+    },
+    {
+        "_guid": "2311a212-7495-4a4b-aadb-1606070effb8",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component2": {
+            "b": 1.0,
+            "l": 2.0,
+            "r": 3.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component7": {
+            "b": 4.0,
+            "l": 1.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "1"
+    },
+    {
+        "_guid": "5dd554d6-06b5-44a8-ac6e-b53ade124c36",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component2": {
+            "b": 1.0,
+            "l": 2.0,
+            "r": 3.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component6": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "1"
+    },
+    {
+        "_guid": "eb173385-a6c4-4cdf-80d9-642af396ca78",
+        "component0": {
+            "b": 0.0,
+            "l": 2.0,
+            "r": 5.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 1.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "component16": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "component2": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "success": "0"
+    },
+    {
+        "_guid": "62837f23-1d42-4e6b-8198-f4ef2ad0f13d",
+        "component0": {
+            "b": 3.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 4.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 1.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "component2": {
+            "b": 0.0,
+            "l": 2.0,
+            "r": 3.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "component6": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "1"
+    },
+    {
+        "_guid": "7c572260-e9a5-42e8-bc82-308ac050210d",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 0.0,
+            "l": 3.0,
+            "r": 6.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component2": {
+            "b": 1.0,
+            "l": 2.0,
+            "r": 3.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component21": {
+            "b": 4.0,
+            "l": 1.0,
+            "r": 4.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "0"
+    },
+    {
+        "_guid": "25430120-d372-45d5-9f0d-85bc672aab84",
+        "component0": {
+            "b": 0.0,
+            "l": 1.0,
+            "r": 4.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 1.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "component11": {
+            "b": 4.0,
+            "l": 1.0,
+            "r": 4.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "component2": {
+            "b": 1.0,
+            "l": 2.0,
+            "r": 3.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "success": "1"
+    },
+    {
+        "_guid": "2a842e9b-e3dc-4974-bfa2-7c4b094c0e96",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component8": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "1"
+    },
+    {
+        "_guid": "0e94714c-914f-4a1f-9dd9-d70435486428",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 0.0,
+            "l": 3.0,
+            "r": 6.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component2": {
+            "b": 1.0,
+            "l": 3.0,
+            "r": 4.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component22": {
+            "b": 4.0,
+            "l": 2.0,
+            "r": 4.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "0"
+    },
+    {
+        "_guid": "3c6f925a-21c4-483f-b40d-93128f61421b",
+        "component0": {
+            "b": 3.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 4.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 1.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "component2": {
+            "b": 0.0,
+            "l": 2.0,
+            "r": 3.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "component6": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "1"
+    },
+    {
+        "_guid": "e3f7d456-2cb7-44d8-b131-56a89b37dcab",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component2": {
+            "b": 1.0,
+            "l": 2.0,
+            "r": 3.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component6": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "1"
+    },
+    {
+        "_guid": "193e9ecf-aaf9-4aa4-a4e3-183253ca9245",
+        "component0": {
+            "b": 3.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 4.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 1.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "component2": {
+            "b": 0.0,
+            "l": 2.0,
+            "r": 3.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "component6": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "1"
+    },
+    {
+        "_guid": "f267fc61-2e06-4771-b812-e027b52c6dac",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 0.0,
+            "l": 3.0,
+            "r": 6.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component2": {
+            "b": 1.0,
+            "l": 4.0,
+            "r": 5.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component21": {
+            "b": 4.0,
+            "l": 3.0,
+            "r": 6.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "0"
+    },
+    {
+        "_guid": "8672a9c0-aa9d-4a6a-9ed0-4fd14281bd3c",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 0.0,
+            "l": 3.0,
+            "r": 6.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component2": {
+            "b": 1.0,
+            "l": 4.0,
+            "r": 5.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component21": {
+            "b": 4.0,
+            "l": 3.0,
+            "r": 6.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "0"
+    },
+    {
+        "_guid": "5f2caa82-6d05-41da-8245-bc40a74fab5a",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component8": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "0"
+    },
+    {
+        "_guid": "dc3636dd-aeaf-400a-a405-47a0f275e081",
+        "component0": {
+            "b": 3.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 4.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 1.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "component2": {
+            "b": 0.0,
+            "l": 2.0,
+            "r": 3.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "component6": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "1"
+    },
+    {
+        "_guid": "6373ddcd-7115-4819-bc4b-f288ce1f9040",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component8": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "0"
+    },
+    {
+        "_guid": "04a358a6-2e30-4210-99d8-5f3c1ae19312",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component2": {
+            "b": 1.0,
+            "l": 2.0,
+            "r": 3.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component6": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "0"
+    },
+    {
+        "_guid": "92605347-e313-4a8c-ace9-56f9798c1173",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component8": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "0"
+    },
+    {
+        "_guid": "f6feff5e-1dbc-46d0-a5bb-ea5d4a25614f",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 0.0,
+            "r": 1.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component2": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component6": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "1"
+    },
+    {
+        "_guid": "af92d949-2d16-4f07-b822-bff35ec4ae4d",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 0.0,
+            "r": 1.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component2": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component6": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "1"
+    },
+    {
+        "_guid": "814da3f7-09c5-4812-be93-340cfff08b52",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component2": {
+            "b": 1.0,
+            "l": 2.0,
+            "r": 3.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component6": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "1"
+    },
+    {
+        "_guid": "1516f335-5a66-4d9e-9f67-67a3cc65a5ba",
+        "component0": {
+            "b": 3.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 4.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 1.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "component2": {
+            "b": 0.0,
+            "l": 2.0,
+            "r": 3.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "component6": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "1"
+    },
+    {
+        "_guid": "8da9fdef-dbe9-4d91-9c64-7c280b506f50",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component8": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "0"
+    },
+    {
+        "_guid": "54b6147d-65bf-4a4e-a52c-f86018b157a7",
+        "component0": {
+            "b": 3.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 4.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 1.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "component2": {
+            "b": 0.0,
+            "l": 2.0,
+            "r": 3.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "component6": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "1"
+    },
+    {
+        "_guid": "5d40c8d7-77fb-4d22-b876-f5268fee9699",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component2": {
+            "b": 1.0,
+            "l": 2.0,
+            "r": 3.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component6": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "1"
+    },
+    {
+        "_guid": "19797ca9-087e-49f9-9e60-2bd10f5b93ac",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 0.0,
+            "r": 1.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component2": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component6": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "1"
+    },
+    {
+        "_guid": "e913b1e6-3f31-4f97-8e87-16af7264ea59",
+        "component0": {
+            "b": 3.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 4.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 1.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "component2": {
+            "b": 0.0,
+            "l": 2.0,
+            "r": 3.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "component6": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "1"
+    },
+    {
+        "_guid": "2b0c468e-131d-4001-9708-5522153f2f79",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 0.0,
+            "r": 1.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component2": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component6": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "1"
+    },
+    {
+        "_guid": "0782340e-d30d-4a75-aeb7-6015eb794966",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component2": {
+            "b": 1.0,
+            "l": 2.0,
+            "r": 3.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component6": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "0"
+    },
+    {
+        "_guid": "c4878371-6aaa-4b3b-9c08-b703598675a3",
+        "component0": {
+            "b": 3.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 4.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 1.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "component2": {
+            "b": 0.0,
+            "l": 2.0,
+            "r": 3.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "component6": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "1"
+    },
+    {
+        "_guid": "bb3ddb6f-1938-411e-81e7-116a65457d6e",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component8": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "0"
+    },
+    {
+        "_guid": "6cc923db-9630-4e2f-8a09-ddb29184be35",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component8": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "0"
+    },
+    {
+        "_guid": "f43820b3-e4ef-45cb-9e4c-ed79667be070",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component2": {
+            "b": 1.0,
+            "l": 2.0,
+            "r": 3.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component7": {
+            "b": 4.0,
+            "l": 1.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "1"
+    },
+    {
+        "_guid": "7e3f8e68-a4cd-4e38-b71f-39b0e3f774f9",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component2": {
+            "b": 1.0,
+            "l": 2.0,
+            "r": 3.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component6": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "1"
+    },
+    {
+        "_guid": "c2eb196e-3b53-493c-ab1f-b2708be3fc2b",
+        "component0": {
+            "b": 3.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 4.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 1.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "component2": {
+            "b": 0.0,
+            "l": 2.0,
+            "r": 3.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "component6": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "1"
+    },
+    {
+        "_guid": "e77f50b3-7781-4b35-a677-839944ec54d8",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component2": {
+            "b": 1.0,
+            "l": 2.0,
+            "r": 3.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component6": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "1"
+    },
+    {
+        "_guid": "8a43f004-9360-4c81-9080-d0fa9ecd2fcf",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 0.0,
+            "l": 4.0,
+            "r": 7.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component2": {
+            "b": 1.0,
+            "l": 3.0,
+            "r": 4.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component26": {
+            "b": 4.0,
+            "l": 2.0,
+            "r": 5.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "0"
+    },
+    {
+        "_guid": "49707ebf-27d3-430e-a699-89d8589a818b",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component2": {
+            "b": 1.0,
+            "l": 2.0,
+            "r": 3.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component6": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "0"
+    },
+    {
+        "_guid": "fcf5e997-1bb3-4ed5-96e2-0003c726861d",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component8": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "0"
+    },
+    {
+        "_guid": "2fda0bde-95a7-4bda-9851-785275c3f56d",
+        "component0": {
+            "b": 3.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 4.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 1.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "component2": {
+            "b": 0.0,
+            "l": 2.0,
+            "r": 3.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "component7": {
+            "b": 4.0,
+            "l": 1.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "1"
+    },
+    {
+        "_guid": "046392f2-58f3-4137-a787-46e68e13ee23",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 0.0,
+            "r": 1.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component2": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component6": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "1"
+    },
+    {
+        "_guid": "7f25e9c2-03eb-46e4-b182-a58421c7bb14",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 0.0,
+            "r": 1.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component2": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component6": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "1"
+    },
+    {
+        "_guid": "ecfc35e2-5f3a-4cf0-b601-77b431314607",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component8": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "0"
+    },
+    {
+        "_guid": "438eb07c-92c1-4c9f-a898-d6ece6f14378",
+        "component0": {
+            "b": 3.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 4.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 1.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "component2": {
+            "b": 0.0,
+            "l": 2.0,
+            "r": 3.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "component6": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "1"
+    },
+    {
+        "_guid": "a9ec9b95-908a-48bd-852b-082d4c609a0f",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component8": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "0"
+    },
+    {
+        "_guid": "034f9766-fde1-4928-b81b-6da366e00c2c",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component8": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "0"
+    },
+    {
+        "_guid": "e103efce-9cf4-4891-8217-36713ac46386",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 0.0,
+            "l": 3.0,
+            "r": 6.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component2": {
+            "b": 1.0,
+            "l": 2.0,
+            "r": 3.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component21": {
+            "b": 4.0,
+            "l": 1.0,
+            "r": 4.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "0"
+    },
+    {
+        "_guid": "385ad8e7-88a9-44cc-8de6-57fa44353541",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 0.0,
+            "l": 3.0,
+            "r": 6.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component2": {
+            "b": 1.0,
+            "l": 3.0,
+            "r": 4.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component22": {
+            "b": 4.0,
+            "l": 2.0,
+            "r": 4.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "1"
+    },
+    {
+        "_guid": "d83a4428-9f75-4d92-90e3-c042ffd8e7b9",
+        "component0": {
+            "b": 3.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 4.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 1.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "component2": {
+            "b": 0.0,
+            "l": 2.0,
+            "r": 3.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "component6": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "1"
+    },
+    {
+        "_guid": "414e0cb8-f78e-4751-8e6f-5f49958b55f8",
+        "component0": {
+            "b": 3.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 4.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 1.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "component2": {
+            "b": 0.0,
+            "l": 2.0,
+            "r": 3.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "component6": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "1"
+    },
+    {
+        "_guid": "3dfdf15b-47ba-490a-adb0-7187d5121933",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component11": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "component2": {
+            "b": 0.0,
+            "l": 3.0,
+            "r": 4.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "success": "0"
+    },
+    {
+        "_guid": "e36488a4-e53b-4483-bb05-cd4c716e7f75",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component2": {
+            "b": 1.0,
+            "l": 2.0,
+            "r": 3.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component7": {
+            "b": 4.0,
+            "l": 1.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "1"
+    },
+    {
+        "_guid": "fb56f182-ee8a-4cca-8a1d-20d66672dac6",
+        "component0": {
+            "b": 3.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 4.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 1.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "component2": {
+            "b": 0.0,
+            "l": 2.0,
+            "r": 3.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "component6": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "1"
+    },
+    {
+        "_guid": "e5d1c2f2-a012-48e3-b9ff-34389a474b9d",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component8": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "0"
+    },
+    {
+        "_guid": "7ddd6647-1c4e-4018-8101-e2323a5fef02",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 0.0,
+            "l": 3.0,
+            "r": 6.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component2": {
+            "b": 1.0,
+            "l": 4.0,
+            "r": 5.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component21": {
+            "b": 4.0,
+            "l": 3.0,
+            "r": 6.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "0"
+    },
+    {
+        "_guid": "c6441ae8-824d-4588-9711-04862593bd1e",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component8": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "0"
+    },
+    {
+        "_guid": "4ce8d8e9-083f-4c6c-87a3-f09bd58f80bc",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component8": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "0"
+    },
+    {
+        "_guid": "780adfe3-570a-4e6c-a900-e15d5176f767",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 0.0,
+            "r": 1.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component2": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component6": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "0"
+    },
+    {
+        "_guid": "6ff5c9f7-3131-453d-86d3-f858537ebcc7",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component8": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "0"
+    },
+    {
+        "_guid": "57d4a8fa-a1c6-482f-8fac-e8724861b253",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component8": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "0"
+    },
+    {
+        "_guid": "a828875b-1eed-4adf-8bc6-bc1d66873ea7",
+        "component0": {
+            "b": 3.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 4.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 1.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "component2": {
+            "b": 0.0,
+            "l": 2.0,
+            "r": 3.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "component6": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "1"
+    },
+    {
+        "_guid": "2bf4c392-ce68-4522-a87e-ed709a71e670",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component8": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "0"
+    },
+    {
+        "_guid": "89d29dfc-d6b6-427b-a872-2166fd4aac9b",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component8": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "0"
+    },
+    {
+        "_guid": "1bc99a42-aba1-4dc7-85e8-60279637a678",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component8": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "0"
+    },
+    {
+        "_guid": "08f65c03-81fb-4be5-aca0-1126bc0c0023",
+        "component0": {
+            "b": 3.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 4.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 1.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "component2": {
+            "b": 0.0,
+            "l": 2.0,
+            "r": 3.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "component6": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "1"
+    },
+    {
+        "_guid": "3eb2f9eb-5c72-494d-8ac3-58de595dc679",
+        "component0": {
+            "b": 3.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 4.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 1.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "component2": {
+            "b": 0.0,
+            "l": 2.0,
+            "r": 3.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "component6": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "1"
+    },
+    {
+        "_guid": "a6e79feb-36c8-4106-89cd-7316688eec54",
+        "component0": {
+            "b": 3.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 4.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 1.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "component2": {
+            "b": 0.0,
+            "l": 2.0,
+            "r": 3.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "component6": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "1"
+    },
+    {
+        "_guid": "20fa6cbd-ff38-4928-b9fe-899616a3fc4d",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component8": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "0"
+    },
+    {
+        "_guid": "57ac68d2-2ad5-4cd6-a1a3-feb3e5778e20",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component8": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "1"
+    },
+    {
+        "_guid": "57bfbf99-312e-4902-805e-b8ec0c32aced",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component8": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "0"
+    },
+    {
+        "_guid": "5cf4d12a-02e2-448d-ba6c-19f445de3ec7",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 0.0,
+            "l": 3.0,
+            "r": 6.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component2": {
+            "b": 1.0,
+            "l": 2.0,
+            "r": 3.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component21": {
+            "b": 4.0,
+            "l": 1.0,
+            "r": 4.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "1"
+    },
+    {
+        "_guid": "1dfa3bd1-33bd-4bde-9021-4bb6b534d778",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 0.0,
+            "r": 1.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component2": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component6": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "1"
+    },
+    {
+        "_guid": "701ce881-ccb3-427f-960c-887216b59d51",
+        "component0": {
+            "b": 3.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 4.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 1.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "component2": {
+            "b": 0.0,
+            "l": 2.0,
+            "r": 3.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "component6": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "1"
+    },
+    {
+        "_guid": "274117fe-41ad-43a2-8261-af5c5573d7c7",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 1.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "component4": {
+            "b": 3.0,
+            "l": 0.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "ufoo0"
+        },
+        "success": "0"
+    },
+    {
+        "_guid": "3ccc238c-0db4-47b9-b004-be524a492cbf",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component8": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "0"
+    },
+    {
+        "_guid": "a1ee5ac2-4b96-421d-90e9-83856442c529",
+        "component0": {
+            "b": 3.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 4.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 1.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "component2": {
+            "b": 0.0,
+            "l": 2.0,
+            "r": 3.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "component6": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "1"
+    },
+    {
+        "_guid": "fc6455a4-5841-415b-8fd6-0648ead74cdb",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component8": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "0"
+    },
+    {
+        "_guid": "44b2006d-ac52-48fb-aade-42d06f20d1ac",
+        "component0": {
+            "b": 3.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 4.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 1.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "component2": {
+            "b": 0.0,
+            "l": 2.0,
+            "r": 3.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "component6": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "1"
+    },
+    {
+        "_guid": "6a8fec38-9aeb-493b-b3a0-d2202b12063c",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component8": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "0"
+    },
+    {
+        "_guid": "5eb7be52-bb09-4cf2-95bb-c77089a48b29",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component8": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "0"
+    },
+    {
+        "_guid": "26fb2a9b-beaf-4a0a-ac0d-4017f5693c25",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 0.0,
+            "l": 4.0,
+            "r": 7.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component2": {
+            "b": 1.0,
+            "l": 3.0,
+            "r": 4.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component26": {
+            "b": 4.0,
+            "l": 2.0,
+            "r": 5.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "0"
+    },
+    {
+        "_guid": "5da3f5f0-1ea8-4fab-9b63-ba2c18db0297",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 0.0,
+            "l": 3.0,
+            "r": 6.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component2": {
+            "b": 1.0,
+            "l": 3.0,
+            "r": 4.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component21": {
+            "b": 4.0,
+            "l": 2.0,
+            "r": 5.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "1"
+    },
+    {
+        "_guid": "0f18b43a-dd2c-46ca-b0fe-9e124dacc077",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component8": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "0"
+    },
+    {
+        "_guid": "28946e55-f52c-47a0-abb5-caf4329897c9",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component2": {
+            "b": 1.0,
+            "l": 2.0,
+            "r": 3.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component6": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "1"
+    },
+    {
+        "_guid": "27073270-83d9-495b-bf73-5aab622b6b6e",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component2": {
+            "b": 1.0,
+            "l": 2.0,
+            "r": 3.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component6": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "1"
+    },
+    {
+        "_guid": "fb0dc6df-6a93-49ac-8d26-c39d1ad4adeb",
+        "component0": {
+            "b": 3.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 4.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 1.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "component2": {
+            "b": 0.0,
+            "l": 2.0,
+            "r": 3.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "component6": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "1"
+    },
+    {
+        "_guid": "9cd0d01e-72c5-4979-9b83-85fecefcb716",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component8": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "0"
+    },
+    {
+        "_guid": "ea8c0b63-5690-4a6d-a63d-c831301ceba7",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 0.0,
+            "l": 3.0,
+            "r": 6.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component2": {
+            "b": 1.0,
+            "l": 3.0,
+            "r": 4.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component21": {
+            "b": 4.0,
+            "l": 2.0,
+            "r": 5.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "0"
+    },
+    {
+        "_guid": "a8f3dbd7-f7e6-4222-9de6-ca0e231acc72",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component8": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "0"
+    },
+    {
+        "_guid": "e9cb7a46-aa56-4992-ac98-62b6626ec54c",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "ufoo0"
+        },
+        "success": "0"
+    },
+    {
+        "_guid": "794fe0f6-8cf9-4312-ab8f-f44a22062e74",
+        "component0": {
+            "b": 3.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 4.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 1.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "component2": {
+            "b": 0.0,
+            "l": 2.0,
+            "r": 3.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "component6": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "1"
+    },
+    {
+        "_guid": "5a4049c5-c7d5-4b58-a0e2-411957779087",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 1.0,
+            "l": 1.0,
+            "r": 2.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component8": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "0"
+    },
+    {
+        "_guid": "ebfc4a6d-a86a-44aa-8908-c67cef092565",
+        "component0": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 0.0,
+            "l": 3.0,
+            "r": 6.0,
+            "t": 1.0,
+            "type": "plat0"
+        },
+        "component2": {
+            "b": 1.0,
+            "l": 3.0,
+            "r": 4.0,
+            "t": 4.0,
+            "type": "plat90"
+        },
+        "component21": {
+            "b": 4.0,
+            "l": 2.0,
+            "r": 5.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "1"
+    },
+    {
+        "_guid": "e0c6966e-6130-4ecc-88ab-8f0449d9feef",
+        "component0": {
+            "b": 3.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 4.0,
+            "type": "plat0"
+        },
+        "component1": {
+            "b": 0.0,
+            "l": 0.0,
+            "r": 1.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "component2": {
+            "b": 0.0,
+            "l": 2.0,
+            "r": 3.0,
+            "t": 3.0,
+            "type": "plat90"
+        },
+        "component6": {
+            "b": 4.0,
+            "l": 0.0,
+            "r": 3.0,
+            "t": 5.0,
+            "type": "ufoo0"
+        },
+        "success": "1"
+    }
 ]
-}, 
-{
-"_guid": "1e6f93a0-b802-44a2-a0da-a47b406a9b45", "success": "1", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 3.0, "t": 4.0}
-, "component1": {
- "type": "plat90", "l": 0.0, "r": 1.0, "b": 0.0, "t": 3.0}
-, "component2": {
- "type": "plat90", "l": 2.0, "r": 3.0, "b": 0.0, "t": 3.0}
-, "component6": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "8382c37f-e00c-4df8-b4fd-fe316360ad0a", "success": "1", "component0": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-}, 
-{
-"_guid": "c2eb196e-3b53-493c-ab1f-b2708be3fc2b", "success": "1", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 3.0, "t": 4.0}
-, "component1": {
- "type": "plat90", "l": 0.0, "r": 1.0, "b": 0.0, "t": 3.0}
-, "component2": {
- "type": "plat90", "l": 2.0, "r": 3.0, "b": 0.0, "t": 3.0}
-, "component6": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "3ccc238c-0db4-47b9-b004-be524a492cbf", "success": "0", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component8": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "827504a3-b036-4b7b-9d77-7c3f727ab8e7", "success": "1", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 3.0, "t": 4.0}
-, "component1": {
- "type": "plat90", "l": 0.0, "r": 1.0, "b": 0.0, "t": 3.0}
-, "component2": {
- "type": "plat90", "l": 2.0, "r": 3.0, "b": 0.0, "t": 3.0}
-, "component6": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "a7070c51-3902-4fb5-9b03-2bb3cf3224eb", "success": "1", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 3.0, "t": 4.0}
-, "component1": {
- "type": "plat90", "l": 0.0, "r": 1.0, "b": 0.0, "t": 3.0}
-, "component2": {
- "type": "plat90", "l": 2.0, "r": 3.0, "b": 0.0, "t": 3.0}
-, "component6": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "62837f23-1d42-4e6b-8198-f4ef2ad0f13d", "success": "1", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 3.0, "t": 4.0}
-, "component1": {
- "type": "plat90", "l": 0.0, "r": 1.0, "b": 0.0, "t": 3.0}
-, "component2": {
- "type": "plat90", "l": 2.0, "r": 3.0, "b": 0.0, "t": 3.0}
-, "component6": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "b5e342bf-7c43-4d3d-9bb2-4b8ac8e70a7e", "success": "0", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component8": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "e77f50b3-7781-4b35-a677-839944ec54d8", "success": "1", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component2": {
- "type": "plat90", "l": 2.0, "r": 3.0, "b": 1.0, "t": 4.0}
-, "component6": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-, "relation1": [
- "horizontal",
- "component1",
- "component2"
-]
-}, 
-{
-"_guid": "bb3ddb6f-1938-411e-81e7-116a65457d6e", "success": "0", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component8": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "2b0c468e-131d-4001-9708-5522153f2f79", "success": "1", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 0.0, "r": 1.0, "b": 1.0, "t": 4.0}
-, "component2": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component6": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-, "relation1": [
- "horizontal",
- "component1",
- "component2"
-]
-}, 
-{
-"_guid": "57bfbf99-312e-4902-805e-b8ec0c32aced", "success": "0", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component8": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "ef8593b2-a510-4edd-945d-89690a0ccb79", "success": "0", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component8": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "d76953e5-956c-473d-968d-d97d672ce3f0", "success": "0", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat0", "l": 3.0, "r": 6.0, "b": 0.0, "t": 1.0}
-, "component2": {
- "type": "plat90", "l": 4.0, "r": 5.0, "b": 1.0, "t": 4.0}
-, "component21": {
- "type": "ufoo0", "l": 3.0, "r": 6.0, "b": 4.0, "t": 5.0}
-, "relation1": [
- "horizontal",
- "component0",
- "component1"
-]
-}, 
-{
-"_guid": "26fb2a9b-beaf-4a0a-ac0d-4017f5693c25", "success": "0", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat0", "l": 4.0, "r": 7.0, "b": 0.0, "t": 1.0}
-, "component2": {
- "type": "plat90", "l": 3.0, "r": 4.0, "b": 1.0, "t": 4.0}
-, "component26": {
- "type": "ufoo0", "l": 2.0, "r": 5.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "e103efce-9cf4-4891-8217-36713ac46386", "success": "0", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat0", "l": 3.0, "r": 6.0, "b": 0.0, "t": 1.0}
-, "component2": {
- "type": "plat90", "l": 2.0, "r": 3.0, "b": 1.0, "t": 4.0}
-, "component21": {
- "type": "ufoo0", "l": 1.0, "r": 4.0, "b": 4.0, "t": 5.0}
-, "relation1": [
- "horizontal",
- "component0",
- "component1"
-]
-}, 
-{
-"_guid": "d236fbad-5dd2-42ed-a506-8785e63ab1eb", "success": "0", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component2": {
- "type": "plat90", "l": 3.0, "r": 4.0, "b": 0.0, "t": 3.0}
-, "component11": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "e0c6966e-6130-4ecc-88ab-8f0449d9feef", "success": "1", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 3.0, "t": 4.0}
-, "component1": {
- "type": "plat90", "l": 0.0, "r": 1.0, "b": 0.0, "t": 3.0}
-, "component2": {
- "type": "plat90", "l": 2.0, "r": 3.0, "b": 0.0, "t": 3.0}
-, "component6": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "6a8fec38-9aeb-493b-b3a0-d2202b12063c", "success": "0", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component8": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "3ad6cc73-7e2c-40cf-a1cd-d008f9de9568", "success": "0", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component8": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "5a4049c5-c7d5-4b58-a0e2-411957779087", "success": "0", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component8": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "7132b528-7add-4efd-95d6-6b772f5f2990", "success": "1", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 0.0, "r": 1.0, "b": 1.0, "t": 4.0}
-, "component2": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component6": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-, "relation1": [
- "horizontal",
- "component1",
- "component2"
-]
-}, 
-{
-"_guid": "54b6147d-65bf-4a4e-a52c-f86018b157a7", "success": "1", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 3.0, "t": 4.0}
-, "component1": {
- "type": "plat90", "l": 0.0, "r": 1.0, "b": 0.0, "t": 3.0}
-, "component2": {
- "type": "plat90", "l": 2.0, "r": 3.0, "b": 0.0, "t": 3.0}
-, "component6": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "20fa6cbd-ff38-4928-b9fe-899616a3fc4d", "success": "0", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component8": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "3eb2f9eb-5c72-494d-8ac3-58de595dc679", "success": "1", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 3.0, "t": 4.0}
-, "component1": {
- "type": "plat90", "l": 0.0, "r": 1.0, "b": 0.0, "t": 3.0}
-, "component2": {
- "type": "plat90", "l": 2.0, "r": 3.0, "b": 0.0, "t": 3.0}
-, "component6": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "92909385-a1d6-41c1-9304-68a73e1a61bd", "success": "0", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component8": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "c4878371-6aaa-4b3b-9c08-b703598675a3", "success": "1", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 3.0, "t": 4.0}
-, "component1": {
- "type": "plat90", "l": 0.0, "r": 1.0, "b": 0.0, "t": 3.0}
-, "component2": {
- "type": "plat90", "l": 2.0, "r": 3.0, "b": 0.0, "t": 3.0}
-, "component6": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "35475109-56b1-4d88-bbe6-3d0812200e5f", "success": "1", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component8": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "e9cb7a46-aa56-4992-ac98-62b6626ec54c", "success": "0", "component0": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-}, 
-{
-"_guid": "d44d4b10-49b5-476e-a340-68ce63fb63da", "success": "0", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component8": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "3dfdf15b-47ba-490a-adb0-7187d5121933", "success": "0", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component2": {
- "type": "plat90", "l": 3.0, "r": 4.0, "b": 0.0, "t": 3.0}
-, "component11": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "794fe0f6-8cf9-4312-ab8f-f44a22062e74", "success": "1", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 3.0, "t": 4.0}
-, "component1": {
- "type": "plat90", "l": 0.0, "r": 1.0, "b": 0.0, "t": 3.0}
-, "component2": {
- "type": "plat90", "l": 2.0, "r": 3.0, "b": 0.0, "t": 3.0}
-, "component6": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "a8f3dbd7-f7e6-4222-9de6-ca0e231acc72", "success": "0", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component8": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "614986e3-fbbc-492a-86d5-e8a489aeb7d5", "success": "0", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component8": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "2311a212-7495-4a4b-aadb-1606070effb8", "success": "1", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component2": {
- "type": "plat90", "l": 2.0, "r": 3.0, "b": 1.0, "t": 4.0}
-, "component7": {
- "type": "ufoo0", "l": 1.0, "r": 3.0, "b": 4.0, "t": 5.0}
-, "relation1": [
- "horizontal",
- "component1",
- "component2"
-]
-}, 
-{
-"_guid": "28946e55-f52c-47a0-abb5-caf4329897c9", "success": "1", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component2": {
- "type": "plat90", "l": 2.0, "r": 3.0, "b": 1.0, "t": 4.0}
-, "component6": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-, "relation1": [
- "horizontal",
- "component1",
- "component2"
-]
-}, 
-{
-"_guid": "7e3f8e68-a4cd-4e38-b71f-39b0e3f774f9", "success": "1", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component2": {
- "type": "plat90", "l": 2.0, "r": 3.0, "b": 1.0, "t": 4.0}
-, "component6": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-, "relation1": [
- "horizontal",
- "component1",
- "component2"
-]
-}, 
-{
-"_guid": "14b1d132-61ab-461e-8306-bc2bc972643e", "success": "0", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component8": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "5f2caa82-6d05-41da-8245-bc40a74fab5a", "success": "0", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component8": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "4b1261db-645e-45b1-a758-49c1b15d97ab", "success": "0", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component8": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "6cc923db-9630-4e2f-8a09-ddb29184be35", "success": "0", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component8": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "7ddd6647-1c4e-4018-8101-e2323a5fef02", "success": "0", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat0", "l": 3.0, "r": 6.0, "b": 0.0, "t": 1.0}
-, "component2": {
- "type": "plat90", "l": 4.0, "r": 5.0, "b": 1.0, "t": 4.0}
-, "component21": {
- "type": "ufoo0", "l": 3.0, "r": 6.0, "b": 4.0, "t": 5.0}
-, "relation1": [
- "horizontal",
- "component0",
- "component1"
-]
-}, 
-{
-"_guid": "385ad8e7-88a9-44cc-8de6-57fa44353541", "success": "1", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat0", "l": 3.0, "r": 6.0, "b": 0.0, "t": 1.0}
-, "component2": {
- "type": "plat90", "l": 3.0, "r": 4.0, "b": 1.0, "t": 4.0}
-, "component22": {
- "type": "ufoo0", "l": 2.0, "r": 4.0, "b": 4.0, "t": 5.0}
-, "relation1": [
- "horizontal",
- "component0",
- "component1"
-]
-}, 
-{
-"_guid": "27073270-83d9-495b-bf73-5aab622b6b6e", "success": "1", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component2": {
- "type": "plat90", "l": 2.0, "r": 3.0, "b": 1.0, "t": 4.0}
-, "component6": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-, "relation1": [
- "horizontal",
- "component1",
- "component2"
-]
-}, 
-{
-"_guid": "0f18b43a-dd2c-46ca-b0fe-9e124dacc077", "success": "0", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component8": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "1dfa3bd1-33bd-4bde-9021-4bb6b534d778", "success": "1", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 0.0, "r": 1.0, "b": 1.0, "t": 4.0}
-, "component2": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component6": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-, "relation1": [
- "horizontal",
- "component1",
- "component2"
-]
-}, 
-{
-"_guid": "afcc5aa4-fa22-4409-ba5c-138246e10394", "success": "1", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 0.0, "r": 1.0, "b": 1.0, "t": 4.0}
-, "component2": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component6": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-, "relation1": [
- "horizontal",
- "component1",
- "component2"
-]
-}, 
-{
-"_guid": "5d40c8d7-77fb-4d22-b876-f5268fee9699", "success": "1", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component2": {
- "type": "plat90", "l": 2.0, "r": 3.0, "b": 1.0, "t": 4.0}
-, "component6": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-, "relation1": [
- "horizontal",
- "component1",
- "component2"
-]
-}, 
-{
-"_guid": "19797ca9-087e-49f9-9e60-2bd10f5b93ac", "success": "1", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 0.0, "r": 1.0, "b": 1.0, "t": 4.0}
-, "component2": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component6": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-, "relation1": [
- "horizontal",
- "component1",
- "component2"
-]
-}, 
-{
-"_guid": "193e9ecf-aaf9-4aa4-a4e3-183253ca9245", "success": "1", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 3.0, "t": 4.0}
-, "component1": {
- "type": "plat90", "l": 0.0, "r": 1.0, "b": 0.0, "t": 3.0}
-, "component2": {
- "type": "plat90", "l": 2.0, "r": 3.0, "b": 0.0, "t": 3.0}
-, "component6": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "eb752f8f-7368-4421-801d-a4493326b94e", "success": "1", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 3.0, "t": 4.0}
-, "component1": {
- "type": "plat90", "l": 0.0, "r": 1.0, "b": 0.0, "t": 3.0}
-, "component2": {
- "type": "plat90", "l": 2.0, "r": 3.0, "b": 0.0, "t": 3.0}
-, "component6": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "438eb07c-92c1-4c9f-a898-d6ece6f14378", "success": "1", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 3.0, "t": 4.0}
-, "component1": {
- "type": "plat90", "l": 0.0, "r": 1.0, "b": 0.0, "t": 3.0}
-, "component2": {
- "type": "plat90", "l": 2.0, "r": 3.0, "b": 0.0, "t": 3.0}
-, "component6": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "d83a4428-9f75-4d92-90e3-c042ffd8e7b9", "success": "1", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 3.0, "t": 4.0}
-, "component1": {
- "type": "plat90", "l": 0.0, "r": 1.0, "b": 0.0, "t": 3.0}
-, "component2": {
- "type": "plat90", "l": 2.0, "r": 3.0, "b": 0.0, "t": 3.0}
-, "component6": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "3c6f925a-21c4-483f-b40d-93128f61421b", "success": "1", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 3.0, "t": 4.0}
-, "component1": {
- "type": "plat90", "l": 0.0, "r": 1.0, "b": 0.0, "t": 3.0}
-, "component2": {
- "type": "plat90", "l": 2.0, "r": 3.0, "b": 0.0, "t": 3.0}
-, "component6": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "1516f335-5a66-4d9e-9f67-67a3cc65a5ba", "success": "1", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 3.0, "t": 4.0}
-, "component1": {
- "type": "plat90", "l": 0.0, "r": 1.0, "b": 0.0, "t": 3.0}
-, "component2": {
- "type": "plat90", "l": 2.0, "r": 3.0, "b": 0.0, "t": 3.0}
-, "component6": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "25401124-50ea-4f52-b30d-ba6fac9e1c14", "success": "0", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component8": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "660ac76d-93b3-4ce7-8a15-a3213e9103f5", "success": "0", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component8": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "701ce881-ccb3-427f-960c-887216b59d51", "success": "1", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 3.0, "t": 4.0}
-, "component1": {
- "type": "plat90", "l": 0.0, "r": 1.0, "b": 0.0, "t": 3.0}
-, "component2": {
- "type": "plat90", "l": 2.0, "r": 3.0, "b": 0.0, "t": 3.0}
-, "component6": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "780adfe3-570a-4e6c-a900-e15d5176f767", "success": "0", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 0.0, "r": 1.0, "b": 1.0, "t": 4.0}
-, "component2": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component6": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-, "relation1": [
- "horizontal",
- "component1",
- "component2"
-]
-}, 
-{
-"_guid": "dc3636dd-aeaf-400a-a405-47a0f275e081", "success": "1", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 3.0, "t": 4.0}
-, "component1": {
- "type": "plat90", "l": 0.0, "r": 1.0, "b": 0.0, "t": 3.0}
-, "component2": {
- "type": "plat90", "l": 2.0, "r": 3.0, "b": 0.0, "t": 3.0}
-, "component6": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "ebe2f9af-9146-45aa-a646-11baf01ac0dd", "success": "0", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component8": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "4c8ab231-130a-4123-bd89-7aeab934024f", "success": "0", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component8": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "44b2006d-ac52-48fb-aade-42d06f20d1ac", "success": "1", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 3.0, "t": 4.0}
-, "component1": {
- "type": "plat90", "l": 0.0, "r": 1.0, "b": 0.0, "t": 3.0}
-, "component2": {
- "type": "plat90", "l": 2.0, "r": 3.0, "b": 0.0, "t": 3.0}
-, "component6": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "7f25e9c2-03eb-46e4-b182-a58421c7bb14", "success": "1", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 0.0, "r": 1.0, "b": 1.0, "t": 4.0}
-, "component2": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component6": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-, "relation1": [
- "horizontal",
- "component1",
- "component2"
-]
-}, 
-{
-"_guid": "0782340e-d30d-4a75-aeb7-6015eb794966", "success": "0", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component2": {
- "type": "plat90", "l": 2.0, "r": 3.0, "b": 1.0, "t": 4.0}
-, "component6": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-, "relation1": [
- "horizontal",
- "component1",
- "component2"
-]
-}, 
-{
-"_guid": "95eb50e5-1f53-4509-8d7e-6c8b030ba2ff", "success": "1", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 1.0, "t": 2.0}
-, "component2": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 2.0, "t": 3.0}
-, "component3": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 3.0, "t": 4.0}
-}, 
-{
-"_guid": "034f9766-fde1-4928-b81b-6da366e00c2c", "success": "0", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component8": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "dcdb91c1-d1d4-43a1-9484-e031568a360b", "success": "1", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 3.0, "t": 4.0}
-, "component1": {
- "type": "plat90", "l": 0.0, "r": 1.0, "b": 0.0, "t": 3.0}
-, "component2": {
- "type": "plat90", "l": 2.0, "r": 3.0, "b": 0.0, "t": 3.0}
-, "component6": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "af92d949-2d16-4f07-b822-bff35ec4ae4d", "success": "1", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 0.0, "r": 1.0, "b": 1.0, "t": 4.0}
-, "component2": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component6": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-, "relation1": [
- "horizontal",
- "component1",
- "component2"
-]
-}, 
-{
-"_guid": "1b19be75-ac28-4bbf-ba75-8effc3a26502", "success": "0", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component8": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "8a43f004-9360-4c81-9080-d0fa9ecd2fcf", "success": "0", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat0", "l": 4.0, "r": 7.0, "b": 0.0, "t": 1.0}
-, "component2": {
- "type": "plat90", "l": 3.0, "r": 4.0, "b": 1.0, "t": 4.0}
-, "component26": {
- "type": "ufoo0", "l": 2.0, "r": 5.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "5c650be5-8737-405f-bd95-f534d1cac1b0", "success": "1", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 3.0, "t": 4.0}
-, "component1": {
- "type": "plat90", "l": 0.0, "r": 1.0, "b": 0.0, "t": 3.0}
-, "component2": {
- "type": "plat90", "l": 2.0, "r": 3.0, "b": 0.0, "t": 3.0}
-, "component6": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "414e0cb8-f78e-4751-8e6f-5f49958b55f8", "success": "1", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 3.0, "t": 4.0}
-, "component1": {
- "type": "plat90", "l": 0.0, "r": 1.0, "b": 0.0, "t": 3.0}
-, "component2": {
- "type": "plat90", "l": 2.0, "r": 3.0, "b": 0.0, "t": 3.0}
-, "component6": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "929c3be2-76a4-48c4-a84c-ad63b2fd0299", "success": "0", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component8": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "e5d1c2f2-a012-48e3-b9ff-34389a474b9d", "success": "0", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component8": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "92605347-e313-4a8c-ace9-56f9798c1173", "success": "0", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component8": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "5eb7be52-bb09-4cf2-95bb-c77089a48b29", "success": "0", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component8": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "841c6f04-1203-49f7-9fcb-a4ed53e6693d", "success": "0", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component8": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "89d29dfc-d6b6-427b-a872-2166fd4aac9b", "success": "0", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component8": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "f267fc61-2e06-4771-b812-e027b52c6dac", "success": "0", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat0", "l": 3.0, "r": 6.0, "b": 0.0, "t": 1.0}
-, "component2": {
- "type": "plat90", "l": 4.0, "r": 5.0, "b": 1.0, "t": 4.0}
-, "component21": {
- "type": "ufoo0", "l": 3.0, "r": 6.0, "b": 4.0, "t": 5.0}
-, "relation1": [
- "horizontal",
- "component0",
- "component1"
-]
-}, 
-{
-"_guid": "2a842e9b-e3dc-4974-bfa2-7c4b094c0e96", "success": "1", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component8": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "0e94714c-914f-4a1f-9dd9-d70435486428", "success": "0", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat0", "l": 3.0, "r": 6.0, "b": 0.0, "t": 1.0}
-, "component2": {
- "type": "plat90", "l": 3.0, "r": 4.0, "b": 1.0, "t": 4.0}
-, "component22": {
- "type": "ufoo0", "l": 2.0, "r": 4.0, "b": 4.0, "t": 5.0}
-, "relation1": [
- "horizontal",
- "component0",
- "component1"
-]
-}, 
-{
-"_guid": "57ac68d2-2ad5-4cd6-a1a3-feb3e5778e20", "success": "1", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component8": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "ea8c0b63-5690-4a6d-a63d-c831301ceba7", "success": "0", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat0", "l": 3.0, "r": 6.0, "b": 0.0, "t": 1.0}
-, "component2": {
- "type": "plat90", "l": 3.0, "r": 4.0, "b": 1.0, "t": 4.0}
-, "component21": {
- "type": "ufoo0", "l": 2.0, "r": 5.0, "b": 4.0, "t": 5.0}
-, "relation1": [
- "horizontal",
- "component0",
- "component1"
-]
-}, 
-{
-"_guid": "a9ec9b95-908a-48bd-852b-082d4c609a0f", "success": "0", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component8": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "51aba565-bc2b-414c-926d-83ce12a01ddf", "success": "0", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat0", "l": 3.0, "r": 6.0, "b": 0.0, "t": 1.0}
-, "component2": {
- "type": "plat90", "l": 4.0, "r": 5.0, "b": 1.0, "t": 4.0}
-, "component21": {
- "type": "ufoo0", "l": 3.0, "r": 6.0, "b": 4.0, "t": 5.0}
-, "relation1": [
- "horizontal",
- "component0",
- "component1"
-]
-}, 
-{
-"_guid": "ebfc4a6d-a86a-44aa-8908-c67cef092565", "success": "1", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat0", "l": 3.0, "r": 6.0, "b": 0.0, "t": 1.0}
-, "component2": {
- "type": "plat90", "l": 3.0, "r": 4.0, "b": 1.0, "t": 4.0}
-, "component21": {
- "type": "ufoo0", "l": 2.0, "r": 5.0, "b": 4.0, "t": 5.0}
-, "relation1": [
- "horizontal",
- "component0",
- "component1"
-]
-}, 
-{
-"_guid": "4b18cf32-85e5-4aad-9f1f-7ce5939bd76e", "success": "1", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 3.0, "t": 4.0}
-, "component1": {
- "type": "plat90", "l": 0.0, "r": 1.0, "b": 0.0, "t": 3.0}
-, "component2": {
- "type": "plat90", "l": 2.0, "r": 3.0, "b": 0.0, "t": 3.0}
-, "component6": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "fb0dc6df-6a93-49ac-8d26-c39d1ad4adeb", "success": "1", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 3.0, "t": 4.0}
-, "component1": {
- "type": "plat90", "l": 0.0, "r": 1.0, "b": 0.0, "t": 3.0}
-, "component2": {
- "type": "plat90", "l": 2.0, "r": 3.0, "b": 0.0, "t": 3.0}
-, "component6": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "9cdfd352-82c8-44e9-86a9-2acb9609bdb2", "success": "1", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 3.0, "t": 4.0}
-, "component1": {
- "type": "plat90", "l": 0.0, "r": 1.0, "b": 0.0, "t": 3.0}
-, "component2": {
- "type": "plat90", "l": 2.0, "r": 3.0, "b": 0.0, "t": 3.0}
-, "component6": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "fc6455a4-5841-415b-8fd6-0648ead74cdb", "success": "0", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component8": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "a5096a31-b5a8-4c58-89f8-cca6f8e0eaf6", "success": "0", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component8": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "35aa4a04-cfb7-41d1-9bdd-1b685afde6be", "success": "0", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat0", "l": 3.0, "r": 6.0, "b": 0.0, "t": 1.0}
-, "component2": {
- "type": "plat90", "l": 2.0, "r": 3.0, "b": 1.0, "t": 4.0}
-, "component21": {
- "type": "ufoo0", "l": 1.0, "r": 4.0, "b": 4.0, "t": 5.0}
-, "relation1": [
- "horizontal",
- "component0",
- "component1"
-]
-}, 
-{
-"_guid": "25430120-d372-45d5-9f0d-85bc672aab84", "success": "1", "component0": {
- "type": "plat0", "l": 1.0, "r": 4.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 0.0, "r": 1.0, "b": 0.0, "t": 3.0}
-, "component2": {
- "type": "plat90", "l": 2.0, "r": 3.0, "b": 1.0, "t": 4.0}
-, "component11": {
- "type": "ufoo0", "l": 1.0, "r": 4.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "88418132-8139-49ac-a7e9-e36003d22895", "success": "1", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 3.0, "t": 4.0}
-, "component1": {
- "type": "plat90", "l": 0.0, "r": 1.0, "b": 0.0, "t": 3.0}
-, "component2": {
- "type": "plat90", "l": 2.0, "r": 3.0, "b": 0.0, "t": 3.0}
-, "component6": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "a5bf568c-f7a6-4055-9f75-28844df88239", "success": "0", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component8": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "5cf4d12a-02e2-448d-ba6c-19f445de3ec7", "success": "1", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat0", "l": 3.0, "r": 6.0, "b": 0.0, "t": 1.0}
-, "component2": {
- "type": "plat90", "l": 2.0, "r": 3.0, "b": 1.0, "t": 4.0}
-, "component21": {
- "type": "ufoo0", "l": 1.0, "r": 4.0, "b": 4.0, "t": 5.0}
-, "relation1": [
- "horizontal",
- "component0",
- "component1"
-]
-}, 
-{
-"_guid": "8672a9c0-aa9d-4a6a-9ed0-4fd14281bd3c", "success": "0", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat0", "l": 3.0, "r": 6.0, "b": 0.0, "t": 1.0}
-, "component2": {
- "type": "plat90", "l": 4.0, "r": 5.0, "b": 1.0, "t": 4.0}
-, "component21": {
- "type": "ufoo0", "l": 3.0, "r": 6.0, "b": 4.0, "t": 5.0}
-, "relation1": [
- "horizontal",
- "component0",
- "component1"
-]
-}, 
-{
-"_guid": "274117fe-41ad-43a2-8261-af5c5573d7c7", "success": "0", "component0": {
- "type": "plat90", "l": 0.0, "r": 1.0, "b": 0.0, "t": 3.0}
-, "component4": {
- "type": "ufoo0", "l": 0.0, "r": 2.0, "b": 3.0, "t": 4.0}
-}, 
-{
-"_guid": "2bf4c392-ce68-4522-a87e-ed709a71e670", "success": "0", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component8": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "4ce8d8e9-083f-4c6c-87a3-f09bd58f80bc", "success": "0", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component8": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "c6441ae8-824d-4588-9711-04862593bd1e", "success": "0", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component8": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "bc362d1c-e73c-426d-9ea5-a1a73304391f", "success": "0", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat0", "l": 3.0, "r": 6.0, "b": 0.0, "t": 1.0}
-, "component2": {
- "type": "plat90", "l": 2.0, "r": 3.0, "b": 1.0, "t": 4.0}
-, "component21": {
- "type": "ufoo0", "l": 1.0, "r": 4.0, "b": 4.0, "t": 5.0}
-, "relation1": [
- "horizontal",
- "component0",
- "component1"
-]
-}, 
-{
-"_guid": "7c572260-e9a5-42e8-bc82-308ac050210d", "success": "0", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat0", "l": 3.0, "r": 6.0, "b": 0.0, "t": 1.0}
-, "component2": {
- "type": "plat90", "l": 2.0, "r": 3.0, "b": 1.0, "t": 4.0}
-, "component21": {
- "type": "ufoo0", "l": 1.0, "r": 4.0, "b": 4.0, "t": 5.0}
-, "relation1": [
- "horizontal",
- "component0",
- "component1"
-]
-}, 
-{
-"_guid": "5da3f5f0-1ea8-4fab-9b63-ba2c18db0297", "success": "1", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat0", "l": 3.0, "r": 6.0, "b": 0.0, "t": 1.0}
-, "component2": {
- "type": "plat90", "l": 3.0, "r": 4.0, "b": 1.0, "t": 4.0}
-, "component21": {
- "type": "ufoo0", "l": 2.0, "r": 5.0, "b": 4.0, "t": 5.0}
-, "relation1": [
- "horizontal",
- "component0",
- "component1"
-]
-}, 
-{
-"_guid": "49707ebf-27d3-430e-a699-89d8589a818b", "success": "0", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component2": {
- "type": "plat90", "l": 2.0, "r": 3.0, "b": 1.0, "t": 4.0}
-, "component6": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-, "relation1": [
- "horizontal",
- "component1",
- "component2"
-]
-}, 
-{
-"_guid": "814da3f7-09c5-4812-be93-340cfff08b52", "success": "1", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component2": {
- "type": "plat90", "l": 2.0, "r": 3.0, "b": 1.0, "t": 4.0}
-, "component6": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-, "relation1": [
- "horizontal",
- "component1",
- "component2"
-]
-}, 
-{
-"_guid": "04a358a6-2e30-4210-99d8-5f3c1ae19312", "success": "0", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component2": {
- "type": "plat90", "l": 2.0, "r": 3.0, "b": 1.0, "t": 4.0}
-, "component6": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-, "relation1": [
- "horizontal",
- "component1",
- "component2"
-]
-}, 
-{
-"_guid": "e36488a4-e53b-4483-bb05-cd4c716e7f75", "success": "1", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component2": {
- "type": "plat90", "l": 2.0, "r": 3.0, "b": 1.0, "t": 4.0}
-, "component7": {
- "type": "ufoo0", "l": 1.0, "r": 3.0, "b": 4.0, "t": 5.0}
-, "relation1": [
- "horizontal",
- "component1",
- "component2"
-]
-}, 
-{
-"_guid": "58ab7539-d07d-48dc-be2b-968620c521db", "success": "0", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component8": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "d2eff55d-1487-4b2c-9ea3-3eaa22623c34", "success": "1", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 3.0, "t": 4.0}
-, "component1": {
- "type": "plat90", "l": 0.0, "r": 1.0, "b": 0.0, "t": 3.0}
-, "component2": {
- "type": "plat90", "l": 2.0, "r": 3.0, "b": 0.0, "t": 3.0}
-, "component6": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "6ff5c9f7-3131-453d-86d3-f858537ebcc7", "success": "0", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component8": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "ecfc35e2-5f3a-4cf0-b601-77b431314607", "success": "0", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component8": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "a828875b-1eed-4adf-8bc6-bc1d66873ea7", "success": "1", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 3.0, "t": 4.0}
-, "component1": {
- "type": "plat90", "l": 0.0, "r": 1.0, "b": 0.0, "t": 3.0}
-, "component2": {
- "type": "plat90", "l": 2.0, "r": 3.0, "b": 0.0, "t": 3.0}
-, "component6": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "046392f2-58f3-4137-a787-46e68e13ee23", "success": "1", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 0.0, "r": 1.0, "b": 1.0, "t": 4.0}
-, "component2": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component6": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-, "relation1": [
- "horizontal",
- "component1",
- "component2"
-]
-}, 
-{
-"_guid": "7f68089d-edb7-4ed7-bc31-0557c1abed9d", "success": "1", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 0.0, "r": 1.0, "b": 1.0, "t": 4.0}
-, "component2": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component6": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-, "relation1": [
- "horizontal",
- "component1",
- "component2"
-]
-}, 
-{
-"_guid": "a45c9ebe-574f-4622-8c13-b8f67e508b24", "success": "1", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat0", "l": 4.0, "r": 7.0, "b": 0.0, "t": 1.0}
-, "component2": {
- "type": "plat90", "l": 3.0, "r": 4.0, "b": 1.0, "t": 4.0}
-, "component26": {
- "type": "ufoo0", "l": 2.0, "r": 5.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "eb173385-a6c4-4cdf-80d9-642af396ca78", "success": "0", "component0": {
- "type": "plat0", "l": 2.0, "r": 5.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 0.0, "r": 1.0, "b": 0.0, "t": 3.0}
-, "component2": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component16": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "1bc99a42-aba1-4dc7-85e8-60279637a678", "success": "0", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component8": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "08f65c03-81fb-4be5-aca0-1126bc0c0023", "success": "1", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 3.0, "t": 4.0}
-, "component1": {
- "type": "plat90", "l": 0.0, "r": 1.0, "b": 0.0, "t": 3.0}
-, "component2": {
- "type": "plat90", "l": 2.0, "r": 3.0, "b": 0.0, "t": 3.0}
-, "component6": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "a6e79feb-36c8-4106-89cd-7316688eec54", "success": "1", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 3.0, "t": 4.0}
-, "component1": {
- "type": "plat90", "l": 0.0, "r": 1.0, "b": 0.0, "t": 3.0}
-, "component2": {
- "type": "plat90", "l": 2.0, "r": 3.0, "b": 0.0, "t": 3.0}
-, "component6": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "57d4a8fa-a1c6-482f-8fac-e8724861b253", "success": "0", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component8": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "17f517c2-4b8d-418d-ad77-af75e934978e", "success": "1", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 3.0, "t": 4.0}
-, "component1": {
- "type": "plat90", "l": 0.0, "r": 1.0, "b": 0.0, "t": 3.0}
-, "component2": {
- "type": "plat90", "l": 2.0, "r": 3.0, "b": 0.0, "t": 3.0}
-, "component6": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "a1ee5ac2-4b96-421d-90e9-83856442c529", "success": "1", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 3.0, "t": 4.0}
-, "component1": {
- "type": "plat90", "l": 0.0, "r": 1.0, "b": 0.0, "t": 3.0}
-, "component2": {
- "type": "plat90", "l": 2.0, "r": 3.0, "b": 0.0, "t": 3.0}
-, "component6": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "6851d0a2-1a1b-4f31-8c50-a1038a324fbc", "success": "1", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat0", "l": 3.0, "r": 6.0, "b": 0.0, "t": 1.0}
-, "component2": {
- "type": "plat90", "l": 3.0, "r": 4.0, "b": 1.0, "t": 4.0}
-, "component21": {
- "type": "ufoo0", "l": 2.0, "r": 5.0, "b": 4.0, "t": 5.0}
-, "relation1": [
- "horizontal",
- "component0",
- "component1"
-]
-}, 
-{
-"_guid": "b2f47fd0-54d6-4573-ac3a-f27357a2b418", "success": "0", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component9": {
- "type": "ufoo0", "l": 1.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "f6feff5e-1dbc-46d0-a5bb-ea5d4a25614f", "success": "1", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 0.0, "r": 1.0, "b": 1.0, "t": 4.0}
-, "component2": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component6": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-, "relation1": [
- "horizontal",
- "component1",
- "component2"
-]
-}, 
-{
-"_guid": "e3f7d456-2cb7-44d8-b131-56a89b37dcab", "success": "1", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component2": {
- "type": "plat90", "l": 2.0, "r": 3.0, "b": 1.0, "t": 4.0}
-, "component6": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-, "relation1": [
- "horizontal",
- "component1",
- "component2"
-]
-}, 
-{
-"_guid": "fb56f182-ee8a-4cca-8a1d-20d66672dac6", "success": "1", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 3.0, "t": 4.0}
-, "component1": {
- "type": "plat90", "l": 0.0, "r": 1.0, "b": 0.0, "t": 3.0}
-, "component2": {
- "type": "plat90", "l": 2.0, "r": 3.0, "b": 0.0, "t": 3.0}
-, "component6": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "c023394d-ce45-4899-8be1-1a7d7476eb32", "success": "0", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component8": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "f43820b3-e4ef-45cb-9e4c-ed79667be070", "success": "1", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component2": {
- "type": "plat90", "l": 2.0, "r": 3.0, "b": 1.0, "t": 4.0}
-, "component7": {
- "type": "ufoo0", "l": 1.0, "r": 3.0, "b": 4.0, "t": 5.0}
-, "relation1": [
- "horizontal",
- "component1",
- "component2"
-]
-}, 
-{
-"_guid": "e913b1e6-3f31-4f97-8e87-16af7264ea59", "success": "1", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 3.0, "t": 4.0}
-, "component1": {
- "type": "plat90", "l": 0.0, "r": 1.0, "b": 0.0, "t": 3.0}
-, "component2": {
- "type": "plat90", "l": 2.0, "r": 3.0, "b": 0.0, "t": 3.0}
-, "component6": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "6373ddcd-7115-4819-bc4b-f288ce1f9040", "success": "0", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component8": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "5dd554d6-06b5-44a8-ac6e-b53ade124c36", "success": "1", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component2": {
- "type": "plat90", "l": 2.0, "r": 3.0, "b": 1.0, "t": 4.0}
-, "component6": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-, "relation1": [
- "horizontal",
- "component1",
- "component2"
-]
-}, 
-{
-"_guid": "8da9fdef-dbe9-4d91-9c64-7c280b506f50", "success": "0", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component8": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "9cd0d01e-72c5-4979-9b83-85fecefcb716", "success": "0", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component8": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-}, 
-{
-"_guid": "69132ac1-fedb-4359-b961-d3109a794192", "success": "0", "component0": {
- "type": "plat0", "l": 0.0, "r": 3.0, "b": 0.0, "t": 1.0}
-, "component1": {
- "type": "plat90", "l": 1.0, "r": 2.0, "b": 1.0, "t": 4.0}
-, "component2": {
- "type": "plat90", "l": 2.0, "r": 3.0, "b": 1.0, "t": 4.0}
-, "component6": {
- "type": "ufoo0", "l": 0.0, "r": 3.0, "b": 4.0, "t": 5.0}
-, "relation1": [
- "horizontal",
- "component1",
- "component2"
-]
-}
-]
-

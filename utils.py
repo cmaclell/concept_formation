@@ -2,6 +2,8 @@ from random import uniform
 from math import sqrt
 import numpy as np
 from scipy import linalg
+from scipy.stats import sem
+from scipy.stats import t
 from numbers import Number
 
 # A hashtable of values to use in the c4(n) function to apply corrections to
@@ -336,11 +338,27 @@ def lowess(x, y, f=2./3., iter=3):
     return yest
 
 def weighted_choice(choices):
-   total = sum(w for c, w in choices)
-   r = uniform(0, total)
-   upto = 0
-   for c, w in choices:
-      if upto + w > r:
-         return c
-      upto += w
-   assert False, "Shouldn't get here"
+    """
+    Given a list of tuples [(val, prob),...(val, prob)] this function returns a
+    randomly chosen value where the choice is weighted by prob.
+    """
+    total = sum(w for c, w in choices)
+    r = uniform(0, total)
+    upto = 0
+    for c, w in choices:
+       if upto + w > r:
+          return c
+       upto += w
+    assert False, "Shouldn't get here"
+
+def mean_confidence_interval(data, confidence=0.95):
+    """
+    Given a list or vector of data, this returns the mean, lower, and upper
+    confidence intervals to the level of confidence specified (default = 95%
+    confidence interval).
+    """
+    a = 1.0*np.array(data)
+    n = len(a)
+    m, se = np.mean(a), sem(a)
+    h = se * t._ppf((1+confidence)/2., n-1)
+    return m, m-h, m+h

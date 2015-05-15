@@ -8,16 +8,6 @@ from structure_mapper import flatMatch
 from structure_mapper import renameFlat
 from cobweb3 import ContinuousValue
 
-#def probability_missing(tree, instance, attr):
-#    """
-#    Returns the probability of a particular attribute missing a value in the
-#    instance.
-#    """
-#    if attr in instance:
-#        instance = {a:instance[a] for a in instance if not a == attr}
-#    concept = tree.categorize(instance)
-#    return concept.get_probability_missing(attr)
-
 def probability(tree, instance, attr, val):
     """
     Returns the probability of a particular value of an attribute in the
@@ -41,10 +31,15 @@ def probability(tree, instance, attr, val):
     else:
         return concept.get_probability(attr, val)
 
-def probability_error(tree, instance, attr, val):
-    return 1 - probability(tree, instance, attr, val)
-
 def error(tree, instance, attr, val):
+    """
+    Computes the error between the predicted value and the actual value for an
+    attribute. 
+
+    Not quite sure how to compute error or squared for missing values with
+    continuous attributes (e.g., 0-1 vs. scale of the continuous attribute
+    cannot be averaged).
+    """
     if attr in instance:
         instance = {a:instance[a] for a in instance if not a == attr}
 
@@ -101,18 +96,15 @@ def squared_error(tree, instance, attr, val):
 #    return mean(probs)
 
 def incremental_prediction(tree, instances, attr, run_length, runs=1,
-                           error=probability):
+                           score=probability):
     """
     Given a set of instances and an attribute, perform an incremental
     prediction task; i.e., try to predict the attr for each instance before
     incorporating it into the tree. This will give a type of cross validated
     result.
 
-    Currently different error functions are supported. 
-
-    Not quite sure how to compute error for missing values with continuous
-    attributes (e.g., 0-1 vs. scale of the continuous attribute cannot be
-    averaged). 
+    Currently different score functions are supported, this defaults to
+    probaility of missing value (i.e., accuracy). 
     """
     #if attr is None:
     #    possible_attrs = set([k for i in instances for k in i.keys()])
@@ -129,9 +121,9 @@ def incremental_prediction(tree, instances, attr, run_length, runs=1,
         for instance in instances[1:run_length]:
             #if attr:
             if attr not in instance:
-                run_accuracy.append(error(tree, instance, attr, None))
+                run_accuracy.append(score(tree, instance, attr, None))
             else:
-                run_accuracy.append(error(tree, instance, attr, instance[attr]))
+                run_accuracy.append(score(tree, instance, attr, instance[attr]))
             #else:
             #    run_accuracy.append(flexible_probability(tree, instance,
             #                                          possible_attrs))

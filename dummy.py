@@ -1,6 +1,7 @@
 from cobweb3 import Cobweb3Node
 from trestle import TrestleTree
-from structure_mapper import structure_map
+#from structure_mapper import structure_map
+from structure_mapper import flattenJSON
 
 class DummyTree(TrestleTree):
 
@@ -11,7 +12,8 @@ class DummyTree(TrestleTree):
         self.root.scaling = False
 
     def ifit(self, instance):
-        temp_instance = structure_map(self.root, instance)
+        temp_instance = flattenJSON(instance)
+        #temp_instance = structure_map(self.root, instance)
         self.root.increment_counts(temp_instance)
         return self.root
 

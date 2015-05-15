@@ -46,8 +46,8 @@ with open('accuracy.csv', 'w') as fout:
             print(time, inst)
             inst = inst[7:-4]
             inst = instances[inst]
-            fout.write("%0.5f,%i\n" % (tree.specific_prediction(inst, 'success',
-                                                guessing=False), opp))
+            #fout.write("%0.5f,%i\n" % (tree.specific_prediction(inst, 'success',
+            #                                    guessing=False), opp))
             tree.ifit(inst)
 
 #tree.predictions('data_files/rb_s_07.json', 31, 100, attr='success')
