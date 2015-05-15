@@ -285,7 +285,7 @@ def containsComponent(component, attr):
 
     return False
 
-def flatMatch(concept, instance, optimal=True):
+def flatMatch(concept, instance, optimal=False):
     """
     Given a concept and instance this function returns a mapping (dictionary)
     that can be used to rename the instance. The mapping returned maximizes
@@ -304,7 +304,7 @@ def flatMatch(concept, instance, optimal=True):
                                 flatMatchHeuristicFn))
     else:
         solution = next(search.BeamGS(initial, flatMatchSuccessorFn, flatMatchGoalTestFn,
-                           flatMatchHeuristicFn), initialBeamWidth=3)
+                           flatMatchHeuristicFn, initialBeamWidth=3))
     #print(solution.cost)
 
     if solution:

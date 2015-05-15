@@ -111,6 +111,7 @@ def incremental_prediction(tree, instances, attr, run_length, runs=1,
 
     accuracy = []
     for r in range(runs):
+        print("run: ", r)
         tree = tree.__class__()
 
         run_accuracy = []
