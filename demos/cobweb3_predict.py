@@ -14,22 +14,19 @@ num_examples = 200
 
 ############################ GENERATE SIMULATED DATA ########################
 num_clusters = 2 
-num_samples = 10000
-sigma = 0.1
+num_samples = 300
+sigma = 0.15 
 
-xmean = [uniform(-100, 100) for i in range(num_clusters)]
-ymean = [uniform(-100, 100) for i in range(num_clusters)]
+mean = [uniform(-100, 100) for i in range(num_clusters)]
 label = ['bo', 'go', 'ro', 'co', 'mo', 'yo', 'ko']
 shuffle(label)
 label = label[0:num_clusters]
 
 simulated_data = []
 for i in range(num_clusters):
-    simulated_data += [{'x': normalvariate(0, sigma), 'y':
-                        normalvariate(ymean[i], sigma), 'label': 'l1'} for
+    simulated_data += [{'x': normalvariate(0, sigma), 'label': 'l1'} for
                        j in range(num_samples)]
-    simulated_data += [{'x': normalvariate(2, sigma), 'y':
-                        normalvariate(ymean[i], sigma), 'label': 'l2'} for
+    simulated_data += [{'x': normalvariate(10, sigma), 'label': 'l2'} for
                        j in range(num_samples)]
 
 ############################## GENERATE PREDICTIONS ##########################

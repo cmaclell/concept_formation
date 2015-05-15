@@ -2,6 +2,8 @@ import json
 from random import shuffle
 from random import random
 
+from utils import weighted_choice
+
 class CobwebTree:
 
     def __init__(self, alpha=0.001):
@@ -562,6 +564,51 @@ class CobwebNode:
 
         return output
 
+    def get_weighted_values(self, attr):
+        n_values = len(self.root.av_counts[attr]) + 1
+
+        choices = []
+        val_count = 0
+        for val in self.root.av_counts[attr]:
+            if attr not in self.av_counts or val not in self.av_counts[attr]:
+                count = 0
+            else:
+                count = self.av_counts[attr][val]
+
+            choices.append((val, (count + self.root.alpha)
+                            / (1.0 * self.count + self.root.alpha * n_values)))
+            if attr in self.av_counts and val in self.av_counts[attr]:
+                val_count += self.av_counts[attr][val]
+
+        choices.append((None, ((self.count - val_count + self.root.alpha) /
+                               (1.0 * self.count + self.root.alpha *
+                                n_values))))
+        return choices
+
+    def predict(self, attr):
+        """
+        Predicts the value of an attribute, by returning the most likely value.
+        This takes into account the laplacian smoothing. 
+        """
+        if attr not in self.root.av_counts:
+            return None
+
+        choices = self.get_weighted_values(attr)
+        choices.sort(key=lambda x: -x[1])
+        return choices[0][0]
+
+    def sample(self, attr):
+        """
+        Predicts the value of an attribute, by returning the most likely value.
+        This takes into account the laplacian smoothing. 
+        """
+        if attr not in self.root.av_counts:
+            return None
+
+        choices = self.get_weighted_values(attr)
+
+        return weighted_choice(choices)
+
     def get_probability(self, attr, val):
         """
         Gets the probability of a particular attribute value at the given
@@ -570,15 +617,19 @@ class CobwebNode:
         Laplace smoothing is used to place a prior over these possibilites.
         Alpha determines the strength of this prior.
         """
-        if attr not in self.av_counts:
+        if attr not in self.root.av_counts:
             return 0.0
 
-        if val not in self.av_counts[attr]:
+        if val is not None and val not in self.root.av_counts[attr]:
             return 0.0
 
         n_values = len(self.root.av_counts[attr]) + 1
 
-        return ((self.av_counts[attr][val] + self.root.alpha) / 
+        count = 0
+        if attr in self.av_counts and val in self.av_counts[attr]:
+            count = self.av_counts[attr][val]
+
+        return ((count + self.root.alpha) / 
                 (1.0 * self.count + self.root.alpha * n_values))
 
     def get_probability_missing(self, attr):

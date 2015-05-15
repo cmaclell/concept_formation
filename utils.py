@@ -1,3 +1,4 @@
+from random import uniform
 from math import sqrt
 import numpy as np
 from scipy import linalg
@@ -333,3 +334,13 @@ def lowess(x, y, f=2./3., iter=3):
         delta = (1 - delta**2)**2
  
     return yest
+
+def weighted_choice(choices):
+   total = sum(w for c, w in choices)
+   r = uniform(0, total)
+   upto = 0
+   for c, w in choices:
+      if upto + w > r:
+         return c
+      upto += w
+   assert False, "Shouldn't get here"

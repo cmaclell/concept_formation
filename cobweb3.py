@@ -1,11 +1,18 @@
 from math import sqrt
 from math import pi
 from math import exp
+from random import normalvariate
 from numbers import Number
 
 from utils import c4
 from cobweb import CobwebNode
 from cobweb import CobwebTree
+
+# Magnify the differences after normalization so a normalized difference of
+# 0.1 is perceptable given the acuity limit.
+perceptible_diff = 0.1
+scale_num_std = 1 /(perceptible_diff * sqrt(2 * pi))
+scale_proportion = 1 / scale_num_std
 
 class Cobweb3Tree(CobwebTree):
 
@@ -80,7 +87,7 @@ class Cobweb3Node(CobwebNode):
             return 0.0
         elif isinstance(self.av_counts[attr], ContinuousValue):
             if self.root.scaling:
-                scale = self.root.av_counts[attr].unbiased_std()
+                scale = scale_proportion * self.root.av_counts[attr].unbiased_std()
             else:
                 scale = 1.0
 
@@ -135,7 +142,7 @@ class Cobweb3Node(CobwebNode):
                     val_count = self.av_counts[attr].num
 
                     if self.root.scaling:
-                        scale = self.root.av_counts[attr].unbiased_std()
+                        scale = scale_proportion * self.root.av_counts[attr].unbiased_std()
                     else:
                         scale = 1.0
 
@@ -204,21 +211,82 @@ class Cobweb3Node(CobwebNode):
 
         return ret
 
+    def sample(self, attr):
+        """
+        Uses the probability table to sample a value for an attribute. This can
+        be useful when wanting to complete missing attributes of objects.
+        """
+        if attr not in self.root.av_counts:
+            return None
+
+        if isinstance(self.root.av_counts[attr], ContinuousValue):
+            n_values = 2
+            prob_attr = ((1.0 * self.av_counts[attr].num + self.root.alpha) /
+                         (self.count + self.root.alpha * n_values ))
+
+            if prob_attr < 0.5:
+                return None
+
+            return normalvariate(self.av_counts[attr].mean,
+                                 self.av_counts[attr].unbiased_std())
+        else:
+            return super(Cobweb3Node, self).sample(attr)
+
+    def predict(self, attr):
+        """
+        Predicts the value of an attribute, in the case of nominal attributes
+        the most likely value is chosen. In the case of continuous attributes,
+        the mean value is chosen. 
+        """
+        if attr not in self.root.av_counts:
+            return None
+
+        if isinstance(self.root.av_counts[attr], ContinuousValue):
+            n_values = 2
+            prob_attr = ((1.0 * self.av_counts[attr].num + self.root.alpha) /
+                         (self.count + self.root.alpha * n_values ))
+
+            if prob_attr < 0.5:
+                return None
+
+            return self.av_counts[attr].mean
+        else:
+            return super(Cobweb3Node, self).predict(attr)
+
     def get_probability(self, attr, val):
         """
         Gets the probability of a particular attribute value. This takes into
-        account the possibility that a value is missing, it uses laplacian
-        smoothing (alpha) and it normalizes the values using the root concept
-        if scaling is enabled (scaling).
+        account the possibility that a value is missing.
         """
         if attr not in self.root.av_counts:
             return 0.0
 
         if isinstance(self.root.av_counts[attr], ContinuousValue):
-            # TODO not sure what to do here, I did what I thought is the most
-            # reasonable thing, throw an exception. Should use squared error
-            # of predicted value instead.
-            raise Exception("Probability of Continuous Value is nonsensical.")
+            n_values = 2
+            prob_attr = ((1.0 * self.av_counts[attr].num + self.root.alpha) /
+                         (self.count + self.root.alpha * n_values ))
+
+            if val is None:
+                return 1 - prob_attr
+
+            if self.root.scaling:
+                scale = scale_proportion * self.root.av_counts[attr].unbiased_std()
+                if scale == 0:
+                    scale = 1
+                shift = self.root.av_counts[attr].mean
+                val = (val - shift) / scale
+            else:
+                scale = 1.0
+                shift = 0.0
+
+            mean = (self.av_counts[attr].mean - shift) / scale
+            std = max(self.av_counts[attr].scaled_unbiased_std(scale),
+                      self.acuity)
+
+            return (prob_attr * 
+                    (1.0 / (std * sqrt(2 * pi))) * 
+                    exp(-((val - mean) * (val - mean)) / (2.0 * std * std)))
+
         else:
             return super(Cobweb3Node, self).get_probability(attr, val)
 

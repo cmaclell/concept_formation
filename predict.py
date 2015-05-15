@@ -1,20 +1,22 @@
 from re import search
 from random import shuffle
+from numbers import Number
 
 from utils import mean
 from structure_mapper import flattenJSON
 from structure_mapper import flatMatch
 from structure_mapper import renameFlat
+from cobweb3 import ContinuousValue
 
-def probability_missing(tree, instance, attr):
-    """
-    Returns the probability of a particular attribute missing a value in the
-    instance.
-    """
-    if attr in instance:
-        instance = {a:instance[a] for a in instance if not a == attr}
-    concept = tree.categorize(instance)
-    return concept.get_probability_missing(attr)
+#def probability_missing(tree, instance, attr):
+#    """
+#    Returns the probability of a particular attribute missing a value in the
+#    instance.
+#    """
+#    if attr in instance:
+#        instance = {a:instance[a] for a in instance if not a == attr}
+#    concept = tree.categorize(instance)
+#    return concept.get_probability_missing(attr)
 
 def probability(tree, instance, attr, val):
     """
@@ -39,46 +41,103 @@ def probability(tree, instance, attr, val):
     else:
         return concept.get_probability(attr, val)
 
-def flexible_probability(tree, instance, attrs=None):
-    """
-    Returns the average probability of each value in the instance (over all
-    attributes).
-    """
-    if attrs is None:
-        attrs = instance.keys()
+def probability_error(tree, instance, attr, val):
+    return 1 - probability(tree, instance, attr, val)
 
-    probs = []
-    for attr in attrs:
-        if attr in instance:
-            val = instance[attr]
-            probs.append(probability(tree, instance, attr, val))
+def error(tree, instance, attr, val):
+    if attr in instance:
+        instance = {a:instance[a] for a in instance if not a == attr}
+
+    concept = tree.categorize(instance)
+
+    if isinstance(val, dict):
+        raise Exception("Currently does not support prediction error of component attributes.")
+    elif isinstance(val, Number):
+        prediction = concept.predict(attr)
+        if prediction is None:
+            raise Exception("Not sure how to handle continuous values that are predicted to be missing.")
+        e = val - prediction 
+    else:
+        if val is None and isinstance(tree.root.av_counts[attr],
+                                      ContinuousValue):
+            raise Exception("Not sure how to handle missing continuous values.")
+
+        prediction = concept.predict(attr)
+
+        if val == prediction:
+            e = 0
         else:
-            probs.append(probability_missing(tree, instance, attr))
-    return mean(probs)
+            e = 1
 
-def incremental_prediction(tree, instances, run_length, runs=1, attr=None):
+    return e
+
+def absolute_error(tree, instance, attr, val):
     """
-    Given a set of instances, perform an incremental prediction task; i.e.,
-    try to flexibly predict each instance before incorporating it into the 
-    tree. This will give a type of cross validated result.
+    Returns the error of the tree for a particular attribute value pair.
     """
-    if attr is None:
-        possible_attrs = set([k for i in instances for k in i.keys()])
+    return abs(error(tree, instance, attr, val))
+
+def squared_error(tree, instance, attr, val):
+    """
+    Returns the error of the tree for a particular attribute value pair.
+    """
+    e = error(tree, instance, attr, val)
+    return e * e
+
+#def flexible_probability(tree, instance, attrs=None):
+#    """
+#    Returns the average probability of each value in the instance (over all
+#    attributes).
+#    """
+#    if attrs is None:
+#        attrs = instance.keys()
+#
+#    probs = []
+#    for attr in attrs:
+#        if attr in instance:
+#            probs.append(probability(tree, instance, attr, instance[attr]))
+#        else:
+#            probs.append(probability(tree, instance, attr, None))
+#    return mean(probs)
+
+def incremental_prediction(tree, instances, attr, run_length, runs=1,
+                           error=probability):
+    """
+    Given a set of instances and an attribute, perform an incremental
+    prediction task; i.e., try to predict the attr for each instance before
+    incorporating it into the tree. This will give a type of cross validated
+    result.
+
+    Currently different error functions are supported. 
+
+    Not quite sure how to compute error for missing values with continuous
+    attributes (e.g., 0-1 vs. scale of the continuous attribute cannot be
+    averaged). 
+    """
+    #if attr is None:
+    #    possible_attrs = set([k for i in instances for k in i.keys()])
 
     accuracy = []
-    for j in range(runs):
-        # reset the tree each run
+    for r in range(runs):
         tree = tree.__class__()
 
         run_accuracy = []
         shuffle(instances)
-        for instance in instances[:run_length]:
+        
+        tree.ifit(instances[0])
 
-            if attr:
-                run_accuracy.append(probability(tree, instance, attr, instance[attr]))
+        for instance in instances[1:run_length]:
+            #if attr:
+            if attr not in instance:
+                run_accuracy.append(error(tree, instance, attr, None))
             else:
-                run_accuracy.append(flexible_probability(tree, instance,
-                                                         possible_attrs))
+                run_accuracy.append(error(tree, instance, attr, instance[attr]))
+            #else:
+            #    run_accuracy.append(flexible_probability(tree, instance,
+            #                                          possible_attrs))
+
             tree.ifit(instance)
+
         accuracy.append(run_accuracy)
+
     return accuracy

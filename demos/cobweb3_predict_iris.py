@@ -4,24 +4,24 @@ import matplotlib.pyplot as plt
 
 from utils import moving_average
 from predict import incremental_prediction
-from cobweb import CobwebTree
+from cobweb3 import Cobweb3Tree
 from dummy import DummyTree
 
-window = 5 
+window = 30 
 num_runs = 10 
-num_examples = 30 
+num_examples = 150
 
-with open('data_files/mushrooms.json') as fin:
-    mushrooms = json.load(fin)
+with open('data_files/iris.json') as fin:
+    irises = json.load(fin)
 
 ############################## GENERATE PREDICTIONS ##########################
 
-naive_accuracy = incremental_prediction(DummyTree(), mushrooms,
+naive_accuracy = incremental_prediction(DummyTree(), irises,
                                   run_length=num_examples,
-                                  runs=num_runs)
-cobweb_accuracy = incremental_prediction(CobwebTree(), mushrooms,
+                                  runs=num_runs, attr="class")
+cobweb_accuracy = incremental_prediction(Cobweb3Tree(), irises,
                                   run_length=num_examples,
-                                  runs=num_runs)
+                                  runs=num_runs, attr="class")
 
 ############################## PLOT RESULTS ##################################
 
@@ -41,16 +41,16 @@ naive_y = np.array([np.mean(l) for l in naive_data])
 cobweb_y_smooth = moving_average(cobweb_y, window)
 naive_y_smooth = moving_average(naive_y, window)
 
-x = np.array([i for i in range(len(cobweb_y_smooth))])
+x = np.array([1+i for i in range(len(cobweb_y_smooth))])
 
-cobweb_lower = np.array([np.mean(l) - 2 * np.std(l) for l in cobweb_data])
-naive_lower = np.array([np.mean(l) - 2 * np.std(l) for l in naive_data])
+cobweb_lower = np.array([max(0, np.mean(l) - 2 * np.std(l)) for l in cobweb_data])
+naive_lower = np.array([max(0, np.mean(l) - 2 * np.std(l)) for l in naive_data])
 
 cobweb_lower_smooth = moving_average(cobweb_lower, window)
 naive_lower_smooth = moving_average(naive_lower, window)
 
-cobweb_upper = np.array([np.mean(l) + 2 * np.std(l) for l in cobweb_data])
-naive_upper = np.array([np.mean(l) + 2 * np.std(l) for l in naive_data])
+cobweb_upper = np.array([min(np.mean(l) + 2 * np.std(l), 1) for l in cobweb_data])
+naive_upper = np.array([min(np.mean(l) + 2 * np.std(l), 1) for l in naive_data])
 
 cobweb_upper_smooth = moving_average(cobweb_upper, window)
 naive_upper_smooth = moving_average(naive_upper, window)
@@ -63,11 +63,11 @@ plt.fill_between(x, naive_lower_smooth, naive_upper_smooth, alpha=0.5,
 plt.plot(x, cobweb_y_smooth, label="COBWEB", color="green")
 plt.plot(x, naive_y_smooth, label="Naive Predictor", color="red")
 
-plt.gca().set_ylim([0,1.05])
-plt.gca().set_xlim([0,len(naive_y_smooth)-1])
-plt.title("Incremental Flexible Mushroom Prediction Accuracy")
+plt.gca().set_ylim([0.00,1.0])
+plt.gca().set_xlim([1,len(naive_y_smooth)-1])
+plt.title("Incremental Iris Classification Prediction Accuracy")
 plt.xlabel("# of Training Examples")
-plt.ylabel("Accuracy")
+plt.ylabel("Avg. Probability of True Class (Accuracy)")
 plt.legend(loc=4)
 
 plt.show()

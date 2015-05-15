@@ -9,7 +9,7 @@ from dummy import DummyTree
 
 window = 50 
 num_runs = 10 
-num_examples = 100 
+num_examples = 200 
 
 with open('data_files/mushrooms.json') as fin:
     mushrooms = json.load(fin)
@@ -41,16 +41,16 @@ naive_y = np.array([np.mean(l) for l in naive_data])
 cobweb_y_smooth = moving_average(cobweb_y, window)
 naive_y_smooth = moving_average(naive_y, window)
 
-x = np.array([i for i in range(len(cobweb_y_smooth))])
+x = np.array([1+i for i in range(len(cobweb_y_smooth))])
 
-cobweb_lower = np.array([np.mean(l) - 2 * np.std(l) for l in cobweb_data])
-naive_lower = np.array([np.mean(l) - 2 * np.std(l) for l in naive_data])
+cobweb_lower = np.array([max(0, np.mean(l) - 2 * np.std(l)) for l in cobweb_data])
+naive_lower = np.array([max(0, np.mean(l) - 2 * np.std(l)) for l in naive_data])
 
 cobweb_lower_smooth = moving_average(cobweb_lower, window)
 naive_lower_smooth = moving_average(naive_lower, window)
 
-cobweb_upper = np.array([np.mean(l) + 2 * np.std(l) for l in cobweb_data])
-naive_upper = np.array([np.mean(l) + 2 * np.std(l) for l in naive_data])
+cobweb_upper = np.array([min(1, np.mean(l) + 2 * np.std(l)) for l in cobweb_data])
+naive_upper = np.array([min(1, np.mean(l) + 2 * np.std(l)) for l in naive_data])
 
 cobweb_upper_smooth = moving_average(cobweb_upper, window)
 naive_upper_smooth = moving_average(naive_upper, window)
@@ -63,11 +63,11 @@ plt.fill_between(x, naive_lower_smooth, naive_upper_smooth, alpha=0.5,
 plt.plot(x, cobweb_y_smooth, label="COBWEB", color="green")
 plt.plot(x, naive_y_smooth, label="Naive Predictor", color="red")
 
-plt.gca().set_ylim([0,1.05])
-plt.gca().set_xlim([0,len(naive_y_smooth)-1])
+plt.gca().set_ylim([0.0,1.0])
+plt.gca().set_xlim([1,len(naive_y_smooth)-1])
 plt.title("Incremental Mushroom Edibility Prediction Accuracy")
 plt.xlabel("# of Training Examples")
-plt.ylabel("Accuracy")
+plt.ylabel("Avg. Probability of True Class (Accuracy)")
 plt.legend(loc=4)
 
 plt.show()
