@@ -298,7 +298,7 @@ def moving_average(a, n=3) :
     ret[n:] = ret[n:] - ret[:-n]
     return ret[n - 1:] / n
 
-def lowess(x, y, f=2./3., iter=3):
+def lowess(x, y, f=1./3., iter=3, confidence=0.95):
     """
     Code taken from: https://gist.github.com/agramfort/850437
 
@@ -334,8 +334,31 @@ def lowess(x, y, f=2./3., iter=3):
         s = np.median(np.abs(residuals))
         delta = np.clip(residuals / (6.0 * s), -1, 1)
         delta = (1 - delta**2)**2
- 
-    return yest
+
+    h = np.zeros(n)
+    for x_idx, x_val in enumerate(x):
+        r2 = np.array([v*v for i, v in enumerate(residuals) if x[i] == x_val])
+        n = len(r2)
+        se = sqrt(mean(r2)) / sqrt(len(r2))
+        h[x_idx] = se * t._ppf((1+confidence)/2., n-1)
+
+    return yest, yest-h, yest+h
+
+def avg_lines(x, y, confidence=0.95):
+    n = len(x)
+    mean = np.zeros(n)
+    lower = np.zeros(n)
+    upper = np.zeros(n)
+
+    for x_idx, x_val in enumerate(x):
+        ys = np.array([v for i,v in enumerate(y) if x[i] == x_val])
+        m,l,u = mean_confidence_interval(ys)
+        mean[x_idx] = m
+        lower[x_idx] = l
+        upper[x_idx] = u
+
+    return mean, lower, upper
+
 
 def weighted_choice(choices):
     """

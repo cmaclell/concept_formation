@@ -109,28 +109,21 @@ def incremental_prediction(tree, instances, attr, run_length, runs=1,
     #if attr is None:
     #    possible_attrs = set([k for i in instances for k in i.keys()])
 
-    accuracy = []
+    scores = []
     for r in range(runs):
         print("run: ", r)
         tree = tree.__class__()
 
-        run_accuracy = []
         shuffle(instances)
         
+        scores.append((0,0))
         tree.ifit(instances[0])
 
-        for instance in instances[1:run_length]:
-            #if attr:
-            if attr not in instance:
-                run_accuracy.append(score(tree, instance, attr, None))
-            else:
-                run_accuracy.append(score(tree, instance, attr, instance[attr]))
-            #else:
-            #    run_accuracy.append(flexible_probability(tree, instance,
-            #                                          possible_attrs))
-
+        for i,instance in enumerate(instances[1:run_length]):
+            val = None
+            if attr in instance:
+                val = instance[attr]
+            scores.append((i+1, score(tree, instance, attr, val)))
             tree.ifit(instance)
 
-        accuracy.append(run_accuracy)
-
-    return accuracy
+    return scores
