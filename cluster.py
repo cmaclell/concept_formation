@@ -1,201 +1,121 @@
-# This is going to be the root file that you would use to work with each of the
-# algorithms in this package. I went with tlc because of Trestle, Labyrinth, Cobweb
-# but we can rename it later if we want
-
 import json
 import re
-#from trestle import Trestle
-#from cobweb import Cobweb
-from cobweb3 import Cobweb3Tree
-from itertools import cycle, islice
-import copy
-import random
 
-random.seed(1)
+def cluster(tree, instances, minsplit=1, maxsplit=1, mod=True):
+	"""
+	Categorize the list of instances into the tree and return a list of lists of
+	cluster labels.
 
-def sort_dissimilar(instances):
-    original = copy.deepcopy(instances)
-    for i,d in enumerate(original):
-        d['_id'] = i
+	The size of the list will be (1 + maxsplit - minsplit). The first clustering
+	is dervied by splitting the root, then each subsequent clustering is based
+	on the splitting least coupled cluster (in terms of category utility). This
+	may stop early if you reach the case where there are no more clusters to
+	split (each instance in its own cluster).
 
-    data = [a for a in original]
-    random.shuffle(data)
-    #last_ids = []
-    #ids = [a['*id'] for a in data]
+	Keyword arguments:
+	tree -- a CobwebTree, Cobweb3Tree, or TrestleTree
+	instances -- a list of instance objects
+	minsplit -- The minimum number of splits to perform on the tree, must be >=1
+	(default 1)
+	maxsplit -- the maximum number of splits to perform on the tree, must be >=1
+	(default 1)
+	mod -- If True instances will be fit (i.e. modyfiying knoweldge) else they
+	will be categorized (i.e. not modiyfing knowledge) (default True)
+	"""
+	if minsplit < 1:
+		raise ValueError("minsplit must be >= 1")
+	if maxsplit < 1:
+		raise ValueError("maxsplit must be >= 1")
+	
+	if mod:
+		temp_clusters = [tree.ifit(instance) for instance in instances]
+	else:
+		temp_clusters = [tree.categorize(instance) for instance in instances]
 
-    # not sure how to tell that I have converged... there is no likelihood
-    # score to maximize or something... do i do cu at the root?
-    for i in range(10):
-    #while last_ids != ids:
-        #print(levenshtein(last_ids, ids))
-        #last_ids = ids
-        tree = Cobweb3Tree()
-        tree.fit(data)
-        #print(tree.category_utility())
-        ids = [a for a in order(tree.root)]
-        data = [original[v] for v in ids]
+	clusterings = []
+	
+	for nth_split in range(minsplit, maxsplit+1):
 
-    return data
+		clusters = []
+		for i,c in enumerate(temp_clusters):
+			while (c.parent and c.parent.parent):
+				c = c.parent
+			clusters.append("Concept" + c.concept_id)
+		clusterings.append(clusters)
 
-def order(node):
-    if not node.children:
-        return list(node.av_counts['_id'].keys())
+		split_cus = sorted([(tree.root.cu_for_split(c) -
+							 tree.root.category_utility(), i, c) for i,c in
+							enumerate(tree.root.children) if c.children])
 
-    node.children.sort(key=lambda x: x.count, reverse=True)
-    items = [order(c) for c in node.children]
-    return roundrobin(*items)
+		# Exit early, we don't need to re-reun the following part for the
+		# last time through
+		if nth_split == maxsplit or not split_cus:
+			break
 
-def levenshtein(a,b):
-    "Calculates the Levenshtein distance between a and b."
-    n, m = len(a), len(b)
-    if n > m:
-        # Make sure n <= m, to use O(min(n,m)) space
-        a,b = b,a
-        n,m = m,n
-        
-    current = range(n+1)
-    for i in range(1,m+1):
-        previous, current = current, [i]+[0]*n
-        for j in range(1,n+1):
-            add, delete = previous[j]+1, current[j-1]+1
-            change = previous[j-1]
-            if a[j-1] != b[i-1]:
-                change = change + 1
-            current[j] = min(add, delete, change)
-            
-    return current[n]
+		# Split the least cohesive cluster
+		tree.root.split(split_cus[-1][2])
 
-def roundrobin(*iterables):
-    "roundrobin('ABC', 'D', 'EF') --> A D E B F C"
-    # Recipe credited to George Sakkis
-    pending = len(iterables)
-    nexts = cycle(iter(it).__next__ for it in iterables)
-    while pending:
-        try:
-            for next in nexts:
-                yield next()
-        except StopIteration:
-            pending -= 1
-            nexts = cycle(islice(nexts, pending))
-
-def cluster(self, instances, minsplit=1, maxsplit=1, samplesize=-1, mod=True):
-    """
-    Returns a list of clusterings. the size of the list will be (1 +
-    maxsplit - minsplit). The first clustering will be if the root was
-    split, then each subsequent clustering will be if the least coupled
-    cluster (in terms of category utility) is split. This might stop early
-    if you reach the case where there are no more clusters to split (each
-    instance in its own cluster).
-
-    The sample parameter can be used to specify a percentage (0.0-1.0) of 
-    the instances to use to build the initial concept tree against which 
-    all of the instances will be categorized for clustering. If no sample
-    value is specified then the tree will be built from all instances.
-    Sampling is not random but based on taking an inital sublist. If
-    random sampling is desired then shuffle the input list.
-    """
-    
-    if mod:
-        if samplesize > 0.0 and samplesize < 1.0 :
-            temp_clusters = [self.ifit(instance) for instance in instances[:floor(len(instances)*samplesize)]]
-            temp_clusters.extend([self.categorize(instance) for instance in instances[floor(len(instances)*samplesize):]])
-        else:
-            temp_clusters = [self.ifit(instance) for instance in instances]
-    else:
-        temp_clusters = [self.categorize(instance) for instance in instances]
-
-    clusterings = []
-    
-    self.generate_d3_visualization('output-pre')
-
-    for nth_split in range(minsplit, maxsplit+1):
-        #print(len(set([c.concept_id for c in temp_clusters])))
-
-        clusters = []
-        for i,c in enumerate(temp_clusters):
-            while (c.parent and c.parent.parent):
-                c = c.parent
-            clusters.append("Concept" + c.concept_id)
-        clusterings.append(clusters)
-
-        split_cus = sorted([(self.root.cu_for_split(c) -
-                             self.root.category_utility(), i, c) for i,c in
-                            enumerate(self.root.children) if c.children])
-
-        # Exit early, we don't need to re-reun the following part for the
-        # last time through
-        if nth_split == maxsplit or not split_cus:
-            break
-
-        # Split the least cohesive cluster
-        self.root.split(split_cus[-1][2])
-    
-    self.generate_d3_visualization('output-post')
-    self.generate_d3_visualization('output')
-
-    return clusterings
+	return clusterings
 
 def generate_d3_visualization(tree, fileName):
-    """
-    Generates the .js file that is used by index.html to generate the d3 tree.
-    """
-    #with open('visualize/output.json', 'w') as f:
-    #    f.write(json.dumps(self.root.output_json()))
-    fname = 'visualize/'+fileName+'.js'
-    with open(fname, 'w') as f:
-        f.write("var output = '"+re.sub("'", '',
-                                        json.dumps(tree.root.output_json()))+"';")
+	"""
+	Export a .js file that is used to visualize the tree with d3.
+	"""
+	fname = 'visualize/'+fileName+'.js'
+	with open(fname, 'w') as f:
+		f.write("var output = '"+re.sub("'", '',
+										json.dumps(tree.root.output_json()))+"';")
 
-def h_label(self,instances,fit=True):
-    """
-    Returns a hierarchical labeling of each instance from the root down
-    to the most specific leaf. It returns a 2D matrix that is 
-    len(instances) X max(numConceptParents). Labels are provided general
-    to specific across each row If an instance was categorized shallower in
-    the tree its labeling row will contain empty cells. 
-    
-    instances -- a collection of instances
+def depth_labels(tree,instances,mod=True):
+	"""
+	Categorize the list of instances into the tree and return a matrix of
+	hierarchical labeling of each instance from the root to its most specific
+	concept.
 
-    fit -- a flag for whether or not the labeling should come from
-    fitting (i.e. modifying) the instances or categorizing 
-    (i.e. non-modifying) the instances.
-    """
-
-    if fit:
-        temp_labels = [self.ifit(instance) for instance in instances]
-    else:
-        temp_labels = [self.categorize(instance) for instance in instances]
-
-    final_labels = []
-    max_labels = 0
-    for t in temp_labels:
-        labs = []
-        count = 0
-        label = t
-        while label.parent:
-            labs.append("Concept" + label.concept_id)
-            count += 1
-            label = label.parent
-        labs.append("Concept" + label.concept_id)
-        count += 1
-        final_labels.append(labs)
-        if count > max_labels:
-            max_labels = count
+	The returned matrix is max(conceptDepth) X len(instances). Labelings are
+	ordered general to specific with final_labels[0] being the root and
+	final_labels[-1] being the leaves.
    
-    for f in final_labels:
-       f.reverse()
-       while len(f) < max_labels:
-           f.append("")
+	Keyword attributes:
+	tree -- a CobwebTree, Cobweb3Tree, or TrestleTree
+	instances -- a list of instance objects
+	mod -- If True instances will be fit (i.e. modyfiying knoweldge) else they
+	will be categorized (i.e. not modiyfing knowledge) (default True)
+	"""
 
-    return final_labels
+	if mod:
+		temp_labels = [tree.ifit(instance) for instance in instances]
+	else:
+		temp_labels = [tree.categorize(instance) for instance in instances]
 
-if __name__ == "__main__":
-    data = [{'x': random.normalvariate(0,0.5)} for i in range(10)]
-    data += [{'x': random.normalvariate(2,0.5)} for i in range(10)]
-    data += [{'x': random.normalvariate(4,0.5)} for i in range(10)]
-    data = sort_dissimilar(data)
+	instance_labels = []
+	max_depth = 0
+	for t in temp_labels:
+		labs = []
+		depth = 0
+		label = t
+		while label.parent:
+			labs.append("Concept" + label.concept_id)
+			depth += 1
+			label = label.parent
+		labs.append("Concept" + label.concept_id)
+		depth += 1
+		instance_labels.append(labs)
+		if depth > max_depth:
+			max_depth = depth
+   
+	for f in instance_labels:
+	   f.reverse()
+	   last_label = f[-1]
+	   while len(f) < max_depth:
+		   f.append(last_label)
+	
 
-    tree = Cobweb3Tree()
-    clusters = cluster(tree, data)
-    print(clusters)
-    print(set(clusters))
+	final_labels = []
+	for d in range(len(instance_labels[0])):
+		depth_n = []
+		for i in instance_labels:
+			depth_n.append(i[d])
+		final_labels.append(depth_n)
+
+	return final_labels
