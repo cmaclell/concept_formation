@@ -1,16 +1,70 @@
 import json
 import re
+import copy
+
+def cluster_iter(tree, instances, minsplit=1, maxsplit=100000,  mod=True):
+	"""
+	Categorize the list of instances into the tree and return an iterator that
+	can  be used to iteratively return clusterings based on splitting nodes of
+	the tree.
+
+	The first clustering is derived by splitting the root, then each subsequent
+	clustering is based on splitting the least coupled cluster (in terms of
+	category utility). This process may halt early if it reaches the case where
+	there are no more clusters to split (each instance in its own cluster).
+	Because splitting is a modifying operation, a deepcopy of the tree is made
+	before creating the iterator.
+
+	Keyword arguments:
+	tree -- a CobwebTree, Cobweb3Tree, or TrestleTree
+	instances -- a list of instance objects
+	minsplit -- The minimum number of splits to perform on the tree, must be >=1
+	(default 1)
+	maxsplit -- the maximum number of splits to perform on the tree, must be >= minsplit
+	(default 100000)
+	mod -- If True instances will be fit (i.e. modyfiying knoweldge) else they
+	will be categorized (i.e. not modiyfing knowledge) (default True)
+	"""
+	if minsplit < 1:
+		raise ValueError("minsplit must be >= 1")
+	if minsplit > maxsplit:
+		raise ValueError("maxsplit must be >= minsplit")
+
+	tree = copy.deepcopy(tree)
+
+	if mod:
+		temp_clusters = [tree.ifit(instance) for instance in instances]
+	else:
+		temp_clusters = [tree.categorize(instance) for instance in instances]
+	
+	for nth_split in range(1,maxsplit+1):
+
+		if nth_split >= minsplit:
+			clusters = []
+			for i,c in enumerate(temp_clusters):
+				while (c.parent and c.parent.parent):
+					c = c.parent
+				clusters.append("Concept" + c.concept_id)
+			yield clusters
+
+		split_cus = sorted([(tree.root.cu_for_split(c) -
+							 tree.root.category_utility(), i, c) for i,c in
+							enumerate(tree.root.children) if c.children])
+
+		# Exit early, we don't need to re-reun the following part for the
+		# last time through
+		if not split_cus:
+			break
+
+		# Split the least cohesive cluster
+		tree.root.split(split_cus[-1][2])
+
+		nth_split+=1
 
 def cluster(tree, instances, minsplit=1, maxsplit=1, mod=True):
 	"""
 	Categorize the list of instances into the tree and return a list of lists of
-	cluster labels.
-
-	The size of the list will be (1 + maxsplit - minsplit). The first clustering
-	is dervied by splitting the root, then each subsequent clustering is based
-	on the splitting least coupled cluster (in terms of category utility). This
-	may stop early if you reach the case where there are no more clusters to
-	split (each instance in its own cluster).
+	flat cluster labelings based on different numbers of splits.
 
 	Keyword arguments:
 	tree -- a CobwebTree, Cobweb3Tree, or TrestleTree
@@ -22,40 +76,32 @@ def cluster(tree, instances, minsplit=1, maxsplit=1, mod=True):
 	mod -- If True instances will be fit (i.e. modyfiying knoweldge) else they
 	will be categorized (i.e. not modiyfing knowledge) (default True)
 	"""
-	if minsplit < 1:
-		raise ValueError("minsplit must be >= 1")
-	if maxsplit < 1:
-		raise ValueError("maxsplit must be >= 1")
-	
-	if mod:
-		temp_clusters = [tree.ifit(instance) for instance in instances]
-	else:
-		temp_clusters = [tree.categorize(instance) for instance in instances]
+	return [c for c in cluster_iter(tree,instances,minsplit,maxsplit,mod)]
 
-	clusterings = []
-	
-	for nth_split in range(minsplit, maxsplit+1):
+def k_cluster(tree,instances,k=3,mod=True):
+	"""
+	Categorize the list of instances into the tree and return a flat cluster
+	where n_clusters <= k. If a split would result in n_clusters > k then fewer
+	clusters will be returned.
 
-		clusters = []
-		for i,c in enumerate(temp_clusters):
-			while (c.parent and c.parent.parent):
-				c = c.parent
-			clusters.append("Concept" + c.concept_id)
-		clusterings.append(clusters)
+	Keyword arguments:
+	tree -- a CobwebTree, Cobweb3Tree, or TrestleTree
+	instances -- a list of instance objects
+	k -- a desired number of clusters (default 3)
+	mod -- If True instances will be fit (i.e. modyfiying knoweldge) else they
+	will be categorized (i.e. not modiyfing knowledge) (default True)
+	"""
 
-		split_cus = sorted([(tree.root.cu_for_split(c) -
-							 tree.root.category_utility(), i, c) for i,c in
-							enumerate(tree.root.children) if c.children])
+	if k < 2:
+		raise ValueError("k must be >=2, all nodes in Cobweb are guaranteed to have at least 2 children.")
 
-		# Exit early, we don't need to re-reun the following part for the
-		# last time through
-		if nth_split == maxsplit or not split_cus:
+	clustering = ["Concept" + tree.root.concept_id for i in instance]
+	for c in cluster_iter(tree,instance,mod=mod):
+		if len(set(c)) > k:
 			break
+		clustering = c
 
-		# Split the least cohesive cluster
-		tree.root.split(split_cus[-1][2])
-
-	return clusterings
+	return clustering
 
 def generate_d3_visualization(tree, fileName):
 	"""
@@ -69,8 +115,7 @@ def generate_d3_visualization(tree, fileName):
 def depth_labels(tree,instances,mod=True):
 	"""
 	Categorize the list of instances into the tree and return a matrix of
-	hierarchical labeling of each instance from the root to its most specific
-	concept.
+	labeling of each instance based on different depth cuts of the tree.
 
 	The returned matrix is max(conceptDepth) X len(instances). Labelings are
 	ordered general to specific with final_labels[0] being the root and
@@ -119,3 +164,15 @@ def depth_labels(tree,instances,mod=True):
 		final_labels.append(depth_n)
 
 	return final_labels
+
+
+from trestle import TrestleTree
+import pprint
+
+with open("data_files/rb_s_07_continuous.json") as dat:
+	instances = json.load(dat)[:15]
+
+	tree = TrestleTree()
+
+	clus = cluster(tree,instances,maxsplit=5)
+	pprint.pprint(clus)
