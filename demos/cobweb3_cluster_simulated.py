@@ -1,8 +1,9 @@
 import time
-from cobweb3 import *
+from cobweb3 import Cobweb3Tree
 from random import normalvariate
 from random import shuffle, uniform
 import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
 from matplotlib.patches import Ellipse
 
 tree = Cobweb3Tree()
@@ -13,7 +14,7 @@ sigma = 1
 
 xmean = [uniform(-8, 8) for i in range(num_clusters)]
 ymean = [uniform(-8, 8) for i in range(num_clusters)]
-label = ['bo', 'go', 'ro', 'co', 'mo', 'yo', 'ko']
+label = ['bo', 'bo', 'bo', 'bo', 'bo', 'bo', 'bo']
 shuffle(label)
 label = label[0:num_clusters]
 
@@ -30,6 +31,12 @@ shuffle(data)
 trained = []
 
 plt.ion()
+red_patch = mpatches.Patch(color='red', alpha=0.1)
+blue_patch = mpatches.Patch(color='blue', alpha=0.08)
+samples_patch = mpatches.Patch(color='blue')
+plt.legend([red_patch, blue_patch, samples_patch], ['COBWEB/3 Clusters',
+                                                    'True Clusters', 
+                                                    'Sampled Points'], loc=3)
 plt.show()
 
 # draw the actual sampling distribution
@@ -63,7 +70,7 @@ for datum in data:
     # draw the new point
     plt.plot([datum['x']], [datum['y']], datum['_label'])
 
-    plt.axis([-10, 10, -10, 10])
+    plt.axis([-10, 10, -15, 10])
     plt.draw()
     time.sleep(0.0001)
 
