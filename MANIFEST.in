@@ -1,5 +1,5 @@
 include *.txt
 include *.md
 recursive-include data_files *
-recursive-include example *
+recursive-include examples *
 recursive-include docs *.txt
