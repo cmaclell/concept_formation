@@ -1,7 +1,7 @@
-from cobweb import CobwebTree, CobwebNode
 import unittest
 import random
-import json
+
+from concept_formation.cobweb import CobwebTree, CobwebNode
 
 def verify_category_utility(node):
     if node.children:
@@ -115,36 +115,6 @@ class TestCobweb(unittest.TestCase):
             data['a2'] = random.choice(['v1', 'v2', 'v3', 'v4'])
             tree.ifit(data)
         verify_counts(tree.root)
-
-    #def test_predict_attribute(self):
-    #    with open("data_files/mushrooms.json", "r") as json_data:
-    #        instances = json.load(json_data)
-
-    #    random.shuffle(instances)
-    #    train_size = 5 
-    #    train = instances[0:train_size]
-    #    test = instances[train_size:]
-
-    #    tree = CobwebTree()
-    #    tree.fit(train)
-
-    #    with open('visualize/output.json', 'w') as f:
-    #        f.write(json.dumps(tree.root.output_json()))
-
-    #    correct = []
-    #    for e in test:
-    #        y = e['0']
-    #        del e['0']
-    #        y_hat = tree.predict_attribute(e, '0')
-    #        
-    #        if y_hat == y:
-    #            correct.append(1)
-    #        else:
-    #            correct.append(0)
-
-    #    print("Accuracy on Mushroom Dataset = %0.2f" %
-    #          (sum(correct)/len(correct)))
-
 
 if __name__ == "__main__":
     unittest.main()
