@@ -163,13 +163,13 @@ def depth_labels(tree,instances,mod=True):
 
     return final_labels
 
-from trestle import TrestleTree
-import pprint
-
-with open("data_files/rb_s_07_continuous.json") as dat:
-    instances = json.load(dat)[:15]
-
-    tree = TrestleTree()
-
-    clus = cluster(tree,instances,maxsplit=5)
-    pprint.pprint(clus)
+#from trestle import TrestleTree
+#import pprint
+#
+#with open("data_files/rb_s_07_continuous.json") as dat:
+#    instances = json.load(dat)[:15]
+#
+#    tree = TrestleTree()
+#
+#    clus = cluster(tree,instances,maxsplit=5)
+#    pprint.pprint(clus)

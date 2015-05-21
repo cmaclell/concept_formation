@@ -28,7 +28,7 @@ class CobwebTree:
         """
         return self.cobweb(instance)
 
-    def fit(self, instances, iterations=1, shuffle=True):
+    def fit(self, instances, iterations=1, randomize_order=True):
         """
         This is a batch ifit function that takes a collection of instances
         and categorizes all of them. This function does not return anything.
@@ -40,11 +40,13 @@ class CobwebTree:
         Note that the first iteration is not shuffled.
         """
         instances = [i for i in instances]
+
         for x in range(iterations):
+            if randomize_order:
+                shuffle(instances)
+
             for i in instances:
                 self.ifit(i)
-            if shuffle:
-                shuffle(instances)
 
     def cobweb(self, instance):
         """
