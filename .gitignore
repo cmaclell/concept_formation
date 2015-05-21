@@ -6,7 +6,7 @@
 *.pyc
 
 # ignore specific files
-./visualize/output.json
-./visualize/output.js
-./visualize/output*
-./visualize/images
+visualize/output.json
+visualize/output.js
+visualize/output*
+visualize/images
