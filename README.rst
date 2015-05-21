@@ -41,8 +41,7 @@ You can install this software using pip::
 
     pip install -U concept_formation
 
-Alternatively, you can install the latest version of the code directly from
-github::
+You can install the latest version of the code directly from github::
     
     pip install -U git+https://github.com/cmaclell/concept_formation@master
 
