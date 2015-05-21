@@ -1,8 +1,10 @@
 # Overview
 
-This is a python library of algorithms that perform concept formation written by
+This is a Python library of algorithms that perform concept formation written by
 Christopher MacLellan (http://www.christopia.net) and Erik Harpstead
-(http://www.erikharpstead.net).  
+(http://www.erikharpstead.net). *Note, this libary has been developed for
+python 3 and is incompatible with python 2 because of the way that it treats
+integer division.*
 
 In this library, the
 [COBWEB](http://axon.cs.byu.edu/~martinez/classes/678/Papers/Fisher_Cobweb.pdf)
