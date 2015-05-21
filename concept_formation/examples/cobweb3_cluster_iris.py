@@ -1,4 +1,3 @@
-import json
 from random import shuffle
 
 import matplotlib.pyplot as plt
@@ -8,13 +7,13 @@ from sklearn.metrics import adjusted_rand_score
 
 from concept_formation.cobweb3 import Cobweb3Tree
 from concept_formation.cluster import cluster
+from concept_formation.datasets import load_iris
 
 def run_demo():
 
     ############## LOAD DATA ###############################
 
-    with open('data_files/iris.json') as fin:
-        irises = json.load(fin)
+    irises = load_iris()
     shuffle(irises)
 
     ############### CLUSTER DATA ###########################
