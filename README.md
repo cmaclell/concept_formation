@@ -10,7 +10,9 @@ use the following imports:
 from __future__ import print_function, unicode_literals
 from __future__ import absolute_import, division
 ```
-as described [here](http://www.dwheeler.com/essays/python3-in-python2.html)
+as described [here](http://www.dwheeler.com/essays/python3-in-python2.html).
+However, you should keep in mind that we have only tested this code on Python
+3.
 
 In this library, the
 [COBWEB](http://axon.cs.byu.edu/~martinez/classes/678/Papers/Fisher_Cobweb.pdf)
