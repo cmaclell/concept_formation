@@ -11,7 +11,7 @@ from concept_formation.cluster import cluster
 
 ############## LOAD DATA ###############################
 
-with open('../data_files/mushrooms.json') as fin:
+with open('data_files/mushrooms.json') as fin:
     mushrooms = json.load(fin)
 shuffle(mushrooms)
 mushrooms = mushrooms[:150]
