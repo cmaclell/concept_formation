@@ -20,7 +20,7 @@ concept hierarchy. The resulting hierarchy can be used for clustering and
 prediction.
 
 This library also includes
-`TRESTLE <http://christopia.net/data/articles/publications/maclellan1-2015.pdf>_`,
+`TRESTLE <http://christopia.net/data/articles/publications/maclellan1-2015.pdf>`_,
 an extension of COBWEB and COBWEB/3 that support structured and relational data
 objects. This system employs partial matching to rename new objects to align
 with previous examples, then categorizes these renamed objects.
