@@ -52,7 +52,7 @@ Citing this Software
 If you use this software in a scientific publiction, then we would appreciate
 citation of the following paper:
 
-MacLellan, C.J., Harpstead, E., Aleven, V., Koedinger, K.R. (2015) `<TRESTLE:
+MacLellan, C.J., Harpstead, E., Aleven, V., Koedinger, K.R. (2015) `TRESTLE:
 Incremental Learning in Structured Domains using Partial Matching and
 Categorization <http://christopia.net/data/articles/publications/maclellan1-2015.pdf>`_.
 The Third Annual Conference on Advances in Cognitive Systems.
