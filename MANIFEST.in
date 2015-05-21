@@ -1,4 +1,3 @@
 include *.txt
-include *.md
+include *.rst
 recursive-include concept_formation/data_files *
-recursive-include docs *.txt
