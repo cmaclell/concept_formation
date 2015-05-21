@@ -18,5 +18,5 @@ setup(
     license='LICENSE.txt',
     description='A library for doing incremental concept formation using algorithms in the COBWEB family',
     long_description=open('README.md').read(),
-    install_requires=['python>=3.0'],
+    install_requires=[],
 )
