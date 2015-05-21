@@ -5,7 +5,7 @@ setup(
     version='0.1.0',
     author='Christopher J. MacLellan, Erik Harpstead',
     author_email='maclellan.christopher@gmail.com, whitill29@gmail.com',
-    packages=['concept_formation', 'towelstuff.test'],
+    packages=['concept_formation', 'concept_formation.test'],
     scripts=['bin/cobweb3_cluster_iris.py',
              'bin/cobweb3_cluster_simulated.py',
              'bin/cobweb3_predict_iris.py',
