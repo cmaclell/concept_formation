@@ -2,9 +2,15 @@
 
 This is a Python library of algorithms that perform concept formation written by
 Christopher MacLellan (http://www.christopia.net) and Erik Harpstead
-(http://www.erikharpstead.net). *Note, this libary has been developed for
+(http://www.erikharpstead.net). **Note, this libary has been developed for
 python 3 and is incompatible with python 2 because of the way that it treats
-integer division.*
+integer division.** If you choose to try and use this library on python 2 then
+use the following imports:
+```
+from __future__ import print_function, unicode_literals
+from __future__ import absolute_import, division
+```
+as described [here](http://www.dwheeler.com/essays/python3-in-python2.html)
 
 In this library, the
 [COBWEB](http://axon.cs.byu.edu/~martinez/classes/678/Papers/Fisher_Cobweb.pdf)
