@@ -9,45 +9,49 @@ from sklearn.metrics import adjusted_rand_score
 from concept_formation.cobweb3 import Cobweb3Tree
 from concept_formation.cluster import cluster
 
-############## LOAD DATA ###############################
+def run_demo():
 
-with open('data_files/iris.json') as fin:
-    irises = json.load(fin)
-shuffle(irises)
+    ############## LOAD DATA ###############################
 
-############### CLUSTER DATA ###########################
+    with open('data_files/iris.json') as fin:
+        irises = json.load(fin)
+    shuffle(irises)
 
-tree = Cobweb3Tree()
-irises_no_class = [{a: iris[a] for a in iris if a != 'class'} for iris in irises]
-clusters = cluster(tree, irises_no_class)[0] 
+    ############### CLUSTER DATA ###########################
 
-############### COMPUTE AGREEMENT WITH TRUE CLASSES#####
+    tree = Cobweb3Tree()
+    irises_no_class = [{a: iris[a] for a in iris if a != 'class'} for iris in irises]
+    clusters = cluster(tree, irises_no_class)[0] 
 
-iris_class = [iris[a] for iris in irises for a in iris if a == 'class']
-ari = adjusted_rand_score(clusters, iris_class)
+    ############### COMPUTE AGREEMENT WITH TRUE CLASSES#####
 
-############### PLOT RESULTS ###########################
+    iris_class = [iris[a] for iris in irises for a in iris if a == 'class']
+    ari = adjusted_rand_score(clusters, iris_class)
 
-dv = DictVectorizer(sparse=False)
-iris_X = dv.fit_transform([{a:iris[a] for a in iris if a != 'class'} for iris in irises])
-pca = PCA(n_components=2)
-iris_2d_x = pca.fit_transform(iris_X)
+    ############### PLOT RESULTS ###########################
 
-colors = ['b', 'g', 'r', 'y', 'k', 'c', 'm']
-shapes = ['o', '^', '+']
-clust_set = {v:i for i,v in enumerate(list(set(clusters)))}
-class_set = {v:i for i,v in enumerate(list(set(iris_class)))}
+    dv = DictVectorizer(sparse=False)
+    iris_X = dv.fit_transform([{a:iris[a] for a in iris if a != 'class'} for iris in irises])
+    pca = PCA(n_components=2)
+    iris_2d_x = pca.fit_transform(iris_X)
 
-for class_idx, class_label in enumerate(class_set):
-    x = [x[0] for i,x in enumerate(iris_2d_x) if iris_class[i] == class_label]
-    y = [x[1] for i,x in enumerate(iris_2d_x) if iris_class[i] == class_label]
-    c = [colors[clust_set[clusters[i]]] for i,v in enumerate(iris_2d_x) if
-         iris_class[i] == class_label]
-    plt.scatter(x, y, color=c, marker=shapes[class_idx], label=class_label)
+    colors = ['b', 'g', 'r', 'y', 'k', 'c', 'm']
+    shapes = ['o', '^', '+']
+    clust_set = {v:i for i,v in enumerate(list(set(clusters)))}
+    class_set = {v:i for i,v in enumerate(list(set(iris_class)))}
 
-plt.title("COBWEB/3 Iris Clustering (ARI = %0.2f)" % (ari))
-plt.xlabel("PCA Dimension 1")
-plt.ylabel("PCA Dimension 2")
-plt.legend(loc=4)
-plt.show()
+    for class_idx, class_label in enumerate(class_set):
+        x = [x[0] for i,x in enumerate(iris_2d_x) if iris_class[i] == class_label]
+        y = [x[1] for i,x in enumerate(iris_2d_x) if iris_class[i] == class_label]
+        c = [colors[clust_set[clusters[i]]] for i,v in enumerate(iris_2d_x) if
+             iris_class[i] == class_label]
+        plt.scatter(x, y, color=c, marker=shapes[class_idx], label=class_label)
 
+    plt.title("COBWEB/3 Iris Clustering (ARI = %0.2f)" % (ari))
+    plt.xlabel("PCA Dimension 1")
+    plt.ylabel("PCA Dimension 2")
+    plt.legend(loc=4)
+    plt.show()
+
+if __name__ == "__main__":
+    run_demo()
