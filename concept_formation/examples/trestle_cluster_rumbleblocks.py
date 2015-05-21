@@ -6,34 +6,33 @@ import matplotlib.pyplot as plt
 
 from concept_formation.trestle import TrestleTree
 from concept_formation.cluster import cluster
+from concept_formation.datasets import load_rb_wb_03
 
-############### LOAD THE DATA ################
+def run_demo():
+    ############### LOAD THE DATA ################
 
-## Choose a datafile to load
-filename = 'data_files/rb_wb_03_continuous.json'
-#filename = 'data_files/rb_com_11_continuous.json'
-#filename = 'data_files/rb_s_13_continuous.json'
+    towers = load_rb_wb_03()
+    shuffle(towers)
+    towers = towers[:30]
 
-with open(filename) as dat:
-    towers = json.load(dat)
-shuffle(towers)
-towers = towers[:30]
+    ############## CLUSTER THE DATA ##############
 
-############## CLUSTER THE DATA ##############
+    tree = TrestleTree()
+    clusters = cluster(tree, towers, maxsplit=10)
 
-tree = TrestleTree()
-clusters = cluster(tree, towers, maxsplit=10)
+    ############# PLOT THE RESULTS ###############
 
-############# PLOT THE RESULTS ###############
+    human_labels = [tower['_human_cluster_label'] for tower in towers]
 
-human_labels = [tower['_human_cluster_label'] for tower in towers]
+    x = [num_splits for num_splits in range(1,len(clusters)+1)]
+    y = [adjusted_rand_score(human_labels, split) for split in clusters]
+    plt.plot(x, y, label="TRESTLE")
 
-x = [num_splits for num_splits in range(1,len(clusters)+1)]
-y = [adjusted_rand_score(human_labels, split) for split in clusters]
-plt.plot(x, y, label="TRESTLE")
+    plt.title("TRESTLE Clustering Accuracy (Given Human Ground Truth)")
+    plt.ylabel("Adjusted Rand Index (Agreement Correcting for Chance)")
+    plt.xlabel("# of Splits of Trestle Tree")
+    plt.legend(loc=4)
+    plt.show()
 
-plt.title("TRESTLE Clustering Accuracy (Given Human Ground Truth)")
-plt.ylabel("Adjusted Rand Index (Agreement Correcting for Chance)")
-plt.xlabel("# of Splits of Trestle Tree")
-plt.legend(loc=4)
-plt.show()
+if __name__ == "__main__":
+    run_demo()
