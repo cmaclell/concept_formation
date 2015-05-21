@@ -34,7 +34,7 @@ pca = PCA(n_components=2)
 iris_2d_x = pca.fit_transform(iris_X)
 
 colors = ['b', 'g', 'r', 'y', 'k', 'c', 'm']
-shapes = ['o', 's', '*']
+shapes = ['o', '^', '+']
 clust_set = {v:i for i,v in enumerate(list(set(clusters)))}
 class_set = {v:i for i,v in enumerate(list(set(iris_class)))}
 
