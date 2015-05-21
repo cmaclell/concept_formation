@@ -1,12 +1,13 @@
 import csv
 import json
+
 import numpy as np
 import matplotlib.pyplot as plt
 
-from utils import lowess
-from predict import incremental_prediction
-from trestle import TrestleTree
-from dummy import DummyTree
+from concept_formation.utils import lowess
+from concept_formation.predict import incremental_prediction
+from concept_formation.trestle import TrestleTree
+from concept_formation.dummy import DummyTree
 
 num_runs = 30
 num_examples = 30

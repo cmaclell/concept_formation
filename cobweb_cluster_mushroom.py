@@ -1,16 +1,17 @@
 import json
 from random import shuffle
+
 import matplotlib.pyplot as plt
 from sklearn.decomposition import PCA
 from sklearn.feature_extraction import DictVectorizer
 from sklearn.metrics import adjusted_rand_score
 
-from cobweb import CobwebTree
-from cluster import cluster
+from concept_formation.cobweb import CobwebTree
+from concept_formation.cluster import cluster
 
 ############## LOAD DATA ###############################
 
-with open('data_files/mushrooms.json') as fin:
+with open('../data_files/mushrooms.json') as fin:
     mushrooms = json.load(fin)
 shuffle(mushrooms)
 mushrooms = mushrooms[:150]

@@ -4,8 +4,8 @@ from random import shuffle
 from sklearn.metrics import adjusted_rand_score
 import matplotlib.pyplot as plt
 
-from trestle import TrestleTree
-from cluster import cluster
+from concept_formation.trestle import TrestleTree
+from concept_formation.cluster import cluster
 
 ############### LOAD THE DATA ################
 

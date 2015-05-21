@@ -1,4 +1,4 @@
-import search
+from concept_formation import search
 
 gensym_counter = 0;
 

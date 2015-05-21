@@ -2,7 +2,7 @@ import json
 from random import shuffle
 from random import random
 
-from utils import weighted_choice
+from concept_formation.utils import weighted_choice
 
 class CobwebTree:
 

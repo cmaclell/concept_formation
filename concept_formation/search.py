@@ -1,10 +1,8 @@
+import random
 from collections import deque
 from heapq import heappush
 from heapq import heappop
 from heapq import heapify
-#import queue
-import random
-
 
 class Node:
     

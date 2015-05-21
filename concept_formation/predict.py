@@ -2,11 +2,11 @@ from re import search
 from random import shuffle
 from numbers import Number
 
-from utils import mean
-from structure_mapper import flattenJSON
-from structure_mapper import flatMatch
-from structure_mapper import renameFlat
-from cobweb3 import ContinuousValue
+from concept_formation.utils import mean
+from concept_formation.structure_mapper import flattenJSON
+from concept_formation.structure_mapper import flatMatch
+from concept_formation.structure_mapper import renameFlat
+from concept_formation.cobweb3 import ContinuousValue
 
 def probability(tree, instance, attr, val):
     """

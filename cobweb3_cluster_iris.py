@@ -1,12 +1,13 @@
 import json
 from random import shuffle
+
 import matplotlib.pyplot as plt
 from sklearn.decomposition import PCA
 from sklearn.feature_extraction import DictVectorizer
 from sklearn.metrics import adjusted_rand_score
 
-from cobweb3 import Cobweb3Tree
-from cluster import cluster
+from concept_formation.cobweb3 import Cobweb3Tree
+from concept_formation.cluster import cluster
 
 ############## LOAD DATA ###############################
 

@@ -1,10 +1,11 @@
 from random import uniform
 from math import sqrt
+from numbers import Number
+
 import numpy as np
 from scipy import linalg
 from scipy.stats import sem
 from scipy.stats import t
-from numbers import Number
 
 # A hashtable of values to use in the c4(n) function to apply corrections to
 # estimates of std.

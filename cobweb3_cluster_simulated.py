@@ -1,10 +1,12 @@
 import time
-from cobweb3 import Cobweb3Tree
 from random import normalvariate
 from random import shuffle, uniform
+
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 from matplotlib.patches import Ellipse
+
+from concept_formation.cobweb3 import Cobweb3Tree
 
 tree = Cobweb3Tree()
 

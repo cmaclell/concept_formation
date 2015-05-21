@@ -3,9 +3,9 @@ from itertools import product
 
 import numpy as np
 
-from search import Node
-from search import BeamGS
-from search import BestFGS
+from concept_formation.search import Node
+from concept_formation.search import BestFGS
+#from concept_formation.search import BeamGS
 
 def levenshtein(source, target):
     """ 

@@ -4,9 +4,9 @@ from math import exp
 from random import normalvariate
 from numbers import Number
 
-from utils import c4
-from cobweb import CobwebNode
-from cobweb import CobwebTree
+from concept_formation.utils import c4
+from concept_formation.cobweb import CobwebNode
+from concept_formation.cobweb import CobwebTree
 
 # Magnify the continuous values so that the just noticable difference
 # of the noramlized values is equal to acuity (i.e., a JND of 8% means that the

@@ -2,25 +2,25 @@ import json
 import numpy as np
 import matplotlib.pyplot as plt
 
-from utils import lowess
-from predict import incremental_prediction
-from cobweb3 import Cobweb3Tree
-from dummy import DummyTree
+from concept_formation.utils import lowess
+from concept_formation.predict import incremental_prediction
+from concept_formation.cobweb import CobwebTree
+from concept_formation.dummy import DummyTree
 
-num_runs = 30
-num_examples = 30
+num_runs = 30 
+num_examples = 30 
 
-with open('data_files/iris.json') as fin:
-    irises = json.load(fin)
+with open('data_files/mushrooms.json') as fin:
+    mushrooms = json.load(fin)
 
 ############################## GENERATE PREDICTIONS ##########################
 
-naive_data = incremental_prediction(DummyTree(), irises,
+naive_data = incremental_prediction(DummyTree(), mushrooms,
                                   run_length=num_examples,
-                                  runs=num_runs, attr="class")
-cobweb_data = incremental_prediction(Cobweb3Tree(), irises,
+                                  runs=num_runs, attr="classification")
+cobweb_data = incremental_prediction(CobwebTree(), mushrooms,
                                   run_length=num_examples,
-                                  runs=num_runs, attr="class")
+                                  runs=num_runs, attr="classification")
 
 ############################## PLOT RESULTS ##################################
 
@@ -50,12 +50,12 @@ plt.fill_between(cobweb_x, cobweb_lower_smooth, cobweb_upper_smooth, alpha=0.5,
 plt.fill_between(naive_x, naive_lower_smooth, naive_upper_smooth, alpha=0.5,
                  facecolor="red")
 
-plt.plot(cobweb_x, cobweb_y_smooth, label="COBWEB/3", color="green")
+plt.plot(cobweb_x, cobweb_y_smooth, label="COBWEB", color="green")
 plt.plot(naive_x, naive_y_smooth, label="Naive Predictor", color="red")
 
-plt.gca().set_ylim([0.00,1.0])
+plt.gca().set_ylim([0.0,1.0])
 plt.gca().set_xlim([0,max(naive_x)-1])
-plt.title("Incremental Iris Classification Prediction Accuracy")
+plt.title("Incremental Mushroom Edibility Prediction Accuracy")
 plt.xlabel("# of Training Examples")
 plt.ylabel("Avg. Probability of True Class (Accuracy)")
 plt.legend(loc=4)

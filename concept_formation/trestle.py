@@ -1,6 +1,6 @@
-from cobweb3 import Cobweb3Tree
-from cobweb3 import Cobweb3Node
-from structure_mapper import structure_map
+from concept_formation.cobweb3 import Cobweb3Tree
+from concept_formation.cobweb3 import Cobweb3Node
+from concept_formation.structure_mapper import structure_map
 
 class TrestleTree(Cobweb3Tree):
 
