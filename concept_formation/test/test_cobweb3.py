@@ -1,8 +1,11 @@
-from utils import ContinuousValue
-from cobweb3 import Cobweb3Node, Cobweb3Tree
+from __future__ import print_function, unicode_literals
+from __future__ import absolute_import, division
 import unittest
 import random
-import math
+from numbers import Number
+
+from concept_formation.cobweb3 import ContinuousValue
+from concept_formation.cobweb3 import Cobweb3Tree
 
 def verify_counts(node):
     """
@@ -42,7 +45,7 @@ def verify_counts(node):
     assert temp_count == 0
 
     for attr in temp:
-        if isinstance(temp[attr], int):
+        if isinstance(temp[attr], Number):
             assert temp[attr] == 0.0
         else:
             for val in temp[attr]:
@@ -71,46 +74,6 @@ class TestCobweb(unittest.TestCase):
             data['y'] = random.normalvariate(0,4)
             tree.ifit(data)
         verify_counts(tree.root)
-
-    def test_expected_correct_guess(self):
-        node = Cobweb3Node()
-        node.count = 10
-        node.av_counts['a1'] = {}
-        node.av_counts['a1']['v1'] = 1 
-        node.av_counts['a1']['v2'] = 3 
-        node.av_counts['a1']['v3'] = 6 
-
-        assert node.expected_correct_guesses() == ((1/10)**2 + (3/10)**2 +
-                                                   (6/10)**2)
-
-        node.av_counts['*a2'] = {}
-        node.av_counts['*a2']['v1'] = 1 
-        node.av_counts['*a2']['v2'] = 1
-
-        assert node.expected_correct_guesses() == ((1/10)**2 + (3/10)**2 +
-                                                   (6/10)**2)
-
-        node = Cobweb3Node()
-        node.count = 10
-        node.av_counts['a1'] = {}
-        v1 = ContinuousValue()
-        v1.update(3)
-        v1.update(5)
-        v2 = ContinuousValue()
-        v2.update(1)
-        v2.update(11)
-        v2.update(1.01)
-        node.av_counts['a1'] = v1
-        node.av_counts['a2'] = v2
-
-        assert node.expected_correct_guesses() == ((2/10)**2 *
-        (1/(2*math.sqrt(math.pi)*v1.unbiased_std())) + 
-        (3/10)**2 * (1/(2*math.sqrt(math.pi)*v2.unbiased_std())))
-
-        node.av_counts['*a3'] = v2
-        assert node.expected_correct_guesses() == ((2/10)**2 *
-        (1/(2*math.sqrt(math.pi)*v1.unbiased_std())) + 
-        (3/10)**2 * (1/(2*math.sqrt(math.pi)*v2.unbiased_std())))
 
 if __name__ == "__main__":
     unittest.main()
