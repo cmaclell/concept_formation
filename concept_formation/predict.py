@@ -1,3 +1,5 @@
+from __future__ import print_function, unicode_literals
+from __future__ import absolute_import, division
 from re import search
 from random import shuffle
 from numbers import Number

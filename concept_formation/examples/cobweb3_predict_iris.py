@@ -1,5 +1,7 @@
-import numpy as np
+from __future__ import print_function, unicode_literals
+from __future__ import absolute_import, division
 
+import numpy as np
 import matplotlib.pyplot as plt
 
 from concept_formation.utils import lowess
@@ -9,12 +11,12 @@ from concept_formation.dummy import DummyTree
 from concept_formation.datasets import load_iris
 
 def run_demo():
-
+    """
+    Run the demo.
+    """
     num_runs = 30
     num_examples = 30
     irises = load_iris()
-
-    ############################## GENERATE PREDICTIONS ##########################
 
     naive_data = incremental_prediction(DummyTree(), irises,
                                       run_length=num_examples,
@@ -22,8 +24,6 @@ def run_demo():
     cobweb_data = incremental_prediction(Cobweb3Tree(), irises,
                                       run_length=num_examples,
                                       runs=num_runs, attr="class")
-
-    ############################## PLOT RESULTS ##################################
 
     naive_data.sort()
     cobweb_data.sort()

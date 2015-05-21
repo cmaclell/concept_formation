@@ -11,6 +11,6 @@ setup(
     url='http://pypi.python.org/pypi/concept_formation/',
     license='LICENSE.txt',
     description='A library for doing incremental concept formation using algorithms in the COBWEB family',
-    long_description=open('README.md').read(),
+    long_description=open('README.rst').read(),
     install_requires=[],
 )

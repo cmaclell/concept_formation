@@ -1,3 +1,5 @@
+from __future__ import print_function, unicode_literals
+from __future__ import absolute_import, division
 from concept_formation.cobweb3 import Cobweb3Tree
 from concept_formation.cobweb3 import Cobweb3Node
 from concept_formation.structure_mapper import structure_map

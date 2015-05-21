@@ -1,6 +1,5 @@
-import csv
-import json
-
+from __future__ import print_function, unicode_literals
+from __future__ import absolute_import, division
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -12,12 +11,12 @@ from concept_formation.datasets import load_s_07
 from concept_formation.datasets import load_rb_s_07_human_predictions
 
 def run_demo():
+    """
+    Runs the demo.
+    """
     num_runs = 30
     num_examples = 30
-
     towers = load_s_07()
-
-    ############################## GENERATE PREDICTIONS ##########################
 
     naive_data = incremental_prediction(DummyTree(), towers,
                                       run_length=num_examples,
@@ -26,7 +25,6 @@ def run_demo():
                                       run_length=num_examples,
                                       runs=num_runs, attr="success")
 
-    ############################## LOAD HUMAN PREDICTIONS FOR COMPARISON #########
     human_data = []
     key = None
     human_predictions = load_rb_s_07_human_predictions()
@@ -40,7 +38,6 @@ def run_demo():
                      int(line[key['prediction']])))
         human_data.append((x,y))
 
-    ############################## PLOT RESULTS ##################################
     naive_data.sort()
     cobweb_data.sort()
     human_data.sort()

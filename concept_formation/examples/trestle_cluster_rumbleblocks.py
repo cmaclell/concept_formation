@@ -1,4 +1,5 @@
-import json
+from __future__ import print_function, unicode_literals
+from __future__ import absolute_import, division
 from random import shuffle
 
 from sklearn.metrics import adjusted_rand_score
@@ -9,19 +10,15 @@ from concept_formation.cluster import cluster
 from concept_formation.datasets import load_rb_wb_03
 
 def run_demo():
-    ############### LOAD THE DATA ################
-
+    """
+    Runs the demo.
+    """
     towers = load_rb_wb_03()
     shuffle(towers)
     towers = towers[:30]
 
-    ############## CLUSTER THE DATA ##############
-
     tree = TrestleTree()
     clusters = cluster(tree, towers, maxsplit=10)
-
-    ############# PLOT THE RESULTS ###############
-
     human_labels = [tower['_human_cluster_label'] for tower in towers]
 
     x = [num_splits for num_splits in range(1,len(clusters)+1)]

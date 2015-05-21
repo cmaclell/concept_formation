@@ -1,3 +1,5 @@
+from __future__ import print_function, unicode_literals
+from __future__ import absolute_import, division
 from random import shuffle
 
 import matplotlib.pyplot as plt
@@ -10,26 +12,20 @@ from concept_formation.cluster import cluster
 from concept_formation.datasets import load_mushroom
 
 def run_demo():
-    ############## LOAD DATA ###############################
-
+    """
+    Run the demo.
+    """
     mushrooms = load_mushroom()
     shuffle(mushrooms)
     mushrooms = mushrooms[:150]
-
-    ############### CLUSTER DATA ###########################
 
     tree = CobwebTree()
     mushrooms_no_class = [{a: mushroom[a] for a in mushroom 
                            if a != 'classification'} for mushroom in mushrooms]
     clusters = cluster(tree, mushrooms_no_class)[0] 
-
-    ############### COMPUTE AGREEMENT WITH TRUE CLASSES#####
-
     mushroom_class = [mushroom[a] for mushroom in mushrooms for a in mushroom
                       if a == 'classification']
     ari = adjusted_rand_score(clusters, mushroom_class)
-
-    ############### PLOT RESULTS ###########################
 
     dv = DictVectorizer(sparse=False)
     mushroom_X = dv.fit_transform(mushrooms_no_class)
@@ -38,7 +34,6 @@ def run_demo():
     mushroom_2d_x = pca.fit_transform(mushroom_X)
 
     colors = ['b', 'g', 'r', 'y', 'k', 'c', 'm']
-    shapes = ['o', '*']
     clust_set = {v:i for i,v in enumerate(list(set(clusters)))}
     class_set = {v:i for i,v in enumerate(list(set(mushroom_class)))}
 

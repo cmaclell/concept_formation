@@ -1,6 +1,8 @@
-import time
+from __future__ import print_function, unicode_literals
+from __future__ import absolute_import, division
 from random import normalvariate
 from random import shuffle, uniform
+import time
 
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
@@ -9,6 +11,9 @@ from matplotlib.patches import Ellipse
 from concept_formation.cobweb3 import Cobweb3Tree
 
 def run_demo():
+    """
+    Run the demo.
+    """
     tree = Cobweb3Tree()
 
     num_clusters = 4 

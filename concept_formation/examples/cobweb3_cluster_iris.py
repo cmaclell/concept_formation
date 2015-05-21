@@ -1,3 +1,5 @@
+from __future__ import print_function, unicode_literals
+from __future__ import absolute_import, division
 from random import shuffle
 
 import matplotlib.pyplot as plt
@@ -11,23 +13,14 @@ from concept_formation.datasets import load_iris
 
 def run_demo():
 
-    ############## LOAD DATA ###############################
-
     irises = load_iris()
     shuffle(irises)
-
-    ############### CLUSTER DATA ###########################
 
     tree = Cobweb3Tree()
     irises_no_class = [{a: iris[a] for a in iris if a != 'class'} for iris in irises]
     clusters = cluster(tree, irises_no_class)[0] 
-
-    ############### COMPUTE AGREEMENT WITH TRUE CLASSES#####
-
     iris_class = [iris[a] for iris in irises for a in iris if a == 'class']
     ari = adjusted_rand_score(clusters, iris_class)
-
-    ############### PLOT RESULTS ###########################
 
     dv = DictVectorizer(sparse=False)
     iris_X = dv.fit_transform([{a:iris[a] for a in iris if a != 'class'} for iris in irises])

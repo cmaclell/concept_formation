@@ -6,6 +6,8 @@
 *.pyc
 
 # ignore specific files
+MANIFEST
+dist/
 visualize/output.json
 visualize/output.js
 visualize/output*

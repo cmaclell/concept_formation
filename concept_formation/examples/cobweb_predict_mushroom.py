@@ -1,3 +1,5 @@
+from __future__ import print_function, unicode_literals
+from __future__ import absolute_import, division
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -8,12 +10,12 @@ from concept_formation.dummy import DummyTree
 from concept_formation.datasets import load_mushroom
 
 def run_demo():
-
+    """
+    Run the demo.
+    """
     num_runs = 30 
     num_examples = 30 
     mushrooms = load_mushroom()
-
-    ############################## GENERATE PREDICTIONS ##########################
 
     naive_data = incremental_prediction(DummyTree(), mushrooms,
                                       run_length=num_examples,
@@ -21,8 +23,6 @@ def run_demo():
     cobweb_data = incremental_prediction(CobwebTree(), mushrooms,
                                       run_length=num_examples,
                                       runs=num_runs, attr="classification")
-
-    ############################## PLOT RESULTS ##################################
 
     naive_data.sort()
     cobweb_data.sort()
