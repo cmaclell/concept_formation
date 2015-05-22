@@ -7,7 +7,7 @@ from concept_formation.utils import lowess
 from concept_formation.predict import incremental_prediction
 from concept_formation.trestle import TrestleTree
 from concept_formation.dummy import DummyTree
-from concept_formation.datasets import load_s_07
+from concept_formation.datasets import load_rb_s_07
 from concept_formation.datasets import load_rb_s_07_human_predictions
 
 def run_demo():
@@ -16,7 +16,7 @@ def run_demo():
     """
     num_runs = 30
     num_examples = 30
-    towers = load_s_07()
+    towers = load_rb_s_07()
 
     naive_data = incremental_prediction(DummyTree(), towers,
                                       run_length=num_examples,
