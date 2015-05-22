@@ -51,9 +51,9 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = 'concept_formation'
-copyright = '2015, Author'
-author = 'Author'
+project = 'Concept Formation'
+copyright = '2015, Christopher J MacLellan and Erik Harpstead'
+author = 'Christopher J MacLellan and Erik Harpstead'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -107,7 +107,6 @@ pygments_style = 'sphinx'
 
 # If true, `todo` and `todoList` produce output, else they produce nothing.
 todo_include_todos = True
-
 
 # -- Options for HTML output ----------------------------------------------
 

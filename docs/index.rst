@@ -9,7 +9,7 @@ Welcome to concept_formation's documentation!
 Contents:
 
 .. toctree::
-   :maxdepth: 4
+   :maxdepth: 2
 
    concept_formation
 

@@ -45,6 +45,17 @@ You can install the latest version of the code directly from github::
     
     pip install -U git+https://github.com/cmaclell/concept_formation@master
 
+Documentation
+=============
+
+Basic API documentation can be found at `concept-formation.readthedocs.org <http://concept-formation.readthedocs.org>`_.
+
+We have created a number of examples to demonstrate the basic functionality of
+this library. Details on running these examples can be found `here <concept_formation/examples/README.rst>`_. *Note, the basic library has no prerequisites, but some of the
+examples require Matplotlib and Scikit-learn.*
+
+
+
 Citing this Software 
 ====================
 
