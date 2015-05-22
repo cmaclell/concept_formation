@@ -8,6 +8,9 @@
 # ignore specific files
 MANIFEST
 dist/
+docs/_build
+docs/_static
+docs/_templates
 visualize/output.json
 visualize/output.js
 visualize/output*
