@@ -5,8 +5,7 @@ import re
 import copy
 
 def cluster_iter(tree, instances, minsplit=1, maxsplit=100000,  mod=True):
-    """
-    Categorize the list of instances into the tree and return an iterator that
+    """Categorize the list of instances into the tree and return an iterator that
     can  be used to iteratively return clusterings based on splitting nodes of
     the tree.
 
@@ -17,15 +16,20 @@ def cluster_iter(tree, instances, minsplit=1, maxsplit=100000,  mod=True):
     Because splitting is a modifying operation, a deepcopy of the tree is made
     before creating the iterator.
 
-    Keyword arguments:
-    tree -- a CobwebTree, Cobweb3Tree, or TrestleTree
-    instances -- a list of instance objects
-    minsplit -- The minimum number of splits to perform on the tree, must be >=1
-    (default 1)
-    maxsplit -- the maximum number of splits to perform on the tree, must be >= minsplit
-    (default 100000)
-    mod -- If True instances will be fit (i.e. modyfiying knoweldge) else they
-    will be categorized (i.e. not modiyfing knowledge) (default True)
+    :param tree: A category tree to generate clusters from, it can be pre-trained or newly created.
+    :param instances: A list of instances
+    :param minsplit: The minimum number of splits to perform on the tree (default 1)
+    :param maxsplit: the maximum number of splits to perform on the tree (default 100000)
+    :param mod: A flag determine if instances will be fit (i.e. modifying knoweldge) or categorized (i.e. not modifiying knowledge)
+    :type tree: CobwebTree, Cobweb3Tree, or TrestleTree
+    :type instances: list
+    :type minsplit: int
+    :type maxsplit: int
+    :type mod: bool
+    :returns: an iterator of clusterings based on a number of splits between minsplit and maxsplit
+    :rtype: iterator
+
+    .. warning:: minsplit must be >=1 and maxsplit must be >= minsplit
     """
     if minsplit < 1: 
         raise ValueError("minsplit must be >= 1") 
