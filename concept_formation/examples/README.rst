@@ -2,7 +2,7 @@
 Concept Formation Examples
 ==========================
 
-Cobweb Predict Mushroom Edibility::
+Cobweb Predict Mushroom Edibility (`source <cobweb_predict_mushroom.py>`_)::
 
     python -c "import concept_formation.examples.cobweb_predict_mushroom; cobweb_predict_mushroom.run_demo()"
 
