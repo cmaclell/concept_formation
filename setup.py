@@ -2,7 +2,7 @@ from distutils.core import setup
 
 setup(
     name='concept_formation',
-    version='0.1.2',
+    version='0.1.3',
     author='Christopher J. MacLellan, Erik Harpstead',
     author_email='maclellan.christopher@gmail.com, whitill29@gmail.com',
     packages=['concept_formation', 
