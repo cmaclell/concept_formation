@@ -9,7 +9,7 @@ setup(
               'concept_formation.test',
               'concept_formation.examples'],
     url='http://pypi.python.org/pypi/concept_formation/',
-    package_data={'concept_formation': ['data_files/*']},
+    package_data={'concept_formation': ['concept_formation/data_files/*']},
     license='LICENSE.txt',
     description='A library for doing incremental concept formation using algorithms in the COBWEB family',
     long_description=open('README.rst').read(),
