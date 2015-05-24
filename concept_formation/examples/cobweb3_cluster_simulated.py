@@ -5,15 +5,13 @@ from __future__ import division
 from random import normalvariate
 from random import shuffle
 from random import uniform
-import time
+#import time
 
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 from matplotlib.patches import Ellipse
 
 from concept_formation.cobweb3 import Cobweb3Tree
-
-interactive = False
 
 num_clusters = 4 
 num_samples = 30
@@ -37,17 +35,9 @@ for i in range(num_clusters):
 shuffle(data)
 trained = []
 
-if interactive is True:
-    plt.ion()
+#plt.ion()
 
-red_patch = mpatches.Patch(color='red', alpha=0.1)
-blue_patch = mpatches.Patch(color='blue', alpha=0.08)
-samples_patch = mpatches.Patch(color='blue')
-plt.legend([red_patch, blue_patch, samples_patch], ['COBWEB/3 Clusters',
-                                                    'True Clusters', 
-                                                    'Sampled Points'], loc=3)
-if interactive is True:
-    plt.show()
+#plt.show()
 
 tree = Cobweb3Tree()
 
@@ -82,13 +72,18 @@ for datum in data:
     # draw the new point
     plt.plot([datum['x']], [datum['y']], datum['_label'])
 
-    plt.axis([-10, 10, -15, 10])
     
-    if interactive is True:
-        plt.draw()
-        time.sleep(0.0001)
+    #plt.draw()
+    #time.sleep(0.0001)
 
-if interactive is True:
-    plt.ioff()
+plt.axis([-10, 10, -15, 10])
+red_patch = mpatches.Patch(color='red', alpha=0.1)
+blue_patch = mpatches.Patch(color='blue', alpha=0.08)
+samples_patch = mpatches.Patch(color='blue')
+plt.legend([red_patch, blue_patch, samples_patch], ['COBWEB/3 Clusters',
+                                                    'True Clusters', 
+                                                    'Sampled Points'], loc=3)
+
+#plt.ioff()
 plt.show()
 
