@@ -1,17 +1,6 @@
 concept_formation package
 =========================
 
-Subpackages
------------
-
-.. toctree::
-
-    concept_formation.examples
-    concept_formation.test
-
-Submodules
-----------
-
 concept_formation.action_planner module
 ---------------------------------------
 

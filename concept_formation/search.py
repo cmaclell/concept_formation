@@ -1,10 +1,12 @@
-from __future__ import print_function, unicode_literals
-from __future__ import absolute_import, division
-import random
+from __future__ import print_function
+from __future__ import unicode_literals
+from __future__ import absolute_import
+from __future__ import division
 from collections import deque
 from heapq import heappush
 from heapq import heappop
 from heapq import heapify
+import random
 
 class Node:
     

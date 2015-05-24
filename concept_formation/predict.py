@@ -1,8 +1,10 @@
-from __future__ import print_function, unicode_literals
-from __future__ import absolute_import, division
-from re import search
+from __future__ import print_function
+from __future__ import unicode_literals
+from __future__ import absolute_import
+from __future__ import division
 from random import shuffle
 from numbers import Number
+from re import search
 
 from concept_formation.utils import mean
 from concept_formation.structure_mapper import flattenJSON
@@ -113,7 +115,6 @@ def incremental_prediction(tree, instances, attr, run_length, runs=1,
 
     scores = []
     for r in range(runs):
-        print("run: ", r)
         tree = tree.__class__()
 
         shuffle(instances)

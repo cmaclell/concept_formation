@@ -1,13 +1,15 @@
-from __future__ import print_function, unicode_literals
-from __future__ import absolute_import, division
+from __future__ import print_function
+from __future__ import unicode_literals
+from __future__ import absolute_import
+from __future__ import division
 from random import uniform
-from math import sqrt
 from numbers import Number
+from math import sqrt
 
-import numpy as np
-from scipy import linalg
 from scipy.stats import sem
 from scipy.stats import t
+from scipy import linalg
+import numpy as np
 
 # A hashtable of values to use in the c4(n) function to apply corrections to
 # estimates of std.
