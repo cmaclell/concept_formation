@@ -8,7 +8,7 @@ import json
 
 from concept_formation.utils import weighted_choice
 
-class CobwebTree:
+class CobwebTree(object):
 
     def __init__(self, alpha=0.001):
         """
@@ -157,7 +157,7 @@ class CobwebTree:
         self.fit(instances)
         json_data.close()
 
-class CobwebNode:
+class CobwebNode(object):
 
     counter = 0
 
