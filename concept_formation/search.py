@@ -602,21 +602,21 @@ if __name__ == "__main__":
     print(puzzle)
     print()
 
-    print("BREADTH FIRST GRAPH SEARCH")
-    sol = next(BreadthFGS(Node(initial), successorFn8Puzzle, goalTestFn8Puzzle))
-    print("Solution Length = %i" % len(sol.getSolution()))
-    print()
+    #print("BREADTH FIRST GRAPH SEARCH")
+    #sol = next(BreadthFGS(Node(initial), successorFn8Puzzle, goalTestFn8Puzzle))
+    #print("Solution Length = %i" % len(sol.getSolution()))
+    #print()
 
-    print("DEPTH FIRST GRAPH SEARCH")
-    sol = next(DepthFGS(Node(initial), successorFn8Puzzle, goalTestFn8Puzzle))
-    print("Solution Length = %i" % len(sol.getSolution()))
-    print()
-    
-    print("BEST FIRST GRAPH SEARCH")
-    sol = next(BestFGS(Node(initial), successorFn8Puzzle, goalTestFn8Puzzle,
-                  heuristicFn8Puzzle))
-    print("Solution Length = %i" % len(sol.getSolution()))
-    print()
+    #print("DEPTH FIRST GRAPH SEARCH")
+    #sol = next(DepthFGS(Node(initial), successorFn8Puzzle, goalTestFn8Puzzle))
+    #print("Solution Length = %i" % len(sol.getSolution()))
+    #print()
+    #
+    #print("BEST FIRST GRAPH SEARCH")
+    #sol = next(BestFGS(Node(initial), successorFn8Puzzle, goalTestFn8Puzzle,
+    #              heuristicFn8Puzzle))
+    #print("Solution Length = %i" % len(sol.getSolution()))
+    #print()
 
     print("BEAM GRAPH SEARCH")
     sol = next(BeamGS(Node(initial), successorFn8Puzzle, goalTestFn8Puzzle,
@@ -629,11 +629,11 @@ if __name__ == "__main__":
 #    print("Solution Length = %i" % len(sol.getSolution()))
 #    print()
 #
-    print("ITERATIVE DEEPENING BEST FIRST SEARCH")
-    sol = next(IDBFS(Node(initial), successorFn8Puzzle, goalTestFn8Puzzle,
-                  heuristicFn8Puzzle))
-    print("Solution Length = %i" % len(sol.getSolution()))
-    print()
+    #print("ITERATIVE DEEPENING BEST FIRST SEARCH")
+    #sol = next(IDBFS(Node(initial), successorFn8Puzzle, goalTestFn8Puzzle,
+    #              heuristicFn8Puzzle))
+    #print("Solution Length = %i" % len(sol.getSolution()))
+    #print()
 
     #print("BEAM SEARCH")
     #sol = next(BeamS(Node(initial), successorFn8Puzzle, goalTestFn8Puzzle,
