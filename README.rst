@@ -54,10 +54,6 @@ Important Links
 Examples
 ========
 
-.. ipython::
-    
-    In [1]: help('modules')
-
 We have created a number of examples to demonstrate the basic functionality of
 this library. The examples can be found 
 `here <http://concept-formation.readthedocs.org>`_.  

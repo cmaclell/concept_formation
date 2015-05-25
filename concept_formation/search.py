@@ -8,7 +8,7 @@ from heapq import heappop
 from heapq import heapify
 import random
 
-class Node:
+class Node(object):
     
     def __init__(self, state, parent=None, action=None, cost=0, depth=0,
                  extra=None):
@@ -39,6 +39,9 @@ class Node:
 
     def __eq__(self, other):
         return isinstance(other, Node) and self.state == other.state
+
+    def __ne__(self, other):
+        return not self.__eq__(other)
 
 def IDDFS(initial, successorFn, goalTestFn, initialDepthLimit=1):
     """
