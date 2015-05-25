@@ -1,6 +1,10 @@
 Examples
 ========
 
+.. toctree::
+
+    examples/fast_example.rst
+
 Cobweb:
 
 .. toctree::
@@ -20,7 +24,6 @@ Trestle:
 
 .. toctree::
 
-    examples/fast_example.rst
     examples/trestle_cluster_rumbleblocks.rst
     examples/trestle_predict_rumbleblocks.rst
 
