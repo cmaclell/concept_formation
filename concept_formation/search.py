@@ -518,6 +518,9 @@ class eightPuzzle:
             return self.state == other.state
         return False
 
+    def __ne__(self, other):
+        return not self.__eq__(other)
+
     def copy(self):
         new = eightPuzzle()
         new.state = tuple([i for i in self.state])
