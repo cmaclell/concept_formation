@@ -368,7 +368,9 @@ class Cobweb3Node(CobwebNode):
         used to place a prior over these possibilites. Alpha determines the
         strength of this prior.
 
-        .. todo:: say something about how numerics are treated differently?
+        For numerical attributes the probability of val given a
+        normal distribution is returned. This normal distribution is defined by
+        the mean and std of past values stored in the concept.
         
         :param attr: an attribute of an instance
         :type attr: str
