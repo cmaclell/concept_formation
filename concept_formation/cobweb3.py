@@ -77,7 +77,7 @@ class Cobweb3Node(CobwebNode):
     """
     acuity is used as a floor on standard deviation estimates for numeric
     attribute values. The default value is set to 
-    :math:`\frac{1}{\\sqrt{2 * \\pi}}` which is the smallest possible acuity
+    :math:`\\frac{1}{\\sqrt{2 * \\pi}}` which is the smallest possible acuity
     before probability estimates begin to exceed 1.0.
     """
 
