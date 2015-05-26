@@ -196,18 +196,18 @@ class CobwebTree(object):
         json_data.close()
 
 class CobwebNode(object):
-   """
+    """
 
-    A CobwebNode represents a concept within the knoweldge base of a particular CobwebTree.
-    Each node contians a probability table that can be used to
+    A CobwebNode represents a concept within the knoweldge base of a particular
+    CobwebTree. Each node contians a probability table that can be used to
     calculate the probability of different attributes given the concept that the
-    node represents. 
+    node represents.
 
     In general the CobwebTree's functions (:meth:`CobwebTree.ifit`,
     :meth:`CobwebTree.categorize`) should be used to initially interface with
     the Cobweb knowledge base and then the returned concept can be used to
     calculate probabilities of certain attributes or determine concept labels.
-
+    
     """
 
     counter = 0
