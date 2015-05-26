@@ -329,7 +329,17 @@ class CobwebNode(object):
         its own children. This is used as the heuristic to guide the concept
         formation process. Category Utility is calculated as:
 
-        .. todo:: Add latex magic to the docstring for the equation.
+        .. math::
+
+            CU(\\{C_1, C_2, \\cdots, C_n\\}) = \\frac{1}{n} \\sum_{k=1}^n P(C_k)
+            \\left[ \\sum_i \\sum_j P(A_i = V_{ij} | C_k)^2 - \\sum_i \\sum_j P(A_i
+            = V_{ij})^2 \\right]
+
+        where :math:`n` is the numer of children concepts to the current node,
+        :math:`P(C_k)` is the probability of a concept given the current node,
+        :math:`P(A_i = V_{ij} | C_k)` is the probability of a particular
+        attribute value given the concept C_k, and :math:`P(A_i = V_{ij})` is
+        the probability of a particular attribute value given the current node.
 
         In general this is used as an internal function of the cobweb algorithm
         but there may be times when it would be useful to call outside of the
@@ -624,7 +634,7 @@ class CobwebNode(object):
         the tree from growing and to increase the tree's predictive accuracy.
 
         :param instance: The instance currently being categorized
-        :type instance: {a1: v1, a2: v2, ...} - a hashtable of attr and values         
+        :type instance: {a1: v1, a2: v2, ...} - a hashtable of attr and values
         :return: the category utility of fringe splitting at the current node.
         :rtype: float        
 
