@@ -7,14 +7,20 @@ from random import random
 from concept_formation.utils import weighted_choice
 
 class CobwebTree:
+    """
+    The CobwebTree contains the knoweldge base of a partiucluar instance of the
+    cobweb algorithm and can be used to fit and categorize instances.
+    """
 
     def __init__(self, alpha=0.001):
-        """
-        The tree constructor.
+        """The tree constructor.
 
         The alpha parameter is the parameter used for laplacian smoothing. The
         higher the value, the higher the prior that all attributes/values are
         equally likely. By default a minor smoothing is used: 0.001.
+
+        :param alpha: constant to use for laplacian smoothing.
+        :type alpha: float
         """
         self.root = CobwebNode()
         self.root.root = self.root
@@ -25,36 +31,63 @@ class CobwebTree:
         return str(self.root)
 
     def ifit(self, instance):
-        """
-        Given an instance incrementally update the categorization tree.
+        """Incrementally fit a new instance into the tree and return its resulting
+        concept
+
+        The instance is passed down the cobweb tree and updates each node to
+        incorporate the instance. This process modifies the trees knowledge for
+        a non-modifying version of labeling use the categorize() function.
+        
+        :param instance: an instance to be categorized into the tree.
+        :type instance: {a1:v1, a2:v2, ...}
+        :return: A concept describing the instance
+        :rtype: CobwebNode
+        .. note:: this modifies the tree's knoweldge.
+        .. seealso:: :meth:`CobwebTree.cobweb`
         """
         return self.cobweb(instance)
 
-    def fit(self, instances, iterations=1, randomize_order=True):
-        """
-        This is a batch ifit function that takes a collection of instances
-        and categorizes all of them. This function does not return anything.
+    def fit(self, instances, iterations=1, randomize_first=True):
+        """Fit a collection of instances into the tree
 
-        instances -- a collection of instances
-        iterations -- the number of iterations to perform
-        shuffle -- whether or not to shuffle the list between iterations.
+        This is a batch version of the ifit function that takes a collection of
+        instances and categorizes all of them. The instances can be incorporated
+        multiple times to burn in the tree with prior knowledge. Each iteration
+        of fitting uses a randomized order but the first pass can be done in the
+        original order of the list if desired, this is useful for starting the
+        tree with specific prior experience.
 
-        Note that the first iteration is not shuffled.
+        :param instaces: a collection of instances
+        :type instances: [{a1:v1, a2:v2, ...}, {a1:v1, a2:v2, ...}, ...]
+        :param iterations: number of times the list of instances should be fit.
+        :type iterations: int
+        :param randomize_first: whether or not the first iteration of fitting should be done in a random order or in the list's original order. 
+        :type randomize_first: bool
         """
         instances = [i for i in instances]
 
         for x in range(iterations):
-            if randomize_order:
+            if x == 0 and randomize_first:
                 shuffle(instances)
 
             for i in instances:
                 self.ifit(i)
 
+            shuffle(instances)
+
     def cobweb(self, instance):
-        """
-        Incrementally integrates an instance into the categorization tree.
-        This function operates iteratively to integrate this instance and uses
-        category utility as the heuristic to make decisions.
+        """The core cobweb algorithm used in fitting and categorization, not meant
+        to be externally called.
+
+        ADD AN EXTENDED DESCRIPTION OF THE COBWEB ALGORITHM HERE
+
+        .. todo:: Add an extended description of the cobweb algorithm.
+
+        :param instance: an instance to incorporate into the tree
+        :type instance: {a1:v1, a2:v2, ...}
+        :return: a concept describing the instance
+        :rtype: CobwebNode
+        .. seealso:: :meth:`CobwebTree.ifit`, :meth:`CobwebTree.categorize`
         """
         current = self.root
 
@@ -107,12 +140,9 @@ class CobwebTree:
                     raise Exception("Should never get here.")
 
     def cobweb_categorize(self, instance):
-        """
-        Sorts an instance in the categorization tree defined at the current
-        node without modifying the counts of the tree.
+        """A cobweb speciifc version of categorize, not inteded to be externally called.
 
-        Uses the new and best operations; when new is the best operation it
-        returns the current node otherwise it iterates on the best node. 
+        .. seealso:: :meth:`CobwebTree.categorize`
         """
         current = self.root
         while current:
@@ -134,12 +164,20 @@ class CobwebTree:
             elif best_action == "best":
                 current = best1
 
-    def categorize(self, instance):
-        """
-        A categorize function that can be used polymorphicaly without 
-        having to worry about the type of the underlying object.
+    def categorize(self, instance): 
+        """Sort an instance in the categorization tree and return its resulting
+        concept.
 
-        In Cobweb's case this calls cobweb_categorize()
+        The instance is passed down the the categorization tree according to the
+        normal cobweb algorithm except using only the new and best opperators
+        and without modifying nodes' probability tables.
+
+        :param instance: an instance to be categorized into the tree.
+        :type instance: {a1:v1, a2:v2, ...}
+        :return: A concept describing the instance
+        :rtype: CobwebNode
+        .. note:: this does not modify the tree's knoweldge.
+        .. seealso:: :meth:`CobwebTree.cobweb`
         """
         return self.cobweb_categorize(instance)
     
@@ -156,19 +194,37 @@ class CobwebTree:
         json_data.close()
 
 class CobwebNode:
+    """
+
+    A CobwebNode represents a concept within the knoweldge base of a particular CobwebTree.
+    Each node contians a probability table that can be used to
+    calculate the probability of different attributes given the concept that the
+    node represents. 
+
+    In general the CobwebTree's functions (:meth:`CobwebTree.ifit`,
+    :meth:`CobwebTree.categorize`) should be used to initially interface with
+    the Cobweb knowledge base and then the returned concept can be used to
+    calculate probabilities of certain attributes or determine concept labels.
+
+    """
 
     counter = 0
 
     def __init__(self, otherNode=None):
+        """Create a new CobwebNode
+
+        This constructor creates a cobweb node with default values. It can also
+        be used as a copy constructor to "deepcopy" a node, including all
+        references to other parts of the original node's CobwebTree. 
+
+        :param otherNode: Another concept node to deepcopy.
+        :type otherNode: CobwebNode
         """
-        The constructor creates a cobweb node with default values. It can also
-        be used as a copy constructor to "deepcopy" a node.
-        """
-        self.concept_id = self.gensym()
-        self.count = 0
+        self.concept_id = self.gensym() 
+        self.count = 0 
         self.av_counts = {}
-        self.children = []
-        self.parent = None
+        self.children = [] 
+        self.parent = None 
         self.root = None
 
         if otherNode:
@@ -180,8 +236,12 @@ class CobwebNode:
                 self.children.append(self.__class__(child))
 
     def shallow_copy(self):
-        """
-        Creates a shallow copy of the current node (and not its children)
+        """Create a shallow copy of the current node (and not its children)
+
+        This can be used to copy only the information relevant to the node's
+        probability table without maintaining reference to other elements of the
+        tree, except for the root which is necessary to calculate category
+        utility.
         """
         temp = self.__class__()
         temp.root = self.root
@@ -189,12 +249,11 @@ class CobwebNode:
         return temp
 
     def increment_counts(self, instance):
-        """
-        Increment the counts at the current node according to the specified
+        """Increment the counts at the current node according to the specified
         instance.
 
-        input:
-            instance: {a1: v1, a2: v2, ...} - a hashtable of attr and values. 
+        :param instance: A new instances to incorporate into the node.
+        :type instance: {a1: v1, a2: v2, ...} - a hashtable of attr and values. 
         """
         self.count += 1 
         for attr in instance:
@@ -203,9 +262,13 @@ class CobwebNode:
                 instance[attr], 0) + 1)
     
     def update_counts_from_node(self, node):
-        """
-        Increments the counts of the current node by the amount in the specified
+        """Increments the counts of the current node by the amount in the specified
         node.
+
+        This function is used as part of copying nodes and in merging nodes.
+
+        :param node: Another node from the same CobwebTree
+        :type node: CobwebNode
         """
         self.count += node.count
         for attr in node.av_counts:
@@ -215,10 +278,14 @@ class CobwebNode:
                                      node.av_counts[attr][val])
 
     def expected_correct_guesses(self):
-        """
-        Returns the number of correct guesses that are expected from the given
-        concept. This is the sum of the probability of each attribute value
-        squared. 
+        """Returns the number of correct guesses that are expected from the given
+        concept. 
+
+        This is the sum of the probability of each attribute value squared. This
+        function is used in calculating category utility.
+
+        :return: the number of correct guesses that are expected from the given concept. 
+        :rtype: float
         """
         correct_guesses = 0.0
 
@@ -249,10 +316,24 @@ class CobwebNode:
         return correct_guesses
 
     def category_utility(self):
-        """
-        Returns the category utility of a particular division of a concept into
-        its children. This is used as the heuristic to guide the concept
-        formation.
+        """Return the category utility of a particular division of a concept into
+        its children. 
+
+        Category utility is always calculated in reference to a parent node and
+        its own children. This is used as the heuristic to guide the concept
+        formation process. Category Utility is calculated as:
+
+        .. todo:: Add latex magic to the docstring for the equation.
+
+        In general this is used as an internal function of the cobweb algorithm
+        but there may be times when it would be useful to call outside of the
+        algorithm itself.
+
+        :return: The category utility of the current node with respect to its chidlren.
+        :rtype: float
+
+        
+
         """
         if len(self.children) == 0:
             return 0.0
@@ -268,11 +349,35 @@ class CobwebNode:
 
     def get_best_operation(self, instance, best1, best2, 
                             possible_ops=["best", "new", "merge", "split"]):
-        """
-        Given a set of possible operations, find the operator that produces the
-        highest category utility, and then returns the cu and the action name
+        """Given a set of possible operations, find the operator that produces the
+        highest category utility, and then return the cu and the action name
         for the best operation. In the case of ties, an operator is randomly
         chosen.
+
+        When performing concept formation cobweb chooses from 4 operations to perform on the tree:
+
+        * best - categorize the instance to child with the best category utility
+        * new - create a new child node to the current node and add the instance there
+        * merge - take the two best children, create a new node as their mutual parent and add the instnace there.
+        * split - take the best node and promote its children to be children of the current node and recurse on the current node.
+
+        Each operation is entertained and the resultant category utility is used
+        to pick which operation to perform. The list of operations to entertain
+        can be controlled with the possible_ops parameter. For example, when
+        performing categorization without modifying knoweldge only the best and
+        new operators are used.
+
+        :param instance: The instance currently being categorized
+        :type instance: {a1: v1, a2: v2, ...} - a hashtable of attr and values. 
+        :param best1: The child with the best category utility as determined by :meth:`CobwebNode.two_best_children`
+        :type best1: CobwebNode
+        :param best2: The child with the second best category utility as determined by :meth:`CobwebNode.two_best_children`
+        :type best2: CobwebNode
+        :param possible_ops: A list of operations from ["best", "new", "merge", "split"] to entertain.
+        :type possible_ops: ["best", "new", "merge", "split"]
+
+        :return: A tuple of the category utility of the best operation and the name of the best operation.
+        :rtype: (float,str)
         """
         if not best1:
             raise ValueError("Need at least one best child.")
@@ -300,16 +405,15 @@ class CobwebNode:
         return best_op
 
     def two_best_children(self, instance):
-        """
-        Returns the two best children to incorporate the instance
-        into in terms of category utility. When selecting the best children it
-        sorts first by CU, then by Size, then randomly. 
+        """Return the two best children to incorporate the instance
+        into in terms of category utility. 
 
-        input:
-            instance: {a1: v1, a2: v2,...} - a hashtable of attr. and values. 
-        output:
-            (0.2,2),(0.1,3) - the category utility and indices for the two best
-            children (the second tuple will be None if there is only 1 child).
+        When selecting the best children it sorts first by CU, then by Size, then by a random value.
+
+        :param instance: The instance currently being categorized
+        :type instance: {a1: v1, a2: v2, ...} - a hashtable of attr and values. 
+        :return: the category utility and indices for the two best children (the second tuple will be None if there is only 1 child).
+        :rtype: ((float,int),(float,int))
         """
         if len(self.children) == 0:
             raise Exception("No children!")
@@ -327,9 +431,21 @@ class CobwebNode:
                                                          children_cu[1][3]))
 
     def cu_for_insert(self, child, instance):
-        """
-        Computer the category utility of adding the instance to the specified
+        """Compute the category utility of adding the instance to the specified
         child.
+
+        This operation does not actually instert the instance into the child it
+        only calculates what the result of the insertion would be. For the
+        actual insertion function see: :meth:`CobwebNode.increment_counts` This
+        is the function used to determine the best children for each of the
+        other operations.
+
+        :param child: a child of the current node
+        :type child: CobwebNode
+        :param instance: The instance currently being categorized
+        :type instance: {a1: v1, a2: v2, ...} - a hashtable of attr and values 
+        :return: the category utility of adding the instance to the given node
+        :rtype: float
         """
         temp = self.shallow_copy()
         temp.increment_counts(instance)
@@ -342,9 +458,16 @@ class CobwebNode:
         return temp.category_utility()
 
     def create_new_child(self, instance):
-        """
-        Creates a new child (to the current node) with the counts initialized by
-        the given instance. 
+        """Create a new child (to the current node) with the counts initialized by
+        the *given instance*.
+
+        This is the operation used for creating a new child to a node and adding
+        the instance to it.
+        
+        :param instance: The instance currently being categorized
+        :type instance: {a1: v1, a2: v2, ...} - a hashtable of attr and values 
+        :return: The new child
+        :rtype: CobwebNode
         """
         new_child = self.__class__()
         new_child.parent = self
@@ -354,9 +477,14 @@ class CobwebNode:
         return new_child
 
     def create_child_with_current_counts(self):
-        """
-        Creates a new child (to the current node) with the counts initialized by
-        the current node's counts.
+        """Create a new child (to the current node) with the counts initialized by
+        the *current node's counts*.
+
+        This operation is used in the speical case when a new node is created at
+        a leaf.
+
+        :return: The new child
+        :rtype: CobwebNode
         """
         if self.count > 0:
             new = self.__class__(self)
@@ -366,9 +494,17 @@ class CobwebNode:
             return new
 
     def cu_for_new_child(self, instance):
-        """
-        Returns the category utility for creating a new child using the
+        """Return the category utility for creating a new child using the
         particular instance.
+
+        This operation does not actually create the child it only calculates
+        what the result of creating it would be. For the actual new function see:
+        :meth:`CobwebNode.create_new_child`.
+
+        :param instance: The instance currently being categorized
+        :type instance: {a1: v1, a2: v2, ...} - a hashtable of attr and values         
+        :return: the category utility of adding the instance to a new child.
+        :rtype: float
         """
         temp = self.shallow_copy()
         for c in self.children:
@@ -381,14 +517,20 @@ class CobwebNode:
         return temp.category_utility()
 
     def merge(self, best1, best2):
-        """
-        Merge the two specified nodes.
+        """Merge the two specified nodes.
 
-        input:
-            best1: the best child
-            best2: the second best child
-        output:
-            The new child formed from the merge
+        A merge operation introduces a new mode between the two given nodes and
+        the current node where the given nodes are children of the new node
+        which is a child of the current node.
+
+        .. todo:: add a figure to show this?
+
+        :param best1: The child of the current node with the best category utility
+        :type best1: CobwebNode
+        :param best2: The child of the current node with the second best category utility
+        :type best2: CobwebNode
+        :return: The new child node that was created by the merge
+        :rtype: CobwebNode
         """
         new_child = self.__class__()
         new_child.parent = self
@@ -408,14 +550,20 @@ class CobwebNode:
         return new_child
 
     def cu_for_merge(self, best1, best2, instance):
-        """
-        Returns the category utility for merging the two best children.
+        """Return the category utility for merging the two best children.
 
-        input:
-            best1: the best child in the children array.
-            best2: the second best child in the children array.
-        output:
-            0.02 - the category utility for the merge of best1 and best2.
+        This does not actually merge the two children it only calculates what
+        the result of the merge would be. For the actual merge operation see:
+        :meth:`CobwebNode.merge`
+
+        :param best1: The child of the current node with the best category utility
+        :type best1: CobwebNode
+        :param best2: The child of the current node with the second best category utility
+        :type best2: CobwebNode
+        :param instance: The instance currently being categorized
+        :type instance: {a1: v1, a2: v2, ...} - a hashtable of attr and values 
+        :return: The category utility that would result from merging best1 and best2.
+        :rtype: float
         """
         temp = self.shallow_copy()
         temp.increment_counts(instance)
@@ -436,8 +584,17 @@ class CobwebNode:
         return temp.category_utility()
 
     def split(self, best):
-        """
-        Split the best node and promote its children
+        """Split the best node and promote its children
+
+        A split operation removes a child node and promotes its children to be
+        children of the current node. Split operations result in a recursive
+        call of cobweb on the current node so this function does not return
+        anything.
+
+        .. todo:: put a figure of a split here
+
+        :param best: The child node to be split
+        :type best: CobwebNode
         """
         self.children.remove(best)
         for child in best.children:
@@ -446,13 +603,22 @@ class CobwebNode:
             self.children.append(child)
 
     def cu_for_fringe_split(self, instance):
+        """Return the category utility of performing a fringe split (i.e.,
+        adding a leaf to a leaf). 
+
+        A "fringe split" is essenitally a new operation performed at a leaf. It
+        is useful to have the distinction because unlike a normal split a fringe
+        split must also push the parent down to maintain a proper tree
+        structure. This is useful for identifying unnecessary fringe splits,
+        when the two leaves are essentially identical. It can be used to keep
+        the tree from growing and to increase the tree's predictive accuracy.
+
+        :param instance: The instance currently being categorized
+        :type instance: {a1: v1, a2: v2, ...} - a hashtable of attr and values         
+        :return: the category utility of fringe splitting at the current node.
+        :rtype: float        
         """
-        Determine the category utility of performing a fringe split (i.e.,
-        adding a leaf to a leaf). It turns out that this is useful for
-        identifying unnecessary fringe splits, when the two leaves are
-        essentially identical. It can be used to keep the tree from growing and
-        to increase the tree's predictive accuracy.
-        """
+
         temp = self.shallow_copy()
         
         temp.create_child_with_current_counts()
@@ -462,13 +628,18 @@ class CobwebNode:
         return temp.category_utility()
 
     def cu_for_split(self, best):
-        """
-        Return the category utility for splitting the best child.
-        
-        input:
-            best1: a child in the children array.
-        output:
-            0.03 - the category utility for the split of best1.
+        """Return the category utility for splitting the best child.
+
+        This does not actually split the child it only calculates what
+        the result of the split would be. For the actual split operation see:
+        :meth:`CobwebNode.split`
+
+        :param best: The child of the current node with the best category utility
+        :type best: CobwebNode
+        :return: The category utility that would result from splitting best
+        :rtype: float
+
+        .. todo:: This doesn't need to be passed the instance?
         """
         temp = self.shallow_copy()
 
@@ -481,30 +652,39 @@ class CobwebNode:
         return temp.category_utility()
 
     def __hash__(self):
-        """
-        The basic hash function. This hashes the concept name, which is
+        """The basic hash function. This hashes the concept name, which is
         generated to be unique across concepts.
         """
         return hash("CobwebNode" + str(self.concept_id))
 
     def gensym(self):
-        """
-        Generates a unique id and increments the class counter. This is used to
-        create a unique name for every concept. 
+        """Generate a unique id and increment the class counter. 
+
+        This is used to create a unique name for every concept. As long as the
+        class counter variable is never externally altered these keys will
+        remain unique.
+
         """
         self.__class__.counter += 1
         return str(self.__class__.counter)
 
     def __str__(self):
-        """
-        Call pretty print
+        """Call :meth:`CobwebNode.pretty_print`
         """
         return self.pretty_print()
 
     def pretty_print(self, depth=0):
+        """Print the categorization tree
+
+        The string formatting inserts tab characters to align child nodes of the
+        same depth.
+        
+        :param depth: The current depth in the print, intended to be called recursively
+        :type depth: int
+        :return: a formated string displaying the tree and its children
+        :rtype: str
         """
-        Prints the categorization tree.
-        """
+
         ret = str(('\t' * depth) + "|-" + str(self.av_counts) + ":" +
                   str(self.count) + '\n')
         
@@ -514,17 +694,21 @@ class CobwebNode:
         return ret
 
     def depth(self):
+        """Returns the depth of the current node in its tree
+        :return: the depth of the current node in ints tree
+        :rtype: int
         """
-        Returns the depth of the current node in the tree.
-        """
+
         if self.parent:
             return 1 + self.parent.depth()
         return 0
 
     def is_parent(self, other_concept):
+        """Return True if self is a parent of other_concept
+        :return: True if this concept is a parent of other_concept else False
+        :rtype: bool
         """
-        Returns True if self is a parent of other concept.
-        """
+        
         temp = other_concept
         while temp != None:
             if temp == self:
@@ -537,20 +721,28 @@ class CobwebNode:
         return False
 
     def num_concepts(self):
+        """Return the number of concepts contained below the current node in the
+        tree.
+
+        When called on the root of CobwebTree this is the number of nodes in the
+        whole tree.
+
+        :return: the number of concepts below this concept.
+        :rtype: int
         """
-        Return the number of concepts contained in the tree defined by the
-        current node. 
-        """
+        
         children_count = 0
         for c in self.children:
            children_count += c.num_concepts() 
         return 1 + children_count 
 
     def output_json(self):
+        """Outputs the categorization tree in JSON form
+
+        :return: an object that contains all of the structural information of the node and its children
+        :rtype: obj
         """
-        Outputs the categorization tree in JSON form so that it can be
-        displayed, I usually visualize it with d3js in a web browser.
-        """
+
         output = {}
         output['name'] = "Concept" + self.concept_id
         output['size'] = self.count
@@ -569,9 +761,29 @@ class CobwebNode:
         return output
 
     def get_weighted_values(self, attr):
+        """Return a list of weighted choices for an attribute based on the node's
+        probability table.
+
+        This calculation will include an option for the change that an attribute
+        is missing from an instance all together. This is useful for probability
+        and sampling calculations.
+
+        .. todo:: If the attribute has never been present in the tree it will
+            return a 100% chance of None, is this right?
+
+        :param attr: an attribute of an instance
+        :type attr: str
+        :return: a list of weighted choices for attr's value
+        :rtype: [(choice1, choice1_weight), (choice2, choice2_weight), ...]
+        """
+        choices = []
+        if attr not in self.root.av_counts:
+            choices.append((None,1.0))
+            return choices
+
         n_values = len(self.root.av_counts[attr]) + 1
 
-        choices = []
+        
         val_count = 0
         for val in self.root.av_counts[attr]:
             if attr not in self.av_counts or val not in self.av_counts[attr]:
@@ -590,9 +802,13 @@ class CobwebNode:
         return choices
 
     def predict(self, attr):
-        """
-        Predicts the value of an attribute, by returning the most likely value.
-        This takes into account the laplacian smoothing. 
+        """Predict the value of an attribute, by returning the most likely value.
+        This takes into account the laplacian smoothing.
+
+        :param attr: an attribute of an instance.
+        :type attr: str
+        :return: The most likely value for the given attribute in the node's probability table.
+        :rtype: str
         """
         if attr not in self.root.av_counts:
             return None
@@ -602,9 +818,13 @@ class CobwebNode:
         return choices[0][0]
 
     def sample(self, attr):
-        """
-        Predicts the value of an attribute, by returning the most likely value.
+        """Samples the value of an attribute from the node's probability table.
         This takes into account the laplacian smoothing. 
+
+        :param attr: an attribute of an instance
+        :type attr: str
+        :return: A value sampled from the distribution of values in the node's probability table.
+        :rtype: str
         """
         if attr not in self.root.av_counts:
             return None
@@ -614,12 +834,20 @@ class CobwebNode:
         return weighted_choice(choices)
 
     def get_probability(self, attr, val):
-        """
-        Gets the probability of a particular attribute value at the given
-        concept. This takes into account the possibilities that an attribute
-        can take any of the values available at the root, or be missing.
-        Laplace smoothing is used to place a prior over these possibilites.
-        Alpha determines the strength of this prior.
+        """Returns the probability of a particular attribute value at the current
+        concept. 
+
+        This takes into account the possibilities that an attribute can take any
+        of the values available at the root, or be missing. Laplace smoothing is
+        used to place a prior over these possibilites. Alpha determines the
+        strength of this prior.
+        
+        :param attr: an attribute of an instance
+        :type attr: str
+        :param val: a value for the given attribute
+        :type val: str:
+        :return: The probability of attr having the value val in the current concept.
+        :rtype: float
         """
         if attr not in self.root.av_counts:
             return 0.0
@@ -637,12 +865,18 @@ class CobwebNode:
                 (1.0 * self.count + self.root.alpha * n_values))
 
     def get_probability_missing(self, attr):
-        """
-        Gets the probability of a particular attribute value at the given
-        concept. This takes into account the possibilities that an attribute
-        can take any of the values available at the root, or be missing.
-        Laplace smoothing is used to place a prior over these possibilites.
-        Alpha determines the strength of this prior.
+        """Returns the probability of a particular attribute not being present in a
+        given concept.
+
+        This takes into account the possibilities that an attribute can take any
+        of the values available at the root, or be missing. Laplace smoothing is
+        used to place a prior over these possibilites. Alpha determines the
+        strength of this prior.
+
+        :param attr: an attribute of an instance
+        :type attr: str
+        :return: The probability of attr not being present from an instance in the current concept.
+        :rtype: float 
         """
         # the +1 is for the "missing" value
         if attr in self.root.av_counts:
@@ -660,4 +894,3 @@ class CobwebNode:
 
         return ((self.count - val_count + self.root.alpha) / 
                 (1.0 * self.count + self.root.alpha * n_values))
-
