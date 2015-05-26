@@ -448,6 +448,8 @@ class CobwebNode(object):
         :type instance: {a1: v1, a2: v2, ...} - a hashtable of attr and values 
         :return: the category utility of adding the instance to the given node
         :rtype: float
+
+        .. seealso:: :meth:`CobwebNode.get_best_operation`
         """
         temp = self.shallow_copy()
         temp.increment_counts(instance)
@@ -507,6 +509,8 @@ class CobwebNode(object):
         :type instance: {a1: v1, a2: v2, ...} - a hashtable of attr and values         
         :return: the category utility of adding the instance to a new child.
         :rtype: float
+
+        .. seealso:: :meth:`CobwebNode.get_best_operation`
         """
         temp = self.shallow_copy()
         for c in self.children:
@@ -521,9 +525,9 @@ class CobwebNode(object):
     def merge(self, best1, best2):
         """Merge the two specified nodes.
 
-        A merge operation introduces a new mode between the two given nodes and
-        the current node where the given nodes are children of the new node
-        which is a child of the current node.
+        A merge operation introduces a new node to be the merger of the the two
+        given nodes. This new node becomes a child of the current node and the
+        two given nodes become children of the new node.
 
         .. todo:: add a figure to show this?
 
@@ -566,6 +570,8 @@ class CobwebNode(object):
         :type instance: {a1: v1, a2: v2, ...} - a hashtable of attr and values 
         :return: The category utility that would result from merging best1 and best2.
         :rtype: float
+
+        .. seealso:: :meth:`CobwebNode.get_best_operation`
         """
         temp = self.shallow_copy()
         temp.increment_counts(instance)
@@ -619,6 +625,8 @@ class CobwebNode(object):
         :type instance: {a1: v1, a2: v2, ...} - a hashtable of attr and values         
         :return: the category utility of fringe splitting at the current node.
         :rtype: float        
+
+        .. seealso:: :meth:`CobwebNode.get_best_operation`
         """
 
         temp = self.shallow_copy()
@@ -642,6 +650,8 @@ class CobwebNode(object):
         :rtype: float
 
         .. todo:: This doesn't need to be passed the instance?
+
+        .. seealso:: :meth:`CobwebNode.get_best_operation`
         """
         temp = self.shallow_copy()
 
@@ -697,6 +707,7 @@ class CobwebNode(object):
 
     def depth(self):
         """Returns the depth of the current node in its tree
+
         :return: the depth of the current node in ints tree
         :rtype: int
         """
@@ -707,6 +718,7 @@ class CobwebNode(object):
 
     def is_parent(self, other_concept):
         """Return True if self is a parent of other_concept
+
         :return: True if this concept is a parent of other_concept else False
         :rtype: bool
         """
@@ -811,6 +823,8 @@ class CobwebNode(object):
         :type attr: str
         :return: The most likely value for the given attribute in the node's probability table.
         :rtype: str
+
+        .. seealso :meth:`CobwebNode.sample`
         """
         if attr not in self.root.av_counts:
             return None
@@ -827,6 +841,8 @@ class CobwebNode(object):
         :type attr: str
         :return: A value sampled from the distribution of values in the node's probability table.
         :rtype: str
+
+        .. seealso :meth:`CobwebNode.predict`
         """
         if attr not in self.root.av_counts:
             return None
