@@ -44,6 +44,7 @@ class CobwebTree(object):
         :type instance: {a1:v1, a2:v2, ...}
         :return: A concept describing the instance
         :rtype: CobwebNode
+
         .. note:: this modifies the tree's knoweldge.
         .. seealso:: :meth:`CobwebTree.cobweb`
         """
@@ -56,7 +57,7 @@ class CobwebTree(object):
         instances and categorizes all of them. The instances can be incorporated
         multiple times to burn in the tree with prior knowledge. Each iteration
         of fitting uses a randomized order but the first pass can be done in the
-        original order of the list if desired, this is useful for starting the
+        original order of the list if desired, this is useful for initializing the
         tree with specific prior experience.
 
         :param instaces: a collection of instances
@@ -78,17 +79,17 @@ class CobwebTree(object):
             shuffle(instances)
 
     def cobweb(self, instance):
-        """The core cobweb algorithm used in fitting and categorization, not meant
-        to be externally called.
+        """The core cobweb algorithm used in fitting and categorization
 
-        ADD AN EXTENDED DESCRIPTION OF THE COBWEB ALGORITHM HERE
+        .. note:: This function is equivalent to calling :meth:`CobwebTree.ifit` but its better to call ifit because it is the polymorphic method siganture between the different cobweb family algorithms.
 
-        .. todo:: Add an extended description of the cobweb algorithm.
+        .. todo:: ADD AN EXTENDED DESCRIPTION OF THE COBWEB ALGORITHM HERE
 
         :param instance: an instance to incorporate into the tree
         :type instance: {a1:v1, a2:v2, ...}
         :return: a concept describing the instance
         :rtype: CobwebNode
+
         .. seealso:: :meth:`CobwebTree.ifit`, :meth:`CobwebTree.categorize`
         """
         current = self.root
@@ -141,7 +142,7 @@ class CobwebTree(object):
                 else:
                     raise Exception("Should never get here.")
 
-    def cobweb_categorize(self, instance):
+    def _cobweb_categorize(self, instance):
         """A cobweb speciifc version of categorize, not inteded to be externally called.
 
         .. seealso:: :meth:`CobwebTree.categorize`
@@ -178,10 +179,11 @@ class CobwebTree(object):
         :type instance: {a1:v1, a2:v2, ...}
         :return: A concept describing the instance
         :rtype: CobwebNode
+
         .. note:: this does not modify the tree's knoweldge.
         .. seealso:: :meth:`CobwebTree.cobweb`
         """
-        return self.cobweb_categorize(instance)
+        return self._cobweb_categorize(instance)
     
     def train_from_json(self, filename, length=None):
         """
@@ -199,18 +201,18 @@ class CobwebNode(object):
     """
 
     A CobwebNode represents a concept within the knoweldge base of a particular
-    CobwebTree. Each node contians a probability table that can be used to
+    :class:`CobwebTree`. Each node contians a probability table that can be used to
     calculate the probability of different attributes given the concept that the
     node represents.
 
-    In general the CobwebTree's functions (:meth:`CobwebTree.ifit`,
-    :meth:`CobwebTree.categorize`) should be used to initially interface with
-    the Cobweb knowledge base and then the returned concept can be used to
-    calculate probabilities of certain attributes or determine concept labels.
+    In general the :meth:`CobwebTree.ifit`, :meth:`CobwebTree.categorize`
+    functions should be used to initially interface with the Cobweb knowledge
+    base and then the returned concept can be used to calculate probabilities of
+    certain attributes or determine concept labels.
     
     """
 
-    counter = 0
+    _counter = 0
 
     def __init__(self, otherNode=None):
         """Create a new CobwebNode
@@ -288,7 +290,9 @@ class CobwebNode(object):
 
         :return: the number of correct guesses that are expected from the given concept. 
         :rtype: float
+
         """
+
         correct_guesses = 0.0
 
         for attr in self.root.av_counts:
@@ -332,9 +336,7 @@ class CobwebNode(object):
         algorithm itself.
 
         :return: The category utility of the current node with respect to its chidlren.
-        :rtype: float
-
-        
+        :rtype: float     
 
         """
         if len(self.children) == 0:
@@ -379,7 +381,7 @@ class CobwebNode(object):
         :type possible_ops: ["best", "new", "merge", "split"]
 
         :return: A tuple of the category utility of the best operation and the name of the best operation.
-        :rtype: (float,str)
+        :rtype: (cu_bestOp,name_bestOp)
         """
         if not best1:
             raise ValueError("Need at least one best child.")
@@ -415,7 +417,7 @@ class CobwebNode(object):
         :param instance: The instance currently being categorized
         :type instance: {a1: v1, a2: v2, ...} - a hashtable of attr and values. 
         :return: the category utility and indices for the two best children (the second tuple will be None if there is only 1 child).
-        :rtype: ((float,int),(float,int))
+        :rtype: ((cu_best1,index_best1),(cu_best2,index_best2))
         """
         if len(self.children) == 0:
             raise Exception("No children!")
@@ -640,16 +642,16 @@ class CobwebNode(object):
     def cu_for_split(self, best):
         """Return the category utility for splitting the best child.
 
-        This does not actually split the child it only calculates what
-        the result of the split would be. For the actual split operation see:
-        :meth:`CobwebNode.split`
+        This does not actually split the child it only calculates what the
+        result of the split would be. For the actual split operation see:
+        :meth:`CobwebNode.split`. Unlike the category utility calculations for
+        the other operations split does not need the instance because splits
+        trigger a recursive call on the current node.
 
         :param best: The child of the current node with the best category utility
         :type best: CobwebNode
         :return: The category utility that would result from splitting best
         :rtype: float
-
-        .. todo:: This doesn't need to be passed the instance?
 
         .. seealso:: :meth:`CobwebNode.get_best_operation`
         """
@@ -670,15 +672,15 @@ class CobwebNode(object):
         return hash("CobwebNode" + str(self.concept_id))
 
     def gensym(self):
-        """Generate a unique id and increment the class counter. 
+        """Generate a unique id and increment the class _counter. 
 
         This is used to create a unique name for every concept. As long as the
-        class counter variable is never externally altered these keys will
+        class _counter variable is never externally altered these keys will
         remain unique.
 
         """
-        self.__class__.counter += 1
-        return str(self.__class__.counter)
+        self.__class__._counter += 1
+        return str(self.__class__._counter)
 
     def __str__(self):
         """Call :meth:`CobwebNode.pretty_print`
@@ -708,7 +710,7 @@ class CobwebNode(object):
     def depth(self):
         """Returns the depth of the current node in its tree
 
-        :return: the depth of the current node in ints tree
+        :return: the depth of the current node in its tree
         :rtype: int
         """
 
@@ -717,7 +719,7 @@ class CobwebNode(object):
         return 0
 
     def is_parent(self, other_concept):
-        """Return True if self is a parent of other_concept
+        """Return True if this concept is a parent of other_concept
 
         :return: True if this concept is a parent of other_concept else False
         :rtype: bool
@@ -738,7 +740,7 @@ class CobwebNode(object):
         """Return the number of concepts contained below the current node in the
         tree.
 
-        When called on the root of CobwebTree this is the number of nodes in the
+        When called on the :attr:`CobwebTree.root` this is the number of nodes in the
         whole tree.
 
         :return: the number of concepts below this concept.
@@ -780,10 +782,8 @@ class CobwebNode(object):
 
         This calculation will include an option for the change that an attribute
         is missing from an instance all together. This is useful for probability
-        and sampling calculations.
-
-        .. todo:: If the attribute has never been present in the tree it will
-            return a 100% chance of None, is this right?
+        and sampling calculations. If the attribute has never appeared in the
+        tree then it will return a 100% chance of None.
 
         :param attr: an attribute of an instance
         :type attr: str

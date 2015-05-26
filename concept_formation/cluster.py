@@ -108,6 +108,7 @@ def k_cluster(tree,instances,k=3,mod=True):
     :type mod: bool
     :returns: a list of lists of cluster labels based on successive splits between minsplit and maxsplit.
     :rtype: list of lists
+    
     .. seealso:: :meth:`cluster_iter`
     .. warning:: k must be >= 2.
     """
