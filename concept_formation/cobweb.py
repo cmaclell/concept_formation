@@ -1,12 +1,14 @@
-from __future__ import print_function, unicode_literals
-from __future__ import absolute_import, division
-import json
+from __future__ import print_function
+from __future__ import unicode_literals
+from __future__ import absolute_import
+from __future__ import division
 from random import shuffle
 from random import random
+import json
 
 from concept_formation.utils import weighted_choice
 
-class CobwebTree:
+class CobwebTree(object):
     """
     The CobwebTree contains the knoweldge base of a partiucluar instance of the
     cobweb algorithm and can be used to fit and categorize instances.
@@ -193,8 +195,8 @@ class CobwebTree:
         self.fit(instances)
         json_data.close()
 
-class CobwebNode:
-    """
+class CobwebNode(object):
+   """
 
     A CobwebNode represents a concept within the knoweldge base of a particular CobwebTree.
     Each node contians a probability table that can be used to

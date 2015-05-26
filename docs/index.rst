@@ -1,17 +1,14 @@
 .. concept_formation documentation master file, created by
-   sphinx-quickstart on Thu May 21 20:32:30 2015.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
-Welcome to concept_formation's documentation!
-=============================================
+.. include:: 
+    ../README.rst
 
 Contents:
 
 .. toctree::
-   :maxdepth: 2
+    :maxdepth: 1
 
-   concept_formation
+    examples.rst
+    concept_formation
 
 
 Indices and tables

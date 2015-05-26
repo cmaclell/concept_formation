@@ -1,12 +1,14 @@
-from __future__ import print_function, unicode_literals
-from __future__ import absolute_import, division
-import random
+from __future__ import print_function
+from __future__ import unicode_literals
+from __future__ import absolute_import
+from __future__ import division
 from collections import deque
 from heapq import heappush
 from heapq import heappop
 from heapq import heapify
+import random
 
-class Node:
+class Node(object):
     
     def __init__(self, state, parent=None, action=None, cost=0, depth=0,
                  extra=None):
@@ -37,6 +39,9 @@ class Node:
 
     def __eq__(self, other):
         return isinstance(other, Node) and self.state == other.state
+
+    def __ne__(self, other):
+        return not self.__eq__(other)
 
 def IDDFS(initial, successorFn, goalTestFn, initialDepthLimit=1):
     """
@@ -513,6 +518,9 @@ class eightPuzzle:
             return self.state == other.state
         return False
 
+    def __ne__(self, other):
+        return not self.__eq__(other)
+
     def copy(self):
         new = eightPuzzle()
         new.state = tuple([i for i in self.state])
@@ -600,21 +608,21 @@ if __name__ == "__main__":
     print(puzzle)
     print()
 
-    print("BREADTH FIRST GRAPH SEARCH")
-    sol = next(BreadthFGS(Node(initial), successorFn8Puzzle, goalTestFn8Puzzle))
-    print("Solution Length = %i" % len(sol.getSolution()))
-    print()
+    #print("BREADTH FIRST GRAPH SEARCH")
+    #sol = next(BreadthFGS(Node(initial), successorFn8Puzzle, goalTestFn8Puzzle))
+    #print("Solution Length = %i" % len(sol.getSolution()))
+    #print()
 
-    print("DEPTH FIRST GRAPH SEARCH")
-    sol = next(DepthFGS(Node(initial), successorFn8Puzzle, goalTestFn8Puzzle))
-    print("Solution Length = %i" % len(sol.getSolution()))
-    print()
-    
-    print("BEST FIRST GRAPH SEARCH")
-    sol = next(BestFGS(Node(initial), successorFn8Puzzle, goalTestFn8Puzzle,
-                  heuristicFn8Puzzle))
-    print("Solution Length = %i" % len(sol.getSolution()))
-    print()
+    #print("DEPTH FIRST GRAPH SEARCH")
+    #sol = next(DepthFGS(Node(initial), successorFn8Puzzle, goalTestFn8Puzzle))
+    #print("Solution Length = %i" % len(sol.getSolution()))
+    #print()
+    #
+    #print("BEST FIRST GRAPH SEARCH")
+    #sol = next(BestFGS(Node(initial), successorFn8Puzzle, goalTestFn8Puzzle,
+    #              heuristicFn8Puzzle))
+    #print("Solution Length = %i" % len(sol.getSolution()))
+    #print()
 
     print("BEAM GRAPH SEARCH")
     sol = next(BeamGS(Node(initial), successorFn8Puzzle, goalTestFn8Puzzle,
@@ -627,11 +635,11 @@ if __name__ == "__main__":
 #    print("Solution Length = %i" % len(sol.getSolution()))
 #    print()
 #
-    print("ITERATIVE DEEPENING BEST FIRST SEARCH")
-    sol = next(IDBFS(Node(initial), successorFn8Puzzle, goalTestFn8Puzzle,
-                  heuristicFn8Puzzle))
-    print("Solution Length = %i" % len(sol.getSolution()))
-    print()
+    #print("ITERATIVE DEEPENING BEST FIRST SEARCH")
+    #sol = next(IDBFS(Node(initial), successorFn8Puzzle, goalTestFn8Puzzle,
+    #              heuristicFn8Puzzle))
+    #print("Solution Length = %i" % len(sol.getSolution()))
+    #print()
 
     #print("BEAM SEARCH")
     #sol = next(BeamS(Node(initial), successorFn8Puzzle, goalTestFn8Puzzle,

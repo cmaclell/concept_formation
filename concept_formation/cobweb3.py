@@ -1,10 +1,12 @@
-from __future__ import print_function, unicode_literals
-from __future__ import absolute_import, division
+from __future__ import print_function
+from __future__ import unicode_literals
+from __future__ import absolute_import
+from __future__ import division
+from random import normalvariate
+from numbers import Number
 from math import sqrt
 from math import pi
 from math import exp
-from random import normalvariate
-from numbers import Number
 
 from concept_formation.utils import c4
 from concept_formation.cobweb import CobwebNode
@@ -42,7 +44,7 @@ class Cobweb3Tree(CobwebTree):
 
 class Cobweb3Node(CobwebNode):
 
-    # Smallest possible acuity. Below this and probabilities will exceed 1.0
+    # Smallest possible acuity. Below this probabilities will exceed 1.0
     acuity = 1.0 / sqrt(2.0 * pi)
 
     def increment_counts(self, instance):
@@ -125,11 +127,19 @@ class Cobweb3Node(CobwebNode):
         numeric attribute values. 
         
         The typical cobweb 3 calculation for correct guesses is:
-            P(A_i = V_ij)^2 = 1 / (2 * sqrt(pi) * std)
 
-        However, this does not take into account situations when P(A_i) != 1.0.
+        .. math::
+
+            P(A_i = V_{ij})^2 = \\frac{1}{2 * \\sqrt{\\pi} * \\sigma}
+
+        However, this does not take into account situations when 
+        :math:`P(A_i) \\neq 1.0`.
+
         To account for this we use a modified equation:
-            P(A_i = V_ij)^2 = P(A_i)^2 * (1 / (2 * sqrt(pi) * std))
+
+        .. math::
+
+            P(A_i = V_{ij})^2 = P(A_i)^2 * \\frac{1}{2 * \\sqrt{\\pi} * \\sigma}
 
         """
         correct_guesses = 0.0
@@ -377,7 +387,7 @@ class ContinuousValue():
         """
         Returns an unbiased estimate of the std that uses Bessel's correction
         and Cochran's theorem: 
-            https://en.wikipedia.org/wiki/Unbiased_estimation_of_standard_deviation
+        `<https://en.wikipedia.org/wiki/Unbiased_estimation_of_standard_deviation#Bias_correction>`_
         """
         if self.num < 2:
             return 0.0
@@ -428,7 +438,7 @@ class ContinuousValue():
         Incrementally update the mean and squared mean error (meanSq) values in
         an efficient and practical (no precision problems) way. This uses and
         algorithm by Knuth, which I found here:
-            https://en.wikipedia.org/wiki/Algorithms_for_calculating_variance
+        `<https://en.wikipedia.org/wiki/Algorithms_for_calculating_variance>`_
         """
         self.num += 1
         delta = x - self.mean 
@@ -439,9 +449,9 @@ class ContinuousValue():
         """
         Combine two clusters of means and squared mean error (meanSq) values in
         an efficient and practical (no precision problems) way. This uses the
-        parallel algorithm by Chan et al. found here: 
-            https://en.wikipedia.org/wiki/Algorithms_for_calculating_variance
-        """
+        parallel algorithm by Chan et al. found at:
+        `<https://en.wikipedia.org/wiki/Algorithms_for_calculating_variance#Parallel_algorithm>`_
+            """
         if not isinstance(other, ContinuousValue):
             raise ValueError("Can only merge 2 continuous values.")
         delta = other.mean - self.mean
