@@ -1,13 +1,15 @@
 concept_formation package
 =========================
 
-concept_formation.action_planner module
----------------------------------------
+..
+    The action_planner is still under development
+    concept_formation.action_planner module
+    ---------------------------------------
 
-.. automodule:: concept_formation.action_planner
-    :members:
-    :undoc-members:
-    :show-inheritance:
+    .. automodule:: concept_formation.action_planner
+        :members:
+        :undoc-members:
+        :show-inheritance:
 
 concept_formation.cluster module
 --------------------------------
@@ -30,6 +32,7 @@ concept_formation.cobweb3 module
 
 .. automodule:: concept_formation.cobweb3
     :members:
+    :inherited-members:
     :undoc-members:
     :show-inheritance:
 
@@ -78,6 +81,7 @@ concept_formation.trestle module
 
 .. automodule:: concept_formation.trestle
     :members:
+    :inherited-members:
     :undoc-members:
     :show-inheritance:
 

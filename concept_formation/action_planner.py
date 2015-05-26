@@ -1,3 +1,9 @@
+"""
+The contents of this module are currently experimental and under active
+development. More thorough documentation will be done when its development has
+settled.
+"""
+
 from __future__ import print_function
 from __future__ import unicode_literals
 from __future__ import absolute_import
