@@ -38,8 +38,9 @@ Fast Example
     In [8]: pprint(tree.root.output_json())
 
     # Trees can also be used to predict missing attributes of new data points.
-    In [9]: new = {'f2': 2.6, 'f3': {'sub-feature1': 'v1'}, 'f4': {'sub-feature1': 'v1'},
-      ....:        'f5': ['some-relation', 'f3', 'f4']}
+    In [9]: new = {'f2': 2.6, 'f3': {'sub-feature1': 'v1'}, 
+       ...:        'f4': {'sub-feature1': 'v1'},
+       ...:        'f5': ['some-relation', 'f3', 'f4']}
 
     In [10]: concept = tree.categorize(new)
 
