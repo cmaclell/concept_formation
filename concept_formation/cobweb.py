@@ -338,7 +338,7 @@ class CobwebNode(object):
         where :math:`n` is the numer of children concepts to the current node,
         :math:`P(C_k)` is the probability of a concept given the current node,
         :math:`P(A_i = V_{ij} | C_k)` is the probability of a particular
-        attribute value given the concept C_k, and :math:`P(A_i = V_{ij})` is
+        attribute value given the concept :math:`C_k`, and :math:`P(A_i = V_{ij})` is
         the probability of a particular attribute value given the current node.
 
         In general this is used as an internal function of the cobweb algorithm
