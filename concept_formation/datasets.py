@@ -31,7 +31,9 @@ def load_iris():
 
     This is an example of instances with numeric and nominal attributes.
 
-    .. todo:: put in a link to the origin of the dataset
+    This dataset was downloaded from the `UCI machine learning repository
+    <https://archive.ics.uci.edu/ml/datasets/Iris>`_. We processed the data
+    to be in dictionary format with human readable labels. 
 
     >>> import pprint
     >>> data = load_iris()
@@ -50,7 +52,9 @@ def load_mushroom():
 
     This is an example of instances with only nominal attributes.
 
-    .. todo:: put in a link to the origin of the dataset
+    This dataset was downloaded from the `UCI machine learning repository
+    <https://archive.ics.uci.edu/ml/datasets/Mushroom>`_. We processed the data
+    to be in dictionary format with human readable labels. 
 
     >>> import pprint
     >>> data = load_mushroom()
@@ -84,7 +88,8 @@ def load_mushroom():
 def load_rb_com_11():
     """Load the RumbleBlocks, Center of Mass Level 11, dataset.
 
-    This is an example of instances with only component, numeric, and nominal attributes.
+    This is an example of instances with only component, numeric, and nominal
+    attributes.
 
     >>> import pprint
     >>> data = load_rb_com_11()
@@ -103,7 +108,8 @@ def load_rb_com_11():
 def load_rb_s_07():
     """Load the RumbleBlocks, Symmetry Level 7, dataset.
 
-    This is an example of instances with only component, numeric, and nominal attributes.
+    This is an example of instances with only component, numeric, and nominal
+    attributes.
 
     >>> import pprint
     >>> data = load_rb_s_07()
@@ -119,7 +125,8 @@ def load_rb_s_07():
 def load_rb_s_13():
     """Load the RumbleBlocks, Symmetry Level 13, dataset.
 
-    This is an example of instances with only component, numeric, and nominal attributes.
+    This is an example of instances with only component, numeric, and nominal
+    attributes.
 
     >>> import pprint
     >>> data = load_rb_s_07()
@@ -135,7 +142,8 @@ def load_rb_s_13():
 def load_rb_wb_03():
     """Load the RumbleBlocks, Wide Base Level 03, dataset.
 
-    This is an example of instances with only component, numeric, and nominal attributes.
+    This is an example of instances with only component, numeric, and nominal
+    attributes.
 
     >>> import pprint
     >>> data = load_rb_s_07()
@@ -152,15 +160,15 @@ def load_rb_s_07_human_predictions():
     """Load the Human Predictions Data for the RumbleBlocks, Symmetry Level 7,
     dataset.
 
-    This is an example of instances with only component, numeric, and nominal attributes.
+    This is data collected from mechanical turk, where workers were tasked with
+    predicting a concept label (success) given a picture of the tower. The
+    element contains labels for the data and subsequent rows contain the actual
+    data.
 
     >>> import pprint
-    >>> data = load_rb_s_07()
-    >>> pprint.pprint(data[0])
-    {'_guid': '660ac76d-93b3-4ce7-8a15-a3213e9103f5',
-     'component0': {'b': 0.0, 'l': 0.0, 'r': 3.0, 't': 1.0, 'type': 'plat0'},
-     'component1': {'b': 1.0, 'l': 1.0, 'r': 2.0, 't': 4.0, 'type': 'plat90'},
-     'component8': {'b': 4.0, 'l': 0.0, 'r': 3.0, 't': 5.0, 'type': 'ufoo0'},
-     'success': '0'}
+    >>> data = load_rb_s_07_human_predictions()
+    >>> pprint.pprint(data[0:2])
+    ['user_id,instance_guid,time,order,prediction,correctness\n',
+     '1,2fda0bde-95a7-4bda-9851-785275c3f56d,2015-02-15 19:21:14.327344+00:00,1,0,1\n']
     """
     return _load_file('human_s_07_success_predictions.csv')
