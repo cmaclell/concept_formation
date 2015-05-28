@@ -42,7 +42,6 @@ class TrestleTree(Cobweb3Tree):
         :param scaling: whether or not numerical values should be scaled in online normalization.
         :type scaling: bool
         """
-        self.r
         self.root = Cobweb3Node()
         self.root.root = self.root
         self.root.alpha = alpha
