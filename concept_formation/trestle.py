@@ -75,7 +75,7 @@ class TrestleTree(Cobweb3Tree):
         sub-components before categorizing itself.
         """
         temp_instance = structure_map(self.root, instance)
-        return self.cobweb_categorize(temp_instance)
+        return self._cobweb_categorize(temp_instance)
 
     def categorize(self, instance):
         """Sort an instance in the categorization tree and return its resulting
