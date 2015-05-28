@@ -1,3 +1,41 @@
+"""
+
+This module contains all of the core functions for Trestle's structure mapping
+and flattening procedures. The core function in this process is
+:meth:`structure_map` with most of the remaning functions being sub-procedures of
+the core process.
+
+Throughout this module we refer to instances in several different stages of the
+structure mapping process. Here is a description of what each stage means:
+
+.. _raw-instance:
+
+* **raw instance** - The original state of the instance. Conventionally this is assumed to be
+  the result of ``json.load()``). All component atributes have their original names
+  and refer to dictionaries with their own attribute values and all relations are full lists.
+
+.. _standard-instance:
+
+* **standardized instance** - An instance where all components have been
+  renamed, both in the instance and in relations, to have unique names to prevent
+  collisions in the mapping process. (e.g. ``{a:{b:2}, c:{d:{x:1,y:2}}}`` -> ``{o1:{b:2}, o2:{o3:{x:1,y:2}}}``)
+
+.. _flattened-instance:
+
+* **flattened instance** - An instance where component attributes are flattened
+  using a dot notation (e.g. ``o1:{b:1}`` -> ``o1.b:1``) and relations have been
+  turned into tuples (e.g. ``rel:['before', 'o1', 'o2']`` -> ``('before', 'o1',
+  'o2'):True``)
+
+.. _fully-mapped:
+
+* **mapped instance** - A fully structure mapped instance with component
+  attributes renamed, both in the instance and its relations. And components
+  flattened using dot notation. This is the final result of the overall process.
+
+"""
+
+
 from __future__ import print_function
 from __future__ import unicode_literals
 from __future__ import absolute_import
@@ -5,23 +43,35 @@ from __future__ import division
 
 from concept_formation import search
 
-gensym_counter = 0;
+_gensym_counter = 0;
 
 def gensym():
+    """Generates unique names for naming renaming apart objects.
+
+    :return: a unique object name
+    :rtype: 'o'+counter
     """
-    Generates unique names for naming renaming apart objects.
-    """
-    global gensym_counter
-    gensym_counter += 1
-    return 'o' + str(gensym_counter)
+    global _gensym_counter
+    _gensym_counter += 1
+    return 'o' + str(_gensym_counter)
 
 def standardizeApartNames(instance):
-    """
-    Given an raw input instance (i.e., relations are still lists, object is
-    still structured), it renames all the components so they have unique names.
+    """Given a :ref:`raw instance <raw-instance>` rename all the components so they
+    have unique names.
+
+    This will rename component attirbutes as well as any occurance of the
+    component's name within relation attributes. This renaming is necessary to
+    allow for a search between possible mappings without collisions.
+
+    :param instance: An instance to be named apart.
+    :type instance: :ref:`raw instance <raw-instance>`
+    :return: an instance with component attributes renamed
+    :rtype: :ref:`standardized instance <standard-instance>`
 
     >>> import pprint
-    >>> pprint.pprint(standardizeApartNames({'a': {}, 'r1': ['is-good', 'a']}))
+    >>> instance = {'a': {}, 'r1': ['is-good', 'a']}
+    >>> standard = standardizeApartNames(instance)
+    >>> pprint.pprint(standard)
     {'o2': {}, 'r1': ['is-good', 'o2']}
     """
     new_instance = {}
@@ -49,11 +99,18 @@ def standardizeApartNames(instance):
     return new_instance
 
 def getComponentNames(instance):
-    """
-    Given a flattened representation of an instance or concept.av_counts
-    return a list of all of the component names.
+    """Given  a :ref:`flattened instance <flattened-instance>` or a concept's
+    probability table return a list of all of the component names.
 
-    >>> sorted(getComponentNames({'c1.a': 0, 'c2.a': 0, '_c3._a': 0}))
+
+    :param instance: An instance or a concept's probability table.
+    :type instance: :ref:`raw instance <raw-instance>` or dict
+    :return: A list of all of the component names present in the instance
+    :rtype: [str, str, ...]
+
+    >>> instance = {'c1.a': 0, 'c2.a': 0, '_c3._a': 0}
+    >>> names = getComponentNames(instance)
+    >>> sorted(names)
     ['c1', 'c2', 'c3']
     """
     names = set()
@@ -70,14 +127,24 @@ def getComponentNames(instance):
     return list(names)
 
 def renameComponent(attr, mapping):
-    """
-    Takes a component attribute (e.g., o1.o2) and renames the 
+    """Takes a component attribute (e.g., o1.o2) and renames the 
     components given a mapping.
 
-    >>> renameComponent("c1.c2.a", {'c1': 'o1', 'c2': 'o2'})
+    :param attr: The attribute to be renamed
+    :type attr: str
+    :param mapping: A dictionary of mappings between component names
+    :type mapping: dict
+    :return: The attribute's new name
+    :rtype: str
+
+    >>> attr = "c1.c2.a"
+    >>> mapping = {'c1': 'o1', 'c2': 'o2'}
+    >>> renameComponent(attr, mapping)
     'o1.o2.a'
 
-    >>> renameComponent("_c1._c2._a", {'c1': 'o1', 'c2': 'o2'})
+    >>> attr = "_c1._c2._a"
+    >>> mapping = {'c1': 'o1', 'c2': 'o2'}
+    >>> renameComponent(attr, mapping)
     '_o1._o2._a'
     """
     new_attr = []
@@ -99,11 +166,19 @@ def renameComponent(attr, mapping):
         return ".".join(new_attr)
 
 def renameRelation(attr, mapping):
-    """
-    Takes a relational attribute (e.g., (before o1 o2)) and renames
+    """Takes a relational attribute (e.g., (before o1 o2)) and renames
     the components based on mapping.
 
-    >>> renameRelation(('before', 'c1', 'c2'),  {'c1': 'o1', 'c2': 'o2'})
+    :param attr: The relational attribute containing components to be renamed
+    :type attr: tuple
+    :param mapping: A dictionary of mappings between component names
+    :type mapping: dict
+    :return: A new relational attribute with components renamed
+    :rtype: tuple
+
+    >>> attr = ('before', 'c1', 'c2')
+    >>> mapping =  {'c1': 'o1', 'c2': 'o2'}
+    >>> renameRelation(attr, mapping)
     ('before', 'o1', 'o2')
     """
     temp = []
@@ -118,12 +193,21 @@ def renameRelation(attr, mapping):
     return tuple(temp)
 
 def renameFlat(instance, mapping):
-    """
-    Given a flattened instance and a mapping (type = dict) rename the
-    components and relations and return the renamed instance. 
+    """Given a :ref:`flattened instance <flattened-instance>` and a mapping (type =
+    dict) rename the components and relations and return the renamed instance.
+
+    :param instance: An instance to be renamed according to a mapping
+    :type instance: :ref:`flattened instance <flattened-instance>`
+    :param mapping: :param mapping: A dictionary of mappings between component names
+    :type mapping: dict
+    :return: A copy of the instance with components and relations renamed
+    :rtype: :ref:`mapped instance <fully-mapped>`
 
     >>> import pprint
-    >>> pprint.pprint(renameFlat({'c1.a': 1, ('good', 'c1'): True}, {'c1': 'o1'}))
+    >>> instance = {'c1.a': 1, ('good', 'c1'): True}
+    >>> mapping = {'c1': 'o1'}
+    >>> renamed = renameFlat(instance,mapping)
+    >>> pprint.pprint(renamed)
     {'o1.a': 1, ('good', 'o1'): True}
     """
     for attr in instance:
@@ -148,13 +232,21 @@ def renameFlat(instance, mapping):
     return temp_instance
 
 def flattenJSON(instance):
-    """
-    Takes a raw hierarchical JSON instance, standardizes apart the component
-    names, and flattens it. It represents hierarchy with periods between variable
-    names. It also converts the relations into tuples with values.
+    """Takes a :ref:`raw instance <raw-instance>`, standardizes apart the component
+    names, and flattens it. 
+
+    Hierarchy is represented with periods between variable names. This process
+    also converts the relations into tuples with values of ``True``.
+
+    :param instance: An instance to be flattened.
+    :type instance: :ref:`raw instance <raw-instance>`
+    :return: A copy of the instance flattend
+    :rtype: :ref:`flattened instance <flattened-instance>`
 
     >>> import pprint
-    >>> pprint.pprint(flattenJSON({'a': 1, 'c1': {'b': 1}}))
+    >>> instance = {'a': 1, 'c1': {'b': 1}}
+    >>> flat = flattenJSON(instance)
+    >>> pprint.pprint(flat)
     {'a': 1, 'o1.b': 1}
     """
     instance = standardizeApartNames(instance)
@@ -182,13 +274,15 @@ def flattenJSON(instance):
                 temp[attr] = instance[attr]
     return temp
 
-def traverseStructure(path, instance):
-    """
-    Given an instance (hashmap) to the given subobject for the given path.
+def _traverseStructure(path, instance):
+    """Given an instance dict to the given subobject for the given path.
     Creates subobjects if they do not exist.
 
+    Essentially this ensures that subdictionaries exist to accept values from a
+    flat instance.
+
     >>> x = {}
-    >>> traverseStructure(['c1', 'c2'], x)
+    >>> _traverseStructure(['c1', 'c2'], x)
     {}
     >>> x
     {'c1': {'c2': {}}}
@@ -201,11 +295,19 @@ def traverseStructure(path, instance):
     return curr
 
 def structurizeJSON(instance):
-    """
-    Takes a flattened instance and adds the structure back in. This essentially
-    "undoes" the flattening process. 
+    """Takes a :ref:`flattened instance <flattened-instance>` and adds the
+    structure back in. 
 
-    >>> structurizeJSON({'c1.c2.a': 1})
+    This essentially "undoes" the flattening process, however any renaming that
+    may have been performed is not undone.
+
+    :param instance: A instance to be re-structured
+    :type instance: :ref:`flattened instance <flattened-instance>`
+    :return: the instance with structure reproduced from the flattened information
+    :rtype: :ref:`standardized instance <standard-instance>`
+
+    >>> instance = {'c1.c2.a': 1}
+    >>> structurizeJSON(instance)
     {'c1': {'c2': {'a': 1}}}
     """
     temp = {}
@@ -220,14 +322,14 @@ def structurizeJSON(instance):
                     path = v.split('.')
                     relation.append(path[-1])
                     path = path[:-1]
-            obj = traverseStructure(path, temp)
+            obj = _traverseStructure(path, temp)
             obj[tuple(relation)] = True
 
         elif "." in attr:
             path = [p[1:] if p[0] == "_" else p for p in attr.split('.')]
             subatt = path[-1]
             path = path[:-1]
-            curr = traverseStructure(path, temp)
+            curr = _traverseStructure(path, temp)
             if attr[0] == "_":
                 curr["_" + subatt] = instance[attr]
             else:
@@ -239,14 +341,25 @@ def structurizeJSON(instance):
     return temp
 
 def bindFlatAttr(attr, mapping):
-    """
-    Renames the attribute given the mapping.
+    """Renames an attribute given a mapping.
 
-    >>> bindFlatAttr(('before', 'c1', 'c2'), {'c1': 'o1', 'c2':'o2'})
+    :param attr: The attribute to be renamed
+    :type attr: str
+    :param mapping: A dictionary of mappings between component names
+    :type mapping: dict
+    :return: The attribute's new name or ``None`` if the mapping is incomplete
+    :rtype: str
+
+    >>> attr = ('before', 'c1', 'c2')
+    >>> mapping = {'c1': 'o1', 'c2':'o2'}
+    >>> bindFlatAttr(attr, mapping)
     ('before', 'o1', 'o2')
 
-    If the mapping is incomplete then returns None (nothing) 
-    >>> bindFlatAttr(('before', 'c1', 'c2'), {'c1': 'o1'}) is None
+    If the mapping is incomplete then returns ``None`` (nothing) 
+
+    >>> attr = ('before', 'c1', 'c2')
+    >>> mapping = {'c1': 'o1'}
+    >>> bindFlatAttr(attr, mapping) is None
     True
     """
     if isinstance(attr, tuple):
@@ -267,9 +380,16 @@ def bindFlatAttr(attr, mapping):
         return attr
 
 def containsComponent(component, attr):
-    """
-    Check if the given component is in the attribute.
-    
+    """Return ``True`` if the given component name is in the attribute, either as part of a
+    hierarchical name or within a relations otherwise ``False``.
+
+    :param component: A component name
+    :type component: str
+    :param attr: An attribute name
+    :type atte: str
+    :return: ``True`` if the component name exists inside the attribute name ``False`` otherwise
+    :rtype: bool
+
     >>> containsComponent('c1', 'c2.c1.a')
     True
 
@@ -291,10 +411,26 @@ def containsComponent(component, attr):
     return False
 
 def flatMatch(concept, instance, optimal=False):
-    """
-    Given a concept and instance this function returns a mapping (dictionary)
-    that can be used to rename the instance. The mapping returned maximizes
+    """Given a concept and instance this function returns a mapping  that can be
+    used to rename components in the instance. The mapping returned maximizes
     similarity between the instance and the concept.
+
+    The mapping search can be performed in an optimal way (using A* search) to
+    guarantee the best possible mapping at the expense of performance or in an
+    greedy way (using Beam search) to find a sufficient solution in less time.
+    
+    .. note:: If the instance contains no relational attributes then the optimal
+       and greedy searches will be identical.
+
+    :param concept: A concept to map the instance to
+    :type concept: TrestleNode
+    :param instance: An instance to be mapped to the concept
+    :type instance: :ref:`flattened instance <flattened-instance>`
+    :param optimal: If True the mapping will be optimal (using A* Search) otherwise it will be greedy (using Beam Search).
+    :type optimal: bool
+    :return: a mapping for renaming components in the instance.
+    :rtype: dict
+
     """
     inames = frozenset(getComponentNames(instance))
     cnames = frozenset(getComponentNames(concept.av_counts))
@@ -305,11 +441,11 @@ def flatMatch(concept, instance, optimal=False):
      
     initial = search.Node((frozenset(), inames, cnames), extra=(concept, instance))
     if optimal:
-        solution = next(search.BestFGS(initial, flatMatchSuccessorFn, flatMatchGoalTestFn,
-                                flatMatchHeuristicFn))
+        solution = next(search.BestFGS(initial, _flatMatchSuccessorFn, _flatMatchGoalTestFn,
+                                _flatMatchHeuristicFn))
     else:
-        solution = next(search.BeamGS(initial, flatMatchSuccessorFn, flatMatchGoalTestFn,
-                           flatMatchHeuristicFn, initialBeamWidth=3))
+        solution = next(search.BeamGS(initial, _flatMatchSuccessorFn, _flatMatchGoalTestFn,
+                           _flatMatchHeuristicFn, initialBeamWidth=3))
     #print(solution.cost)
 
     if solution:
@@ -318,11 +454,12 @@ def flatMatch(concept, instance, optimal=False):
     else:
         return None
 
-def flatMatchSuccessorFn(node):
-    """
-    Given a node (mapping, instance, concept), this function computes the
+def _flatMatchSuccessorFn(node):
+    """Given a node (mapping, instance, concept), this function computes the
     successor nodes where an additional mapping has been added for each
-    possible additional mapping. See the search library for more details.
+    possible additional mapping. 
+
+    See the :mod:`concept_formation.search` library for more details.
     """
     mapping, inames, availableNames = node.state
     concept, instance = node.extra
@@ -358,11 +495,13 @@ def flatMatchSuccessorFn(node):
                                       frozenset([new])), node, n + ":" + new,
                         node.cost - reward, node.depth + 1, node.extra)
 
-def flatMatchHeuristicFn(node):
+def _flatMatchHeuristicFn(node):
     """
     Considers all partial matches for each unbound attribute and assumes that
     you get the highest guess_gain match. This provides an over estimation of
     the possible reward (i.e., is admissible).
+
+    See the :mod:`concept_formation.search` library for more details.
     """
     mapping, unnamed, availableNames = node.state
     concept, instance = node.extra
@@ -381,18 +520,28 @@ def flatMatchHeuristicFn(node):
 
     return h
 
-def flatMatchGoalTestFn(node):
+def _flatMatchGoalTestFn(node):
     """
     Returns True if every component in the original instance has been renamed
     in the given node.
+
+    See the :mod:`concept_formation.search` library for more details.
     """
     mapping, unnamed, availableNames = node.state
     return len(unnamed) == 0
 
 def isPartialMatch(iAttr, cAttr, mapping):
-    """
-    Returns True if the instance attribute (iAttr) partially matches the
+    """Returns True if the instance attribute (iAttr) partially matches the
     concept attribute (cAttr) given the mapping.
+
+    :param iAttr: An attribute in an instance
+    :type iAttr: str
+    :param cAttr: An attribute in a concept
+    :type cAttr: str
+    :param mapping: A mapping between between attribute names
+    :type mapping: dict
+    :return: ``True`` if the instance attribute matches the concept attribute in the mapping otherwise ``False``
+    :rtype: bool
     """
     if type(iAttr) != type(cAttr):
         return False
@@ -428,9 +577,16 @@ def isPartialMatch(iAttr, cAttr, mapping):
     return True
 
 def structure_map(concept, instance):
-    """
-    Flatten the instance, perform structure mapping, rename the instance
+    """Flatten the instance, perform structure mapping to the concept, rename the instance
     based on this structure mapping, and return the renamed instance.
+
+    :param concept: A concept to structure map the instance to
+    :type concept: TrestleNode
+    :param instance: An instance to map to the concept
+    :type instance: :ref:`raw instance <raw-instance>`
+    :return: A fully mapped and flattend copy of the instance
+    :rtype: :ref:`mapped instance <fully-mapped>`
+
     """
     temp_instance = flattenJSON(instance)
     mapping = flatMatch(concept, temp_instance)

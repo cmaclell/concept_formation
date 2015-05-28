@@ -49,8 +49,24 @@ class TrestleTree(Cobweb3Tree):
         self.root.scaling = scaling
 
     def ifit(self, instance):
-        """
-        A modification of ifit to call Trestle instead.
+        """Incrementally fit a new instance into the tree and return its resulting
+        concept
+
+        The instance is passed down the tree and updates each node to
+        incorporate the instance. This process modifies the trees knowledge for
+        a non-modifying version of labeling use the categorize() function.
+
+        This version is modified from the normal :meth:`CobwebTree.ifit
+        <concept_formation.cobweb.CobwebTree.ifit>` by first structur mapping
+        the instance before fitting it into the knoweldge base.
+        
+        :param instance: an instance to be categorized into the tree.
+        :type instance: {a1:v1, a2:v2, ...}
+        :return: A concept describing the instance
+        :rtype: Cobweb3Node
+
+        .. note:: this modifies the tree's knoweldge.
+        .. seealso:: :meth:`TrestleTree.trestle`
         """
         return self.trestle(instance)
 
@@ -63,16 +79,31 @@ class TrestleTree(Cobweb3Tree):
         return self.cobweb_categorize(temp_instance)
 
     def categorize(self, instance):
-        """
-        A categorize function that can be used polymorphicaly without 
-        having to worry about the type of the underlying object.
+        """Sort an instance in the categorization tree and return its resulting
+        concept.
 
-        In Trestle's case this calls _trestle_categorize()
+        The instance is passed down the the categorization tree according to the
+        normal cobweb algorithm except using only the new and best opperators
+        and without modifying nodes' probability tables.
+
+        This version differs fomr the normal :meth:`CobwebTree.categorize
+        <concept_formation.cobweb.CobwebTree.categorize>` and
+        :meth:`Cobweb3Tree.categorize
+        <concept_formation.cobweb3.Cobweb3Tree.categorize>` by structure mapping
+        instances before categorizing them.
+
+        :param instance: an instance to be categorized into the tree.
+        :type instance: {a1:v1, a2:v2, ...}
+        :return: A concept describing the instance
+        :rtype: CobwebNode
+
+        .. note:: this does not modify the tree's knoweldge.
+        .. seealso:: :meth:`TrestleTree.trestle`
         """
         return self._trestle_categorize(instance)
 
     def trestle(self, instance):
-        """The code trestle algorithm used in fitting and categorization
+        """The core trestle algorithm used in fitting and categorization
 
         This function is similar to :meth:`Cobweb.cobweb
         <concept_formation.cobweb.CobwebTree.cobweb>` The key difference between
