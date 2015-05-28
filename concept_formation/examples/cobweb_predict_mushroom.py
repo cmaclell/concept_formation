@@ -5,7 +5,7 @@ from __future__ import division
 import matplotlib.pyplot as plt
 import numpy as np
 
-from concept_formation.utils import lowess
+from concept_formation.example.examples_utils import lowess
 from concept_formation.predict import incremental_prediction
 from concept_formation.cobweb import CobwebTree
 from concept_formation.dummy import DummyTree

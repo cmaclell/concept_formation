@@ -6,10 +6,6 @@ from random import uniform
 from numbers import Number
 from math import sqrt
 
-from scipy.stats import sem
-from scipy.stats import t
-from scipy import linalg
-import numpy as np
 
 # A hashtable of values to use in the c4(n) function to apply corrections to
 # estimates of std.
@@ -57,8 +53,15 @@ def c4(n) :
         return c4n_table[n] if n < 30 else 1.0
 
 def mean(values):
-    """
-    Computes the mean of a list of values.
+    """Computes the mean of a list of values.
+
+    This is primarily included to reduce dependency on external math libraries
+    like numpy in the core algorithm.
+
+    :param values: a list of numbers
+    :type values: list
+    :return: the mean of the list of values
+    :rtype: float
 
     >>> mean([600, 470, 170, 430, 300])
     394.0
@@ -72,6 +75,14 @@ def std(values):
     """
     Computes the standard deviation of a list of values.
 
+    This is primarily included to reduce dependency on external math libraries
+    like numpy in the core algorithm.
+
+    :param values: a list of numbers
+    :type values: list
+    :return: the standard deviation of the list of values
+    :rtype: float
+
     >>> std([600, 470, 170, 430, 300])
     147.32277488562318
     """
@@ -83,32 +94,35 @@ def std(values):
                            values]))/len(values)
     return sqrt(variance)
 
-def listsToRelations(instance, relationName="Ordered", appendAttr=True, attrs = None):
-    """
-    Takes a structured instance containing lists and returns the same instance
-    with all list elements converted to a series of relations that describe the
-    ordering of elements. This process will be applied recurrsively to any
-    commponent attributes of the instance.
+def lists_to_relations(instance, rel_name="Ordered", append_attr=True, attrs = None):
+    """Take a raw structured instance containing lists and returns the same
+    instance with all list elements converted to a series of binary ordering
+    relations that describe the ordering of elements. This process will be
+    applied recurrsively to any commponent attributes of the instance.
 
-    Arguments: 
-
-        relationName -- The name that should be used to describe the relation,
-        by default "Orderd" is used. However, a new name can be provided if
-        that conflicts with other relations in the data already.
-
-        appendAttr -- if True appends the originzal list's attribute name to the
-        relationName this is to prevent the matcher from over generalizing
-        ordering when there are multiple lists in an object.
-
-        attrs -- A list of specific attribute names to convert. If no list is
-        provided then all list attributes will be converted
+    :param rel_name: The name that should be used to describe the relation.
+    :type rel_name: str
+    :param append_attr: If ``True`` appends the original list's attribute name to the
+        rel_name this is to prevent the structure mapper from over generalizing
+        "Ordered" relations when there are multiple lists in a component.
+    :type append_attr: bool
+    :param attrs: a list of attribute names to specifically target for
+        conversion. if ``None``, then the process will convert all applicable
+        attributes.
+    :type attrs: list
+    :return: The original instance with lists converted to ordering relations
+    :rtype: instance
 
     >>> import pprint
-    >>> pprint.pprint(listsToRelations({"list1":['a','b','c']}))
+    >>> instance = {"list1":['a','b','c']}
+    >>> instance = lists_to_relations(instance)
+    >>> pprint.pprint(instance)
     {'list1-0': ['Orderedlist1', 'a', 'b'], 'list1-1': ['Orderedlist1', 'b', 'c']}
 
     >>> import pprint
-    >>> pprint.pprint(listsToRelations({"list1":['a','b','c']}, appendAttr=False))
+    >>> instance = {"list1":['a','b','c']}
+    >>> instance = lists_to_relations(instance, append_attr=False)
+    >>> pprint.pprint(instance)
     {'list1-0': ['Ordered', 'a', 'b'], 'list1-1': ['Ordered', 'b', 'c']}
     """
     if attrs is None:
@@ -121,57 +135,59 @@ def listsToRelations(instance, relationName="Ordered", appendAttr=True, attrs = 
     for attr in instance:
         if isinstance(instance[attr], list) and attr in attrs:
             for i in range(len(instance[attr])-1):
-                if appendAttr:
-                    newInstance[str(attr)+"-"+str(i)] = [str(relationName+attr),
+                if append_attr:
+                    newInstance[str(attr)+"-"+str(i)] = [str(rel_name+attr),
                         instance[attr][i],
                         instance[attr][i+1]]
                 else:
-                    newInstance[str(attr)+"-"+str(i)] = [str(relationName),
+                    newInstance[str(attr)+"-"+str(i)] = [str(rel_name),
                         instance[attr][i],
                         instance[attr][i+1]]
         elif isinstance(instance[attr],dict):
-            newInstance[attr] = listsToRelations(instance[attr],relationName,appendAttr,attrs)
+            newInstance[attr] = lists_to_relations(instance[attr],rel_name,append_attr,attrs)
         else:
             newInstance[attr] = instance[attr]
     return newInstance
 
-def batchListsToRelations(instances, relationName="Ordered", appendAttr=True, attrs=None):
+def batch_lists_to_relations(instances, rel_name="Ordered", append_attr=True, attrs=None):
+    """Perform :meth:`lists_to_relations` over a list of instances.
     """
-    Takes a list of structured instances that contain lists and batch converts
-    all the list elements to a relation format expected by TRESTLE.
-    """
-    return [listsToRelations(instance, relationName, appendAttr) for instance
+    return [lists_to_relations(instance, rel_name, append_attr) for instance
             in instances]
 
-def extractComponentsFromList(instance, prefix="exob", attrs=None):
+def extract_components(instance, prefix="exob", attrs=None):
     """
+    Extracts object literals from within any list elements and extracts them into
+    their own component attributes. Note that this function does not add ordering
+    relations see: :meth:`lists_to_relations`.
 
-    Extracts object literals from within an list elements and extracts them into
-    their own component attributes. Note that this function does not ad ordering
-    relations so if that behavior is desired follow it up with listToRelation.
-
-    Arguments:
-
-        prefix -- Any objects found within list in the ojbect will be assigned
-        new names of prefix + a sequential counter. This value will eventually
+    :param prefix: Any objects found within list in the ojbect will be assigned
+        new names of ``prefix + counter``. This value will eventually
         be aliased by TRESTLE's structure mapper but it should not collide with
         any object names that naturally exist wihtin the instance object.
-
-        attrs -- A list of attribute names to specifically target for object
-        extraction. If this is not provided then the process will search within
-        all of the instance's attribtues.
+    :type prefix: str
+    :param attrs: a list of attribute names to specifically target for
+        conversion. if ``None``, then the process will convert all applicable
+        attributes.
+    :type attrs: list
+    :return: The original instance with in-line objects extracted to their own components
+    :rtype: instance
 
     >>> import pprint
-    >>> pprint.pprint(extractComponentsFromList({"a":"n","l1":["test",{"p":"q","j":"k"},{"n":"m"}]}))
+    >>> instance = {"a":"n","list1":["test",{"p":"q","j":"k"},{"n":"m"}]}
+    >>> instance = extract_components(instance)
+    >>> pprint.pprint(instance)
     {'a': 'n',
      'exob1': {'j': 'k', 'p': 'q'},
      'exob2': {'n': 'm'},
-     'l1': ['test', 'exob1', 'exob2']}
+     'list1': ['test', 'exob1', 'exob2']}
 
     >>> import pprint
-    >>> pprint.pprint(extractComponentsFromList({"a":"n","l1":["test",{"p":"q","j":"k"},{"n":"m"}]},prefix="newobject"))
+    >>> instance = {"a":"n","list1":["test",{"p":"q","j":"k"},{"n":"m"}]}
+    >>> instance = extract_components(instance,prefix="newobject")
+    >>> pprint.pprint(instance)
     {'a': 'n',
-     'l1': ['test', 'newobject1', 'newobject2'],
+     'list1': ['test', 'newobject1', 'newobject2'],
      'newobject1': {'j': 'k', 'p': 'q'},
      'newobject2': {'n': 'm'}}
  
@@ -190,46 +206,48 @@ def extractComponentsFromList(instance, prefix="exob", attrs=None):
                 if isinstance(instance[a][i],dict):
                     counter += 1
                     newName = prefix + str(counter)
-                    instance[newName] = extractComponentsFromList(instance[a][i])
+                    instance[newName] = extract_components(instance[a][i])
                     instance[a][i] = newName
         if isinstance(instance[a],dict):
-            instance[a] = extractComponentsFromList(instance[a])
+            instance[a] = extract_components(instance[a])
     return instance
 
-def batchExtractComponentsFromList(instances, prefix="exob", attrs=None):
+def batch_extract_components(instances, prefix="exob", attrs=None):
+    """Perform :meth:`extract_components` over a list of instances.
     """
-
-    Takes a list of instances and extracts components from lists within each of
-    them.
-
-    """
-    return [extractComponentsFromList(instance, prefix, attrs) for instance
+    return [extract_components(instance, prefix, attrs) for instance
             in instances]
 
-def numericToNominal(instance, attrs = None):     
-    """         
-    Takes a list of instances and converts any attributes that TRESTLE or
-    COBWEB/3 would consider to be numeric attributes to nominal attributes in
-    the case that should be treated as such. This is useful for when data
-    natually contains values that would be numbers but you do not want to
-    entertain that they have a distribution.    
+def numeric_to_nominal(instance, attrs = None):     
+    """Takes an instance and takes any attributes that Trestle or Cobweb/3 would
+    consider to be numeric attributes and converts them to nominal attributes.
 
-    Arguments:
+    This is useful for when data natually contains values that would be numbers
+    but you do not want to entertain that they have a distribution.
 
-        attrs -- a list of attribute names to specifically target for
-        conversion. If no list is provided it will default to all of the
-        instance's attributes.
+    :param attrs: a list of attribute names to specifically target for
+        conversion. if ``None``, then the process will convert all applicable
+        attributes.
+    :type attrs: list
+    :return: The original instance with numerical attributes converted to nominal
+    :rtype: instance
 
     >>> import pprint
-    >>> pprint.pprint(numericToNominal({"x":12.5,"y":9,"z":"top"}))
+    >>> instance = {"x":12.5,"y":9,"z":"top"}
+    >>> instance = numeric_to_nominal(instance)
+    >>> pprint.pprint(instance)
     {'x': '12.5', 'y': '9', 'z': 'top'}
 
     >>> import pprint
-    >>> pprint.pprint(numericToNominal({"x":12.5,"y":9,"z":"12.6"},attrs=["y","z"]))
+    >>> instance = {"x":12.5,"y":9,"z":"12.6"}
+    >>> instance = numeric_to_nominal(instance,attrs=["y","z"])
+    >>> pprint.pprint(instance)
     {'x': 12.5, 'y': '9', 'z': '12.6'}
 
     >>> import pprint
-    >>> pprint.pprint(numericToNominal({"x":12.5,"y":9,"z":"top"},attrs="y"))
+    >>> instance = {"x":12.5,"y":9,"z":"top"}
+    >>> instance = numeric_to_nominal(instance,attrs="y")
+    >>> pprint.pprint(instance)
     {'x': 12.5, 'y': '9', 'z': 'top'}
 
     """
@@ -241,40 +259,39 @@ def numericToNominal(instance, attrs = None):
         if isinstance(instance[a],Number):
             instance[a] = str(instance[a])
         if isinstance(instance[a],dict):
-            instance[a] = numericToNominal(instance[a],attrs)
+            instance[a] = numeric_to_nominal(instance[a],attrs)
     return instance
 
-def batchNumericToNominal(instances, attrs = None):
+def batch_numeric_to_nominal(instances, attrs = None):
+    """Perform :meth:`numeric_to_nominal` over a list of instances.
     """
-    Takes a list of instances and batch converts any specified numeric
-    attributes within instances to nominal attributes for times when this is the
-    desired behavior
-    """
-    return [numericToNominal(instance,attrs) for instance in instances]
+    return [numeric_to_nominal(instance,attrs) for instance in instances]
 
-def santizeJSON(instance,ext_ob_name="extOb",relation_name="Ordered",appendAttr=True,attrs = None):
-    """
+def santize_JSON(instance,ext_ob_name="extOb",rel_name="Ordered",append_attr=True,attrs = None):
+    """Takes a raw JSON object and applies some transformations to it that convert
+    common structures into an equivalent format that Trestle would expect.
 
-    Takes a raw JSON object and applies some transformations to it that convert
-    common structures into an equivalent format that TRESTLE would expect.
-    TRESTLE should run given any arbitrarily structured JSON object but this
-    process makes some conversions that preserve the intent of some JSON
-    notation in a way that TRESTLE would expect. In particular this process will
+    Trestle can process any arbitrarily structured JSON object but this
+    functions makes some conversions that preserve the intent of certain JSON
+    notation in a way that Trestle would expect. In particular this process will
     extract an object litterals that are in-line within a list, and break any
-    lists into a series of tuples that describe their order.
+    lists into a series of relations that describe their order.
 
-    Attributes:
-
-        ext_ob_name -- the prefix to use for objects extracted from in-line lists
-
-        relation_name -- the name to use for ordering relations converted from lists
-
-        appendAttr -- a flag for whether to append the original attribute name to a converted relation list
-
-        attrs -- a list of particular attributes to perform conversion on.
+    :param ext_ob_name: the prefix to use for objects extracted from in-line lists
+    :type ext_ob_name: str
+    :param relation_name: the name to use for ordering relations converted from lists
+    :type relation_name: str
+    :param append_attr: a flag for whether to append the original attribute name to a converted relation list
+    :type append_attr: bool
+    :param attrs: a list of attribute names to specifically target for
+        conversion. if ``None``, then the process will convert all applicable
+        attributes.
+    :type attrs: list
 
     >>> import pprint
-    >>> pprint.pprint(santizeJSON({"stack":[{"a":1,"b":2,"c":3},{"x":1,"y":2,"z":3},{"i":1,"j":2,"k":3}]}))
+    >>> instance = {"stack":[{"a":1, "b":2, "c":3}, {"x":1, "y":2, "z":3}, {"i":1, "j":2, "k":3}]}
+    >>> instance = santize_JSON(instance)
+    >>> pprint.pprint(instance)
     {'extOb1': {'a': 1, 'b': 2, 'c': 3},
      'extOb2': {'x': 1, 'y': 2, 'z': 3},
      'extOb3': {'i': 1, 'j': 2, 'k': 3},
@@ -282,93 +299,25 @@ def santizeJSON(instance,ext_ob_name="extOb",relation_name="Ordered",appendAttr=
      'stack-1': ['Orderedstack', 'extOb2', 'extOb3']}
 
     """    
+    return lists_to_relations(extract_components(instance,prefix=ext_ob_name,attrs=attrs),rel_name=rel_name,append_attr=append_attr,attrs=attrs)
 
-    return listsToRelations(extractComponentsFromList(instance,prefix=ext_ob_name,
-        attrs=attrs),relationName=relation_name,appendAttr=appendAttr,attrs=attrs)
-
-def santizeJSONList(instances,ext_ob_name="extOb",relation_name="Ordered",appendAttr=True,attrs = None):
+def batch_santize_JSON(instances,ext_ob_name="extOb",relation_name="Ordered",append_attr=True,attrs = None):
+    """Perform :meth:`santize_JSON` over a list of instances.
     """
-
-    Applies the santizeJSON function to a list of objects.
-
-    """
-    return [santizeJSON(instance,ext_ob_name,relation_name,appendAttr,attrs) for instance in instances]
-
-def moving_average(a, n=3) :
-    """
-    A function for computing the moving average, so that we can smooth out the
-    curves on a graph.
-    """
-    ret = np.cumsum(a, dtype=float)
-    ret[n:] = ret[n:] - ret[:-n]
-    return ret[n - 1:] / n
-
-def lowess(x, y, f=1./3., iter=3, confidence=0.95):
-    """
-    Code taken from: https://gist.github.com/agramfort/850437
-
-    lowess(x, y, f=2./3., iter=3) -> yest
-
-    Lowess smoother: Robust locally weighted regression.
-    The lowess function fits a nonparametric regression curve to a scatterplot.
-    The arrays x and y contain an equal number of elements; each pair
-    (x[i], y[i]) defines a data point in the scatterplot. The function returns
-    the estimated (smooth) values of y.
-
-    The smoothing span is given by f. A larger value for f will result in a
-    smoother curve. The number of robustifying iterations is given by iter. The
-    function will run faster with a smaller number of iterations.
-    """
-    n = len(x)
-    r = int(np.ceil(f*n))
-    h = [np.sort(np.abs(x - x[i]))[r] for i in range(n)]
-    w = np.clip(np.abs((x[:,None] - x[None,:]) / h), 0.0, 1.0)
-    w = (1 - w**3)**3
-    yest = np.zeros(n)
-    delta = np.ones(n)
-    for iteration in range(iter):
-        for i in range(n):
-            weights = delta * w[:,i]
-            b = np.array([np.sum(weights*y), np.sum(weights*y*x)])
-            A = np.array([[np.sum(weights), np.sum(weights*x)],
-                   [np.sum(weights*x), np.sum(weights*x*x)]])
-            beta = linalg.solve(A, b)
-            yest[i] = beta[0] + beta[1]*x[i]
- 
-        residuals = y - yest
-        s = np.median(np.abs(residuals))
-        delta = np.clip(residuals / (6.0 * s), -1, 1)
-        delta = (1 - delta**2)**2
-
-    h = np.zeros(n)
-    for x_idx, x_val in enumerate(x):
-        r2 = np.array([v*v for i, v in enumerate(residuals) if x[i] == x_val])
-        n = len(r2)
-        se = sqrt(mean(r2)) / sqrt(len(r2))
-        h[x_idx] = se * t._ppf((1+confidence)/2., n-1)
-
-    return yest, yest-h, yest+h
-
-def avg_lines(x, y, confidence=0.95):
-    n = len(x)
-    mean = np.zeros(n)
-    lower = np.zeros(n)
-    upper = np.zeros(n)
-
-    for x_idx, x_val in enumerate(x):
-        ys = np.array([v for i,v in enumerate(y) if x[i] == x_val])
-        m,l,u = mean_confidence_interval(ys)
-        mean[x_idx] = m
-        lower[x_idx] = l
-        upper[x_idx] = u
-
-    return mean, lower, upper
+    
+    return [santize_JSON(instance,ext_ob_name,relation_name,append_attr,attrs) for instance in instances]
 
 
 def weighted_choice(choices):
-    """
-    Given a list of tuples [(val, prob),...(val, prob)] this function returns a
+    """Given a list of tuples [(val, prob),...(val, prob)], return a
     randomly chosen value where the choice is weighted by prob.
+
+    :param choices: A list of tuples
+    :type choices: [(val, prob),...(val, prob)]
+    :return: A choice sampled from the list according to the weightings
+    :rtype: val
+
+    .. seealso:: :meth:`CobwebNode.sample <concept_formation.cobweb.CobwebNode.sample>`
     """
     total = sum(w for c, w in choices)
     r = uniform(0, total)
@@ -379,14 +328,4 @@ def weighted_choice(choices):
        upto += w
     assert False, "Shouldn't get here"
 
-def mean_confidence_interval(data, confidence=0.95):
-    """
-    Given a list or vector of data, this returns the mean, lower, and upper
-    confidence intervals to the level of confidence specified (default = 95%
-    confidence interval).
-    """
-    a = 1.0*np.array(data)
-    n = len(a)
-    m, se = np.mean(a), sem(a)
-    h = se * t._ppf((1+confidence)/2., n-1)
-    return m, m-h, m+h
+

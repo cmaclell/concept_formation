@@ -22,7 +22,7 @@ def _load_file(filename):
     """
     module_path = dirname(__file__)
     with open(join(module_path, 'data_files', filename)) as dat:
-        output = [row for row in dat]
+        output = [row[:-1] for row in dat]
     return output
 
 def load_iris():
@@ -168,7 +168,8 @@ def load_rb_s_07_human_predictions():
     >>> import pprint
     >>> data = load_rb_s_07_human_predictions()
     >>> pprint.pprint(data[0:2])
-    ['user_id,instance_guid,time,order,prediction,correctness\n',
-     '1,2fda0bde-95a7-4bda-9851-785275c3f56d,2015-02-15 19:21:14.327344+00:00,1,0,1\n']
+    ['user_id,instance_guid,time,order,prediction,correctness',
+     '1,2fda0bde-95a7-4bda-9851-785275c3f56d,2015-02-15 '
+     '19:21:14.327344+00:00,1,0,1']
     """
     return _load_file('human_s_07_success_predictions.csv')
