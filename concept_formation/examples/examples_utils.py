@@ -3,11 +3,14 @@ This module contains utility functions used in the example scripts. They are
 implemented separately because they use scipy and numpy and we want to remove
 external dependencies from within the core library.
 """
+from math import sqrt
 
 from scipy.stats import sem
 from scipy.stats import t
 from scipy import linalg
 import numpy as np
+
+from concept_formation.utils import mean
 
 def moving_average(a, n=3) :
     """A function for computing the moving average, so that we can smooth out the
