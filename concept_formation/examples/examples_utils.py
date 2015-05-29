@@ -3,6 +3,10 @@ This module contains utility functions used in the example scripts. They are
 implemented separately because they use scipy and numpy and we want to remove
 external dependencies from within the core library.
 """
+from __future__ import print_function
+from __future__ import unicode_literals
+from __future__ import absolute_import
+from __future__ import division
 from math import sqrt
 
 from scipy.stats import sem
