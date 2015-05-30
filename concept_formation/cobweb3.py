@@ -12,16 +12,6 @@ from concept_formation.utils import c4
 from concept_formation.cobweb import CobwebNode
 from concept_formation.cobweb import CobwebTree
 
-# Magnify the continuous values so that the just noticable difference
-# of the noramlized values is equal to acuity (i.e., a JND of 8% means that the
-# system is able to perceive a difference of 0.08 after normalizing the data to
-# have std 1). Smaller JND values tend to make categorization slower because
-# the tree will have greater depth due to being able to more finely
-# discriminate between values.
-just_noticable_difference = 0.08
-scale_num_std = 1 /(just_noticable_difference * sqrt(2 * pi))
-scale_proportion = 1 / scale_num_std
-
 class Cobweb3Tree(CobwebTree):
     """
     The Cobweb3Tree contains the knoweldge base of a partiucluar instance of the
@@ -159,8 +149,8 @@ class Cobweb3Node(CobwebNode):
         elif attr not in self.av_counts:
             return 0.0
         elif isinstance(self.av_counts[attr], ContinuousValue):
-            if self.tree.scaling:
-                scale = scale_proportion * self.tree.root.av_counts[attr].unbiased_std()
+            if self.tree.scaling and self.parent:
+                scale = self.parent.av_counts[attr].unbiased_std()
             else:
                 scale = 1.0
 
@@ -223,8 +213,8 @@ class Cobweb3Node(CobwebNode):
                 else:
                     val_count = self.av_counts[attr].num
 
-                    if self.tree.scaling:
-                        scale = scale_proportion * self.tree.root.av_counts[attr].unbiased_std()
+                    if self.tree.scaling and self.parent:
+                        scale = self.parent.av_counts[attr].unbiased_std()
                     else:
                         scale = 1.0
 
@@ -396,11 +386,11 @@ class Cobweb3Node(CobwebNode):
             if val is None:
                 return 1 - prob_attr
 
-            if self.tree.scaling:
-                scale = scale_proportion * self.tree.root.av_counts[attr].unbiased_std()
+            if self.tree.scaling and self.parent:
+                scale = self.parent.av_counts[attr].unbiased_std()
                 if scale == 0:
                     scale = 1
-                shift = self.tree.root.av_counts[attr].mean
+                shift = self.parent.av_counts[attr].mean
                 val = (val - shift) / scale
             else:
                 scale = 1.0
