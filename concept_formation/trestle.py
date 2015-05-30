@@ -43,9 +43,16 @@ class TrestleTree(Cobweb3Tree):
         :type scaling: bool
         """
         self.root = Cobweb3Node()
-        self.root.root = self.root
-        self.root.alpha = alpha
-        self.root.scaling = scaling
+        self.root.tree = self
+        self.alpha = alpha
+        self.scaling = scaling
+
+    def clear(self):
+        """Clears the concepts of the tree, but maintains the alpha  and
+        scaling parameters.
+        """
+        self.root = Cobweb3Node()
+        self.root.tree = self
 
     def ifit(self, instance):
         """Incrementally fit a new instance into the tree and return its resulting

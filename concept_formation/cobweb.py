@@ -25,9 +25,16 @@ class CobwebTree(object):
         :type alpha: float
         """
         self.root = CobwebNode()
-        self.root.root = self.root
-        self.root.alpha = alpha
-        self.root.scaling = False
+        self.root.tree = self
+        #self.root.root = self.root
+        self.alpha = alpha
+        self.scaling = False
+
+    def clear(self):
+        """Clears the concepts of the tree, but maintains the alpha parameter.
+        """
+        self.root = CobwebNode()
+        self.root.tree = self
 
     def __str__(self):
         return str(self.root)
@@ -109,10 +116,7 @@ class CobwebTree(object):
                     new.parent.children.remove(current)
                     new.parent.children.append(new)
                 else:
-                    new.alpha = self.root.alpha
-                    new.scaling = self.root.scaling
                     self.root = new
-                    self.root.root = new
 
                 new.increment_counts(instance)
                 return new.create_new_child(instance)
@@ -229,12 +233,13 @@ class CobwebNode(object):
         self.av_counts = {}
         self.children = [] 
         self.parent = None 
-        self.root = None
+        #self.root = None
+        self.tree = None
 
         if otherNode:
             self.update_counts_from_node(otherNode)
             self.parent = otherNode.parent
-            self.root = otherNode.root
+            self.tree = otherNode.tree
 
             for child in otherNode.children:
                 self.children.append(self.__class__(child))
@@ -248,7 +253,8 @@ class CobwebNode(object):
         utility.
         """
         temp = self.__class__()
-        temp.root = self.root
+        #temp.root = self.root
+        temp.tree = self.tree
         temp.update_counts_from_node(self)
         return temp
 
@@ -295,28 +301,28 @@ class CobwebNode(object):
 
         correct_guesses = 0.0
 
-        for attr in self.root.av_counts:
+        for attr in self.tree.root.av_counts:
             if attr[0] == "_":
                 continue
             val_count = 0
 
             # the +1 is for the "missing" value
-            n_values = len(self.root.av_counts[attr]) + 1
+            n_values = len(self.tree.root.av_counts[attr]) + 1
 
-            for val in self.root.av_counts[attr]:
+            for val in self.tree.root.av_counts[attr]:
                 if attr not in self.av_counts or val not in self.av_counts[attr]:
                     prob = 0
-                    if self.root.alpha > 0:
-                        prob = self.root.alpha / (self.root.alpha * n_values)
+                    if self.tree.alpha > 0:
+                        prob = self.tree.alpha / (self.tree.alpha * n_values)
                 else:
                     val_count += self.av_counts[attr][val]
-                    prob = ((self.av_counts[attr][val] + self.root.alpha) / (1.0 * self.count
-                                                              + self.root.alpha * n_values))
+                    prob = ((self.av_counts[attr][val] + self.tree.alpha) / (1.0 * self.count
+                                                              + self.tree.alpha * n_values))
                 correct_guesses += (prob * prob)
 
             #Factors in the probability mass of missing values
-            prob = ((self.count - val_count + self.root.alpha) / (1.0*self.count +
-                                                             self.root.alpha * n_values))
+            prob = ((self.count - val_count + self.tree.alpha) / (1.0*self.count +
+                                                             self.tree.alpha * n_values))
             correct_guesses += (prob * prob)
 
         return correct_guesses
@@ -487,7 +493,7 @@ class CobwebNode(object):
         """
         new_child = self.__class__()
         new_child.parent = self
-        new_child.root = self.root
+        new_child.tree = self.tree
         new_child.increment_counts(instance)
         self.children.append(new_child)
         return new_child
@@ -505,7 +511,7 @@ class CobwebNode(object):
         if self.count > 0:
             new = self.__class__(self)
             new.parent = self
-            new.root = self.root
+            new.tree = self.tree
             self.children.append(new)
             return new
 
@@ -552,13 +558,14 @@ class CobwebNode(object):
         """
         new_child = self.__class__()
         new_child.parent = self
-        new_child.root = self.root
+        new_child.tree = self.tree
+
         new_child.update_counts_from_node(best1)
         new_child.update_counts_from_node(best2)
         best1.parent = new_child
-        best1.root = new_child.root
+        #best1.tree = new_child.tree
         best2.parent = new_child
-        best2.root = new_child.root
+        #best2.tree = new_child.tree
         new_child.children.append(best1)
         new_child.children.append(best2)
         self.children.remove(best1)
@@ -589,7 +596,7 @@ class CobwebNode(object):
         temp.increment_counts(instance)
 
         new_child = self.__class__()
-        new_child.root = self.root
+        new_child.tree = self.tree
         new_child.update_counts_from_node(best1)
         new_child.update_counts_from_node(best2)
         new_child.increment_counts(instance)
@@ -619,7 +626,7 @@ class CobwebNode(object):
         self.children.remove(best)
         for child in best.children:
             child.parent = self
-            child.root = self.root
+            child.tree = self.tree
             self.children.append(child)
 
     def cu_for_fringe_split(self, instance):
@@ -801,27 +808,25 @@ class CobwebNode(object):
         :rtype: [(choice1, choice1_weight), (choice2, choice2_weight), ...]
         """
         choices = []
-        if attr not in self.root.av_counts:
+        if attr not in self.tree.root.av_counts:
             choices.append((None,1.0))
             return choices
 
-        n_values = len(self.root.av_counts[attr]) + 1
+        n_values = len(self.tree.root.av_counts[attr]) + 1
 
-        
         val_count = 0
-        for val in self.root.av_counts[attr]:
-            if attr not in self.av_counts or val not in self.av_counts[attr]:
-                count = 0
-            else:
+        for val in self.tree.root.av_counts[attr]:
+            count = 0
+            if attr in self.av_counts and val in self.av_counts[attr]:
                 count = self.av_counts[attr][val]
 
-            choices.append((val, (count + self.root.alpha)
-                            / (1.0 * self.count + self.root.alpha * n_values)))
-            if attr in self.av_counts and val in self.av_counts[attr]:
-                val_count += self.av_counts[attr][val]
+            choices.append((val, (count + self.tree.alpha)
+                            / (1.0 * self.count + self.tree.alpha * n_values)))
 
-        choices.append((None, ((self.count - val_count + self.root.alpha) /
-                               (1.0 * self.count + self.root.alpha *
+            val_count += count
+
+        choices.append((None, ((self.count - val_count + self.tree.alpha) /
+                               (1.0 * self.count + self.tree.alpha *
                                 n_values))))
         return choices
 
@@ -836,7 +841,7 @@ class CobwebNode(object):
 
         .. seealso :meth:`CobwebNode.sample`
         """
-        if attr not in self.root.av_counts:
+        if attr not in self.tree.root.av_counts:
             return None
 
         choices = self.get_weighted_values(attr)
@@ -854,7 +859,7 @@ class CobwebNode(object):
 
         .. seealso :meth:`CobwebNode.predict`
         """
-        if attr not in self.root.av_counts:
+        if attr not in self.tree.root.av_counts:
             return None
 
         choices = self.get_weighted_values(attr)
@@ -877,20 +882,20 @@ class CobwebNode(object):
         :return: The probability of attr having the value val in the current concept.
         :rtype: float
         """
-        if attr not in self.root.av_counts:
+        if attr not in self.tree.root.av_counts:
             return 0.0
 
-        if val is not None and val not in self.root.av_counts[attr]:
+        if val is not None and val not in self.tree.root.av_counts[attr]:
             return 0.0
 
-        n_values = len(self.root.av_counts[attr]) + 1
+        n_values = len(self.tree.root.av_counts[attr]) + 1
 
         count = 0
         if attr in self.av_counts and val in self.av_counts[attr]:
             count = self.av_counts[attr][val]
 
-        return ((count + self.root.alpha) / 
-                (1.0 * self.count + self.root.alpha * n_values))
+        return ((count + self.tree.alpha) / 
+                (1.0 * self.count + self.tree.alpha * n_values))
 
     def get_probability_missing(self, attr):
         """Returns the probability of a particular attribute not being present in a
@@ -907,8 +912,8 @@ class CobwebNode(object):
         :rtype: float 
         """
         # the +1 is for the "missing" value
-        if attr in self.root.av_counts:
-            n_values = len(self.root.av_counts[attr]) + 1
+        if attr in self.tree.root.av_counts:
+            n_values = len(self.tree.root.av_counts[attr]) + 1
         else:
             n_values = 1
 
@@ -917,8 +922,8 @@ class CobwebNode(object):
             for val in self.av_counts[attr]:
                 val_count += self.av_counts[attr][val]
 
-        if (1.0 * self.count + self.root.alpha * n_values) == 0:
+        if (1.0 * self.count + self.tree.alpha * n_values) == 0:
             return 0.0
 
-        return ((self.count - val_count + self.root.alpha) / 
-                (1.0 * self.count + self.root.alpha * n_values))
+        return ((self.count - val_count + self.tree.alpha) / 
+                (1.0 * self.count + self.tree.alpha * n_values))

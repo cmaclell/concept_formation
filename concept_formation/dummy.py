@@ -11,9 +11,9 @@ class DummyTree(TrestleTree):
 
     def __init__(self):
         self.root = Cobweb3Node()
-        self.root.root = self.root
-        self.root.alpha = 0
-        self.root.scaling = False
+        self.root.tree = self
+        self.alpha = 0
+        self.scaling = False
 
     def ifit(self, instance, do_mapping=False):
         """

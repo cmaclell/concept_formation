@@ -34,8 +34,6 @@ structure mapping process. Here is a description of what each stage means:
   flattened using dot notation. This is the final result of the overall process.
 
 """
-
-
 from __future__ import print_function
 from __future__ import unicode_literals
 from __future__ import absolute_import

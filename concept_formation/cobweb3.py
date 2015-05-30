@@ -54,9 +54,16 @@ class Cobweb3Tree(CobwebTree):
         :type scaling: bool
         """
         self.root = Cobweb3Node()
-        self.root.root = self.root
-        self.root.alpha = alpha
-        self.root.scaling = scaling
+        self.root.tree = self
+        self.alpha = alpha
+        self.scaling = scaling
+
+    def clear(self):
+        """Clears the concepts of the tree, but maintains the alpha  and
+        scaling parameters.
+        """
+        self.root = Cobweb3Node()
+        self.root.tree = self
 
 class Cobweb3Node(CobwebNode):
     """
@@ -72,7 +79,6 @@ class Cobweb3Node(CobwebNode):
     """
 
     # Smallest possible acuity. Below this probabilities will exceed 1.0
-
     acuity = 1.0 / sqrt(2.0 * pi)
     """
     acuity is used as a floor on standard deviation estimates for numeric
@@ -153,8 +159,8 @@ class Cobweb3Node(CobwebNode):
         elif attr not in self.av_counts:
             return 0.0
         elif isinstance(self.av_counts[attr], ContinuousValue):
-            if self.root.scaling:
-                scale = scale_proportion * self.root.av_counts[attr].unbiased_std()
+            if self.tree.scaling:
+                scale = scale_proportion * self.tree.root.av_counts[attr].unbiased_std()
             else:
                 scale = 1.0
 
@@ -204,53 +210,53 @@ class Cobweb3Node(CobwebNode):
         """
         correct_guesses = 0.0
 
-        for attr in self.root.av_counts:
+        for attr in self.tree.root.av_counts:
             if attr[0] == "_":
                 continue
-            elif isinstance(self.root.av_counts[attr], ContinuousValue):
+            elif isinstance(self.tree.root.av_counts[attr], ContinuousValue):
                 n_values = 2
                 if attr not in self.av_counts :
                     prob = 0
-                    if self.root.alpha > 0:
-                        prob = self.root.alpha / (self.root.alpha * n_values)
+                    if self.tree.alpha > 0:
+                        prob = self.tree.alpha / (self.tree.alpha * n_values)
                     val_count = 0
                 else:
                     val_count = self.av_counts[attr].num
 
-                    if self.root.scaling:
-                        scale = scale_proportion * self.root.av_counts[attr].unbiased_std()
+                    if self.tree.scaling:
+                        scale = scale_proportion * self.tree.root.av_counts[attr].unbiased_std()
                     else:
                         scale = 1.0
 
                     std = max(self.av_counts[attr].scaled_unbiased_std(scale),
                               self.acuity)
-                    prob_attr = ((1.0 * self.av_counts[attr].num + self.root.alpha) /
-                                 (self.count + self.root.alpha * n_values ))
+                    prob_attr = ((1.0 * self.av_counts[attr].num + self.tree.alpha) /
+                                 (self.count + self.tree.alpha * n_values ))
                     correct_guesses += ((prob_attr * prob_attr) * 
                                         (1.0 / (2.0 * sqrt(pi) * std)))
 
                 #Factors in the probability mass of missing values
-                prob = ((self.count - val_count + self.root.alpha) / (1.0 * self.count +
-                                                            self.root.alpha * n_values))
+                prob = ((self.count - val_count + self.tree.alpha) / (1.0 * self.count +
+                                                            self.tree.alpha * n_values))
                 correct_guesses += (prob * prob)
 
             else:
                 val_count = 0
-                n_values = len(self.root.av_counts[attr]) + 1
-                for val in self.root.av_counts[attr]:
+                n_values = len(self.tree.root.av_counts[attr]) + 1
+                for val in self.tree.root.av_counts[attr]:
                     if attr not in self.av_counts or val not in self.av_counts[attr]:
                         prob = 0
-                        if self.root.alpha > 0:
-                            prob = self.root.alpha / (self.root.alpha * n_values)
+                        if self.tree.alpha > 0:
+                            prob = self.tree.alpha / (self.tree.alpha * n_values)
                     else:
                         val_count += self.av_counts[attr][val]
-                        prob = ((self.av_counts[attr][val] + self.root.alpha) / (1.0 * self.count + 
-                                                                       self.root.alpha * n_values))
+                        prob = ((self.av_counts[attr][val] + self.tree.alpha) / (1.0 * self.count + 
+                                                                       self.tree.alpha * n_values))
                     correct_guesses += (prob * prob)
 
                 #Factors in the probability mass of missing values
-                prob = ((self.count - val_count + self.root.alpha) /
-                        (1.0*self.count + self.root.alpha *
+                prob = ((self.count - val_count + self.tree.alpha) /
+                        (1.0*self.count + self.tree.alpha *
                                                     n_values))
                 correct_guesses += (prob * prob)
 
@@ -311,13 +317,13 @@ class Cobweb3Node(CobwebNode):
 
         .. seealso :meth:`Cobweb3Node.predict`
         """
-        if attr not in self.root.av_counts:
+        if attr not in self.tree.root.av_counts:
             return None
 
-        if isinstance(self.root.av_counts[attr], ContinuousValue):
+        if isinstance(self.tree.root.av_counts[attr], ContinuousValue):
             n_values = 2
-            prob_attr = ((1.0 * self.av_counts[attr].num + self.root.alpha) /
-                         (self.count + self.root.alpha * n_values ))
+            prob_attr = ((1.0 * self.av_counts[attr].num + self.tree.alpha) /
+                         (self.count + self.tree.alpha * n_values ))
 
             if prob_attr < 0.5:
                 return None
@@ -344,13 +350,13 @@ class Cobweb3Node(CobwebNode):
         .. seealso :meth:`Cobweb3Node.sample`
 
         """
-        if attr not in self.root.av_counts:
+        if attr not in self.tree.root.av_counts:
             return None
 
-        if isinstance(self.root.av_counts[attr], ContinuousValue):
+        if isinstance(self.tree.root.av_counts[attr], ContinuousValue):
             n_values = 2
-            prob_attr = ((1.0 * self.av_counts[attr].num + self.root.alpha) /
-                         (self.count + self.root.alpha * n_values ))
+            prob_attr = ((1.0 * self.av_counts[attr].num + self.tree.alpha) /
+                         (self.count + self.tree.alpha * n_values ))
 
             if prob_attr < 0.5:
                 return None
@@ -379,22 +385,22 @@ class Cobweb3Node(CobwebNode):
         :return: The probability of attr having the value val in the current concept.
         :rtype: float
         """
-        if attr not in self.root.av_counts:
+        if attr not in self.tree.root.av_counts:
             return 0.0
 
-        if isinstance(self.root.av_counts[attr], ContinuousValue):
+        if isinstance(self.tree.root.av_counts[attr], ContinuousValue):
             n_values = 2
-            prob_attr = ((1.0 * self.av_counts[attr].num + self.root.alpha) /
-                         (self.count + self.root.alpha * n_values ))
+            prob_attr = ((1.0 * self.av_counts[attr].num + self.tree.alpha) /
+                         (self.count + self.tree.alpha * n_values ))
 
             if val is None:
                 return 1 - prob_attr
 
-            if self.root.scaling:
-                scale = scale_proportion * self.root.av_counts[attr].unbiased_std()
+            if self.tree.scaling:
+                scale = scale_proportion * self.tree.root.av_counts[attr].unbiased_std()
                 if scale == 0:
                     scale = 1
-                shift = self.root.av_counts[attr].mean
+                shift = self.tree.root.av_counts[attr].mean
                 val = (val - shift) / scale
             else:
                 scale = 1.0
