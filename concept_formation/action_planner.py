@@ -13,9 +13,10 @@ import inspect
 
 import numpy as np
 
+from concept_formation.structure_mapper import flattenJSON
 from concept_formation.search import Node
-from concept_formation.search import BestFGS
-#from concept_formation.search import BeamGS
+#from concept_formation.search import BestFGS
+from concept_formation.search import BeamGS
 
 def levenshtein(source, target):
     """ 
@@ -69,8 +70,9 @@ class ActionPlanner:
         state. The function returns a plan.
         """
         initial = Node((tuple(state.items()), value))
-        #solution = next(BeamGS(initial, self.successorfn, self.testfn, self.heuristicfn), 3)
-        solution = next(BestFGS(initial, self.successorfn, self.testfn, self.heuristicfn))
+        solution = next(BeamGS(initial, self.successorfn, self.testfn,
+                               self.heuristicfn, initialBeamWidth=1))
+        #solution = next(BestFGS(initial, self.successorfn, self.testfn, self.heuristicfn))
 
         return solution
 
@@ -85,9 +87,11 @@ class ActionPlanner:
                 action_name = "(%s %s)" % (action, " ".join(names))
                 try:
                     new_state.append((action_name, self.actions[action](*values)))
-                    yield Node((tuple(new_state), goal), node, action_name, node.cost+1, node.depth+1)
+                    yield Node((tuple(new_state), goal), node, action_name,
+                               node.cost+1, node.depth+1)
                 except Exception as e:
-                    print(e)
+                    pass
+                    #print(e)
 
     def testfn(self, node):
         s, goal = node.state
@@ -158,7 +162,12 @@ if __name__ == "__main__":
                         'cdr': cdr,
                         'append': append,
                         'tostring': tostring})
-    print(ap.explain_value({'v1': "5", 'v2': "3"}, tostring(5*5+3)))
+
+    s = {'v1': {'value': 5},
+         'v2': {'value': 3}}
+    
+    FlatS = flattenJSON(s)
+    print(ap.explain_value(FlatS, 5*5+3))
 
 
 

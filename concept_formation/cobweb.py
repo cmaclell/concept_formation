@@ -26,7 +26,6 @@ class CobwebTree(object):
         """
         self.root = CobwebNode()
         self.root.tree = self
-        #self.root.root = self.root
         self.alpha = alpha
         self.scaling = False
 

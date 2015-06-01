@@ -90,8 +90,19 @@ def standardizeApartNames(instance):
         for i,v in enumerate(r):
             if i == 0:
                 new_relation.append(v)
+            elif '.' in v:
+                new_v = []
+                for element in v.split('.'):
+                    if element in mapping:
+                        new_v.append(mapping[element])
+                    else:
+                        new_v.append(element)
+                new_relation.append(".".join(new_v))
             else:
-                new_relation.append(mapping[v])
+                if v in mapping:
+                    new_relation.append(mapping[v])
+                else:
+                    new_relation.append(v)
         new_instance[name] = new_relation
 
     return new_instance
@@ -184,9 +195,8 @@ def renameRelation(attr, mapping):
         if idx == 0:
             temp.append(val)
         else:
-            new_attr = []
-            for name in val.split("."):
-                new_attr.append(mapping[name])
+            new_attr = [mapping[name] if name in mapping else name for name in
+                        val.split(".")]
             temp.append(".".join(new_attr))
     return tuple(temp)
 
@@ -316,6 +326,10 @@ def structurizeJSON(instance):
             for i,v in enumerate(attr):
                 if i == 0:
                     relation.append(v)
+                elif v in instance:
+                    path = v.split('.')
+                    relation.append('.'.join(path[-2:]))
+                    path = path[:-2]
                 else:
                     path = v.split('.')
                     relation.append(path[-1])
@@ -338,40 +352,53 @@ def structurizeJSON(instance):
 
     return temp
 
-def bindFlatAttr(attr, mapping):
+def bindFlatAttr(attr, mapping, unnamed):
     """Renames an attribute given a mapping.
 
     :param attr: The attribute to be renamed
-    :type attr: str
+    :type attr: str or tuple
     :param mapping: A dictionary of mappings between component names
     :type mapping: dict
+    :param unnamed: A list of components that are not yet mapped.
+    :type unnamed: dict
     :return: The attribute's new name or ``None`` if the mapping is incomplete
     :rtype: str
 
     >>> attr = ('before', 'c1', 'c2')
     >>> mapping = {'c1': 'o1', 'c2':'o2'}
-    >>> bindFlatAttr(attr, mapping)
+    >>> bindFlatAttr(attr, mapping, {})
     ('before', 'o1', 'o2')
 
     If the mapping is incomplete then returns ``None`` (nothing) 
 
     >>> attr = ('before', 'c1', 'c2')
     >>> mapping = {'c1': 'o1'}
-    >>> bindFlatAttr(attr, mapping) is None
+    >>> bindFlatAttr(attr, mapping, {'c2'}) is None
     True
+
+    >>> bindFlatAttr(('<', 'o2.a', 'o1.a'), {'o1': 'c1'}, {'o2'}) is None
+    True
+
+    >>> bindFlatAttr(('<', 'o2.a', 'o1.a'), {'o1': 'c1', 'o2': 'c2'}, {}) is None
+    False
     """
     if isinstance(attr, tuple):
         for i,v in enumerate(attr):
             if i == 0:
                 continue
+
+            # TODO add an extra thing here to match nested relations
+            # - Chris MacLellan
+
             for o in v.split('.'):
-                if o not in mapping:
+                if o in unnamed:
                     return None
         return renameRelation(attr, mapping)
     elif '.' in attr:
-        path = attr.split('.')[:-1]
+        path = attr.split('.')[:-1] # might not need the -1
         for o in path:
-            if o not in mapping:
+            #if o not in mapping:
+            if o in unnamed:
                 return None
         return renameComponent(attr, mapping)
     else:
@@ -436,14 +463,15 @@ def flatMatch(concept, instance, optimal=False):
     if(len(inames) == 0 or
        len(cnames) == 0):
         return {}
-     
-    initial = search.Node((frozenset(), inames, cnames), extra=(concept, instance))
+
+    initial = search.Node((frozenset(), inames, cnames), extra=(concept,
+                                                                instance))
     if optimal:
         solution = next(search.BestFGS(initial, _flatMatchSuccessorFn, _flatMatchGoalTestFn,
                                 _flatMatchHeuristicFn))
     else:
         solution = next(search.BeamGS(initial, _flatMatchSuccessorFn, _flatMatchGoalTestFn,
-                           _flatMatchHeuristicFn, initialBeamWidth=3))
+                           _flatMatchHeuristicFn, initialBeamWidth=1))
     #print(solution.cost)
 
     if solution:
@@ -469,7 +497,7 @@ def _flatMatchSuccessorFn(node):
         for attr in instance:
             if not containsComponent(n, attr):
                 continue
-            new_attr = bindFlatAttr(attr, m)
+            new_attr = bindFlatAttr(attr, m, inames)
             if new_attr:
                 reward += concept.attr_val_guess_gain(new_attr, instance[attr])
 
@@ -484,7 +512,7 @@ def _flatMatchSuccessorFn(node):
             for attr in instance:
                 if not containsComponent(n, attr):
                     continue
-                new_attr = bindFlatAttr(attr, m)
+                new_attr = bindFlatAttr(attr, m, inames)
                 if new_attr:
                     reward += concept.attr_val_guess_gain(new_attr,
                                                           instance[attr])
@@ -492,6 +520,7 @@ def _flatMatchSuccessorFn(node):
                                       frozenset([n]), availableNames -
                                       frozenset([new])), node, n + ":" + new,
                         node.cost - reward, node.depth + 1, node.extra)
+
 
 def _flatMatchHeuristicFn(node):
     """
@@ -507,13 +536,13 @@ def _flatMatchHeuristicFn(node):
     h = 0
     m = {a:v for a,v in mapping}
     for attr in instance:
-        new_attr = bindFlatAttr(attr, m)
+        new_attr = bindFlatAttr(attr, m, unnamed)
         if not new_attr:
             best_attr_h = [concept.attr_val_guess_gain(cAttr, instance[attr]) for
                                cAttr in concept.av_counts if
-                               isPartialMatch(attr, cAttr, m)]
+                               isPartialMatch(attr, cAttr, m, unnamed)]
 
-            if len(best_attr_h) != 0:
+            if len(best_attr_h) > 0:
                 h -= max(best_attr_h)
 
     return h
@@ -528,18 +557,29 @@ def _flatMatchGoalTestFn(node):
     mapping, unnamed, availableNames = node.state
     return len(unnamed) == 0
 
-def isPartialMatch(iAttr, cAttr, mapping):
+def isPartialMatch(iAttr, cAttr, mapping, unnamed):
     """Returns True if the instance attribute (iAttr) partially matches the
     concept attribute (cAttr) given the mapping.
 
     :param iAttr: An attribute in an instance
-    :type iAttr: str
+    :type iAttr: str or tuple
     :param cAttr: An attribute in a concept
-    :type cAttr: str
+    :type cAttr: str or tuple
     :param mapping: A mapping between between attribute names
     :type mapping: dict
+    :param unnamed: A list of components that are not yet mapped.
+    :type unnamed: dict
     :return: ``True`` if the instance attribute matches the concept attribute in the mapping otherwise ``False``
     :rtype: bool
+
+    >>> isPartialMatch(('<', 'o2.a', 'o1.a'), ('<', 'c2.a', 'c1.b'), {'o1': 'c1'}, {'o2'})
+    False
+
+    >>> isPartialMatch(('<', 'o2.a', 'o1.a'), ('<', 'c2.a', 'c1.a'), {'o1': 'c1'}, {'o2'})
+    True
+
+    >>> isPartialMatch(('<', 'o2.a', 'o1.a'), ('<', 'c2.a', 'c1.a'), {'o1': 'c1', 'o2': 'c2'}, {})
+    True
     """
     if type(iAttr) != type(cAttr):
         return False
@@ -552,12 +592,18 @@ def isPartialMatch(iAttr, cAttr, mapping):
         for i,v in enumerate(iAttr):
             if i == 0:
                 continue
+
+            # TODO handle nested relations here
+            # Chris MacLellan
+
             iSplit = v.split('.')
             cSplit = cAttr[i].split('.')
             if len(iSplit) != len(cSplit):
                 return False
             for j,v2 in enumerate(iSplit):
                 if v2 in mapping and mapping[v2] != cSplit[j]:
+                    return False
+                if v2 not in mapping and v2 not in unnamed and v2 != cSplit[j]:
                     return False
     elif "." not in cAttr:
         return False
