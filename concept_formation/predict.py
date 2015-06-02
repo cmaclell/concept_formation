@@ -115,6 +115,7 @@ def incremental_prediction(tree, instances, attr, run_length, runs=1,
 
     scores = []
     for r in range(runs):
+        print(r)
         tree.clear()
 
         shuffle(instances)

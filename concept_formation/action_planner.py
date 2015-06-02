@@ -84,7 +84,9 @@ class ActionPlanner:
                 names = [a for a, v in tupled_args]
                 values = [v for a, v in tupled_args]
                 new_state = list(state)
-                action_name = "(%s %s)" % (action, " ".join(names))
+                action_name = tuple([action] + names)
+                ## TODO correctly output actions as relations.
+                #print([action] + names)
                 try:
                     new_state.append((action_name, self.actions[action](*values)))
                     yield Node((tuple(new_state), goal), node, action_name,
