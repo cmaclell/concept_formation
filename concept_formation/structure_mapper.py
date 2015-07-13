@@ -687,7 +687,7 @@ def lists_to_relations(instance):
                     ",".join(["ordered-list",
                         attr,
                         instance[attr][i],
-                        instanct[attr][i+1]])+
+                        instance[attr][i+1]])+
                     ")"] = True
 
         elif isinstance(instance[attr],dict):
