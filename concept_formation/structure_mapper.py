@@ -693,8 +693,14 @@ def lists_to_relations(instance):
     
     return instance
 
+def hoist_sub_objects(instance) :
+    """
 
-
+    Travese the instance for objects that contain subobjects and hoists the
+    subobjects to be their own objects at the top level of the instance
+    
+    """
+    pass
 
 
 
