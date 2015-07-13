@@ -620,25 +620,6 @@ def isPartialMatch(iAttr, cAttr, mapping, unnamed):
 
     return True
 
-def structure_map(concept, instance):
-    """Flatten the instance, perform structure mapping to the concept, rename
-    the instance based on this structure mapping, and return the renamed
-    instance.
-
-    :param concept: A concept to structure map the instance to
-    :type concept: TrestleNode
-    :param instance: An instance to map to the concept
-    :type instance: :ref:`raw instance <raw-instance>`
-    :return: A fully mapped and flattend copy of the instance
-    :rtype: :ref:`mapped instance <fully-mapped>`
-
-    """
-    instance = standardizeApartNames(instance)
-    instance = flattenJSON(instance)
-    mapping = flatMatch(concept, instance)
-    instance = renameFlat(instance, mapping)
-    return instance
-
 def extract_list_elements(instance):
     """
 
@@ -703,4 +684,33 @@ def hoist_sub_objects(instance) :
     
     """
     pass
+
+def tuplize(instance):
+    """
+    Converts all functions and object attribute references to tuples.
+    """
+    pass
+
+def structure_map(concept, instance):
+    """Flatten the instance, perform structure mapping to the concept, rename
+    the instance based on this structure mapping, and return the renamed
+    instance.
+
+    :param concept: A concept to structure map the instance to
+    :type concept: TrestleNode
+    :param instance: An instance to map to the concept
+    :type instance: :ref:`raw instance <raw-instance>`
+    :return: A fully mapped and flattend copy of the instance
+    :rtype: :ref:`mapped instance <fully-mapped>`
+
+    """
+    instance = standardizeApartNames(instance)
+    instance = extract_list_elements(instance)
+    instance = lists_to_relations(instance)
+    instance = hoist_sub_objects(instance)
+    instance = tuplize(instance)
+    instance = flattenJSON(instance)
+    mapping = flatMatch(concept, instance)
+    instance = renameFlat(instance, mapping)
+    return instance
 
