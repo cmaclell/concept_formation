@@ -54,7 +54,8 @@ def gensym():
     return 'o' + str(_gensym_counter)
 
 def standardizeApartNames(instance):
-    """Given a :ref:`raw instance <raw-instance>` rename all the components so they
+    """
+    Given a :ref:`raw instance <raw-instance>` rename all the components so they
     have unique names.
 
     This will rename component attirbutes as well as any occurance of the
@@ -257,7 +258,6 @@ def flattenJSON(instance):
     >>> pprint.pprint(flat)
     {'a': 1, 'o1.b': 1}
     """
-    instance = standardizeApartNames(instance)
     temp = {}
     for attr in instance:
         if isinstance(instance[attr], dict):
@@ -621,8 +621,9 @@ def isPartialMatch(iAttr, cAttr, mapping, unnamed):
     return True
 
 def structure_map(concept, instance):
-    """Flatten the instance, perform structure mapping to the concept, rename the instance
-    based on this structure mapping, and return the renamed instance.
+    """Flatten the instance, perform structure mapping to the concept, rename
+    the instance based on this structure mapping, and return the renamed
+    instance.
 
     :param concept: A concept to structure map the instance to
     :type concept: TrestleNode
@@ -632,10 +633,11 @@ def structure_map(concept, instance):
     :rtype: :ref:`mapped instance <fully-mapped>`
 
     """
-    temp_instance = flattenJSON(instance)
-    mapping = flatMatch(concept, temp_instance)
-    temp_instance = renameFlat(temp_instance, mapping)
-    return temp_instance
+    instance = standardizeApartNames(instance)
+    instance = flattenJSON(instance)
+    mapping = flatMatch(concept, instance)
+    instance = renameFlat(instance, mapping)
+    return instance
 
 def extract_list_elements(instance):
     """
@@ -701,9 +703,4 @@ def hoist_sub_objects(instance) :
     
     """
     pass
-
-
-
-
-
 
