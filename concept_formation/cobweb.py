@@ -76,6 +76,7 @@ class CobwebTree(object):
         instances = [i for i in instances]
 
         for x in range(iterations):
+            print("it:",x)
             if x == 0 and randomize_first:
                 shuffle(instances)
 

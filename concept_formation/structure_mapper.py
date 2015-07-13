@@ -636,3 +636,68 @@ def structure_map(concept, instance):
     mapping = flatMatch(concept, temp_instance)
     temp_instance = renameFlat(temp_instance, mapping)
     return temp_instance
+
+def extract_list_elements(instance):
+    """
+
+    Find all lists in an instance and extract their elements into their own
+    subjects of the main instance.
+
+    Unlike the utils.extract_components function this one will extract ALL
+    elements into their own objects not just object literals
+
+    TODO how to solve implicit references to objects that don't already exist in
+    the instance
+
+    """
+
+    for a in instance.keys():
+        if isinstance(instance[a],list):
+            for i in range(len(instance[a])):
+                
+                # TODO do we want to deep copy in the case we find a dict?
+                if isinstance(instance[a][i],dict):
+                    new_obj = instance[a][i]
+                else :
+                    new_obj = {}
+                    new_obj["val"]  = instance[a][i]
+
+                new_att = gensym()
+                instance[new_att] = extract_list_elements(new_obj)
+                instance[a][i] = new_att
+
+        if isinstance(instance[a],dict):
+            instance[a] = extract_list_elements(instance[a])
+
+    return instance
+
+def lists_to_relations(instance):
+    """
+    Travese the instance and turn any list elements into 
+    a series of relations.
+    """
+
+    for attr in instance.keys():
+        if isinstance(instance[attr], list):
+            for i in range(len(instance[attr])-1):
+
+                instance["("+
+                    ",".join(["ordered-list",
+                        attr,
+                        instance[attr][i],
+                        instanct[attr][i+1]])+
+                    ")"] = True
+
+        elif isinstance(instance[attr],dict):
+            instance[attr] = lists_to_relations(instance[attr])
+    
+    return instance
+
+
+
+
+
+
+
+
+
