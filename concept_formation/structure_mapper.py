@@ -53,12 +53,6 @@ def gensym():
     _gensym_counter += 1
     return 'o' + str(_gensym_counter)
 
-def _rel_name(*vals) :
-    """
-    Just a sanity function for me
-    """
-    return "("+" ".join(vals)+")"
-
 def standardize_apart_names(instance, mapping = {}):
     """
     Given a :ref:`raw instance <raw-instance>` rename all the components so they
@@ -85,10 +79,10 @@ def standardize_apart_names(instance, mapping = {}):
     {'lists': ['s1', 's2', 's3'],
      'nominal': 'v1',
      'numeric': 2.3,
-     'o1': {'a2': 'v2'},
-     'o2': {'a1': 'v1'},
-     (('relation1',), ('o2', ''), ('o1', '')): True,
-     (('relation2',), ('o2', ''), (('relation3',), ('o1', ''))): 4.3}
+     'o7': {'a1': 'v1'},
+     'o8': {'a2': 'v2'},
+     (('relation1',), ('o7', ''), ('o8', '')): True,
+     (('relation2',), ('o7', ''), (('relation3',), ('o8', ''))): 4.3}
     """
     new_instance = {}
     relations = []
@@ -132,7 +126,7 @@ def tuplize_relation_elements(elements, mapping):
 
     return tuple(elements)
 
-def tuplize_relation(relation, mapping):
+def tuplize_relation(relation, mapping={}) :
     """
     Converts a string formatted relation into a tuplized relation. It requires
     the mapping so that it can convert the period separated object references
@@ -764,22 +758,22 @@ def extract_list_elements(instance):
     new_instance = {}
     for a in instance.keys():
         if isinstance(instance[a],list):
-            new_instance[a] = []
-            for i in range(len(instance[a])):
+            new_list = []
+            for el in instance[a]:
                 
                 # TODO do we want to deep copy in the case we find a dict?
-                if isinstance(instance[a][i],dict):
-                    new_obj = instance[a][i]
+                if isinstance(el,dict):
+                    new_obj = el
                 else :
-                    new_obj = {}
-                    new_obj["val"]  = instance[a][i]
+                    new_obj = {"val": el}
 
                 new_att = gensym()
                 new_instance[new_att] = extract_list_elements(new_obj)
-                new_instance[a].append(new_att)
-                #instance[a][i] = new_att
+                new_list.append(new_att)
 
-        if isinstance(instance[a],dict):
+            new_instance[a] = new_list
+
+        elif isinstance(instance[a],dict):
             new_instance[a] = extract_list_elements(instance[a])
         else :
             new_instance[a] = instance[a]
@@ -795,17 +789,18 @@ def lists_to_relations(instance):
     >>> instance = {"list1":['a','b','c']}
     >>> instance = lists_to_relations(instance)
     >>> pprint.pprint(instance)
-    {'(ordered-list list1 a b)': True, '(ordered-list list1 b c)': True}
+    {(('ordered-list',), ('list1',), ('a', ''), ('b', '')): True,
+     (('ordered-list',), ('list1',), ('b', ''), ('c', '')): True}
     
     >>> import pprint
     >>> instance = {"list1":['a','b','c'],"list2":['w','x','y','z']}
     >>> instance = lists_to_relations(instance)
     >>> pprint.pprint(instance)
-    {'(ordered-list list1 a b)': True,
-     '(ordered-list list1 b c)': True,
-     '(ordered-list list2 w x)': True,
-     '(ordered-list list2 x y)': True,
-     '(ordered-list list2 y z)': True}
+    {(('ordered-list',), ('list1',), ('a', ''), ('b', '')): True,
+     (('ordered-list',), ('list1',), ('b', ''), ('c', '')): True,
+     (('ordered-list',), ('list2',), ('w', ''), ('x', '')): True,
+     (('ordered-list',), ('list2',), ('x', ''), ('y', '')): True,
+     (('ordered-list',), ('list2',), ('y', ''), ('z', '')): True}
 
     >>> import pprint
     >>> instance = {"stack":[{"a":1, "b":2, "c":3}, {"x":1, "y":2, "z":3}, {"i":1, "j":2, "k":3}]}
@@ -818,21 +813,26 @@ def lists_to_relations(instance):
 
     >>> instance = lists_to_relations(instance)
     >>> pprint.pprint(instance)
-    {'(ordered-list stack o4 o5)': True,
-     '(ordered-list stack o5 o6)': True,
-     'o4': {'a': 1, 'b': 2, 'c': 3},
+    {'o4': {'a': 1, 'b': 2, 'c': 3},
      'o5': {'x': 1, 'y': 2, 'z': 3},
-     'o6': {'i': 1, 'j': 2, 'k': 3}}
+     'o6': {'i': 1, 'j': 2, 'k': 3},
+     (('ordered-list',), ('stack',), ('o4', ''), ('o5', '')): True,
+     (('ordered-list',), ('stack',), ('o5', ''), ('o6', '')): True}
     """
     new_instance = {}
     for attr in instance.keys():
         if isinstance(instance[attr], list):
             for i in range(len(instance[attr])-1):
+                
+                rel = tuplize_relation_elements(
+                    ("ordered-list",
+                        attr,
+                        str(instance[attr][i]),
+                        str(instance[attr][i+1])),
+                    {str(instance[attr][i]),
+                        str(instance[attr][i+1])})
 
-                new_instance[_rel_name("ordered-list",
-                    attr,
-                    instance[attr][i],
-                    instance[attr][i+1])] = True
+                new_instance[rel] = True
 
         elif isinstance(instance[attr],dict):
             new_instance[attr] = lists_to_relations(instance[attr])
@@ -856,15 +856,15 @@ def hoist_sub_objects(instance) :
               'subsub2': {'a7': 7, 'subsubsub': {'a8': 'V8'}}}}
     >>> instance = hoist_sub_objects(instance)
     >>> pprint.pprint(instance)
-    {'(has-component sub2 subsub1)': True,
-     '(has-component sub2 subsub2)': True,
-     '(has-component subsub2 subsubsub)': True,
-     'a1': 'v1',
+    {'a1': 'v1',
      'sub1': {'a2': 'v2', 'a3': 3},
      'sub2': {'a4': 'v4'},
      'subsub1': {'a5': 'v5', 'a6': 'v6'},
      'subsub2': {'a7': 7},
-     'subsubsub': {'a8': 'V8'}}
+     'subsubsub': {'a8': 'V8'},
+     (('has-component',), ('sub2', ''), ('subsub1', '')): True,
+     (('has-component',), ('sub2', ''), ('subsub2', '')): True,
+     (('has-component',), ('subsub2', ''), ('subsubsub', '')): True}
     """
     new_instance = {}
     
@@ -886,7 +886,12 @@ def _hoist_sub_objects_rec(sub,attr,top_level):
         # this is a sub-sub object
         if isinstance(sub[a],dict):
             top_level[a] = _hoist_sub_objects_rec(sub[a],a,top_level)
-            top_level[_rel_name("has-component",attr,a)] = True
+            rel = tuplize_relation_elements(
+                ("has-component",
+                   str(attr),
+                   str(a)),{str(attr),
+                   str(a)})
+            top_level[rel] = True
         else :
             new_sub[a] = sub[a]
     return new_sub
