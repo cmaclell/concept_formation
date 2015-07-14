@@ -288,7 +288,8 @@ class CobwebNode(object):
                                      node.av_counts[attr][val])
 
     def expected_correct_guesses(self):
-        """Returns the number of correct guesses that are expected from the given
+        """
+        Returns the number of correct guesses that are expected from the given
         concept. 
 
         This is the sum of the probability of each attribute value squared. This
@@ -298,7 +299,6 @@ class CobwebNode(object):
         :rtype: float
 
         """
-
         correct_guesses = 0.0
 
         for attr in self.tree.root.av_counts:

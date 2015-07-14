@@ -61,9 +61,6 @@ def _rel_name(*vals) :
 
 def standardize_apart_names(instance, mapping = {}):
     """
-    :warning: broken rewrite this function to do the correct thing based on
-    doctests!
-
     Given a :ref:`raw instance <raw-instance>` rename all the components so they
     have unique names.
 
@@ -88,17 +85,17 @@ def standardize_apart_names(instance, mapping = {}):
     {'lists': ['s1', 's2', 's3'],
      'nominal': 'v1',
      'numeric': 2.3,
-     'o1': {'a1': 'v1'},
-     'o2': {'a2': 'v2'},
-     ('relation1', 'o1', 'o2'): True,
-     ('relation2', 'o1', ('relation3', 'o2')): 4.3}
+     'o1': {'a2': 'v2'},
+     'o2': {'a1': 'v1'},
+     (('relation1',), ('o2', ''), ('o1', '')): True,
+     (('relation2',), ('o2', ''), (('relation3',), ('o1', ''))): 4.3}
     """
     new_instance = {}
     relations = []
 
     for attr in instance:
         if attr[0] == '(':
-            relations.append((tuplize_relation(attr), instance[attr]))
+            relations.append((attr, instance[attr]))
         elif isinstance(instance[attr], dict):
             mapping[attr] = gensym()
             new_instance[mapping[attr]] = standardize_apart_names(instance[attr], mapping)
@@ -106,17 +103,54 @@ def standardize_apart_names(instance, mapping = {}):
             new_instance[attr] = instance[attr]
 
     for relation, val in relations:
-        new_instance[rename_relation(relation, mapping)] = val
+        new_instance[rename_relation(tuplize_relation(relation, mapping), mapping)] = val
 
     return new_instance
 
-def tuplize_relation(relation):
+def tuplize_relation_elements(elements, mapping):
     """
-    Converts a string formated relation into a tuple of tuples.
+    Converts a relation element into a tuple for efficient
+    processing.
+    
+    >>> mapping = {'o1': 'c1', 'o2': 'c2'}
+    >>> ele1 = 'o1'
+    >>> tuplize_relation_elements(ele1, mapping)
+    ('o1', '')
+    >>> ele2 = "o1.o2.a"
+    >>> tuplize_relation_elements(ele2, mapping)
+    ('o1', 'o2', 'a')
+    >>> ele3 = ('o1', ('o1.o2.a',))
+    >>> tuplize_relation_elements(ele3, mapping)
+    (('o1', ''), (('o1', 'o2', 'a'),))
+    """
+    if isinstance(elements, tuple):
+        return tuple([tuplize_relation_elements(ele, mapping) for ele in elements])
+    
+    elements = elements.split('.')
+    if elements[-1] in mapping:
+        elements.append('')
+
+    return tuple(elements)
+
+def tuplize_relation(relation, mapping):
+    """
+    Converts a string formatted relation into a tuplized relation. It requires
+    the mapping so that it can convert the period separated object references
+    correctly into presplit tuples for efficient processing.
+
+    :param attr: The relational attribute formatted as a string
+    :type attr: string
+    :param mapping: A dictionary of mappings with component names as keys. Just
+    the keys are used (i.e., as a set) to determine if elements in the relation
+    are objects.
+    :type mapping: dict
+    :return: A new relational attribute in tuple format
+    :rtype: tuple
 
     >>> relation = '(foo1 o1 (foo2 o2 o3))'
-    >>> tuplize_relation(relation)
-    ('foo1', 'o1', ('foo2', 'o2', 'o3'))
+    >>> mapping = {'o1': 'sk1', 'o2': 'sk2', 'o3': 'sk3'}
+    >>> tuplize_relation(relation, mapping)
+    (('foo1',), ('o1', ''), (('foo2',), ('o2', ''), ('o3', '')))
     """
     stack = [[]]
 
@@ -141,11 +175,12 @@ def tuplize_relation(relation):
             end -= 1
 
     final = tuple(stack[-1][-1])
+    final = tuplize_relation_elements(final, mapping)
     return final
 
 def stringify_relation(relation):
     """
-    Converts a tuple of tuples into a string formatted relation.
+    Converts a tupleized relation into a string formated relation.
 
     >>> relation = ('foo1', 'o1', ('foo2', 'o2', 'o3'))
     >>> stringify_relation(relation)
@@ -156,7 +191,15 @@ def stringify_relation(relation):
 
 def rename_relation(relation, mapping):
     """
-    Rename the objects in a tuplized relation given a mapping.
+    Takes a tuplized relational attribute (e.g., ('before', 'o1', 'o2')) and
+    a mapping and renames the components based on mapping.
+
+    :param attr: The relational attribute containing components to be renamed
+    :type attr: tuple
+    :param mapping: A dictionary of mappings between component names
+    :type mapping: dict
+    :return: A new relational attribute with components renamed
+    :rtype: tuple
 
     >>> relation = ('foo1', 'o1', ('foo2', 'o2', 'o3'))
     >>> mapping = {'o1': 'o100', 'o2': 'o200', 'o3': 'o300'}
@@ -317,12 +360,19 @@ def renameFlat(instance, mapping):
 
     return temp_instance
 
-def flattenJSON(instance):
-    """Takes a :ref:`raw instance <raw-instance>`, standardizes apart the component
-    names, and flattens it. 
+def flatten_json(instance):
+    """
+    Takes a :ref:`raw instance <raw-instance>` that has already been
+    standardized apart and flattens it.
 
-    Hierarchy is represented with periods between variable names. This process
-    also converts the relations into tuples with values of ``True``.
+    :warning: important to note that relations can only exist at the top level,
+    not within subobjects. If they do exist than this function will return
+    incorrect results.
+
+    Hierarchy is represented with periods between variable names in the
+    flattened attributes. However, this process converts the attributes with
+    periods in them into a tuple of objects with an attribute as the last
+    element, this is more efficient for later processing.
 
     :param instance: An instance to be flattened.
     :type instance: :ref:`raw instance <raw-instance>`
@@ -330,33 +380,28 @@ def flattenJSON(instance):
     :rtype: :ref:`flattened instance <flattened-instance>`
 
     >>> import pprint
-    >>> instance = {'a': 1, 'c1': {'b': 1}}
-    >>> flat = flattenJSON(instance)
+    >>> instance = {'a': 1, 'c1': {'b': 1, '_c': 2}}
+    >>> flat = flatten_json(instance)
     >>> pprint.pprint(flat)
-    {'a': 1, 'o1.b': 1}
+    {'a': 1, ('_c1', '_c'): 2, ('c1', 'b'): 1}
     """
     temp = {}
     for attr in instance:
         if isinstance(instance[attr], dict):
-            subobject = flattenJSON(instance[attr])
+            subobject = flatten_json(instance[attr])
             for so_attr in subobject:
                 if isinstance(so_attr, tuple):
-                    relation = []
-                    for idx, val in enumerate(so_attr):
-                        if idx == 0:
-                            relation.append(val)
-                        else:
-                            relation.append(attr + "." + val)
-                    temp[tuple(relation)] = True
-                elif so_attr[0] == "_":
-                    temp["_" + attr + "." + so_attr] = subobject[so_attr]
+                    if so_attr[0][0] == '_':
+                        new_attr = ('_' + attr) + so_attr
+                    else:
+                        new_attr = (attr) + so_attr
+                elif so_attr[0] == '_':
+                    new_attr = ('_' + attr, so_attr)
                 else:
-                    temp[attr + "." + so_attr] = subobject[so_attr]
+                    new_attr = (attr, so_attr)
+                temp[new_attr] = subobject[so_attr]
         else:
-            if isinstance(instance[attr], list):
-                temp[tuple(instance[attr])] = True
-            else:
-                temp[attr] = instance[attr]
+            temp[attr] = instance[attr]
     return temp
 
 def _traverseStructure(path, instance):
@@ -871,7 +916,7 @@ def structure_map(concept, instance):
     instance = lists_to_relations(instance)
     instance = hoist_sub_objects(instance)
     #instance = tuplize(instance) # flatten should just tuplize. 
-    instance = flattenJSON(instance)
+    instance = flatten_json(instance)
     mapping = flatMatch(concept, instance)
     instance = renameFlat(instance, mapping)
     return instance
