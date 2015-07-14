@@ -53,6 +53,12 @@ def gensym():
     _gensym_counter += 1
     return 'o' + str(_gensym_counter)
 
+def _rel_name(*vals) :
+    """
+    Just a sanity function for me
+    """
+    return "("+" ".join(vals)+")"
+
 def standardizeApartNames(instance):
     """
     Given a :ref:`raw instance <raw-instance>` rename all the components so they
@@ -622,20 +628,27 @@ def isPartialMatch(iAttr, cAttr, mapping, unnamed):
 
 def extract_list_elements(instance):
     """
-
     Find all lists in an instance and extract their elements into their own
     subjects of the main instance.
 
     Unlike the utils.extract_components function this one will extract ALL
     elements into their own objects not just object literals
 
-    TODO how to solve implicit references to objects that don't already exist in
-    the instance
-
+    >>> import pprint
+    >>> instance = {"a":"n","list1":["test",{"p":"q","j":"k"},{"n":"m"}]}
+    >>> instance = extract_list_elements(instance)
+    >>> pprint.pprint(instance)
+    {'a': 'n',
+     'list1': ['o1', 'o2', 'o3'],
+     'o1': {'val': 'test'},
+     'o2': {'j': 'k', 'p': 'q'},
+     'o3': {'n': 'm'}}
     """
 
+    new_instance = {}
     for a in instance.keys():
         if isinstance(instance[a],list):
+            new_instance[a] = []
             for i in range(len(instance[a])):
                 
                 # TODO do we want to deep copy in the case we find a dict?
@@ -646,44 +659,122 @@ def extract_list_elements(instance):
                     new_obj["val"]  = instance[a][i]
 
                 new_att = gensym()
-                instance[new_att] = extract_list_elements(new_obj)
-                instance[a][i] = new_att
+                new_instance[new_att] = extract_list_elements(new_obj)
+                new_instance[a].append(new_att)
+                #instance[a][i] = new_att
 
         if isinstance(instance[a],dict):
-            instance[a] = extract_list_elements(instance[a])
+            new_instance[a] = extract_list_elements(instance[a])
+        else :
+            new_instance[a] = instance[a]
 
-    return instance
+    return new_instance
 
 def lists_to_relations(instance):
     """
     Travese the instance and turn any list elements into 
     a series of relations.
-    """
 
+    >>> import pprint
+    >>> instance = {"list1":['a','b','c']}
+    >>> instance = lists_to_relations(instance)
+    >>> pprint.pprint(instance)
+    {'(ordered-list list1 a b)': True, '(ordered-list list1 b c)': True}
+    
+    >>> import pprint
+    >>> instance = {"list1":['a','b','c'],"list2":['w','x','y','z']}
+    >>> instance = lists_to_relations(instance)
+    >>> pprint.pprint(instance)
+    {'(ordered-list list1 a b)': True,
+     '(ordered-list list1 b c)': True,
+     '(ordered-list list2 w x)': True,
+     '(ordered-list list2 x y)': True,
+     '(ordered-list list2 y z)': True}
+
+    >>> import pprint
+    >>> instance = {"stack":[{"a":1, "b":2, "c":3}, {"x":1, "y":2, "z":3}, {"i":1, "j":2, "k":3}]}
+    >>> instance = extract_list_elements(instance)
+    >>> pprint.pprint(instance)
+    {'o4': {'a': 1, 'b': 2, 'c': 3},
+     'o5': {'x': 1, 'y': 2, 'z': 3},
+     'o6': {'i': 1, 'j': 2, 'k': 3},
+     'stack': ['o4', 'o5', 'o6']}
+
+    >>> instance = lists_to_relations(instance)
+    >>> pprint.pprint(instance)
+    {'(ordered-list stack o4 o5)': True,
+     '(ordered-list stack o5 o6)': True,
+     'o4': {'a': 1, 'b': 2, 'c': 3},
+     'o5': {'x': 1, 'y': 2, 'z': 3},
+     'o6': {'i': 1, 'j': 2, 'k': 3}}
+    """
+    new_instance = {}
     for attr in instance.keys():
         if isinstance(instance[attr], list):
             for i in range(len(instance[attr])-1):
 
-                instance["("+
-                    ",".join(["ordered-list",
-                        attr,
-                        instance[attr][i],
-                        instance[attr][i+1]])+
-                    ")"] = True
+                new_instance[_rel_name("ordered-list",
+                    attr,
+                    instance[attr][i],
+                    instance[attr][i+1])] = True
 
         elif isinstance(instance[attr],dict):
-            instance[attr] = lists_to_relations(instance[attr])
+            new_instance[attr] = lists_to_relations(instance[attr])
+        else:
+            new_instance[attr] = instance[attr]
     
-    return instance
+    return new_instance
 
 def hoist_sub_objects(instance) :
     """
-
     Travese the instance for objects that contain subobjects and hoists the
-    subobjects to be their own objects at the top level of the instance
+    subobjects to be their own objects at the top level of the instance. 
     
+    >>> import pprint
+    >>> instance = {"a1":"v1","sub1":{"a2":"v2","a3":3},"sub2":{"a4":"v4","subsub1":{"a5":"v5","a6":"v6"},"subsub2":{"subsubsub":{"a8":"V8"},"a7":7}}}
+    >>> pprint.pprint(instance)
+    {'a1': 'v1',
+     'sub1': {'a2': 'v2', 'a3': 3},
+     'sub2': {'a4': 'v4',
+              'subsub1': {'a5': 'v5', 'a6': 'v6'},
+              'subsub2': {'a7': 7, 'subsubsub': {'a8': 'V8'}}}}
+    >>> instance = hoist_sub_objects(instance)
+    >>> pprint.pprint(instance)
+    {'(has-component sub2 subsub1)': True,
+     '(has-component sub2 subsub2)': True,
+     '(has-component subsub2 subsubsub)': True,
+     'a1': 'v1',
+     'sub1': {'a2': 'v2', 'a3': 3},
+     'sub2': {'a4': 'v4'},
+     'subsub1': {'a5': 'v5', 'a6': 'v6'},
+     'subsub2': {'a7': 7},
+     'subsubsub': {'a8': 'V8'}}
     """
-    pass
+    new_instance = {}
+    
+    for a in instance.keys() :
+        # this is a subobject
+        if isinstance(instance[a],dict):
+            new_instance[a] = _hoist_sub_objects_rec(instance[a],a,new_instance)
+        else :
+            new_instance[a] = instance[a]
+
+    return new_instance
+
+def _hoist_sub_objects_rec(sub,attr,top_level):
+    """
+    The recursive version of subobject hoisting.
+    """
+    new_sub = {}
+    for a in sub.keys():
+        # this is a sub-sub object
+        if isinstance(sub[a],dict):
+            top_level[a] = _hoist_sub_objects_rec(sub[a],a,top_level)
+            top_level[_rel_name("has-component",attr,a)] = True
+        else :
+            new_sub[a] = sub[a]
+    return new_sub
+
 
 def tuplize(instance):
     """
