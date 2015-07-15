@@ -79,15 +79,15 @@ def standardize_apart_names(instance, mapping = {}):
     {'lists': ['s1', 's2', 's3'],
      'nominal': 'v1',
      'numeric': 2.3,
-     'o7': {'a1': 'v1'},
-     'o8': {'a2': 'v2'},
-     (('relation1',), ('o7', ''), ('o8', '')): True,
-     (('relation2',), ('o7', ''), (('relation3',), ('o8', ''))): 4.3}
+     'o13': {'a1': 'v1'},
+     'o14': {'a2': 'v2'},
+     (('relation1',), ('o13', ''), ('o14', '')): True,
+     (('relation2',), ('o13', ''), (('relation3',), ('o14', ''))): 4.3}
     """
     new_instance = {}
     relations = []
 
-    for attr in instance:
+    for attr in sorted(instance):
         if attr[0] == '(':
             relations.append((attr, instance[attr]))
         elif isinstance(instance[attr], dict):
@@ -897,11 +897,57 @@ def _hoist_sub_objects_rec(sub,attr,top_level):
     return new_sub
 
 
-def tuplize(instance):
+def pre_process(instance):
     """
-    Converts all functions and object attribute references to tuples.
+    Runs all of the pre-processing functions
+
+    >>> import pprint
+    >>> instance = {"noma":"a","num3":3,"compa":{"nomb":"b","num4":4,"sub":{"nomc":"c","num5":5}},"compb":{"nomd":"d","nome":"e"},"(related compa.num4 comb.nome)":True,"list1":["a","b",{"i":1,"j":12.3,"k":"test"}]}
+    >>> pprint.pprint(instance)
+    {'(related compa.num4 comb.nome)': True,
+     'compa': {'nomb': 'b', 'num4': 4, 'sub': {'nomc': 'c', 'num5': 5}},
+     'compb': {'nomd': 'd', 'nome': 'e'},
+     'list1': ['a', 'b', {'i': 1, 'j': 12.3, 'k': 'test'}],
+     'noma': 'a',
+     'num3': 3}
+
+    >>> instance = pre_process(instance)
+    >>> pprint.pprint(instance)
+    {'noma': 'a',
+     'num3': 3,
+     (('ordered-list',), ('list1',), ('o10', ''), ('o11', '')): True,
+     ('o10', 'val'): 'a',
+     (('ordered-list',), ('list1',), ('o11', ''), ('o12', '')): True,
+     ('o11', 'val'): 'b',
+     ('o12', 'i'): 1,
+     ('o12', 'j'): 12.3,
+     ('o12', 'k'): 'test',
+     ('o7', 'nomd'): 'd',
+     ('o7', 'nome'): 'e',
+     ('o8', 'nomb'): 'b',
+     ('o8', 'num4'): 4,
+     ('o9', 'nomc'): 'c',
+     ('o9', 'num5'): 5,
+     (('has-component',), ('o8', ''), ('o9', '')): True,
+     (('related',), ('o8', 'num4'), ('comb', 'nome')): True}
+
     """
-    pass
+    instance = standardize_apart_names(instance)
+    instance = extract_list_elements(instance)
+    instance = lists_to_relations(instance)
+    instance = hoist_sub_objects(instance)
+    #instance = tuplize(instance) # flatten should just tuplize. 
+    instance = flatten_json(instance)
+    return instance
+
+def pprint_instance(instance):
+    """
+
+    Take an instance pretty print it. We can't use the default pprint operation
+    because it doesn't deterministically order tuple keys in a dictionary.
+    
+    """
+    
 
 def structure_map(concept, instance):
     """Flatten the instance, perform structure mapping to the concept, rename
@@ -916,12 +962,7 @@ def structure_map(concept, instance):
     :rtype: :ref:`mapped instance <fully-mapped>`
 
     """
-    instance = standardize_apart_names(instance)
-    instance = extract_list_elements(instance)
-    instance = lists_to_relations(instance)
-    instance = hoist_sub_objects(instance)
-    #instance = tuplize(instance) # flatten should just tuplize. 
-    instance = flatten_json(instance)
+    instance = pre_process(instance)
     mapping = flatMatch(concept, instance)
     instance = renameFlat(instance, mapping)
     return instance
