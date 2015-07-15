@@ -205,14 +205,14 @@ def rename_relation(relation, mapping):
     for v in relation:
         if isinstance(v, tuple):
             new_relation.append(rename_relation(v, mapping))
-        elif "." in v:
-            new_v = []
-            for ele in v.split("."):
-                if ele in mapping:
-                    new_v.append(mapping[ele])
-                else:
-                    new_v.append(ele)
-            new_relation.append(".".join(new_v))
+        #elif "." in v:
+        #    new_v = []
+        #    for ele in v.split("."):
+        #        if ele in mapping:
+        #            new_v.append(mapping[ele])
+        #        else:
+        #            new_v.append(ele)
+        #    new_relation.append(".".join(new_v))
         else:
             if v in mapping:
                 new_relation.append(mapping[v])
@@ -222,31 +222,31 @@ def rename_relation(relation, mapping):
     return tuple(new_relation)
     
 
-def getComponentNames(instance):
-    """Given  a :ref:`flattened instance <flattened-instance>` or a concept's
+def get_component_names(instance):
+    """
+    Given  a :ref:`flattened instance <flattened-instance>` or a concept's
     probability table return a list of all of the component names.
-
 
     :param instance: An instance or a concept's probability table.
     :type instance: :ref:`raw instance <raw-instance>` or dict
     :return: A list of all of the component names present in the instance
     :rtype: [str, str, ...]
 
-    >>> instance = {'c1.a': 0, 'c2.a': 0, '_c3._a': 0}
-    >>> names = getComponentNames(instance)
+    >>> instance = {('c1', 'a'): 0, ('c2','a'): 0, ('_c3', '_a'): 0}
+    >>> names = get_component_names(instance)
     >>> sorted(names)
     ['c1', 'c2', 'c3']
     """
     names = set()
     for attr in instance:
-        if isinstance(attr, tuple):
+        if isinstance(attr, tuple) and isinstance(attr[0], tuple):
             continue
-
-        for name in attr.split(".")[:-1]:
-            if name[0] == "_":
-                names.add(name[1:])
-            else:
-                names.add(name)
+        if isinstance(attr, tuple):
+            for ele in attr[:-1]:
+                if ele[0] == '_':
+                    names.add(ele[1:])
+                else:
+                    names.add(ele)
 
     return list(names)
 
@@ -468,8 +468,9 @@ def structurizeJSON(instance):
 
     return temp
 
-def bindFlatAttr(attr, mapping, unnamed):
-    """Renames an attribute given a mapping.
+def bind_flat_attr(attr, mapping, unnamed):
+    """
+    Renames an attribute given a mapping.
 
     :param attr: The attribute to be renamed
     :type attr: str or tuple
@@ -480,79 +481,69 @@ def bindFlatAttr(attr, mapping, unnamed):
     :return: The attribute's new name or ``None`` if the mapping is incomplete
     :rtype: str
 
-    >>> attr = ('before', 'c1', 'c2')
+    >>> attr = (('before',), ('c1',''), ('c2',''))
     >>> mapping = {'c1': 'o1', 'c2':'o2'}
-    >>> bindFlatAttr(attr, mapping, {})
-    ('before', 'o1', 'o2')
+    >>> bind_flat_attr(attr, mapping, {})
+    (('before',), ('o1', ''), ('o2', ''))
 
     If the mapping is incomplete then returns ``None`` (nothing) 
 
-    >>> attr = ('before', 'c1', 'c2')
+    >>> attr = (('before',), ('c1',''), ('c2',''))
     >>> mapping = {'c1': 'o1'}
-    >>> bindFlatAttr(attr, mapping, {'c2'}) is None
+    >>> bind_flat_attr(attr, mapping, {'c2'}) is None
     True
 
-    >>> bindFlatAttr(('<', 'o2.a', 'o1.a'), {'o1': 'c1'}, {'o2'}) is None
+    >>> bind_flat_attr((('<',), ('o2','a'), ('o1','a')), {'o1': 'c1'}, {'o2'}) is None
     True
 
-    >>> bindFlatAttr(('<', 'o2.a', 'o1.a'), {'o1': 'c1', 'o2': 'c2'}, {}) is None
+    >>> bind_flat_attr((('<',), ('o2','a'), ('o1','a')), {'o1': 'c1', 'o2': 'c2'}, {}) is None
     False
     """
+    for o in unnamed:
+        if contains_component(o, attr):
+            return None
+
     if isinstance(attr, tuple):
-        for i,v in enumerate(attr):
-            if i == 0:
-                continue
-
-            # TODO add an extra thing here to match nested relations
-            # - Chris MacLellan
-
-            for o in v.split('.'):
-                if o in unnamed:
-                    return None
-        return renameRelation(attr, mapping)
-    elif '.' in attr:
-        path = attr.split('.')[:-1] # might not need the -1
-        for o in path:
-            #if o not in mapping:
-            if o in unnamed:
-                return None
-        return renameComponent(attr, mapping)
+        return rename_relation(attr, mapping)
     else:
         return attr
 
-def containsComponent(component, attr):
-    """Return ``True`` if the given component name is in the attribute, either as part of a
-    hierarchical name or within a relations otherwise ``False``.
+def contains_component(component, attr):
+    """
+    Return ``True`` if the given component name is in the attribute, either as
+    part of a hierarchical name or within a relations otherwise ``False``.
 
     :param component: A component name
     :type component: str
     :param attr: An attribute name
     :type atte: str
-    :return: ``True`` if the component name exists inside the attribute name ``False`` otherwise
+    :return: ``True`` if the component name exists inside the attribute name
+             ``False`` otherwise
     :rtype: bool
 
-    >>> containsComponent('c1', 'c2.c1.a')
+    >>> contains_component('c1', ('c2', 'c1', 'a'))
     True
-
-    >>> containsComponent('c3', ('before', 'c1', 'c2'))
+    >>> contains_component('c3', ('before', 'c1', 'c2'))
     False
     """
-    if isinstance(attr, tuple):
-        for i,v in enumerate(attr):
-            if i == 0:
-                continue
-            for o in v.split('.'):
-                if o == component:
-                    return True
-    elif "." in attr:
-        for o in attr.split('.')[:-1]:
-            if o == component:
+    if isinstance(attr, tuple) and isinstance(attr[0], tuple):
+        for ele in attr:
+            if contains_component(component, ele) is True:
                 return True
 
+    elif isinstance(attr, tuple):
+        for ele in attr[:-1]:
+            if contains_component(component, ele) is True:
+                return True
+
+    elif component == attr:
+        return True
+    
     return False
 
-def flatMatch(concept, instance, optimal=False):
-    """Given a concept and instance this function returns a mapping  that can be
+def flat_match(concept, instance, optimal=False):
+    """
+    Given a concept and instance this function returns a mapping  that can be
     used to rename components in the instance. The mapping returned maximizes
     similarity between the instance and the concept.
 
@@ -573,8 +564,8 @@ def flatMatch(concept, instance, optimal=False):
     :rtype: dict
 
     """
-    inames = frozenset(getComponentNames(instance))
-    cnames = frozenset(getComponentNames(concept.av_counts))
+    inames = frozenset(get_component_names(instance))
+    cnames = frozenset(get_component_names(concept.av_counts))
 
     if(len(inames) == 0 or
        len(cnames) == 0):
@@ -583,10 +574,10 @@ def flatMatch(concept, instance, optimal=False):
     initial = search.Node((frozenset(), inames, cnames), extra=(concept,
                                                                 instance))
     if optimal:
-        solution = next(search.BestFGS(initial, _flatMatchSuccessorFn, _flatMatchGoalTestFn,
+        solution = next(search.BestFGS(initial, _flat_match_successor_fn, _flatMatchGoalTestFn,
                                 _flatMatchHeuristicFn))
     else:
-        solution = next(search.BeamGS(initial, _flatMatchSuccessorFn, _flatMatchGoalTestFn,
+        solution = next(search.BeamGS(initial, _flat_match_successor_fn, _flatMatchGoalTestFn,
                            _flatMatchHeuristicFn, initialBeamWidth=1))
     #print(solution.cost)
 
@@ -596,8 +587,9 @@ def flatMatch(concept, instance, optimal=False):
     else:
         return None
 
-def _flatMatchSuccessorFn(node):
-    """Given a node (mapping, instance, concept), this function computes the
+def _flat_match_successor_fn(node):
+    """
+    Given a node (mapping, instance, concept), this function computes the
     successor nodes where an additional mapping has been added for each
     possible additional mapping. 
 
@@ -611,7 +603,7 @@ def _flatMatchSuccessorFn(node):
         m = {a:v for a,v in mapping}
         m[n] = n
         for attr in instance:
-            if not containsComponent(n, attr):
+            if not contains_component(n, attr):
                 continue
             new_attr = bindFlatAttr(attr, m, inames)
             if new_attr:
@@ -947,7 +939,7 @@ def pprint_instance(instance):
     because it doesn't deterministically order tuple keys in a dictionary.
     
     """
-    
+    pass
 
 def structure_map(concept, instance):
     """Flatten the instance, perform structure mapping to the concept, rename
@@ -963,7 +955,7 @@ def structure_map(concept, instance):
 
     """
     instance = pre_process(instance)
-    mapping = flatMatch(concept, instance)
+    mapping = flat_match(concept, instance)
     instance = renameFlat(instance, mapping)
     return instance
 
