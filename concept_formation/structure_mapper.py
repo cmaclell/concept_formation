@@ -72,17 +72,25 @@ def standardize_apart_names(instance, mapping = {}):
     :type instance: :ref:`raw instance <raw-instance>`
     :return: an instance with component attributes renamed
     :rtype: :ref:`standardized instance <standard-instance>`
-    >>> import pprint
+
     >>> instance = {'nominal': 'v1', 'numeric': 2.3, 'c1': {'a1': 'v1'}, 'c2': {'a2': 'v2'}, '(relation1 c1 c2)': True, 'lists': ['s1', 's2', 's3'], '(relation2 c1 (relation3 c2))': 4.3}
     >>> standard = standardize_apart_names(instance)
-    >>> pprint.pprint(standard)
-    {'lists': ['s1', 's2', 's3'],
-     'nominal': 'v1',
-     'numeric': 2.3,
-     'o13': {'a1': 'v1'},
-     'o14': {'a2': 'v2'},
-     (('relation1',), ('o13', ''), ('o14', '')): True,
-     (('relation2',), ('o13', ''), (('relation3',), ('o14', ''))): 4.3}
+    >>> doctest_print(standard)
+    'lists' : [
+        's1'
+        's2'
+        's3'
+    ]
+    'nominal' : 'v1'
+    'numeric' : 2.3
+    'o13' : {
+        'a1' : 'v1'
+    }
+    'o14' : {
+        'a2' : 'v2'
+    }
+    (('relation1',), ('o13', ''), ('o14', '')) : True
+    (('relation2',), ('o13', ''), (('relation3',), ('o14', ''))) : 4.3
     """
     new_instance = {}
     relations = []
@@ -326,12 +334,12 @@ def renameFlat(instance, mapping):
     :return: A copy of the instance with components and relations renamed
     :rtype: :ref:`mapped instance <fully-mapped>`
 
-    >>> import pprint
     >>> instance = {'c1.a': 1, ('good', 'c1'): True}
     >>> mapping = {'c1': 'o1'}
     >>> renamed = renameFlat(instance,mapping)
-    >>> pprint.pprint(renamed)
-    {'o1.a': 1, ('good', 'o1'): True}
+    >>> doctest_print(renamed)
+    'o1.a' : 1
+    ('good', 'o1') : True
     """
     for attr in instance:
         if isinstance(attr, tuple):
@@ -373,11 +381,12 @@ def flatten_json(instance):
     :return: A copy of the instance flattend
     :rtype: :ref:`flattened instance <flattened-instance>`
 
-    >>> import pprint
     >>> instance = {'a': 1, 'c1': {'b': 1, '_c': 2}}
     >>> flat = flatten_json(instance)
-    >>> pprint.pprint(flat)
-    {'a': 1, ('_c1', '_c'): 2, ('c1', 'b'): 1}
+    >>> doctest_print(flat)
+    'a' : 1
+    ('_c1', '_c') : 2
+    ('c1', 'b') : 1
     """
     temp = {}
     for attr in instance:
@@ -736,15 +745,25 @@ def extract_list_elements(instance):
     Unlike the utils.extract_components function this one will extract ALL
     elements into their own objects not just object literals
 
-    >>> import pprint
     >>> instance = {"a":"n","list1":["test",{"p":"q","j":"k"},{"n":"m"}]}
     >>> instance = extract_list_elements(instance)
-    >>> pprint.pprint(instance)
-    {'a': 'n',
-     'list1': ['o1', 'o2', 'o3'],
-     'o1': {'val': 'test'},
-     'o2': {'j': 'k', 'p': 'q'},
-     'o3': {'n': 'm'}}
+    >>> doctest_print(instance)
+    'a' : 'n'
+    'list1' : [
+        'o1'
+        'o2'
+        'o3'
+    ]
+    'o1' : {
+        'val' : 'test'
+    }
+    'o2' : {
+        'j' : 'k'
+        'p' : 'q'
+    }
+    'o3' : {
+        'n' : 'm'
+    }
     """
 
     new_instance = {}
@@ -777,39 +796,64 @@ def lists_to_relations(instance):
     Travese the instance and turn any list elements into 
     a series of relations.
 
-    >>> import pprint
     >>> instance = {"list1":['a','b','c']}
     >>> instance = lists_to_relations(instance)
-    >>> pprint.pprint(instance)
-    {(('ordered-list',), ('list1',), ('a', ''), ('b', '')): True,
-     (('ordered-list',), ('list1',), ('b', ''), ('c', '')): True}
+    >>> doctest_print(instance)
+    (('ordered-list',), ('list1',), ('a', ''), ('b', '')) : True
+    (('ordered-list',), ('list1',), ('b', ''), ('c', '')) : True
     
-    >>> import pprint
     >>> instance = {"list1":['a','b','c'],"list2":['w','x','y','z']}
     >>> instance = lists_to_relations(instance)
-    >>> pprint.pprint(instance)
-    {(('ordered-list',), ('list1',), ('a', ''), ('b', '')): True,
-     (('ordered-list',), ('list1',), ('b', ''), ('c', '')): True,
-     (('ordered-list',), ('list2',), ('w', ''), ('x', '')): True,
-     (('ordered-list',), ('list2',), ('x', ''), ('y', '')): True,
-     (('ordered-list',), ('list2',), ('y', ''), ('z', '')): True}
+    >>> doctest_print(instance)
+    (('ordered-list',), ('list1',), ('a', ''), ('b', '')) : True
+    (('ordered-list',), ('list1',), ('b', ''), ('c', '')) : True
+    (('ordered-list',), ('list2',), ('w', ''), ('x', '')) : True
+    (('ordered-list',), ('list2',), ('x', ''), ('y', '')) : True
+    (('ordered-list',), ('list2',), ('y', ''), ('z', '')) : True
 
-    >>> import pprint
     >>> instance = {"stack":[{"a":1, "b":2, "c":3}, {"x":1, "y":2, "z":3}, {"i":1, "j":2, "k":3}]}
     >>> instance = extract_list_elements(instance)
-    >>> pprint.pprint(instance)
-    {'o4': {'a': 1, 'b': 2, 'c': 3},
-     'o5': {'x': 1, 'y': 2, 'z': 3},
-     'o6': {'i': 1, 'j': 2, 'k': 3},
-     'stack': ['o4', 'o5', 'o6']}
+    >>> doctest_print(instance)
+    'o4' : {
+        'a' : 1
+        'b' : 2
+        'c' : 3
+    }
+    'o5' : {
+        'x' : 1
+        'y' : 2
+        'z' : 3
+    }
+    'o6' : {
+        'i' : 1
+        'j' : 2
+        'k' : 3
+    }
+    'stack' : [
+        'o4'
+        'o5'
+        'o6'
+    ]
 
     >>> instance = lists_to_relations(instance)
-    >>> pprint.pprint(instance)
-    {'o4': {'a': 1, 'b': 2, 'c': 3},
-     'o5': {'x': 1, 'y': 2, 'z': 3},
-     'o6': {'i': 1, 'j': 2, 'k': 3},
-     (('ordered-list',), ('stack',), ('o4', ''), ('o5', '')): True,
-     (('ordered-list',), ('stack',), ('o5', ''), ('o6', '')): True}
+    >>> doctest_print(instance)
+    'o4' : {
+        'a' : 1
+        'b' : 2
+        'c' : 3
+    }
+    'o5' : {
+        'x' : 1
+        'y' : 2
+        'z' : 3
+    }
+    'o6' : {
+        'i' : 1
+        'j' : 2
+        'k' : 3
+    }
+    (('ordered-list',), ('stack',), ('o4', ''), ('o5', '')) : True
+    (('ordered-list',), ('stack',), ('o5', ''), ('o6', '')) : True
     """
     new_instance = {}
     for attr in instance.keys():
@@ -838,25 +882,49 @@ def hoist_sub_objects(instance) :
     Travese the instance for objects that contain subobjects and hoists the
     subobjects to be their own objects at the top level of the instance. 
     
-    >>> import pprint
     >>> instance = {"a1":"v1","sub1":{"a2":"v2","a3":3},"sub2":{"a4":"v4","subsub1":{"a5":"v5","a6":"v6"},"subsub2":{"subsubsub":{"a8":"V8"},"a7":7}}}
-    >>> pprint.pprint(instance)
-    {'a1': 'v1',
-     'sub1': {'a2': 'v2', 'a3': 3},
-     'sub2': {'a4': 'v4',
-              'subsub1': {'a5': 'v5', 'a6': 'v6'},
-              'subsub2': {'a7': 7, 'subsubsub': {'a8': 'V8'}}}}
+    >>> doctest_print(instance)
+    'a1' : 'v1'
+    'sub1' : {
+        'a2' : 'v2'
+        'a3' : 3
+    }
+    'sub2' : {
+        'a4' : 'v4'
+        'subsub1' : {
+            'a5' : 'v5'
+            'a6' : 'v6'
+        }
+        'subsub2' : {
+            'a7' : 7
+            'subsubsub' : {
+                'a8' : 'V8'
+            }
+        }
+    }
     >>> instance = hoist_sub_objects(instance)
-    >>> pprint.pprint(instance)
-    {'a1': 'v1',
-     'sub1': {'a2': 'v2', 'a3': 3},
-     'sub2': {'a4': 'v4'},
-     'subsub1': {'a5': 'v5', 'a6': 'v6'},
-     'subsub2': {'a7': 7},
-     'subsubsub': {'a8': 'V8'},
-     (('has-component',), ('sub2', ''), ('subsub1', '')): True,
-     (('has-component',), ('sub2', ''), ('subsub2', '')): True,
-     (('has-component',), ('subsub2', ''), ('subsubsub', '')): True}
+    >>> doctest_print(instance)
+    'a1' : 'v1'
+    'sub1' : {
+        'a2' : 'v2'
+        'a3' : 3
+    }
+    'sub2' : {
+        'a4' : 'v4'
+    }
+    'subsub1' : {
+        'a5' : 'v5'
+        'a6' : 'v6'
+    }
+    'subsub2' : {
+        'a7' : 7
+    }
+    'subsubsub' : {
+        'a8' : 'V8'
+    }
+    (('has-component',), ('sub2', ''), ('subsub1', '')) : True
+    (('has-component',), ('sub2', ''), ('subsub2', '')) : True
+    (('has-component',), ('subsub2', ''), ('subsubsub', '')) : True
     """
     new_instance = {}
     
@@ -893,35 +961,51 @@ def pre_process(instance):
     """
     Runs all of the pre-processing functions
 
-    >>> import pprint
     >>> instance = {"noma":"a","num3":3,"compa":{"nomb":"b","num4":4,"sub":{"nomc":"c","num5":5}},"compb":{"nomd":"d","nome":"e"},"(related compa.num4 comb.nome)":True,"list1":["a","b",{"i":1,"j":12.3,"k":"test"}]}
-    >>> pprint.pprint(instance)
-    {'(related compa.num4 comb.nome)': True,
-     'compa': {'nomb': 'b', 'num4': 4, 'sub': {'nomc': 'c', 'num5': 5}},
-     'compb': {'nomd': 'd', 'nome': 'e'},
-     'list1': ['a', 'b', {'i': 1, 'j': 12.3, 'k': 'test'}],
-     'noma': 'a',
-     'num3': 3}
+    >>> doctest_print(instance)
+    '(related compa.num4 comb.nome)' : True
+    'compa' : {
+        'nomb' : 'b'
+        'num4' : 4
+        'sub' : {
+            'nomc' : 'c'
+            'num5' : 5
+        }
+    }
+    'compb' : {
+        'nomd' : 'd'
+        'nome' : 'e'
+    }
+    'list1' : [
+        'a'
+        'b'{
+            'i' : 1
+            'j' : 12.3
+            'k' : 'test'
+        }
+    ]
+    'noma' : 'a'
+    'num3' : 3
 
     >>> instance = pre_process(instance)
-    >>> pprint.pprint(instance)
-    {'noma': 'a',
-     'num3': 3,
-     (('ordered-list',), ('list1',), ('o10', ''), ('o11', '')): True,
-     ('o10', 'val'): 'a',
-     (('ordered-list',), ('list1',), ('o11', ''), ('o12', '')): True,
-     ('o11', 'val'): 'b',
-     ('o12', 'i'): 1,
-     ('o12', 'j'): 12.3,
-     ('o12', 'k'): 'test',
-     ('o7', 'nomd'): 'd',
-     ('o7', 'nome'): 'e',
-     ('o8', 'nomb'): 'b',
-     ('o8', 'num4'): 4,
-     ('o9', 'nomc'): 'c',
-     ('o9', 'num5'): 5,
-     (('has-component',), ('o8', ''), ('o9', '')): True,
-     (('related',), ('o8', 'num4'), ('comb', 'nome')): True}
+    >>> doctest_print(instance)
+    'noma' : 'a'
+    'num3' : 3
+    ('o10', 'val') : 'a'
+    ('o11', 'val') : 'b'
+    ('o12', 'i') : 1
+    ('o12', 'j') : 12.3
+    ('o12', 'k') : 'test'
+    ('o7', 'nomb') : 'b'
+    ('o7', 'num4') : 4
+    ('o8', 'nomc') : 'c'
+    ('o8', 'num5') : 5
+    ('o9', 'nomd') : 'd'
+    ('o9', 'nome') : 'e'
+    (('has-component',), ('o7', ''), ('o8', '')) : True
+    (('ordered-list',), ('list1',), ('o10', ''), ('o11', '')) : True
+    (('ordered-list',), ('list1',), ('o11', ''), ('o12', '')) : True
+    (('related',), ('o7', 'num4'), ('comb', 'nome')) : True
 
     """
     instance = standardize_apart_names(instance)
@@ -932,14 +1016,82 @@ def pre_process(instance):
     instance = flatten_json(instance)
     return instance
 
-def pprint_instance(instance):
-    """
+def doctest_print(instance, depth=0):
+    """Take and instance pretty print it with a deterministic key ordering. 
 
-    Take an instance pretty print it. We can't use the default pprint operation
-    because it doesn't deterministically order tuple keys in a dictionary.
-    
+    We can't use the default pprint operation because it doesn't
+    deterministically order tuple keys in a dictionary.
     """
-    pass
+    def cmp(a, b):
+        return (a > b) - (a < b) 
+
+    def t_depth(tup,depth=0):
+        if isinstance(tup[0],tuple):
+            return t_depth(tup[0],depth+1)
+        else:
+            return (depth,str(tup))
+
+    def compare(x,y):
+        if isinstance(x,tuple) and isinstance(y,tuple):
+            xd = t_depth(x)
+            yd = t_depth(y)
+            if xd[0] == yd[0]:
+                return cmp(str(x),str(y))
+            else:
+                return cmp(xd[0],yd[0])
+        elif isinstance(x,tuple):
+            return 1
+        elif isinstance(y,tuple):
+            return -1
+        else:
+            return cmp(x,y)
+
+    def cmp_to_key(mycmp):
+        'Convert a cmp= function into a key= function'
+        class K(object):
+            def __init__(self, obj, *args):
+                self.obj = obj
+            def __lt__(self, other):
+                return mycmp(self.obj, other.obj) < 0
+            def __gt__(self, other):
+                return mycmp(self.obj, other.obj) > 0
+            def __eq__(self, other):
+                return mycmp(self.obj, other.obj) == 0
+            def __le__(self, other):
+                return mycmp(self.obj, other.obj) <= 0
+            def __ge__(self, other):
+                return mycmp(self.obj, other.obj) >= 0
+            def __ne__(self, other):
+                return mycmp(self.obj, other.obj) != 0
+        return K
+
+    def str2(val):
+        if isinstance(val,str):
+            return "'"+val+"'"
+        else:
+            return str(val)
+
+    str_to_print = ''
+
+    for k in sorted(instance, key=cmp_to_key(compare)):
+        str_to_print += (' '*4*depth) + str2(k) + ' : '
+        if isinstance(instance[k],dict):
+            str_to_print += '{\n' + doctest_print(instance[k],depth+1)+(' '*4*depth)+'}'
+        elif isinstance(instance[k],list):
+            str_to_print += '['
+            for i in instance[k]:
+                if isinstance(i,dict):
+                    str_to_print += '{\n'+ doctest_print(i,depth+2)+(' '*4*(depth+1))+'}'
+                else:
+                    str_to_print += '\n'+(' '*4*(depth+1))+str2(i)
+            str_to_print += (' '*4*depth)+'\n]'
+        else:
+            str_to_print += str2(instance[k])
+        str_to_print +='\n'
+    if depth == 0:
+        print(str_to_print[:-1])
+    else:
+        return str_to_print
 
 def structure_map(concept, instance):
     """Flatten the instance, perform structure mapping to the concept, rename
@@ -958,4 +1110,3 @@ def structure_map(concept, instance):
     mapping = flat_match(concept, instance)
     instance = renameFlat(instance, mapping)
     return instance
-
