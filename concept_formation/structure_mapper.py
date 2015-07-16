@@ -807,24 +807,14 @@ def lists_to_relations(instance, current=None, top_level=None):
 
     for attr in instance.keys():
         if isinstance(instance[attr], list):
+            if top_level == new_instance:
+                lname = attr
+            else:
+                lname = (attr, (current,))
             for i in range(len(instance[attr])-1):
-                
-                if top_level == new_instance:
                     rel = tuplize_relation_elements(
                         ("ordered-list",
-                            attr,
-                            str(instance[attr][i]),
-                            str(instance[attr][i+1])),
-                        {str(instance[attr][i]),
-                            str(instance[attr][i+1])})
-
-                    new_instance[rel] = True
-
-
-                else:
-                    rel = tuplize_relation_elements(
-                        ("ordered-list",
-                            (attr, (current,)),
+                            lname,
                             str(instance[attr][i]),
                             str(instance[attr][i+1])),
                         {str(instance[attr][i]),
@@ -832,21 +822,24 @@ def lists_to_relations(instance, current=None, top_level=None):
 
                     top_level[rel] = True
 
-                rel = tuplize_relation_elements(
-                        ("has-component",
-                            attr,
-                            instance[attr][i],
-                            ),
-                        {str(instance[attr][i])})
-                new_instance[rel] = True
+                    rel = tuplize_relation_elements(
+                            ("has-component",
+                                lname,
+                                instance[attr][len(instance[attr])-1],
+                                ),
+                            {str(instance[attr][len(instance[attr])-1])})
+                    
+                    top_level[rel] = True
 
-            rel = tuplize_relation_elements(
-                        ("has-component",
-                            attr,
-                            instance[attr][len(instance[attr])-1],
-                            ),
-                        {str(instance[attr][len(instance[attr])-1])})
-            new_instance[rel] = True
+
+            if len(instance[attr]) > 0:
+                rel = tuplize_relation_elements(
+                            ("has-component",
+                                lname,
+                                instance[attr][len(instance[attr])-1],
+                                ),
+                            {str(instance[attr][len(instance[attr])-1])})
+                top_level[rel] = True
 
         elif isinstance(instance[attr],dict):
             new_instance[attr] = lists_to_relations(instance[attr],
