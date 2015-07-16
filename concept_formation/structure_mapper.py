@@ -103,7 +103,7 @@ def standardize_apart_names(instance, mapping = {}):
             new_instance[attr] = instance[attr]
 
     for relation, val in relations:
-        new_instance[rename_relation(tuplize_relation(relation, mapping), mapping)] = val
+        new_instanec[rename_relation(tuplize_relation(relation, mapping), mapping)] = val
 
     return new_instance
 
@@ -395,7 +395,7 @@ def flatten_json(instance):
                     if so_attr[0][0] == '_':
                         new_attr = ('_' + attr) + so_attr
                     else:
-                        new_attr = (attr) + so_attr
+                        new_attr = str(attr) + str(so_attr)
                 elif so_attr[0] == '_':
                     new_attr = ('_' + attr, so_attr)
                 else:
