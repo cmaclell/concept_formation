@@ -247,7 +247,7 @@ def get_component_names(instance):
     :return: A list of all of the component names present in the instance
     :rtype: [str, str, ...]
 
-    >>> instance = {('c1', 'a'): 0, ('c2','a'): 0, ('_c3', '_a'): 0}
+    >>> instance = {('a', ('c1',)): 0, ('a', ('c2',)): 0, ('_', '_a', ('c3',)): 0}
     >>> names = get_component_names(instance)
     >>> sorted(names)
     ['c1', 'c2', 'c3']
@@ -569,7 +569,8 @@ def flat_match(concept, instance, optimal=False):
     :type concept: TrestleNode
     :param instance: An instance to be mapped to the concept
     :type instance: :ref:`flattened instance <flattened-instance>`
-    :param optimal: If True the mapping will be optimal (using A* Search) otherwise it will be greedy (using Beam Search).
+    :param optimal: If True the mapping will be optimal (using A* Search)
+    otherwise it will be greedy (using Beam Search).
     :type optimal: bool
     :return: a mapping for renaming components in the instance.
     :rtype: dict
