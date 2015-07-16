@@ -761,6 +761,14 @@ def extract_list_elements(instance):
     new_instance = {}
     for a in instance.keys():
         if isinstance(instance[a],list):
+
+            # TODO hidden attributes get cast to strings and stored is this the
+            # right way to do it?
+
+            if a[0] == '_':
+                new_instance[a] = str(instance[a])
+                continue
+
             new_list = []
             for el in instance[a]:
                 
@@ -872,7 +880,7 @@ def hoist_sub_objects(instance) :
             'a6': 'v6'},
         'subsub2': {'a7': 7,
             'subsubsub': {'a8': 'V8'}}}}
-            
+
     >>> instance = hoist_sub_objects(instance)
     >>> doctest_print(instance)
     {'a1': 'v1',
