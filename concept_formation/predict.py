@@ -7,9 +7,9 @@ from numbers import Number
 from re import search
 
 from concept_formation.utils import mean
-from concept_formation.structure_mapper import flattenJSON
-from concept_formation.structure_mapper import flatMatch
-from concept_formation.structure_mapper import renameFlat
+from concept_formation.structure_mapper import flatten_json
+from concept_formation.structure_mapper import flat_match
+from concept_formation.structure_mapper import rename_flat
 from concept_formation.cobweb3 import ContinuousValue
 
 def probability(tree, instance, attr, val):
@@ -25,9 +25,9 @@ def probability(tree, instance, attr, val):
     concept = tree.categorize(instance)
 
     if isinstance(val, dict):
-        temp_instance = flattenJSON(instance)
-        mapping = flatMatch(concept, temp_instance)
-        temp_instance = renameFlat(temp_instance, mapping)
+        temp_instance = flatten_json(instance)
+        mapping = flat_match(concept, temp_instance)
+        temp_instance = rename_flat(temp_instance, mapping)
         probs = [concept.get_probability(sub_attr, temp_instance[sub_attr]) 
                  for sub_attr in temp_instance 
                  if search('^' + mapping[attr], sub_attr)]

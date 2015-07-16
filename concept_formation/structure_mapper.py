@@ -235,7 +235,6 @@ def rename_relation(relation, mapping):
             new_relation.append(v)
 
     return tuple(new_relation)
-    
 
 def get_component_names(instance):
     """
@@ -305,34 +304,7 @@ def renameComponent(attr, mapping):
     else:
         return ".".join(new_attr)
 
-def renameRelation(attr, mapping):
-    """
-    Takes a relational attribute (e.g., (before o1 o2)) and renames
-    the components based on mapping.
-
-    :param attr: The relational attribute containing components to be renamed
-    :type attr: tuple
-    :param mapping: A dictionary of mappings between component names
-    :type mapping: dict
-    :return: A new relational attribute with components renamed
-    :rtype: tuple
-
-    >>> attr = ('before', 'c1', 'c2')
-    >>> mapping =  {'c1': 'o1', 'c2': 'o2'}
-    >>> renameRelation(attr, mapping)
-    ('before', 'o1', 'o2')
-    """
-    temp = []
-    for idx, val in enumerate(attr):
-        if idx == 0:
-            temp.append(val)
-        else:
-            new_attr = [mapping[name] if name in mapping else name for name in
-                        val.split(".")]
-            temp.append(".".join(new_attr))
-    return tuple(temp)
-
-def renameFlat(instance, mapping):
+def rename_flat(instance, mapping):
     """
     Given a :ref:`flattened instance <flattened-instance>` and a mapping (type =
     dict) rename the components and relations and return the renamed instance.
@@ -345,28 +317,17 @@ def renameFlat(instance, mapping):
     :rtype: :ref:`mapped instance <fully-mapped>`
 
     >>> import pprint
-    >>> instance = {'c1.a': 1, ('good', 'c1'): True}
+    >>> instance = {('a', ('c1',)): 1, ('good', ('c1',)): True}
     >>> mapping = {'c1': 'o1'}
-    >>> renamed = renameFlat(instance,mapping)
+    >>> renamed = rename_flat(instance,mapping)
     >>> pprint.pprint(renamed)
-    {'o1.a': 1, ('good', 'o1'): True}
+    {('a', ('o1',)): 1, ('good', ('o1',)): True}
     """
-    for attr in instance:
-        if isinstance(attr, tuple):
-            continue
-        for name in attr.split('.')[:-1]:
-            if name[0] == "_":
-                name = name[1:]
-            if name not in mapping:
-                mapping[name] = name
-
     temp_instance = {}
 
     for attr in instance:
         if isinstance(attr, tuple):
-            temp_instance[renameRelation(attr, mapping)] = instance[attr]
-        elif "." in attr:
-            temp_instance[renameComponent(attr, mapping)] = instance[attr]
+            temp_instance[rename_relation(attr, mapping)] = instance[attr]
         else:
             temp_instance[attr] = instance[attr]
 
@@ -480,7 +441,7 @@ def structurizeJSON(instance):
 
     return temp
 
-def bind_flat_attr(attr, mapping, unnamed):
+def bind_flat_attr(attr, mapping):
     """
     Renames an attribute given a mapping.
 
@@ -495,30 +456,40 @@ def bind_flat_attr(attr, mapping, unnamed):
 
     >>> attr = ('before', ('c1',), ('c2',))
     >>> mapping = {'c1': 'o1', 'c2':'o2'}
-    >>> bind_flat_attr(attr, mapping, {})
+    >>> bind_flat_attr(attr, mapping)
     ('before', ('o1',), ('o2',))
 
     If the mapping is incomplete then returns ``None`` (nothing) 
 
     >>> attr = ('before', ('c1',), ('c2',))
     >>> mapping = {'c1': 'o1'}
-    >>> bind_flat_attr(attr, mapping, {'c2'}) is None
+    >>> bind_flat_attr(attr, mapping) is None
     True
 
-    >>> bind_flat_attr(('<', ('a', ('o2',)), ('a', ('o1',))), {'o1': 'c1'}, {'o2'}) is None
+    >>> bind_flat_attr(('<', ('a', ('o2',)), ('a', ('o1',))), {'o1': 'c1'}) is None
     True
 
-    >>> bind_flat_attr(('<', ('a', ('o2',)), ('a', ('o1',))), {'o1': 'c1', 'o2': 'c2'}, {}) is None
+    >>> bind_flat_attr(('<', ('a', ('o2',)), ('a', ('o1',))), {'o1': 'c1', 'o2': 'c2'}) is None
     False
     """
     if not isinstance(attr, tuple):
         return attr
 
-    for o in unnamed:
-        if contains_component(o, attr):
+    if isinstance(attr, tuple) and len(attr) == 1:
+        if attr[0] not in mapping:
             return None
+        else:
+            return (mapping[attr[0]],)
 
-    return rename_relation(attr, mapping)
+    if isinstance(attr, tuple):
+        new_attr = []
+        for ele in attr:
+            new_ele = bind_flat_attr(ele, mapping)
+            if new_ele is None:
+                return None
+            else:
+                new_attr.append(new_ele)
+        return tuple(new_attr)
 
 def contains_component(component, attr):
     """
@@ -581,11 +552,14 @@ def flat_match(concept, instance, optimal=False):
     initial = search.Node((frozenset(), inames, cnames), extra=(concept,
                                                                 instance))
     if optimal:
-        solution = next(search.BestFGS(initial, _flat_match_successor_fn, _flatMatchGoalTestFn,
-                                _flatMatchHeuristicFn))
+        solution = next(search.BestFGS(initial, _flat_match_successor_fn,
+                                       _flat_match_goal_test_fn,
+                                       _flat_match_heuristic_fn))
     else:
-        solution = next(search.BeamGS(initial, _flat_match_successor_fn, _flatMatchGoalTestFn,
-                           _flatMatchHeuristicFn, initialBeamWidth=1))
+        solution = next(search.BeamGS(initial, _flat_match_successor_fn,
+                                      _flat_match_goal_test_fn,
+                                      _flat_match_heuristic_fn,
+                                      initialBeamWidth=1))
     #print(solution.cost)
 
     if solution:
@@ -612,7 +586,7 @@ def _flat_match_successor_fn(node):
         for attr in instance:
             if not contains_component(n, attr):
                 continue
-            new_attr = bindFlatAttr(attr, m, inames)
+            new_attr = bind_flat_attr(attr, m)
             if new_attr:
                 reward += concept.attr_val_guess_gain(new_attr, instance[attr])
 
@@ -625,19 +599,20 @@ def _flat_match_successor_fn(node):
             m = {a:v for a,v in mapping}
             m[n] = new
             for attr in instance:
-                if not containsComponent(n, attr):
+                if not contains_component(n, attr):
                     continue
-                new_attr = bindFlatAttr(attr, m, inames)
+                new_attr = bind_flat_attr(attr, m)
                 if new_attr:
                     reward += concept.attr_val_guess_gain(new_attr,
                                                           instance[attr])
+
             yield search.Node((mapping.union(frozenset([(n, new)])), inames -
                                       frozenset([n]), availableNames -
                                       frozenset([new])), node, n + ":" + new,
                         node.cost - reward, node.depth + 1, node.extra)
 
 
-def _flatMatchHeuristicFn(node):
+def _flat_match_heuristic_fn(node):
     """
     Considers all partial matches for each unbound attribute and assumes that
     you get the highest guess_gain match. This provides an over estimation of
@@ -651,18 +626,18 @@ def _flatMatchHeuristicFn(node):
     h = 0
     m = {a:v for a,v in mapping}
     for attr in instance:
-        new_attr = bindFlatAttr(attr, m, unnamed)
+        new_attr = bind_flat_attr(attr, m)
         if not new_attr:
             best_attr_h = [concept.attr_val_guess_gain(cAttr, instance[attr]) for
                                cAttr in concept.av_counts if
-                               isPartialMatch(attr, cAttr, m, unnamed)]
+                               is_partial_match(attr, cAttr, m, unnamed)]
 
             if len(best_attr_h) > 0:
                 h -= max(best_attr_h)
 
     return h
 
-def _flatMatchGoalTestFn(node):
+def _flat_match_goal_test_fn(node):
     """
     Returns True if every component in the original instance has been renamed
     in the given node.
@@ -672,8 +647,9 @@ def _flatMatchGoalTestFn(node):
     mapping, unnamed, availableNames = node.state
     return len(unnamed) == 0
 
-def isPartialMatch(iAttr, cAttr, mapping, unnamed):
-    """Returns True if the instance attribute (iAttr) partially matches the
+def is_partial_match(iAttr, cAttr, mapping, unnamed):
+    """
+    Returns True if the instance attribute (iAttr) partially matches the
     concept attribute (cAttr) given the mapping.
 
     :param iAttr: An attribute in an instance
@@ -687,53 +663,34 @@ def isPartialMatch(iAttr, cAttr, mapping, unnamed):
     :return: ``True`` if the instance attribute matches the concept attribute in the mapping otherwise ``False``
     :rtype: bool
 
-    >>> isPartialMatch(('<', 'o2.a', 'o1.a'), ('<', 'c2.a', 'c1.b'), {'o1': 'c1'}, {'o2'})
+    >>> is_partial_match(('<', ('a', ('o2',)), ('a', ('o1',))), ('<', ('a', ('c2',)), ('b', ('c1',))), {'o1': 'c1'}, {'o2'})
     False
 
-    >>> isPartialMatch(('<', 'o2.a', 'o1.a'), ('<', 'c2.a', 'c1.a'), {'o1': 'c1'}, {'o2'})
+    >>> is_partial_match(('<', ('a', ('o2',)), ('a', ('o1',))), ('<', ('a', ('c2',)), ('a', ('c1',))), {'o1': 'c1'}, {'o2'})
     True
 
-    >>> isPartialMatch(('<', 'o2.a', 'o1.a'), ('<', 'c2.a', 'c1.a'), {'o1': 'c1', 'o2': 'c2'}, {})
+    >>> is_partial_match(('<', ('a', ('o2',)), ('a', ('o1',))), ('<', ('a', ('c2',)), ('a', ('c1',))), {'o1': 'c1', 'o2': 'c2'}, {})
     True
     """
     if type(iAttr) != type(cAttr):
         return False
+
     if isinstance(iAttr, tuple) and len(iAttr) != len(cAttr):
         return False
 
+    if isinstance(iAttr, tuple) and len(iAttr) == 1:
+        if iAttr[0] in unnamed:
+            return True
+        elif iAttr[0] in mapping:
+            return mapping[iAttr[0]] == cAttr[0]
+
     if isinstance(iAttr, tuple):
-        if iAttr[0] != cAttr[0]:
-            return False
         for i,v in enumerate(iAttr):
-            if i == 0:
-                continue
-
-            # TODO handle nested relations here
-            # Chris MacLellan
-
-            iSplit = v.split('.')
-            cSplit = cAttr[i].split('.')
-            if len(iSplit) != len(cSplit):
+            if not is_partial_match(iAttr[i], cAttr[i], mapping, unnamed):
                 return False
-            for j,v2 in enumerate(iSplit):
-                if v2 in mapping and mapping[v2] != cSplit[j]:
-                    return False
-                if v2 not in mapping and v2 not in unnamed and v2 != cSplit[j]:
-                    return False
-    elif "." not in cAttr:
-        return False
-    else:
-        iSplit = iAttr.split('.')
-        cSplit = cAttr.split('.')
-        if len(iSplit) != len(cSplit):
-            return False
-        if iSplit[-1] != cSplit[-1]:
-            return False
-        for i,v in enumerate(iSplit[:-1]):
-            if v in mapping and mapping[v] != cSplit[i]:
-                return False
+        return True
 
-    return True
+    return iAttr == cAttr
 
 def extract_list_elements(instance):
     """
@@ -996,5 +953,5 @@ def structure_map(concept, instance):
     """
     instance = pre_process(instance)
     mapping = flat_match(concept, instance)
-    instance = renameFlat(instance, mapping)
+    instance = rename_flat(instance, mapping)
     return instance

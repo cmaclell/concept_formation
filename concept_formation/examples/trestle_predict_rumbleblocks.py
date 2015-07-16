@@ -12,7 +12,7 @@ from concept_formation.dummy import DummyTree
 from concept_formation.datasets import load_rb_s_07
 from concept_formation.datasets import load_rb_s_07_human_predictions
 
-num_runs = 30 
+num_runs = 30
 num_examples = 30
 towers = load_rb_s_07()
 

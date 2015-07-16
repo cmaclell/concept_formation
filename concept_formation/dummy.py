@@ -4,7 +4,7 @@ from __future__ import absolute_import
 from __future__ import division
 from concept_formation.cobweb3 import Cobweb3Node
 from concept_formation.trestle import TrestleTree
-from concept_formation.structure_mapper import flattenJSON
+from concept_formation.structure_mapper import flatten_json
 from concept_formation.structure_mapper import structure_map
 
 class DummyTree(TrestleTree):
@@ -25,7 +25,7 @@ class DummyTree(TrestleTree):
         if do_mapping:
             temp_instance = structure_map(self.root, instance)
         else:
-            temp_instance = flattenJSON(instance)
+            temp_instance = flatten_json(instance)
         self.root.increment_counts(temp_instance)
         return self.root
 
