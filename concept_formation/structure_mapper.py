@@ -249,21 +249,22 @@ def get_component_names(instance):
 
     >>> instance = {('a', ('c1',)): 0, ('a', ('c2',)): 0, ('_', '_a', ('c3',)): 0}
     >>> names = get_component_names(instance)
-    >>> sorted(names)
+    >>> sorted(list(names))
     ['c1', 'c2', 'c3']
     """
     names = set()
     for attr in instance:
-        if isinstance(attr, tuple) and isinstance(attr[0], tuple):
+        if not isinstance(attr, tuple):
             continue
-        if isinstance(attr, tuple):
-            for ele in attr[:-1]:
-                if ele[0] == '_':
-                    names.add(ele[1:])
-                else:
-                    names.add(ele)
 
-    return list(names)
+        for ele in attr:
+            if isinstance(ele, tuple) and len(ele) == 1:
+                names.add(ele[0])
+            elif isinstance(ele, tuple):
+                for name in get_component_names(ele):
+                    names.add(name)
+
+    return names
 
 def renameComponent(attr, mapping):
     """Takes a component attribute (e.g., o1.o2) and renames the 
@@ -492,32 +493,32 @@ def bind_flat_attr(attr, mapping, unnamed):
     :return: The attribute's new name or ``None`` if the mapping is incomplete
     :rtype: str
 
-    >>> attr = (('before',), ('c1',''), ('c2',''))
+    >>> attr = ('before', ('c1',), ('c2',))
     >>> mapping = {'c1': 'o1', 'c2':'o2'}
     >>> bind_flat_attr(attr, mapping, {})
-    (('before',), ('o1', ''), ('o2', ''))
+    ('before', ('o1',), ('o2',))
 
     If the mapping is incomplete then returns ``None`` (nothing) 
 
-    >>> attr = (('before',), ('c1',''), ('c2',''))
+    >>> attr = ('before', ('c1',), ('c2',))
     >>> mapping = {'c1': 'o1'}
     >>> bind_flat_attr(attr, mapping, {'c2'}) is None
     True
 
-    >>> bind_flat_attr((('<',), ('o2','a'), ('o1','a')), {'o1': 'c1'}, {'o2'}) is None
+    >>> bind_flat_attr(('<', ('a', ('o2',)), ('a', ('o1',))), {'o1': 'c1'}, {'o2'}) is None
     True
 
-    >>> bind_flat_attr((('<',), ('o2','a'), ('o1','a')), {'o1': 'c1', 'o2': 'c2'}, {}) is None
+    >>> bind_flat_attr(('<', ('a', ('o2',)), ('a', ('o1',))), {'o1': 'c1', 'o2': 'c2'}, {}) is None
     False
     """
+    if not isinstance(attr, tuple):
+        return attr
+
     for o in unnamed:
         if contains_component(o, attr):
             return None
 
-    if isinstance(attr, tuple):
-        return rename_relation(attr, mapping)
-    else:
-        return attr
+    return rename_relation(attr, mapping)
 
 def contains_component(component, attr):
     """
@@ -532,23 +533,18 @@ def contains_component(component, attr):
              ``False`` otherwise
     :rtype: bool
 
-    >>> contains_component('c1', ('c2', 'c1', 'a'))
+    >>> contains_component('c1', ('relation', ('c2',), ('a', ('c1',))))
     True
-    >>> contains_component('c3', ('before', 'c1', 'c2'))
+    >>> contains_component('c3', ('before', ('c1',), ('c2',)))
     False
     """
-    if isinstance(attr, tuple) and isinstance(attr[0], tuple):
+    if isinstance(attr, tuple) and len(attr) == 1:
+        return component == attr[0]
+
+    elif isinstance(attr, tuple):
         for ele in attr:
             if contains_component(component, ele) is True:
                 return True
-
-    elif isinstance(attr, tuple):
-        for ele in attr[:-1]:
-            if contains_component(component, ele) is True:
-                return True
-
-    elif component == attr:
-        return True
     
     return False
 
@@ -579,8 +575,7 @@ def flat_match(concept, instance, optimal=False):
     inames = frozenset(get_component_names(instance))
     cnames = frozenset(get_component_names(concept.av_counts))
 
-    if(len(inames) == 0 or
-       len(cnames) == 0):
+    if(len(inames) == 0 or len(cnames) == 0):
         return {}
 
     initial = search.Node((frozenset(), inames, cnames), extra=(concept,
