@@ -76,26 +76,24 @@ def standardize_apart_names(instance, mapping = {}):
     >>> instance = {'nominal': 'v1', 'numeric': 2.3, 'c1': {'a1': 'v1'}, 'c2': {'a2': 'v2'}, '(relation1 c1 c2)': True, 'lists': ['s1', 's2', 's3'], '(relation2 c1 (relation3 c2))': 4.3}
     >>> standard = standardize_apart_names(instance)
     >>> doctest_print(standard)
-    'lists' : [
-        's1'
-        's2'
+    {'lists': [
+        's1',
+        's2',
         's3'
-    ]
-    'nominal' : 'v1'
-    'numeric' : 2.3
-    'o13' : {
-        'a1' : 'v1'
-    }
-    'o14' : {
-        'a2' : 'v2'
-    }
-    (('relation1',), ('o13', ''), ('o14', '')) : True
-    (('relation2',), ('o13', ''), (('relation3',), ('o14', ''))) : 4.3
+    ],
+    'nominal': 'v1',
+    'numeric': 2.3,
+    'o13': {'a1': 'v1'},
+    'o14': {'a2': 'v2'},
+    (('relation1',), ('o13', ''), ('o14', '')): True,
+    (('relation2',), ('o13', ''), (('relation3',), ('o14', ''))): 4.3}
     """
     new_instance = {}
     relations = []
 
-    for attr in sorted(instance):
+    # I had to add the key function to the sort because python apparently can't
+    # naturally sort strings nad tuples
+    for attr in sorted(instance, key=lambda at: str(at)):
         if attr[0] == '(':
             relations.append((attr, instance[attr]))
         elif isinstance(instance[attr], dict):
@@ -338,8 +336,8 @@ def renameFlat(instance, mapping):
     >>> mapping = {'c1': 'o1'}
     >>> renamed = renameFlat(instance,mapping)
     >>> doctest_print(renamed)
-    'o1.a' : 1
-    ('good', 'o1') : True
+    {'o1.a': 1,
+    ('good', 'o1'): True}
     """
     for attr in instance:
         if isinstance(attr, tuple):
@@ -384,9 +382,9 @@ def flatten_json(instance):
     >>> instance = {'a': 1, 'c1': {'b': 1, '_c': 2}}
     >>> flat = flatten_json(instance)
     >>> doctest_print(flat)
-    'a' : 1
-    ('_c1', '_c') : 2
-    ('c1', 'b') : 1
+    {'a': 1,
+    ('_c1', '_c'): 2,
+    ('c1', 'b'): 1}
     """
     temp = {}
     for attr in instance:
@@ -748,22 +746,16 @@ def extract_list_elements(instance):
     >>> instance = {"a":"n","list1":["test",{"p":"q","j":"k"},{"n":"m"}]}
     >>> instance = extract_list_elements(instance)
     >>> doctest_print(instance)
-    'a' : 'n'
-    'list1' : [
-        'o1'
-        'o2'
+    {'a': 'n',
+    'list1': [
+        'o1',
+        'o2',
         'o3'
-    ]
-    'o1' : {
-        'val' : 'test'
-    }
-    'o2' : {
-        'j' : 'k'
-        'p' : 'q'
-    }
-    'o3' : {
-        'n' : 'm'
-    }
+    ],
+    'o1': {'val': 'test'},
+    'o2': {'j': 'k',
+        'p': 'q'},
+    'o3': {'n': 'm'}}
     """
 
     new_instance = {}
@@ -799,61 +791,49 @@ def lists_to_relations(instance):
     >>> instance = {"list1":['a','b','c']}
     >>> instance = lists_to_relations(instance)
     >>> doctest_print(instance)
-    (('ordered-list',), ('list1',), ('a', ''), ('b', '')) : True
-    (('ordered-list',), ('list1',), ('b', ''), ('c', '')) : True
+    {(('ordered-list',), ('list1',), ('a', ''), ('b', '')): True,
+    (('ordered-list',), ('list1',), ('b', ''), ('c', '')): True}
     
     >>> instance = {"list1":['a','b','c'],"list2":['w','x','y','z']}
     >>> instance = lists_to_relations(instance)
     >>> doctest_print(instance)
-    (('ordered-list',), ('list1',), ('a', ''), ('b', '')) : True
-    (('ordered-list',), ('list1',), ('b', ''), ('c', '')) : True
-    (('ordered-list',), ('list2',), ('w', ''), ('x', '')) : True
-    (('ordered-list',), ('list2',), ('x', ''), ('y', '')) : True
-    (('ordered-list',), ('list2',), ('y', ''), ('z', '')) : True
+    {(('ordered-list',), ('list1',), ('a', ''), ('b', '')): True,
+    (('ordered-list',), ('list1',), ('b', ''), ('c', '')): True,
+    (('ordered-list',), ('list2',), ('w', ''), ('x', '')): True,
+    (('ordered-list',), ('list2',), ('x', ''), ('y', '')): True,
+    (('ordered-list',), ('list2',), ('y', ''), ('z', '')): True}
 
     >>> instance = {"stack":[{"a":1, "b":2, "c":3}, {"x":1, "y":2, "z":3}, {"i":1, "j":2, "k":3}]}
     >>> instance = extract_list_elements(instance)
     >>> doctest_print(instance)
-    'o4' : {
-        'a' : 1
-        'b' : 2
-        'c' : 3
-    }
-    'o5' : {
-        'x' : 1
-        'y' : 2
-        'z' : 3
-    }
-    'o6' : {
-        'i' : 1
-        'j' : 2
-        'k' : 3
-    }
-    'stack' : [
-        'o4'
-        'o5'
+    {'o4': {'a': 1,
+        'b': 2,
+        'c': 3},
+    'o5': {'x': 1,
+        'y': 2,
+        'z': 3},
+    'o6': {'i': 1,
+        'j': 2,
+        'k': 3},
+    'stack': [
+        'o4',
+        'o5',
         'o6'
-    ]
+    ]}
 
     >>> instance = lists_to_relations(instance)
     >>> doctest_print(instance)
-    'o4' : {
-        'a' : 1
-        'b' : 2
-        'c' : 3
-    }
-    'o5' : {
-        'x' : 1
-        'y' : 2
-        'z' : 3
-    }
-    'o6' : {
-        'i' : 1
-        'j' : 2
-        'k' : 3
-    }
-    (('ordered-list',), ('stack',), ('o4', ''), ('o5', '')) : True
-    (('ordered-list',), ('stack',), ('o5', ''), ('o6', '')) : True
+    {'o4': {'a': 1,
+        'b': 2,
+        'c': 3},
+    'o5': {'x': 1,
+        'y': 2,
+        'z': 3},
+    'o6': {'i': 1,
+        'j': 2,
+        'k': 3},
+    (('ordered-list',), ('stack',), ('o4', ''), ('o5', '')): True,
+    (('ordered-list',), ('stack',), ('o5', ''), ('o6', '')): True}
     """
     new_instance = {}
     for attr in instance.keys():
@@ -884,47 +864,28 @@ def hoist_sub_objects(instance) :
     
     >>> instance = {"a1":"v1","sub1":{"a2":"v2","a3":3},"sub2":{"a4":"v4","subsub1":{"a5":"v5","a6":"v6"},"subsub2":{"subsubsub":{"a8":"V8"},"a7":7}}}
     >>> doctest_print(instance)
-    'a1' : 'v1'
-    'sub1' : {
-        'a2' : 'v2'
-        'a3' : 3
-    }
-    'sub2' : {
-        'a4' : 'v4'
-        'subsub1' : {
-            'a5' : 'v5'
-            'a6' : 'v6'
-        }
-        'subsub2' : {
-            'a7' : 7
-            'subsubsub' : {
-                'a8' : 'V8'
-            }
-        }
-    }
+    {'a1': 'v1',
+    'sub1': {'a2': 'v2',
+        'a3': 3},
+    'sub2': {'a4': 'v4',
+        'subsub1': {'a5': 'v5',
+            'a6': 'v6'},
+        'subsub2': {'a7': 7,
+            'subsubsub': {'a8': 'V8'}}}}
+            
     >>> instance = hoist_sub_objects(instance)
     >>> doctest_print(instance)
-    'a1' : 'v1'
-    'sub1' : {
-        'a2' : 'v2'
-        'a3' : 3
-    }
-    'sub2' : {
-        'a4' : 'v4'
-    }
-    'subsub1' : {
-        'a5' : 'v5'
-        'a6' : 'v6'
-    }
-    'subsub2' : {
-        'a7' : 7
-    }
-    'subsubsub' : {
-        'a8' : 'V8'
-    }
-    (('has-component',), ('sub2', ''), ('subsub1', '')) : True
-    (('has-component',), ('sub2', ''), ('subsub2', '')) : True
-    (('has-component',), ('subsub2', ''), ('subsubsub', '')) : True
+    {'a1': 'v1',
+    'sub1': {'a2': 'v2',
+        'a3': 3},
+    'sub2': {'a4': 'v4'},
+    'subsub1': {'a5': 'v5',
+        'a6': 'v6'},
+    'subsub2': {'a7': 7},
+    'subsubsub': {'a8': 'V8'},
+    (('has-component',), ('sub2', ''), ('subsub1', '')): True,
+    (('has-component',), ('sub2', ''), ('subsub2', '')): True,
+    (('has-component',), ('subsub2', ''), ('subsubsub', '')): True}
     """
     new_instance = {}
     
@@ -963,50 +924,63 @@ def pre_process(instance):
 
     >>> instance = {"noma":"a","num3":3,"compa":{"nomb":"b","num4":4,"sub":{"nomc":"c","num5":5}},"compb":{"nomd":"d","nome":"e"},"(related compa.num4 comb.nome)":True,"list1":["a","b",{"i":1,"j":12.3,"k":"test"}]}
     >>> doctest_print(instance)
-    '(related compa.num4 comb.nome)' : True
-    'compa' : {
-        'nomb' : 'b'
-        'num4' : 4
-        'sub' : {
-            'nomc' : 'c'
-            'num5' : 5
-        }
-    }
-    'compb' : {
-        'nomd' : 'd'
-        'nome' : 'e'
-    }
-    'list1' : [
-        'a'
-        'b'{
-            'i' : 1
-            'j' : 12.3
-            'k' : 'test'
-        }
-    ]
-    'noma' : 'a'
-    'num3' : 3
+    {'(related compa.num4 comb.nome)': True,
+    'compa': {'nomb': 'b',
+        'num4': 4,
+        'sub': {'nomc': 'c',
+            'num5': 5}},
+    'compb': {'nomd': 'd',
+        'nome': 'e'},
+    'list1': [
+        'a',
+        'b',
+        {'i': 1,
+            'j': 12.3,
+            'k': 'test'}
+    ],
+    'noma': 'a',
+    'num3': 3}
 
     >>> instance = pre_process(instance)
     >>> doctest_print(instance)
-    'noma' : 'a'
-    'num3' : 3
-    ('o10', 'val') : 'a'
-    ('o11', 'val') : 'b'
-    ('o12', 'i') : 1
-    ('o12', 'j') : 12.3
-    ('o12', 'k') : 'test'
-    ('o7', 'nomb') : 'b'
-    ('o7', 'num4') : 4
-    ('o8', 'nomc') : 'c'
-    ('o8', 'num5') : 5
-    ('o9', 'nomd') : 'd'
-    ('o9', 'nome') : 'e'
-    (('has-component',), ('o7', ''), ('o8', '')) : True
-    (('ordered-list',), ('list1',), ('o10', ''), ('o11', '')) : True
-    (('ordered-list',), ('list1',), ('o11', ''), ('o12', '')) : True
-    (('related',), ('o7', 'num4'), ('comb', 'nome')) : True
+    {'noma': 'a',
+    'num3': 3,
+    ('o10', 'val'): 'a',
+    ('o11', 'val'): 'b',
+    ('o12', 'i'): 1,
+    ('o12', 'j'): 12.3,
+    ('o12', 'k'): 'test',
+    ('o7', 'nomb'): 'b',
+    ('o7', 'num4'): 4,
+    ('o8', 'nomc'): 'c',
+    ('o8', 'num5'): 5,
+    ('o9', 'nomd'): 'd',
+    ('o9', 'nome'): 'e',
+    (('has-component',), ('o7', ''), ('o8', '')): True,
+    (('ordered-list',), ('list1',), ('o10', ''), ('o11', '')): True,
+    (('ordered-list',), ('list1',), ('o11', ''), ('o12', '')): True,
+    (('related',), ('o7', 'num4'), ('comb', 'nome')): True}
 
+    >>> instance = pre_process(instance)
+    >>> doctest_print(instance)
+    {'noma': 'a',
+    'num3': 3,
+    ('o10', 'val'): 'a',
+    ('o11', 'val'): 'b',
+    ('o12', 'i'): 1,
+    ('o12', 'j'): 12.3,
+    ('o12', 'k'): 'test',
+    ('o7', 'nomb'): 'b',
+    ('o7', 'num4'): 4,
+    ('o8', 'nomc'): 'c',
+    ('o8', 'num5'): 5,
+    ('o9', 'nomd'): 'd',
+    ('o9', 'nome'): 'e',
+    (('has-component',), ('o7', ''), ('o8', '')): True,
+    (('ordered-list',), ('list1',), ('o10', ''), ('o11', '')): True,
+    (('ordered-list',), ('list1',), ('o11', ''), ('o12', '')): True,
+    (('related',), ('o7', 'num4'), ('comb', 'nome')): True}
+    
     """
     instance = standardize_apart_names(instance)
     instance = extract_list_elements(instance)
@@ -1071,25 +1045,32 @@ def doctest_print(instance, depth=0):
         else:
             return str(val)
 
-    str_to_print = ''
+    str_to_print = '{'
+    first = True
 
     for k in sorted(instance, key=cmp_to_key(compare)):
-        str_to_print += (' '*4*depth) + str2(k) + ' : '
+        if first:
+            str_to_print += str2(k) + ': '
+            first=False 
+        else:
+            str_to_print += (' '*4*depth) + str2(k) + ': '
         if isinstance(instance[k],dict):
-            str_to_print += '{\n' + doctest_print(instance[k],depth+1)+(' '*4*depth)+'}'
+            str_to_print += doctest_print(instance[k],depth+1)
         elif isinstance(instance[k],list):
-            str_to_print += '['
+            str_to_print += '[\n'
             for i in instance[k]:
                 if isinstance(i,dict):
-                    str_to_print += '{\n'+ doctest_print(i,depth+2)+(' '*4*(depth+1))+'}'
+                    str_to_print += (' '*4*(depth+1))+doctest_print(i,depth+2)
                 else:
-                    str_to_print += '\n'+(' '*4*(depth+1))+str2(i)
-            str_to_print += (' '*4*depth)+'\n]'
+                    str_to_print += (' '*4*(depth+1))+str2(i)
+                str_to_print += ',\n'
+            str_to_print = str_to_print[:-2] + '\n' +(' '*4*depth)+']'
         else:
             str_to_print += str2(instance[k])
-        str_to_print +='\n'
+        str_to_print +=',\n'
+    str_to_print = str_to_print[:-2] + '}'
     if depth == 0:
-        print(str_to_print[:-1])
+        print(str_to_print)
     else:
         return str_to_print
 
