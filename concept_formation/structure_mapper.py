@@ -781,13 +781,35 @@ def lists_to_relations(instance, current=None, top_level=None):
     {'subobj': {},
      ('ordered-list', ('list1', ('subobj',)), ('a',), ('b',)): True,
      ('ordered-list', ('list1', ('subobj',)), ('b',), ('c',)): True}
+
+
+    >>> instance = {'tta':'alpha','ttb':{'tlist':['a','b',{'sub-a':'c','sub-sub':{'s':'d','sslist':['w','x','y',{'issue':'here'}]}},'g']}}
+    >>> instance = extract_list_elements(instance)
+    >>> pprint.pprint(instance)
+    {}
+    >>> instance = lists_to_relations(instance)
+    >>> pprint.pprint(instance)
+    {}
+
+
+    >>> instance = {"Function Defintion":{"body":[{"Return":{"value":{"Compare":{"left":{"Number":{"n":2 } }, "ops":[{"<":{}},{"<=":{}}],"comparators":[{"Name":{"id":"daysPassed","ctx":{"Load":{}}}},{"Number":{"n":9}}]}}}}]}}
+    >>> instance = extract_list_elements(instance)
+    >>> pprint.pprint(instance)
+    {}
+    >>> instance = lists_to_relations(instance)
+    >>> pprint.pprint(instance)
+    {}
+
     """
     new_instance = {}
+    if top_level is None:
+        top_level = new_instance
+
     for attr in instance.keys():
         if isinstance(instance[attr], list):
             for i in range(len(instance[attr])-1):
                 
-                if top_level is None:
+                if top_level == new_instance:
                     rel = tuplize_relation_elements(
                         ("ordered-list",
                             attr,
@@ -797,6 +819,8 @@ def lists_to_relations(instance, current=None, top_level=None):
                             str(instance[attr][i+1])})
 
                     new_instance[rel] = True
+
+
                 else:
                     rel = tuplize_relation_elements(
                         ("ordered-list",
@@ -808,11 +832,26 @@ def lists_to_relations(instance, current=None, top_level=None):
 
                     top_level[rel] = True
 
+                rel = tuplize_relation_elements(
+                        ("has-component",
+                            attr,
+                            instance[attr][i],
+                            ),
+                        {str(instance[attr][i])})
+                new_instance[rel] = True
+
+            rel = tuplize_relation_elements(
+                        ("has-component",
+                            attr,
+                            instance[attr][len(instance[attr])-1],
+                            ),
+                        {str(instance[attr][len(instance[attr])-1])})
+            new_instance[rel] = True
 
         elif isinstance(instance[attr],dict):
             new_instance[attr] = lists_to_relations(instance[attr],
                                                     attr,
-                                                    new_instance)
+                                                    top_level)
         else:
             new_instance[attr] = instance[attr]
     
@@ -932,7 +971,7 @@ def pre_process(instance):
     """
     instance = extract_list_elements(instance)
     instance = standardize_apart_names(instance)
-
+    
     instance = lists_to_relations(instance)
     instance = hoist_sub_objects(instance)
     instance = flatten_json(instance)
