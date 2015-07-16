@@ -53,7 +53,7 @@ def gensym():
     _gensym_counter += 1
     return 'o' + str(_gensym_counter)
 
-def standardize_apart_names(instance, mapping = {}):
+def standardize_apart_names(instance, mapping = {}, prefix=""):
     """
     Given a :ref:`raw instance <raw-instance>` rename all the components so they
     have unique names.
@@ -73,7 +73,7 @@ def standardize_apart_names(instance, mapping = {}):
     :return: an instance with component attributes renamed
     :rtype: :ref:`standardized instance <standard-instance>`
 
-    >>> instance = {'nominal': 'v1', 'numeric': 2.3, 'c1': {'a1': 'v1'}, 'c2': {'a2': 'v2'}, '(relation1 c1 c2)': True, 'lists': ['s1', 's2', 's3'], '(relation2 c1 (relation3 c2))': 4.3}
+    >>> instance = {'nominal': 'v1', 'numeric': 2.3, 'c1': {'a1': 'v1'}, 'c2': {'a2': 'v2', 'c3': {'a3': 'v3'}}, '(relation1 c1 c2)': True, 'lists': ['s1', 's2', 's3'], '(relation2 c1.a1 (relation3 c2.c3.a3))': 4.3}
     >>> standard = standardize_apart_names(instance)
     >>> doctest_print(standard)
     {'lists': [
@@ -84,9 +84,10 @@ def standardize_apart_names(instance, mapping = {}):
     'nominal': 'v1',
     'numeric': 2.3,
     'o13': {'a1': 'v1'},
-    'o14': {'a2': 'v2'},
-    (('relation1',), ('o13', ''), ('o14', '')): True,
-    (('relation2',), ('o13', ''), (('relation3',), ('o14', ''))): 4.3}
+    'o14': {'a2': 'v2',
+        'o15': {'a3': 'v3'}},
+    ('relation1', ('o13',), ('o14',)): True,
+    ('relation2', ('a1', ('o13',)), ('relation3', ('a3', ('o15',)))): 4.3}
     """
     new_instance = {}
     relations = []
@@ -97,42 +98,60 @@ def standardize_apart_names(instance, mapping = {}):
         if attr[0] == '(':
             relations.append((attr, instance[attr]))
         elif isinstance(instance[attr], dict):
-            mapping[attr] = gensym()
-            new_instance[mapping[attr]] = standardize_apart_names(instance[attr], mapping)
+            mapping[prefix + attr] = gensym()
+            new_instance[mapping[prefix + attr]] = standardize_apart_names(instance[attr], 
+                                                                  mapping, attr
+                                                                 + ".")
         else:
             new_instance[attr] = instance[attr]
 
     for relation, val in relations:
-        new_instance[rename_relation(tuplize_relation(relation, mapping), mapping)] = val
+        temp_rel = tuplize_relation(relation)
+        temp_rel = rename_relation(temp_rel, mapping)
+        obj_set = {mapping[o] for o in mapping}
+        temp_rel = tuplize_relation_elements(temp_rel, obj_set)
+        new_instance[temp_rel] = val
 
     return new_instance
 
-def tuplize_relation_elements(elements, mapping):
+def tuplize_relation_elements(elements, obj_set):
     """
     Converts a relation element into a tuple for efficient
     processing.
     
-    >>> mapping = {'o1': 'c1', 'o2': 'c2'}
+    >>> mapping = {'o1', 'o2'}
     >>> ele1 = 'o1'
     >>> tuplize_relation_elements(ele1, mapping)
-    ('o1', '')
-    >>> ele2 = "o1.o2.a"
+    ('o1',)
+    >>> ele2 = "o1.a"
     >>> tuplize_relation_elements(ele2, mapping)
-    ('o1', 'o2', 'a')
-    >>> ele3 = ('o1', ('o1.o2.a',))
+    ('a', ('o1',))
+    >>> ele3 = ('relation1', 'o1', ('relation2', 'o2.a'))
     >>> tuplize_relation_elements(ele3, mapping)
-    (('o1', ''), (('o1', 'o2', 'a'),))
+    ('relation1', ('o1',), ('relation2', ('a', ('o2',))))
     """
     if isinstance(elements, tuple):
-        return tuple([tuplize_relation_elements(ele, mapping) for ele in elements])
+        return tuple([tuplize_relation_elements(ele, obj_set) for ele in elements])
     
-    elements = elements.split('.')
-    if elements[-1] in mapping:
-        elements.append('')
+    if "." in elements:
+        elements = elements.split('.')
 
-    return tuple(elements)
+        # assume elements is a pair, at this point there shouldn't be more
+        if len(elements) != 2:
+            raise Exception("Should only have attribute of single object here.")
+        if elements[0] not in obj_set:
+            raise Exception("Can only use dot notation with objects")
 
-def tuplize_relation(relation, mapping={}) :
+        return (tuplize_relation_elements(elements[1], obj_set),
+                tuplize_relation_elements(elements[0], obj_set))
+
+    elif elements in obj_set:
+        return (elements,)
+
+    else:
+        return elements
+
+def tuplize_relation(relation) :
     """
     Converts a string formatted relation into a tuplized relation. It requires
     the mapping so that it can convert the period separated object references
@@ -149,8 +168,8 @@ def tuplize_relation(relation, mapping={}) :
 
     >>> relation = '(foo1 o1 (foo2 o2 o3))'
     >>> mapping = {'o1': 'sk1', 'o2': 'sk2', 'o3': 'sk3'}
-    >>> tuplize_relation(relation, mapping)
-    (('foo1',), ('o1', ''), (('foo2',), ('o2', ''), ('o3', '')))
+    >>> tuplize_relation(relation)
+    ('foo1', 'o1', ('foo2', 'o2', 'o3'))
     """
     stack = [[]]
 
@@ -175,7 +194,7 @@ def tuplize_relation(relation, mapping={}) :
             end -= 1
 
     final = tuple(stack[-1][-1])
-    final = tuplize_relation_elements(final, mapping)
+    #final = tuplize_relation_elements(final, mapping)
     return final
 
 def stringify_relation(relation):
@@ -211,19 +230,13 @@ def rename_relation(relation, mapping):
     for v in relation:
         if isinstance(v, tuple):
             new_relation.append(rename_relation(v, mapping))
-        #elif "." in v:
-        #    new_v = []
-        #    for ele in v.split("."):
-        #        if ele in mapping:
-        #            new_v.append(mapping[ele])
-        #        else:
-        #            new_v.append(ele)
-        #    new_relation.append(".".join(new_v))
+        elif v in mapping:
+            new_relation.append(mapping[v])
+        elif "." in v and ".".join(v.split(".")[:-1]) in mapping:
+            new_relation.append(mapping[".".join(v.split(".")[:-1])] + '.' +
+                                v.split('.')[-1])
         else:
-            if v in mapping:
-                new_relation.append(mapping[v])
-            else:
-                new_relation.append(v)
+            new_relation.append(v)
 
     return tuple(new_relation)
     
@@ -296,7 +309,8 @@ def renameComponent(attr, mapping):
         return ".".join(new_attr)
 
 def renameRelation(attr, mapping):
-    """Takes a relational attribute (e.g., (before o1 o2)) and renames
+    """
+    Takes a relational attribute (e.g., (before o1 o2)) and renames
     the components based on mapping.
 
     :param attr: The relational attribute containing components to be renamed
@@ -322,7 +336,8 @@ def renameRelation(attr, mapping):
     return tuple(temp)
 
 def renameFlat(instance, mapping):
-    """Given a :ref:`flattened instance <flattened-instance>` and a mapping (type =
+    """
+    Given a :ref:`flattened instance <flattened-instance>` and a mapping (type =
     dict) rename the components and relations and return the renamed instance.
 
     :param instance: An instance to be renamed according to a mapping
@@ -383,24 +398,18 @@ def flatten_json(instance):
     >>> flat = flatten_json(instance)
     >>> doctest_print(flat)
     {'a': 1,
-    ('_c1', '_c'): 2,
-    ('c1', 'b'): 1}
+    ('_', ('_c', ('c1',))): 2,
+    ('b', ('c1',)): 1}
     """
     temp = {}
     for attr in instance:
         if isinstance(instance[attr], dict):
-            subobject = flatten_json(instance[attr])
-            for so_attr in subobject:
-                if isinstance(so_attr, tuple):
-                    if so_attr[0][0] == '_':
-                        new_attr = ('_' + attr) + so_attr
-                    else:
-                        new_attr = (attr) + so_attr
-                elif so_attr[0] == '_':
-                    new_attr = ('_' + attr, so_attr)
+            for so_attr in instance[attr]:
+                if so_attr[0] == '_':
+                    new_attr = ('_', (so_attr, (attr,)))
                 else:
-                    new_attr = (attr, so_attr)
-                temp[new_attr] = subobject[so_attr]
+                    new_attr = (so_attr, (attr,))
+                temp[new_attr] = instance[attr][so_attr]
         else:
             temp[attr] = instance[attr]
     return temp
@@ -791,7 +800,7 @@ def extract_list_elements(instance):
 
     return new_instance
 
-def lists_to_relations(instance):
+def lists_to_relations(instance, current=None, top_level=None):
     """
     Travese the instance and turn any list elements into 
     a series of relations.
@@ -799,17 +808,17 @@ def lists_to_relations(instance):
     >>> instance = {"list1":['a','b','c']}
     >>> instance = lists_to_relations(instance)
     >>> doctest_print(instance)
-    {(('ordered-list',), ('list1',), ('a', ''), ('b', '')): True,
-    (('ordered-list',), ('list1',), ('b', ''), ('c', '')): True}
+    {('ordered-list', 'list1', ('a',), ('b',)): True,
+    ('ordered-list', 'list1', ('b',), ('c',)): True}
     
     >>> instance = {"list1":['a','b','c'],"list2":['w','x','y','z']}
     >>> instance = lists_to_relations(instance)
     >>> doctest_print(instance)
-    {(('ordered-list',), ('list1',), ('a', ''), ('b', '')): True,
-    (('ordered-list',), ('list1',), ('b', ''), ('c', '')): True,
-    (('ordered-list',), ('list2',), ('w', ''), ('x', '')): True,
-    (('ordered-list',), ('list2',), ('x', ''), ('y', '')): True,
-    (('ordered-list',), ('list2',), ('y', ''), ('z', '')): True}
+    {('ordered-list', 'list1', ('a',), ('b',)): True,
+    ('ordered-list', 'list1', ('b',), ('c',)): True,
+    ('ordered-list', 'list2', ('w',), ('x',)): True,
+    ('ordered-list', 'list2', ('x',), ('y',)): True,
+    ('ordered-list', 'list2', ('y',), ('z',)): True}
 
     >>> instance = {"stack":[{"a":1, "b":2, "c":3}, {"x":1, "y":2, "z":3}, {"i":1, "j":2, "k":3}]}
     >>> instance = extract_list_elements(instance)
@@ -840,26 +849,48 @@ def lists_to_relations(instance):
     'o6': {'i': 1,
         'j': 2,
         'k': 3},
-    (('ordered-list',), ('stack',), ('o4', ''), ('o5', '')): True,
-    (('ordered-list',), ('stack',), ('o5', ''), ('o6', '')): True}
+    ('ordered-list', 'stack', ('o4',), ('o5',)): True,
+    ('ordered-list', 'stack', ('o5',), ('o6',)): True}
+
+    >>> instance = {'subobj': {'list1': ['a', 'b', 'c']}}
+    >>> instance = lists_to_relations(instance)
+    >>> import pprint
+    >>> pprint.pprint(instance)
+    {'subobj': {},
+     ('ordered-list', ('list1', ('subobj',)), ('a',), ('b',)): True,
+     ('ordered-list', ('list1', ('subobj',)), ('b',), ('c',)): True}
     """
     new_instance = {}
     for attr in instance.keys():
         if isinstance(instance[attr], list):
             for i in range(len(instance[attr])-1):
                 
-                rel = tuplize_relation_elements(
-                    ("ordered-list",
-                        attr,
-                        str(instance[attr][i]),
-                        str(instance[attr][i+1])),
-                    {str(instance[attr][i]),
-                        str(instance[attr][i+1])})
+                if top_level is None:
+                    rel = tuplize_relation_elements(
+                        ("ordered-list",
+                            attr,
+                            str(instance[attr][i]),
+                            str(instance[attr][i+1])),
+                        {str(instance[attr][i]),
+                            str(instance[attr][i+1])})
 
-                new_instance[rel] = True
+                    new_instance[rel] = True
+                else:
+                    rel = tuplize_relation_elements(
+                        ("ordered-list",
+                            (attr, (current,)),
+                            str(instance[attr][i]),
+                            str(instance[attr][i+1])),
+                        {str(instance[attr][i]),
+                            str(instance[attr][i+1])})
+
+                    top_level[rel] = True
+
 
         elif isinstance(instance[attr],dict):
-            new_instance[attr] = lists_to_relations(instance[attr])
+            new_instance[attr] = lists_to_relations(instance[attr],
+                                                    attr,
+                                                    new_instance)
         else:
             new_instance[attr] = instance[attr]
     
@@ -891,9 +922,9 @@ def hoist_sub_objects(instance) :
         'a6': 'v6'},
     'subsub2': {'a7': 7},
     'subsubsub': {'a8': 'V8'},
-    (('has-component',), ('sub2', ''), ('subsub1', '')): True,
-    (('has-component',), ('sub2', ''), ('subsub2', '')): True,
-    (('has-component',), ('subsub2', ''), ('subsubsub', '')): True}
+    ('has-component', ('sub2',), ('subsub1',)): True,
+    ('has-component', ('sub2',), ('subsub2',)): True,
+    ('has-component', ('subsub2',), ('subsubsub',)): True}
     """
     new_instance = {}
     
@@ -930,9 +961,9 @@ def pre_process(instance):
     """
     Runs all of the pre-processing functions
 
-    >>> instance = {"noma":"a","num3":3,"compa":{"nomb":"b","num4":4,"sub":{"nomc":"c","num5":5}},"compb":{"nomd":"d","nome":"e"},"(related compa.num4 comb.nome)":True,"list1":["a","b",{"i":1,"j":12.3,"k":"test"}]}
+    >>> instance = {"noma":"a","num3":3,"compa":{"nomb":"b","num4":4,"sub":{"nomc":"c","num5":5}},"compb":{"nomd":"d","nome":"e"},"(related compa.num4 compb.nome)":True,"list1":["a","b",{"i":1,"j":12.3,"k":"test"}]}
     >>> doctest_print(instance)
-    {'(related compa.num4 comb.nome)': True,
+    {'(related compa.num4 compb.nome)': True,
     'compa': {'nomb': 'b',
         'num4': 4,
         'sub': {'nomc': 'c',
@@ -953,48 +984,47 @@ def pre_process(instance):
     >>> doctest_print(instance)
     {'noma': 'a',
     'num3': 3,
-    ('o10', 'val'): 'a',
-    ('o11', 'val'): 'b',
-    ('o12', 'i'): 1,
-    ('o12', 'j'): 12.3,
-    ('o12', 'k'): 'test',
-    ('o7', 'nomb'): 'b',
-    ('o7', 'num4'): 4,
-    ('o8', 'nomc'): 'c',
-    ('o8', 'num5'): 5,
-    ('o9', 'nomd'): 'd',
-    ('o9', 'nome'): 'e',
-    (('has-component',), ('o7', ''), ('o8', '')): True,
-    (('ordered-list',), ('list1',), ('o10', ''), ('o11', '')): True,
-    (('ordered-list',), ('list1',), ('o11', ''), ('o12', '')): True,
-    (('related',), ('o7', 'num4'), ('comb', 'nome')): True}
+    ('has-component', ('o7',), ('o8',)): True,
+    ('i', ('o12',)): 1,
+    ('j', ('o12',)): 12.3,
+    ('k', ('o12',)): 'test',
+    ('nomb', ('o7',)): 'b',
+    ('nomc', ('o8',)): 'c',
+    ('nomd', ('o9',)): 'd',
+    ('nome', ('o9',)): 'e',
+    ('num4', ('o7',)): 4,
+    ('num5', ('o8',)): 5,
+    ('ordered-list', 'list1', ('o10',), ('o11',)): True,
+    ('ordered-list', 'list1', ('o11',), ('o12',)): True,
+    ('related', ('num4', ('o7',)), ('nome', ('o9',))): True,
+    ('val', ('o10',)): 'a',
+    ('val', ('o11',)): 'b'}
 
     >>> instance = pre_process(instance)
     >>> doctest_print(instance)
     {'noma': 'a',
     'num3': 3,
-    ('o10', 'val'): 'a',
-    ('o11', 'val'): 'b',
-    ('o12', 'i'): 1,
-    ('o12', 'j'): 12.3,
-    ('o12', 'k'): 'test',
-    ('o7', 'nomb'): 'b',
-    ('o7', 'num4'): 4,
-    ('o8', 'nomc'): 'c',
-    ('o8', 'num5'): 5,
-    ('o9', 'nomd'): 'd',
-    ('o9', 'nome'): 'e',
-    (('has-component',), ('o7', ''), ('o8', '')): True,
-    (('ordered-list',), ('list1',), ('o10', ''), ('o11', '')): True,
-    (('ordered-list',), ('list1',), ('o11', ''), ('o12', '')): True,
-    (('related',), ('o7', 'num4'), ('comb', 'nome')): True}
+    ('has-component', ('o7',), ('o8',)): True,
+    ('i', ('o12',)): 1,
+    ('j', ('o12',)): 12.3,
+    ('k', ('o12',)): 'test',
+    ('nomb', ('o7',)): 'b',
+    ('nomc', ('o8',)): 'c',
+    ('nomd', ('o9',)): 'd',
+    ('nome', ('o9',)): 'e',
+    ('num4', ('o7',)): 4,
+    ('num5', ('o8',)): 5,
+    ('ordered-list', 'list1', ('o10',), ('o11',)): True,
+    ('ordered-list', 'list1', ('o11',), ('o12',)): True,
+    ('related', ('num4', ('o7',)), ('nome', ('o9',))): True,
+    ('val', ('o10',)): 'a',
+    ('val', ('o11',)): 'b'}
     
     """
     instance = standardize_apart_names(instance)
     instance = extract_list_elements(instance)
     instance = lists_to_relations(instance)
     instance = hoist_sub_objects(instance)
-    #instance = tuplize(instance) # flatten should just tuplize. 
     instance = flatten_json(instance)
     return instance
 
@@ -1076,7 +1106,9 @@ def doctest_print(instance, depth=0):
         else:
             str_to_print += str2(instance[k])
         str_to_print +=',\n'
+
     str_to_print = str_to_print[:-2] + '}'
+
     if depth == 0:
         print(str_to_print)
     else:
