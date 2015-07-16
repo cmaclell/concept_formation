@@ -973,8 +973,9 @@ def pre_process(instance):
      ('val', ('o11',)): 'b'}
     
     """
-    instance = standardize_apart_names(instance)
     instance = extract_list_elements(instance)
+    instance = standardize_apart_names(instance)
+
     instance = lists_to_relations(instance)
     instance = hoist_sub_objects(instance)
     instance = flatten_json(instance)
