@@ -44,7 +44,8 @@ from concept_formation import search
 _gensym_counter = 0;
 
 def gensym():
-    """Generates unique names for naming renaming apart objects.
+    """
+    Generates unique names for naming renaming apart objects.
 
     :return: a unique object name
     :rtype: 'o'+counter
@@ -53,67 +54,185 @@ def gensym():
     _gensym_counter += 1
     return 'o' + str(_gensym_counter)
 
-def standardize_apart_names(instance, mapping = {}, prefix=""):
+def reset_gensym():
     """
-    Given a :ref:`raw instance <raw-instance>` rename all the components so they
-    have unique names.
+    Resets the gensym counter to 0, which is useful for doctesting.
+    """
+    global _gensym_counter
+    _gensym_counter = 0
 
-    :warning: relations cannot have dictionaries as values (i.e., cannot be
-    subojects).
-    :warning: relations can only exist at the top level, not in sub-objects.
+class Preprocessor(object):
+    """
+    A template class that defines the functions a preprocessor class should
+    implement. In particular, a preprocessor should tranform an instance and
+    implement a function for undoing this transformation.
+    """
+    def transform(self, instance):
+        """
+        Transforms an instance.
+        """
+        raise NotImplementedError("Class must implement transform function")
 
-    This will rename component attirbutes as well as any occurance of the
-    component's name within relation attributes. This renaming is necessary to
-    allow for a search between possible mappings without collisions.
+    def undo_transform(self, instance):
+        """
+        Undoes a transformation to an instance.
+        """
+        raise NotImplementedError("Class must implement undo_transform function")
 
-    :param instance: An instance to be named apart.
-    :param mapping: An existing mapping to add new mappings to; used for
-    recursive calls.
-    :type instance: :ref:`raw instance <raw-instance>`
-    :return: an instance with component attributes renamed
-    :rtype: :ref:`standardized instance <standard-instance>`
+class StandardizeApartNames(Preprocessor):
+    """
+    A preprocessor that standardizes apart object names.
 
+    >>> reset_gensym()
     >>> import pprint
-    >>> instance = {'nominal': 'v1', 'numeric': 2.3, 'c1': {'a1': 'v1'}, 'c2': {'a2': 'v2', 'c3': {'a3': 'v3'}}, '(relation1 c1 c2)': True, 'lists': ['s1', 's2', 's3'], '(relation2 c1.a1 (relation3 c2.c3.a3))': 4.3}
-    >>> standard = standardize_apart_names(instance)
-    >>> pprint.pprint(standard)
-    {'lists': ['s1', 's2', 's3'],
+    >>> instance = {'nominal': 'v1', 'numeric': 2.3, 'c1': {'a1': 'v1'}, 'c2': {'a2': 'v2', 'c3': {'a3': 'v3'}}, '(relation1 c1 c2)': True, 'lists': [{'c1': {'inner': 'val'}}, 's2', 's3'], '(relation2 c1.a1 (relation3 c2.c3.a3))': 4.3}
+    >>> std = StandardizeApartNames()
+    >>> std.undo_transform(instance)
+    Traceback (most recent call last):
+        ...
+    Exception: Must call transform before undo_transform!
+    >>> new_i = std.transform(instance)
+    >>> old_i = std.undo_transform(new_i)
+    >>> pprint.pprint(instance)
+    {'(relation1 c1 c2)': True,
+     '(relation2 c1.a1 (relation3 c2.c3.a3))': 4.3,
+     'c1': {'a1': 'v1'},
+     'c2': {'a2': 'v2', 'c3': {'a3': 'v3'}},
+     'lists': [{'c1': {'inner': 'val'}}, 's2', 's3'],
+     'nominal': 'v1',
+     'numeric': 2.3}
+    >>> pprint.pprint(new_i)
+    {'lists': [{'o4': {'inner': 'val'}}, 's2', 's3'],
      'nominal': 'v1',
      'numeric': 2.3,
-     'o13': {'a1': 'v1'},
-     'o14': {'a2': 'v2', 'o15': {'a3': 'v3'}},
-     ('relation1', ('o13',), ('o14',)): True,
-     ('relation2', ('a1', ('o13',)), ('relation3', ('a3', ('o15',)))): 4.3}
+     'o1': {'a1': 'v1'},
+     'o2': {'a2': 'v2', 'o3': {'a3': 'v3'}},
+     ('relation1', 'o1', 'o2'): True,
+     ('relation2', 'o1.a1', ('relation3', 'o3.a3')): 4.3}
+    >>> pprint.pprint(old_i)
+    {'(relation1 c1 c2)': True,
+     '(relation2 c1.a1 (relation3 c2.c3.a3))': 4.3,
+     'c1': {'a1': 'v1'},
+     'c2': {'a2': 'v2', 'c3': {'a3': 'v3'}},
+     'lists': [{'c1': {'inner': 'val'}}, 's2', 's3'],
+     'nominal': 'v1',
+     'numeric': 2.3}
     """
-    new_instance = {}
-    relations = []
 
-    # I had to add the key function to the sort because python apparently can't
-    # naturally sort strings nad tuples
-    for attr in sorted(instance, key=lambda at: str(at)):
-    #for attr in instance:
-        if attr[0] == '(':
-            relations.append((attr, instance[attr]))
-        elif isinstance(instance[attr], dict):
-            mapping[prefix + attr] = gensym()
-            new_instance[mapping[prefix + attr]] = standardize_apart_names(instance[attr], 
-                                                                  mapping, attr
-                                                                 + ".")
-        else:
-            new_instance[attr] = instance[attr]
+    def __init__(self):
+        self.reverse_obj_mapping = None
+        self.reverse_path_mapping = None
 
-    for relation, val in relations:
-        temp_rel = tuplize_relation(relation)
-        temp_rel = rename_relation(temp_rel, mapping)
-        obj_set = {mapping[o] for o in mapping}
-        temp_rel = tuplize_relation_elements(temp_rel, obj_set)
-        new_instance[temp_rel] = val
+    def transform(self, instance):
+        """
+        Performs the standardize apart tranformation.
+        """
+        self.reverse_obj_mapping = {}
+        mapping = {}
+        new_instance = self.standardize(instance, mapping)
+        self.reverse_path_mapping = {mapping[o]:o for o in mapping}
+        return new_instance
 
-    return new_instance
+    def undo_transform(self, instance):
+        """
+        Undoes the standardize apart tranformation.
+        """
+        if self.reverse_obj_mapping is None:
+            raise Exception("Must call transform before undo_transform!")
+
+        return self.undo_standardize(instance)
+
+    def undo_standardize(self, instance):
+        new_instance = {}
+        relations = []
+
+        for attr in instance:
+            if isinstance(attr, tuple):
+                relations.append((attr, instance[attr]))
+            elif isinstance(instance[attr], dict):
+                new_instance[self.reverse_obj_mapping[attr]] = self.undo_standardize(instance[attr])
+            elif isinstance(instance[attr], list):
+                new_instance[attr] = [self.undo_standardize(ele) if
+                                      isinstance(ele, dict) else ele for ele in
+                                      instance[attr]]
+            else:
+                new_instance[attr] = instance[attr]
+
+        for rel, val in relations:
+            temp_rel = rename_relation(rel, self.reverse_path_mapping)
+            temp_rel = stringify_relation(temp_rel)
+            new_instance[temp_rel] = val
+        
+        return new_instance
+
+    def standardize(self, instance, mapping = {}, prefix=""):
+        """
+        Given a :ref:`raw instance <raw-instance>` rename all the components so they
+        have unique names.
+
+        :warning: relations cannot have dictionaries as values (i.e., cannot be
+        subojects).
+        :warning: relations can only exist at the top level, not in sub-objects.
+
+        This will rename component attirbutes as well as any occurance of the
+        component's name within relation attributes. This renaming is necessary to
+        allow for a search between possible mappings without collisions.
+
+        :param instance: An instance to be named apart.
+        :param mapping: An existing mapping to add new mappings to; used for
+        recursive calls.
+        :type instance: :ref:`raw instance <raw-instance>`
+        :return: an instance with component attributes renamed
+        :rtype: :ref:`standardized instance <standard-instance>`
+
+        >>> reset_gensym()
+        >>> import pprint
+        >>> instance = {'nominal': 'v1', 'numeric': 2.3, 'c1': {'a1': 'v1'}, 'c2': {'a2': 'v2', 'c3': {'a3': 'v3'}}, '(relation1 c1 c2)': True, 'lists': ['s1', 's2', 's3'], '(relation2 c1.a1 (relation3 c2.c3.a3))': 4.3}
+        >>> std = StandardizeApartNames()
+        >>> standard = std.transform(instance)
+        >>> pprint.pprint(standard)
+        {'lists': ['s1', 's2', 's3'],
+         'nominal': 'v1',
+         'numeric': 2.3,
+         'o1': {'a1': 'v1'},
+         'o2': {'a2': 'v2', 'o3': {'a3': 'v3'}},
+         ('relation1', 'o1', 'o2'): True,
+         ('relation2', 'o1.a1', ('relation3', 'o3.a3')): 4.3}
+        """
+        new_instance = {}
+        relations = []
+
+        # I had to add the key function to the sort because python apparently can't
+        # naturally sort strings and tuples
+        for attr in sorted(instance, key=lambda at: str(at)):
+        #for attr in instance:
+            if attr[0] == '(':
+                relations.append((attr, instance[attr]))
+            elif isinstance(instance[attr], dict):
+                mapping[prefix + attr] = gensym()
+                self.reverse_obj_mapping[mapping[prefix + attr]] = attr
+                new_instance[mapping[prefix + attr]] = self.standardize(instance[attr], 
+                                                                      mapping, attr
+                                                                     + ".")
+            elif isinstance(instance[attr], list):
+                new_instance[attr] = [self.standardize(ele, mapping, attr + ".") if
+                                      isinstance(ele, dict) else ele for ele in
+                                      instance[attr]]
+            else:
+                new_instance[attr] = instance[attr]
+
+        for relation, val in relations:
+            temp_rel = tuplize_relation(relation)
+            temp_rel = rename_relation(temp_rel, mapping)
+            #obj_set = {mapping[o] for o in mapping}
+            #temp_rel = tuplize_relation_elements(temp_rel, obj_set)
+            new_instance[temp_rel] = val
+
+        return new_instance
 
 def tuplize_relation_elements(elements, obj_set):
     """
-    Converts a relation element into a tuple for efficient
+    Converts a relation element into a pre-order tuple for efficient
     processing.
     
     >>> mapping = {'o1', 'o2'}
@@ -126,6 +245,9 @@ def tuplize_relation_elements(elements, obj_set):
     >>> ele3 = ('relation1', 'o1', ('relation2', 'o2.a'))
     >>> tuplize_relation_elements(ele3, mapping)
     ('relation1', ('o1',), ('relation2', ('a', ('o2',))))
+    >>> ele4 = "o1.o2.const.a"
+    >>> tuplize_relation_elements(ele4, mapping)
+    ('a', ('const', (('o2',), ('o1',))))
     """
     if isinstance(elements, tuple):
         return tuple([tuplize_relation_elements(ele, obj_set) for ele in elements])
@@ -133,14 +255,8 @@ def tuplize_relation_elements(elements, obj_set):
     if "." in elements:
         elements = elements.split('.')
 
-        # assume elements is a pair, at this point there shouldn't be more
-        if len(elements) != 2:
-            raise Exception("Should only have attribute of single object here.")
-        if elements[0] not in obj_set:
-            raise Exception("Can only use dot notation with objects")
-
-        return (tuplize_relation_elements(elements[1], obj_set),
-                tuplize_relation_elements(elements[0], obj_set))
+        return (tuplize_relation_elements(elements[-1], obj_set),
+         tuplize_relation_elements(".".join(elements[:-1]), obj_set))
 
     elif elements in obj_set:
         return (elements,)
@@ -701,6 +817,7 @@ def extract_list_elements(instance):
     Unlike the utils.extract_components function this one will extract ALL
     elements into their own objects not just object literals
 
+    >>> reset_gensym()
     >>> import pprint
     >>> instance = {"a":"n","list1":["test",{"p":"q","j":"k"},{"n":"m"}]}
     >>> instance = extract_list_elements(instance)
@@ -750,6 +867,7 @@ def lists_to_relations(instance, current=None, top_level=None):
     Travese the instance and turn any list elements into 
     a series of relations.
 
+    >>> reset_gensym()
     >>> import pprint
     >>> instance = {"list1":['a','b','c']}
     >>> instance = lists_to_relations(instance)
@@ -856,6 +974,7 @@ def hoist_sub_objects(instance) :
     Travese the instance for objects that contain subobjects and hoists the
     subobjects to be their own objects at the top level of the instance. 
     
+    >>> reset_gensym()
     >>> import pprint
     >>> instance = {"a1":"v1","sub1":{"a2":"v2","a3":3},"sub2":{"a4":"v4","subsub1":{"a5":"v5","a6":"v6"},"subsub2":{"subsubsub":{"a8":"V8"},"a7":7}}}
     >>> pprint.pprint(instance)
@@ -912,6 +1031,7 @@ def pre_process(instance):
     """
     Runs all of the pre-processing functions
 
+    >>> reset_gensym()
     >>> import pprint
     >>> instance = {"noma":"a","num3":3,"compa":{"nomb":"b","num4":4,"sub":{"nomc":"c","num5":5}},"compb":{"nomd":"d","nome":"e"},"(related compa.num4 compb.nome)":True,"list1":["a","b",{"i":1,"j":12.3,"k":"test"}]}
     >>> pprint.pprint(instance)
@@ -964,7 +1084,9 @@ def pre_process(instance):
     
     """
     instance = extract_list_elements(instance)
-    instance = standardize_apart_names(instance)
+
+    standardizer = StandardizeApartNames()
+    instance = standardizer.transform(instance)
     
     instance = lists_to_relations(instance)
     instance = hoist_sub_objects(instance)
