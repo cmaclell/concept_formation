@@ -328,4 +328,17 @@ def weighted_choice(choices):
        upto += w
     assert False, "Shouldn't get here"
 
+def most_likely_choice(choices):
+    """
+    Given a list of tuples [(val, prob),...(val, prob)], returns the
+    value with the highest probability.
+
+    :param choices: A list of tuples
+    :type choices: [(val, prob),...(val, prob)]
+    :return: the val with the hightest prob
+    :rtype: val
+    """
+    val, prob = sorted(choices)[0]
+    return val
+
 

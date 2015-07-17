@@ -91,6 +91,7 @@ def standardize_apart_names(instance, mapping = {}, prefix=""):
     # I had to add the key function to the sort because python apparently can't
     # naturally sort strings nad tuples
     for attr in sorted(instance, key=lambda at: str(at)):
+    #for attr in instance:
         if attr[0] == '(':
             relations.append((attr, instance[attr]))
         elif isinstance(instance[attr], dict):

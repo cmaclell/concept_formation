@@ -2,9 +2,12 @@ from __future__ import print_function
 from __future__ import unicode_literals
 from __future__ import absolute_import
 from __future__ import division
+
+from concept_formation.utils import weighted_choice
 from concept_formation.cobweb3 import Cobweb3Tree
 from concept_formation.cobweb3 import Cobweb3Node
 from concept_formation.structure_mapper import structure_map
+
 
 class TrestleTree(Cobweb3Tree):
     """
@@ -83,6 +86,35 @@ class TrestleTree(Cobweb3Tree):
         """
         temp_instance = structure_map(self.root, instance)
         return self._cobweb_categorize(temp_instance)
+
+    def complete_instance(self, instance, choice_fn=weighted_choice):
+        """
+        Given a tree and an instance, returns a new instance with attribute 
+        values picked using hte choice_fn.
+
+        :param instance: an instance to be completed.
+        :type instance: {a1: v1, a2: v2, ...}
+        :param choice_fn: A function for deciding which attribute/value to
+            chose. The default is: concept_formation.utils.weighted_choice. The
+            other option is: concept_formation.utils.most_likely_choice.
+        :type choice_fn: a python function
+        :type instance: {a1: v1, a2: v2, ...}
+        :return: A completed instance
+        :rtype: instance
+        """
+        temp_instance = structure_map(self.root, instance)
+        concept = self._cobweb_categorize(temp_instance)
+
+        for attr in concept.av_counts:
+            if attr in temp_instance:
+                continue
+
+            missing_prob = concept.get_probability_missing(attr)
+            attr_choices = ((None, missing_prob), (attr, 1 - missing_prob))
+            if choice_fn(attr_choices) == attr:
+                temp_instance[attr] = choice_fn(concept.get_weighted_values(attr))
+
+        return temp_instance
 
     def categorize(self, instance):
         """Sort an instance in the categorization tree and return its resulting

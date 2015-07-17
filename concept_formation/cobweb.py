@@ -794,7 +794,8 @@ class CobwebNode(object):
         return output
 
     def get_weighted_values(self, attr):
-        """Return a list of weighted choices for an attribute based on the node's
+        """
+        Return a list of weighted choices for an attribute based on the node's
         probability table.
 
         This calculation will include an option for the change that an attribute
@@ -849,12 +850,14 @@ class CobwebNode(object):
         return choices[0][0]
 
     def sample(self, attr):
-        """Samples the value of an attribute from the node's probability table.
+        """
+        Samples the value of an attribute from the node's probability table.
         This takes into account the laplacian smoothing. 
 
         :param attr: an attribute of an instance
         :type attr: str
-        :return: A value sampled from the distribution of values in the node's probability table.
+        :return: A value sampled from the distribution of values in the node's
+        probability table.
         :rtype: str
 
         .. seealso :meth:`CobwebNode.predict`
@@ -867,7 +870,8 @@ class CobwebNode(object):
         return weighted_choice(choices)
 
     def get_probability(self, attr, val):
-        """Returns the probability of a particular attribute value at the current
+        """
+        Returns the probability of a particular attribute value at the current
         concept. 
 
         This takes into account the possibilities that an attribute can take any
@@ -898,7 +902,8 @@ class CobwebNode(object):
                 (1.0 * self.count + self.tree.alpha * n_values))
 
     def get_probability_missing(self, attr):
-        """Returns the probability of a particular attribute not being present in a
+        """
+        Returns the probability of a particular attribute not being present in a
         given concept.
 
         This takes into account the possibilities that an attribute can take any
