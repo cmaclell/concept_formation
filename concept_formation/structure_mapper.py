@@ -54,9 +54,10 @@ def gensym():
     _gensym_counter += 1
     return 'o' + str(_gensym_counter)
 
-def reset_gensym():
+def _reset_gensym():
     """
-    Resets the gensym counter to 0, which is useful for doctesting.
+    Resets the gensym counter to 0, which is useful for doctesting. Do not call
+    this function during normal operation.
     """
     global _gensym_counter
     _gensym_counter = 0
@@ -83,7 +84,7 @@ class StandardizeApartNames(Preprocessor):
     """
     A preprocessor that standardizes apart object names.
 
-    >>> reset_gensym()
+    >>> _reset_gensym()
     >>> import pprint
     >>> instance = {'nominal': 'v1', 'numeric': 2.3, 'c1': {'a1': 'v1'}, 'c2': {'a2': 'v2', 'c3': {'a3': 'v3'}}, '(relation1 c1 c2)': True, 'lists': [{'c1': {'inner': 'val'}}, 's2', 's3'], '(relation2 c1.a1 (relation3 c2.c3.a3))': 4.3}
     >>> std = StandardizeApartNames()
@@ -185,7 +186,7 @@ class StandardizeApartNames(Preprocessor):
         :return: an instance with component attributes renamed
         :rtype: :ref:`standardized instance <standard-instance>`
 
-        >>> reset_gensym()
+        >>> _reset_gensym()
         >>> import pprint
         >>> instance = {'nominal': 'v1', 'numeric': 2.3, 'c1': {'a1': 'v1'}, 'c2': {'a2': 'v2', 'c3': {'a3': 'v3'}}, '(relation1 c1 c2)': True, 'lists': ['s1', 's2', 's3'], '(relation2 c1.a1 (relation3 c2.c3.a3))': 4.3}
         >>> std = StandardizeApartNames()
@@ -809,101 +810,180 @@ def is_partial_match(iAttr, cAttr, mapping, unnamed):
 
     return iAttr == cAttr
 
-def extract_list_elements(instance):
+class ExtractListElements(Preprocessor):
     """
-    Find all lists in an instance and extract their elements into their own
-    subjects of the main instance.
+    A pre-processor that extracts the elements of lists into their own objects
 
-    Unlike the utils.extract_components function this one will extract ALL
-    elements into their own objects not just object literals
 
-    >>> reset_gensym()
+    >>> _reset_gensym()
     >>> import pprint
-    >>> instance = {"a":"n","list1":["test",{"p":"q","j":"k"},{"n":"m"}]}
-    >>> instance = extract_list_elements(instance)
+    >>> instance = {"att1":"V1","list1":["a","b","c",{"B":"C","D":"E"}]}
     >>> pprint.pprint(instance)
-    {'a': 'n',
-     'list1': ['o1', 'o2', 'o3'],
-     'o1': {'val': 'test'},
-     'o2': {'j': 'k', 'p': 'q'},
-     'o3': {'n': 'm'}}
+    {'att1': 'V1', 'list1': ['a', 'b', 'c', {'B': 'C', 'D': 'E'}]}
+    >>> pp = ExtractListElements()
+    >>> instance = pp.transform(instance)
+    >>> pprint.pprint(instance)
+    {'att1': 'V1',
+     'list1': ['o1', 'o2', 'o3', 'o4'],
+     'o1': {'val': 'a'},
+     'o2': {'val': 'b'},
+     'o3': {'val': 'c'},
+     'o4': {'B': 'C', 'D': 'E'}}
+    >>> instance = pp.undo_transform(instance)
+    >>> pprint.pprint(instance)
+    {'att1': 'V1', 'list1': ['a', 'b', 'c', {'B': 'C', 'D': 'E'}]}
+
     """
 
-    new_instance = {}
-    for a in instance.keys():
-        if isinstance(instance[a],list):
+    def __init__(self):
+        pass
 
-            # TODO hidden attributes get cast to strings and stored is this the
-            # right way to do it?
+    def transform(self, instance):
+        """
+        Peforms the list element extraction operation.
+        """
+        new_instance = self.extract(instance)
+        return new_instance
 
-            if a[0] == '_':
-                new_instance[a] = str(instance[a])
+    def undo_transform(self, instance):
+        """
+        Undoes the list element extraction operation.
+        """
+
+        return self.undo_extract(instance)
+
+    def undo_extract(self,instance):
+        """
+        Reverses the list element extraction process
+        """
+        new_instance = {}
+        lists = {}
+        elements = {}
+
+        for a in instance:
+            if isinstance(instance[a],list):
+                lists[a] = True
+                new_list = []
+                for i in range(len(instance[a])):
+                    elements[instance[a][i]] = True
+                    obj = instance[instance[a][i]]
+
+                    if len(obj) > 1 and "val" not in obj:
+                        new_list.append(obj)
+                    else :
+                        new_list.append(obj["val"])
+                new_instance[a] = new_list
+
+        for a in instance:
+            if isinstance(instance[a],list) or a in elements:
                 continue
-
-            new_list = []
-            for el in instance[a]:
-                
-                # TODO do we want to deep copy in the case we find a dict?
-                if isinstance(el,dict):
-                    new_obj = el
-                else :
-                    new_obj = {"val": el}
-
-                new_att = gensym()
-                new_instance[new_att] = extract_list_elements(new_obj)
-                new_list.append(new_att)
-
-            new_instance[a] = new_list
-
-        elif isinstance(instance[a],dict):
-            new_instance[a] = extract_list_elements(instance[a])
-        else :
             new_instance[a] = instance[a]
 
-    return new_instance
+        return new_instance
+
+
+
+    def extract(self,instance):
+        """
+        Find all lists in an instance and extract their elements into their own
+        subjects of the main instance.
+
+        Unlike the utils.extract_components function this one will extract ALL
+        elements into their own objects not just object literals
+
+        >>> _reset_gensym()
+        >>> import pprint
+        >>> instance = {"a":"n","list1":["test",{"p":"q","j":"k"},{"n":"m"}]}
+        >>> pp = ExtractListElements()
+        >>> instance = pp.extract(instance)
+        >>> pprint.pprint(instance)
+        {'a': 'n',
+         'list1': ['o1', 'o2', 'o3'],
+         'o1': {'val': 'test'},
+         'o2': {'j': 'k', 'p': 'q'},
+         'o3': {'n': 'm'}}
+        """
+        new_instance = {}
+        for a in instance.keys():
+            if isinstance(instance[a],list):
+
+                if a[0] == '_':
+                    new_instance[a] = str(instance[a])
+                    continue
+
+                new_list = []
+                for el in instance[a]:
+                    
+                    # TODO do we want to deep copy in the case we find a dict?
+                    if isinstance(el,dict):
+                        new_obj = el
+                    else :
+                        new_obj = {"val": el}
+
+                    new_att = gensym()
+                    new_instance[new_att] = self.extract(new_obj)
+                    new_list.append(new_att)
+
+                new_instance[a] = new_list
+
+            elif isinstance(instance[a],dict):
+                new_instance[a] = self.extract(instance[a])
+            else :
+                new_instance[a] = instance[a]
+
+        return new_instance
 
 def lists_to_relations(instance, current=None, top_level=None):
     """
     Travese the instance and turn any list elements into 
     a series of relations.
 
-    >>> reset_gensym()
+    >>> _reset_gensym()
     >>> import pprint
     >>> instance = {"list1":['a','b','c']}
     >>> instance = lists_to_relations(instance)
     >>> pprint.pprint(instance)
-    {('ordered-list', 'list1', ('a',), ('b',)): True,
+    {('has-element', 'list1', ('c',)): True,
+     ('ordered-list', 'list1', ('a',), ('b',)): True,
      ('ordered-list', 'list1', ('b',), ('c',)): True}
     
     >>> instance = {"list1":['a','b','c'],"list2":['w','x','y','z']}
     >>> instance = lists_to_relations(instance)
     >>> pprint.pprint(instance)
-    {('ordered-list', 'list1', ('a',), ('b',)): True,
+    {('has-element', 'list1', ('c',)): True,
+     ('has-element', 'list2', ('z',)): True,
+     ('ordered-list', 'list1', ('a',), ('b',)): True,
      ('ordered-list', 'list1', ('b',), ('c',)): True,
      ('ordered-list', 'list2', ('w',), ('x',)): True,
      ('ordered-list', 'list2', ('x',), ('y',)): True,
      ('ordered-list', 'list2', ('y',), ('z',)): True}
 
     >>> instance = {"stack":[{"a":1, "b":2, "c":3}, {"x":1, "y":2, "z":3}, {"i":1, "j":2, "k":3}]}
-    >>> instance = extract_list_elements(instance)
+    >>> ele = ExtractListElements()
+    >>> instance = ele.extract(instance)
     >>> instance = lists_to_relations(instance)
     >>> pprint.pprint(instance)
-    {'o4': {'a': 1, 'b': 2, 'c': 3},
-     'o5': {'x': 1, 'y': 2, 'z': 3},
-     'o6': {'i': 1, 'j': 2, 'k': 3},
-     ('ordered-list', 'stack', ('o4',), ('o5',)): True,
-     ('ordered-list', 'stack', ('o5',), ('o6',)): True}
+    {'o1': {'a': 1, 'b': 2, 'c': 3},
+     'o2': {'x': 1, 'y': 2, 'z': 3},
+     'o3': {'i': 1, 'j': 2, 'k': 3},
+     ('has-element', 'stack', ('o3',)): True,
+     ('ordered-list', 'stack', ('o1',), ('o2',)): True,
+     ('ordered-list', 'stack', ('o2',), ('o3',)): True}
 
     >>> instance = {'subobj': {'list1': ['a', 'b', 'c']}}
     >>> instance = lists_to_relations(instance)
     >>> pprint.pprint(instance)
     {'subobj': {},
-     ('ordered-list', ('list1', ('subobj',)), ('a',), ('b',)): True,
-     ('ordered-list', ('list1', ('subobj',)), ('b',), ('c',)): True}
+     ('has-element', 'list1', ('a',)): True,
+     ('has-element', 'list1', ('b',)): True,
+     ('has-element', 'list1', ('c',)): True,
+     ('ordered-list', 'list1', ('a',), ('b',)): True,
+     ('ordered-list', 'list1', ('b',), ('c',)): True}
 
-
+    >>> _reset_gensym()
     >>> instance = {'tta':'alpha','ttb':{'tlist':['a','b',{'sub-a':'c','sub-sub':{'s':'d','sslist':['w','x','y',{'issue':'here'}]}},'g']}}
-    >>> instance = extract_list_elements(instance)
+    >>> ele = ExtractListElements()
+    >>> instance = ele.extract(instance)
     >>> pprint.pprint(instance)
     {}
     >>> instance = lists_to_relations(instance)
@@ -912,7 +992,8 @@ def lists_to_relations(instance, current=None, top_level=None):
 
 
     >>> instance = {"Function Defintion":{"body":[{"Return":{"value":{"Compare":{"left":{"Number":{"n":2 } }, "ops":[{"<":{}},{"<=":{}}],"comparators":[{"Name":{"id":"daysPassed","ctx":{"Load":{}}}},{"Number":{"n":9}}]}}}}]}}
-    >>> instance = extract_list_elements(instance)
+    >>> ele = ExtractListElements()
+    >>> instance = ele.extract(instance)
     >>> pprint.pprint(instance)
     {}
     >>> instance = lists_to_relations(instance)
@@ -942,7 +1023,7 @@ def lists_to_relations(instance, current=None, top_level=None):
                     top_level[rel] = True
 
                     rel = tuplize_relation_elements(
-                            ("has-component",
+                            ("has-element",
                                 lname,
                                 instance[attr][len(instance[attr])-1],
                                 ),
@@ -953,7 +1034,7 @@ def lists_to_relations(instance, current=None, top_level=None):
 
             if len(instance[attr]) > 0:
                 rel = tuplize_relation_elements(
-                            ("has-component",
+                            ("has-element",
                                 lname,
                                 instance[attr][len(instance[attr])-1],
                                 ),
@@ -974,7 +1055,7 @@ def hoist_sub_objects(instance) :
     Travese the instance for objects that contain subobjects and hoists the
     subobjects to be their own objects at the top level of the instance. 
     
-    >>> reset_gensym()
+    >>> _reset_gensym()
     >>> import pprint
     >>> instance = {"a1":"v1","sub1":{"a2":"v2","a3":3},"sub2":{"a4":"v4","subsub1":{"a5":"v5","a6":"v6"},"subsub2":{"subsubsub":{"a8":"V8"},"a7":7}}}
     >>> pprint.pprint(instance)
@@ -1031,7 +1112,7 @@ def pre_process(instance):
     """
     Runs all of the pre-processing functions
 
-    >>> reset_gensym()
+    >>> _reset_gensym()
     >>> import pprint
     >>> instance = {"noma":"a","num3":3,"compa":{"nomb":"b","num4":4,"sub":{"nomc":"c","num5":5}},"compb":{"nomd":"d","nome":"e"},"(related compa.num4 compb.nome)":True,"list1":["a","b",{"i":1,"j":12.3,"k":"test"}]}
     >>> pprint.pprint(instance)
