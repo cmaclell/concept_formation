@@ -52,7 +52,7 @@ def gensym():
     """
     global _gensym_counter
     _gensym_counter += 1
-    return 'o' + str(_gensym_counter)
+    return '?o' + str(_gensym_counter)
 
 def _reset_gensym():
     """
@@ -80,93 +80,179 @@ class Preprocessor(object):
         """
         raise NotImplementedError("Class must implement undo_transform function")
 
+class Tuplizer(Preprocessor):
+    """
+    Converts all string versions of relations into tuples
+
+    >>> tuplizer = Tuplizer()
+    >>> instance = {'(foo1 o1 (foo2 o2 o3))': True}
+    >>> print(tuplizer.transform(instance))
+    {('foo1', 'o1', ('foo2', 'o2', 'o3')): True}
+    >>> print(tuplizer.undo_transform(tuplizer.transform(instance)))
+    {'(foo1 o1 (foo2 o2 o3))': True}
+    """
+    def transform(self, instance):
+        return {self.tuplize_relation(attr): instance[attr] for attr in instance}
+
+    def undo_transform(self, instance):
+        return {self.stringify_relation(attr): instance[attr] for attr in instance}
+
+    def tuplize_relation(self, relation):
+        """
+        Converts a string formatted relation into a tuplized relation. 
+
+        :param attr: The relational attribute formatted as a string
+        :type attr: string
+        :param mapping: A dictionary of mappings with component names as keys. Just
+        the keys are used (i.e., as a set) to determine if elements in the relation
+        are objects.
+        :type mapping: dict
+        :return: A new relational attribute in tuple format
+        :rtype: tuple
+
+        >>> relation = '(foo1 o1 (foo2 o2 o3))'
+        >>> tuplizer = Tuplizer()
+        >>> tuplizer.tuplize_relation(relation)
+        ('foo1', 'o1', ('foo2', 'o2', 'o3'))
+        """
+        if relation[0] != '(':
+            return relation
+
+        stack = [[]]
+
+        for val in relation.split(' '):
+            end = 0
+
+            if val[0] == '(':
+                stack.append([])
+                val = val[1:]
+
+            while val[-1] == ')':
+                end += 1
+                val = val[:-1]
+            
+            current = stack[-1]
+            current.append(val)
+            
+            while end > 0:
+                last = tuple(stack.pop())
+                current = stack[-1]
+                current.append(last)
+                end -= 1
+
+        final = tuple(stack[-1][-1])
+        #final = self.tuplize_elements(final)
+        return final
+
+    def stringify_relation(self, relation):
+        """
+        Converts a tupleized relation into a string formated relation.
+
+        >>> relation = ('foo1', 'o1', ('foo2', 'o2', 'o3'))
+        >>> tuplizer = Tuplizer()
+        >>> tuplizer.stringify_relation(relation)
+        '(foo1 o1 (foo2 o2 o3))'
+        """
+        #relation = convert_unary_to_dot(relation)
+        if isinstance(relation, tuple):
+            relation = [self.stringify_relation(ele) if isinstance(ele, tuple)
+                        else ele for ele in relation]
+            return "(" + " ".join(relation) + ")"
+        else:
+            return relation
+
 class StandardizeApartNames(Preprocessor):
     """
     A preprocessor that standardizes apart object names.
 
     >>> _reset_gensym()
     >>> import pprint
-    >>> instance = {'nominal': 'v1', 'numeric': 2.3, 'c1': {'a1': 'v1'}, 'c2': {'a2': 'v2', 'c3': {'a3': 'v3'}}, '(relation1 c1 c2)': True, 'lists': [{'c1': {'inner': 'val'}}, 's2', 's3'], '(relation2 c1.a1 (relation3 c2.c3.a3))': 4.3}
+    >>> instance = {'nominal': 'v1', 'numeric': 2.3, 'c1': {'a1': 'v1'}, '?c2': {'a2': 'v2', '?c3': {'a3': 'v3'}}, '(relation1 c1 ?c2)': True, 'lists': [{'c1': {'inner': 'val'}}, 's2', 's3'], '(relation2 (a1 c1) (relation3 (a3 (?c3 ?c2))))': 4.3}
+    >>> tuplizer = Tuplizer()
+    >>> instance = tuplizer.transform(instance)
     >>> std = StandardizeApartNames()
     >>> std.undo_transform(instance)
     Traceback (most recent call last):
         ...
     Exception: Must call transform before undo_transform!
     >>> new_i = std.transform(instance)
+
+    #>>> new_i['?o1']['?o2'][('a4', '?o2')] = 'v4'
+
     >>> old_i = std.undo_transform(new_i)
     >>> pprint.pprint(instance)
-    {'(relation1 c1 c2)': True,
-     '(relation2 c1.a1 (relation3 c2.c3.a3))': 4.3,
+    {'?c2': {'?c3': {'a3': 'v3'}, 'a2': 'v2'},
      'c1': {'a1': 'v1'},
-     'c2': {'a2': 'v2', 'c3': {'a3': 'v3'}},
      'lists': [{'c1': {'inner': 'val'}}, 's2', 's3'],
-     'nominal': 'v1',
-     'numeric': 2.3}
-    >>> pprint.pprint(new_i)
-    {'lists': [{'o4': {'inner': 'val'}}, 's2', 's3'],
      'nominal': 'v1',
      'numeric': 2.3,
-     'o1': {'a1': 'v1'},
-     'o2': {'a2': 'v2', 'o3': {'a3': 'v3'}},
-     ('relation1', 'o1', 'o2'): True,
-     ('relation2', 'o1.a1', ('relation3', 'o3.a3')): 4.3}
-    >>> pprint.pprint(old_i)
-    {'(relation1 c1 c2)': True,
-     '(relation2 c1.a1 (relation3 c2.c3.a3))': 4.3,
+     ('relation1', 'c1', '?c2'): True,
+     ('relation2', ('a1', 'c1'), ('relation3', ('a3', ('?c3', '?c2')))): 4.3}
+    >>> pprint.pprint(new_i)
+    {'?o1': {'?o2': {'a3': 'v3'}, 'a2': 'v2'},
      'c1': {'a1': 'v1'},
-     'c2': {'a2': 'v2', 'c3': {'a3': 'v3'}},
      'lists': [{'c1': {'inner': 'val'}}, 's2', 's3'],
      'nominal': 'v1',
-     'numeric': 2.3}
+     'numeric': 2.3,
+     ('relation1', 'c1', '?o1'): True,
+     ('relation2', ('a1', 'c1'), ('relation3', ('a3', '?o2'))): 4.3}
+    >>> pprint.pprint(old_i)
+    {'?c2': {'?c3': {'a3': 'v3'}, 'a2': 'v2'},
+     'c1': {'a1': 'v1'},
+     'lists': [{'c1': {'inner': 'val'}}, 's2', 's3'],
+     'nominal': 'v1',
+     'numeric': 2.3,
+     ('relation1', 'c1', '?c2'): True,
+     ('relation2', ('a1', 'c1'), ('relation3', ('a3', ('?c3', '?c2')))): 4.3}
     """
 
     def __init__(self):
-        self.reverse_obj_mapping = None
-        self.reverse_path_mapping = None
+        self.reverse_mapping = None
 
     def transform(self, instance):
         """
         Performs the standardize apart tranformation.
         """
-        self.reverse_obj_mapping = {}
         mapping = {}
         new_instance = self.standardize(instance, mapping)
-        self.reverse_path_mapping = {mapping[o]:o for o in mapping}
+        self.reverse_mapping = {mapping[o]: o for o in mapping}
         return new_instance
 
     def undo_transform(self, instance):
         """
         Undoes the standardize apart tranformation.
         """
-        if self.reverse_obj_mapping is None:
+        if self.reverse_mapping is None:
             raise Exception("Must call transform before undo_transform!")
 
         return self.undo_standardize(instance)
 
     def undo_standardize(self, instance):
         new_instance = {}
-        relations = []
 
         for attr in instance:
-            if isinstance(attr, tuple):
-                relations.append((attr, instance[attr]))
-            elif isinstance(instance[attr], dict):
-                new_instance[self.reverse_obj_mapping[attr]] = self.undo_standardize(instance[attr])
+            
+            name = attr
+            if attr in self.reverse_mapping:
+                name = self.reverse_mapping[attr]
+                if isinstance(name, tuple):
+                    name = name[0]
+
+            if isinstance(instance[attr], dict):
+                new_instance[name] = self.undo_standardize(instance[attr])
             elif isinstance(instance[attr], list):
-                new_instance[attr] = [self.undo_standardize(ele) if
+                new_instance[name] = [self.undo_standardize(ele) if
                                       isinstance(ele, dict) else ele for ele in
                                       instance[attr]]
+            elif isinstance(attr, tuple):
+                temp_rel = rename_relation(attr, self.reverse_mapping)
+                new_instance[temp_rel] = instance[attr]
             else:
                 new_instance[attr] = instance[attr]
-
-        for rel, val in relations:
-            temp_rel = rename_relation(rel, self.reverse_path_mapping)
-            temp_rel = stringify_relation(temp_rel)
-            new_instance[temp_rel] = val
         
         return new_instance
 
-    def standardize(self, instance, mapping = {}, prefix=""):
+    def standardize(self, instance, mapping={}, prefix=None):
         """
         Given a :ref:`raw instance <raw-instance>` rename all the components so they
         have unique names.
@@ -188,144 +274,67 @@ class StandardizeApartNames(Preprocessor):
 
         >>> _reset_gensym()
         >>> import pprint
-        >>> instance = {'nominal': 'v1', 'numeric': 2.3, 'c1': {'a1': 'v1'}, 'c2': {'a2': 'v2', 'c3': {'a3': 'v3'}}, '(relation1 c1 c2)': True, 'lists': ['s1', 's2', 's3'], '(relation2 c1.a1 (relation3 c2.c3.a3))': 4.3}
+        >>> instance = {'nominal': 'v1', 'numeric': 2.3, '?c1': {'a1': 'v1'}, 'c2': {'a2': 'v2', 'c3': {'a3': 'v3'}}, '(relation1 ?c1 c2)': True, 'lists': ['s1', 's2', 's3'], '(relation2 (a1 ?c1) (relation3 (a3 (c2 c3))))': 4.3}
+        >>> tuplizer = Tuplizer()
+        >>> instance = tuplizer.transform(instance)
         >>> std = StandardizeApartNames()
         >>> standard = std.transform(instance)
         >>> pprint.pprint(standard)
-        {'lists': ['s1', 's2', 's3'],
+        {'?o1': {'a1': 'v1'},
+         'c2': {'a2': 'v2', 'c3': {'a3': 'v3'}},
+         'lists': ['s1', 's2', 's3'],
          'nominal': 'v1',
          'numeric': 2.3,
-         'o1': {'a1': 'v1'},
-         'o2': {'a2': 'v2', 'o3': {'a3': 'v3'}},
-         ('relation1', 'o1', 'o2'): True,
-         ('relation2', 'o1.a1', ('relation3', 'o3.a3')): 4.3}
+         ('relation1', '?o1', 'c2'): True,
+         ('relation2', ('a1', '?o1'), ('relation3', ('a3', ('c2', 'c3')))): 4.3}
         """
         new_instance = {}
         relations = []
 
         # I had to add the key function to the sort because python apparently can't
         # naturally sort strings and tuples
-        for attr in sorted(instance, key=lambda at: str(at)):
         #for attr in instance:
-            if attr[0] == '(':
+        for attr in sorted(instance, key=lambda at: str(at)):
+
+            if prefix is None:
+                new_a = attr
+            else:
+                new_a = (attr, prefix)
+
+            if attr[0] == '?':
+                mapping[new_a] = gensym()
+
+            if isinstance(attr, tuple):
                 relations.append((attr, instance[attr]))
+
             elif isinstance(instance[attr], dict):
-                mapping[prefix + attr] = gensym()
-                self.reverse_obj_mapping[mapping[prefix + attr]] = attr
-                new_instance[mapping[prefix + attr]] = self.standardize(instance[attr], 
-                                                                      mapping, attr
-                                                                     + ".")
+                name = attr
+                if attr[0] == '?':
+                    name = mapping[new_a]
+                new_instance[name] = self.standardize(instance[attr],
+                                                       mapping, new_a)
             elif isinstance(instance[attr], list):
-                new_instance[attr] = [self.standardize(ele, mapping, attr + ".") if
-                                      isinstance(ele, dict) else ele for ele in
-                                      instance[attr]]
+                name = attr
+                if attr[0] == '?':
+                    name = mapping[new_a]
+                new_instance[name] = [self.standardize(ele, mapping, new_a) 
+                                       if isinstance(ele, dict) else ele for
+                                       ele in instance[attr]]
             else:
                 new_instance[attr] = instance[attr]
 
         for relation, val in relations:
-            temp_rel = tuplize_relation(relation)
-            temp_rel = rename_relation(temp_rel, mapping)
-            #obj_set = {mapping[o] for o in mapping}
-            #temp_rel = tuplize_relation_elements(temp_rel, obj_set)
+            temp_rel = rename_relation(relation, mapping)
             new_instance[temp_rel] = val
 
         return new_instance
 
-def tuplize_relation_elements(elements, obj_set):
-    """
-    Converts a relation element into a pre-order tuple for efficient
-    processing.
-    
-    >>> mapping = {'o1', 'o2'}
-    >>> ele1 = 'o1'
-    >>> tuplize_relation_elements(ele1, mapping)
-    ('o1',)
-    >>> ele2 = "o1.a"
-    >>> tuplize_relation_elements(ele2, mapping)
-    ('a', ('o1',))
-    >>> ele3 = ('relation1', 'o1', ('relation2', 'o2.a'))
-    >>> tuplize_relation_elements(ele3, mapping)
-    ('relation1', ('o1',), ('relation2', ('a', ('o2',))))
-    >>> ele4 = "o1.o2.const.a"
-    >>> tuplize_relation_elements(ele4, mapping)
-    ('a', ('const', (('o2',), ('o1',))))
-    """
-    if isinstance(elements, tuple):
-        return tuple([tuplize_relation_elements(ele, obj_set) for ele in elements])
-    
-    if "." in elements:
-        elements = elements.split('.')
-
-        return (tuplize_relation_elements(elements[-1], obj_set),
-         tuplize_relation_elements(".".join(elements[:-1]), obj_set))
-
-    elif elements in obj_set:
-        return (elements,)
-
-    else:
-        return elements
-
-def tuplize_relation(relation) :
-    """
-    Converts a string formatted relation into a tuplized relation. It requires
-    the mapping so that it can convert the period separated object references
-    correctly into presplit tuples for efficient processing.
-
-    :param attr: The relational attribute formatted as a string
-    :type attr: string
-    :param mapping: A dictionary of mappings with component names as keys. Just
-    the keys are used (i.e., as a set) to determine if elements in the relation
-    are objects.
-    :type mapping: dict
-    :return: A new relational attribute in tuple format
-    :rtype: tuple
-
-    >>> relation = '(foo1 o1 (foo2 o2 o3))'
-    >>> mapping = {'o1': 'sk1', 'o2': 'sk2', 'o3': 'sk3'}
-    >>> tuplize_relation(relation)
-    ('foo1', 'o1', ('foo2', 'o2', 'o3'))
-    """
-    stack = [[]]
-
-    for val in relation.split(' '):
-        end = 0
-
-        if val[0] == '(':
-            stack.append([])
-            val = val[1:]
-
-        while val[-1] == ')':
-            end += 1
-            val = val[:-1]
-        
-        current = stack[-1]
-        current.append(val)
-        
-        while end > 0:
-            last = tuple(stack.pop())
-            current = stack[-1]
-            current.append(last)
-            end -= 1
-
-    final = tuple(stack[-1][-1])
-    #final = tuplize_relation_elements(final, mapping)
-    return final
-
-def stringify_relation(relation):
-    """
-    Converts a tupleized relation into a string formated relation.
-
-    >>> relation = ('foo1', 'o1', ('foo2', 'o2', 'o3'))
-    >>> stringify_relation(relation)
-    '(foo1 o1 (foo2 o2 o3))'
-    """
-    temp = [stringify_relation(ele) if isinstance(ele, tuple) else ele for ele in relation]
-    return "(" + " ".join(temp) + ")"
-
 def rename_relation(relation, mapping):
     """
     Takes a tuplized relational attribute (e.g., ('before', 'o1', 'o2')) and
-    a mapping and renames the components based on mapping.
+    a mapping and renames the components based on mapping. This function
+    contains a special edge case for handling dot notation which is used in
+    standardize apart.
 
     :param attr: The relational attribute containing components to be renamed
     :type attr: tuple
@@ -338,17 +347,19 @@ def rename_relation(relation, mapping):
     >>> mapping = {'o1': 'o100', 'o2': 'o200', 'o3': 'o300'}
     >>> rename_relation(relation, mapping)
     ('foo1', 'o100', ('foo2', 'o200', 'o300'))
+
+    >>> relation = ('foo1', ('o1', ('o2', 'o3')))
+    >>> mapping = {('o1', ('o2', 'o3')): 'o100'}
+    >>> rename_relation(relation, mapping)
+    ('foo1', 'o100')
     """
     new_relation = []
 
     for v in relation:
-        if isinstance(v, tuple):
-            new_relation.append(rename_relation(v, mapping))
-        elif v in mapping:
+        if v in mapping:
             new_relation.append(mapping[v])
-        elif "." in v and ".".join(v.split(".")[:-1]) in mapping:
-            new_relation.append(mapping[".".join(v.split(".")[:-1])] + '.' +
-                                v.split('.')[-1])
+        elif isinstance(v, tuple):
+            new_relation.append(rename_relation(v, mapping))
         else:
             new_relation.append(v)
 
@@ -814,7 +825,6 @@ class ExtractListElements(Preprocessor):
     """
     A pre-processor that extracts the elements of lists into their own objects
 
-
     >>> _reset_gensym()
     >>> import pprint
     >>> instance = {"att1":"V1","list1":["a","b","c",{"B":"C","D":"E"}]}
@@ -823,12 +833,12 @@ class ExtractListElements(Preprocessor):
     >>> pp = ExtractListElements()
     >>> instance = pp.transform(instance)
     >>> pprint.pprint(instance)
-    {'att1': 'V1',
-     'list1': ['o1', 'o2', 'o3', 'o4'],
-     'o1': {'val': 'a'},
-     'o2': {'val': 'b'},
-     'o3': {'val': 'c'},
-     'o4': {'B': 'C', 'D': 'E'}}
+    {'?o1': {'val': 'a'},
+     '?o2': {'val': 'b'},
+     '?o3': {'val': 'c'},
+     '?o4': {'B': 'C', 'D': 'E'},
+     'att1': 'V1',
+     'list1': ['?o1', '?o2', '?o3', '?o4']}
     >>> instance = pp.undo_transform(instance)
     >>> pprint.pprint(instance)
     {'att1': 'V1', 'list1': ['a', 'b', 'c', {'B': 'C', 'D': 'E'}]}
@@ -897,11 +907,11 @@ class ExtractListElements(Preprocessor):
         >>> pp = ExtractListElements()
         >>> instance = pp.extract(instance)
         >>> pprint.pprint(instance)
-        {'a': 'n',
-         'list1': ['o1', 'o2', 'o3'],
-         'o1': {'val': 'test'},
-         'o2': {'j': 'k', 'p': 'q'},
-         'o3': {'n': 'm'}}
+        {'?o1': {'val': 'test'},
+         '?o2': {'j': 'k', 'p': 'q'},
+         '?o3': {'n': 'm'},
+         'a': 'n',
+         'list1': ['?o1', '?o2', '?o3']}
         """
         new_instance = {}
         for a in instance.keys():
@@ -1012,33 +1022,33 @@ def lists_to_relations(instance, current=None, top_level=None):
             else:
                 lname = (attr, (current,))
             for i in range(len(instance[attr])-1):
-                    rel = tuplize_relation_elements(
+                    rel = tuplize_elements(
                         ("ordered-list",
                             lname,
                             str(instance[attr][i]),
-                            str(instance[attr][i+1])),
-                        {str(instance[attr][i]),
-                            str(instance[attr][i+1])})
+                            str(instance[attr][i+1])))
+                        #,{str(instance[attr][i]),
+                        #    str(instance[attr][i+1])})
 
                     top_level[rel] = True
 
-                    rel = tuplize_relation_elements(
+                    rel = tuplize_elements(
                             ("has-element",
                                 lname,
                                 instance[attr][len(instance[attr])-1],
-                                ),
-                            {str(instance[attr][len(instance[attr])-1])})
+                                ))
+                            #,{str(instance[attr][len(instance[attr])-1])})
                     
                     top_level[rel] = True
 
 
             if len(instance[attr]) > 0:
-                rel = tuplize_relation_elements(
+                rel = tuplize_elements(
                             ("has-element",
                                 lname,
                                 instance[attr][len(instance[attr])-1],
-                                ),
-                            {str(instance[attr][len(instance[attr])-1])})
+                                ))
+                            #,{str(instance[attr][len(instance[attr])-1])})
                 top_level[rel] = True
 
         elif isinstance(instance[attr],dict):
@@ -1097,11 +1107,11 @@ def _hoist_sub_objects_rec(sub,attr,top_level):
         # this is a sub-sub object
         if isinstance(sub[a],dict):
             top_level[a] = _hoist_sub_objects_rec(sub[a],a,top_level)
-            rel = tuplize_relation_elements(
+            rel = tuplize_elements(
                 ("has-component",
                    str(attr),
-                   str(a)),{str(attr),
-                   str(a)})
+                   str(a)))
+                #,{str(attr), str(a)})
             top_level[rel] = True
         else :
             new_sub[a] = sub[a]
@@ -1164,7 +1174,11 @@ def pre_process(instance):
      ('val', ('o11',)): 'b'}
     
     """
-    instance = extract_list_elements(instance)
+    tuplizer = Tuplizer()
+    instance = tuplizer.transform(instance)
+
+    listExtractor = ExtractListElements()
+    instance = listExtractor.transform(instance)
 
     standardizer = StandardizeApartNames()
     instance = standardizer.transform(instance)
