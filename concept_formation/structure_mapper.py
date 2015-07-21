@@ -395,7 +395,7 @@ def get_component_names(instance):
     :return: A list of all of the component names present in the instance
     :rtype: [str, str, ...]
 
-    >>> instance = {('a', ('c1',)): 0, ('a', ('c2',)): 0, ('_', '_a', ('c3',)): 0}
+    >>> instance = {('a', 'c1'): 0, ('a', 'c2'): 0, ('_', '_a', 'c3'): 0}
     >>> names = get_component_names(instance)
     >>> sorted(list(names))
     ['c1', 'c2', 'c3']
@@ -1627,5 +1627,6 @@ def structure_map(concept, instance):
     """
     instance = pre_process(instance)
     mapping = flat_match(concept, instance)
+    print(mapping)
     instance = rename_flat(instance, mapping)
     return instance
