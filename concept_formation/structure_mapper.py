@@ -38,6 +38,7 @@ from __future__ import print_function
 from __future__ import unicode_literals
 from __future__ import absolute_import
 from __future__ import division
+import copy
 
 from concept_formation import search
 
@@ -925,8 +926,6 @@ class ListProcessor(Preprocessor):
                                  'sslist': {}}},
              '?o8': {'val': 'g'},
              'tlist': {}},
-     ('has-component', 'ttb', ('tlist', 'ttb')): True,
-     ('has-component', ('sub-sub', ('?o3', 'ttb')), ('sslist', ('sub-sub', ('?o3', 'ttb')))): True,
      ('has-element', ('sslist', ('sub-sub', ('?o3', 'ttb'))), '?o4'): True,
      ('has-element', ('sslist', ('sub-sub', ('?o3', 'ttb'))), '?o5'): True,
      ('has-element', ('sslist', ('sub-sub', ('?o3', 'ttb'))), '?o6'): True,
@@ -1088,19 +1087,19 @@ class ListsToRelations(Preprocessor):
     >>> _reset_gensym()
     >>> ltr = ListsToRelations()
     >>> import pprint
-    >>> instance = {"list1":['c','b','a']}
+    >>> instance = {'o1': {"list1":['c','b','a']}}
     >>> instance = ltr.transform(instance)
     >>> pprint.pprint(instance)
-    {'list1': {},
-     ('has-element', 'list1', 'a'): True,
-     ('has-element', 'list1', 'b'): True,
-     ('has-element', 'list1', 'c'): True,
-     ('ordered-list', 'list1', 'b', 'a'): True,
-     ('ordered-list', 'list1', 'c', 'b'): True}
+    {'o1': {'list1': {}},
+     ('has-element', ('list1', 'o1'), 'a'): True,
+     ('has-element', ('list1', 'o1'), 'b'): True,
+     ('has-element', ('list1', 'o1'), 'c'): True,
+     ('ordered-list', ('list1', 'o1'), 'b', 'a'): True,
+     ('ordered-list', ('list1', 'o1'), 'c', 'b'): True}
 
     >>> instance = ltr.undo_transform(instance)
     >>> pprint.pprint(instance)
-    {'list1': ['c', 'b', 'a']}
+    {'o1': {'list1': ['c', 'b', 'a']}}
     """
     def transform(self, instance):
         return self.lists_to_relations(instance)
@@ -1122,9 +1121,10 @@ class ListsToRelations(Preprocessor):
 
         for attr in instance:
             if isinstance(attr, tuple) and (attr[0] == 'has-element'):
-                if attr[1] not in elements:
-                    elements[attr[1]] = []
-                elements[attr[1]].append(attr[2])
+                rel, lname, ele = attr
+                if lname not in elements:
+                    elements[lname] = []
+                elements[lname].append(ele)
             
             elif isinstance(attr, tuple) and attr[0] == 'ordered-list':
                 rel, lname, ele1, ele2 = attr
@@ -1176,17 +1176,14 @@ class ListsToRelations(Preprocessor):
             path = self.get_path(l)
             current = new_instance
             while len(path) > 1:
-                current = new_instance[path.pop(0)]
+                current = current[path.pop(0)]
             current[path[0]] = new_list
 
         return new_instance
 
-    def remove_cycles(self, list_order):
-        pass
-
     def get_path(self, path):
-        if isinstance(path, tuple):
-            return self.get_path(path[1]).append(path[0])
+        if isinstance(path, tuple) and len(path) == 2:
+            return self.get_path(path[1]) + [path[0]]
         else:
             return [path]
 
@@ -1245,14 +1242,11 @@ class ListsToRelations(Preprocessor):
         >>> instance = ltr.lists_to_relations(instance)
         >>> pprint.pprint(instance)
         {'subobj': {'list1': {}},
-         ('has-component', 'subobj', ('list1', 'subobj')): True,
          ('has-element', ('list1', 'subobj'), 'a'): True,
          ('has-element', ('list1', 'subobj'), 'b'): True,
          ('has-element', ('list1', 'subobj'), 'c'): True,
          ('ordered-list', ('list1', 'subobj'), 'a', 'b'): True,
          ('ordered-list', ('list1', 'subobj'), 'b', 'c'): True}
-
-
 
         >> instance = {"Function Defintion":{"body":[{"Return":{"value":{"Compare":{"left":{"Number":{"n":2 } }, "ops":[{"<":{}},{"<=":{}}],"comparators":[{"Name":{"id":"daysPassed","ctx":{"Load":{}}}},{"Number":{"n":9}}]}}}}]}}
         >> ele = ExtractListElements()
@@ -1316,9 +1310,9 @@ class ListsToRelations(Preprocessor):
                     rel = ('has-element', lname, instance[attr][-1])
                     top_level[rel] = True
 
-                if isinstance(lname, tuple):
-                    rel = ('has-component', current, lname)
-                    top_level[rel] = True
+                #if isinstance(lname, tuple):
+                #    rel = ('has-component', current, lname)
+                #    top_level[rel] = True
 
             elif isinstance(instance[attr],dict):
                 new_instance[attr] = self.lists_to_relations(instance[attr],
@@ -1342,7 +1336,27 @@ class SubComponentProcessor(Preprocessor):
         Removes the has-component relations by adding the elements as
         subobjects.
         """
-        pass
+        new_instance = {}
+
+        parents = {}
+        children = {}
+
+        for attr in instance:
+            if isinstance(attr, tuple) and attr[0] == 'has-component':
+                rel, parent, child = attr
+
+                if child not in parents:
+                    parents[child] = []
+                parents[child].append(parent)
+
+                if parent not in children:
+                    children[parent] = []
+                children[parent].append(child)
+
+            else:
+                new_instance[attr] = copy.deepcopy(instance[attr])
+
+        return new_instance
 
     def hoist_sub_objects(self, instance):
         """
