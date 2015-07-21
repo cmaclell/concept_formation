@@ -181,7 +181,7 @@ class Tuplizer(Preprocessor):
         else:
             return relation
 
-class StandardizeApartNames(Preprocessor):
+class NameStandardizer(Preprocessor):
     """
     A preprocessor that standardizes apart object names.
 
@@ -190,7 +190,7 @@ class StandardizeApartNames(Preprocessor):
     >>> instance = {'nominal': 'v1', 'numeric': 2.3, 'c1': {'a1': 'v1'}, '?c2': {'a2': 'v2', '?c3': {'a3': 'v3'}}, '(relation1 c1 ?c2)': True, 'lists': [{'c1': {'inner': 'val'}}, 's2', 's3'], '(relation2 (a1 c1) (relation3 (a3 (?c3 ?c2))))': 4.3}
     >>> tuplizer = Tuplizer()
     >>> instance = tuplizer.transform(instance)
-    >>> std = StandardizeApartNames()
+    >>> std = NameStandardizer()
     >>> std.undo_transform(instance)
     Traceback (most recent call last):
         ...
@@ -297,7 +297,7 @@ class StandardizeApartNames(Preprocessor):
         >>> instance = {'nominal': 'v1', 'numeric': 2.3, '?c1': {'a1': 'v1'}, 'c2': {'a2': 'v2', 'c3': {'a3': 'v3'}}, '(relation1 ?c1 c2)': True, 'lists': ['s1', 's2', 's3'], '(relation2 (a1 ?c1) (relation3 (a3 (c2 c3))))': 4.3}
         >>> tuplizer = Tuplizer()
         >>> instance = tuplizer.transform(instance)
-        >>> std = StandardizeApartNames()
+        >>> std = NameStandardizer()
         >>> standard = std.transform(instance)
         >>> pprint.pprint(standard)
         {'?o1': {'a1': 'v1'},
@@ -1155,15 +1155,17 @@ class ListsToRelations(Preprocessor):
 
     def relations_to_lists(self, instance, path=None):
         """
-        Traverse the instance and turn any list relations into a list. If there
-        is a total ordering with no cycles than this should work perfectly. In
-        the event of a cycle or a partial ordering than this might return
-        incorrect results, just be careful.
+        Traverse the instance and turns each set of totally ordered list
+        relations into a list.
+        
+        If there is a cycle or a partial ordering, than the relations are not
+        converted and left as they are. 
         """
         new_instance = {}
 
         elements = {}
         order = {}
+        originals = {}
 
         for attr in instance:
             if isinstance(attr, tuple) and (attr[0] == 'has-element'):
@@ -1171,6 +1173,10 @@ class ListsToRelations(Preprocessor):
                 if lname not in elements:
                     elements[lname] = []
                 elements[lname].append(ele)
+
+                if lname not in originals:
+                    originals[lname] = []
+                originals[lname].append((attr, instance[attr]))
             
             elif isinstance(attr, tuple) and attr[0] == 'ordered-list':
                 rel, lname, ele1, ele2 = attr
@@ -1180,50 +1186,57 @@ class ListsToRelations(Preprocessor):
 
                 order[lname].append((ele1, ele2))
 
+                if lname not in originals:
+                    originals[lname] = []
+                originals[lname].append((attr, instance[attr]))
+
             else:
                 new_instance[attr] = instance[attr]
 
         for l in elements:
-            all_lists = []
+            new_list = [elements[l].pop(0)]
+            change = True
 
-            while len(elements[l]) > 0:
-                new_list = [elements[l].pop(0)]
+            while len(elements[l]) > 0 and change:
+                change = False
             
                 # chain to front
-                change = True
-                while change is not None:
-                    change = None
+                front = True
+                while front is not None:
+                    front = None
                     for a,b in order[l]:
                         if b == new_list[0]:
-                            change = (a,b)
+                            change = True
+                            front = (a,b)
                             elements[l].remove(a)
                             new_list.insert(0, a)
                             break
-                    if change is not None:
-                        order[l].remove(change)
+                    if front is not None:
+                        order[l].remove(front)
                 
                 # chain to end
-                change = True
-                while change is not None:
-                    change = None
+                back = True
+                while back is not None:
+                    back = None
                     for a,b in order[l]:
                         if a == new_list[-1]:
-                            change = (a,b)
+                            change = True
+                            back = (a,b)
                             elements[l].remove(b)
                             new_list.append(b)
                             break
-                    if change is not None:
-                        order[l].remove(change)
-
-                all_lists.append(new_list)
-
-            new_list = [ele for sub_list in all_lists for ele in sub_list]
+                    if back is not None:
+                        order[l].remove(back)
             
-            path = self.get_path(l)
-            current = new_instance
-            while len(path) > 1:
-                current = current[path.pop(0)]
-            current[path[0]] = new_list
+            if len(elements[l]) == 0:
+                path = self.get_path(l)
+                current = new_instance
+                while len(path) > 1:
+                    current = current[path.pop(0)]
+                current[path[0]] = new_list
+            else:
+                for attr, val in originals:
+                    new_instance[attr] = val
 
         return new_instance
 
@@ -1413,17 +1426,35 @@ class SubComponentProcessor(Preprocessor):
         """
         Removes the has-component relations by adding the elements as
         subobjects.
+
+        If a objects is a child in multiple has-component relationships than it
+        is left in relational form (i.e., it cannot be expressed in sub-object
+        form).
         """
         new_instance = {}
 
         parents = {}
         children = {}
+        leave_alone = set()
 
         for attr in instance:
             if isinstance(attr, tuple) and attr[0] == 'has-component':
                 rel, parent, child = attr
-                parents[child] = parent
-                children[parent] = child
+                if child in leave_alone:
+                    new_instance[attr] = instance[attr]
+                elif child in parents:
+                    new_instance[attr] = instance[attr]
+                    rel = ('has-component', parents[child],
+                           children[parents[child]])
+                    new_instance[rel] = True
+                    leave_alone.add(child)
+
+                    p = parents[child]
+                    del children[p]
+                    del parents[child]
+                else:
+                    parents[child] = parent
+                    children[parent] = child
             else:
                 new_instance[attr] = copy.deepcopy(instance[attr])
 
@@ -1518,41 +1549,47 @@ def pre_process(instance):
     >>> pprint.pprint(instance)
     {'noma': 'a',
      'num3': 3,
-     ('has-component', ('o7',), ('o8',)): True,
-     ('i', ('o12',)): 1,
-     ('j', ('o12',)): 12.3,
-     ('k', ('o12',)): 'test',
-     ('nomb', ('o7',)): 'b',
-     ('nomc', ('o8',)): 'c',
-     ('nomd', ('o9',)): 'd',
-     ('nome', ('o9',)): 'e',
-     ('num4', ('o7',)): 4,
-     ('num5', ('o8',)): 5,
-     ('ordered-list', 'list1', ('o10',), ('o11',)): True,
-     ('ordered-list', 'list1', ('o11',), ('o12',)): True,
-     ('related', ('num4', ('o7',)), ('nome', ('o9',))): True,
-     ('val', ('o10',)): 'a',
-     ('val', ('o11',)): 'b'}
+     ('has-component', 'compa', 'sub'): True,
+     ('has-element', 'list1', '?o4'): True,
+     ('has-element', 'list1', '?o5'): True,
+     ('has-element', 'list1', '?o6'): True,
+     ('i', '?o6'): 1,
+     ('j', '?o6'): 12.3,
+     ('k', '?o6'): 'test',
+     ('nomb', 'compa'): 'b',
+     ('nomc', 'sub'): 'c',
+     ('nomd', 'compb'): 'd',
+     ('nome', 'compb'): 'e',
+     ('num4', 'compa'): 4,
+     ('num5', 'sub'): 5,
+     ('ordered-list', 'list1', '?o4', '?o5'): True,
+     ('ordered-list', 'list1', '?o5', '?o6'): True,
+     ('related', 'compa.num4', 'compb.nome'): True,
+     ('val', '?o4'): 'a',
+     ('val', '?o5'): 'b'}
 
     >>> instance = pre_process(instance)
     >>> pprint.pprint(instance)
     {'noma': 'a',
      'num3': 3,
-     ('has-component', ('o7',), ('o8',)): True,
-     ('i', ('o12',)): 1,
-     ('j', ('o12',)): 12.3,
-     ('k', ('o12',)): 'test',
-     ('nomb', ('o7',)): 'b',
-     ('nomc', ('o8',)): 'c',
-     ('nomd', ('o9',)): 'd',
-     ('nome', ('o9',)): 'e',
-     ('num4', ('o7',)): 4,
-     ('num5', ('o8',)): 5,
-     ('ordered-list', 'list1', ('o10',), ('o11',)): True,
-     ('ordered-list', 'list1', ('o11',), ('o12',)): True,
-     ('related', ('num4', ('o7',)), ('nome', ('o9',))): True,
-     ('val', ('o10',)): 'a',
-     ('val', ('o11',)): 'b'}
+     ('has-component', 'compa', 'sub'): True,
+     ('has-element', 'list1', '?o4'): True,
+     ('has-element', 'list1', '?o5'): True,
+     ('has-element', 'list1', '?o6'): True,
+     ('i', '?o6'): 1,
+     ('j', '?o6'): 12.3,
+     ('k', '?o6'): 'test',
+     ('nomb', 'compa'): 'b',
+     ('nomc', 'sub'): 'c',
+     ('nomd', 'compb'): 'd',
+     ('nome', 'compb'): 'e',
+     ('num4', 'compa'): 4,
+     ('num5', 'sub'): 5,
+     ('ordered-list', 'list1', '?o4', '?o5'): True,
+     ('ordered-list', 'list1', '?o5', '?o6'): True,
+     ('related', 'compa.num4', 'compb.nome'): True,
+     ('val', '?o4'): 'a',
+     ('val', '?o5'): 'b'}
     
     """
     tuplizer = Tuplizer()
@@ -1561,7 +1598,7 @@ def pre_process(instance):
     list_processor = ListProcessor()
     instance = list_processor.transform(instance)
 
-    standardizer = StandardizeApartNames()
+    standardizer = NameStandardizer()
     instance = standardizer.transform(instance)
     
     sub_component_processor = SubComponentProcessor()
