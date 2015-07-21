@@ -896,6 +896,65 @@ class ListProcessor(Preprocessor):
     >>> pprint.pprint(instance)
     {'l1': ['a', {'in1': 3, 'in2': 4}, {'ag': 'b', 'ah': 'c'}, 12, 'again']}
 
+    >>> _reset_gensym()
+    >>> instance = {'tta':'alpha','ttb':{'tlist':['a','b',{'sub-a':'c','sub-sub':{'s':'d','sslist':['w','x','y',{'issue':'here'}]}},'g']}}
+    >>> pprint.pprint(instance)
+    {'tta': 'alpha',
+     'ttb': {'tlist': ['a',
+                       'b',
+                       {'sub-a': 'c',
+                        'sub-sub': {'s': 'd',
+                                    'sslist': ['w',
+                                               'x',
+                                               'y',
+                                               {'issue': 'here'}]}},
+                       'g']}}
+
+    >>> lp = ListProcessor()
+    >>> instance = lp.transform(instance)
+    >>> pprint.pprint(instance)
+    {'tta': 'alpha',
+     'ttb': {'?o1': {'val': 'a'},
+             '?o2': {'val': 'b'},
+             '?o3': {'sub-a': 'c',
+                     'sub-sub': {'?o4': {'val': 'w'},
+                                 '?o5': {'val': 'x'},
+                                 '?o6': {'val': 'y'},
+                                 '?o7': {'issue': 'here'},
+                                 's': 'd',
+                                 'sslist': {}}},
+             '?o8': {'val': 'g'},
+             'tlist': {}},
+     ('has-component', 'ttb', ('tlist', 'ttb')): True,
+     ('has-component', ('sub-sub', ('?o3', 'ttb')), ('sslist', ('sub-sub', ('?o3', 'ttb')))): True,
+     ('has-element', ('sslist', ('sub-sub', ('?o3', 'ttb'))), '?o4'): True,
+     ('has-element', ('sslist', ('sub-sub', ('?o3', 'ttb'))), '?o5'): True,
+     ('has-element', ('sslist', ('sub-sub', ('?o3', 'ttb'))), '?o6'): True,
+     ('has-element', ('sslist', ('sub-sub', ('?o3', 'ttb'))), '?o7'): True,
+     ('has-element', ('tlist', 'ttb'), '?o1'): True,
+     ('has-element', ('tlist', 'ttb'), '?o2'): True,
+     ('has-element', ('tlist', 'ttb'), '?o3'): True,
+     ('has-element', ('tlist', 'ttb'), '?o8'): True,
+     ('ordered-list', ('sslist', ('sub-sub', ('?o3', 'ttb'))), '?o4', '?o5'): True,
+     ('ordered-list', ('sslist', ('sub-sub', ('?o3', 'ttb'))), '?o5', '?o6'): True,
+     ('ordered-list', ('sslist', ('sub-sub', ('?o3', 'ttb'))), '?o6', '?o7'): True,
+     ('ordered-list', ('tlist', 'ttb'), '?o1', '?o2'): True,
+     ('ordered-list', ('tlist', 'ttb'), '?o2', '?o3'): True,
+     ('ordered-list', ('tlist', 'ttb'), '?o3', '?o8'): True}
+
+    >>> instance = lp.undo_transform(instance)
+    >>> pprint.pprint(instance)
+    {'tta': 'alpha',
+     'ttb': {'tlist': ['a',
+                       'b',
+                       {'sub-a': 'c',
+                        'sub-sub': {'s': 'd',
+                                    'sslist': ['w',
+                                               'x',
+                                               'y',
+                                               {'issue': 'here'}]}},
+                       'g']}}
+
     """
     def __init__(self):
         self.processor = Pipeline(ExtractListElements(), ListsToRelations())
@@ -1193,54 +1252,7 @@ class ListsToRelations(Preprocessor):
          ('ordered-list', ('list1', 'subobj'), 'a', 'b'): True,
          ('ordered-list', ('list1', 'subobj'), 'b', 'c'): True}
 
-        >>> _reset_gensym()
-        >>> instance = {'tta':'alpha','ttb':{'tlist':['a','b',{'sub-a':'c','sub-sub':{'s':'d','sslist':['w','x','y',{'issue':'here'}]}},'g']}}
-        >>> ele = ExtractListElements()
-        >>> instance = ele.extract(instance)
-        >>> pprint.pprint(instance)
-        {'tta': 'alpha',
-         'ttb': {'?o1': {'val': 'a'},
-                 '?o2': {'val': 'b'},
-                 '?o3': {'sub-a': 'c',
-                         'sub-sub': {'?o4': {'val': 'w'},
-                                     '?o5': {'val': 'x'},
-                                     '?o6': {'val': 'y'},
-                                     '?o7': {'issue': 'here'},
-                                     's': 'd',
-                                     'sslist': ['?o4', '?o5', '?o6', '?o7']}},
-                 '?o8': {'val': 'g'},
-                 'tlist': ['?o1', '?o2', '?o3', '?o8']}}
-                
-        >> instance = ltr.lists_to_relations(instance)
-        >> pprint.pprint(instance)
-        {'tta': 'alpha',
-         'ttb': {'?o1': {'val': 'a'},
-                 '?o2': {'val': 'b'},
-                 '?o3': {'sub-a': 'c',
-                         'sub-sub': {'?o4': {'val': 'w'},
-                                     '?o5': {'val': 'x'},
-                                     '?o6': {'val': 'y'},
-                                     '?o7': {'issue': 'here'},
-                                     's': 'd',
-                                     'sslist': {}}},
-                 '?o8': {'val': 'g'},
-                 'tlist': {}},
-         ('has-component', 'ttb', ('tlist', 'ttb')): True,
-         ('has-component', ('sub-sub', ('?o3', 'ttb')), ('sslist', ('sub-sub', ('?o3', 'ttb')))): True,
-         ('has-element', ('sslist', ('sub-sub', ('?o3', 'ttb'))), '?o4'): True,
-         ('has-element', ('sslist', ('sub-sub', ('?o3', 'ttb'))), '?o5'): True,
-         ('has-element', ('sslist', ('sub-sub', ('?o3', 'ttb'))), '?o6'): True,
-         ('has-element', ('sslist', ('sub-sub', ('?o3', 'ttb'))), '?o7'): True,
-         ('has-element', ('tlist', 'ttb'), '?o1'): True,
-         ('has-element', ('tlist', 'ttb'), '?o2'): True,
-         ('has-element', ('tlist', 'ttb'), '?o3'): True,
-         ('has-element', ('tlist', 'ttb'), '?o8'): True,
-         ('ordered-list', ('sslist', ('sub-sub', ('?o3', 'ttb'))), '?o4', '?o5'): True,
-         ('ordered-list', ('sslist', ('sub-sub', ('?o3', 'ttb'))), '?o5', '?o6'): True,
-         ('ordered-list', ('sslist', ('sub-sub', ('?o3', 'ttb'))), '?o6', '?o7'): True,
-         ('ordered-list', ('tlist', 'ttb'), '?o1', '?o2'): True,
-         ('ordered-list', ('tlist', 'ttb'), '?o2', '?o3'): True,
-         ('ordered-list', ('tlist', 'ttb'), '?o3', '?o8'): True}
+
 
         >> instance = {"Function Defintion":{"body":[{"Return":{"value":{"Compare":{"left":{"Number":{"n":2 } }, "ops":[{"<":{}},{"<=":{}}],"comparators":[{"Name":{"id":"daysPassed","ctx":{"Load":{}}}},{"Number":{"n":9}}]}}}}]}}
         >> ele = ExtractListElements()
