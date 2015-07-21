@@ -1016,21 +1016,21 @@ class ExtractListElements(Preprocessor):
 
     >>> _reset_gensym()
     >>> import pprint
-    >>> instance = {"att1":"V1","list1":["a","b","c",{"B":"C","D":"E"}]}
+    >>> instance = {"att1":"V1",'subobj':{"list1":["a","b","c",{"B":"C","D":"E"}]}}
     >>> pprint.pprint(instance)
-    {'att1': 'V1', 'list1': ['a', 'b', 'c', {'B': 'C', 'D': 'E'}]}
+    {'att1': 'V1', 'subobj': {'list1': ['a', 'b', 'c', {'B': 'C', 'D': 'E'}]}}
     >>> pp = ExtractListElements()
     >>> instance = pp.transform(instance)
     >>> pprint.pprint(instance)
-    {'?o1': {'val': 'a'},
-     '?o2': {'val': 'b'},
-     '?o3': {'val': 'c'},
-     '?o4': {'B': 'C', 'D': 'E'},
-     'att1': 'V1',
-     'list1': ['?o1', '?o2', '?o3', '?o4']}
+    {'att1': 'V1',
+     'subobj': {'?o1': {'val': 'a'},
+                '?o2': {'val': 'b'},
+                '?o3': {'val': 'c'},
+                '?o4': {'B': 'C', 'D': 'E'},
+                'list1': ['?o1', '?o2', '?o3', '?o4']}}
     >>> instance = pp.undo_transform(instance)
     >>> pprint.pprint(instance)
-    {'att1': 'V1', 'list1': ['a', 'b', 'c', {'B': 'C', 'D': 'E'}]}
+    {'att1': 'V1', 'subobj': {'list1': ['a', 'b', 'c', {'B': 'C', 'D': 'E'}]}}
 
     """
     def transform(self, instance):
@@ -1060,18 +1060,21 @@ class ExtractListElements(Preprocessor):
                 new_list = []
                 for i in range(len(instance[a])):
                     elements[instance[a][i]] = True
-                    obj = instance[instance[a][i]]
+                    obj = self.undo_extract(instance[instance[a][i]])
 
-                    if len(obj) > 1 and "val" not in obj:
+                    if "val" not in obj:
                         new_list.append(obj)
-                    else :
+                    else:
                         new_list.append(obj["val"])
                 new_instance[a] = new_list
 
         for a in instance:
             if isinstance(instance[a],list) or a in elements:
                 continue
-            new_instance[a] = instance[a]
+            elif isinstance(instance[a], dict):
+                new_instance[a] = self.undo_extract(instance[a])
+            else:
+                new_instance[a] = instance[a]
 
         return new_instance
 
