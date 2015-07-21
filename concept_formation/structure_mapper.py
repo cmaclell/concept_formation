@@ -859,7 +859,6 @@ class ExtractListElements(Preprocessor):
         """
         Undoes the list element extraction operation.
         """
-
         return self.undo_extract(instance)
 
     def undo_extract(self,instance):
@@ -890,8 +889,6 @@ class ExtractListElements(Preprocessor):
             new_instance[a] = instance[a]
 
         return new_instance
-
-
 
     def extract(self,instance):
         """
@@ -943,122 +940,193 @@ class ExtractListElements(Preprocessor):
 
         return new_instance
 
-def lists_to_relations(instance, current=None, top_level=None):
-    """
-    Travese the instance and turn any list elements into 
-    a series of relations.
+class ListsToRelations(Preprocessor):
 
-    >>> _reset_gensym()
-    >>> import pprint
-    >>> instance = {"list1":['a','b','c']}
-    >>> instance = lists_to_relations(instance)
-    >>> pprint.pprint(instance)
-    {('has-element', 'list1', ('c',)): True,
-     ('ordered-list', 'list1', ('a',), ('b',)): True,
-     ('ordered-list', 'list1', ('b',), ('c',)): True}
-    
-    >>> instance = {"list1":['a','b','c'],"list2":['w','x','y','z']}
-    >>> instance = lists_to_relations(instance)
-    >>> pprint.pprint(instance)
-    {('has-element', 'list1', ('c',)): True,
-     ('has-element', 'list2', ('z',)): True,
-     ('ordered-list', 'list1', ('a',), ('b',)): True,
-     ('ordered-list', 'list1', ('b',), ('c',)): True,
-     ('ordered-list', 'list2', ('w',), ('x',)): True,
-     ('ordered-list', 'list2', ('x',), ('y',)): True,
-     ('ordered-list', 'list2', ('y',), ('z',)): True}
+    def lists_to_relations(self, instance, current=None, top_level=None):
+        """
+        Travese the instance and turn any list elements into 
+        a series of relations.
 
-    >>> instance = {"stack":[{"a":1, "b":2, "c":3}, {"x":1, "y":2, "z":3}, {"i":1, "j":2, "k":3}]}
-    >>> ele = ExtractListElements()
-    >>> instance = ele.extract(instance)
-    >>> instance = lists_to_relations(instance)
-    >>> pprint.pprint(instance)
-    {'o1': {'a': 1, 'b': 2, 'c': 3},
-     'o2': {'x': 1, 'y': 2, 'z': 3},
-     'o3': {'i': 1, 'j': 2, 'k': 3},
-     ('has-element', 'stack', ('o3',)): True,
-     ('ordered-list', 'stack', ('o1',), ('o2',)): True,
-     ('ordered-list', 'stack', ('o2',), ('o3',)): True}
+        >>> _reset_gensym()
+        >>> ltr = ListsToRelations()
+        >>> import pprint
+        >>> instance = {"list1":['a','b','c']}
+        >>> instance = ltr.lists_to_relations(instance)
+        >>> pprint.pprint(instance)
+        {'list1': {},
+         ('has-element', 'list1', 'a'): True,
+         ('has-element', 'list1', 'b'): True,
+         ('has-element', 'list1', 'c'): True,
+         ('ordered-list', 'list1', 'a', 'b'): True,
+         ('ordered-list', 'list1', 'b', 'c'): True}
+        
+        >>> instance = {"list1":['a','b','c'],"list2":['w','x','y','z']}
+        >>> instance = ltr.lists_to_relations(instance)
+        >>> pprint.pprint(instance)
+        {'list1': {},
+         'list2': {},
+         ('has-element', 'list1', 'a'): True,
+         ('has-element', 'list1', 'b'): True,
+         ('has-element', 'list1', 'c'): True,
+         ('has-element', 'list2', 'w'): True,
+         ('has-element', 'list2', 'x'): True,
+         ('has-element', 'list2', 'y'): True,
+         ('has-element', 'list2', 'z'): True,
+         ('ordered-list', 'list1', 'a', 'b'): True,
+         ('ordered-list', 'list1', 'b', 'c'): True,
+         ('ordered-list', 'list2', 'w', 'x'): True,
+         ('ordered-list', 'list2', 'x', 'y'): True,
+         ('ordered-list', 'list2', 'y', 'z'): True}
 
-    >>> instance = {'subobj': {'list1': ['a', 'b', 'c']}}
-    >>> instance = lists_to_relations(instance)
-    >>> pprint.pprint(instance)
-    {'subobj': {},
-     ('has-element', 'list1', ('a',)): True,
-     ('has-element', 'list1', ('b',)): True,
-     ('has-element', 'list1', ('c',)): True,
-     ('ordered-list', 'list1', ('a',), ('b',)): True,
-     ('ordered-list', 'list1', ('b',), ('c',)): True}
+        >>> instance = {"stack":[{"a":1, "b":2, "c":3}, {"x":1, "y":2, "z":3}, {"i":1, "j":2, "k":3}]}
+        >>> ele = ExtractListElements()
+        >>> instance = ele.extract(instance)
+        >>> instance = ltr.lists_to_relations(instance)
+        >>> pprint.pprint(instance)
+        {'?o1': {'a': 1, 'b': 2, 'c': 3},
+         '?o2': {'x': 1, 'y': 2, 'z': 3},
+         '?o3': {'i': 1, 'j': 2, 'k': 3},
+         'stack': {},
+         ('has-element', 'stack', '?o1'): True,
+         ('has-element', 'stack', '?o2'): True,
+         ('has-element', 'stack', '?o3'): True,
+         ('ordered-list', 'stack', '?o1', '?o2'): True,
+         ('ordered-list', 'stack', '?o2', '?o3'): True}
 
-    >>> _reset_gensym()
-    >>> instance = {'tta':'alpha','ttb':{'tlist':['a','b',{'sub-a':'c','sub-sub':{'s':'d','sslist':['w','x','y',{'issue':'here'}]}},'g']}}
-    >>> ele = ExtractListElements()
-    >>> instance = ele.extract(instance)
-    >>> pprint.pprint(instance)
-    {}
-    >>> instance = lists_to_relations(instance)
-    >>> pprint.pprint(instance)
-    {}
+        >>> instance = {'subobj': {'list1': ['a', 'b', 'c']}}
+        >>> instance = ltr.lists_to_relations(instance)
+        >>> pprint.pprint(instance)
+        {'subobj': {'list1': {}},
+         ('has-component', 'subobj', ('list1', 'subobj')): True,
+         ('has-element', ('list1', 'subobj'), 'a'): True,
+         ('has-element', ('list1', 'subobj'), 'b'): True,
+         ('has-element', ('list1', 'subobj'), 'c'): True,
+         ('ordered-list', ('list1', 'subobj'), 'a', 'b'): True,
+         ('ordered-list', ('list1', 'subobj'), 'b', 'c'): True}
 
+        >>> _reset_gensym()
+        >>> instance = {'tta':'alpha','ttb':{'tlist':['a','b',{'sub-a':'c','sub-sub':{'s':'d','sslist':['w','x','y',{'issue':'here'}]}},'g']}}
+        >>> ele = ExtractListElements()
+        >>> instance = ele.extract(instance)
+        >>> pprint.pprint(instance)
+        {'tta': 'alpha',
+         'ttb': {'?o1': {'val': 'a'},
+                 '?o2': {'val': 'b'},
+                 '?o3': {'sub-a': 'c',
+                         'sub-sub': {'?o4': {'val': 'w'},
+                                     '?o5': {'val': 'x'},
+                                     '?o6': {'val': 'y'},
+                                     '?o7': {'issue': 'here'},
+                                     's': 'd',
+                                     'sslist': ['?o4', '?o5', '?o6', '?o7']}},
+                 '?o8': {'val': 'g'},
+                 'tlist': ['?o1', '?o2', '?o3', '?o8']}}
+                
+        >> instance = ltr.lists_to_relations(instance)
+        >> pprint.pprint(instance)
+        {'tta': 'alpha',
+         'ttb': {'?o1': {'val': 'a'},
+                 '?o2': {'val': 'b'},
+                 '?o3': {'sub-a': 'c',
+                         'sub-sub': {'?o4': {'val': 'w'},
+                                     '?o5': {'val': 'x'},
+                                     '?o6': {'val': 'y'},
+                                     '?o7': {'issue': 'here'},
+                                     's': 'd',
+                                     'sslist': {}}},
+                 '?o8': {'val': 'g'},
+                 'tlist': {}},
+         ('has-component', 'ttb', ('tlist', 'ttb')): True,
+         ('has-component', ('sub-sub', ('?o3', 'ttb')), ('sslist', ('sub-sub', ('?o3', 'ttb')))): True,
+         ('has-element', ('sslist', ('sub-sub', ('?o3', 'ttb'))), '?o4'): True,
+         ('has-element', ('sslist', ('sub-sub', ('?o3', 'ttb'))), '?o5'): True,
+         ('has-element', ('sslist', ('sub-sub', ('?o3', 'ttb'))), '?o6'): True,
+         ('has-element', ('sslist', ('sub-sub', ('?o3', 'ttb'))), '?o7'): True,
+         ('has-element', ('tlist', 'ttb'), '?o1'): True,
+         ('has-element', ('tlist', 'ttb'), '?o2'): True,
+         ('has-element', ('tlist', 'ttb'), '?o3'): True,
+         ('has-element', ('tlist', 'ttb'), '?o8'): True,
+         ('ordered-list', ('sslist', ('sub-sub', ('?o3', 'ttb'))), '?o4', '?o5'): True,
+         ('ordered-list', ('sslist', ('sub-sub', ('?o3', 'ttb'))), '?o5', '?o6'): True,
+         ('ordered-list', ('sslist', ('sub-sub', ('?o3', 'ttb'))), '?o6', '?o7'): True,
+         ('ordered-list', ('tlist', 'ttb'), '?o1', '?o2'): True,
+         ('ordered-list', ('tlist', 'ttb'), '?o2', '?o3'): True,
+         ('ordered-list', ('tlist', 'ttb'), '?o3', '?o8'): True}
 
-    >>> instance = {"Function Defintion":{"body":[{"Return":{"value":{"Compare":{"left":{"Number":{"n":2 } }, "ops":[{"<":{}},{"<=":{}}],"comparators":[{"Name":{"id":"daysPassed","ctx":{"Load":{}}}},{"Number":{"n":9}}]}}}}]}}
-    >>> ele = ExtractListElements()
-    >>> instance = ele.extract(instance)
-    >>> pprint.pprint(instance)
-    {}
-    >>> instance = lists_to_relations(instance)
-    >>> pprint.pprint(instance)
-    {}
+        >> instance = {"Function Defintion":{"body":[{"Return":{"value":{"Compare":{"left":{"Number":{"n":2 } }, "ops":[{"<":{}},{"<=":{}}],"comparators":[{"Name":{"id":"daysPassed","ctx":{"Load":{}}}},{"Number":{"n":9}}]}}}}]}}
+        >> ele = ExtractListElements()
+        >> instance = ele.extract(instance)
+        >> pprint.pprint(instance)
+        {'Function Defintion': {'?o9': {'Return': {'value': {'Compare': {'?o10': {'<': {}},
+                                                                         '?o11': {'<=': {}},
+                                                                         '?o12': {'Name': {'ctx': {'Load': {}},
+                                                                                           'id': 'daysPassed'}},
+                                                                         '?o13': {'Number': {'n': 9}},
+                                                                         'comparators': ['?o12',
+                                                                                         '?o13'],
+                                                                         'left': {'Number': {'n': 2}},
+                                                                         'ops': ['?o10',
+                                                                                 '?o11']}}}},
+                                'body': ['?o9']}}
+        >> instance = ltr.lists_to_relations(instance)
+        >> pprint.pprint(instance)
+        {'Function Defintion': {'?o9': {'Return': {'value': {'Compare': {'?o10': {'<': {}},
+                                                                         '?o11': {'<=': {}},
+                                                                         '?o12': {'Name': {'ctx': {'Load': {}},
+                                                                                           'id': 'daysPassed'}},
+                                                                         '?o13': {'Number': {'n': 9}},
+                                                                         'comparators': {},
+                                                                         'left': {'Number': {'n': 2}},
+                                                                         'ops': {}}}}},
+                                'body': {}},
+         ('has-component', 'Function Defintion', ('body', 'Function Defintion')): True,
+         ('has-component', ('Compare', ('value', ('Return', ('?o9', 'Function Defintion')))), ('comparators', ('Compare', ('value', ('Return', ('?o9', 'Function Defintion')))))): True,
+         ('has-component', ('Compare', ('value', ('Return', ('?o9', 'Function Defintion')))), ('ops', ('Compare', ('value', ('Return', ('?o9', 'Function Defintion')))))): True,
+         ('has-element', ('body', 'Function Defintion'), '?o9'): True,
+         ('has-element', ('comparators', ('Compare', ('value', ('Return', ('?o9', 'Function Defintion'))))), '?o12'): True,
+         ('has-element', ('comparators', ('Compare', ('value', ('Return', ('?o9', 'Function Defintion'))))), '?o13'): True,
+         ('has-element', ('ops', ('Compare', ('value', ('Return', ('?o9', 'Function Defintion'))))), '?o10'): True,
+         ('has-element', ('ops', ('Compare', ('value', ('Return', ('?o9', 'Function Defintion'))))), '?o11'): True,
+         ('ordered-list', ('comparators', ('Compare', ('value', ('Return', ('?o9', 'Function Defintion'))))), '?o12', '?o13'): True,
+         ('ordered-list', ('ops', ('Compare', ('value', ('Return', ('?o9', 'Function Defintion'))))), '?o10', '?o11'): True}
+        """
+        new_instance = {}
+        if top_level is None:
+            top_level = new_instance
 
-    """
-    new_instance = {}
-    if top_level is None:
-        top_level = new_instance
-
-    for attr in instance.keys():
-        if isinstance(instance[attr], list):
-            if top_level == new_instance:
+        for attr in instance.keys():
+            if current is None:
                 lname = attr
             else:
-                lname = (attr, (current,))
-            for i in range(len(instance[attr])-1):
-                    rel = tuplize_elements(
-                        ("ordered-list",
-                            lname,
-                            str(instance[attr][i]),
-                            str(instance[attr][i+1])))
-                        #,{str(instance[attr][i]),
-                        #    str(instance[attr][i+1])})
+                lname = (attr, current)
 
+            if isinstance(instance[attr], list):
+                new_instance[attr] = {}
+
+                for i in range(len(instance[attr])-1):
+                    rel = ("ordered-list", lname, str(instance[attr][i]),
+                           str(instance[attr][i+1]))
                     top_level[rel] = True
 
-                    rel = tuplize_elements(
-                            ("has-element",
-                                lname,
-                                instance[attr][len(instance[attr])-1],
-                                ))
-                            #,{str(instance[attr][len(instance[attr])-1])})
-                    
+                    rel = ("has-element", lname, instance[attr][i])
                     top_level[rel] = True
 
+                if len(instance[attr]) > 0:
+                    rel = ('has-element', lname, instance[attr][-1])
+                    top_level[rel] = True
 
-            if len(instance[attr]) > 0:
-                rel = tuplize_elements(
-                            ("has-element",
-                                lname,
-                                instance[attr][len(instance[attr])-1],
-                                ))
-                            #,{str(instance[attr][len(instance[attr])-1])})
-                top_level[rel] = True
+                if isinstance(lname, tuple):
+                    rel = ('has-component', current, lname)
+                    top_level[rel] = True
 
-        elif isinstance(instance[attr],dict):
-            new_instance[attr] = lists_to_relations(instance[attr],
-                                                    attr,
-                                                    top_level)
-        else:
-            new_instance[attr] = instance[attr]
-    
-    return new_instance
+            elif isinstance(instance[attr],dict):
+                new_instance[attr] = self.lists_to_relations(instance[attr],
+                                                        lname,
+                                                        top_level)
+            else:
+                new_instance[attr] = instance[attr]
+        
+        return new_instance
 
 def hoist_sub_objects(instance) :
     """
