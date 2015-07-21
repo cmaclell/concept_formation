@@ -88,7 +88,6 @@ class Pipeline(Preprocessor):
     """
     def __init__(self, *preprocessors):
         self.preprocessors = preprocessors
-        print(preprocessors)
 
     def transform(self, instance):
         for pp in self.preprocessors:
@@ -1318,63 +1317,74 @@ class ListsToRelations(Preprocessor):
         
         return new_instance
 
-def hoist_sub_objects(instance):
-    """
-    Travese the instance for objects that contain subobjects and hoists the
-    subobjects to be their own objects at the top level of the instance. 
+class SubComponentProcessor(Preprocessor):
     
-    >>> _reset_gensym()
-    >>> import pprint
-    >>> instance = {"a1":"v1","sub1":{"a2":"v2","a3":3},"sub2":{"a4":"v4","subsub1":{"a5":"v5","a6":"v6"},"subsub2":{"subsubsub":{"a8":"V8"},"a7":7}}}
-    >>> pprint.pprint(instance)
-    {'a1': 'v1',
-     'sub1': {'a2': 'v2', 'a3': 3},
-     'sub2': {'a4': 'v4',
-              'subsub1': {'a5': 'v5', 'a6': 'v6'},
-              'subsub2': {'a7': 7, 'subsubsub': {'a8': 'V8'}}}}
+    def transform(self, instance):
+        return self.hoist_sub_objects(instance)
 
-    >>> instance = hoist_sub_objects(instance)
-    >>> pprint.pprint(instance)
-    {'a1': 'v1',
-     'sub1': {'a2': 'v2', 'a3': 3},
-     'sub2': {'a4': 'v4'},
-     'subsub1': {'a5': 'v5', 'a6': 'v6'},
-     'subsub2': {'a7': 7},
-     'subsubsub': {'a8': 'V8'},
-     ('has-component', ('sub2',), ('subsub1',)): True,
-     ('has-component', ('sub2',), ('subsub2',)): True,
-     ('has-component', ('subsub2',), ('subsubsub',)): True}
-    """
-    new_instance = {}
-    
-    for a in instance.keys() :
-        # this is a subobject
-        if isinstance(instance[a],dict):
-            new_instance[a] = _hoist_sub_objects_rec(instance[a],a,new_instance)
-        else :
-            new_instance[a] = instance[a]
+    def undo_transform(self, instance):
+        return self.add_sub_objects(instance)
 
-    return new_instance
+    def add_sub_objects(self, instance):
+        """
+        Removes the has-component relations by adding the elements as
+        subobjects.
+        """
+        pass
 
-def _hoist_sub_objects_rec(sub,attr,top_level):
-    """
-    The recursive version of subobject hoisting.
-    """
-    new_sub = {}
-    for a in sub.keys():
-        # this is a sub-sub object
-        if isinstance(sub[a],dict):
-            top_level[a] = _hoist_sub_objects_rec(sub[a],a,top_level)
-            rel = tuplize_elements(
-                ("has-component",
-                   str(attr),
-                   str(a)))
-                #,{str(attr), str(a)})
-            top_level[rel] = True
-        else :
-            new_sub[a] = sub[a]
-    return new_sub
+    def hoist_sub_objects(self, instance):
+        """
+        Travese the instance for objects that contain subobjects and hoists the
+        subobjects to be their own objects at the top level of the instance. 
+        
+        >>> _reset_gensym()
+        >>> import pprint
+        >>> psc = SubComponentProcessor()
+        >>> instance = {"a1":"v1","sub1":{"a2":"v2","a3":3},"sub2":{"a4":"v4","subsub1":{"a5":"v5","a6":"v6"},"subsub2":{"subsubsub":{"a8":"V8"},"a7":7}}}
+        >>> pprint.pprint(instance)
+        {'a1': 'v1',
+         'sub1': {'a2': 'v2', 'a3': 3},
+         'sub2': {'a4': 'v4',
+                  'subsub1': {'a5': 'v5', 'a6': 'v6'},
+                  'subsub2': {'a7': 7, 'subsubsub': {'a8': 'V8'}}}}
 
+        >>> instance = psc.hoist_sub_objects(instance)
+        >>> pprint.pprint(instance)
+        {'a1': 'v1',
+         'sub1': {'a2': 'v2', 'a3': 3},
+         'sub2': {'a4': 'v4'},
+         'subsub1': {'a5': 'v5', 'a6': 'v6'},
+         'subsub2': {'a7': 7},
+         'subsubsub': {'a8': 'V8'},
+         ('has-component', 'sub2', 'subsub1'): True,
+         ('has-component', 'sub2', 'subsub2'): True,
+         ('has-component', 'subsub2', 'subsubsub'): True}
+        """
+        new_instance = {}
+        
+        for a in instance.keys() :
+            # this is a subobject
+            if isinstance(instance[a],dict):
+                new_instance[a] = self._hoist_sub_objects_rec(instance[a],a,new_instance)
+            else :
+                new_instance[a] = instance[a]
+
+        return new_instance
+
+    def _hoist_sub_objects_rec(self, sub, attr, top_level):
+        """
+        The recursive version of subobject hoisting.
+        """
+        new_sub = {}
+        for a in sub.keys():
+            # this is a sub-sub object
+            if isinstance(sub[a],dict):
+                top_level[a] = self._hoist_sub_objects_rec(sub[a],a,top_level)
+                rel = ("has-component", str(attr), str(a))
+                top_level[rel] = True
+            else :
+                new_sub[a] = sub[a]
+        return new_sub
 
 def pre_process(instance):
     """
@@ -1441,7 +1451,9 @@ def pre_process(instance):
     standardizer = StandardizeApartNames()
     instance = standardizer.transform(instance)
     
-    instance = hoist_sub_objects(instance)
+    sub_component_processor = SubComponentProcessor()
+    instance = sub_component_processor.transform(instance)
+
     instance = flatten_json(instance)
     return instance
 
