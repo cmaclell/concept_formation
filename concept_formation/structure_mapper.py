@@ -80,6 +80,26 @@ class Preprocessor(object):
         """
         raise NotImplementedError("Class must implement undo_transform function")
 
+class Pipeline(Preprocessor):
+    """
+    A special preprocessor class used to chain together many preprocessors.
+    Supports the same same transform and undo_transform functions as a regular
+    preprocessor.
+    """
+    def __init__(self, *preprocessors):
+        self.preprocessors = preprocessors
+        print(preprocessors)
+
+    def transform(self, instance):
+        for pp in self.preprocessors:
+            instance = pp.transform(instance)
+        return instance
+
+    def undo_transform(self, instance):
+        for pp in reversed(self.preprocessors):
+            instance = pp.undo_transform(instance)
+        return instance
+
 class Tuplizer(Preprocessor):
     """
     Converts all string versions of relations into tuples
@@ -821,6 +841,19 @@ def is_partial_match(iAttr, cAttr, mapping, unnamed):
 
     return iAttr == cAttr
 
+class ListProcessor(Preprocessor):
+    """
+    Preprocesses out the lists, converting them into objects and relations.
+    """
+    def __init__(self):
+        self.processor = Pipeline(ExtractListElements(), ListsToRelations())
+
+    def transform(self, instance):
+        return self.processor.transform(instance)        
+
+    def undo_transform(self, instance):
+        self.processor.undo_transform(instance)
+
 class ExtractListElements(Preprocessor):
     """
     A pre-processor that extracts the elements of lists into their own objects
@@ -844,10 +877,6 @@ class ExtractListElements(Preprocessor):
     {'att1': 'V1', 'list1': ['a', 'b', 'c', {'B': 'C', 'D': 'E'}]}
 
     """
-
-    def __init__(self):
-        pass
-
     def transform(self, instance):
         """
         Peforms the list element extraction operation.
@@ -941,6 +970,114 @@ class ExtractListElements(Preprocessor):
         return new_instance
 
 class ListsToRelations(Preprocessor):
+    """
+    Converts an object with lists into an object with sub-objects and list
+    relations.
+
+    >>> _reset_gensym()
+    >>> ltr = ListsToRelations()
+    >>> import pprint
+    >>> instance = {"list1":['c','b','a']}
+    >>> instance = ltr.transform(instance)
+    >>> pprint.pprint(instance)
+    {'list1': {},
+     ('has-element', 'list1', 'a'): True,
+     ('has-element', 'list1', 'b'): True,
+     ('has-element', 'list1', 'c'): True,
+     ('ordered-list', 'list1', 'b', 'a'): True,
+     ('ordered-list', 'list1', 'c', 'b'): True}
+
+    >>> instance = ltr.undo_transform(instance)
+    >>> pprint.pprint(instance)
+    {'list1': ['c', 'b', 'a']}
+    """
+    def transform(self, instance):
+        return self.lists_to_relations(instance)
+
+    def undo_transform(self, instance):
+        return self.relations_to_lists(instance)
+
+    def relations_to_lists(self, instance, path=None):
+        """
+        Traverse the instance and turn any list relations into a list. If there
+        is a total ordering with no cycles than this should work perfectly. In
+        the event of a cycle or a partial ordering than this might return
+        incorrect results, just be careful.
+        """
+        new_instance = {}
+
+        elements = {}
+        order = {}
+
+        for attr in instance:
+            if isinstance(attr, tuple) and (attr[0] == 'has-element'):
+                if attr[1] not in elements:
+                    elements[attr[1]] = []
+                elements[attr[1]].append(attr[2])
+            
+            elif isinstance(attr, tuple) and attr[0] == 'ordered-list':
+                rel, lname, ele1, ele2 = attr
+
+                if lname not in order:
+                    order[lname] = []
+
+                order[lname].append((ele1, ele2))
+
+            else:
+                new_instance[attr] = instance[attr]
+
+        for l in elements:
+            all_lists = []
+
+            while len(elements[l]) > 0:
+                new_list = [elements[l].pop(0)]
+            
+                # chain to front
+                change = True
+                while change is not None:
+                    change = None
+                    for a,b in order[l]:
+                        if b == new_list[0]:
+                            change = (a,b)
+                            elements[l].remove(a)
+                            new_list.insert(0, a)
+                            break
+                    if change is not None:
+                        order[l].remove(change)
+                
+                # chain to end
+                change = True
+                while change is not None:
+                    change = None
+                    for a,b in order[l]:
+                        if a == new_list[-1]:
+                            change = (a,b)
+                            elements[l].remove(b)
+                            new_list.append(b)
+                            break
+                    if change is not None:
+                        order[l].remove(change)
+
+                all_lists.append(new_list)
+
+            new_list = [ele for sub_list in all_lists for ele in sub_list]
+            
+            path = self.get_path(l)
+            current = new_instance
+            while len(path) > 1:
+                current = new_instance[path.pop(0)]
+            current[path[0]] = new_list
+
+        return new_instance
+
+    def remove_cycles(self, list_order):
+        pass
+
+    def get_path(self, path):
+        if isinstance(path, tuple):
+            return self.get_path(path[1]).append(path[0])
+        else:
+            return [path]
 
     def lists_to_relations(self, instance, current=None, top_level=None):
         """
@@ -1128,7 +1265,7 @@ class ListsToRelations(Preprocessor):
         
         return new_instance
 
-def hoist_sub_objects(instance) :
+def hoist_sub_objects(instance):
     """
     Travese the instance for objects that contain subobjects and hoists the
     subobjects to be their own objects at the top level of the instance. 
@@ -1245,13 +1382,12 @@ def pre_process(instance):
     tuplizer = Tuplizer()
     instance = tuplizer.transform(instance)
 
-    listExtractor = ExtractListElements()
-    instance = listExtractor.transform(instance)
+    list_processor = ListProcessor()
+    instance = list_processor.transform(instance)
 
     standardizer = StandardizeApartNames()
     instance = standardizer.transform(instance)
     
-    instance = lists_to_relations(instance)
     instance = hoist_sub_objects(instance)
     instance = flatten_json(instance)
     return instance
