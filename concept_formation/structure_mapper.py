@@ -482,43 +482,89 @@ def rename_flat(instance, mapping):
 
     return temp_instance
 
-def flatten_json(instance):
+class Flattener(Preprocessor):
     """
-    Takes a :ref:`raw instance <raw-instance>` that has already been
-    standardized apart and flattens it.
-
-    :warning: important to note that relations can only exist at the top level,
-    not within subobjects. If they do exist than this function will return
-    incorrect results.
-
-    Hierarchy is represented with periods between variable names in the
-    flattened attributes. However, this process converts the attributes with
-    periods in them into a tuple of objects with an attribute as the last
-    element, this is more efficient for later processing.
-
-    :param instance: An instance to be flattened.
-    :type instance: :ref:`raw instance <raw-instance>`
-    :return: A copy of the instance flattend
-    :rtype: :ref:`flattened instance <flattened-instance>`
+    Flattens subobject attributes.
 
     >>> import pprint
+    >>> flattener = Flattener()
     >>> instance = {'a': 1, 'c1': {'b': 1, '_c': 2}}
-    >>> flat = flatten_json(instance)
-    >>> pprint.pprint(flat)
-    {'a': 1, ('_', ('_c', ('c1',))): 2, ('b', ('c1',)): 1}
+    >>> pprint.pprint(instance)
+    {'a': 1, 'c1': {'_c': 2, 'b': 1}}
+    >>> instance = flattener.transform(instance)
+    >>> pprint.pprint(instance)
+    {'a': 1, ('_', ('_c', 'c1')): 2, ('b', 'c1'): 1}
+    >>> instance = flattener.undo_transform(instance)
+    >>> pprint.pprint(instance)
+    {'a': 1, 'c1': {'_c': 2, 'b': 1}}
     """
-    temp = {}
-    for attr in instance:
-        if isinstance(instance[attr], dict):
-            for so_attr in instance[attr]:
-                if so_attr[0] == '_':
-                    new_attr = ('_', (so_attr, (attr,)))
+
+    def transform(self, instance):
+        return self.flatten_json(instance)
+
+    def undo_transform(self, instance):
+        return self.structurize(instance)
+
+    def structurize(self, instance):
+        """
+        Undoes the flattening.
+        """
+        temp = {}
+        for attr in instance:
+            if (isinstance(attr, tuple) and len(attr) == 2): 
+
+                if attr[0] == '_':
+                    rel, (sub_attr, name) = attr
                 else:
-                    new_attr = (so_attr, (attr,))
-                temp[new_attr] = instance[attr][so_attr]
-        else:
-            temp[attr] = instance[attr]
-    return temp
+                    sub_attr, name = attr
+
+                if name not in temp:
+                    temp[name] = {}
+                temp[name][sub_attr] = instance[attr]
+
+            else:
+                temp[attr] = instance[attr]
+
+        return temp
+
+    def flatten_json(self, instance):
+        """
+        Takes a :ref:`raw instance <raw-instance>` that has already been
+        standardized apart and flattens it.
+
+        :warning: important to note that relations can only exist at the top level,
+        not within subobjects. If they do exist than this function will return
+        incorrect results.
+
+        Hierarchy is represented with periods between variable names in the
+        flattened attributes. However, this process converts the attributes with
+        periods in them into a tuple of objects with an attribute as the last
+        element, this is more efficient for later processing.
+
+        :param instance: An instance to be flattened.
+        :type instance: :ref:`raw instance <raw-instance>`
+        :return: A copy of the instance flattend
+        :rtype: :ref:`flattened instance <flattened-instance>`
+
+        >>> import pprint
+        >>> flattener = Flattener()
+        >>> instance = {'a': 1, 'c1': {'b': 1, '_c': 2}}
+        >>> flat = flattener.flatten_json(instance)
+        >>> pprint.pprint(flat)
+        {'a': 1, ('_', ('_c', 'c1')): 2, ('b', 'c1'): 1}
+        """
+        temp = {}
+        for attr in instance:
+            if isinstance(instance[attr], dict):
+                for so_attr in instance[attr]:
+                    if so_attr[0] == '_':
+                        new_attr = ('_', (so_attr, attr))
+                    else:
+                        new_attr = (so_attr, attr)
+                    temp[new_attr] = instance[attr][so_attr]
+            else:
+                temp[attr] = instance[attr]
+        return temp
 
 def _traverseStructure(path, instance):
     """Given an instance dict to the given subobject for the given path.
@@ -1324,6 +1370,38 @@ class ListsToRelations(Preprocessor):
         return new_instance
 
 class SubComponentProcessor(Preprocessor):
+    """
+    Removes sub-objects and add has-component relations.
+
+    >>> _reset_gensym()
+    >>> import pprint
+    >>> psc = SubComponentProcessor()
+    >>> instance = {"a1":"v1","sub1":{"a2":"v2","a3":3},"sub2":{"a4":"v4","subsub1":{"a5":"v5","a6":"v6"},"subsub2":{"subsubsub":{"a8":"V8"},"a7":7}}}
+    >>> pprint.pprint(instance)
+    {'a1': 'v1',
+     'sub1': {'a2': 'v2', 'a3': 3},
+     'sub2': {'a4': 'v4',
+              'subsub1': {'a5': 'v5', 'a6': 'v6'},
+              'subsub2': {'a7': 7, 'subsubsub': {'a8': 'V8'}}}}
+    >>> instance = psc.transform(instance)
+    >>> pprint.pprint(instance)
+    {'a1': 'v1',
+     'sub1': {'a2': 'v2', 'a3': 3},
+     'sub2': {'a4': 'v4'},
+     'subsub1': {'a5': 'v5', 'a6': 'v6'},
+     'subsub2': {'a7': 7},
+     'subsubsub': {'a8': 'V8'},
+     ('has-component', 'sub2', 'subsub1'): True,
+     ('has-component', 'sub2', 'subsub2'): True,
+     ('has-component', 'subsub2', 'subsubsub'): True}
+    >>> instance = psc.undo_transform(instance)
+    >>> pprint.pprint(instance)
+    {'a1': 'v1',
+     'sub1': {'a2': 'v2', 'a3': 3},
+     'sub2': {'a4': 'v4',
+              'subsub1': {'a5': 'v5', 'a6': 'v6'},
+              'subsub2': {'a7': 7, 'subsubsub': {'a8': 'V8'}}}}
+    """
     
     def transform(self, instance):
         return self.hoist_sub_objects(instance)
@@ -1344,17 +1422,26 @@ class SubComponentProcessor(Preprocessor):
         for attr in instance:
             if isinstance(attr, tuple) and attr[0] == 'has-component':
                 rel, parent, child = attr
-
-                if child not in parents:
-                    parents[child] = []
-                parents[child].append(parent)
-
-                if parent not in children:
-                    children[parent] = []
-                children[parent].append(child)
-
+                parents[child] = parent
+                children[parent] = child
             else:
                 new_instance[attr] = copy.deepcopy(instance[attr])
+
+        while True:
+            child = None
+            for c in parents:
+                if c not in children:
+                    child = c
+                    break
+            if child is not None:
+                new_instance[parents[child]][child] = new_instance[child]
+                del new_instance[child]
+                dlist = [ele for ele in children if children[ele] == child]
+                for ele in dlist:
+                    del children[ele]
+                del parents[child]
+            else:
+                break
 
         return new_instance
 
@@ -1480,7 +1567,9 @@ def pre_process(instance):
     sub_component_processor = SubComponentProcessor()
     instance = sub_component_processor.transform(instance)
 
-    instance = flatten_json(instance)
+    flattener = Flattener()
+    instance = flattener.transform(instance)
+
     return instance
 
 def structure_map(concept, instance):
