@@ -844,6 +844,59 @@ def is_partial_match(iAttr, cAttr, mapping, unnamed):
 class ListProcessor(Preprocessor):
     """
     Preprocesses out the lists, converting them into objects and relations.
+
+    >>> import pprint
+    >>> _reset_gensym()
+    >>> instance = {"att1":"val1","list1":["a","b","a","c","d"]}
+    >>> lp = ListProcessor()
+    >>> instance = lp.transform(instance)
+    >>> pprint.pprint(instance)
+    {'?o1': {'val': 'a'},
+     '?o2': {'val': 'b'},
+     '?o3': {'val': 'a'},
+     '?o4': {'val': 'c'},
+     '?o5': {'val': 'd'},
+     'att1': 'val1',
+     'list1': {},
+     ('has-element', 'list1', '?o1'): True,
+     ('has-element', 'list1', '?o2'): True,
+     ('has-element', 'list1', '?o3'): True,
+     ('has-element', 'list1', '?o4'): True,
+     ('has-element', 'list1', '?o5'): True,
+     ('ordered-list', 'list1', '?o1', '?o2'): True,
+     ('ordered-list', 'list1', '?o2', '?o3'): True,
+     ('ordered-list', 'list1', '?o3', '?o4'): True,
+     ('ordered-list', 'list1', '?o4', '?o5'): True}
+
+    >>> instance = lp.undo_transform(instance)
+    >>> pprint.pprint(instance)
+    {'att1': 'val1', 'list1': ['a', 'b', 'a', 'c', 'd']}
+
+    >>> _reset_gensym()
+    >>> instance = {'l1':['a',{'in1':3,'in2':4},{'ag':'b','ah':'c'},12,'again']}
+    >>> lp = ListProcessor()
+    >>> instance = lp.transform(instance)
+    >>> pprint.pprint(instance)
+    {'?o1': {'val': 'a'},
+     '?o2': {'in1': 3, 'in2': 4},
+     '?o3': {'ag': 'b', 'ah': 'c'},
+     '?o4': {'val': 12},
+     '?o5': {'val': 'again'},
+     'l1': {},
+     ('has-element', 'l1', '?o1'): True,
+     ('has-element', 'l1', '?o2'): True,
+     ('has-element', 'l1', '?o3'): True,
+     ('has-element', 'l1', '?o4'): True,
+     ('has-element', 'l1', '?o5'): True,
+     ('ordered-list', 'l1', '?o1', '?o2'): True,
+     ('ordered-list', 'l1', '?o2', '?o3'): True,
+     ('ordered-list', 'l1', '?o3', '?o4'): True,
+     ('ordered-list', 'l1', '?o4', '?o5'): True}
+
+    >>> instance = lp.undo_transform(instance)
+    >>> pprint.pprint(instance)
+    {'l1': ['a', {'in1': 3, 'in2': 4}, {'ag': 'b', 'ah': 'c'}, 12, 'again']}
+
     """
     def __init__(self):
         self.processor = Pipeline(ExtractListElements(), ListsToRelations())
@@ -852,7 +905,7 @@ class ListProcessor(Preprocessor):
         return self.processor.transform(instance)        
 
     def undo_transform(self, instance):
-        self.processor.undo_transform(instance)
+        return self.processor.undo_transform(instance)
 
 class ExtractListElements(Preprocessor):
     """
