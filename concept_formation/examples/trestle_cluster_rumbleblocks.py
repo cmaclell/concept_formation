@@ -10,10 +10,14 @@ import matplotlib.pyplot as plt
 from concept_formation.trestle import TrestleTree
 from concept_formation.cluster import cluster
 from concept_formation.datasets import load_rb_wb_03
+from concept_formation.structure_mapper import ObjectVariablizer
 
 towers = load_rb_wb_03()
 shuffle(towers)
 towers = towers[:30]
+
+variablizer = ObjectVariablizer()
+towers = [variablizer.transform(t) for t in towers]
 
 tree = TrestleTree()
 clusters = cluster(tree, towers, maxsplit=10)

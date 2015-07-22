@@ -385,7 +385,28 @@ def rename_relation(relation, mapping):
 
     return tuple(new_relation)
 
-def get_component_names(instance):
+def get_relation_components(relation, vars_only=True):
+    """
+    Gets component names out of a relation.
+    """
+    names = set()
+
+    if vars_only is not True and relation[0] != '_':
+        names.add(relation)
+
+    for ele in relation:
+        if isinstance(ele, tuple):
+
+            for name in get_relation_components(ele, vars_only):
+                names.add(name)
+        else:
+            if ((vars_only is not True or ele[0] == '?') and ele != '_' and
+                ele[0] != '_'):
+                names.add(ele)
+
+    return names
+
+def get_component_names(instance, vars_only=True):
     """
     Given  a :ref:`flattened instance <flattened-instance>` or a concept's
     probability table return a list of all of the component names.
@@ -395,22 +416,24 @@ def get_component_names(instance):
     :return: A list of all of the component names present in the instance
     :rtype: [str, str, ...]
 
-    >>> instance = {('a', 'c1'): 0, ('a', 'c2'): 0, ('_', '_a', 'c3'): 0}
-    >>> names = get_component_names(instance)
-    >>> sorted(list(names))
-    ['c1', 'c2', 'c3']
+    >>> instance = {('a', ('sub1', 'c1')): 0, ('a', 'c2'): 0, ('_', '_a', 'c3'): 0}
+    >>> names = get_component_names(instance, False)
+    >>> frozenset(names) == frozenset({'c3', 'c2', ('sub1', 'c1'), 'sub1', 'a', ('a', ('sub1', 'c1')), ('a', 'c2'), 'c1'})
+    True
+    >>> names = get_component_names(instance, True)
+    >>> frozenset(names) == frozenset()
+    True
+
+    >>> instance = {('relation1', ('sub1', 'c1'), 'o3'): True}
+    >>> names = get_component_names(instance, False)
+    >>> frozenset(names) == frozenset({'o3', ('relation1', ('sub1', 'c1'), 'o3'), 'sub1', ('sub1', 'c1'), 'c1', 'relation1'})
+    True
     """
     names = set()
     for attr in instance:
-        if not isinstance(attr, tuple):
-            continue
-
-        for ele in attr:
-            if isinstance(ele, tuple) and len(ele) == 1:
-                names.add(ele[0])
-            elif isinstance(ele, tuple):
-                for name in get_component_names(ele):
-                    names.add(name)
+        if isinstance(attr, tuple):
+            for name in get_relation_components(attr, vars_only):
+                names.add(name)
 
     return names
 
@@ -466,11 +489,11 @@ def rename_flat(instance, mapping):
     :rtype: :ref:`mapped instance <fully-mapped>`
 
     >>> import pprint
-    >>> instance = {('a', ('c1',)): 1, ('good', ('c1',)): True}
-    >>> mapping = {'c1': 'o1'}
+    >>> instance = {('a', '?c1'): 1, ('good', '?c1'): True}
+    >>> mapping = {'?c1': '?o1'}
     >>> renamed = rename_flat(instance,mapping)
     >>> pprint.pprint(renamed)
-    {('a', ('o1',)): 1, ('good', ('o1',)): True}
+    {('a', '?o1'): 1, ('good', '?o1'): True}
     """
     temp_instance = {}
 
@@ -649,32 +672,31 @@ def bind_flat_attr(attr, mapping):
     :return: The attribute's new name or ``None`` if the mapping is incomplete
     :rtype: str
 
-    >>> attr = ('before', ('c1',), ('c2',))
-    >>> mapping = {'c1': 'o1', 'c2':'o2'}
+    >>> attr = ('before', '?c1', '?c2')
+    >>> mapping = {'?c1': '?o1', '?c2':'?o2'}
     >>> bind_flat_attr(attr, mapping)
-    ('before', ('o1',), ('o2',))
+    ('before', '?o1', '?o2')
 
     If the mapping is incomplete then returns ``None`` (nothing) 
 
-    >>> attr = ('before', ('c1',), ('c2',))
-    >>> mapping = {'c1': 'o1'}
+    >>> attr = ('before', '?c1', '?c2')
+    >>> mapping = {'?c1': 'o1'}
     >>> bind_flat_attr(attr, mapping) is None
     True
 
-    >>> bind_flat_attr(('<', ('a', ('o2',)), ('a', ('o1',))), {'o1': 'c1'}) is None
+    >>> bind_flat_attr(('<', ('a', '?o2'), ('a', '?o1')), {'?o1': '?c1'}) is None
     True
 
-    >>> bind_flat_attr(('<', ('a', ('o2',)), ('a', ('o1',))), {'o1': 'c1', 'o2': 'c2'}) is None
+    >>> bind_flat_attr(('<', ('a', '?o2'), ('a', '?o1')), {'?o1': '?c1', '?o2': '?c2'}) is None
     False
     """
+    if not isinstance(attr, tuple) and attr in mapping:
+        return mapping[attr]
     if not isinstance(attr, tuple):
-        return attr
-
-    if isinstance(attr, tuple) and len(attr) == 1:
-        if attr[0] not in mapping:
+        if attr[0] == '?':
             return None
         else:
-            return (mapping[attr[0]],)
+            return attr
 
     if isinstance(attr, tuple):
         new_attr = []
@@ -699,18 +721,18 @@ def contains_component(component, attr):
              ``False`` otherwise
     :rtype: bool
 
-    >>> contains_component('c1', ('relation', ('c2',), ('a', ('c1',))))
+    >>> contains_component('?c1', ('relation', '?c2', ('a', '?c1')))
     True
-    >>> contains_component('c3', ('before', ('c1',), ('c2',)))
+    >>> contains_component('?c3', ('before', '?c1', '?c2'))
     False
     """
-    if isinstance(attr, tuple) and len(attr) == 1:
-        return component == attr[0]
-
-    elif isinstance(attr, tuple):
+    if isinstance(attr, tuple):
         for ele in attr:
             if contains_component(component, ele) is True:
                 return True
+    else:
+        if attr == component:
+            return True
     
     return False
 
@@ -740,6 +762,8 @@ def flat_match(concept, instance, optimal=False):
     """
     inames = frozenset(get_component_names(instance))
     cnames = frozenset(get_component_names(concept.av_counts))
+    # might try this too. let variables be mapped to constants
+    #cnames = frozenset(get_component_names(concept.av_counts, False))
 
     if(len(inames) == 0 or len(cnames) == 0):
         return {}
@@ -858,13 +882,13 @@ def is_partial_match(iAttr, cAttr, mapping, unnamed):
     :return: ``True`` if the instance attribute matches the concept attribute in the mapping otherwise ``False``
     :rtype: bool
 
-    >>> is_partial_match(('<', ('a', ('o2',)), ('a', ('o1',))), ('<', ('a', ('c2',)), ('b', ('c1',))), {'o1': 'c1'}, {'o2'})
+    >>> is_partial_match(('<', ('a', '?o2'), ('a', '?o1')), ('<', ('a', '?c2'), ('b', '?c1')), {'?o1': '?c1'}, {'?o2'})
     False
 
-    >>> is_partial_match(('<', ('a', ('o2',)), ('a', ('o1',))), ('<', ('a', ('c2',)), ('a', ('c1',))), {'o1': 'c1'}, {'o2'})
+    >>> is_partial_match(('<', ('a', '?o2'), ('a', '?o1')), ('<', ('a', '?c2'), ('a', '?c1')), {'?o1': '?c1'}, {'?o2'})
     True
 
-    >>> is_partial_match(('<', ('a', ('o2',)), ('a', ('o1',))), ('<', ('a', ('c2',)), ('a', ('c1',))), {'o1': 'c1', 'o2': 'c2'}, {})
+    >>> is_partial_match(('<', ('a', '?o2'), ('a', '?o1')), ('<', ('a', '?c2'), ('a', '?c1')), {'?o1': '?c1', '?o2': '?c2'}, {})
     True
     """
     if type(iAttr) != type(cAttr):
@@ -873,16 +897,16 @@ def is_partial_match(iAttr, cAttr, mapping, unnamed):
     if isinstance(iAttr, tuple) and len(iAttr) != len(cAttr):
         return False
 
-    if isinstance(iAttr, tuple) and len(iAttr) == 1:
-        if iAttr[0] in unnamed:
-            return True
-        elif iAttr[0] in mapping:
-            return mapping[iAttr[0]] == cAttr[0]
-
     if isinstance(iAttr, tuple):
         for i,v in enumerate(iAttr):
             if not is_partial_match(iAttr[i], cAttr[i], mapping, unnamed):
                 return False
+        return True
+
+    if iAttr[0] == '?' and iAttr in mapping:
+        return mapping[iAttr] == cAttr
+
+    if iAttr[0] == '?' and cAttr[0] == '?' and iAttr not in mapping:
         return True
 
     return iAttr == cAttr
@@ -1612,8 +1636,9 @@ def pre_process(instance):
 
     return instance
 
-def structure_map(concept, instance):
-    """Flatten the instance, perform structure mapping to the concept, rename
+class StructureMapper(Preprocessor):
+    """
+    Flatten the instance, perform structure mapping to the concept, rename
     the instance based on this structure mapping, and return the renamed
     instance.
 
@@ -1623,10 +1648,70 @@ def structure_map(concept, instance):
     :type instance: :ref:`raw instance <raw-instance>`
     :return: A fully mapped and flattend copy of the instance
     :rtype: :ref:`mapped instance <fully-mapped>`
-
     """
-    instance = pre_process(instance)
-    mapping = flat_match(concept, instance)
-    print(mapping)
-    instance = rename_flat(instance, mapping)
-    return instance
+    def __init__(self, concept):
+        self.concept = concept
+        self.reverse_mapping = None
+        self.pipeline = Pipeline(Tuplizer(), ListProcessor(),
+                                 NameStandardizer(),
+                                 SubComponentProcessor(), Flattener())
+
+    def get_mapping(self):
+        return {self.reverse_mapping[o]: o for o in self.reverse_mapping}
+    
+    def transform(self, instance):
+        instance = self.pipeline.transform(instance)
+        mapping = flat_match(self.concept, instance)
+        self.reverse_mapping = {mapping[o]: o for o in mapping}
+        return rename_flat(instance, mapping)
+
+    def undo_transform(self, instance):
+        if self.reverse_mapping is None:
+            raise Exception("Must transform before undoing transform")
+        instance = rename_flat(instance, self.reverse_mapping)
+        return self.pipeline.undo_transform(instance)
+
+class ObjectVariablizer(Preprocessor):
+    """
+    Converts all attributes with dictionary values into variables by adding a
+    question mark.
+    """
+    def transform(self, instance):
+        return self.variablize(instance)
+
+    def undo_transform(self, instance):
+        raise NotImplemented("no reverse transformation currently implemented")
+
+    def variablize(self, instance, mapping={}, prefix=None):
+        new_instance = {}
+
+        mapping = {}
+        relations = []
+
+        for attr in instance:
+            if prefix == None:
+                prefix = attr
+            else:
+                prefix = (attr, prefix)
+
+            if isinstance(attr, tuple):
+                relations.append(attr)
+
+            elif isinstance(instance[attr], dict):
+                name = attr
+                if attr[0] != '?':
+                    name = '?' + attr
+                new_instance[name] = self.variablize(instance[attr], 
+                                                     mapping, prefix)
+            else:
+                new_instance[attr] = instance[attr]
+
+        for rel in relations:
+            new_instance[rename_relation(rel, mapping)] = instance[rel]
+
+        return new_instance
+
+
+
+                
+

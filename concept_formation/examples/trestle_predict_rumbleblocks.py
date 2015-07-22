@@ -11,10 +11,14 @@ from concept_formation.trestle import TrestleTree
 from concept_formation.dummy import DummyTree
 from concept_formation.datasets import load_rb_s_07
 from concept_formation.datasets import load_rb_s_07_human_predictions
+from concept_formation.structure_mapper import ObjectVariablizer
 
 num_runs = 30
 num_examples = 30
 towers = load_rb_s_07()
+
+variablizer = ObjectVariablizer()
+towers = [variablizer.transform(t) for t in towers]
 
 naive_data = incremental_prediction(DummyTree(), towers,
                                   run_length=num_examples,

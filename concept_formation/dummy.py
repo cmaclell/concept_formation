@@ -4,8 +4,13 @@ from __future__ import absolute_import
 from __future__ import division
 from concept_formation.cobweb3 import Cobweb3Node
 from concept_formation.trestle import TrestleTree
-from concept_formation.structure_mapper import flatten_json
-from concept_formation.structure_mapper import structure_map
+from concept_formation.structure_mapper import StructureMapper
+from concept_formation.structure_mapper import Tuplizer
+from concept_formation.structure_mapper import ListProcessor
+from concept_formation.structure_mapper import NameStandardizer
+from concept_formation.structure_mapper import SubComponentProcessor
+from concept_formation.structure_mapper import Flattener
+from concept_formation.structure_mapper import Pipeline
 
 class DummyTree(TrestleTree):
 
@@ -23,9 +28,13 @@ class DummyTree(TrestleTree):
         mapping. This is disabled by default to get a really naive model.
         """
         if do_mapping:
-            temp_instance = structure_map(self.root, instance)
+            structure_mapper = StructureMapper(self.root)
+            temp_instance = structure_mapper.transform(instance)
         else:
-            temp_instance = flatten_json(instance)
+            pipeline = Pipeline(Tuplizer(), ListProcessor(),
+                                 NameStandardizer(),
+                                 SubComponentProcessor(), Flattener())
+            temp_instance = pipeline.transform(instance)
         self.root.increment_counts(temp_instance)
         return self.root
 
