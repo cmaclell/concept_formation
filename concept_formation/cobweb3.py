@@ -9,6 +9,7 @@ from math import pi
 from math import exp
 
 from concept_formation.utils import c4
+from concept_formation.utils import weighted_choice
 from concept_formation.cobweb import CobwebNode
 from concept_formation.cobweb import CobwebTree
 
@@ -48,6 +49,39 @@ class Cobweb3Tree(CobwebTree):
         self.alpha = alpha
         self.scaling = scaling
 
+    def infer_missing(self, instance, choice_fn=weighted_choice):
+        """
+        Given a tree and an instance, returns a new instance with attribute 
+        values picked using the choice_fn.
+
+        :param instance: an instance to be completed.
+        :type instance: {a1: v1, a2: v2, ...}
+        :param choice_fn: A function for deciding which attribute/value to
+            chose. The default is: concept_formation.utils.weighted_choice. The
+            other option is: concept_formation.utils.most_likely_choice.
+        :type choice_fn: a python function
+        :type instance: {a1: v1, a2: v2, ...}
+        :return: A completed instance
+        :rtype: instance
+        """
+        temp_instance = {a:instance[a] for a in instance}
+        concept = self._cobweb_categorize(temp_instance)
+
+        for attr in concept.av_counts:
+            if attr in temp_instance:
+                continue
+
+            missing_prob = concept.get_probability_missing(attr)
+            attr_choices = ((None, missing_prob), (attr, 1 - missing_prob))
+            if choice_fn(attr_choices) == attr:
+
+                if isinstance(concept.av_counts[attr], ContinuousValue):
+                    temp_instance[attr] = concept.av_counts[attr].unbiased_mean()
+                else:
+                    temp_instance[attr] = choice_fn(concept.get_weighted_values(attr))
+
+        return temp_instance
+
     def clear(self):
         """Clears the concepts of the tree, but maintains the alpha  and
         scaling parameters.
@@ -76,6 +110,41 @@ class Cobweb3Node(CobwebNode):
     :math:`\\frac{1}{\\sqrt{2 * \\pi}}` which is the smallest possible acuity
     before probability estimates begin to exceed 1.0.
     """
+
+    def get_probability_missing(self, attr):
+        """
+        Returns the probability of a particular attribute not being present in a
+        given concept.
+
+        This takes into account the possibilities that an attribute can take any
+        of the values available at the root, or be missing. Laplace smoothing is
+        used to place a prior over these possibilites. Alpha determines the
+        strength of this prior.
+
+        :param attr: an attribute of an instance
+        :type attr: str
+        :return: The probability of attr not being present from an instance in the current concept.
+        :rtype: float 
+        """
+        # the +1 is for the "missing" value
+        if attr in self.tree.root.av_counts:
+            n_values = len(self.tree.root.av_counts[attr]) + 1
+        else:
+            n_values = 1
+
+        val_count = 0
+        if attr in self.av_counts:
+            if isinstance(self.av_counts[attr], ContinuousValue):
+                val_count += self.av_counts[attr].num
+            else:
+                for val in self.av_counts[attr]:
+                    val_count += self.av_counts[attr][val]
+
+        if (1.0 * self.count + self.tree.alpha * n_values) == 0:
+            return 0.0
+
+        return ((self.count - val_count + self.tree.alpha) / 
+                (1.0 * self.count + self.tree.alpha * n_values))
 
     def increment_counts(self, instance):
         """Increment the counts at the current node according to the specified

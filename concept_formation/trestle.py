@@ -6,6 +6,7 @@ from __future__ import division
 from concept_formation.utils import weighted_choice
 from concept_formation.cobweb3 import Cobweb3Tree
 from concept_formation.cobweb3 import Cobweb3Node
+from concept_formation.cobweb3 import ContinuousValue
 from concept_formation.structure_mapper import StructureMapper
 
 
@@ -88,7 +89,7 @@ class TrestleTree(Cobweb3Tree):
         temp_instance = structure_mapper.transform(instance)
         return self._cobweb_categorize(temp_instance)
 
-    def complete_instance(self, instance, choice_fn=weighted_choice):
+    def infer_missing(self, instance, choice_fn=weighted_choice):
         """
         Given a tree and an instance, returns a new instance with attribute 
         values picked using hte choice_fn.
@@ -114,7 +115,11 @@ class TrestleTree(Cobweb3Tree):
             missing_prob = concept.get_probability_missing(attr)
             attr_choices = ((None, missing_prob), (attr, 1 - missing_prob))
             if choice_fn(attr_choices) == attr:
-                temp_instance[attr] = choice_fn(concept.get_weighted_values(attr))
+
+                if isinstance(concept.av_counts[attr], ContinuousValue):
+                    temp_instance[attr] = concept.av_counts[attr].unbiased_mean()
+                else:
+                    temp_instance[attr] = choice_fn(concept.get_weighted_values(attr))
 
         return structure_mapper.undo_transform(temp_instance)
 

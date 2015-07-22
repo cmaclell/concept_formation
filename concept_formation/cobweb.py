@@ -171,6 +171,35 @@ class CobwebTree(object):
             elif best_action == "best":
                 current = best1
 
+    def infer_missing(self, instance, choice_fn=weighted_choice):
+        """
+        Given a tree and an instance, returns a new instance with attribute 
+        values picked using the choice_fn.
+
+        :param instance: an instance to be completed.
+        :type instance: {a1: v1, a2: v2, ...}
+        :param choice_fn: A function for deciding which attribute/value to
+            chose. The default is: concept_formation.utils.weighted_choice. The
+            other option is: concept_formation.utils.most_likely_choice.
+        :type choice_fn: a python function
+        :type instance: {a1: v1, a2: v2, ...}
+        :return: A completed instance
+        :rtype: instance
+        """
+        temp_instance = {a:instance[a] for a in instance}
+        concept = self._cobweb_categorize(temp_instance)
+
+        for attr in concept.av_counts:
+            if attr in temp_instance:
+                continue
+
+            missing_prob = concept.get_probability_missing(attr)
+            attr_choices = ((None, missing_prob), (attr, 1 - missing_prob))
+            if choice_fn(attr_choices) == attr:
+                temp_instance[attr] = choice_fn(concept.get_weighted_values(attr))
+
+        return temp_instance
+
     def categorize(self, instance): 
         """Sort an instance in the categorization tree and return its resulting
         concept.
