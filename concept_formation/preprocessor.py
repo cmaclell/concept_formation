@@ -76,9 +76,9 @@ class Tuplizer(Preprocessor):
     notation for relations ``(related a b)`` but this preprocessor should be
     flexible enough to handle postfix and prefix.
 
-    In :class:`StructureMapper
+    This is the first operation in :class:`StructureMapper
     <concept_formation.structure_mapper.StructureMapper>`'s standard
-    preprocessor pipeline this is the first operation run.
+    pipeline.
 
     >>> tuplizer = Tuplizer()
     >>> instance = {'(foo1 o1 (foo2 o2 o3))': True}
@@ -167,7 +167,23 @@ class NameStandardizer(Preprocessor):
     """
     A preprocessor that standardizes apart object names.
 
+    Given a :ref:`raw instance <raw-instance>` rename all the components so they
+    have unique names.
+
+    .. :warning: relations cannot have dictionaries as values (i.e., cannot be
+        subojects).
+    .. :warning: relations can only exist at the top level, not in sub-objects.
+
+    This will rename component attributes as well as any occurance of the
+    component's name within relation attributes. This renaming is necessary to
+    allow for a search between possible mappings without collisions.
+
+    This is the second operation in :class:`StructureMapper
+    <concept_formation.structure_mapper.StructureMapper>`'s standard
+    pipeline.
+
     >>> _reset_gensym()
+    >>> # We reset the symbol generator for doctesting purposes. 
     >>> import pprint
     >>> instance = {'nominal': 'v1', 'numeric': 2.3, 'c1': {'a1': 'v1'}, '?c2': {'a2': 'v2', '?c3': {'a3': 'v3'}}, '(relation1 c1 ?c2)': True, 'lists': [{'c1': {'inner': 'val'}}, 's2', 's3'], '(relation2 (a1 c1) (relation3 (a3 (?c3 ?c2))))': 4.3}
     >>> tuplizer = Tuplizer()
@@ -178,9 +194,6 @@ class NameStandardizer(Preprocessor):
         ...
     Exception: Must call transform before undo_transform!
     >>> new_i = std.transform(instance)
-
-    #>>> new_i['?o1']['?o2'][('a4', '?o2')] = 'v4'
-
     >>> old_i = std.undo_transform(new_i)
     >>> pprint.pprint(instance)
     {'?c2': {'?c3': {'a3': 'v3'}, 'a2': 'v2'},
@@ -216,7 +229,7 @@ class NameStandardizer(Preprocessor):
         Performs the standardize apart tranformation.
         """
         mapping = {}
-        new_instance = self.standardize(instance, mapping)
+        new_instance = self._standardize(instance, mapping)
         self.reverse_mapping = {mapping[o]: o for o in mapping}
         return new_instance
 
@@ -227,9 +240,9 @@ class NameStandardizer(Preprocessor):
         if self.reverse_mapping is None:
             raise Exception("Must call transform before undo_transform!")
 
-        return self.undo_standardize(instance)
+        return self._undo_standardize(instance)
 
-    def undo_standardize(self, instance):
+    def _undo_standardize(self, instance):
         new_instance = {}
 
         for attr in instance:
@@ -241,9 +254,9 @@ class NameStandardizer(Preprocessor):
                     name = name[0]
 
             if isinstance(instance[attr], dict):
-                new_instance[name] = self.undo_standardize(instance[attr])
+                new_instance[name] = self._undo_standardize(instance[attr])
             elif isinstance(instance[attr], list):
-                new_instance[name] = [self.undo_standardize(ele) if
+                new_instance[name] = [self._undo_standardize(ele) if
                                       isinstance(ele, dict) else ele for ele in
                                       instance[attr]]
             elif isinstance(attr, tuple):
@@ -254,7 +267,7 @@ class NameStandardizer(Preprocessor):
         
         return new_instance
 
-    def standardize(self, instance, mapping={}, prefix=None):
+    def _standardize(self, instance, mapping={}, prefix=None):
         """
         Given a :ref:`raw instance <raw-instance>` rename all the components so they
         have unique names.
@@ -315,13 +328,13 @@ class NameStandardizer(Preprocessor):
                 name = attr
                 if attr[0] == '?':
                     name = mapping[new_a]
-                new_instance[name] = self.standardize(instance[attr],
+                new_instance[name] = self._standardize(instance[attr],
                                                        mapping, new_a)
             elif isinstance(instance[attr], list):
                 name = attr
                 if attr[0] == '?':
                     name = mapping[new_a]
-                new_instance[name] = [self.standardize(ele, mapping, new_a) 
+                new_instance[name] = [self._standardize(ele, mapping, new_a) 
                                        if isinstance(ele, dict) else ele for
                                        ele in instance[attr]]
             else:

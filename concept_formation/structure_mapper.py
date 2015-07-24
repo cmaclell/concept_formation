@@ -639,8 +639,7 @@ class StructureMapper(Preprocessor):
         self.reverse_mapping = None
 
         if pipeline is None:
-        	self.pipeline = Pipeline(Tuplizer(), ListProcessor(),
-                                 NameStandardizer(),
+        	self.pipeline = Pipeline(Tuplizer(), NameStandardizer(),
                                  SubComponentProcessor(), Flattener())
         else :
         	self.pipeline = pipeline
