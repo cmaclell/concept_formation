@@ -25,25 +25,35 @@ class Cobweb3Tree(CobwebTree):
     """
 
     def __init__(self, alpha=0.001, scaling=True):
-        """The tree constructor. 
+        """
+        The tree constructor. 
 
-        The alpha parameter is the parameter used for laplacian smoothing. The
-        higher the value, the higher the prior that all attributes/values are
-        equally likely. By default a minor smoothing is used: 0.001.
+        The alpha parameter is the parameter used for laplacian smoothing of
+        nominal values (or whether an attribute is present or not for both
+        nominal and numeric attributes). The higher the value, the higher the
+        prior that all attributes/values are equally likely. By default a minor
+        smoothing is used: 0.001.
 
+        .. todo:: Need to test scaling by 1 std vs. 2 std. It might be
+            preferrable to standardize by 2 std because that gives it the same
+            variance as a nominal value.
+            
         The scaling parameter determines whether online normalization of
         continuous attributes is used. By default scaling is used. Scaling
         divides the std of each attribute by the std of the attribute in the
-        root node. Scaling is useful to balance the weight of different
-        numerical attributes, without scaling the magnitude of numerical
-        attributes can affect category utility calculation meaning numbers that
-        are naturally larger will recieve extra weight in the calculation.
+        parent node (no scaling is performed in the root). Scaling is useful to
+        balance the weight of different numerical attributes, without scaling
+        the magnitude of numerical attributes can affect category utility
+        calculation meaning numbers that are naturally larger will recieve
+        extra weight in the calculation.
 
         :param alpha: constant to use for laplacian smoothing.
         :type alpha: float
-        :param scaling: whether or not numerical values should be scaled in online normalization.
+        :param scaling: whether or not numerical values should be scaled in
+        online normalization.
         :type scaling: bool
         """
+
         self.root = Cobweb3Node()
         self.root.tree = self
         self.alpha = alpha
@@ -51,8 +61,8 @@ class Cobweb3Tree(CobwebTree):
 
     def infer_missing(self, instance, choice_fn=weighted_choice):
         """
-        Given a tree and an instance, returns a new instance with attribute 
-        values picked using the choice_fn.
+        Given a tree and an instance, returns a new instance with missing
+        atributes-values inferred using the given choice_fn.
 
         :param instance: an instance to be completed.
         :type instance: {a1: v1, a2: v2, ...}
