@@ -77,6 +77,15 @@ concept_formation.structure_mapper module
     :undoc-members:
     :show-inheritance:
 
+concept_formation.preprocessor module
+-----------------------------------------
+
+.. automodule:: concept_formation.preprocessor
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
 concept_formation.trestle module
 --------------------------------
 

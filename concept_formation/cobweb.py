@@ -886,11 +886,13 @@ class CobwebNode(object):
         :param attr: an attribute of an instance
         :type attr: str
         :return: A value sampled from the distribution of values in the node's
-        probability table.
+            probability table.
         :rtype: str
 
         .. seealso :meth:`CobwebNode.predict`
+        
         """
+
         if attr not in self.tree.root.av_counts:
             return None
 
