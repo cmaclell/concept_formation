@@ -309,7 +309,8 @@ def batch_santize_JSON(instances,ext_ob_name="extOb",relation_name="Ordered",app
 
 
 def weighted_choice(choices):
-    """Given a list of tuples [(val, prob),...(val, prob)], return a
+    """
+    Given a list of tuples [(val, prob),...(val, prob)], return a
     randomly chosen value where the choice is weighted by prob.
 
     :param choices: A list of tuples
@@ -338,7 +339,7 @@ def most_likely_choice(choices):
     :return: the val with the hightest prob
     :rtype: val
     """
-    val, prob = sorted(choices)[0]
+    val, prob = sorted(choices, key=lambda a: -a[1])[0]
     return val
 
 

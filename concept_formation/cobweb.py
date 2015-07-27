@@ -7,6 +7,7 @@ from random import random
 import json
 
 from concept_formation.utils import weighted_choice
+from concept_formation.utils import most_likely_choice
 
 class CobwebTree(object):
     """
@@ -57,7 +58,8 @@ class CobwebTree(object):
         return self.cobweb(instance)
 
     def fit(self, instances, iterations=1, randomize_first=True):
-        """Fit a collection of instances into the tree
+        """
+        Fit a collection of instances into the tree
 
         This is a batch version of the ifit function that takes a collection of
         instances and categorizes all of them. The instances can be incorporated
@@ -171,21 +173,27 @@ class CobwebTree(object):
             elif best_action == "best":
                 current = best1
 
-    def infer_missing(self, instance, choice_fn=weighted_choice):
+    def infer_missing(self, instance, choice_fn="most likely"):
         """
         Given a tree and an instance, returns a new instance with attribute 
-        values picked using the choice_fn.
+        values picked using the specified choice function (wither "most likely"
+        or "sampled"). 
 
         :param instance: an instance to be completed.
         :type instance: {a1: v1, a2: v2, ...}
-        :param choice_fn: A function for deciding which attribute/value to
-            chose. The default is: concept_formation.utils.weighted_choice. The
-            other option is: concept_formation.utils.most_likely_choice.
-        :type choice_fn: a python function
-        :type instance: {a1: v1, a2: v2, ...}
+        :param choice_fn: a string specifying the choice function to use,
+        either "most likely" or "sampled". 
+        :type choice_fn: a string
         :return: A completed instance
         :rtype: instance
         """
+        if choice_fn == "most likely" or choice_fn == "m":
+            choice_fn = most_likely_choice
+        elif choice_fn == "sampled" or choice_fn == "s":
+            choice_fn = weighted_choice
+        else:
+            raise Exception("Unknown choice_fn")
+
         temp_instance = {a:instance[a] for a in instance}
         concept = self._cobweb_categorize(temp_instance)
 
