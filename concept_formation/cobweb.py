@@ -522,6 +522,10 @@ class CobwebNode(object):
 
         This is the operation used for creating a new child to a node and adding
         the instance to it.
+
+        .. image:: images/new.png
+            :width: 400px
+            :align: center        
         
         :param instance: The instance currently being categorized
         :type instance: {a1: v1, a2: v2, ...} - a hashtable of attr and values 
@@ -584,7 +588,9 @@ class CobwebNode(object):
         given nodes. This new node becomes a child of the current node and the
         two given nodes become children of the new node.
 
-        .. todo:: add a figure to show this?
+        .. image:: images/merged.png
+            :width: 400px
+            :align: center
 
         :param best1: The child of the current node with the best category utility
         :type best1: CobwebNode
@@ -655,7 +661,9 @@ class CobwebNode(object):
         call of cobweb on the current node so this function does not return
         anything.
 
-        .. todo:: put a figure of a split here
+        .. image:: images/split.png
+            :width: 400px
+            :align: center
 
         :param best: The child node to be split
         :type best: CobwebNode

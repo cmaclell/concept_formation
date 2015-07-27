@@ -732,8 +732,6 @@ class ExtractListElements(Preprocessor):
 
     def _extract(self,instance):
         """
-        
-
         Unlike the utils.extract_components function this one will extract ALL
         elements into their own objects not just object literals
         """
@@ -748,9 +746,8 @@ class ExtractListElements(Preprocessor):
                 new_list = []
                 for el in instance[a]:
                     
-                    # TODO do we want to deep copy in the case we find a dict?
                     if isinstance(el,dict):
-                        new_obj = el
+                        new_obj = deepcopy(el)
                     else :
                         new_obj = {"val": el}
 
