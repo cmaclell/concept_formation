@@ -35,10 +35,6 @@ class Cobweb3Tree(CobwebTree):
         prior that all attributes/values are equally likely. By default a minor
         smoothing is used: 0.001.
 
-        .. todo:: Need to test scaling by 1 std vs. 2 std. It might be
-            preferrable to standardize by 2 std because that gives it the same
-            variance as a nominal value.
-            
         The scaling parameter determines whether online normalization of
         continuous attributes is used. By default scaling is used. Scaling
         divides the std of each attribute by the std of the attribute in the
@@ -59,6 +55,7 @@ class Cobweb3Tree(CobwebTree):
         self.root.tree = self
         self.alpha = alpha
         self.scaling = scaling
+        self.std_to_scale = 1.0
 
     def infer_missing(self, instance, choice_fn="most likely"):
         """
@@ -240,7 +237,7 @@ class Cobweb3Node(CobwebNode):
             return 0.0
         elif isinstance(self.av_counts[attr], ContinuousValue):
             if self.tree.scaling and self.parent:
-                scale = self.parent.av_counts[attr].unbiased_std()
+                scale = self.tree.std_to_scale * self.parent.av_counts[attr].unbiased_std()
             else:
                 scale = 1.0
 
@@ -266,7 +263,8 @@ class Cobweb3Node(CobwebNode):
             return (after_prob * after_prob) - (before_prob * before_prob)
 
     def expected_correct_guesses(self):
-        """Returns the number of attribute values that would be correctly guessed
+        """
+        Returns the number of attribute values that would be correctly guessed
         in the current concept. This extension supports both nominal and
         numeric attribute values. 
         
@@ -285,7 +283,8 @@ class Cobweb3Node(CobwebNode):
 
             P(A_i = V_{ij})^2 = P(A_i)^2 * \\frac{1}{2 * \\sqrt{\\pi} * \\sigma}
 
-        :return: The number of attribute values that would be correctly guessed in the current concept.
+        :return: The number of attribute values that would be correctly guessed
+        in the current concept.
         :rtype: float
         """
         correct_guesses = 0.0
@@ -304,7 +303,7 @@ class Cobweb3Node(CobwebNode):
                     val_count = self.av_counts[attr].num
 
                     if self.tree.scaling and self.parent:
-                        scale = self.parent.av_counts[attr].unbiased_std()
+                        scale = self.tree.std_to_scale * self.parent.av_counts[attr].unbiased_std()
                     else:
                         scale = 1.0
 
@@ -477,7 +476,7 @@ class Cobweb3Node(CobwebNode):
                 return 1 - prob_attr
 
             if self.tree.scaling and self.parent:
-                scale = self.parent.av_counts[attr].unbiased_std()
+                scale = self.tree.std_to_scale * self.parent.av_counts[attr].unbiased_std()
                 if scale == 0:
                     scale = 1
                 shift = self.parent.av_counts[attr].mean
