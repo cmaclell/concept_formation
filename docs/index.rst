@@ -7,10 +7,10 @@ Contents:
 .. toctree::
     :maxdepth: 1
 
-    instance_language.rst
+    index.rst
+    instance_representation.rst
     examples.rst
     concept_formation
-
 
 Indices and tables
 ==================

@@ -3,6 +3,8 @@ from __future__ import unicode_literals
 from __future__ import absolute_import
 from __future__ import division
 
+from copy import deepcopy
+
 _gensym_counter = 0;
 
 def gensym():
@@ -944,7 +946,7 @@ class SubComponentProcessor(Preprocessor):
                     parents[child] = parent
                     children[parent] = child
             else:
-                new_instance[attr] = copy.deepcopy(instance[attr])
+                new_instance[attr] = deepcopy(instance[attr])
 
         while True:
             child = None
