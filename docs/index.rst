@@ -7,7 +7,6 @@ Contents:
 .. toctree::
     :maxdepth: 1
 
-    index.rst
     instance_representation.rst
     examples.rst
     concept_formation
