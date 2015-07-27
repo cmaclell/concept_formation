@@ -182,7 +182,7 @@ class CobwebTree(object):
         :param instance: an instance to be completed.
         :type instance: {a1: v1, a2: v2, ...}
         :param choice_fn: a string specifying the choice function to use,
-        either "most likely" or "sampled". 
+            either "most likely" or "sampled". 
         :type choice_fn: a string
         :return: A completed instance
         :rtype: instance

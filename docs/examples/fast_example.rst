@@ -15,13 +15,13 @@ Fast Example
        ...:          'f2': 2.6, #numeric value
        ...:          'f3': {'sub-feature1': 'v1'}, # component value
        ...:          'f4': {'sub-feature1': 'v1'}, # component value
-       ...:          'f5': ['some-relation', 'f3', 'f4'] #relational value
+       ...:          '(some-relation f3 f4)': True #relational value
        ...:         },
        ...:         {'f1': 'v1', #nominal value
        ...:          'f2': 2.8, #numeric value
        ...:          'f3': {'sub-feature1': 'v2'}, # component value
        ...:          'f4': {'sub-feature1': 'v1'}, # component value
-       ...:          'f5': ['some-relation', 'f3', 'f4'] #relational value
+       ...:          '(some-relation f3 f4)': True #relational value
        ...:         }]
 
     # Data can be clustered with a TrestleTree, which supports all data types or
@@ -40,7 +40,7 @@ Fast Example
     # Trees can also be used to predict missing attributes of new data points.
     In [9]: new = {'f2': 2.6, 'f3': {'sub-feature1': 'v1'}, 
        ...:        'f4': {'sub-feature1': 'v1'},
-       ...:        'f5': ['some-relation', 'f3', 'f4']}
+       ...:        '(some-relation f3 f4)':True}
 
     In [10]: concept = tree.categorize(new)
 

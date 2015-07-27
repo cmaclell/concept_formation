@@ -69,7 +69,7 @@ class Cobweb3Tree(CobwebTree):
         :param instance: an instance to be completed.
         :type instance: {a1: v1, a2: v2, ...}
         :param choice_fn: a string specifying the choice function to use,
-        either "most likely" or "sampled". 
+            either "most likely" or "sampled". 
         :type choice_fn: a string
         :return: A completed instance
         :rtype: instance
@@ -168,7 +168,8 @@ class Cobweb3Node(CobwebNode):
                 (1.0 * self.count + self.tree.alpha * n_values))
 
     def increment_counts(self, instance):
-        """Increment the counts at the current node according to the specified
+        """
+        Increment the counts at the current node according to the specified
         instance.
 
         Cobweb3Node uses a modified version of
@@ -179,7 +180,9 @@ class Cobweb3Node(CobwebNode):
         as a numerical attribute and included under an assumption that the
         number should follow a normal distribution.
 
-        .. warning:: If a numeric attribute is found in an instance with the name of a previously nominal attribute the original nominal data in the concept will be overridden.
+        .. warning:: If a numeric attribute is found in an instance with the
+            name of a previously nominal attribute, or vice versa, this function will raise
+            an exception.
         
         :param instance: A new instances to incorporate into the node.
         :type instance: {a1: v1, a2: v2, ...} - a hashtable of attr and values, where values can be numeric or nominal. 
@@ -189,20 +192,26 @@ class Cobweb3Node(CobwebNode):
             
         for attr in instance:
             if isinstance(instance[attr], Number):
-                if (attr not in self.av_counts or 
-                    not isinstance(self.av_counts[attr], ContinuousValue)):
-                    # TODO currently overrides nominals if a float comes in.
+                if attr not in self.av_counts:
                     self.av_counts[attr] = ContinuousValue()
+                elif not isinstance(self.av_counts[attr], ContinuousValue):
+                    raise Exception ('Numerical value found in nominal attribute. Try casting all values of "'+attr+'" to either string or a number type.')
+                    
                 self.av_counts[attr].update(instance[attr])
             else:
+                if isinstance(self.av_counts[attr],ContinuousValue):
+                    raise Exception ('Nominal value found in numerical attribute. Try casting all values of "'+attr+'" to either string or a number type.')
                 self.av_counts[attr] = self.av_counts.setdefault(attr,{})
                 self.av_counts[attr][instance[attr]] = (self.av_counts[attr].get(instance[attr], 0) + 1)
 
     def update_counts_from_node(self, node):
-        """Increments the counts of the current node by the amount in the specified
+        """
+        Increments the counts of the current node by the amount in the specified
         node, modified to handle numbers.
 
-        .. warning:: If a numeric attribute is found in an instance with the name of a previously nominal attribute the original nominal data in the concept will be overridden.
+        .. warning:: If a numeric attribute is found in an instance with the
+            name of a previously nominal attribute, or vice versa, this function will raise
+            an exception.
 
         :param node: Another node from the same Cobweb3Tree
         :type node: Cobweb3Node
@@ -210,19 +219,23 @@ class Cobweb3Node(CobwebNode):
         self.count += node.count
         for attr in node.av_counts:
             if isinstance(node.av_counts[attr], ContinuousValue):
-                if (attr not in self.av_counts or 
-                    not isinstance(self.av_counts[attr], ContinuousValue)):
-                    # TODO currently overrides nominals if a float comes in.
+                if attr not in self.av_counts:
                     self.av_counts[attr] = ContinuousValue()
+                elif not isinstance(self.av_counts[attr], ContinuousValue):
+                    raise Exception ('Numerical value found in nominal attribute. Try casting all values of "'+attr+'" to either string or a number type.')
+                    
                 self.av_counts[attr].combine(node.av_counts[attr])
             else:
+                if attr in self.av_counts and isinstance(self.av_counts[attr],ContinuousValue):
+                    raise Exception ('Nominal value found in numerical attribute. Try casting all values of "'+attr+'" to either string or a number type.')
                 for val in node.av_counts[attr]:
                     self.av_counts[attr] = self.av_counts.setdefault(attr,{})
                     self.av_counts[attr][val] = (self.av_counts[attr].get(val,0) +
                                          node.av_counts[attr][val])
     
     def attr_val_guess_gain(self, attr, val):
-        """Returns the gain in number of correct guesses if a particular attr/val
+        """
+        Returns the gain in number of correct guesses if a particular attr/val
         was added to a concept.
 
         :param attr: An attribute in the concept
