@@ -56,43 +56,9 @@ from concept_formation.preprocessor import SubComponentProcessor
 from concept_formation.preprocessor import Flattener
 from concept_formation.preprocessor import Pipeline
 from concept_formation.preprocessor import Preprocessor
+from concept_formation.preprocessor import rename_relation
 
 
-def rename_relation(relation, mapping):
-    """
-    Takes a tuplized relational attribute (e.g., ('before', 'o1', 'o2')) and
-    a mapping and renames the components based on mapping. This function
-    contains a special edge case for handling dot notation which is used in
-    standardize apart.
-
-    :param attr: The relational attribute containing components to be renamed
-    :type attr: tuple
-    :param mapping: A dictionary of mappings between component names
-    :type mapping: dict
-    :return: A new relational attribute with components renamed
-    :rtype: tuple
-
-    >>> relation = ('foo1', 'o1', ('foo2', 'o2', 'o3'))
-    >>> mapping = {'o1': 'o100', 'o2': 'o200', 'o3': 'o300'}
-    >>> rename_relation(relation, mapping)
-    ('foo1', 'o100', ('foo2', 'o200', 'o300'))
-
-    >>> relation = ('foo1', ('o1', ('o2', 'o3')))
-    >>> mapping = {('o1', ('o2', 'o3')): 'o100'}
-    >>> rename_relation(relation, mapping)
-    ('foo1', 'o100')
-    """
-    new_relation = []
-
-    for v in relation:
-        if v in mapping:
-            new_relation.append(mapping[v])
-        elif isinstance(v, tuple):
-            new_relation.append(rename_relation(v, mapping))
-        else:
-            new_relation.append(v)
-
-    return tuple(new_relation)
 
 def get_relation_components(relation, vars_only=True):
     """

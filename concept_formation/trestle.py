@@ -21,9 +21,9 @@ class TrestleTree(Cobweb3Tree):
     Attributes are interpreted in the following ways
         * Numeric - ``isinstance(instance[attr],Number) == True``
         * Nominal - everything else, though the assumption is
-        ``isinstance(instance[attr],str) == True``
+            ``isinstance(instance[attr],str) == True``
         * Relation - ``isinstance(attr, tuple)`` after the attribute has been
-        tuplized (e.g., input attr = "(before o1 o2)").
+            tuplized (e.g., input attr = "(before o1 o2)").
         * Component - Any attributes or values that begin with a '?'.
     """
 
