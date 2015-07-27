@@ -9,7 +9,6 @@ from concept_formation.cobweb3 import Cobweb3Node
 from concept_formation.cobweb3 import ContinuousValue
 from concept_formation.structure_mapper import StructureMapper
 
-
 class TrestleTree(Cobweb3Tree):
     """
     The TrestleTree instantiates the Trestle algorithm, which can
