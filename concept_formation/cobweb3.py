@@ -196,7 +196,7 @@ class Cobweb3Node(CobwebNode):
                     
                 self.av_counts[attr].update(instance[attr])
             else:
-                if isinstance(self.av_counts[attr],ContinuousValue):
+                if attr in self.av_counts and isinstance(self.av_counts[attr],ContinuousValue):
                     raise Exception ('Nominal value found in numerical attribute. Try casting all values of "'+attr+'" to either string or a number type.')
                 self.av_counts[attr] = self.av_counts.setdefault(attr,{})
                 self.av_counts[attr][instance[attr]] = (self.av_counts[attr].get(instance[attr], 0) + 1)
