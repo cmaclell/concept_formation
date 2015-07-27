@@ -60,6 +60,7 @@ class TrestleTree(Cobweb3Tree):
         self.root.tree = self
         self.alpha = alpha
         self.scaling = scaling
+        self.std_to_scale= 1.0
 
     def clear(self):
         """

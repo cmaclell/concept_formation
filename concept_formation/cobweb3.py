@@ -297,7 +297,7 @@ class Cobweb3Node(CobwebNode):
             P(A_i = V_{ij})^2 = P(A_i)^2 * \\frac{1}{2 * \\sqrt{\\pi} * \\sigma}
 
         :return: The number of attribute values that would be correctly guessed
-        in the current concept.
+            in the current concept.
         :rtype: float
         """
         correct_guesses = 0.0
@@ -384,7 +384,7 @@ class Cobweb3Node(CobwebNode):
                     values.append("'" + str(val) + "': " +
                                   str(self.av_counts[attr][val]))
 
-                attributes.append("'" + attr + "': {" + ", ".join(values) + "}")
+                attributes.append("'" + str(attr) + "': {" + ", ".join(values) + "}")
                   
         ret += "{" + ", ".join(attributes) + "}: " + str(self.count) + '\n'
         
