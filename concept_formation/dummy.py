@@ -5,12 +5,12 @@ from __future__ import division
 from concept_formation.cobweb3 import Cobweb3Node
 from concept_formation.trestle import TrestleTree
 from concept_formation.structure_mapper import StructureMapper
-from concept_formation.structure_mapper import Tuplizer
-from concept_formation.structure_mapper import ListProcessor
-from concept_formation.structure_mapper import NameStandardizer
-from concept_formation.structure_mapper import SubComponentProcessor
-from concept_formation.structure_mapper import Flattener
-from concept_formation.structure_mapper import Pipeline
+from concept_formation.preprocessor import Tuplizer
+from concept_formation.preprocessor import ListProcessor
+from concept_formation.preprocessor import NameStandardizer
+from concept_formation.preprocessor import SubComponentProcessor
+from concept_formation.preprocessor import Flattener
+from concept_formation.preprocessor import Pipeline
 
 class DummyTree(TrestleTree):
 

@@ -11,7 +11,7 @@ from concept_formation.trestle import TrestleTree
 from concept_formation.dummy import DummyTree
 from concept_formation.datasets import load_rb_s_07
 from concept_formation.datasets import load_rb_s_07_human_predictions
-from concept_formation.structure_mapper import ObjectVariablizer
+from concept_formation.preprocessor import ObjectVariablizer
 
 num_runs = 30
 num_examples = 30
