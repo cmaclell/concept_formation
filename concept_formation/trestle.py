@@ -42,11 +42,30 @@ class TrestleTree(Cobweb3Tree):
     calculation meaning numbers that are naturally larger will recieve
     extra weight in the calculation.
 
+    The beam width parameter detemines the inital beam width used in the search
+    step of structure mapping. A smaller beam width results in a faster search
+    but is not gauranteed to find an optimal match. If beam width is set to
+    ``float('inf')`` then the search will perform equivalently to an A* search.
+
+    The vars_only parameter determines whether the matcher should only allow
+    variable attributes to match to other variable attributes or if variable
+    attributes should also be allowed to match to constant attributes. This
+    setting will generally depend on the domain of the data and whether
+    variables mapping to constant attributes makes sense. Allowing the match to
+    constant attributes also increases the search space taking more time to find
+    matches.
+
     :param alpha: constant to use for laplacian smoothing.
     :type alpha: float
     :param scaling: whether or not numerical values should be scaled in
         online normalization.
     :type scaling: bool
+    :param beam_width: the initial beam width to use in structure mapping's
+        search step.
+    :type beam_width: int
+    :param vars_only: whether matching should be performed only between variable
+        or if variables can be matched to constant values.
+    :type vars_only: bool
     """
 
     def __init__(self, alpha=0.001, scaling=True, beam_width=1, vars_only=True):
