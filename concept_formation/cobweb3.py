@@ -255,7 +255,6 @@ class Cobweb3Node(CobwebNode):
             else:
                 scale = 1.0
 
-            # TODO consider incorporating laplace smoothing (alpha).
             before_std = max(self.av_counts[attr].scaled_unbiased_std(scale), self.acuity)
             before_prob = ((1.0 * self.av_counts[attr].num) / (self.count + 1.0))
             before_count = ((before_prob * before_prob) * 

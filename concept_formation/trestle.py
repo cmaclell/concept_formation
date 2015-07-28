@@ -16,17 +16,6 @@ class TrestleTree(Cobweb3Tree):
     handle component attributes as well as relations in addition to the
     numerical and nominal attributes of Cobweb and Cobweb/3.
 
-    Attributes are interpreted in the following ways:
-    
-        * Numeric - ``isinstance(instance[attr],Number) == True``
-        * Nominal - assumed to be ``isinstance(instance[attr],str) == True`` but
-          is also the fall through case
-        * Relation - ``isinstance(attr, tuple)`` after the attribute has been
-          tuplized (e.g., input attr = "(before o1 o2)").
-        * Component - Any attributes or values that begin with a '?'.
-
-        .. todo:: Need to double check these assumptions.
-
     The alpha parameter is the parameter used for laplacian smoothing of
     nominal values (or whether an attribute is present or not for both
     nominal and numeric attributes). The higher the value, the higher the
@@ -98,15 +87,13 @@ class TrestleTree(Cobweb3Tree):
         concept.
 
         The instance is passed down the tree and updates each node to
-        incorporate the instance. This process modifies the trees knowledge;
-        for a non-modifying version use the categorize() function.
+        incorporate the instance. **This modifies the tree's knowledge** for a 
+        non-modifying version see: :meth:`TrestleTree.categorize`.
 
         This version is modified from the normal :meth:`CobwebTree.ifit
         <concept_formation.cobweb.CobwebTree.ifit>` by first structure mapping
-        the instance before fitting it into the knoweldge base. **This modifies
-        the tree's knowledge** for a non-modifying version see
-        :meth:`TrestleTree.categorize`.
-        
+        the instance before fitting it into the knoweldge base. 
+
         :param instance: an instance to be categorized into the tree.
         :type instance: {a1:v1, a2:v2, ...}
         :return: A concept describing the instance
@@ -135,7 +122,7 @@ class TrestleTree(Cobweb3Tree):
     def infer_missing(self, instance, choice_fn="most likely"):
         """
         Given a tree and an instance, returns a new instance with attribute 
-        values picked using the specified choice function (wither "most likely"
+        values picked using the specified choice function (either "most likely"
         or "sampled"). 
 
         :param instance: an instance to be completed.
