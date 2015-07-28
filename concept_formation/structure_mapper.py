@@ -65,7 +65,6 @@ def get_relation_components(relation, vars_only=True):
 
     for ele in relation:
         if isinstance(ele, tuple):
-
             for name in get_relation_components(ele, vars_only):
                 names.add(name)
         else:
@@ -103,47 +102,10 @@ def get_component_names(instance, vars_only=True):
         if isinstance(attr, tuple):
             for name in get_relation_components(attr, vars_only):
                 names.add(name)
+        elif (vars_only is not True and attr[0] != '_') or attr[0] == '?':
+            names.add(attr)
 
     return names
-
-def renameComponent(attr, mapping):
-    """Takes a component attribute (e.g., o1.o2) and renames the 
-    components given a mapping.
-
-    :param attr: The attribute to be renamed
-    :type attr: str
-    :param mapping: A dictionary of mappings between component names
-    :type mapping: dict
-    :return: The attribute's new name
-    :rtype: str
-
-    >>> attr = "c1.c2.a"
-    >>> mapping = {'c1': 'o1', 'c2': 'o2'}
-    >>> renameComponent(attr, mapping)
-    'o1.o2.a'
-
-    >>> attr = "_c1._c2._a"
-    >>> mapping = {'c1': 'o1', 'c2': 'o2'}
-    >>> renameComponent(attr, mapping)
-    '_o1._o2._a'
-    """
-    new_attr = []
-    att_split = attr.split('.')
-    for name in att_split[:-1]:
-        if name[0] == "_":
-            new_attr.append(mapping[name[1:]])
-        else:
-            new_attr.append(mapping[name])
-
-    if att_split[-1][0] == "_":
-        new_attr.append(att_split[-1][1:])
-    else:
-        new_attr.append(att_split[-1])
-
-    if attr[0] == "_":
-        return "_" + "._".join(new_attr)
-    else:
-        return ".".join(new_attr)
 
 def rename_flat(instance, mapping):
     """
@@ -167,7 +129,9 @@ def rename_flat(instance, mapping):
     temp_instance = {}
 
     for attr in instance:
-        if isinstance(attr, tuple):
+        if attr in mapping:
+            temp_instance[mapping[attr]] = instance[attr]
+        elif isinstance(attr, tuple):
             temp_instance[rename_relation(attr, mapping)] = instance[attr]
         else:
             temp_instance[attr] = instance[attr]
@@ -279,6 +243,7 @@ def bind_flat_attr(attr, mapping):
     """
     if not isinstance(attr, tuple) and attr in mapping:
         return mapping[attr]
+
     if not isinstance(attr, tuple):
         if attr[0] == '?':
             return None
@@ -498,14 +463,11 @@ def is_partial_match(iAttr, cAttr, mapping, unnamed):
 
     return iAttr == cAttr
 
-
-
-
-
 def pre_process(instance):
     """
     Runs all of the pre-processing functions
 
+    >>> from concept_formation.preprocessor import _reset_gensym
     >>> _reset_gensym()
     >>> import pprint
     >>> instance = {"noma":"a","num3":3,"compa":{"nomb":"b","num4":4,"sub":{"nomc":"c","num5":5}},"compb":{"nomd":"d","nome":"e"},"(related compa.num4 compb.nome)":True,"list1":["a","b",{"i":1,"j":12.3,"k":"test"}]}
