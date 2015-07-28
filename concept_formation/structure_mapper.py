@@ -288,7 +288,7 @@ def contains_component(component, attr):
     
     return False
 
-def flat_match(concept, instance, optimal=False):
+def flat_match(concept, instance, beam_width=1, vars_only=True):
     """
     Given a concept and instance this function returns a mapping  that can be
     used to rename components in the instance. The mapping returned maximizes
@@ -305,24 +305,26 @@ def flat_match(concept, instance, optimal=False):
     :type concept: TrestleNode
     :param instance: An instance to be mapped to the concept
     :type instance: :ref:`flattened instance <flattened-instance>`
-    :param optimal: If True the mapping will be optimal (using A* Search)
-    	otherwise it will be greedy (using Beam Search).
-    :type optimal: bool
+    :param beam_width: The width of the beam used for Beam Search. If set to
+        float('inf'), then A* will be used.
+    :type beam_width: int (or float('inf') for optimal) 
+    :param vars_only: Determines whether or not variables in the instance can
+        be matched only to variables in the concept or if they can also be bound to
+        constants. 
+    :type vars_only: boolean
     :return: a mapping for renaming components in the instance.
     :rtype: dict
 
     """
     inames = frozenset(get_component_names(instance))
-    cnames = frozenset(get_component_names(concept.av_counts))
-    # might try this too. let variables be mapped to constants
-    #cnames = frozenset(get_component_names(concept.av_counts, False))
+    cnames = frozenset(get_component_names(concept.av_counts, vars_only))
 
     if(len(inames) == 0 or len(cnames) == 0):
         return {}
 
     initial = search.Node((frozenset(), inames, cnames), extra=(concept,
                                                                 instance))
-    if optimal:
+    if beam_width == float('inf'):
         solution = next(search.BestFGS(initial, _flat_match_successor_fn,
                                        _flat_match_goal_test_fn,
                                        _flat_match_heuristic_fn))
@@ -330,7 +332,7 @@ def flat_match(concept, instance, optimal=False):
         solution = next(search.BeamGS(initial, _flat_match_successor_fn,
                                       _flat_match_goal_test_fn,
                                       _flat_match_heuristic_fn,
-                                      initialBeamWidth=1))
+                                      initialBeamWidth=beam_width))
     #print(solution.cost)
 
     if solution:
