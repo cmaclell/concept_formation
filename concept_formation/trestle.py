@@ -49,11 +49,11 @@ class TrestleTree(Cobweb3Tree):
     :type scaling: bool
     """
 
-    def __init__(self, alpha=0.001, scaling=True):
+    def __init__(self, alpha=0.001, scaling=True, beam_width=1, vars_only=True):
         """
         The tree constructor. 
 
-        TODO Need to test scaling by 1 std vs. 2 std. It might be
+        .. todo:: Need to test scaling by 1 std vs. 2 std. It might be
         preferrable to standardize by 2 std because that gives it the same
         variance as a nominal value. 
         """
@@ -61,7 +61,9 @@ class TrestleTree(Cobweb3Tree):
         self.root.tree = self
         self.alpha = alpha
         self.scaling = scaling
-        self.std_to_scale= 1.0
+        self.std_to_scale = 1.0
+        self.beam_width = beam_width
+        self.vars_only = vars_only
 
     def clear(self):
         """
@@ -105,7 +107,9 @@ class TrestleTree(Cobweb3Tree):
         :return: A concept describing the instance
         :rtype: Cobweb3Node
         """
-        structure_mapper = StructureMapper(self.root)
+        structure_mapper = StructureMapper(self.root,
+                                           beam_width=self.beam_width,
+                                           vars_only=self.vars_only)
         temp_instance = structure_mapper.transform(instance)
         return self._cobweb_categorize(temp_instance)
 
@@ -123,7 +127,9 @@ class TrestleTree(Cobweb3Tree):
         :return: A completed instance
         :rtype: instance
         """
-        structure_mapper = StructureMapper(self.root)
+        structure_mapper = StructureMapper(self.root,
+                                           beam_width=self.beam_width,
+                                           vars_only=self.vars_only)
         temp_instance = structure_mapper.transform(instance)
         temp_instance = super(TrestleTree, self).infer_missing(temp_instance, choice_fn)
         return structure_mapper.undo_transform(temp_instance)
@@ -170,6 +176,8 @@ class TrestleTree(Cobweb3Tree):
         :return: A concept describing the instance
         :rtype: CobwebNode
         """
-        structure_mapper = StructureMapper(self.root)
+        structure_mapper = StructureMapper(self.root,
+                                           beam_width=self.beam_width,
+                                           vars_only=self.vars_only)
         temp_instance = structure_mapper.transform(instance)
         return self.cobweb(temp_instance)

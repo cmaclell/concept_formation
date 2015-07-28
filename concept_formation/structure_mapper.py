@@ -558,9 +558,11 @@ class StructureMapper(Preprocessor):
     :return: A fully mapped and flattend copy of the instance
     :rtype: :ref:`mapped instance <fully-mapped>`
     """
-    def __init__(self, concept, pipeline=None):
+    def __init__(self, concept, beam_width=1, vars_only=True, pipeline=None):
         self.concept = concept        
         self.reverse_mapping = None
+        self.beam_width = beam_width
+        self.vars_only = vars_only
 
         if pipeline is None:
         	self.pipeline = Pipeline(Tuplizer(), NameStandardizer(),
@@ -573,7 +575,9 @@ class StructureMapper(Preprocessor):
     
     def transform(self, instance):
         instance = self.pipeline.transform(instance)
-        mapping = flat_match(self.concept, instance)
+        mapping = flat_match(self.concept, instance,
+                             beam_width=self.beam_width,
+                             vars_only=self.vars_only)
         self.reverse_mapping = {mapping[o]: o for o in mapping}
         return rename_flat(instance, mapping)
 
