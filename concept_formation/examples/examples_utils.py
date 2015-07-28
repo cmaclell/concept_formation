@@ -25,7 +25,8 @@ def moving_average(a, n=3) :
     return ret[n - 1:] / n
 
 def lowess(x, y, f=1./3., iter=3, confidence=0.95):
-    """Performs Lowess smoothing
+    """
+    Performs Lowess smoothing
 
     Code adapted from: https://gist.github.com/agramfort/850437
 
@@ -40,6 +41,8 @@ def lowess(x, y, f=1./3., iter=3, confidence=0.95):
     The smoothing span is given by f. A larger value for f will result in a
     smoother curve. The number of robustifying iterations is given by iter. The
     function will run faster with a smaller number of iterations.
+
+    .. todo:: double check that the confidence bounds are correct
     """
     n = len(x)
     r = int(np.ceil(f*n))
