@@ -1,3 +1,38 @@
+"""
+This module contains an number of proprocessors that can be used on various
+forms of raw input data to convert an instance into a shape that Trestle would
+better understand. Almost all preprocessors preserve the original semantics of
+an instance and are mainly being used to prep for Trestle's internal operations.
+
+Two abstract preprocessors are defined:
+
+* :class:`Preprocessor` - Defines the general structure of a preprocessor.
+* :class:`Pipeline` - Allows for chaining a collection of preprocessors together.
+
+Trestle's normal implementation uses a standard pipeline of preprocessors that
+run in the following order:
+
+#. :class:`NameStandardizer` - Gives any variables unique names so they can be 
+   renamed in matching without colliding.
+#. :class:`SubComponentProcessor` - Pulls any sub-components present in the
+   instance to the top level of the instance and adds ``has-component``
+   relations to preserve semantics.
+#. :class:`Flattener` - Flattens component instances into a number of tuples
+   (i.e. ``(attr,component)``) for faster hashing and access.
+
+The remaining preprocessors are helper classes designed to support data that is
+not stored in Trestle's conventional representation:
+
+* :class:`Tuplizer` - Looks for relation attributes denoted as strings (i.e.
+  ``'(relation e1 e1)'``) and replaces the string attribute name with the
+  equivalent tuple representation of the relation.
+* :class:`ListProcessor` - Search for list values and extracts their elements
+  into their own objects and replaces the list with ordering and element-of
+  relations. Intended to preserve the semenatics of a list in JSON representation.
+* :class:`ObjectVariablizer` - Looks for component objects within an instance
+  and variablizes their names by prepending a ``'?'``.
+"""
+
 from __future__ import print_function
 from __future__ import unicode_literals
 from __future__ import absolute_import
@@ -47,7 +82,7 @@ class Preprocessor(object):
 class Pipeline(Preprocessor):
     """
     A special preprocessor class used to chain together many preprocessors.
-    Supports the same same transform and undo_transform functions as a regular
+    Supports the same transform and undo_transform functions as a regular
     preprocessor.
     """
     def __init__(self, *preprocessors):
@@ -509,10 +544,11 @@ class ListProcessor(Preprocessor):
     <concept_formation.structure_mapper.StructureMapper>`'s standard
     pipeline.
 
-    .. warning:: The ListProcessor's undo_transform function is not guaranteed
-        to be deterministic and attempts a best guess at a partial ordering. In
-        most cases this will be fine but in complex instances with multiple lists
-        and user defined ordering relations it can break down.
+        .. warning:: The ListProcessor's undo_transform function is not
+            guaranteed to be deterministic and attempts a best guess at a partial ordering.
+            In most cases this will be fine but in complex instances with multiple lists and
+            user defined ordering relations it can break down. If an ordering cannot be
+            determined then ordering relations are left in place.
 
     
     >>> _reset_gensym()     # Reset the symbol generator for doctesting purposes. 

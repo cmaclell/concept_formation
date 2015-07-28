@@ -4,8 +4,7 @@ This module contains classes for preprocessing and structure mapping instances
 for use with Trestle. A preprocessor transforms an instance so that it can be
 integrated into Trestle's knoweldge base. 
 
-
-
+.. todo:: Most of this module's header comment is no longer true. We need to update it.
 
 
 This module contains all of the core functions for Trestle's structure mapping

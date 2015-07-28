@@ -23,33 +23,31 @@ class Cobweb3Tree(CobwebTree):
     distribution. For the purposes of Cobweb/3's core algorithms a numeric
     attribute is any value where ``isinstance(instance[attr], Number)`` returns
     ``True``.
+
+    The alpha parameter is the parameter used for laplacian smoothing of
+    nominal values (or whether an attribute is present or not for both
+    nominal and numeric attributes). The higher the value, the higher the
+    prior that all attributes/values are equally likely. By default a minor
+    smoothing is used: 0.001.
+
+    The scaling parameter determines whether online normalization of
+    continuous attributes is used. By default scaling is used. Scaling
+    divides the std of each attribute by the std of the attribute in the
+    parent node (no scaling is performed in the root). Scaling is useful to
+    balance the weight of different numerical attributes, without scaling
+    the magnitude of numerical attributes can affect category utility
+    calculation meaning numbers that are naturally larger will recieve
+    extra weight in the calculation.
+
+    :param alpha: constant to use for laplacian smoothing.
+    :type alpha: float
+    :param scaling: whether or not numerical values should be scaled in
+        online normalization.
+    :type scaling: bool
     """
 
     def __init__(self, alpha=0.001, scaling=True):
-        """
-        The tree constructor. 
-
-        The alpha parameter is the parameter used for laplacian smoothing of
-        nominal values (or whether an attribute is present or not for both
-        nominal and numeric attributes). The higher the value, the higher the
-        prior that all attributes/values are equally likely. By default a minor
-        smoothing is used: 0.001.
-
-        The scaling parameter determines whether online normalization of
-        continuous attributes is used. By default scaling is used. Scaling
-        divides the std of each attribute by the std of the attribute in the
-        parent node (no scaling is performed in the root). Scaling is useful to
-        balance the weight of different numerical attributes, without scaling
-        the magnitude of numerical attributes can affect category utility
-        calculation meaning numbers that are naturally larger will recieve
-        extra weight in the calculation.
-
-        :param alpha: constant to use for laplacian smoothing.
-        :type alpha: float
-        :param scaling: whether or not numerical values should be scaled in
-        online normalization.
-        :type scaling: bool
-        """
+        """The tree constructor."""
 
         self.root = Cobweb3Node()
         self.root.tree = self
@@ -101,7 +99,7 @@ class Cobweb3Tree(CobwebTree):
         return temp_instance
 
     def clear(self):
-        """Clears the concepts of the tree, but maintains the alpha  and
+        """Clears the concepts of the tree, but maintains the alpha and
         scaling parameters.
         """
         self.root = Cobweb3Node()
@@ -141,7 +139,8 @@ class Cobweb3Node(CobwebNode):
 
         :param attr: an attribute of an instance
         :type attr: str
-        :return: The probability of attr not being present from an instance in the current concept.
+        :return: The probability of attr not being present from an instance in
+            the current concept.
         :rtype: float 
         """
         # the +1 is for the "missing" value
@@ -182,7 +181,8 @@ class Cobweb3Node(CobwebNode):
             an exception.
         
         :param instance: A new instances to incorporate into the node.
-        :type instance: {a1: v1, a2: v2, ...} - a hashtable of attr and values, where values can be numeric or nominal. 
+        :type instance: {a1: v1, a2: v2, ...} - a hashtable of attr and values,
+            where values can be numeric or nominal.
 
         """
         self.count += 1 
@@ -240,8 +240,7 @@ class Cobweb3Node(CobwebNode):
         :param val: A value for the given attribute in the concept
         :type val: float or str
         :return:  the gain in number of correct guesses from adding the partiucluar attr/val
-        :rtype: float
-                
+        :rtype: float               
         """
 
         if attr[0] == "_":
@@ -355,7 +354,8 @@ class Cobweb3Node(CobwebNode):
         return correct_guesses
 
     def pretty_print(self, depth=0):
-        """Print the categorization tree
+        """
+        Print the categorization tree
 
         The string formatting inserts tab characters to align child nodes of the
         same depth. Numerical values are printed with their means and standard
@@ -404,7 +404,8 @@ class Cobweb3Node(CobwebNode):
 
         :param attr: an attribute of an instance
         :type attr: str
-        :return: A value sampled from the distribution of values in the node's probability table.
+        :return: A value sampled from the distribution of values in the node's
+            probability table.
         :rtype: str or float
 
         .. seealso :meth:`Cobweb3Node.predict`
@@ -426,7 +427,8 @@ class Cobweb3Node(CobwebNode):
             return super(Cobweb3Node, self).sample(attr)
 
     def predict(self, attr):
-        """Predict the value of an attribute, by returning the most likely value.
+        """
+        Predict the value of an attribute, by returning the most likely value.
         This takes into account the laplacian smoothing.
 
         If the attribute is a nominal then this function behaves the same as
@@ -436,11 +438,11 @@ class Cobweb3Node(CobwebNode):
 
         :param attr: an attribute of an instance.
         :type attr: str
-        :return: The most likely value for the given attribute in the node's probability table.
+        :return: The most likely value for the given attribute in the node's 
+            probability table.
         :rtype: str or float
 
         .. seealso :meth:`Cobweb3Node.sample`
-
         """
         if attr not in self.tree.root.av_counts:
             return None
@@ -458,7 +460,8 @@ class Cobweb3Node(CobwebNode):
             return super(Cobweb3Node, self).predict(attr)
 
     def get_probability(self, attr, val):
-        """Returns the probability of a particular attribute value at the current
+        """
+        Returns the probability of a particular attribute value at the current
         concept. 
 
         This takes into account the possibilities that an attribute can take any
@@ -510,12 +513,15 @@ class Cobweb3Node(CobwebNode):
             return super(Cobweb3Node, self).get_probability(attr, val)
 
     def output_json(self):
-        """Outputs the categorization tree in JSON form. 
+        """
+        Outputs the categorization tree in JSON form. 
 
-        This is a modification of the :meth:`CobwebNode.output_json <concept_formation.cobweb.CobwebNode.output_json>` to handle
-        numeric values.
+        This is a modification of the :meth:`CobwebNode.output_json
+        <concept_formation.cobweb.CobwebNode.output_json>` to handle numeric
+        values.
 
-        :return: an object that contains all of the structural information of the node and its children
+        :return: an object that contains all of the structural information of
+            the node and its children
         :rtype: obj
         """
         output = {}
@@ -548,13 +554,13 @@ class ContinuousValue():
     and the squared error of the samples for numeric attribute values. It can be
     used to perform incremental estimation of the attribute's mean, std, and
     unbiased std.
+
+    Initially the number of values, the mean of the values, and the
+    squared errors of the values are set to 0.
     """
 
     def __init__(self):
-        """
-        Initializes the number of values, the mean of the values, and the
-        squared errors of the values to 0.
-        """
+        """constructor"""
         self.num = 0.0
         self.mean = 0.0
         self.meanSq = 0.0
@@ -563,7 +569,8 @@ class ContinuousValue():
         return 1
 
     def copy(self):
-        """Returns a deep copy of itself.
+        """
+        Returns a deep copy of itself.
 
         :return: a deep copy of the continuous value
         :rtype: ContinuousValue
@@ -575,7 +582,8 @@ class ContinuousValue():
         return v
 
     def unbiased_mean(self):
-        """Returns the mean value.
+        """
+        Returns the mean value.
 
         :return: the unbiased mean
         :rtype: float
@@ -583,7 +591,8 @@ class ContinuousValue():
         return self.mean
 
     def scaled_unbiased_mean(self, shift, scale):
-        """Returns (self.mean - shift) / scale
+        """
+        Returns (self.mean - shift) / scale
 
         This is used as part of numerical value scaling.
 
@@ -599,7 +608,8 @@ class ContinuousValue():
         return (self.mean - shift) / scale
 
     def biased_std(self):
-        """Returns a biased estimate of the std (i.e., the sample std)
+        """
+        Returns a biased estimate of the std (i.e., the sample std)
 
         :return: biased estimate of the std (i.e., the sample std)
         :rtype: float
@@ -622,8 +632,10 @@ class ContinuousValue():
         return sqrt(self.meanSq / (self.num - 1)) / c4(self.num)
 
     def scaled_unbiased_std(self, scale):
-        """Returns an unbiased estimate of the std (see: :meth:`ContinuousValue.unbiased_std`),
-        but also adjusts the std given a scale parameter. 
+        """
+        Returns an unbiased estimate of the std (see:
+        :meth:`ContinuousValue.unbiased_std`), but also adjusts the std given a
+        scale parameter.
 
         This is used to return std values that have been normalized by some
         value. For edge cases, if scale is less than or equal to 0, then scaling
@@ -633,7 +645,6 @@ class ContinuousValue():
         :type scale: float
         :return: A scaled unbiased estimate of std
         :rtype: float
-        
         """
         if scale <= 0:
             scale = 1.0
@@ -660,7 +671,8 @@ class ContinuousValue():
         return "%0.4f (%0.4f) [%i]" % (self.mean, self.unbiased_std(), self.num)
 
     def update_batch(self, data):
-        """Calls the update function on every value in a given dataset
+        """
+        Calls the update function on every value in a given dataset
 
         :param data: A list of numberic values to add to the distribution
         :type data: [Number, Number, ...]
@@ -669,7 +681,8 @@ class ContinuousValue():
             self.update(x)
 
     def update(self, x):
-        """Incrementally update the mean and squared mean error (meanSq) values in
+        """
+        Incrementally update the mean and squared mean error (meanSq) values in
         an efficient and practical (no precision problems) way. 
 
         This uses and algorithm by Knuth found here:
@@ -684,13 +697,15 @@ class ContinuousValue():
         self.meanSq += delta * (x - self.mean)
 
     def combine(self, other):
-        """Combine another ContinuousValue's distribution into this one in
+        """
+        Combine another ContinuousValue's distribution into this one in
         an efficient and practical (no precision problems) way. 
 
         This uses the parallel algorithm by Chan et al. found at:
         `<https://en.wikipedia.org/wiki/Algorithms_for_calculating_variance#Parallel_algorithm>`_
 
-        :param other: Another ContinuousValue distribution to be incorporated into this one.
+        :param other: Another ContinuousValue distribution to be incorporated
+            into this one.
         :type other: ContinuousValue
         """
         if not isinstance(other, ContinuousValue):

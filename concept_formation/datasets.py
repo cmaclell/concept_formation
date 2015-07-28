@@ -32,7 +32,7 @@ def load_iris():
     This is an example of instances with numeric and nominal attributes.
 
     This dataset was downloaded from the `UCI machine learning repository
-    <https://archive.ics.uci.edu/ml/datasets/Iris>`_. We processed the data
+    <https://archive.ics.uci.edu/ml/datasets/Iris>`__. We processed the data
     to be in dictionary format with human readable labels. 
 
     >>> import pprint
@@ -53,7 +53,7 @@ def load_mushroom():
     This is an example of instances with only nominal attributes.
 
     This dataset was downloaded from the `UCI machine learning repository
-    <https://archive.ics.uci.edu/ml/datasets/Mushroom>`_. We processed the data
+    <https://archive.ics.uci.edu/ml/datasets/Mushroom>`__. We processed the data
     to be in dictionary format with human readable labels. 
 
     >>> import pprint

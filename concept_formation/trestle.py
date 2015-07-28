@@ -16,45 +16,46 @@ class TrestleTree(Cobweb3Tree):
     handle component attributes as well as relations in addition to the
     numerical and nominal attributes of Cobweb and Cobweb/3.
 
-    .. todo:: Not sure this is articulated quite right.
-
-    Attributes are interpreted in the following ways
+    Attributes are interpreted in the following ways:
+    
         * Numeric - ``isinstance(instance[attr],Number) == True``
-        * Nominal - everything else, though the assumption is
-            ``isinstance(instance[attr],str) == True``
+        * Nominal - assumed to be ``isinstance(instance[attr],str) == True`` but
+          is also the fall through case
         * Relation - ``isinstance(attr, tuple)`` after the attribute has been
-            tuplized (e.g., input attr = "(before o1 o2)").
+          tuplized (e.g., input attr = "(before o1 o2)").
         * Component - Any attributes or values that begin with a '?'.
+
+        .. todo:: Need to double check these assumptions.
+
+    The alpha parameter is the parameter used for laplacian smoothing of
+    nominal values (or whether an attribute is present or not for both
+    nominal and numeric attributes). The higher the value, the higher the
+    prior that all attributes/values are equally likely. By default a minor
+    smoothing is used: 0.001.
+        
+    The scaling parameter determines whether online normalization of
+    continuous attributes is used. By default scaling is used. Scaling
+    divides the std of each attribute by the std of the attribute in the
+    parent node (no scaling is performed in the root). Scaling is useful to
+    balance the weight of different numerical attributes, without scaling
+    the magnitude of numerical attributes can affect category utility
+    calculation meaning numbers that are naturally larger will recieve
+    extra weight in the calculation.
+
+    :param alpha: constant to use for laplacian smoothing.
+    :type alpha: float
+    :param scaling: whether or not numerical values should be scaled in
+        online normalization.
+    :type scaling: bool
     """
 
     def __init__(self, alpha=0.001, scaling=True):
         """
         The tree constructor. 
 
-        The alpha parameter is the parameter used for laplacian smoothing of
-        nominal values (or whether an attribute is present or not for both
-        nominal and numeric attributes). The higher the value, the higher the
-        prior that all attributes/values are equally likely. By default a minor
-        smoothing is used: 0.001.
-
-        .. todo:: Need to test scaling by 1 std vs. 2 std. It might be
-            preferrable to standardize by 2 std because that gives it the same
-            variance as a nominal value.
-            
-        The scaling parameter determines whether online normalization of
-        continuous attributes is used. By default scaling is used. Scaling
-        divides the std of each attribute by the std of the attribute in the
-        parent node (no scaling is performed in the root). Scaling is useful to
-        balance the weight of different numerical attributes, without scaling
-        the magnitude of numerical attributes can affect category utility
-        calculation meaning numbers that are naturally larger will recieve
-        extra weight in the calculation.
-
-        :param alpha: constant to use for laplacian smoothing.
-        :type alpha: float
-        :param scaling: whether or not numerical values should be scaled in
-        online normalization.
-        :type scaling: bool
+        TODO Need to test scaling by 1 std vs. 2 std. It might be
+        preferrable to standardize by 2 std because that gives it the same
+        variance as a nominal value. 
         """
         self.root = Cobweb3Node()
         self.root.tree = self
@@ -81,14 +82,15 @@ class TrestleTree(Cobweb3Tree):
 
         This version is modified from the normal :meth:`CobwebTree.ifit
         <concept_formation.cobweb.CobwebTree.ifit>` by first structure mapping
-        the instance before fitting it into the knoweldge base.
+        the instance before fitting it into the knoweldge base. **This modifies
+        the tree's knowledge** for a non-modifying version see
+        :meth:`TrestleTree.categorize`.
         
         :param instance: an instance to be categorized into the tree.
         :type instance: {a1:v1, a2:v2, ...}
         :return: A concept describing the instance
         :rtype: Cobweb3Node
 
-        .. note:: this modifies the tree's knoweldge.
         .. seealso:: :meth:`TrestleTree.trestle`
         """
         return self.trestle(instance)
@@ -133,7 +135,9 @@ class TrestleTree(Cobweb3Tree):
 
         The instance is passed down the the categorization tree according to the
         normal cobweb algorithm except using only the new and best opperators
-        and without modifying nodes' probability tables.
+        and without modifying nodes' probability tables. **This does not modify
+        the tree's knowledge base** for a modifying version see
+        :meth:`TrestleTree.ifit`
 
         This version differs fomr the normal :meth:`CobwebTree.categorize
         <concept_formation.cobweb.CobwebTree.categorize>` and
@@ -146,7 +150,6 @@ class TrestleTree(Cobweb3Tree):
         :return: A concept describing the instance
         :rtype: CobwebNode
 
-        .. note:: this does not modify the tree's knoweldge.
         .. seealso:: :meth:`TrestleTree.trestle`
         """
         return self._trestle_categorize(instance)
@@ -159,7 +162,7 @@ class TrestleTree(Cobweb3Tree):
         <concept_formation.cobweb.CobwebTree.cobweb>` The key difference
         between trestle and cobweb is that trestle performs structure mapping
         (see: :meth:`structure_map
-        <concept_formation.structure_mapper.structure_map>`) before proceeding
+        <concept_formation.structure_mapper.StructureMapper.transform>`) before proceeding
         through the normal cobweb algorithm.
 
         :param instance: an instance to be categorized into the tree.
