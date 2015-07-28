@@ -393,27 +393,22 @@ class NameStandardizer(Preprocessor):
             else:
                 new_a = (attr, prefix)
 
-            if attr[0] == '?':
+            name = attr
+            if attr[0] == '?' and not isinstance(attr, tuple):
                 mapping[new_a] = gensym()
+                name = mapping[new_a]
 
-            if isinstance(attr, tuple):
-                relations.append((attr, instance[attr]))
-
-            elif isinstance(instance[attr], dict):
-                name = attr
-                if attr[0] == '?':
-                    name = mapping[new_a]
-                new_instance[name] = self._standardize(instance[attr],
-                                                       mapping, new_a)
-            elif isinstance(instance[attr], list):
-                name = attr
-                if attr[0] == '?':
-                    name = mapping[new_a]
-                new_instance[name] = [self._standardize(ele, mapping, new_a) 
-                                       if isinstance(ele, dict) else ele for
-                                       ele in instance[attr]]
+            value = instance[attr]
+            if isinstance(value, dict):
+                value = self._standardize(value, mapping, new_a)
+            elif isinstance(value, list):
+                value = [self._standardize(ele, mapping, new_a) if
+                         isinstance(ele, dict) else ele for ele in value]
+            
+            if isinstance(name, tuple):
+                relations.append((name, value))
             else:
-                new_instance[attr] = instance[attr]
+                new_instance[name] = value
 
         for relation, val in relations:
             temp_rel = rename_relation(relation, mapping)
