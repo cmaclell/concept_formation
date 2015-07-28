@@ -46,13 +46,18 @@ def get_relation_components(relation, vars_only=True):
 
 def get_component_names(instance, vars_only=True):
     """
-    Given  a :ref:`flattened instance <flattened-instance>` or a concept's
-    probability table return a list of all of the component names.
+    Given  an instance or a concept's probability table return a list of all of
+    the component names. If vars_only is false, than all constants and
+    variables are returned. 
 
     :param instance: An instance or a concept's probability table.
-    :type instance: :ref:`raw instance <raw-instance>` or dict
-    :return: A list of all of the component names present in the instance
-    :rtype: [str, str, ...]
+    :type instance: an instance 
+    :param vars_only: Whether or not to return only variables (i.e., strings
+        with a names with a '?' at the beginning) or both variables and
+        constants.
+    :type vars_only: boolean
+    :return: A frozenset of all of the component names present in the instance
+    :rtype: frozenset
 
     >>> instance = {('a', ('sub1', 'c1')): 0, ('a', 'c2'): 0, ('_', '_a', 'c3'): 0}
     >>> names = get_component_names(instance, False)
@@ -79,15 +84,15 @@ def get_component_names(instance, vars_only=True):
 
 def rename_flat(instance, mapping):
     """
-    Given a :ref:`flattened instance <flattened-instance>` and a mapping (type =
-    dict) rename the components and relations and return the renamed instance.
+    Given an instance and a mapping rename the components and relations and
+    return the renamed instance.
 
     :param instance: An instance to be renamed according to a mapping
-    :type instance: :ref:`flattened instance <flattened-instance>`
+    :type instance: instance
     :param mapping: :param mapping: A dictionary of mappings between component names
     :type mapping: dict
     :return: A copy of the instance with components and relations renamed
-    :rtype: :ref:`mapped instance <fully-mapped>`
+    :rtype: instance
 
     >>> import pprint
     >>> instance = {('a', '?c1'): 1, ('good', '?c1'): True}
@@ -107,78 +112,6 @@ def rename_flat(instance, mapping):
             temp_instance[attr] = instance[attr]
 
     return temp_instance
-
-
-
-def _traverseStructure(path, instance):
-    """Given an instance dict to the given subobject for the given path.
-    Creates subobjects if they do not exist.
-
-    Essentially this ensures that subdictionaries exist to accept values from a
-    flat instance.
-
-    >>> x = {}
-    >>> _traverseStructure(['c1', 'c2'], x)
-    {}
-    >>> x
-    {'c1': {'c2': {}}}
-    """
-    curr = instance
-    for obj in path:
-        if obj not in curr:
-            curr[obj] = {}
-        curr = curr[obj]
-    return curr
-
-def structurizeJSON(instance):
-    """Takes a :ref:`flattened instance <flattened-instance>` and adds the
-    structure back in. 
-
-    This essentially "undoes" the flattening process, however any renaming that
-    may have been performed is not undone.
-
-    :param instance: A instance to be re-structured
-    :type instance: :ref:`flattened instance <flattened-instance>`
-    :return: the instance with structure reproduced from the flattened information
-    :rtype: :ref:`standardized instance <standard-instance>`
-
-    >>> instance = {'c1.c2.a': 1}
-    >>> structurizeJSON(instance)
-    {'c1': {'c2': {'a': 1}}}
-    """
-    temp = {}
-    for attr in instance:
-        if isinstance(attr, tuple):
-            relation = []
-            path = []
-            for i,v in enumerate(attr):
-                if i == 0:
-                    relation.append(v)
-                elif v in instance:
-                    path = v.split('.')
-                    relation.append('.'.join(path[-2:]))
-                    path = path[:-2]
-                else:
-                    path = v.split('.')
-                    relation.append(path[-1])
-                    path = path[:-1]
-            obj = _traverseStructure(path, temp)
-            obj[tuple(relation)] = True
-
-        elif "." in attr:
-            path = [p[1:] if p[0] == "_" else p for p in attr.split('.')]
-            subatt = path[-1]
-            path = path[:-1]
-            curr = _traverseStructure(path, temp)
-            if attr[0] == "_":
-                curr["_" + subatt] = instance[attr]
-            else:
-                curr[subatt] = instance[attr]
-
-        else:
-            temp[attr] = instance[attr]
-
-    return temp
 
 def bind_flat_attr(attr, mapping):
     """
@@ -274,7 +207,7 @@ def flat_match(concept, instance, beam_width=1, vars_only=True):
     :param concept: A concept to map the instance to
     :type concept: TrestleNode
     :param instance: An instance to be mapped to the concept
-    :type instance: :ref:`flattened instance <flattened-instance>`
+    :type instance: instance
     :param beam_width: The width of the beam used for Beam Search. If set to
         float('inf'), then A* will be used.
     :type beam_width: int (or float('inf') for optimal) 
@@ -435,86 +368,6 @@ def is_partial_match(iAttr, cAttr, mapping, unnamed):
 
     return iAttr == cAttr
 
-def pre_process(instance):
-    """
-    Runs all of the pre-processing functions
-
-    >>> from concept_formation.preprocessor import _reset_gensym
-    >>> _reset_gensym()
-    >>> import pprint
-    >>> instance = {"noma":"a","num3":3,"compa":{"nomb":"b","num4":4,"sub":{"nomc":"c","num5":5}},"compb":{"nomd":"d","nome":"e"},"(related compa.num4 compb.nome)":True,"list1":["a","b",{"i":1,"j":12.3,"k":"test"}]}
-    >>> pprint.pprint(instance)
-    {'(related compa.num4 compb.nome)': True,
-     'compa': {'nomb': 'b', 'num4': 4, 'sub': {'nomc': 'c', 'num5': 5}},
-     'compb': {'nomd': 'd', 'nome': 'e'},
-     'list1': ['a', 'b', {'i': 1, 'j': 12.3, 'k': 'test'}],
-     'noma': 'a',
-     'num3': 3}
-
-    >>> instance = pre_process(instance)
-    >>> pprint.pprint(instance)
-    {'noma': 'a',
-     'num3': 3,
-     ('has-component', 'compa', 'sub'): True,
-     ('has-element', 'list1', '?o4'): True,
-     ('has-element', 'list1', '?o5'): True,
-     ('has-element', 'list1', '?o6'): True,
-     ('i', '?o6'): 1,
-     ('j', '?o6'): 12.3,
-     ('k', '?o6'): 'test',
-     ('nomb', 'compa'): 'b',
-     ('nomc', 'sub'): 'c',
-     ('nomd', 'compb'): 'd',
-     ('nome', 'compb'): 'e',
-     ('num4', 'compa'): 4,
-     ('num5', 'sub'): 5,
-     ('ordered-list', 'list1', '?o4', '?o5'): True,
-     ('ordered-list', 'list1', '?o5', '?o6'): True,
-     ('related', 'compa.num4', 'compb.nome'): True,
-     ('val', '?o4'): 'a',
-     ('val', '?o5'): 'b'}
-
-    >>> instance = pre_process(instance)
-    >>> pprint.pprint(instance)
-    {'noma': 'a',
-     'num3': 3,
-     ('has-component', 'compa', 'sub'): True,
-     ('has-element', 'list1', '?o4'): True,
-     ('has-element', 'list1', '?o5'): True,
-     ('has-element', 'list1', '?o6'): True,
-     ('i', '?o6'): 1,
-     ('j', '?o6'): 12.3,
-     ('k', '?o6'): 'test',
-     ('nomb', 'compa'): 'b',
-     ('nomc', 'sub'): 'c',
-     ('nomd', 'compb'): 'd',
-     ('nome', 'compb'): 'e',
-     ('num4', 'compa'): 4,
-     ('num5', 'sub'): 5,
-     ('ordered-list', 'list1', '?o4', '?o5'): True,
-     ('ordered-list', 'list1', '?o5', '?o6'): True,
-     ('related', 'compa.num4', 'compb.nome'): True,
-     ('val', '?o4'): 'a',
-     ('val', '?o5'): 'b'}
-    
-    """
-    tuplizer = Tuplizer()
-    instance = tuplizer.transform(instance)
-
-    list_processor = ListProcessor()
-    instance = list_processor.transform(instance)
-
-    standardizer = NameStandardizer()
-    instance = standardizer.transform(instance)
-    
-    sub_component_processor = SubComponentProcessor()
-    instance = sub_component_processor.transform(instance)
-
-    flattener = Flattener()
-    instance = flattener.transform(instance)
-
-    return instance
-
 class StructureMapper(Preprocessor):
     """
     Flatten the instance, perform structure mapping to the concept, rename
@@ -523,10 +376,24 @@ class StructureMapper(Preprocessor):
 
     :param concept: A concept to structure map the instance to
     :type concept: TrestleNode
-    :param instance: An instance to map to the concept
-    :type instance: :ref:`raw instance <raw-instance>`
-    :return: A fully mapped and flattend copy of the instance
-    :rtype: :ref:`mapped instance <fully-mapped>`
+    :param beam_width: The width of the beam used for Beam Search. If set to
+        float('inf'), then A* will be used.
+    :type beam_width: int (or float('inf') for optimal) 
+    :param vars_only: Determines whether or not variables in the instance can
+        be matched only to variables in the concept or if they can also be bound to
+        constants. 
+    :type vars_only: boolean
+    :param pipeline: A preprocessing pipeline to apply before structure mapping
+        and to undo when undoing the structure mapping. If ``None`` then the
+        default pipeline of
+        :class:`Tuplizer<concept_formation.preprocessor.Tuplizer>` ->
+        :class:`NameStandardizer<concept_formation.preprocessor.NameStandardizer>`
+        ->
+        :class:`SubComponentProcessor<concept_formation.preprocessor.SubComponentProcessor>`
+        -> :class:`Flattener<concept_formation.preprocessor.Flattener>` is
+        applied
+    :return: A flattened and mapped copy of the instance
+    :rtype: instance
     """
     def __init__(self, concept, beam_width=1, vars_only=True, pipeline=None):
         self.concept = concept        
