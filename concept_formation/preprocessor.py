@@ -468,7 +468,6 @@ class Flattener(Preprocessor):
         temp = {}
         for attr in instance:
             if (isinstance(attr, tuple) and len(attr) == 2): 
-
                 if attr[0] == '_':
                     rel, (sub_attr, name) = attr
                 else:
@@ -476,6 +475,7 @@ class Flattener(Preprocessor):
 
                 if name not in temp:
                     temp[name] = {}
+
                 temp[name][sub_attr] = instance[attr]
 
             else:
@@ -514,7 +514,7 @@ class Flattener(Preprocessor):
         for attr in instance:
             if isinstance(instance[attr], dict):
                 for so_attr in instance[attr]:
-                    if so_attr[0] == '_':
+                    if so_attr[0] == '_' or attr[0] == '_':
                         new_attr = ('_', (so_attr, attr))
                     else:
                         new_attr = (so_attr, attr)
