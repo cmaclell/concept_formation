@@ -65,10 +65,14 @@ Numerical Values
     ``isinstance(val, number)``).
 
 Component Values
-    All dictionary values (i.e., sub-instances).  Note that these sub-instances
-    cannot contain relations. Instead include the relations in the top level
-    instance and use unary relations to refer to elements of sub-instances
-    (e.g., ('att1', 'subobject')). 
+    All dictionary values (i.e., sub-instances). All component values are
+    internally converted into unary relations internally, so the unary
+    relations can also be used directly. For example
+    ``{'subobject: {'attr': 'value'}}`` is equivalent to 
+    ``{('attr', 'subobject'): 'value'}``.  Note that sub-instances cannot
+    contain relations. Instead include the relations in the top-level instance
+    and use unary relations to refer to elements of sub-instances (e.g.,
+    ``('relation1' ('att1', 'subobject'))``). 
 
 The :class:`CobwebTree<concept_formation.cobweb.CobwebTree>` class supports
 only **nominal** values. The
