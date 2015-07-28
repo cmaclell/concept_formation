@@ -104,6 +104,16 @@ def weighted_choice(choices):
     :return: A choice sampled from the list according to the weightings
     :rtype: val
 
+    >>> from random import seed
+    >>> seed(1234)
+    >>> options = [('a',.25),('b',.12),('c',.46),('d',.07)]
+    >>> weighted_choice(options)
+    'd'
+    >>> weighted_choice(options)
+    'c'
+    >>> weighted_choice(options)
+    'a'
+
     .. seealso:: :meth:`CobwebNode.sample <concept_formation.cobweb.CobwebNode.sample>`
     """
     total = sum(w for c, w in choices)
@@ -119,6 +129,15 @@ def most_likely_choice(choices):
     """
     Given a list of tuples [(val, prob),...(val, prob)], returns the
     value with the highest probability.
+
+    >>> options = [('a',.25),('b',.12),('c',.46),('d',.07)]
+    >>> most_likely_choice(options)
+    'c'
+    >>> most_likely_choice(options)
+    'c'
+    >>> most_likely_choice(options)
+    'c'
+
 
     :param choices: A list of tuples
     :type choices: [(val, prob),...(val, prob)]
