@@ -1,43 +1,13 @@
 """
-This module contains classes for preprocessing and structure mapping instances
-for use with Trestle. A preprocessor transforms an instance so that it can be
-integrated into Trestle's knoweldge base. 
+This module contains the
+:class:`StructureMapper<concept_formation.structure_mapper.StructureMapper>`
+class which is used to perform flattening (i.e., compilation of component
+attributes into relational attributes) and structure mapping (i.e., renaming
+variable attributes it improve the category utility) on instances.
 
-.. todo:: Most of this module's header comment is no longer true. We need to update it.
-
-This module contains all of the core functions for Trestle's structure mapping
-and flattening procedures. The core function in this process is
-:meth:`structure_map` with most of the remaning functions being sub-procedures of
-the core process.
-
-Throughout this module we refer to instances in several different stages of the
-structure mapping process. Here is a description of what each stage means:
-
-.. _raw-instance:
-
-* **raw instance** - The original state of the instance. Conventionally this is assumed to be
-  the result of ``json.load()``). All component atributes have their original names
-  and refer to dictionaries with their own attribute values and all relations are full lists.
-
-.. _standard-instance:
-
-* **standardized instance** - An instance where all components have been
-  renamed, both in the instance and in relations, to have unique names to prevent
-  collisions in the mapping process. (e.g. ``{a:{b:2}, c:{d:{x:1,y:2}}}`` -> ``{o1:{b:2}, o2:{o3:{x:1,y:2}}}``)
-
-.. _flattened-instance:
-
-* **flattened instance** - An instance where component attributes are flattened
-  using a dot notation (e.g. ``o1:{b:1}`` -> ``o1.b:1``) and relations have been
-  turned into tuples (e.g. ``rel:['before', 'o1', 'o2']`` -> ``('before', 'o1',
-  'o2'):True``)
-
-.. _fully-mapped:
-
-* **mapped instance** - A fully structure mapped instance with component
-  attributes renamed, both in the instance and its relations. And components
-  flattened using dot notation. This is the final result of the overall process.
-
+It is an instance of a
+:class:`preprocessor<concept_formation.preprocessor.Preprocessor>` with a
+:func:`transform` and :func:`undo_tranform` methods. 
 """
 from __future__ import print_function
 from __future__ import unicode_literals
