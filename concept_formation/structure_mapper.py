@@ -16,7 +16,6 @@ from __future__ import division
 
 from concept_formation import search
 from concept_formation.preprocessor import Tuplizer
-from concept_formation.preprocessor import ListProcessor
 from concept_formation.preprocessor import NameStandardizer
 from concept_formation.preprocessor import SubComponentProcessor
 from concept_formation.preprocessor import Flattener
