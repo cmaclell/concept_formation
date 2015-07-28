@@ -244,8 +244,7 @@ class NameStandardizer(Preprocessor):
     """
     A preprocessor that standardizes apart object names.
 
-    Given a :ref:`raw instance <raw-instance>` rename all the components so they
-    have unique names.
+    Given an instance rename all the components so they have unique names.
 
     .. :warning: relations cannot have dictionaries as values (i.e., cannot be
         subojects).
@@ -345,7 +344,7 @@ class NameStandardizer(Preprocessor):
 
     def _standardize(self, instance, mapping={}, prefix=None):
         """
-        Given a :ref:`raw instance <raw-instance>` rename all the components so they
+        Given an instance rename all the components so they
         have unique names.
 
         .. :warning: relations cannot have dictionaries as values (i.e., cannot be
@@ -359,7 +358,7 @@ class NameStandardizer(Preprocessor):
         :param instance: An instance to be named apart.
         :param mapping: An existing mapping to add new mappings to; used for
             recursive calls.
-        :type instance: :ref:`raw instance <raw-instance>`
+        :type instance: instance
         :return: an instance with component attributes renamed
         :rtype: :ref:`standardized instance <standard-instance>`
 
@@ -421,8 +420,7 @@ class Flattener(Preprocessor):
     """
     Flattens subobject attributes.
 
-    Takes a :ref:`raw instance <raw-instance>` that has already been
-    standardized apart and flattens it.
+    Takes an instance that has already been standardized apart and flattens it.
 
     .. :warning: important to note that relations can only exist at the top level,
         not within subobjects. If they do exist than this function will return
@@ -486,8 +484,8 @@ class Flattener(Preprocessor):
 
     def _flatten_json(self, instance):
         """
-        Takes a :ref:`raw instance <raw-instance>` that has already been
-        standardized apart and flattens it.
+        Takes an instance that has already been standardized apart and flattens
+        it.
 
         .. :warning: important to note that relations can only exist at the top level,
             not within subobjects. If they do exist than this function will return
@@ -499,7 +497,7 @@ class Flattener(Preprocessor):
         element, this is more efficient for later processing.
 
         :param instance: An instance to be flattened.
-        :type instance: :ref:`raw instance <raw-instance>`
+        :type instance: instance
         :return: A copy of the instance flattend
         :rtype: :ref:`flattened instance <flattened-instance>`
 
