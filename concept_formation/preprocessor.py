@@ -31,6 +31,7 @@ not stored in Trestle's conventional representation:
   relations. Intended to preserve the semenatics of a list in JSON representation.
 * :class:`ObjectVariablizer` - Looks for component objects within an instance
   and variablizes their names by prepending a ``'?'``.
+* :class:`NumericToNominal` - Converts numeric values to nominal onts.
 """
 
 from __future__ import print_function
@@ -39,6 +40,7 @@ from __future__ import absolute_import
 from __future__ import division
 
 from copy import deepcopy
+from numbers import Number
 
 _gensym_counter = 0;
 
@@ -113,9 +115,9 @@ class Tuplizer(Preprocessor):
     notation for relations ``(related a b)`` but this preprocessor should be
     flexible enough to handle postfix and prefix.
 
-    This is the first operation in :class:`StructureMapper
-    <concept_formation.structure_mapper.StructureMapper>`'s standard
-    pipeline.
+    This is a helper function preprocessor and so is not part of
+    :class:`StructureMapper
+    <concept_formation.structure_mapper.StructureMapper>`'s standard pipeline.
 
     >>> tuplizer = Tuplizer()
     >>> instance = {'(foo1 o1 (foo2 o2 o3))': True}
@@ -252,7 +254,7 @@ class NameStandardizer(Preprocessor):
     component's name within relation attributes. This renaming is necessary to
     allow for a search between possible mappings without collisions.
 
-    This is the second operation in :class:`StructureMapper
+    This is the first operation in :class:`StructureMapper
     <concept_formation.structure_mapper.StructureMapper>`'s standard
     pipeline.
 
@@ -435,7 +437,7 @@ class Flattener(Preprocessor):
     periods in them into a tuple of objects with an attribute as the last
     element, this is more efficient for later processing.
 
-    This is the fourth and final operation in :class:`StructureMapper
+    This is the third and final operation in :class:`StructureMapper
     <concept_formation.structure_mapper.StructureMapper>`'s standard
     pipeline.
 
@@ -662,7 +664,7 @@ class ListProcessor(Preprocessor):
 
     """
     def __init__(self):
-        self.processor = Pipeline(ExtractListElements(), ListsToRelations())
+        self.processor = Pipeline(ExtractListElements(),ListsToRelations())
 
     def transform(self, instance):
         """
@@ -858,7 +860,6 @@ class ListsToRelations(Preprocessor):
     >>> pprint.pprint(instance)
     {'o1': {'list1': ['c', 'b', 'a']}}
     """
-
     def transform(self, instance):
         return self._lists_to_relations(instance)
 
@@ -1006,7 +1007,7 @@ class SubComponentProcessor(Preprocessor):
     component objects exist as their own top level objects with relations
     describing their original position in the hierarchy.
 
-    This is the third operation in :class:`StructureMapper
+    This is the second operation in :class:`StructureMapper
     <concept_formation.structure_mapper.StructureMapper>`'s standard
     pipeline.
 
@@ -1162,12 +1163,36 @@ class ObjectVariablizer(Preprocessor):
     Traceback (most recent call last):
         ...
     NotImplementedError: no reverse transformation currently implemented
-
+    >>> instance = {"p1":{"x":12,"y":3},"p2":{"x":5,"y":14},"p3":{"x":4,"y":18},"setttings":{"x_lab":"height","y_lab":"age"}}
+    >>> ov = ObjectVariablizer("p1","p2","p3")
+    >>> instance = ov.transform(instance)
+    >>> pprint.pprint(instance)
+    {'?p1': {'x': 12, 'y': 3},
+     '?p2': {'x': 5, 'y': 14},
+     '?p3': {'x': 4, 'y': 18},
+     'setttings': {'x_lab': 'height', 'y_lab': 'age'}}
+    
+    :param attrs: A list of specific attribute names to variablize. If left
+        empty then all variables will be converted.
+    :type attrs: strings
     """
+    def __init__(self, *attrs):
+        if len(attrs) == 0:
+            self.targets = None
+        else:
+            self.targets = attrs
+
     def transform(self, instance):
+        """
+        Variablize target attributes.
+        """
         return self._variablize(instance)
 
     def undo_transform(self, instance):
+        """
+        .. warning:: There is currently no implementation for reversing
+            variablization. Calling this function will throw an error.
+        """
         raise NotImplementedError("no reverse transformation currently implemented")
 
     def _variablize(self, instance, mapping={}, prefix=None):
@@ -1175,6 +1200,10 @@ class ObjectVariablizer(Preprocessor):
 
         mapping = {}
         relations = []
+        if self.targets is None:
+            attrs = [k for k in instance.keys()]
+        else:
+            attrs = self.targets
 
         for attr in instance:
             if prefix == None:
@@ -1185,7 +1214,7 @@ class ObjectVariablizer(Preprocessor):
             if isinstance(attr, tuple):
                 relations.append(attr)
 
-            elif isinstance(instance[attr], dict):
+            elif attr in attrs and isinstance(instance[attr], dict):
                 name = attr
                 if attr[0] != '?':
                     name = '?' + attr
@@ -1198,3 +1227,69 @@ class ObjectVariablizer(Preprocessor):
             new_instance[rename_relation(rel, mapping)] = instance[rel]
 
         return new_instance
+
+class NumericToNominal(Preprocessor):
+    """
+    Converts numeric values to nominal ones.
+
+    :class:`Cobweb3 <concept_formation.cobweb3.Cobweb3Tree>` and :class:`Trestle
+    <concept_formation.trestle.TrestleTree>` will treat anything that passes
+    ``isinstance(instance[attr],Number)`` as a numerical value.
+
+    This is a helper function preprocessor and so is not part of
+    :class:`StructureMapper
+    <concept_formation.structure_mapper.StructureMapper>`'s standard pipeline.
+
+    >>> import pprint
+    >>> ntn = NumericToNominal()
+    >>> instance = {"x":12.5,"y":9,"z":"top"}
+    >>> instance = ntn.transform(instance)
+    >>> pprint.pprint(instance)
+    {'x': '12.5', 'y': '9', 'z': 'top'}
+
+    >>> ntn = NumericToNominal("y")
+    >>> instance = {"x":12.5,"y":9,"z":"top"}
+    >>> instance = ntn.transform(instance)
+    >>> pprint.pprint(instance)
+    {'x': 12.5, 'y': '9', 'z': 'top'}
+
+    :param attrs: A list of specific attributes to convert. If left empty all
+        numeric values will be converted.
+    :type attrs: strings
+    """
+    def __init__(self, *attrs):
+        if len(attrs) == 0:
+            self.targets = None
+        else:
+            self.targets = attrs
+
+    def transform(self,instance):
+        """
+        Transform target attribute values to nominal if they are numeric.
+        """
+        if self.targets is None:
+            attrs = [k for k in instance.keys()]
+        else :
+            attrs = self.targets
+
+        new_instance = {}
+
+        for a in instance:
+            if a in attrs and isinstance(instance[a],Number):
+                new_instance[a] = str(instance[a])
+            elif isinstance(instance[a],dict):
+                new_instance[a] = self.transform(instance[a])
+            else:
+                new_instance[a] = instance[a]
+        return new_instance
+
+    def undo_transform(self,instance):
+        """
+        NumericToNominal is intended to be a standardizing process and so does
+        not implement an undo.
+
+        .. warning:: There is currently no implementation for reversing
+            the numeric to nominal conversion.
+        """
+        raise NotImplementedError("no reverse transformation currently implemented")
+
