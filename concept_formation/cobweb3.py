@@ -178,7 +178,8 @@ class Cobweb3Node(CobwebNode):
 
         .. warning:: If a numeric attribute is found in an instance with the
             name of a previously nominal attribute, or vice versa, this function will raise
-            an exception.
+            an exception. See: :class:`NumericToNominal
+            <concept_formation.preprocessor.NumericToNominal>` for a way to fix this error.
         
         :param instance: A new instances to incorporate into the node.
         :type instance: {a1: v1, a2: v2, ...} - a hashtable of attr and values,
@@ -208,7 +209,8 @@ class Cobweb3Node(CobwebNode):
 
         .. warning:: If a numeric attribute is found in an instance with the
             name of a previously nominal attribute, or vice versa, this function will raise
-            an exception.
+            an exception. See: :class:`NumericToNominal
+            <concept_formation.preprocessor.NumericToNominal>` for a way to fix this error.
 
         :param node: Another node from the same Cobweb3Tree
         :type node: Cobweb3Node

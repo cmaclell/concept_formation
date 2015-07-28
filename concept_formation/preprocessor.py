@@ -31,7 +31,8 @@ not stored in Trestle's conventional representation:
   relations. Intended to preserve the semenatics of a list in JSON representation.
 * :class:`ObjectVariablizer` - Looks for component objects within an instance
   and variablizes their names by prepending a ``'?'``.
-* :class:`NumericToNominal` - Converts numeric values to nominal onts.
+* :class:`NumericToNominal` - Converts numeric values to nominal ones.
+* :class:`NominalToNumeric` - Converts nominal values to numeric ones.
 """
 
 from __future__ import print_function
@@ -1186,7 +1187,7 @@ class ObjectVariablizer(Preprocessor):
     def undo_transform(self, instance):
         """
         .. warning:: There is currently no implementation for reversing
-            variablization. Calling this function will throw an error.
+            variablization. Calling this function will raise an Exception.
         """
         raise NotImplementedError("no reverse transformation currently implemented")
 
@@ -1229,7 +1230,11 @@ class NumericToNominal(Preprocessor):
 
     :class:`Cobweb3 <concept_formation.cobweb3.Cobweb3Tree>` and :class:`Trestle
     <concept_formation.trestle.TrestleTree>` will treat anything that passes
-    ``isinstance(instance[attr],Number)`` as a numerical value.
+    ``isinstance(instance[attr],Number)`` as a numerical value. Because of how they
+    store numerical distribution information, If either algorithm encounts a
+    numerical value where it previously saw a nominal one it will throw an
+    error. This preprocessor is provided as a way to address that problem by
+    unifying the value types of attributes across an instance.
 
     This is a helper function preprocessor and so is not part of
     :class:`StructureMapper
@@ -1280,11 +1285,123 @@ class NumericToNominal(Preprocessor):
 
     def undo_transform(self,instance):
         """
-        NumericToNominal is intended to be a standardizing process and so does
-        not implement an undo.
-
         .. warning:: There is currently no implementation for reversing
-            the numeric to nominal conversion.
+            the numeric to nominal conversion. Calling this function will 
+            raise an Exception.
         """
         raise NotImplementedError("no reverse transformation currently implemented")
 
+class NominalToNumeric(Preprocessor):
+    """
+    Converts nominal values to numeric ones.
+
+    :class:`Cobweb3 <concept_formation.cobweb3.Cobweb3Tree>` and :class:`Trestle
+    <concept_formation.trestle.TrestleTree>` will treat anything that passes
+    ``isinstance(instance[attr],Number)`` as a numerical value. Because of how they
+    store numerical distribution information, If either algorithm encounts a
+    numerical value where it previously saw a nominal one it will throw an
+    error. This preprocessor is provided as a way to address that problem by
+    unifying the value types of attributes across an instance.
+
+    Because parsing numbers is a less automatic function than casting things to
+    strings this preprocessor has an extra parameter from
+    :class:`NumericToNominal`. The on_fail parameter determines what should be
+    done in the event of a parsing error and provides 3 options:
+
+    * ``'break'`` - Simply raises the ValueError that caused the problem and
+      fails. **(Default)**
+    * ``'drop'``  - Drops any attributes that fail to parse. They would be
+      treated as missing by categorization.
+    * ``'zero'``  - Replaces any problem values with ``0.0``.
+
+    This is a helper function preprocessor and so is not part of
+    :class:`StructureMapper
+    <concept_formation.structure_mapper.StructureMapper>`'s standard pipeline.
+
+    >>> import pprint
+    >>> ntn = NominalToNumeric()
+    >>> instance = {"a":"123","b":"12.1241","c":"134"}
+    >>> instance = ntn.transform(instance)
+    >>> pprint.pprint(instance)
+    {'a': 123.0, 'b': 12.1241, 'c': 134.0}
+
+    >>> ntn = NominalToNumeric(on_fail='break')
+    >>> instance = {"a":"123","b":"12.1241","c":"bad"}
+    >>> instance = ntn.transform(instance)
+    Traceback (most recent call last):
+        ...
+    ValueError: could not convert string to float: 'bad'
+
+    >>> ntn = NominalToNumeric(on_fail="drop")
+    >>> instance = {"a":"123","b":"12.1241","c":"bad"}
+    >>> instance = ntn.transform(instance)
+    >>> pprint.pprint(instance)
+    {'a': 123.0, 'b': 12.1241}
+
+    >>> ntn = NominalToNumeric(on_fail="zero")
+    >>> instance = {"a":"123","b":"12.1241","c":"bad"}
+    >>> instance = ntn.transform(instance)
+    >>> pprint.pprint(instance)
+    {'a': 123.0, 'b': 12.1241, 'c': 0.0}
+
+    >>> ntn = NominalToNumeric("break","a","b")
+    >>> instance = {"a":"123","b":"12.1241","c":"bad"}
+    >>> instance = ntn.transform(instance)
+    >>> pprint.pprint(instance)
+    {'a': 123.0, 'b': 12.1241, 'c': 'bad'}
+
+    :param on_fail: defines what should be done in the event of a numerical parse error
+    :type on_fail: 'break', 'drop', or 'zero'
+    :param attrs: A list of specific attributes to convert. If left empty all
+        non-component values will be converted.
+    :type attrs: strings
+    """
+
+    def __init__(self, on_fail='break', *attrs):
+        if len(attrs) == 0:
+            self.targets = None
+        else:
+            self.targets = attrs
+
+        if on_fail not in ["break","drop","zero"]:
+            on_fail = "break"
+        self.on_fail = on_fail
+
+    def transform(self,instance):
+        """
+        Transform target attribute values to numeric if they are valid nominals.
+        """
+        if self.targets is None:
+            attrs = [k for k in instance.keys()]
+        else :
+            attrs = self.targets
+
+        new_instance = {}
+
+        for a in instance:
+            if a in attrs:
+                try:
+                    val = float(instance[a])
+                except ValueError as e:
+                    if self.on_fail == "break":
+                        raise e
+                        return None
+                    elif self.on_fail == "drop":
+                        continue
+                    elif self.on_fail == "zero":
+                        val = 0.0
+                new_instance[a] = val
+            elif isinstance(instance[a],dict):
+                new_instance[a] = self.transform(instance[a])
+            else:
+                new_instance[a] = instance[a]
+        
+        return new_instance
+
+    def undo_transform(self,instance):
+        """
+        .. warning:: There is currently no implementation for reversing
+            the nominal to numeric conversion. Calling this function will 
+            raise an Exception.
+        """
+        raise NotImplementedError("no reverse transformation currently implemented")
