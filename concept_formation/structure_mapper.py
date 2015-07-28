@@ -1,11 +1,9 @@
 """
-
 This module contains classes for preprocessing and structure mapping instances
 for use with Trestle. A preprocessor transforms an instance so that it can be
 integrated into Trestle's knoweldge base. 
 
 .. todo:: Most of this module's header comment is no longer true. We need to update it.
-
 
 This module contains all of the core functions for Trestle's structure mapping
 and flattening procedures. The core function in this process is
@@ -55,8 +53,6 @@ from concept_formation.preprocessor import Flattener
 from concept_formation.preprocessor import Pipeline
 from concept_formation.preprocessor import Preprocessor
 from concept_formation.preprocessor import rename_relation
-
-
 
 def get_relation_components(relation, vars_only=True):
     """
