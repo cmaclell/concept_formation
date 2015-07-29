@@ -60,15 +60,6 @@ concept_formation.predict module
     :undoc-members:
     :show-inheritance:
 
-..
-    concept_formation.search module
-    -------------------------------
-
-    .. automodule:: concept_formation.search
-        :members:
-        :undoc-members:
-        :show-inheritance:
-
 concept_formation.structure_mapper module
 -----------------------------------------
 

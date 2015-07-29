@@ -14,7 +14,7 @@ from __future__ import unicode_literals
 from __future__ import absolute_import
 from __future__ import division
 
-from concept_formation import search
+from py_search import search
 from concept_formation.preprocessor import Tuplizer
 from concept_formation.preprocessor import NameStandardizer
 from concept_formation.preprocessor import SubComponentProcessor

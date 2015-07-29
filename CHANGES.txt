@@ -8,3 +8,4 @@ v0.1.6, 5/21/15 -- Updated code so that it appears to be working on python 2.
 v0.1.7, 5/28/15 -- Slight refactoring to remove numpy import in utils. 
 v0.1.8, 5/29/15 -- Added __future__ to example_utils.py
 v0.1.9, 5/30/15 -- Upddated pointer management and cobweb3 normalization
+v0.2.0, 7/28/15 -- Rewrote structure mapper and changed instance representation
