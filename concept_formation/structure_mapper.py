@@ -237,14 +237,22 @@ def flat_match(concept, instance, beam_width=1, vars_only=True):
         return None
 
 class StructureMappingProblem(Problem):
+    """
+    A class for describing a structure mapping problem to be solved using the
+    `py_search<http://py-search.readthedocs.org/>_` library. This class defines
+    the heuristic, the successor, and goal_test methods used by the search
+    library.
+    """
 
     def heuristic(self, state, extra):
         """
-        Considers all partial matches for each unbound attribute and assumes that
-        you get the highest guess_gain match. This provides an over estimation of
-        the possible reward (i.e., is admissible).
+        Given a state and extra information (concept and instance), considers
+        all partial matches for each unbound attribute and assumes that you get
+        the highest guess_gain match. This provides an over estimation of the
+        possible reward (i.e., is admissible).
 
-        See the :mod:`concept_formation.search` library for more details.
+        This heuristic is used by the :func:`successor` method to compute the
+        value of each state in the search.
         """
         mapping, unnamed, availableNames = state
         concept, instance = extra
@@ -265,11 +273,12 @@ class StructureMappingProblem(Problem):
 
     def successor(self, node):
         """
-        Given a node (mapping, instance, concept), this function computes the
-        successor nodes where an additional mapping has been added for each
-        possible additional mapping. 
+        Given a search node (contains mapping, instance, concept), this
+        function computes the successor nodes where an additional mapping has
+        been added for each possible additional mapping. 
 
-        See the :mod:`concept_formation.search` library for more details.
+        See the `py_search<http://py-search.readthedocs.org/>_` library for
+        more details of how this function is used in search.
         """
         mapping, inames, availableNames = node.state
         concept, instance = node.extra
@@ -315,10 +324,11 @@ class StructureMappingProblem(Problem):
 
     def goal_test(self, node):
         """
-        Returns True if every component in the original instance has been renamed
-        in the given node.
+        Given a search node, this returns True if every component in the
+        original instance has been renamed in the given node.
 
-        See the :mod:`concept_formation.search` library for more details.
+        See the `py_search<http://py-search.readthedocs.org/>_` library for
+        more details of how this function is used in search.
         """
         mapping, unnamed, availableNames = node.state
         return len(unnamed) == 0
