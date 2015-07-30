@@ -198,12 +198,13 @@ def flat_match(concept, instance, beam_width=1, vars_only=True):
     used to rename components in the instance. The mapping returned maximizes
     similarity between the instance and the concept.
 
-    The mapping search can be performed in an optimal way (using A* search) to
-    guarantee the best possible mapping at the expense of performance or in an
-    greedy way (using Beam search) to find a sufficient solution in less time.
-    
-    .. note:: If the instance contains no relational attributes then the optimal
-       and greedy searches will be identical.
+    Beam search is used to find a mapping between instance and concept. If
+    `beam_width==float('inf')` then searh will be optimal (i.e., A* search).
+    The lower the beam width the more greedy (and faster) the search. The
+    default beam width is 1, which is basically greedy hill climbing search. In
+    situations where an instance contains no relational attributes and no
+    sub-component attributes (i.e., components that contain other components)
+    than a beam width of 1 will return the optimal result. 
 
     :param concept: A concept to map the instance to
     :type concept: TrestleNode
@@ -218,7 +219,6 @@ def flat_match(concept, instance, beam_width=1, vars_only=True):
     :type vars_only: boolean
     :return: a mapping for renaming components in the instance.
     :rtype: dict
-
     """
     inames = frozenset(get_component_names(instance))
     cnames = frozenset(get_component_names(concept.av_counts, vars_only))
