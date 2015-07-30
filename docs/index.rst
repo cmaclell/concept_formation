@@ -1,4 +1,3 @@
-.. concept_formation documentation master file, created by
 .. include:: 
     ../README.rst
 

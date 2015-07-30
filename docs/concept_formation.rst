@@ -95,10 +95,11 @@ concept_formation.utils module
     :show-inheritance:
 
 
-Module contents
----------------
+..
+    Module contents
+    ---------------
 
-.. automodule:: concept_formation
-    :members:
-    :undoc-members:
-    :show-inheritance:
+    .. automodule:: concept_formation
+        :members:
+        :undoc-members:
+        :show-inheritance:

@@ -14,7 +14,9 @@ from __future__ import unicode_literals
 from __future__ import absolute_import
 from __future__ import division
 
-from py_search import search
+from py_search.search import Problem
+from py_search.search import Node
+from py_search.search import beam_search
 from concept_formation.preprocessor import Tuplizer
 from concept_formation.preprocessor import NameStandardizer
 from concept_formation.preprocessor import SubComponentProcessor
@@ -224,18 +226,9 @@ def flat_match(concept, instance, beam_width=1, vars_only=True):
     if(len(inames) == 0 or len(cnames) == 0):
         return {}
 
-    initial = search.Node((frozenset(), inames, cnames), extra=(concept,
-                                                                instance))
-    if beam_width == float('inf'):
-        solution = next(search.BestFGS(initial, _flat_match_successor_fn,
-                                       _flat_match_goal_test_fn,
-                                       _flat_match_heuristic_fn))
-    else:
-        solution = next(search.BeamGS(initial, _flat_match_successor_fn,
-                                      _flat_match_goal_test_fn,
-                                      _flat_match_heuristic_fn,
-                                      initialBeamWidth=beam_width))
-    #print(solution.cost)
+    problem = StructureMappingProblem((frozenset(), inames, cnames),
+                                      extra=(concept, instance))
+    solution = next(beam_search(problem, beam_width=beam_width))
 
     if solution:
         mapping, unnamed, availableNames = solution.state
@@ -243,84 +236,92 @@ def flat_match(concept, instance, beam_width=1, vars_only=True):
     else:
         return None
 
-def _flat_match_successor_fn(node):
-    """
-    Given a node (mapping, instance, concept), this function computes the
-    successor nodes where an additional mapping has been added for each
-    possible additional mapping. 
+class StructureMappingProblem(Problem):
 
-    See the :mod:`concept_formation.search` library for more details.
-    """
-    mapping, inames, availableNames = node.state
-    concept, instance = node.extra
+    def heuristic(self, state, extra):
+        """
+        Considers all partial matches for each unbound attribute and assumes that
+        you get the highest guess_gain match. This provides an over estimation of
+        the possible reward (i.e., is admissible).
 
-    for n in inames:
-        reward = 0
+        See the :mod:`concept_formation.search` library for more details.
+        """
+        mapping, unnamed, availableNames = state
+        concept, instance = extra
+
+        h = 0
         m = {a:v for a,v in mapping}
-        m[n] = n
         for attr in instance:
-            if not contains_component(n, attr):
-                continue
             new_attr = bind_flat_attr(attr, m)
-            if new_attr:
-                reward += concept.attr_val_guess_gain(new_attr, instance[attr])
+            if not new_attr:
+                best_attr_h = [concept.attr_val_guess_gain(cAttr, instance[attr]) for
+                                   cAttr in concept.av_counts if
+                                   is_partial_match(attr, cAttr, m, unnamed)]
 
-        yield search.Node((mapping.union(frozenset([(n, n)])), inames -
-                    frozenset([n]), availableNames), node, n + ":" + n,
-                   node.cost - reward, node.depth + 1, node.extra)
+                if len(best_attr_h) > 0:
+                    h -= max(best_attr_h)
 
-        for new in availableNames:
+        return h
+
+    def successor(self, node):
+        """
+        Given a node (mapping, instance, concept), this function computes the
+        successor nodes where an additional mapping has been added for each
+        possible additional mapping. 
+
+        See the :mod:`concept_formation.search` library for more details.
+        """
+        mapping, inames, availableNames = node.state
+        concept, instance = node.extra
+
+        for n in inames:
             reward = 0
             m = {a:v for a,v in mapping}
-            m[n] = new
+            m[n] = n
             for attr in instance:
                 if not contains_component(n, attr):
                     continue
                 new_attr = bind_flat_attr(attr, m)
                 if new_attr:
-                    reward += concept.attr_val_guess_gain(new_attr,
-                                                          instance[attr])
+                    reward += concept.attr_val_guess_gain(new_attr, instance[attr])
 
-            yield search.Node((mapping.union(frozenset([(n, new)])), inames -
-                                      frozenset([n]), availableNames -
-                                      frozenset([new])), node, n + ":" + new,
-                        node.cost - reward, node.depth + 1, node.extra)
+            state = (mapping.union(frozenset([(n, n)])), inames -
+                        frozenset([n]), availableNames)
+            cost = node.cost - reward
+            h = self.heuristic(state, node.extra) 
 
+            yield Node(state, node, n + ":" + n, cost, cost + h,
+                              node.depth + 1, node.extra)
 
-def _flat_match_heuristic_fn(node):
-    """
-    Considers all partial matches for each unbound attribute and assumes that
-    you get the highest guess_gain match. This provides an over estimation of
-    the possible reward (i.e., is admissible).
+            for new in availableNames:
+                reward = 0
+                m = {a:v for a,v in mapping}
+                m[n] = new
+                for attr in instance:
+                    if not contains_component(n, attr):
+                        continue
+                    new_attr = bind_flat_attr(attr, m)
+                    if new_attr:
+                        reward += concept.attr_val_guess_gain(new_attr,
+                                                              instance[attr])
+                state = (mapping.union(frozenset([(n, new)])), inames -
+                                          frozenset([n]), availableNames -
+                                          frozenset([new]))
+                cost = node.cost - reward
+                h = self.heuristic(state, node.extra) 
 
-    See the :mod:`concept_formation.search` library for more details.
-    """
-    mapping, unnamed, availableNames = node.state
-    concept, instance = node.extra
+                yield Node(state, node, n + ":" + new,
+                            cost, cost+h, node.depth + 1, node.extra)
 
-    h = 0
-    m = {a:v for a,v in mapping}
-    for attr in instance:
-        new_attr = bind_flat_attr(attr, m)
-        if not new_attr:
-            best_attr_h = [concept.attr_val_guess_gain(cAttr, instance[attr]) for
-                               cAttr in concept.av_counts if
-                               is_partial_match(attr, cAttr, m, unnamed)]
+    def goal_test(self, node):
+        """
+        Returns True if every component in the original instance has been renamed
+        in the given node.
 
-            if len(best_attr_h) > 0:
-                h -= max(best_attr_h)
-
-    return h
-
-def _flat_match_goal_test_fn(node):
-    """
-    Returns True if every component in the original instance has been renamed
-    in the given node.
-
-    See the :mod:`concept_formation.search` library for more details.
-    """
-    mapping, unnamed, availableNames = node.state
-    return len(unnamed) == 0
+        See the :mod:`concept_formation.search` library for more details.
+        """
+        mapping, unnamed, availableNames = node.state
+        return len(unnamed) == 0
 
 def is_partial_match(iAttr, cAttr, mapping, unnamed):
     """
