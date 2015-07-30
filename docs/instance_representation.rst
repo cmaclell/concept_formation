@@ -22,28 +22,37 @@ Attributes
 The concept_formation package supports four kinds of attributes:
 
 Constant Attributes
-    The default attribute type (typically a string, but if the conditions for
-    the other attribute types are not met than it is assumed to be a constant).
+    The default attribute type. Constant attributes are typically strings but
+    any attribute that does not satisfy the conditions for the other categories
+    will be assumed to be constant.
 
-Variable Attributes 
-    Constant attributes that have a question mark '?' as their first element
-    (e.g., "?variable-attribute").
+Variable Attributes
+    Any attribute that can be renamed to maximize mapping between an instance
+    and a concept. This allows for matching attributes based on the similarity
+    of their values rather than strictly on their attribute names. Variable are
+    denoted with a question mark ``'?'`` as their first element (e.g.,
+    ``'?variable- attribute'``).
 
 Relational Attributes
-    An attribute that is represented as a tuple (e.g., ('relation', 'obj1',
-    'obj2')). Relations can only be in the top level of the instance (i.e.,
-    component values, described below, cannot contain relations). If a
-    relationship needs to be expressed between attributes of component values,
-    than preorder unary relations can be used. For example, to express a
-    relationship of feature1 of subobject1 I might have: ('relation',
-    ('feature1', 'subobject1')). 
+    An attribute that represents a relationship between other attributes or
+    values of the instance. Relation attributes are represented as tuples (e.g.,
+    ``('relation', 'obj1', 'obj2')``). Relations can only be in the top level of
+    the instance (i.e., component values, described below, cannot contain
+    relations). If a relationship needs to be expressed between attributes of
+    component values, then preorder unary relations can be used. For example, to
+    express a relationship of feature1 of subobject1 I might have:
+    ``('relation', ('feature1', 'subobject1')``).
 
 Hidden Attributes
-    Constant or relational attributes that have an '_' as their first element
-    (i.e., attribute[0] == '_'). For constants, this means that the first
-    character is an underscore (e.g., "_hidden"). For relations, this means
-    that the first element in the tuple is an string underscore (e.g., ('_',
-    'hidden-relation', 'obj')). 
+    Attributes that are maintained in the concept knoweldge base but are not
+    considered during concept formation. These are useful for propagating unique
+    ids or other bookkeeping labels into the knoweldge base without biasing
+    concept formation. Hidden attributes are denoted as constant or relational
+    attributes that have an ``'_'`` as their first element (i.e., ``attribute[0]
+    == '_'``). For constants, this means that the first character is an
+    underscore (e.g., ``"_hidden"``). For relations, this means that the first
+    element in the tuple is an string underscore (e.g., ``('_', 'hidden-
+    relation', 'obj')``).
 
 Only the **constant** and **hidden** attributes are supported by
 :class:`CobwebTree<concept_formation.cobweb.CobwebTree>` and
@@ -62,17 +71,16 @@ Nominal Values
 
 Numerical Values
     All values that are recognized by Python as numbers (i.e.,
-    ``isinstance(val, number)``).
+    ``isinstance(val, Number)``).
 
 Component Values
     All dictionary values (i.e., sub-instances). All component values are
-    internally converted into unary relations internally, so the unary
-    relations can also be used directly. For example
-    ``{'subobject: {'attr': 'value'}}`` is equivalent to 
-    ``{('attr', 'subobject'): 'value'}``.  Note that sub-instances cannot
+    internally converted into unary relations, so unary relations can also be
+    used directly. For example ``{'subobject: {'attr': 'value'}}`` is equivalent
+    to  ``{('attr', 'subobject'): 'value'}``.  Note that sub-instances cannot
     contain relations. Instead include the relations in the top-level instance
     and use unary relations to refer to elements of sub-instances (e.g.,
-    ``('relation1' ('att1', 'subobject'))``). 
+    ``('relation1' ('att1', 'subobject'))``).
 
 The :class:`CobwebTree<concept_formation.cobweb.CobwebTree>` class supports
 only **nominal** values. The
