@@ -218,6 +218,8 @@ def compute_rewards(cnames, instance, concept):
     rewards = {}
     for attr in instance:
         a_comps = get_attribute_components(attr)
+        if len(a_comps) == 0:
+            continue
         for c_comps in permutations(cnames, len(a_comps)):
             mapping = dict(zip(a_comps, c_comps))
             new_attr = bind_flat_attr(attr, mapping)
