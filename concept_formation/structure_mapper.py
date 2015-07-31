@@ -244,18 +244,17 @@ class StructureMappingProblem(Problem):
     library.
     """
 
-    def heuristic(self, state, extra):
+    def partial_match_heuristic(self, node):
         """
-        Given a state and extra information (concept and instance), considers
-        all partial matches for each unbound attribute and assumes that you get
-        the highest guess_gain match. This provides an over estimation of the
-        possible reward (i.e., is admissible).
+        Given a node, considers all partial matches for each unbound attribute
+        and assumes that you get the highest guess_gain match. This provides an
+        over estimation of the possible reward (i.e., is admissible).
 
-        This heuristic is used by the :func:`successor` method to compute the
+        This heuristic is used by the :func:`node_value` method to compute the
         value of each state in the search.
         """
-        mapping, unnamed, availableNames = state
-        concept, instance = extra
+        mapping, unnamed, availableNames = node.state
+        concept, instance = node.extra
 
         h = 0
         m = {a:v for a,v in mapping}
@@ -270,6 +269,13 @@ class StructureMappingProblem(Problem):
                     h -= max(best_attr_h)
 
         return h
+
+    def node_value(self, node):
+        """
+        The value of a node. Uses cost + heuristic to achieve A* and other
+        greedy variants.
+        """
+        return node.cost() + self.partial_match_heuristic(node)
 
     def successor(self, node):
         """
@@ -296,11 +302,8 @@ class StructureMappingProblem(Problem):
 
             state = (mapping.union(frozenset([(n, n)])), inames -
                         frozenset([n]), availableNames)
-            cost = node.cost - reward
-            h = self.heuristic(state, node.extra) 
-
-            yield Node(state, node, n + ":" + n, cost, cost + h,
-                              node.depth + 1, node.extra)
+            path_cost = node.cost() - reward
+            yield Node(state, node, n + ":" + n, path_cost, extra=node.extra)
 
             for new in availableNames:
                 reward = 0
@@ -316,11 +319,9 @@ class StructureMappingProblem(Problem):
                 state = (mapping.union(frozenset([(n, new)])), inames -
                                           frozenset([n]), availableNames -
                                           frozenset([new]))
-                cost = node.cost - reward
-                h = self.heuristic(state, node.extra) 
-
-                yield Node(state, node, n + ":" + new,
-                            cost, cost+h, node.depth + 1, node.extra)
+                path_cost = node.cost() - reward
+                yield Node(state, node, n + ":" + new, path_cost,
+                           extra=node.extra)
 
     def goal_test(self, node):
         """
