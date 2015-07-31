@@ -31,10 +31,11 @@ class TrestleTree(Cobweb3Tree):
     calculation meaning numbers that are naturally larger will recieve
     extra weight in the calculation.
 
-    The beam width parameter detemines the inital beam width used in the search
-    step of structure mapping. A smaller beam width results in a faster search
-    but is not gauranteed to find an optimal match. If beam width is set to
-    ``float('inf')`` then the search will perform equivalently to an A* search.
+    The beam width parameter detemines the inital beam width used by Beam
+    Search to perform structure mapping.  A smaller beam width results in a
+    faster search but is not gauranteed to find an optimal match. If beam width
+    is set to ``float('inf')`` then A* search will be used, but typically this is
+    prohibitively slow.
 
     The vars_only parameter determines whether the matcher should only allow
     variable attributes to match to other variable attributes or if variable
@@ -57,7 +58,7 @@ class TrestleTree(Cobweb3Tree):
     :type vars_only: bool
     """
 
-    def __init__(self, alpha=0.001, scaling=True, beam_width=1, vars_only=True):
+    def __init__(self, alpha=0.001, scaling=True, beam_width=2, vars_only=True):
         """
         The tree constructor. 
 

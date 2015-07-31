@@ -12,3 +12,4 @@ v0.2.0, 7/28/15 -- Rewrote structure mapper and changed instance representation
 v0.2.1, 7/28/15 -- Updated structure mapping code to align with changes in py_search
 v0.2.2, 7/30/15 -- Updated structure mapping code to align with more changes py_search
 v0.2.3, 7/30/15 -- Increased version requirement to fix bug in py_search
+v0.2.4, 7/30/15 -- Updated structure mapping code to improve performance

@@ -13,10 +13,12 @@ from __future__ import print_function
 from __future__ import unicode_literals
 from __future__ import absolute_import
 from __future__ import division
+from itertools import permutations
 
 from py_search.search import Problem
 from py_search.search import Node
 from py_search.search import beam_search
+from py_search.search import best_first_search
 from concept_formation.preprocessor import Tuplizer
 from concept_formation.preprocessor import NameStandardizer
 from concept_formation.preprocessor import SubComponentProcessor
@@ -25,23 +27,44 @@ from concept_formation.preprocessor import Pipeline
 from concept_formation.preprocessor import Preprocessor
 from concept_formation.preprocessor import rename_relation
 
-def get_relation_components(relation, vars_only=True):
+def get_attribute_components(attribute, vars_only=True):
     """
-    Gets component names out of a relation.
+    Gets component names out of an attribute
+
+    >>> attr = ('a', ('sub1', '?c1'))
+    >>> get_attribute_components(attr)
+    {'?c1'}
+     
+    >>> attr = '?c1'
+    >>> get_attribute_components(attr)
+    {'?c1'}
+
+    >>> attr = ('a', ('sub1', 'c1'))
+    >>> get_attribute_components(attr)
+    set()
+
+    >>> attr = 'c1'
+    >>> get_attribute_components(attr)
+    set()
     """
     names = set()
 
-    if vars_only is not True and relation[0] != '_':
-        names.add(relation)
+    if vars_only is not True and attribute[0] != '_':
+        names.add(attribute)
 
-    for ele in relation:
-        if isinstance(ele, tuple):
-            for name in get_relation_components(ele, vars_only):
-                names.add(name)
-        else:
-            if ((vars_only is not True or ele[0] == '?') and ele != '_' and
-                ele[0] != '_'):
-                names.add(ele)
+    if isinstance(attribute, tuple):
+        for ele in attribute:
+            if isinstance(ele, tuple):
+                for name in get_attribute_components(ele, vars_only):
+                    names.add(name)
+            else:
+                if ((vars_only is not True or ele[0] == '?') and ele != '_' and
+                    ele[0] != '_'):
+                    names.add(ele)
+
+    elif (vars_only is not True and attribute[0] != '_') or attribute[0] == '?':
+            names.add(attribute)
+
 
     return names
 
@@ -75,12 +98,8 @@ def get_component_names(instance, vars_only=True):
     """
     names = set()
     for attr in instance:
-        if isinstance(attr, tuple):
-            for name in get_relation_components(attr, vars_only):
-                names.add(name)
-        elif (vars_only is not True and attr[0] != '_') or attr[0] == '?':
-            names.add(attr)
-
+        for name in get_attribute_components(attr, vars_only):
+            names.add(name)
     return names
 
 def rename_flat(instance, mapping):
@@ -192,30 +211,50 @@ def contains_component(component, attr):
     
     return False
 
-def flat_match(concept, instance, beam_width=1, vars_only=True):
+def compute_rewards(cnames, instance, concept):
+    """
+    Consider trying to speed this up
+    """
+    rewards = {}
+    for attr in instance:
+        a_comps = get_attribute_components(attr)
+        for c_comps in permutations(cnames, len(a_comps)):
+            mapping = dict(zip(a_comps, c_comps))
+            new_attr = bind_flat_attr(attr, mapping)
+            if new_attr:
+                r = concept.attr_val_guess_gain(new_attr, instance[attr])
+                if r != 0:
+                    items = sorted(mapping.items())
+                    keys = tuple(i[0] for i in items)
+                    values = tuple(i[1] for i in items)
+                    if keys not in rewards:
+                        rewards[keys] = {}
+                    if values not in rewards:
+                        rewards[keys][values] = 0
+                    rewards[keys][values] += r
+    return rewards
+
+def flat_match(concept, instance, beam_width=2, vars_only=True):
     """
     Given a concept and instance this function returns a mapping  that can be
     used to rename components in the instance. The mapping returned maximizes
     similarity between the instance and the concept.
 
-    Beam search is used to find a mapping between instance and concept. If
-    `beam_width==float('inf')` then searh will be optimal (i.e., A* search).
-    The lower the beam width the more greedy (and faster) the search. The
-    default beam width is 1, which is basically greedy hill climbing search. In
-    situations where an instance contains no relational attributes and no
-    sub-component attributes (i.e., components that contain other components)
-    than a beam width of 1 will return the optimal result. 
+    Beam search is used to find a mapping between instance and concept. 
+    The lower the beam width the more greedy (and faster) the search. A default
+    beam_width of 2 is used to achieve slightly less greedy results. If the
+    beam width is set to `float('inf')` then uses A* instead.
 
     :param concept: A concept to map the instance to
     :type concept: TrestleNode
     :param instance: An instance to be mapped to the concept
     :type instance: instance
-    :param beam_width: The width of the beam used for Beam Search. If set to
-        float('inf'), then A* will be used.
-    :type beam_width: int (or float('inf') for optimal) 
+    :param beam_width: The width of the beam used for Beam Search. Uses A* if
+    the beam width is `float('inf')` 
+    :type beam_width: int, or float('inf') for A* 
     :param vars_only: Determines whether or not variables in the instance can
-        be matched only to variables in the concept or if they can also be bound to
-        constants. 
+        be matched only to variables in the concept or if they can also be
+        bound to constants. 
     :type vars_only: boolean
     :return: a mapping for renaming components in the instance.
     :rtype: dict
@@ -226,9 +265,13 @@ def flat_match(concept, instance, beam_width=1, vars_only=True):
     if(len(inames) == 0 or len(cnames) == 0):
         return {}
 
+    rewards = compute_rewards(cnames, instance, concept)
     problem = StructureMappingProblem((frozenset(), inames, cnames),
-                                      extra=(concept, instance))
-    solution = next(beam_search(problem, beam_width=beam_width))
+                                      extra=rewards)
+    if beam_width == float('inf'):
+        solution = next(best_first_search(problem))
+    else:
+        solution = next(beam_search(problem, beam_width=beam_width))
 
     if solution:
         mapping, unnamed, availableNames = solution.state
@@ -254,19 +297,13 @@ class StructureMappingProblem(Problem):
         estimate how promising the state is. 
         """
         mapping, unnamed, availableNames = node.state
-        concept, instance = node.extra
+        rewards = node.extra
 
         h = 0
-        m = {a:v for a,v in mapping}
-        for attr in instance:
-            new_attr = bind_flat_attr(attr, m)
-            if not new_attr:
-                best_attr_h = [concept.attr_val_guess_gain(cAttr, instance[attr]) for
-                                   cAttr in concept.av_counts if
-                                   is_partial_match(attr, cAttr, m, unnamed)]
-
-                if len(best_attr_h) > 0:
-                    h -= max(best_attr_h)
+        for iattr in rewards:
+            values = rewards[iattr].values()
+            if len(values) > 0:
+                h -= max(rewards[iattr].values())
 
         return h
 
@@ -280,6 +317,47 @@ class StructureMappingProblem(Problem):
         """
         return node.cost() + self.partial_match_heuristic(node)
 
+    def is_valid(self, m, iattr, rewards):
+        """
+        Removes elements from the rewards matrix that are never achievable
+        because they violate an existing mapping.
+        """
+        new = {}
+        constrain = {}
+        for idx, o in enumerate(iattr):
+            if o in mapping:
+                constrain[idx] = 0
+
+        for vals in rewards:
+            valid = True
+            for idx in constrain:
+                if iattr[idx] != constrain[idx]:
+                    valid = False
+                    break
+            if valid:
+                new[vals] = rewards[vals]
+
+        return new
+
+    def reward(self, new, mapping, rewards):
+        reward = 0
+        new_rewards = {}
+
+        mapped = frozenset(mapping.keys())
+        for iattr in rewards:
+            if frozenset(iattr).issubset(mapped):
+                bindings = tuple(mapping[o] for o in iattr)
+                if bindings in rewards[iattr]:
+                    reward += rewards[iattr][bindings]
+            elif new[0] in iattr:
+                idx = iattr.index(new[0])
+                new_rewards[iattr] = {vals: rewards[iattr][vals] for vals in
+                                      rewards[iattr] if vals[idx] == new[1]}
+            else:
+                new_rewards[iattr] = rewards[iattr]
+
+        return reward, new_rewards
+
     def successor(self, node):
         """
         Given a search node (contains mapping, instance, concept), this
@@ -290,41 +368,18 @@ class StructureMappingProblem(Problem):
         more details of how this function is used in search.
         """
         mapping, inames, availableNames = node.state
-        concept, instance = node.extra
+        rewards = node.extra
 
-        for n in inames:
-            reward = 0
-            m = {a:v for a,v in mapping}
-            m[n] = n
-            for attr in instance:
-                if not contains_component(n, attr):
-                    continue
-                new_attr = bind_flat_attr(attr, m)
-                if new_attr:
-                    reward += concept.attr_val_guess_gain(new_attr, instance[attr])
-
-            state = (mapping.union(frozenset([(n, n)])), inames -
-                        frozenset([n]), availableNames)
-            path_cost = node.cost() - reward
-            yield Node(state, node, n + ":" + n, path_cost, extra=node.extra)
-
-            for new in availableNames:
-                reward = 0
+        for a in inames:
+            for b in frozenset([a]).union(availableNames):
                 m = {a:v for a,v in mapping}
-                m[n] = new
-                for attr in instance:
-                    if not contains_component(n, attr):
-                        continue
-                    new_attr = bind_flat_attr(attr, m)
-                    if new_attr:
-                        reward += concept.attr_val_guess_gain(new_attr,
-                                                              instance[attr])
-                state = (mapping.union(frozenset([(n, new)])), inames -
-                                          frozenset([n]), availableNames -
-                                          frozenset([new]))
+                m[a] = b
+                state = (mapping.union(frozenset([(a, b)])), inames -
+                            frozenset([a]), availableNames - frozenset([b]))
+                reward, new_rewards = self.reward((a,b), m, rewards)
                 path_cost = node.cost() - reward
-                yield Node(state, node, n + ":" + new, path_cost,
-                           extra=node.extra)
+
+                yield Node(state, node, (a, b), path_cost, extra=new_rewards)
 
     def goal_test(self, node):
         """
@@ -409,7 +464,7 @@ class StructureMapper(Preprocessor):
     :return: A flattened and mapped copy of the instance
     :rtype: instance
     """
-    def __init__(self, concept, beam_width=1, vars_only=True, pipeline=None):
+    def __init__(self, concept, beam_width=2, vars_only=True, pipeline=None):
         self.concept = concept        
         self.reverse_mapping = None
         self.beam_width = beam_width
