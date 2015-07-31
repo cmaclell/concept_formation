@@ -240,7 +240,7 @@ class StructureMappingProblem(Problem):
     """
     A class for describing a structure mapping problem to be solved using the
     `py_search<http://py-search.readthedocs.org/>_` library. This class defines
-    the heuristic, the successor, and goal_test methods used by the search
+    the node_value, the successor, and goal_test methods used by the search
     library.
     """
 
@@ -250,8 +250,8 @@ class StructureMappingProblem(Problem):
         and assumes that you get the highest guess_gain match. This provides an
         over estimation of the possible reward (i.e., is admissible).
 
-        This heuristic is used by the :func:`node_value` method to compute the
-        value of each state in the search.
+        This heuristic is used by the :func:`node_value` method to compute
+        estimate how promising the state is. 
         """
         mapping, unnamed, availableNames = node.state
         concept, instance = node.extra
@@ -274,6 +274,9 @@ class StructureMappingProblem(Problem):
         """
         The value of a node. Uses cost + heuristic to achieve A* and other
         greedy variants.
+
+        See the `py_search<http://py-search.readthedocs.org/>_` library for
+        more details of how this function is used in search.
         """
         return node.cost() + self.partial_match_heuristic(node)
 
