@@ -13,10 +13,11 @@ import inspect
 
 import numpy as np
 
-from concept_formation.structure_mapper import flattenJSON
-from concept_formation.search import Node
-#from concept_formation.search import BestFGS
-from concept_formation.search import BeamGS
+from py_search.search import Node
+from py_search.search import Problem
+from py_search.search import widening_beam_search
+from py_search.search import best_first_search
+
 
 def levenshtein(source, target):
     """ 
@@ -59,27 +60,14 @@ def levenshtein(source, target):
  
     return previous_row[-1]
 
-class ActionPlanner:
+class ActionPlannerProblem(Problem):
 
-    def __init__(self, actions):
-        self.actions = actions
-
-    def explain_value(self, state, value):
-        """ 
-        This function uses a planner compute the given value from the current
-        state. The function returns a plan.
-        """
-        initial = Node((tuple(state.items()), value))
-        solution = next(BeamGS(initial, self.successorfn, self.testfn,
-                               self.heuristicfn, initialBeamWidth=1))
-        #solution = next(BestFGS(initial, self.successorfn, self.testfn, self.heuristicfn))
-
-        return solution
-
-    def successorfn(self, node):
+    def successor(self, node):
         state, goal = node.state
-        for action in self.actions:
-            num_args = len(inspect.getargspec(self.actions[action]).args)
+        actions = node.extra
+
+        for action in actions:
+            num_args = len(inspect.getargspec(actions[action]).args)
             for tupled_args in product(state, repeat=num_args):
                 names = [a for a, v in tupled_args]
                 values = [v for a, v in tupled_args]
@@ -88,24 +76,25 @@ class ActionPlanner:
                 ## TODO correctly output actions as relations.
                 #print([action] + names)
                 try:
-                    new_state.append((action_name, self.actions[action](*values)))
+                    new_state.append((action_name, actions[action](*values)))
+                    path_cost = node.cost() + 1
                     yield Node((tuple(new_state), goal), node, action_name,
-                               node.cost+1, node.depth+1)
+                               path_cost, node.extra)
                 except Exception as e:
                     pass
                     #print(e)
 
-    def testfn(self, node):
+    def goal_test(self, node):
         s, goal = node.state
         for k, v in s:
             if v == goal:
                 return True
         return False
 
-    def heuristicfn(self, node):
+    def heuristic(self, node):
         state, goal = node.state
 
-        h = float('inf')
+        h = 10
         if isinstance(goal, (int, float)):
             for a,v in state:
                 if isinstance(v, (int, float)):
@@ -121,6 +110,34 @@ class ActionPlanner:
                         h = dist
 
         return h
+
+    def node_value(self, node):
+        print(node.cost() + self.heuristic(node))
+        return node.cost() + self.heuristic(node)
+
+class ActionPlanner:
+
+    def __init__(self, actions):
+        self.actions = actions
+
+    def explain_value(self, state, value):
+        """ 
+        This function uses a planner compute the given value from the current
+        state. The function returns a plan.
+        """
+        problem = ActionPlannerProblem((tuple(state.items()), value),
+                                       extra=self.actions)
+
+        try:
+            #solution = next(widening_beam_search(problem, initial_beam_width=1))
+            solution = next(best_first_search(problem, cost_limit=10))
+            return solution.path()[-1]
+
+        except StopIteration:
+            print("FAILED")
+            return value
+
+
 
 def car(x):
     if isinstance(x, str) and len(x) > 1:
@@ -141,12 +158,20 @@ def successor(x):
     return x+1
 
 def add(x,y):
+    if isinstance(x, str):
+        x = float(x)
+    if isinstance(y, str):
+        y = float(y)
     return x+y
 
 def subtract(x,y):
     return x-y
 
 def multiply(x,y):
+    if isinstance(x, str):
+        x = float(x)
+    if isinstance(y, str):
+        y = float(y)
     return x*y
 
 def divide(x,y):
@@ -159,17 +184,18 @@ if __name__ == "__main__":
     ap = ActionPlanner({'add': add,
                         'subtract': subtract,
                         'multiply': multiply,
-                        'divide': divide,
-                        'car': car,
-                        'cdr': cdr,
-                        'append': append,
-                        'tostring': tostring})
+                        'divide': divide
+                        #'toFloat': toFloat,
+                        #'car': car,
+                        #'cdr': cdr,
+                        #'append': append,
+                        #'tostring': tostring
+                       })
 
-    s = {'v1': {'value': 5},
-         'v2': {'value': 3}}
+    s = {('value', 'v1'): '5',
+         ('value', 'v2'): '3'}
     
-    FlatS = flattenJSON(s)
-    print(ap.explain_value(FlatS, 5*5+3))
+    print(ap.explain_value(s, 12))
 
 
 

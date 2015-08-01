@@ -236,16 +236,15 @@ def compute_rewards(cnames, instance, concept):
                     rewards[keys][values] += r
     return rewards
 
-def flat_match(concept, instance, beam_width=2, vars_only=True):
+def flat_match(concept, instance, beam_width=1, vars_only=True):
     """
     Given a concept and instance this function returns a mapping  that can be
     used to rename components in the instance. The mapping returned maximizes
     similarity between the instance and the concept.
 
-    Beam search is used to find a mapping between instance and concept. 
-    The lower the beam width the more greedy (and faster) the search. A default
-    beam_width of 2 is used to achieve slightly less greedy results. If the
-    beam width is set to `float('inf')` then uses A* instead.
+    Beam search is used to find a mapping between instance and concept.  The
+    lower the beam width the more greedy (and faster) the search.  If the beam
+    width is set to `float('inf')` then uses A* instead.
 
     :param concept: A concept to map the instance to
     :type concept: TrestleNode
@@ -466,7 +465,7 @@ class StructureMapper(Preprocessor):
     :return: A flattened and mapped copy of the instance
     :rtype: instance
     """
-    def __init__(self, concept, beam_width=2, vars_only=True, pipeline=None):
+    def __init__(self, concept, beam_width=1, vars_only=True, pipeline=None):
         self.concept = concept        
         self.reverse_mapping = None
         self.beam_width = beam_width
