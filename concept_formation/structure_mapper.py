@@ -287,7 +287,6 @@ class StructureMappingProblem(Problem):
     the node_value, the successor, and goal_test methods used by the search
     library.
     """
-
     def partial_match_heuristic(self, node):
         """
         Given a node, considers all partial matches for each unbound attribute
@@ -317,28 +316,6 @@ class StructureMappingProblem(Problem):
         more details of how this function is used in search.
         """
         return node.cost() + self.partial_match_heuristic(node)
-
-    def is_valid(self, m, iattr, rewards):
-        """
-        Removes elements from the rewards matrix that are never achievable
-        because they violate an existing mapping.
-        """
-        new = {}
-        constrain = {}
-        for idx, o in enumerate(iattr):
-            if o in mapping:
-                constrain[idx] = 0
-
-        for vals in rewards:
-            valid = True
-            for idx in constrain:
-                if iattr[idx] != constrain[idx]:
-                    valid = False
-                    break
-            if valid:
-                new[vals] = rewards[vals]
-
-        return new
 
     def reward(self, new, mapping, rewards):
         reward = 0

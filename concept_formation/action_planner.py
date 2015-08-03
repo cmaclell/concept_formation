@@ -10,13 +10,14 @@ from __future__ import absolute_import
 from __future__ import division
 from itertools import product
 import inspect
+from numbers import Number
 
 import numpy as np
 
 from py_search.search import Node
 from py_search.search import Problem
-from py_search.search import widening_beam_search
 from py_search.search import best_first_search
+from py_search.search import compare_searches
 
 
 def levenshtein(source, target):
@@ -94,26 +95,38 @@ class ActionPlannerProblem(Problem):
     def heuristic(self, node):
         state, goal = node.state
 
-        h = 10
-        if isinstance(goal, (int, float)):
+        h = float('inf')
+        if isinstance(goal, Number):
             for a,v in state:
-                if isinstance(v, (int, float)):
-                    dist = (goal - v) * (goal - v)
+                try:
+                    v = float(v)
+                    vmin = -1000
+                    vmax = 1000
+                    diff = max(min((goal - v) * (goal - v), vmax), vmin)
+                    dist = (diff + 1000) / 2000
                     if dist < h:
                         h = dist
+                except:
+                    pass
 
-        elif isinstance(goal, str):
-            for a,v in state:
-                if isinstance(v, str):
-                    dist = levenshtein(v, goal)
-                    if dist < h:
-                        h = dist
+        #elif isinstance(goal, str):
+        #    for a,v in state:
+        #        if isinstance(v, str):
+        #            diff = min(100, levenshtein(v, goal))
+        #            diff = min(1000, levenshtein(v, goal)) - 500
+        #            dist = 1/(1+math.exp(diff))
+        #            if dist < h:
+        #                h = dist
 
         return h
 
     def node_value(self, node):
-        print(node.cost() + self.heuristic(node))
         return node.cost() + self.heuristic(node)
+
+class NoHeuristic(ActionPlannerProblem):
+
+    def node_value(self, node):
+        return node.cost()
 
 class ActionPlanner:
 
@@ -129,8 +142,7 @@ class ActionPlanner:
                                        extra=self.actions)
 
         try:
-            #solution = next(widening_beam_search(problem, initial_beam_width=1))
-            solution = next(best_first_search(problem, cost_limit=10))
+            solution = next(best_first_search(problem, cost_limit=4))
             return solution.path()[-1]
 
         except StopIteration:
@@ -155,6 +167,10 @@ def tostring(x):
     return str(x)
 
 def successor(x):
+    if isinstance(x, str):
+        x = float(x)
+    if isinstance(y, str):
+        y = float(y)
     return x+1
 
 def add(x,y):
@@ -165,6 +181,10 @@ def add(x,y):
     return x+y
 
 def subtract(x,y):
+    if isinstance(x, str):
+        x = float(x)
+    if isinstance(y, str):
+        y = float(y)
     return x-y
 
 def multiply(x,y):
@@ -175,27 +195,41 @@ def multiply(x,y):
     return x*y
 
 def divide(x,y):
+    if isinstance(x, str):
+        x = float(x)
+    if isinstance(y, str):
+        y = float(y)
     return x/y
 
 def toFloat(x):
     return float(x)
 
 if __name__ == "__main__":
-    ap = ActionPlanner({'add': add,
-                        'subtract': subtract,
-                        'multiply': multiply,
-                        'divide': divide
+    actions = {'add': add,
+               'subtract': subtract, 
+               'multiply': multiply, 
+               'divide': divide
                         #'toFloat': toFloat,
                         #'car': car,
                         #'cdr': cdr,
                         #'append': append,
                         #'tostring': tostring
-                       })
+                       }
+    ap = ActionPlanner(actions)
 
     s = {('value', 'v1'): '5',
          ('value', 'v2'): '3'}
+    explain = 11
     
-    print(ap.explain_value(s, 12))
+    #print(ap.explain_value(s, explain))
 
+    problem = ActionPlannerProblem((tuple(s.items()), explain),
+                                   extra=actions)
+    problem2 = NoHeuristic((tuple(s.items()), explain),
+                                   extra=actions)
 
+    print(s)
+    def cost_limited(problem):
+        return best_first_search(problem, cost_limit=4)
 
+    compare_searches([problem, problem2], [cost_limited])
