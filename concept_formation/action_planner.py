@@ -209,15 +209,14 @@ def divide(x,y):
     return "%i" % (x/y)
 
 def execute_plan(plan, state, actions):
-    if not isinstance(plan, tuple):
-        return plan
-
     if plan in state:
         return state[plan]
 
-    args = [execute_plan(ele, state, actions) for ele in plan[1:]]
+    if not isinstance(plan, tuple):
+        return plan
+
+    args = tuple(execute_plan(ele, state, actions) for ele in plan[1:])
     action = plan[0]
-    args = args
 
     return actions[action](*args)
 
