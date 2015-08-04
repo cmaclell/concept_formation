@@ -87,6 +87,7 @@ class ActionPlannerProblem(Problem):
 
     def goal_test(self, node):
         s, goal = node.state
+
         for k, v in s:
             if v == goal:
                 return True
@@ -96,7 +97,15 @@ class ActionPlannerProblem(Problem):
         state, goal = node.state
 
         h = float('inf')
-        if isinstance(goal, Number):
+
+        is_number_goal = True
+
+        try:
+            goal = float(goal)
+        except ValueError:
+            is_number_goal = False
+
+        if is_number_goal:
             for a,v in state:
                 try:
                     v = float(v)
@@ -108,15 +117,15 @@ class ActionPlannerProblem(Problem):
                         h = dist
                 except:
                     pass
-
-        #elif isinstance(goal, str):
-        #    for a,v in state:
-        #        if isinstance(v, str):
-        #            diff = min(100, levenshtein(v, goal))
-        #            diff = min(1000, levenshtein(v, goal)) - 500
-        #            dist = 1/(1+math.exp(diff))
-        #            if dist < h:
-        #                h = dist
+        else:
+            for a,v in state:
+                if isinstance(v, str):
+                    vmin = -1000
+                    vmax = 1000
+                    diff = max(min(levenshtein(v, goal), vmax), vmin)
+                    dist = (diff + 1000) / 2000
+                    if dist < h:
+                        h = dist
 
         return h
 
@@ -149,22 +158,20 @@ class ActionPlanner:
             print("FAILED")
             return value
 
-
-
-def car(x):
-    if isinstance(x, str) and len(x) > 1:
-        return x[0]
-
-def cdr(x):
-    if isinstance(x, str) and len(x) > 2:
-        return x[1:]
-
-def append(x, y):
-    if isinstance(x, str) and isinstance(y, str):
-        return x + y
-
-def tostring(x):
-    return str(x)
+#def car(x):
+#    if isinstance(x, str) and len(x) > 1:
+#        return x[0]
+#
+#def cdr(x):
+#    if isinstance(x, str) and len(x) > 2:
+#        return x[1:]
+#
+#def append(x, y):
+#    if isinstance(x, str) and isinstance(y, str):
+#        return x + y
+#
+#def tostring(x):
+#    return str(x)
 
 def successor(x):
     if isinstance(x, str):
@@ -178,58 +185,65 @@ def add(x,y):
         x = float(x)
     if isinstance(y, str):
         y = float(y)
-    return x+y
+    return "%i" % (x+y)
 
 def subtract(x,y):
     if isinstance(x, str):
         x = float(x)
     if isinstance(y, str):
         y = float(y)
-    return x-y
+    return "%i" % (x-y)
 
 def multiply(x,y):
     if isinstance(x, str):
         x = float(x)
     if isinstance(y, str):
         y = float(y)
-    return x*y
+    return "%i" % (x*y)
 
 def divide(x,y):
     if isinstance(x, str):
         x = float(x)
     if isinstance(y, str):
         y = float(y)
-    return x/y
+    return "%i" % (x/y)
 
-def toFloat(x):
-    return float(x)
+def execute_plan(plan, state, actions):
+    if not isinstance(plan, tuple):
+        return plan
+
+    if plan in state:
+        return state[plan]
+
+    args = [execute_plan(ele, state, actions) for ele in plan[1:]]
+    action = plan[0]
+    args = args
+
+    return actions[action](*args)
 
 if __name__ == "__main__":
     actions = {'add': add,
                'subtract': subtract, 
                'multiply': multiply, 
-               'divide': divide
-                        #'toFloat': toFloat,
-                        #'car': car,
-                        #'cdr': cdr,
-                        #'append': append,
-                        #'tostring': tostring
-                       }
+               'divide': divide }
     ap = ActionPlanner(actions)
 
     s = {('value', 'v1'): '5',
          ('value', 'v2'): '3'}
-    explain = 11
+    s2 = {('value', 'v1'): '5',
+         ('value', 'v2'): '5'}
+    explain = '11'
     
-    #print(ap.explain_value(s, explain))
+    plan = ap.explain_value(s, explain)
 
-    problem = ActionPlannerProblem((tuple(s.items()), explain),
-                                   extra=actions)
-    problem2 = NoHeuristic((tuple(s.items()), explain),
-                                   extra=actions)
+    print(plan)
+    print(execute_plan(plan, s2, actions))
 
-    print(s)
-    def cost_limited(problem):
-        return best_first_search(problem, cost_limit=4)
+    #problem = ActionPlannerProblem((tuple(s.items()), explain), extra=actions)
+    #problem2 = NoHeuristic((tuple(s.items()), explain), extra=actions)
 
-    compare_searches([problem, problem2], [cost_limited])
+    #print(s)
+    #def cost_limited(problem):
+    #    return best_first_search(problem, cost_limit=4)
+
+    #compare_searches([problem, problem2], [cost_limited])
