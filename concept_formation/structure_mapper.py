@@ -65,7 +65,6 @@ def get_attribute_components(attribute, vars_only=True):
     elif (vars_only is not True and attribute[0] != '_') or attribute[0] == '?':
             names.add(attribute)
 
-
     return names
 
 def get_component_names(instance, vars_only=True):
@@ -211,7 +210,7 @@ def contains_component(component, attr):
     
     return False
 
-def compute_rewards(cnames, instance, concept):
+def compute_rewards(names, instance, concept):
     """
     Consider trying to speed this up
     """
@@ -220,7 +219,8 @@ def compute_rewards(cnames, instance, concept):
         a_comps = get_attribute_components(attr)
         if len(a_comps) == 0:
             continue
-        for c_comps in permutations(cnames, len(a_comps)):
+
+        for c_comps in permutations(names, len(a_comps)):
             mapping = dict(zip(a_comps, c_comps))
             new_attr = bind_flat_attr(attr, mapping)
             if new_attr:
@@ -231,7 +231,7 @@ def compute_rewards(cnames, instance, concept):
                     values = tuple(i[1] for i in items)
                     if keys not in rewards:
                         rewards[keys] = {}
-                    if values not in rewards:
+                    if values not in rewards[keys]:
                         rewards[keys][values] = 0
                     rewards[keys][values] += r
     return rewards
