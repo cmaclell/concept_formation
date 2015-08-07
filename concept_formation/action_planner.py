@@ -152,6 +152,7 @@ class ActionPlanner:
 
         try:
             solution = next(best_first_search(problem, cost_limit=4))
+            print(solution)
             return solution.path()[-1]
 
         except StopIteration:
@@ -183,29 +184,45 @@ def successor(x):
 def add(x,y):
     if isinstance(x, str):
         x = float(x)
+    else:
+        raise TypeError("Arguments must be strings")
     if isinstance(y, str):
         y = float(y)
+    else:
+        raise TypeError("Arguments must be strings")
     return "%i" % (x+y)
 
 def subtract(x,y):
     if isinstance(x, str):
         x = float(x)
+    else:
+        raise TypeError("Arguments must be strings")
     if isinstance(y, str):
         y = float(y)
+    else:
+        raise TypeError("Arguments must be strings")
     return "%i" % (x-y)
 
 def multiply(x,y):
     if isinstance(x, str):
         x = float(x)
+    else:
+        raise TypeError("Arguments must be strings")
     if isinstance(y, str):
         y = float(y)
+    else:
+        raise TypeError("Arguments must be strings")
     return "%i" % (x*y)
 
 def divide(x,y):
     if isinstance(x, str):
         x = float(x)
+    else:
+        raise TypeError("Arguments must be strings")
     if isinstance(y, str):
         y = float(y)
+    else:
+        raise TypeError("Arguments must be strings")
     return "%i" % (x/y)
 
 def execute_plan(plan, state, actions):
@@ -238,11 +255,11 @@ if __name__ == "__main__":
     print(plan)
     print(execute_plan(plan, s2, actions))
 
-    #problem = ActionPlannerProblem((tuple(s.items()), explain), extra=actions)
-    #problem2 = NoHeuristic((tuple(s.items()), explain), extra=actions)
+    problem = ActionPlannerProblem((tuple(s.items()), explain), extra=actions)
+    problem2 = NoHeuristic((tuple(s.items()), explain), extra=actions)
 
     #print(s)
-    #def cost_limited(problem):
-    #    return best_first_search(problem, cost_limit=4)
+    def cost_limited(problem):
+        return best_first_search(problem, cost_limit=4)
 
-    #compare_searches([problem, problem2], [cost_limited])
+    compare_searches([problem, problem2], [cost_limited])
