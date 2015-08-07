@@ -10,6 +10,7 @@ from __future__ import absolute_import
 from __future__ import division
 from itertools import product
 import inspect
+from random import choice
 from numbers import Number
 
 import numpy as np
@@ -152,8 +153,11 @@ class ActionPlanner:
 
         try:
             solution = next(best_first_search(problem, cost_limit=4))
-            print(solution)
-            return solution.path()[-1]
+            if len(solution.path()) > 0:
+                return solution.path()[-1]
+            else:
+                attrs = [attr for attr in state if state[attr] == value]
+                return choice(attrs)
 
         except StopIteration:
             print("FAILED")
@@ -245,15 +249,14 @@ if __name__ == "__main__":
     ap = ActionPlanner(actions)
 
     s = {('value', 'v1'): '5',
-         ('value', 'v2'): '3'}
-    s2 = {('value', 'v1'): '5',
-         ('value', 'v2'): '5'}
-    explain = '11'
+         ('value', 'v2'): '3',
+         ('value', 'v3'): '5'}
+    explain = '5'
     
     plan = ap.explain_value(s, explain)
 
     print(plan)
-    print(execute_plan(plan, s2, actions))
+    print(execute_plan(plan, s, actions))
 
     problem = ActionPlannerProblem((tuple(s.items()), explain), extra=actions)
     problem2 = NoHeuristic((tuple(s.items()), explain), extra=actions)
