@@ -449,7 +449,7 @@ class StructureMapper(Preprocessor):
         self.vars_only = vars_only
 
         if pipeline is None:
-        	self.pipeline = Pipeline(Tuplizer(), NameStandardizer(),
+        	self.pipeline = Pipeline(NameStandardizer(),
                                  SubComponentProcessor(), Flattener())
         else :
         	self.pipeline = pipeline
