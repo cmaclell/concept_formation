@@ -259,8 +259,12 @@ if __name__ == "__main__":
     print(plan)
     print(execute_plan(plan, s, actions))
 
-    problem = ActionPlannerProblem((tuple(s.items()), explain), extra=actions)
-    problem2 = NoHeuristic((tuple(s.items()), explain), extra=actions)
+    extra = {}
+    extra['actions'] = actions
+    extra['epsilon'] = 0.0
+
+    problem = ActionPlannerProblem((tuple(s.items()), explain), extra=extra)
+    problem2 = NoHeuristic((tuple(s.items()), explain), extra=extra)
 
     #print(s)
     def cost_limited(problem):
