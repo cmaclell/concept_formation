@@ -15,3 +15,5 @@ v0.2.3, 7/30/15 -- Increased version requirement to fix bug in py_search
 v0.2.4, 7/30/15 -- Updated structure mapping code to improve performance
 v0.2.5, 7/30/15 -- Bug in structure mapping code corrected
 v0.2.5, 7/30/15 -- Updated action planner.
+v0.2.6, 8/2/15  -- Fixed bug in structure mapping rewards computation
+v0.2.7, 8/7/15  -- Updated action planner.
