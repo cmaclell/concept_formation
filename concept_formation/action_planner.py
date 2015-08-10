@@ -66,7 +66,7 @@ class ActionPlannerProblem(Problem):
 
     def successor(self, node):
         state, goal = node.state
-        actions = node.extra
+        actions = node.extra["actions"]
 
         for action in actions:
             num_args = len(inspect.getargspec(actions[action]).args)
@@ -88,8 +88,12 @@ class ActionPlannerProblem(Problem):
 
     def goal_test(self, node):
         s, goal = node.state
+        epsilon = node.extra["epsilon"]
 
         for k, v in s:
+            if isinstance(goal,Number):
+                if abs(goal-v) <= epsilon):
+                    return True
             if v == goal:
                 return True
         return False
@@ -140,16 +144,20 @@ class NoHeuristic(ActionPlannerProblem):
 
 class ActionPlanner:
 
-    def __init__(self, actions):
+    def __init__(self, actions, epsilon=0.0):
         self.actions = actions
+        self.epsilon = epsilon
 
     def explain_value(self, state, value):
         """ 
         This function uses a planner compute the given value from the current
         state. The function returns a plan.
         """
+        extra = {}
+        extra["actions"] = self.actions
+        extra["epsilon"] = self.epsilon
         problem = ActionPlannerProblem((tuple(state.items()), value),
-                                       extra=self.actions)
+                                       extra=extra)
 
         try:
             solution = next(best_first_search(problem, cost_limit=4))
@@ -178,56 +186,49 @@ class ActionPlanner:
 #def tostring(x):
 #    return str(x)
 
-def successor(x):
-    if isinstance(x, str):
-        x = float(x)
-    if isinstance(y, str):
-        y = float(y)
-    return x+1
-
 def add(x,y):
-    if isinstance(x, str):
+    if isinstance(x, str) and isinstance(y,str):
         x = float(x)
-    else:
-        raise TypeError("Arguments must be strings")
-    if isinstance(y, str):
         y = float(y)
+        return "%i" % (x+y)
+    elif isinstance(x,Number) and isinstance(y,Number):
+        return x+y
     else:
-        raise TypeError("Arguments must be strings")
-    return "%i" % (x+y)
+        raise TypeError("Arguments must both be strings or both be Numbers")
+
 
 def subtract(x,y):
-    if isinstance(x, str):
+    if isinstance(x, str) and isinstance(y,str):
         x = float(x)
-    else:
-        raise TypeError("Arguments must be strings")
-    if isinstance(y, str):
         y = float(y)
+        return "%i" % (x-y)
+    elif isinstance(x,Number) and isinstance(y,Number):
+        return x-y
     else:
-        raise TypeError("Arguments must be strings")
-    return "%i" % (x-y)
+        raise TypeError("Arguments must both be strings or both be Numbers")
+    
 
 def multiply(x,y):
-    if isinstance(x, str):
+    if isinstance(x, str) and isinstance(y,str):
         x = float(x)
-    else:
-        raise TypeError("Arguments must be strings")
-    if isinstance(y, str):
         y = float(y)
+        return "%i" % (x*y)
+    elif isinstance(x,Number) and isinstance(y,Number):
+        return x*y
     else:
-        raise TypeError("Arguments must be strings")
-    return "%i" % (x*y)
+        raise TypeError("Arguments must both be strings or both be Numbers")
+    
 
 def divide(x,y):
-    if isinstance(x, str):
+    if isinstance(x, str) and isinstance(y,str):
         x = float(x)
-    else:
-        raise TypeError("Arguments must be strings")
-    if isinstance(y, str):
         y = float(y)
+        return "%i" % (x/y)
+    elif isinstance(x,Number) and isinstance(y,Number):
+        return x/y
     else:
-        raise TypeError("Arguments must be strings")
-    return "%i" % (x/y)
+        raise TypeError("Arguments must both be strings or both be Numbers")
+
 
 def execute_plan(plan, state, actions):
     if plan in state:
