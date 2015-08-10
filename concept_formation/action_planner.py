@@ -92,7 +92,7 @@ class ActionPlannerProblem(Problem):
 
         for k, v in s:
             if isinstance(goal,Number):
-                if abs(goal-v) <= epsilon):
+                if abs(goal-v) <= epsilon:
                     return True
             if v == goal:
                 return True
