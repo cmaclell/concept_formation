@@ -91,7 +91,7 @@ class ActionPlannerProblem(Problem):
         epsilon = node.extra["epsilon"]
 
         for k, v in s:
-            if isinstance(goal,Number):
+            if isinstance(goal,Number) and isinstance(v,Number):
                 if abs(goal-v) <= epsilon:
                     return True
             if v == goal:
@@ -158,11 +158,13 @@ class ActionPlanner:
         extra["epsilon"] = self.epsilon
         problem = ActionPlannerProblem((tuple(state.items()), value),
                                        extra=extra)
-
         try:
             solution = next(best_first_search(problem, cost_limit=4))
             if len(solution.path()) > 0:
                 return solution.path()[-1]
+            elif isinstance(value, Number):
+                attrs = [attr for attr in state if isinstance(state[attr], Number) and abs(state[attr] - value) <= self.epsilon]
+                return choice(attrs)
             else:
                 attrs = [attr for attr in state if state[attr] == value]
                 return choice(attrs)
@@ -247,21 +249,20 @@ if __name__ == "__main__":
                'subtract': subtract, 
                'multiply': multiply, 
                'divide': divide }
-    ap = ActionPlanner(actions)
+    epsilon = 0.85
+    ap = ActionPlanner(actions,epsilon)
 
-    s = {('value', 'v1'): '5',
-         ('value', 'v2'): '3',
-         ('value', 'v3'): '5'}
-    explain = '5'
+    s = {('value', 'v1'): -1.03}
+    explain = -1.05
     
     plan = ap.explain_value(s, explain)
 
-    print(plan)
-    print(execute_plan(plan, s, actions))
+    #print(plan)
+    #print(execute_plan(plan, s, actions))
 
     extra = {}
     extra['actions'] = actions
-    extra['epsilon'] = 0.0
+    extra['epsilon'] = epsilon
 
     problem = ActionPlannerProblem((tuple(s.items()), explain), extra=extra)
     problem2 = NoHeuristic((tuple(s.items()), explain), extra=extra)
