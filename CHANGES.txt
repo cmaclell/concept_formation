@@ -19,3 +19,4 @@ v0.2.6, 8/2/15  -- Fixed bug in structure mapping rewards computation
 v0.2.7, 8/7/15  -- Updated action planner.
 v0.2.8, 8/10/15 -- Updated action planner.
 v0.2.9, 8/10/15 -- Fixed action planner bug.
+v0.2.10,8/11/15 -- Fixed action planner bug.
