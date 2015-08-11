@@ -156,6 +156,9 @@ class ActionPlanner:
         extra = {}
         extra["actions"] = self.actions
         extra["epsilon"] = self.epsilon
+
+        state = {k:state[k] for k in state if k[0] != '_'}
+
         problem = ActionPlannerProblem((tuple(state.items()), value),
                                        extra=extra)
         try:
