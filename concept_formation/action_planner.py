@@ -173,8 +173,23 @@ class ActionPlanner:
                 return choice(attrs)
 
         except StopIteration:
-            print("FAILED")
+            print("EXPLAIN FAILED")
             return value
+
+    def execute_plan(self, plan, state):
+        
+        actions = self.actions
+
+        if plan in state:
+            return state[plan]
+
+        if not isinstance(plan, tuple):
+            return plan
+
+        args = tuple(execute_plan(ele, state, actions) for ele in plan[1:])
+        action = plan[0]
+
+        return actions[action](*args)
 
 #def car(x):
 #    if isinstance(x, str) and len(x) > 1:
@@ -235,17 +250,7 @@ def divide(x,y):
         raise TypeError("Arguments must both be strings or both be Numbers")
 
 
-def execute_plan(plan, state, actions):
-    if plan in state:
-        return state[plan]
 
-    if not isinstance(plan, tuple):
-        return plan
-
-    args = tuple(execute_plan(ele, state, actions) for ele in plan[1:])
-    action = plan[0]
-
-    return actions[action](*args)
 
 if __name__ == "__main__":
     actions = {'add': add,
