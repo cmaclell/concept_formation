@@ -21,3 +21,4 @@ v0.2.8, 8/10/15 -- Updated action planner.
 v0.2.9, 8/10/15 -- Fixed action planner bug.
 v0.2.10,8/11/15 -- Fixed action planner bug.
 v0.2.11,8/11/15 -- Action planner ignores hidden.
+v0.2.12,8/17/15 -- Removed action planner and updated infer_missing

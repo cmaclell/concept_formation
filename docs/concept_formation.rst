@@ -1,16 +1,6 @@
 concept_formation package
 =========================
 
-..
-    The action_planner is still under development
-    concept_formation.action_planner module
-    ---------------------------------------
-
-    .. automodule:: concept_formation.action_planner
-        :members:
-        :undoc-members:
-        :show-inheritance:
-
 concept_formation.cluster module
 --------------------------------
 
