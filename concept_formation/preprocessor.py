@@ -126,6 +126,11 @@ class Tuplizer(Preprocessor):
     {('foo1', 'o1', ('foo2', 'o2', 'o3')): True}
     >>> print(tuplizer.undo_transform(tuplizer.transform(instance)))
     {'(foo1 o1 (foo2 o2 o3))': True}
+
+    >>> instance = {'(place x1 12.4 9.6 (div width 18.2))':True}
+    >>> tuplizer = Tuplizer()
+    >>> tuplizer.transform(instance)
+    {('place', 'x1', 12.4, 9.6, ('div', 'width', 18.2)): True}
     """
     def transform(self, instance):
         """
@@ -156,6 +161,8 @@ class Tuplizer(Preprocessor):
         >>> tuplizer = Tuplizer()
         >>> tuplizer._tuplize_relation(relation)
         ('foo1', 'o1', ('foo2', 'o2', 'o3'))
+
+
         """
         if relation[0] != '(':
             return relation
@@ -174,6 +181,10 @@ class Tuplizer(Preprocessor):
                 val = val[:-1]
             
             current = stack[-1]
+            try:
+                val = float(val)
+            except ValueError:
+                val = val
             current.append(val)
             
             while end > 0:
