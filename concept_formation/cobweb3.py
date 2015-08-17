@@ -191,7 +191,7 @@ class Cobweb3Node(CobwebNode):
         self.count += 1 
             
         for attr in instance:
-            if isinstance(instance[attr], Number):
+            if not isinstance(instance[attr], bool) and isinstance(instance[attr], Number):
                 if attr not in self.av_counts:
                     self.av_counts[attr] = ContinuousValue()
                 elif not isinstance(self.av_counts[attr], ContinuousValue):
@@ -250,6 +250,7 @@ class Cobweb3Node(CobwebNode):
         if attr[0] == "_":
             return 0.0
         elif attr not in self.av_counts:
+            # TODO check that this should be 0
             return 0.0
         elif isinstance(self.av_counts[attr], ContinuousValue):
             if self.tree.scaling and self.parent:
@@ -270,6 +271,7 @@ class Cobweb3Node(CobwebNode):
                             (1.0 / (2.0 * sqrt(pi) * after_std)))
             return after_count - before_count
         elif val not in self.av_counts[attr]:
+            # TODO check that this should be 0
             return 0.0
         else:
             before_prob = (self.av_counts[attr][val] / (self.count + 1.0))
