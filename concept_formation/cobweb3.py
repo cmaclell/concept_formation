@@ -96,7 +96,9 @@ class Cobweb3Tree(CobwebTree):
                 else:
                     temp_instance[attr] = choice_fn(concept.get_weighted_values(attr))
 
-        return temp_instance
+        probs = {attr: concept.get_probability(attr, temp_instance[attr]) for
+                 attr in temp_instance}
+        return temp_instance, probs
 
     def clear(self):
         """Clears the concepts of the tree, but maintains the alpha and

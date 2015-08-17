@@ -232,7 +232,9 @@ class CobwebTree(object):
             if choice_fn(attr_choices) == attr:
                 temp_instance[attr] = choice_fn(concept.get_weighted_values(attr))
 
-        return temp_instance
+        probs = {attr: concept.get_probability(attr, temp_instance[attr]) for
+                 attr in temp_instance}
+        return temp_instance, probs
 
     def categorize(self, instance): 
         """
