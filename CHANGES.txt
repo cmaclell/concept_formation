@@ -23,3 +23,4 @@ v0.2.10,8/11/15 -- Fixed action planner bug.
 v0.2.11,8/11/15 -- Action planner ignores hidden.
 v0.2.12,8/17/15 -- Removed action planner and updated infer_missing
 v0.2.13,8/17/15 -- Fixed bug in cobweb3 that converts bools to numerics
+v0.2.14,8/18/15 -- Fixed bug in cobweb3 that threw KeyErrors in infer_missing
