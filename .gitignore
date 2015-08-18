@@ -15,3 +15,4 @@ visualize/output.json
 visualize/output.js
 visualize/output*
 visualize/images
+*.egg-info
