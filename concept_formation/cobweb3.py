@@ -485,7 +485,7 @@ class Cobweb3Node(CobwebNode):
         :return: The probability of attr having the value val in the current concept.
         :rtype: float
         """
-        if attr not in self.tree.root.av_counts:
+        if attr not in self.tree.root.av_counts or attr not in self.av_count:
             return 0.0
 
         if isinstance(self.tree.root.av_counts[attr], ContinuousValue):

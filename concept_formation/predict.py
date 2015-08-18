@@ -106,7 +106,7 @@ def squared_error(tree, instance, attr, val):
 #    return mean(probs)
 
 def incremental_prediction(tree, instances, attr, run_length, runs=1,
-                           score=probability):
+                           score=probability, randomize_first=True):
     """
     Given a set of instances and an attribute, perform an incremental
     prediction task; i.e., try to predict the attr for each instance before
@@ -124,7 +124,8 @@ def incremental_prediction(tree, instances, attr, run_length, runs=1,
         print(r)
         tree.clear()
 
-        shuffle(instances)
+        if randomize_first or r > 0:
+            shuffle(instances)
         
         scores.append((0,0))
         tree.ifit(instances[0])
