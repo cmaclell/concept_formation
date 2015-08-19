@@ -19,7 +19,6 @@ from py_search.search import Problem
 from py_search.search import Node
 from py_search.search import beam_search
 from py_search.search import best_first_search
-from concept_formation.preprocessor import Tuplizer
 from concept_formation.preprocessor import NameStandardizer
 from concept_formation.preprocessor import SubComponentProcessor
 from concept_formation.preprocessor import Flattener
@@ -442,14 +441,14 @@ class StructureMapper(Preprocessor):
     :return: A flattened and mapped copy of the instance
     :rtype: instance
     """
-    def __init__(self, concept, beam_width=1, vars_only=True, pipeline=None):
+    def __init__(self, concept, gensym, beam_width=1, vars_only=True, pipeline=None):
         self.concept = concept        
         self.reverse_mapping = None
         self.beam_width = beam_width
         self.vars_only = vars_only
 
         if pipeline is None:
-        	self.pipeline = Pipeline(NameStandardizer(),
+        	self.pipeline = Pipeline(NameStandardizer(gensym),
                                  SubComponentProcessor(), Flattener())
         else :
         	self.pipeline = pipeline

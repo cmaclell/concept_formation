@@ -45,7 +45,7 @@ from numbers import Number
 
 _gensym_counter = 0;
 
-def gensym():
+def default_gensym():
     """
     Generates unique names for naming renaming apart objects.
 
@@ -307,8 +307,13 @@ class NameStandardizer(Preprocessor):
      ('relation2', ('a1', 'c1'), ('relation3', ('a3', ('?c3', '?c2')))): 4.3}
     """
 
-    def __init__(self):
+    def __init__(self, gensym=None):
         self.reverse_mapping = None
+
+        if gensym:
+            self.gensym = gensym
+        else:
+            self.gensym = default_gensym
 
     def transform(self, instance):
         """
@@ -406,7 +411,7 @@ class NameStandardizer(Preprocessor):
 
             name = attr
             if attr[0] == '?' and not isinstance(attr, tuple):
-                mapping[new_a] = gensym()
+                mapping[new_a] = self.gensym()
                 name = mapping[new_a]
 
             value = instance[attr]
@@ -727,6 +732,12 @@ class ExtractListElements(Preprocessor):
     {'att1': 'V1', 'subobj': {'list1': ['a', 'b', 'c', {'B': 'C', 'D': 'E'}]}}
 
     """
+    def __init__(self, gensym=None):
+        if gensym:
+            self.gensym = gensym
+        else:
+            self.gensym = default_gensym
+
     def transform(self, instance):
         """
         Find all lists in an instance and extract their elements into their own
@@ -794,7 +805,7 @@ class ExtractListElements(Preprocessor):
                     else :
                         new_obj = {"val": el}
 
-                    new_att = gensym()
+                    new_att = self.gensym()
                     new_instance[new_att] = self._extract(new_obj)
                     new_list.append(new_att)
 

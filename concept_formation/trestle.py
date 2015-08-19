@@ -3,10 +3,8 @@ from __future__ import unicode_literals
 from __future__ import absolute_import
 from __future__ import division
 
-from concept_formation.utils import weighted_choice
 from concept_formation.cobweb3 import Cobweb3Tree
 from concept_formation.cobweb3 import Cobweb3Node
-from concept_formation.cobweb3 import ContinuousValue
 from concept_formation.structure_mapper import StructureMapper
 
 class TrestleTree(Cobweb3Tree):
@@ -73,6 +71,17 @@ class TrestleTree(Cobweb3Tree):
         self.std_to_scale = 1.0
         self.beam_width = beam_width
         self.vars_only = vars_only
+        self.gensym_counter = 0
+
+    def gensym(self):
+        """
+        Generates unique names for naming renaming apart objects.
+
+        :return: a unique object name
+        :rtype: '?o'+counter
+        """
+        self.gensym_counter += 1
+        return '?o' + str(self.gensym_counter)
 
     def clear(self):
         """
@@ -115,6 +124,7 @@ class TrestleTree(Cobweb3Tree):
         :rtype: Cobweb3Node
         """
         structure_mapper = StructureMapper(self.root,
+                                           gensym=self.gensym,
                                            beam_width=self.beam_width,
                                            vars_only=self.vars_only)
         temp_instance = structure_mapper.transform(instance)
@@ -135,6 +145,7 @@ class TrestleTree(Cobweb3Tree):
         :rtype: instance
         """
         structure_mapper = StructureMapper(self.root,
+                                           gensym=self.gensym,
                                            beam_width=self.beam_width,
                                            vars_only=self.vars_only)
         temp_instance = structure_mapper.transform(instance)
@@ -184,6 +195,7 @@ class TrestleTree(Cobweb3Tree):
         :rtype: CobwebNode
         """
         structure_mapper = StructureMapper(self.root,
+                                           gensym=self.gensym,
                                            beam_width=self.beam_width,
                                            vars_only=self.vars_only)
         temp_instance = structure_mapper.transform(instance)
