@@ -250,7 +250,7 @@ def flat_match(concept, instance, beam_width=1, vars_only=True):
     :param instance: An instance to be mapped to the concept
     :type instance: instance
     :param beam_width: The width of the beam used for Beam Search. Uses A* if
-    the beam width is `float('inf')` 
+        the beam width is `float('inf')` 
     :type beam_width: int, or float('inf') for A* 
     :param vars_only: Determines whether or not variables in the instance can
         be matched only to variables in the concept or if they can also be
