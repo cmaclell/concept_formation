@@ -149,37 +149,27 @@ def bind_flat_attr(attr, mapping):
     >>> bind_flat_attr(attr, mapping)
     ('before', '?o1', '?o2')
 
-    If the mapping is incomplete then returns ``None`` (nothing) 
+    >>> attr = ('ordered-list', ('cells', '?obj12'), '?obj10', '?obj11')
+    >>> mapping = {'?obj12': '?o1', '?obj10':'?o2', '?obj11': '?o3'}
+    >>> bind_flat_attr(attr, mapping)
+    ('ordered-list', ('cells', '?o1'), '?o2', '?o3')
+
+    If the mapping is incomplete then returns partially mapped attributes
 
     >>> attr = ('before', '?c1', '?c2')
     >>> mapping = {'?c1': 'o1'}
-    >>> bind_flat_attr(attr, mapping) is None
-    True
+    >>> bind_flat_attr(attr, mapping)
+    ('before', 'o1', '?c2')
 
-    >>> bind_flat_attr(('<', ('a', '?o2'), ('a', '?o1')), {'?o1': '?c1'}) is None
-    True
+    >>> bind_flat_attr(('<', ('a', '?o2'), ('a', '?o1')), {'?o1': '?c1'})
+    ('<', ('a', '?o2'), ('a', '?c1'))
 
-    >>> bind_flat_attr(('<', ('a', '?o2'), ('a', '?o1')), {'?o1': '?c1', '?o2': '?c2'}) is None
-    False
+    >>> bind_flat_attr(('<', ('a', '?o2'), ('a', '?o1')), {'?o1': '?c1', '?o2': '?c2'})
+    ('<', ('a', '?c2'), ('a', '?c1'))
     """
-    if not isinstance(attr, tuple) and attr in mapping:
-        return mapping[attr]
-
-    if not isinstance(attr, tuple):
-        if attr[0] == '?':
-            return None
-        else:
-            return attr
-
-    if isinstance(attr, tuple):
-        new_attr = []
-        for ele in attr:
-            new_ele = bind_flat_attr(ele, mapping)
-            if new_ele is None:
-                return None
-            else:
-                new_attr.append(new_ele)
-        return tuple(new_attr)
+    return tuple([bind_flat_attr(ele, mapping) if isinstance(ele, tuple)
+                  else mapping[ele] if ele in mapping else ele for ele in
+                  attr])
 
 def contains_component(component, attr):
     """
@@ -222,17 +212,16 @@ def compute_rewards(names, instance, concept):
         for c_comps in permutations(names, len(a_comps)):
             mapping = dict(zip(a_comps, c_comps))
             new_attr = bind_flat_attr(attr, mapping)
-            if new_attr:
-                r = concept.attr_val_guess_gain(new_attr, instance[attr])
-                if r != 0:
-                    items = sorted(mapping.items())
-                    keys = tuple(i[0] for i in items)
-                    values = tuple(i[1] for i in items)
-                    if keys not in rewards:
-                        rewards[keys] = {}
-                    if values not in rewards[keys]:
-                        rewards[keys][values] = 0
-                    rewards[keys][values] += r
+            r = concept.attr_val_guess_gain(new_attr, instance[attr])
+            if r != 0:
+                items = sorted(mapping.items())
+                keys = tuple(i[0] for i in items)
+                values = tuple(i[1] for i in items)
+                if keys not in rewards:
+                    rewards[keys] = {}
+                if values not in rewards[keys]:
+                    rewards[keys][values] = 0
+                rewards[keys][values] += r
     return rewards
 
 def flat_match(concept, instance, beam_width=1, vars_only=True):
@@ -469,8 +458,3 @@ class StructureMapper(Preprocessor):
             raise Exception("Must transform before undoing transform")
         instance = rename_flat(instance, self.reverse_mapping)
         return self.pipeline.undo_transform(instance)
-
-
-
-                
-
