@@ -25,3 +25,4 @@ v0.2.12,8/17/15 -- Removed action planner and updated infer_missing
 v0.2.13,8/17/15 -- Fixed bug in cobweb3 that converts bools to numerics
 v0.2.14,8/18/15 -- Fixed bug in cobweb3 that threw KeyErrors in infer_missing
 v0.2.15,8/18/15 -- Fixed bug introduced in previous fix
+v0.2.17,8/18/15 -- Categorize now uses a matching score between instance and concept. Also, get_probability and get_probability missing were updated to take into account new attr values with laplace smoothing.

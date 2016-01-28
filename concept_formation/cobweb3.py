@@ -48,7 +48,6 @@ class Cobweb3Tree(CobwebTree):
 
     def __init__(self, alpha=0.001, scaling=True):
         """The tree constructor."""
-
         self.root = Cobweb3Node()
         self.root.tree = self
         self.alpha = alpha
@@ -86,7 +85,6 @@ class Cobweb3Tree(CobwebTree):
             missing_prob = concept.get_probability_missing(attr)
             attr_choices = ((None, missing_prob), (attr, 1 - missing_prob))
             if choice_fn(attr_choices) == attr:
-
                 if isinstance(concept.av_counts[attr], ContinuousValue):
                     if choice_fn == most_likely_choice:
                         temp_instance[attr] = concept.av_counts[attr].unbiased_mean()
@@ -101,7 +99,8 @@ class Cobweb3Tree(CobwebTree):
         return temp_instance, probs
 
     def clear(self):
-        """Clears the concepts of the tree, but maintains the alpha and
+        """
+        Clears the concepts of the tree, but maintains the alpha and
         scaling parameters.
         """
         self.root = Cobweb3Node()
@@ -485,11 +484,20 @@ class Cobweb3Node(CobwebNode):
         :return: The probability of attr having the value val in the current concept.
         :rtype: float
         """
-        if attr not in self.tree.root.av_counts or attr not in self.av_counts:
-            return 0.0
+        if attr not in self.tree.root.av_counts:
+            # times 2 for the attr-value and attr-None
+            return self.tree.alpha / (1.0 * self.count + self.tree.alpha * 2)
+            #return 0.0
+
 
         if isinstance(self.tree.root.av_counts[attr], ContinuousValue):
             n_values = 2
+
+            if attr not in self.av_counts:
+                return self.tree.alpha / (1.0 * self.count + self.tree.alpha *
+                                         n_values)
+                #return 0.0
+
             prob_attr = ((1.0 * self.av_counts[attr].num + self.tree.alpha) /
                          (self.count + self.tree.alpha * n_values ))
 

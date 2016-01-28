@@ -4,6 +4,7 @@ from __future__ import absolute_import
 from __future__ import division
 from random import shuffle
 from random import random
+from math import log
 import json
 
 from concept_formation.utils import weighted_choice
@@ -175,6 +176,30 @@ class CobwebTree(object):
                     raise Exception('Best action choice "'+best_action+'" not a recognized option. This should be impossible...')
 
     def _cobweb_categorize(self, instance):
+        """A cobweb speciifc version of categorize, not inteded to be externally called.
+
+        .. seealso:: :meth:`CobwebTree.categorize`
+        """
+        current = self.root
+        current_match = current.log_prob_instance(instance)
+
+        while current:
+            if not current.children:
+                return current
+            
+            children_match = [(child.log_prob_instance(instance), child.count, random(),
+                               child) for child in current.children]
+            children_match.sort(reverse=True)
+
+            best_match, best_count, r, best = children_match[0]
+
+            if best_match > current_match:
+                current = best
+                current_match = best_match
+            else:
+                return current
+
+    def _cobweb_categorize_old(self, instance):
         """A cobweb speciifc version of categorize, not inteded to be externally called.
 
         .. seealso:: :meth:`CobwebTree.categorize`
@@ -525,6 +550,32 @@ class CobwebNode(object):
         best_op = (operations[0][0], operations[0][2])
         #print(best_op)
         return best_op
+
+    def log_prob_instance(self, instance):
+        """
+        Calculates the probability that the instance would have been
+        generated in the current concept.
+        """
+        log_prob = 0.0
+        for attr in set(self.tree.root.av_counts).union(set(instance)):
+            if attr[0] == "_":
+                continue
+            
+            if attr in instance:
+                p = self.get_probability(attr, instance[attr])
+            else:
+                p = self.get_probability_missing(attr)
+
+            # this takes into account the laplacian smoothing for attr-vals
+            # that are not present in the tree, they would get some probability
+            # mass and all others would be decreased, but this accomplishes
+            # that (I think). 
+            #if p == 0:
+            #    p = self.tree.alpha
+
+            log_prob += log(p)
+
+        return log_prob
 
     def two_best_children(self, instance):
         """
@@ -1007,12 +1058,17 @@ class CobwebNode(object):
         :rtype: float
         """
         if attr not in self.tree.root.av_counts:
-            return 0.0
-
-        if val is not None and val not in self.tree.root.av_counts[attr]:
-            return 0.0
+            # times 2 for the attr + None
+            return self.tree.alpha / (1.0 * self.count + self.tree.alpha * 2)
+            #return 0.0
 
         n_values = len(self.tree.root.av_counts[attr]) + 1
+
+        if val is not None and val not in self.tree.root.av_counts[attr]:
+            # add the new value to n_values
+            n_values += 1
+            return self.tree.alpha / (1.0 * self.count + self.tree.alpha * n_values)
+            #return 0.0
 
         count = 0
         if attr in self.av_counts and val in self.av_counts[attr]:

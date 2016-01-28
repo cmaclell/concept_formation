@@ -65,7 +65,7 @@ author = 'Christopher J MacLellan and Erik Harpstead'
 # built documents.
 #
 # The short X.Y version.
-version = '0.2.16'
+version = '0.2.17'
 # The full version, including alpha/beta/rc tags.
 release = version
 
