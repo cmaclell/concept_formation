@@ -130,7 +130,7 @@ class TrestleTree(Cobweb3Tree):
         temp_instance = structure_mapper.transform(instance)
         return self._cobweb_categorize(temp_instance)
 
-    def infer_missing(self, instance, choice_fn="most likely"):
+    def infer_missing(self, instance, choice_fn="most likely", allow_none=True):
         """
         Given a tree and an instance, returns a new instance with attribute 
         values picked using the specified choice function (either "most likely"
@@ -149,7 +149,9 @@ class TrestleTree(Cobweb3Tree):
                                            beam_width=self.beam_width,
                                            vars_only=self.vars_only)
         temp_instance = structure_mapper.transform(instance)
-        temp_instance, probs = super(TrestleTree, self).infer_missing(temp_instance, choice_fn)
+        temp_instance, probs = super(TrestleTree,
+                                     self).infer_missing(temp_instance,
+                                                         choice_fn, allow_none)
         return structure_mapper.undo_transform(temp_instance), structure_mapper.undo_transform(probs)
 
     def categorize(self, instance):

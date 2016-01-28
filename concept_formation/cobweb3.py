@@ -54,7 +54,7 @@ class Cobweb3Tree(CobwebTree):
         self.scaling = scaling
         self.std_to_scale = 1.0
 
-    def infer_missing(self, instance, choice_fn="most likely"):
+    def infer_missing(self, instance, choice_fn="most likely", allow_none=True):
         """
         Given a tree and an instance, returns a new instance with attribute 
         values picked using the specified choice function (wither "most likely"
@@ -82,17 +82,28 @@ class Cobweb3Tree(CobwebTree):
             if attr in temp_instance:
                 continue
 
-            missing_prob = concept.get_probability_missing(attr)
-            attr_choices = ((None, missing_prob), (attr, 1 - missing_prob))
-            if choice_fn(attr_choices) == attr:
-                if isinstance(concept.av_counts[attr], ContinuousValue):
-                    if choice_fn == most_likely_choice:
-                        temp_instance[attr] = concept.av_counts[attr].unbiased_mean()
-                    else:
-                        temp_instance[attr] = normalvariate(concept.av_counts[attr].unbiased_mean(),
-                                                            concept.av_counts[attr].unbiased_std())
+            if isinstance(concept.av_counts[attr], ContinuousValue):
+                if choice_fn == most_likely_choice:
+                    val = concept.av_counts[attr].unbiased_mean()
                 else:
-                    temp_instance[attr] = choice_fn(concept.get_weighted_values(attr))
+                    val = normalvariate(concept.av_counts[attr].unbiased_mean(),
+                                        concept.av_counts[attr].unbiased_std())
+                if not allow_none:
+                    temp_instance[attr] = val
+                else:
+                    missing_prob = concept.get_probability_missing(attr)
+                    val_choices = ((None, missing_prob), (val, 1 - missing_prob))
+                    temp_instance[attr] = choice_fn(val_choices)
+
+            else:
+                val_choices = concept.get_weighted_values(attr)
+                if not allow_none:
+                    val_choices = [(choice, prob) for choice,prob in val_choices if
+                                  choice is not None]
+
+                val = choice_fn(val_choices)
+                if val is not None:
+                    temp_instance[attr] = val
 
         probs = {attr: concept.get_probability(attr, temp_instance[attr]) for
                  attr in temp_instance}

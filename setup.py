@@ -2,7 +2,7 @@ import setuptools
 
 setuptools.setup(
     name='concept_formation',
-    version='0.2.17',
+    version='0.2.18',
     author='Christopher J. MacLellan, Erik Harpstead',
     author_email='maclellan.christopher@gmail.com, whitill29@gmail.com',
     packages=setuptools.find_packages(),

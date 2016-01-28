@@ -224,7 +224,7 @@ class CobwebTree(object):
             elif best_action == "best":
                 current = best1
 
-    def infer_missing(self, instance, choice_fn="most likely"):
+    def infer_missing(self, instance, choice_fn="most likely", allow_none=True):
         """
         Given a tree and an instance, returns a new instance with attribute 
         values picked using the specified choice function (wither "most likely"
@@ -252,13 +252,18 @@ class CobwebTree(object):
             if attr in temp_instance:
                 continue
 
-            missing_prob = concept.get_probability_missing(attr)
-            attr_choices = ((None, missing_prob), (attr, 1 - missing_prob))
-            if choice_fn(attr_choices) == attr:
-                temp_instance[attr] = choice_fn(concept.get_weighted_values(attr))
+            val_choices = concept.get_weighted_values(attr)
+            if not allow_none:
+                val_choices = [(choice, prob) for choice,prob in val_choices if
+                              choice is not None]
+
+            val = choice_fn(val_choices)
+            if val is not None:
+                temp_instance[attr] = val
 
         probs = {attr: concept.get_probability(attr, temp_instance[attr]) for
                  attr in temp_instance}
+
         return temp_instance, probs
 
     def categorize(self, instance): 
