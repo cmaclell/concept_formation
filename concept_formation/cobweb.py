@@ -83,7 +83,7 @@ class CobwebTree(object):
         instances = [i for i in instances]
 
         for x in range(iterations):
-            print("it:",x)
+            #print("it:",x)
             if x == 0 and randomize_first:
                 shuffle(instances)
 
@@ -131,8 +131,15 @@ class CobwebTree(object):
         current = self.root
 
         while current:
-            if (not current.children and current.cu_for_fringe_split(instance)
-                <= 0.0):
+            #if (not current.children and current.cu_for_fringe_split(instance)
+            #    <= 0.0):
+            #    current.increment_counts(instance)
+            #    return current 
+            if not current.children and current.is_pure_match(instance):
+                current.increment_counts(instance)
+                return current 
+
+            elif (not current.children and current.count == 0):
                 current.increment_counts(instance)
                 return current 
 
@@ -181,13 +188,16 @@ class CobwebTree(object):
         .. seealso:: :meth:`CobwebTree.categorize`
         """
         current = self.root
-        current_match = current.log_prob_instance(instance)
+        #current_match = current.log_prob_instance(instance)
+        current_match = current.correct_guesses(instance)
 
         while current:
             if not current.children:
                 return current
             
-            children_match = [(child.log_prob_instance(instance), child.count, random(),
+            #children_match = [(child.log_prob_instance(instance), child.count, random(),
+            #                   child) for child in current.children]
+            children_match = [(child.correct_guesses(instance), child.count, random(),
                                child) for child in current.children]
             children_match.sort(reverse=True)
 
@@ -200,7 +210,8 @@ class CobwebTree(object):
                 return current
 
     def _cobweb_categorize_old(self, instance):
-        """A cobweb speciifc version of categorize, not inteded to be externally called.
+        """A cobweb specific version of categorize, not inteded to be
+        externally called.
 
         .. seealso:: :meth:`CobwebTree.categorize`
         """
@@ -556,6 +567,25 @@ class CobwebNode(object):
         #print(best_op)
         return best_op
 
+    def correct_guesses(self, instance):
+        """Calculates the number of attribute values in the instance that would
+        be correctly guessesd with the current concept. 
+        """
+        guesses = 0.0
+        for attr in set(self.tree.root.av_counts).union(set(instance)):
+            if attr[0] == "_":
+                continue
+
+            if attr in instance:
+                p = self.get_probability(attr, instance[attr])
+            else:
+                p = self.get_probability_missing(attr)
+
+            guesses += p
+
+        return guesses
+            
+
     def log_prob_instance(self, instance):
         """
         Calculates the probability that the instance would have been
@@ -577,6 +607,9 @@ class CobwebNode(object):
             # that (I think). 
             #if p == 0:
             #    p = self.tree.alpha
+
+            if p == 0:
+                return float('-inf')
 
             log_prob += log(p)
 
@@ -822,6 +855,29 @@ class CobwebNode(object):
 
         return temp.category_utility()
 
+    def is_pure_match(self, instance):
+        """
+        Returns true if the concept exactly matches the instance.
+
+        :param instance: The instance currently being categorized
+        :type instance: {a1: v1, a2: v2, ...} - a hashtable of attr and values
+        :return: whether the instance perfectly matches the concept
+        :rtype: boolean
+
+        .. seealso:: :meth:`CobwebNode.get_best_operation`
+        """
+        for attr in self.tree.root.av_counts:
+            if attr in instance and attr not in self.av_counts:
+                return False
+            if attr in self.av_counts and attr not in instance:
+                return False
+            if attr in self.av_counts and attr in instance:
+                if instance[attr] not in self.av_counts[attr]:
+                    return False
+                if not self.av_counts[attr][instance[attr]] == self.count:
+                    return False
+        return True
+
     def cu_for_split(self, best):
         """
         Return the category utility for splitting the best child.
@@ -1063,17 +1119,19 @@ class CobwebNode(object):
         :rtype: float
         """
         if attr not in self.tree.root.av_counts:
+            return 0.0
             # times 2 for the attr + None
-            return self.tree.alpha / (1.0 * self.count + self.tree.alpha * 2)
-            #return 0.0
+            #if (1.0 * self.count + self.tree.alpha * 2) == 0:
+            #    return 0.0
+            #return self.tree.alpha / (1.0 * self.count + self.tree.alpha * 2)
 
         n_values = len(self.tree.root.av_counts[attr]) + 1
 
         if val is not None and val not in self.tree.root.av_counts[attr]:
             # add the new value to n_values
-            n_values += 1
-            return self.tree.alpha / (1.0 * self.count + self.tree.alpha * n_values)
-            #return 0.0
+            #n_values += 1
+            #return self.tree.alpha / (1.0 * self.count + self.tree.alpha * n_values)
+            return 0.0
 
         count = 0
         if attr in self.av_counts and val in self.av_counts[attr]:

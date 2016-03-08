@@ -5,7 +5,7 @@ from __future__ import division
 import matplotlib.pyplot as plt
 import numpy as np
 
-from concept_formation.examples.examples_utils import lowess
+from concept_formation.examples.examples_utils import avg_lines
 from concept_formation.predict import incremental_prediction
 from concept_formation.cobweb import CobwebTree
 from concept_formation.dummy import DummyTree
@@ -40,8 +40,8 @@ cobweb_y = np.array(cobweb_y)
 naive_x = np.array(naive_x)
 naive_y = np.array(naive_y)
 
-cobweb_y_smooth, cobweb_lower_smooth, cobweb_upper_smooth = lowess(cobweb_x, cobweb_y)
-naive_y_smooth, naive_lower_smooth, naive_upper_smooth = lowess(naive_x, naive_y)
+cobweb_y_smooth, cobweb_lower_smooth, cobweb_upper_smooth = avg_lines(cobweb_x, cobweb_y)
+naive_y_smooth, naive_lower_smooth, naive_upper_smooth = avg_lines(naive_x, naive_y)
 
 plt.fill_between(cobweb_x, cobweb_lower_smooth, cobweb_upper_smooth, alpha=0.5,
                  facecolor="green")

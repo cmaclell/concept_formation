@@ -127,14 +127,11 @@ def incremental_prediction(tree, instances, attr, run_length, runs=1,
         if randomize_first or r > 0:
             shuffle(instances)
         
-        scores.append((0,0))
-        tree.ifit(instances[0])
-
-        for i,instance in enumerate(instances[1:run_length]):
+        for i,instance in enumerate(instances[:run_length+2]):
             val = None
             if attr in instance:
                 val = instance[attr]
-            scores.append((i+1, score(tree, instance, attr, val)))
+            scores.append((i, score(tree, instance, attr, val)))
             tree.ifit(instance)
 
     return scores

@@ -19,6 +19,7 @@ Cobweb/3:
     examples/cobweb3_cluster_simulated.rst
     examples/cobweb3_cluster_iris.rst
     examples/cobweb3_predict_iris.rst
+    examples/regression.rst
 
 Trestle:
 

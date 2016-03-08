@@ -43,16 +43,19 @@ class Cobweb3Tree(CobwebTree):
     :type alpha: float
     :param scaling: whether or not numerical values should be scaled in
         online normalization.
-    :type scaling: bool
+    :type scaling: "root", "parent", or None
     """
 
-    def __init__(self, alpha=0.001, scaling=True):
+    def __init__(self, alpha=0.001, scaling=None):
         """The tree constructor."""
         self.root = Cobweb3Node()
         self.root.tree = self
         self.alpha = alpha
         self.scaling = scaling
-        self.std_to_scale = 1.0
+
+        # Number of stds to divide by when normalizing (2.0 -> everything
+        # normalized to half a std deviation)
+        self.std_to_scale = 1.0 
 
     def infer_missing(self, instance, choice_fn="most likely", allow_none=True):
         """
@@ -132,6 +135,7 @@ class Cobweb3Node(CobwebNode):
 
     # Smallest possible acuity. Below this probabilities will exceed 1.0
     acuity = 1.0 / sqrt(2.0 * pi)
+
     """
     acuity is used as a floor on standard deviation estimates for numeric
     attribute values. The default value is set to 
@@ -263,8 +267,10 @@ class Cobweb3Node(CobwebNode):
             # TODO check that this should be 0
             return 0.0
         elif isinstance(self.av_counts[attr], ContinuousValue):
-            if self.tree.scaling and self.parent:
+            if self.tree.scaling == "parent" and self.parent:
                 scale = self.tree.std_to_scale * self.parent.av_counts[attr].unbiased_std()
+            elif self.tree.scaling == "root":
+                scale = self.tree.std_to_scale * self.tree.root.av_counts[attr].unbiased_std()
             else:
                 scale = 1.0
 
@@ -329,8 +335,10 @@ class Cobweb3Node(CobwebNode):
                 else:
                     val_count = self.av_counts[attr].num
 
-                    if self.tree.scaling and self.parent:
+                    if self.tree.scaling == "parent" and self.parent:
                         scale = self.tree.std_to_scale * self.parent.av_counts[attr].unbiased_std()
+                    elif self.tree.scaling == "root":
+                        scale = self.tree.std_to_scale * self.tree.root.av_counts[attr].unbiased_std()
                     else:
                         scale = 1.0
 
@@ -387,11 +395,12 @@ class Cobweb3Node(CobwebNode):
 
         for attr in self.av_counts:
             if isinstance(self.av_counts[attr], ContinuousValue):
-                attributes.append("'%s': { %0.3f (%0.3f) [%i] }" % (attr,
-                                                                    self.av_counts[attr].mean,
-                                                                    max(self.acuity,
-                                                                        self.av_counts[attr].unbiased_std()),
-                                                                    self.av_counts[attr].num))
+                attributes.append("'%s': %s}" % (attr, str(self.av_counts[attr])))
+                #attributes.append("'%s': { %0.3f (%0.3f) [%i] }" % (attr,
+                #                                                    self.av_counts[attr].mean,
+                #                                                    max(self.acuity,
+                #                                                        self.av_counts[attr].unbiased_std()),
+                #                                                    self.av_counts[attr].num))
             else:
                 values = []
 
@@ -496,9 +505,12 @@ class Cobweb3Node(CobwebNode):
         :rtype: float
         """
         if attr not in self.tree.root.av_counts:
-            # times 2 for the attr-value and attr-None
-            return self.tree.alpha / (1.0 * self.count + self.tree.alpha * 2)
-            #return 0.0
+            return 0.0
+            ## times 2 for the attr-value and attr-None
+            #if (1.0 * self.count + self.tree.alpha * 2) == 0.0:
+            #    return 0.0
+
+            #return self.tree.alpha / (1.0 * self.count + self.tree.alpha * 2)
 
 
         if isinstance(self.tree.root.av_counts[attr], ContinuousValue):
@@ -515,26 +527,59 @@ class Cobweb3Node(CobwebNode):
             if val is None:
                 return 1 - prob_attr
 
-            if self.tree.scaling and self.parent:
+            if self.tree.scaling == "parent" and self.parent:
                 scale = self.tree.std_to_scale * self.parent.av_counts[attr].unbiased_std()
                 if scale == 0:
                     scale = 1
                 shift = self.parent.av_counts[attr].mean
+                val = (val - shift) / scale
+            elif self.tree.scaling == "root":
+                scale = self.tree.std_to_scale * self.tree.root.av_counts[attr].unbiased_std()
+                if scale == 0:
+                    scale = 1
+                shift = self.tree.root.av_counts[attr].mean
                 val = (val - shift) / scale
             else:
                 scale = 1.0
                 shift = 0.0
 
             mean = (self.av_counts[attr].mean - shift) / scale
-            std = max(self.av_counts[attr].scaled_unbiased_std(scale),
-                      self.acuity)
-
+            std = max(self.av_counts[attr].scaled_unbiased_std(scale), self.acuity)
             return (prob_attr * 
                     (1.0 / (std * sqrt(2 * pi))) * 
                     exp(-((val - mean) * (val - mean)) / (2.0 * std * std)))
 
         else:
             return super(Cobweb3Node, self).get_probability(attr, val)
+
+    def is_pure_match(self, instance):
+        """
+        Returns true if the concept exactly matches the instance.
+
+        :param instance: The instance currently being categorized
+        :type instance: {a1: v1, a2: v2, ...} - a hashtable of attr and values
+        :return: whether the instance perfectly matches the concept
+        :rtype: boolean
+
+        .. seealso:: :meth:`CobwebNode.get_best_operation`
+        """
+        for attr in self.tree.root.av_counts:
+            if attr in instance and attr not in self.av_counts:
+                return False
+            if attr in self.av_counts and attr not in instance:
+                return False
+            if attr in self.av_counts and attr in instance:
+                if isinstance(self.av_counts[attr], ContinuousValue):
+                    if (not self.av_counts[attr].unbiased_std() == 0.0):
+                        return False
+                    if (not self.av_counts[attr].unbiased_mean() ==
+                        instance[attr]):
+                        return False
+                elif not instance[attr] in self.av_counts[attr]:
+                    return False
+                elif not self.av_counts[attr][instance[attr]] == self.count:
+                    return False
+        return True
 
     def output_json(self):
         """

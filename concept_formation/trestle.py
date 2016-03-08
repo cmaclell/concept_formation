@@ -56,7 +56,7 @@ class TrestleTree(Cobweb3Tree):
     :type vars_only: bool
     """
 
-    def __init__(self, alpha=0.001, scaling=True, beam_width=2, vars_only=True):
+    def __init__(self, alpha=0.001, scaling=None, beam_width=2, vars_only=True):
         """
         The tree constructor. 
 

@@ -14,7 +14,7 @@ from concept_formation.datasets import load_rb_s_07_human_predictions
 from concept_formation.preprocessor import ObjectVariablizer
 
 num_runs = 30
-num_examples = 30
+num_examples = 29
 towers = load_rb_s_07()
 
 variablizer = ObjectVariablizer()

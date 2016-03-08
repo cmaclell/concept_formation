@@ -25,6 +25,72 @@ def _load_file(filename):
         output = [row[:-1] for row in dat]
     return output
 
+def load_forest_fires():
+    """
+    Load the forest fires dataset.
+
+    This is an example of instances with nominal and numeric attributes.
+
+    This dataset was downloaded from the `UCI machine learning repository
+    <http://archive.ics.uci.edu/ml/datasets/Forest+Fires>`__.
+    We processed the data to be in dictionary format with human readable
+    labels. 
+
+    >>> import pprint
+    >>> data = load_forest_fires()
+    >>> pprint.pprint(data[0])
+    {'DC': 94.3,
+     'DMC': 26.2,
+     'FFMC': 86.2,
+     'ISI': 5.1,
+     'RH': 51.0,
+     'area': 0.0,
+     'day': 'fri',
+     'month': 'mar',
+     'rain': 0.0,
+     'temp': 8.2,
+     'wind': 6.7,
+     'x-axis': 7.0,
+     'y-axis': 5.0}
+
+    """
+    return _load_json('forest_fires.json')
+
+def load_congressional_voting():
+    """
+    Load the voting dataset.
+
+    This is an example of instances with only nominal attributes and some
+    missing attributes. 
+
+    This dataset was downloaded from the `UCI machine learning repository
+    <http://archive.ics.uci.edu/ml/datasets/Congressional+Voting+Records>`__.
+    We processed the data to be in dictionary format with human readable
+    labels. 
+
+    >>> import pprint
+    >>> data = load_congressional_voting()
+    >>> pprint.pprint(data[0])
+    {'Class Name': 'republican',
+     'adoption-of-the-budget-resolution': 'n',
+     'aid-to-nicaraguan-contras': 'n',
+     'anti-satellite-test-ban': 'n',
+     'crime': 'y',
+     'duty-free-exports': 'n',
+     'education-spending': 'y',
+     'el-salvador-aid': 'y',
+     'export-administration-act-south-africa': 'y',
+     'handicapped-infants': 'n',
+     'immigration': 'y',
+     'mx-missile': 'n',
+     'physician-fee-freeze': 'y',
+     'religious-groups-in-schools': 'y',
+     'superfund-right-to-sue': 'y',
+     'water-project-cost-sharing': 'y'}
+
+    """
+    return _load_json('congressional_voting.json')
+
 def load_iris():
     """
     Load the iris dataset.
@@ -169,7 +235,6 @@ def load_rb_s_07_human_predictions():
     >>> data = load_rb_s_07_human_predictions()
     >>> pprint.pprint(data[0:2])
     ['user_id,instance_guid,time,order,prediction,correctness',
-     '1,2fda0bde-95a7-4bda-9851-785275c3f56d,2015-02-15 '
-     '19:21:14.327344+00:00,1,0,1']
+     '1,2fda0bde-95a7-4bda-9851-785275c3f56d,2015-02-15 19:21:14.327344+00:00,1,0,1']
     """
     return _load_file('human_s_07_success_predictions.csv')

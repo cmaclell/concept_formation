@@ -9,8 +9,10 @@ v0.1.7, 5/28/15 -- Slight refactoring to remove numpy import in utils.
 v0.1.8, 5/29/15 -- Added __future__ to example_utils.py
 v0.1.9, 5/30/15 -- Upddated pointer management and cobweb3 normalization
 v0.2.0, 7/28/15 -- Rewrote structure mapper and changed instance representation
-v0.2.1, 7/28/15 -- Updated structure mapping code to align with changes in py_search
-v0.2.2, 7/30/15 -- Updated structure mapping code to align with more changes py_search
+v0.2.1, 7/28/15 -- Updated structure mapping code to align with changes in
+                   py_search
+v0.2.2, 7/30/15 -- Updated structure mapping code to align with more changes
+                   py_search
 v0.2.3, 7/30/15 -- Increased version requirement to fix bug in py_search
 v0.2.4, 7/30/15 -- Updated structure mapping code to improve performance
 v0.2.5, 7/30/15 -- Bug in structure mapping code corrected
@@ -25,5 +27,13 @@ v0.2.12,8/17/15 -- Removed action planner and updated infer_missing
 v0.2.13,8/17/15 -- Fixed bug in cobweb3 that converts bools to numerics
 v0.2.14,8/18/15 -- Fixed bug in cobweb3 that threw KeyErrors in infer_missing
 v0.2.15,8/18/15 -- Fixed bug introduced in previous fix
-v0.2.17,1/28/16 -- Categorize now uses a matching score between instance and concept. Also, get_probability and get_probability missing were updated to take into account new attr values with laplace smoothing.
-v0.2.18,1/28/16 -- Fixed error in infer_missing that gave higher chance of missing.
+v0.2.17,1/28/16 -- Categorize now uses a matching score between instance and
+                   concept. Also, get_probability and get_probability missing
+                   were updated to take into account new attr values with
+                   laplace smoothing.
+v0.2.18,1/28/16 -- Fixed error in infer_missing that gave higher chance of
+                   missing.
+v0.2.19,1/28/16 -- Changed categorize function to use the concept that most
+                   closely matches the instance (max # of correct guesses in
+                   instance). Also, added cobweb3 regression example. 
+ 
