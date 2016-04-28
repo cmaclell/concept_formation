@@ -23,7 +23,7 @@ y[::5] += 1 * (0.5 - np.random.rand(8))
 # Create dictionaries
 # Note that the y value is stored as a hidden variable because
 # in this case we only want to use the X value to make predictions.
-training_data = [{'X': v[0], '_y': y[i]} for i,v in enumerate(X)]
+training_data = [{'X': v[0], 'y': y[i]} for i,v in enumerate(X)]
 shuffle(training_data)
 
 # Build test data
@@ -36,8 +36,8 @@ cbt.fit(training_data, iterations=1)
 cb3t.fit(training_data, iterations=1)
 
 # Predict test data
-cby = [cbt.categorize(e).predict('_y') for e in test_data]
-cb3y = [cb3t.categorize(e).predict('_y') for e in test_data]
+cby = [cbt.categorize(e).predict('y') for e in test_data]
+cb3y = [cb3t.categorize(e).predict('y') for e in test_data]
 
 # Plot the results
 plt.scatter(X, y, c='k', label='training data')

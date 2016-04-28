@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 from __future__ import absolute_import
 from __future__ import division
 from random import normalvariate
+from random import random
 from numbers import Number
 from math import sqrt
 from math import pi
@@ -24,12 +25,6 @@ class Cobweb3Tree(CobwebTree):
     attribute is any value where ``isinstance(instance[attr], Number)`` returns
     ``True``.
 
-    The alpha parameter is the parameter used for laplacian smoothing of
-    nominal values (or whether an attribute is present or not for both
-    nominal and numeric attributes). The higher the value, the higher the
-    prior that all attributes/values are equally likely. By default a minor
-    smoothing is used: 0.001.
-
     The scaling parameter determines whether online normalization of
     continuous attributes is used. By default scaling is used. Scaling
     divides the std of each attribute by the std of the attribute in the
@@ -39,18 +34,15 @@ class Cobweb3Tree(CobwebTree):
     calculation meaning numbers that are naturally larger will recieve
     extra weight in the calculation.
 
-    :param alpha: constant to use for laplacian smoothing.
-    :type alpha: float
     :param scaling: whether or not numerical values should be scaled in
         online normalization.
     :type scaling: "root", "parent", or None
     """
 
-    def __init__(self, alpha=0.001, scaling=None):
+    def __init__(self, scaling=None):
         """The tree constructor."""
         self.root = Cobweb3Node()
         self.root.tree = self
-        self.alpha = alpha
         self.scaling = scaling
 
         # Number of stds to divide by when normalizing (2.0 -> everything
@@ -114,8 +106,7 @@ class Cobweb3Tree(CobwebTree):
 
     def clear(self):
         """
-        Clears the concepts of the tree, but maintains the alpha and
-        scaling parameters.
+        Clears the concepts of the tree, but maintains the scaling parameter.
         """
         self.root = Cobweb3Node()
         self.root.tree = self
@@ -142,42 +133,6 @@ class Cobweb3Node(CobwebNode):
     :math:`\\frac{1}{\\sqrt{2 * \\pi}}` which is the smallest possible acuity
     before probability estimates begin to exceed 1.0.
     """
-
-    def get_probability_missing(self, attr):
-        """
-        Returns the probability of a particular attribute not being present in a
-        given concept.
-
-        This takes into account the possibilities that an attribute can take any
-        of the values available at the root, or be missing. Laplace smoothing is
-        used to place a prior over these possibilites. Alpha determines the
-        strength of this prior.
-
-        :param attr: an attribute of an instance
-        :type attr: str
-        :return: The probability of attr not being present from an instance in
-            the current concept.
-        :rtype: float 
-        """
-        # the +1 is for the "missing" value
-        if attr in self.tree.root.av_counts:
-            n_values = len(self.tree.root.av_counts[attr]) + 1
-        else:
-            n_values = 1
-
-        val_count = 0
-        if attr in self.av_counts:
-            if isinstance(self.av_counts[attr], ContinuousValue):
-                val_count += self.av_counts[attr].num
-            else:
-                for val in self.av_counts[attr]:
-                    val_count += self.av_counts[attr][val]
-
-        if (1.0 * self.count + self.tree.alpha * n_values) == 0:
-            return 0.0
-
-        return ((self.count - val_count + self.tree.alpha) / 
-                (1.0 * self.count + self.tree.alpha * n_values))
 
     def increment_counts(self, instance):
         """
@@ -325,54 +280,40 @@ class Cobweb3Node(CobwebNode):
         for attr in self.tree.root.av_counts:
             if attr[0] == "_":
                 continue
+
+            if attr not in self.av_counts:
+                val_count = 0
+                
             elif isinstance(self.tree.root.av_counts[attr], ContinuousValue):
-                n_values = 2
-                if attr not in self.av_counts :
-                    prob = 0
-                    if self.tree.alpha > 0:
-                        prob = self.tree.alpha / (self.tree.alpha * n_values)
-                    val_count = 0
+                if self.tree.scaling == "parent" and self.parent:
+                    scale = (self.tree.std_to_scale *
+                             self.parent.av_counts[attr].unbiased_std())
+                elif self.tree.scaling == "root":
+                    scale = (self.tree.std_to_scale *
+                             self.tree.root.av_counts[attr].unbiased_std())
                 else:
-                    val_count = self.av_counts[attr].num
+                    scale = 1.0
 
-                    if self.tree.scaling == "parent" and self.parent:
-                        scale = self.tree.std_to_scale * self.parent.av_counts[attr].unbiased_std()
-                    elif self.tree.scaling == "root":
-                        scale = self.tree.std_to_scale * self.tree.root.av_counts[attr].unbiased_std()
-                    else:
-                        scale = 1.0
-
-                    std = max(self.av_counts[attr].scaled_unbiased_std(scale),
-                              self.acuity)
-                    prob_attr = ((1.0 * self.av_counts[attr].num + self.tree.alpha) /
-                                 (self.count + self.tree.alpha * n_values ))
-                    correct_guesses += ((prob_attr * prob_attr) * 
-                                        (1.0 / (2.0 * sqrt(pi) * std)))
-
-                #Factors in the probability mass of missing values
-                prob = ((self.count - val_count + self.tree.alpha) / (1.0 * self.count +
-                                                            self.tree.alpha * n_values))
-                correct_guesses += (prob * prob)
+                std = max(self.av_counts[attr].scaled_unbiased_std(scale),
+                          self.acuity)
+                prob_attr = self.av_counts[attr].num / self.count
+                correct_guesses += ((prob_attr * prob_attr) * 
+                                    (1.0 / (2.0 * sqrt(pi) * std)))
+                val_count = self.av_counts[attr].num
 
             else:
                 val_count = 0
-                n_values = len(self.tree.root.av_counts[attr]) + 1
                 for val in self.tree.root.av_counts[attr]:
-                    if attr not in self.av_counts or val not in self.av_counts[attr]:
+                    if val not in self.av_counts[attr]:
                         prob = 0
-                        if self.tree.alpha > 0:
-                            prob = self.tree.alpha / (self.tree.alpha * n_values)
                     else:
                         val_count += self.av_counts[attr][val]
-                        prob = ((self.av_counts[attr][val] + self.tree.alpha) / (1.0 * self.count + 
-                                                                       self.tree.alpha * n_values))
+                        prob = (self.av_counts[attr][val]) / (1.0 * self.count)
                     correct_guesses += (prob * prob)
 
-                #Factors in the probability mass of missing values
-                prob = ((self.count - val_count + self.tree.alpha) /
-                        (1.0*self.count + self.tree.alpha *
-                                                    n_values))
-                correct_guesses += (prob * prob)
+            #Factors in the probability mass of missing values
+            prob = (self.count - val_count) / self.count
+            correct_guesses += (prob * prob)
 
         return correct_guesses
 
@@ -418,7 +359,8 @@ class Cobweb3Node(CobwebNode):
         return ret
 
     def sample(self, attr):
-        """Samples the value of an attribute from the node's probability table.
+        """
+        Samples the value of an attribute from the node's probability table.
         This takes into account the laplacian smoothing.
 
         If the attribute is a nominal then this function behaves the same as
@@ -438,11 +380,9 @@ class Cobweb3Node(CobwebNode):
             return None
 
         if isinstance(self.tree.root.av_counts[attr], ContinuousValue):
-            n_values = 2
-            prob_attr = ((1.0 * self.av_counts[attr].num + self.tree.alpha) /
-                         (self.count + self.tree.alpha * n_values ))
+            prob_attr = self.av_counts[attr].num / self.count
 
-            if prob_attr < 0.5:
+            if prob_attr < random():
                 return None
 
             return normalvariate(self.av_counts[attr].mean,
@@ -453,7 +393,6 @@ class Cobweb3Node(CobwebNode):
     def predict(self, attr):
         """
         Predict the value of an attribute, by returning the most likely value.
-        This takes into account the laplacian smoothing.
 
         If the attribute is a nominal then this function behaves the same as
         :meth:`CobwebNode.predict <concept_formation.cobweb.CobwebNode.predict>`.
@@ -472,9 +411,7 @@ class Cobweb3Node(CobwebNode):
             return None
 
         if isinstance(self.tree.root.av_counts[attr], ContinuousValue):
-            n_values = 2
-            prob_attr = ((1.0 * self.av_counts[attr].num + self.tree.alpha) /
-                         (self.count + self.tree.alpha * n_values ))
+            prob_attr = self.av_counts[attr].num / self.count
 
             if prob_attr < 0.5:
                 return None
@@ -489,13 +426,11 @@ class Cobweb3Node(CobwebNode):
         concept. 
 
         This takes into account the possibilities that an attribute can take any
-        of the values available at the root, or be missing. Laplace smoothing is
-        used to place a prior over these possibilites. Alpha determines the
-        strength of this prior.
+        of the values available at the root, or be missing. 
 
-        For numerical attributes the probability of val given a
-        normal distribution is returned. This normal distribution is defined by
-        the mean and std of past values stored in the concept.
+        For numerical attributes the probability of val given a normal
+        distribution is returned. This normal distribution is defined by the
+        mean and std of past values stored in the concept.
         
         :param attr: an attribute of an instance
         :type attr: str
@@ -504,28 +439,15 @@ class Cobweb3Node(CobwebNode):
         :return: The probability of attr having the value val in the current concept.
         :rtype: float
         """
-        if attr not in self.tree.root.av_counts:
-            return 0.0
-            ## times 2 for the attr-value and attr-None
-            #if (1.0 * self.count + self.tree.alpha * 2) == 0.0:
-            #    return 0.0
+        if (attr in self.tree.root.av_counts and
+            isinstance(self.tree.root.av_counts[attr], ContinuousValue)):
 
-            #return self.tree.alpha / (1.0 * self.count + self.tree.alpha * 2)
-
-
-        if isinstance(self.tree.root.av_counts[attr], ContinuousValue):
-            n_values = 2
-
-            if attr not in self.av_counts:
-                return self.tree.alpha / (1.0 * self.count + self.tree.alpha *
-                                         n_values)
-                #return 0.0
-
-            prob_attr = ((1.0 * self.av_counts[attr].num + self.tree.alpha) /
-                         (self.count + self.tree.alpha * n_values ))
+            prob_attr = 0.0
+            if attr in self.av_counts:
+                prob_attr = self.av_counts[attr].num / self.count
 
             if val is None:
-                return 1 - prob_attr
+                return 1.0 - prob_attr
 
             if self.tree.scaling == "parent" and self.parent:
                 scale = self.tree.std_to_scale * self.parent.av_counts[attr].unbiased_std()
@@ -551,6 +473,22 @@ class Cobweb3Node(CobwebNode):
 
         else:
             return super(Cobweb3Node, self).get_probability(attr, val)
+
+    def get_probability_missing(self, attr):
+        """
+        Returns the probability of a particular attribute not being present in a
+        given concept.
+
+        This takes into account the possibilities that an attribute can take any
+        of the values available at the root, or be missing. 
+
+        :param attr: an attribute of an instance
+        :type attr: str
+        :return: The probability of attr not being present from an instance in
+            the current concept.
+        :rtype: float 
+        """
+        return self.get_probability(attr, None)
 
     def is_pure_match(self, instance):
         """

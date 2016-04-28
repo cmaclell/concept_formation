@@ -4,7 +4,6 @@ from __future__ import absolute_import
 from __future__ import division
 from random import shuffle
 from random import random
-from math import log
 import json
 
 from concept_formation.utils import weighted_choice
@@ -14,27 +13,19 @@ class CobwebTree(object):
     """
     The CobwebTree contains the knoweldge base of a partiucluar instance of the
     cobweb algorithm and can be used to fit and categorize instances.
-
-    The alpha parameter is the parameter used for laplacian smoothing. The
-    higher the value, the higher the prior that all attributes/values are
-    equally likely. By default a minor smoothing is used: 0.001.
-
-    :param alpha: constant to use for laplacian smoothing.
-    :type alpha: float
     """
 
-    def __init__(self, alpha=0.001):
+    def __init__(self):
         """
         The tree constructor.
       
         """
         self.root = CobwebNode()
         self.root.tree = self
-        self.alpha = alpha
         self.scaling = False
 
     def clear(self):
-        """Clears the concepts of the tree, but maintains the alpha parameter.
+        """Clears the concepts of the tree.
         """
         self.root = CobwebNode()
         self.root.tree = self
@@ -112,10 +103,9 @@ class CobwebTree(object):
         operation is chosen at random.
 
         In the base case, i.e. a leaf node, the algorithm checks to see if
-        creating a new leaf node would result in an increase in category_utility
-        (see: :meth:`CobwebNode.cu_for_fringe_split
-        <CobwebNode.cu_for_fringe_split>`), if not then the instance is inserted
-        into the leaf node.
+        the current leaf is an exact match to the current node. If it is, then
+        the instance is inserted and the leaf is returned. Otherwise, a new
+        leaf is created. 
 
         .. note:: This function is equivalent to calling :meth:`CobwebTree.ifit`
             but its better to call ifit because it is the polymorphic method
@@ -131,15 +121,10 @@ class CobwebTree(object):
         current = self.root
 
         while current:
-            #if (not current.children and current.cu_for_fringe_split(instance)
-            #    <= 0.0):
-            #    current.increment_counts(instance)
-            #    return current 
-            if not current.children and current.is_pure_match(instance):
-                current.increment_counts(instance)
-                return current 
 
-            elif (not current.children and current.count == 0):
+            # the current.count == 0 here is for the initially empty tree.
+            if not current.children and (current.is_pure_match(instance) or
+                                         current.count == 0):
                 current.increment_counts(instance)
                 return current 
 
@@ -156,6 +141,7 @@ class CobwebTree(object):
 
                 new.increment_counts(instance)
                 return new.create_new_child(instance)
+
             else:
                 best1, best2 = current.two_best_children(instance)
                 action_cu, best_action = current.get_best_operation(instance,
@@ -182,21 +168,18 @@ class CobwebTree(object):
                 else:
                     raise Exception('Best action choice "'+best_action+'" not a recognized option. This should be impossible...')
 
-    def _cobweb_categorize(self, instance):
+    def _cobweb_categorize_new(self, instance):
         """A cobweb speciifc version of categorize, not inteded to be externally called.
 
         .. seealso:: :meth:`CobwebTree.categorize`
         """
         current = self.root
-        #current_match = current.log_prob_instance(instance)
         current_match = current.correct_guesses(instance)
 
         while current:
             if not current.children:
                 return current
             
-            #children_match = [(child.log_prob_instance(instance), child.count, random(),
-            #                   child) for child in current.children]
             children_match = [(child.correct_guesses(instance), child.count, random(),
                                child) for child in current.children]
             children_match.sort(reverse=True)
@@ -209,7 +192,7 @@ class CobwebTree(object):
             else:
                 return current
 
-    def _cobweb_categorize_old(self, instance):
+    def _cobweb_categorize(self, instance):
         """A cobweb specific version of categorize, not inteded to be
         externally called.
 
@@ -311,7 +294,6 @@ class CobwebTree(object):
 
 class CobwebNode(object):
     """
-
     A CobwebNode represents a concept within the knoweldge base of a particular
     :class:`CobwebTree`. Each node contians a probability table that can be used to
     calculate the probability of different attributes given the concept that the
@@ -335,12 +317,15 @@ class CobwebNode(object):
     def __init__(self, otherNode=None):
         """Create a new CobwebNode"""
         self.concept_id = self.gensym() 
-        self.count = 0 
+        self.count = 0.0
         self.av_counts = {}
         self.children = [] 
         self.parent = None 
         #self.root = None
         self.tree = None
+
+        self.correct_at_node_counts = {}
+        self.correct_at_decendent_counts = {}
 
         if otherNode:
             self.update_counts_from_node(otherNode)
@@ -401,7 +386,8 @@ class CobwebNode(object):
         This is the sum of the probability of each attribute value squared. This
         function is used in calculating category utility.
 
-        :return: the number of correct guesses that are expected from the given concept. 
+        :return: the number of correct guesses that are expected from the given
+                 concept. 
         :rtype: float
 
         """
@@ -410,25 +396,19 @@ class CobwebNode(object):
         for attr in self.tree.root.av_counts:
             if attr[0] == "_":
                 continue
+
             val_count = 0
-
-            # the +1 is for the "missing" value
-            n_values = len(self.tree.root.av_counts[attr]) + 1
-
-            for val in self.tree.root.av_counts[attr]:
-                if attr not in self.av_counts or val not in self.av_counts[attr]:
-                    prob = 0
-                    if self.tree.alpha > 0:
-                        prob = self.tree.alpha / (self.tree.alpha * n_values)
-                else:
-                    val_count += self.av_counts[attr][val]
-                    prob = ((self.av_counts[attr][val] + self.tree.alpha) / (1.0 * self.count
-                                                              + self.tree.alpha * n_values))
-                correct_guesses += (prob * prob)
+            if attr in self.av_counts:
+                for val in self.tree.root.av_counts[attr]:
+                    if val not in self.av_counts[attr]:
+                        prob = 0
+                    else:
+                        val_count += self.av_counts[attr][val]
+                        prob = (self.av_counts[attr][val]) / (1.0 * self.count)
+                    correct_guesses += (prob * prob)
 
             #Factors in the probability mass of missing values
-            prob = ((self.count - val_count + self.tree.alpha) / (1.0*self.count +
-                                                             self.tree.alpha * n_values))
+            prob = (self.count - val_count) / self.count
             correct_guesses += (prob * prob)
 
         return correct_guesses
@@ -585,36 +565,6 @@ class CobwebNode(object):
 
         return guesses
             
-
-    def log_prob_instance(self, instance):
-        """
-        Calculates the probability that the instance would have been
-        generated in the current concept.
-        """
-        log_prob = 0.0
-        for attr in set(self.tree.root.av_counts).union(set(instance)):
-            if attr[0] == "_":
-                continue
-            
-            if attr in instance:
-                p = self.get_probability(attr, instance[attr])
-            else:
-                p = self.get_probability_missing(attr)
-
-            # this takes into account the laplacian smoothing for attr-vals
-            # that are not present in the tree, they would get some probability
-            # mass and all others would be decreased, but this accomplishes
-            # that (I think). 
-            #if p == 0:
-            #    p = self.tree.alpha
-
-            if p == 0:
-                return float('-inf')
-
-            log_prob += log(p)
-
-        return log_prob
-
     def two_best_children(self, instance):
         """
         Calculates the category utility of inserting the instance into each of
@@ -1040,30 +990,23 @@ class CobwebNode(object):
         """
         choices = []
         if attr not in self.tree.root.av_counts:
-            choices.append((None,1.0))
+            choices.append((None, 1.0))
             return choices
-
-        n_values = len(self.tree.root.av_counts[attr]) + 1
 
         val_count = 0
         for val in self.tree.root.av_counts[attr]:
             count = 0
             if attr in self.av_counts and val in self.av_counts[attr]:
                 count = self.av_counts[attr][val]
-
-            choices.append((val, (count + self.tree.alpha)
-                            / (1.0 * self.count + self.tree.alpha * n_values)))
-
+            choices.append((val, count / self.count))
             val_count += count
 
-        choices.append((None, ((self.count - val_count + self.tree.alpha) /
-                               (1.0 * self.count + self.tree.alpha *
-                                n_values))))
+        choices.append((None, ((self.count - val_count) / self.count)))
         return choices
 
     def predict(self, attr):
-        """Predict the value of an attribute, by returning the most likely value.
-        This takes into account the laplacian smoothing.
+        """
+        Predict the value of an attribute, by returning the most likely value.
 
         :param attr: an attribute of an instance.
         :type attr: str
@@ -1082,7 +1025,6 @@ class CobwebNode(object):
     def sample(self, attr):
         """
         Samples the value of an attribute from the node's probability table.
-        This takes into account the laplacian smoothing. 
 
         :param attr: an attribute of an instance
         :type attr: str
@@ -1093,7 +1035,6 @@ class CobwebNode(object):
         .. seealso :meth:`CobwebNode.predict`
         
         """
-
         if attr not in self.tree.root.av_counts:
             return None
 
@@ -1107,38 +1048,26 @@ class CobwebNode(object):
         concept. 
 
         This takes into account the possibilities that an attribute can take any
-        of the values available at the root, or be missing. Laplace smoothing is
-        used to place a prior over these possibilites. Alpha determines the
-        strength of this prior.
+        of the values available at the root, or be missing. 
         
         :param attr: an attribute of an instance
         :type attr: str
         :param val: a value for the given attribute
         :type val: str:
-        :return: The probability of attr having the value val in the current concept.
+        :return: The probability of attr having the value val in the current
+            concept.
         :rtype: float
         """
-        if attr not in self.tree.root.av_counts:
-            return 0.0
-            # times 2 for the attr + None
-            #if (1.0 * self.count + self.tree.alpha * 2) == 0:
-            #    return 0.0
-            #return self.tree.alpha / (1.0 * self.count + self.tree.alpha * 2)
+        if val is None:
+            c = 0.0
+            if attr in self.av_counts:
+                c = sum([self.av_counts[attr][v] for v in self.av_counts[attr]])
+            return (self.count - c) / self.count
 
-        n_values = len(self.tree.root.av_counts[attr]) + 1
-
-        if val is not None and val not in self.tree.root.av_counts[attr]:
-            # add the new value to n_values
-            #n_values += 1
-            #return self.tree.alpha / (1.0 * self.count + self.tree.alpha * n_values)
-            return 0.0
-
-        count = 0
         if attr in self.av_counts and val in self.av_counts[attr]:
-            count = self.av_counts[attr][val]
+            return self.av_counts[attr][val] / self.count
 
-        return ((count + self.tree.alpha) / 
-                (1.0 * self.count + self.tree.alpha * n_values))
+        return 0.0
 
     def get_probability_missing(self, attr):
         """
@@ -1146,9 +1075,7 @@ class CobwebNode(object):
         given concept.
 
         This takes into account the possibilities that an attribute can take any
-        of the values available at the root, or be missing. Laplace smoothing is
-        used to place a prior over these possibilites. Alpha determines the
-        strength of this prior.
+        of the values available at the root, or be missing. 
 
         :param attr: an attribute of an instance
         :type attr: str
@@ -1156,19 +1083,4 @@ class CobwebNode(object):
             the current concept.
         :rtype: float 
         """
-        # the +1 is for the "missing" value
-        if attr in self.tree.root.av_counts:
-            n_values = len(self.tree.root.av_counts[attr]) + 1
-        else:
-            n_values = 1
-
-        val_count = 0
-        if attr in self.av_counts:
-            for val in self.av_counts[attr]:
-                val_count += self.av_counts[attr][val]
-
-        if (1.0 * self.count + self.tree.alpha * n_values) == 0:
-            return 0.0
-
-        return ((self.count - val_count + self.tree.alpha) / 
-                (1.0 * self.count + self.tree.alpha * n_values))
+        return self.get_probability(attr, None)
