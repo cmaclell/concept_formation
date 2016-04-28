@@ -9,11 +9,11 @@ from math import sqrt
 from math import pi
 from math import exp
 
-from concept_formation.utils import c4
 from concept_formation.utils import weighted_choice
 from concept_formation.utils import most_likely_choice
 from concept_formation.cobweb import CobwebNode
 from concept_formation.cobweb import CobwebTree
+from concept_formation.continuous_value import ContinuousValue
 
 class Cobweb3Tree(CobwebTree):
     """
@@ -34,16 +34,25 @@ class Cobweb3Tree(CobwebTree):
     calculation meaning numbers that are naturally larger will recieve
     extra weight in the calculation.
 
+    Acuity is used as a floor on standard deviation estimates for numeric
+    attribute values. The default value is set to 
+    :math:`\\frac{1}{\\sqrt{2 * \\pi}}` which is the smallest possible acuity
+    before probability estimates begin to exceed 1.0.
+
     :param scaling: whether or not numerical values should be scaled in
         online normalization.
     :type scaling: "root", "parent", or None
+    :param acuity: A lower bound on the standard deviation estimates for
+        numeric attributes.
+    :type acuity: float
     """
 
-    def __init__(self, scaling=None):
+    def __init__(self, scaling=None, acuity=1.0/sqrt(2.0*pi)):
         """The tree constructor."""
         self.root = Cobweb3Node()
         self.root.tree = self
         self.scaling = scaling
+        self.acuity = acuity
 
         # Number of stds to divide by when normalizing (2.0 -> everything
         # normalized to half a std deviation)
@@ -122,16 +131,6 @@ class Cobweb3Node(CobwebNode):
     functions should be used to initially interface with the Cobweb/3 knowledge
     base and then the returned concept can be used to calculate probabilities of
     certain attributes or determine concept labels.
-    """
-
-    # Smallest possible acuity. Below this probabilities will exceed 1.0
-    acuity = 1.0 / sqrt(2.0 * pi)
-
-    """
-    acuity is used as a floor on standard deviation estimates for numeric
-    attribute values. The default value is set to 
-    :math:`\\frac{1}{\\sqrt{2 * \\pi}}` which is the smallest possible acuity
-    before probability estimates begin to exceed 1.0.
     """
 
     def increment_counts(self, instance):
@@ -229,14 +228,15 @@ class Cobweb3Node(CobwebNode):
             else:
                 scale = 1.0
 
-            before_std = max(self.av_counts[attr].scaled_unbiased_std(scale), self.acuity)
+            before_std = max(self.av_counts[attr].scaled_unbiased_std(scale),
+                             self.tree.acuity)
             before_prob = ((1.0 * self.av_counts[attr].num) / (self.count + 1.0))
             before_count = ((before_prob * before_prob) * 
                             (1.0 / (2.0 * sqrt(pi) * before_std)))
 
             temp = self.av_counts[attr].copy()
             temp.update(val)
-            after_std = max(temp.scaled_unbiased_std(scale), self.acuity)
+            after_std = max(temp.scaled_unbiased_std(scale), self.tree.acuity)
             after_prob = ((1.0 + self.av_counts[attr].num) / (self.count + 1.0))
             after_count = ((after_prob * after_prob) * 
                             (1.0 / (2.0 * sqrt(pi) * after_std)))
@@ -295,7 +295,7 @@ class Cobweb3Node(CobwebNode):
                     scale = 1.0
 
                 std = max(self.av_counts[attr].scaled_unbiased_std(scale),
-                          self.acuity)
+                          self.tree.acuity)
                 prob_attr = self.av_counts[attr].num / self.count
                 correct_guesses += ((prob_attr * prob_attr) * 
                                     (1.0 / (2.0 * sqrt(pi) * std)))
@@ -339,7 +339,7 @@ class Cobweb3Node(CobwebNode):
                 attributes.append("'%s': %s}" % (attr, str(self.av_counts[attr])))
                 #attributes.append("'%s': { %0.3f (%0.3f) [%i] }" % (attr,
                 #                                                    self.av_counts[attr].mean,
-                #                                                    max(self.acuity,
+                #                                                    max(self.tree.acuity,
                 #                                                        self.av_counts[attr].unbiased_std()),
                 #                                                    self.av_counts[attr].num))
             else:
@@ -361,7 +361,6 @@ class Cobweb3Node(CobwebNode):
     def sample(self, attr):
         """
         Samples the value of an attribute from the node's probability table.
-        This takes into account the laplacian smoothing.
 
         If the attribute is a nominal then this function behaves the same as
         :meth:`CobwebNode.sample <concept_formation.cobweb.CobwebNode.sample>`.
@@ -411,12 +410,21 @@ class Cobweb3Node(CobwebNode):
             return None
 
         if isinstance(self.tree.root.av_counts[attr], ContinuousValue):
-            prob_attr = self.av_counts[attr].num / self.count
+            # get the right concept for this attribute using past performance
+            best = self
+            curr = self
+            while curr is not None:
+                if (curr.correct_at_node[attr].unbiased_mean() >=
+                    curr.correct_at_decendents[attr].unbiased_mean()):
+                    best = curr
+                curr = curr.parent
+
+            prob_attr = best.av_counts[attr].num / best.count
 
             if prob_attr < 0.5:
                 return None
 
-            return self.av_counts[attr].mean
+            return best.av_counts[attr].mean
         else:
             return super(Cobweb3Node, self).predict(attr)
 
@@ -466,7 +474,8 @@ class Cobweb3Node(CobwebNode):
                 shift = 0.0
 
             mean = (self.av_counts[attr].mean - shift) / scale
-            std = max(self.av_counts[attr].scaled_unbiased_std(scale), self.acuity)
+            std = max(self.av_counts[attr].scaled_unbiased_std(scale),
+                      self.tree.acuity)
             return (prob_attr * 
                     (1.0 / (std * sqrt(2 * pi))) * 
                     exp(-((val - mean) * (val - mean)) / (2.0 * std * std)))
@@ -554,172 +563,3 @@ class Cobweb3Node(CobwebNode):
         output["counts"] = temp
 
         return output
-
-class ContinuousValue():
-    """ 
-    This class is used to store the number of samples, the mean of the samples,
-    and the squared error of the samples for numeric attribute values. It can be
-    used to perform incremental estimation of the attribute's mean, std, and
-    unbiased std.
-
-    Initially the number of values, the mean of the values, and the
-    squared errors of the values are set to 0.
-    """
-
-    def __init__(self):
-        """constructor"""
-        self.num = 0.0
-        self.mean = 0.0
-        self.meanSq = 0.0
-
-    def __len__(self):
-        return 1
-
-    def copy(self):
-        """
-        Returns a deep copy of itself.
-
-        :return: a deep copy of the continuous value
-        :rtype: ContinuousValue
-        """
-        v = ContinuousValue()
-        v.num = self.num
-        v.mean = self.mean
-        v.meanSq = self.meanSq
-        return v
-
-    def unbiased_mean(self):
-        """
-        Returns the mean value.
-
-        :return: the unbiased mean
-        :rtype: float
-        """
-        return self.mean
-
-    def scaled_unbiased_mean(self, shift, scale):
-        """
-        Returns (self.mean - shift) / scale
-
-        This is used as part of numerical value scaling.
-
-        :param shift: the amount to shift the mean by
-        :type shift: float
-        :param scale: the amount to scale the returned mean by
-        :type scale: float
-        :return: ``(self.mean - shift) / scale``
-        :rtype: float
-        """
-        if scale <= 0:
-            scale = 1
-        return (self.mean - shift) / scale
-
-    def biased_std(self):
-        """
-        Returns a biased estimate of the std (i.e., the sample std)
-
-        :return: biased estimate of the std (i.e., the sample std)
-        :rtype: float
-        """
-        return sqrt(self.meanSq / (self.num))
-
-    def unbiased_std(self):
-        """Returns an unbiased estimate of the std 
-
-        This implementation uses Bessel's correction and Cochran's theorem: 
-        `<https://en.wikipedia.org/wiki/Unbiased_estimation_of_standard_deviation#Bias_correction>`_
-
-        :return: an unbiased estimate of the std
-        :rtype: float
-
-        .. seealso:: :meth:`concept_formation.utils.c4`
-        """
-        if self.num < 2:
-            return 0.0
-        return sqrt(self.meanSq / (self.num - 1)) / c4(self.num)
-
-    def scaled_unbiased_std(self, scale):
-        """
-        Returns an unbiased estimate of the std (see:
-        :meth:`ContinuousValue.unbiased_std`), but also adjusts the std given a
-        scale parameter.
-
-        This is used to return std values that have been normalized by some
-        value. For edge cases, if scale is less than or equal to 0, then scaling
-        is disabled (i.e., scale = 1.0).
-
-        :param scale: an amount to scale unbiased std estimates by
-        :type scale: float
-        :return: A scaled unbiased estimate of std
-        :rtype: float
-        """
-        if scale <= 0:
-            scale = 1.0
-        return self.unbiased_std() / scale
-
-    def __hash__(self):
-        """
-        This hashing function returns the hash of a constant string, so that
-        all lookups of a continuous value in a dictionary get mapped to the
-        same entry. 
-        """
-        return hash("#ContinuousValue#")
-
-    def __repr__(self):
-        """
-        The representation of a continuous value.
-        """
-        return repr(self.num) + repr(self.mean) + repr(self.meanSq)
-
-    def __str__(self):
-        """
-        The string format for a continuous value."
-        """
-        return "%0.4f (%0.4f) [%i]" % (self.mean, self.unbiased_std(), self.num)
-
-    def update_batch(self, data):
-        """
-        Calls the update function on every value in a given dataset
-
-        :param data: A list of numberic values to add to the distribution
-        :type data: [Number, Number, ...]
-        """
-        for x in data:
-            self.update(x)
-
-    def update(self, x):
-        """
-        Incrementally update the mean and squared mean error (meanSq) values in
-        an efficient and practical (no precision problems) way. 
-
-        This uses and algorithm by Knuth found here:
-        `<https://en.wikipedia.org/wiki/Algorithms_for_calculating_variance>`_
-
-        :param x: A new value to incorporate into the distribution
-        :type x: Number
-        """
-        self.num += 1
-        delta = x - self.mean 
-        self.mean += delta / self.num
-        self.meanSq += delta * (x - self.mean)
-
-    def combine(self, other):
-        """
-        Combine another ContinuousValue's distribution into this one in
-        an efficient and practical (no precision problems) way. 
-
-        This uses the parallel algorithm by Chan et al. found at:
-        `<https://en.wikipedia.org/wiki/Algorithms_for_calculating_variance#Parallel_algorithm>`_
-
-        :param other: Another ContinuousValue distribution to be incorporated
-            into this one.
-        :type other: ContinuousValue
-        """
-        if not isinstance(other, ContinuousValue):
-            raise ValueError("Can only merge 2 continuous values.")
-        delta = other.mean - self.mean
-        self.meanSq = (self.meanSq + other.meanSq + delta * delta * 
-                       ((self.num * other.num) / (self.num + other.num)))
-        self.mean = ((self.num * self.mean + other.num * other.mean) / 
-                     (self.num + other.num))
-        self.num += other.num

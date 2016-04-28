@@ -8,6 +8,7 @@ import json
 
 from concept_formation.utils import weighted_choice
 from concept_formation.utils import most_likely_choice
+from concept_formation.continuous_value import ContinuousValue
 
 class CobwebTree(object):
     """
@@ -22,7 +23,6 @@ class CobwebTree(object):
         """
         self.root = CobwebNode()
         self.root.tree = self
-        self.scaling = False
 
     def clear(self):
         """Clears the concepts of the tree.
@@ -74,13 +74,10 @@ class CobwebTree(object):
         instances = [i for i in instances]
 
         for x in range(iterations):
-            #print("it:",x)
             if x == 0 and randomize_first:
                 shuffle(instances)
-
             for i in instances:
                 self.ifit(i)
-
             shuffle(instances)
 
     def cobweb(self, instance):
@@ -119,16 +116,32 @@ class CobwebTree(object):
         .. seealso:: :meth:`CobwebTree.ifit`, :meth:`CobwebTree.categorize`
         """
         current = self.root
+        was_split = False
+        performance = {attr:[] for attr in
+                       set(current.av_counts).union(instance)}
 
         while current:
+            # predict using original counts during training
+            # for tracking past-performance
+            if not was_split:
+                for attr in performance:
+                    if attr in instance:
+                        p = current.get_probability(attr, instance[attr])
+                    else:
+                        p = current.get_probability_missing(attr)
+                    performance[attr].append(p)
+            else:
+                was_split = False
 
             # the current.count == 0 here is for the initially empty tree.
             if not current.children and (current.is_pure_match(instance) or
                                          current.count == 0):
+                #print("leaf match")
                 current.increment_counts(instance)
-                return current 
+                break
 
             elif not current.children:
+                #print("fringe split")
                 new = current.__class__(current)
                 current.parent = new
                 new.children.append(current)
@@ -140,7 +153,10 @@ class CobwebTree(object):
                     self.root = new
 
                 new.increment_counts(instance)
-                return new.create_new_child(instance)
+                for attr in performance:
+                    performance[attr].append(0.0)
+                current = new.create_new_child(instance)
+                break
 
             else:
                 best1, best2 = current.two_best_children(instance)
@@ -148,6 +164,7 @@ class CobwebTree(object):
                                                                     best1,
                                                                     best2)
 
+                #print(best_action)
                 if best1:
                     best1_cu, best1 = best1
                 if best2:
@@ -158,15 +175,32 @@ class CobwebTree(object):
                     current = best1
                 elif best_action == 'new':
                     current.increment_counts(instance)
-                    return current.create_new_child(instance)
+                    current = current.create_new_child(instance)
+                    for attr in performance:
+                        performance[attr].append(0.0)
+                    break
                 elif best_action == 'merge':
                     current.increment_counts(instance)
                     new_child = current.merge(best1, best2)
                     current = new_child
                 elif best_action == 'split':
                     current.split(best1)
+                    was_split = True
                 else:
                     raise Exception('Best action choice "'+best_action+'" not a recognized option. This should be impossible...')
+        
+        #from pprint import pprint
+        #pprint(performance)
+        #pc = 1
+        #cc = current
+        #while cc.parent:
+        #    cc = cc.parent
+        #    pc += 1
+        #print(pc)
+        #print()
+        
+        current.update_past_performance(performance)
+        return current
 
     def _cobweb_categorize_new(self, instance):
         """A cobweb speciifc version of categorize, not inteded to be externally called.
@@ -324,19 +358,61 @@ class CobwebNode(object):
         #self.root = None
         self.tree = None
 
-        self.correct_at_node_counts = {}
-        self.correct_at_decendent_counts = {}
+        self.correct_at_node = {}
+        self.correct_at_decendents = {}
 
         if otherNode:
             self.update_counts_from_node(otherNode)
             self.parent = otherNode.parent
             self.tree = otherNode.tree
+            self.correct_at_node = otherNode.correct_at_node
+            self.correct_at_decendents = otherNode.correct_at_decendents
 
             for child in otherNode.children:
                 self.children.append(self.__class__(child))
 
+    def update_past_performance(self, performance):
+        #from pprint import pprint
+        current = self 
+        decendents_performance = {attr:[0] for attr in performance}
+
+        #print()
+        #print("START")
+
+        while True:
+            for attr in performance:
+                decendents_correct = max(decendents_performance[attr])
+                node_correct = performance[attr].pop()
+
+                if attr not in current.correct_at_node:
+                    current.correct_at_node[attr] = ContinuousValue()
+                    #print("adding " + attr + " " + str(current.count))
+                    #for i in range(int(current.count)):
+                    #    current.correct_at_node[attr].update(1.0)
+
+                if attr not in current.correct_at_decendents:
+                    current.correct_at_decendents[attr] = ContinuousValue()
+                    #for i in range(int(current.count)):
+                    #    current.correct_at_decendents[attr].update(1.0)
+
+                current.correct_at_node[attr].update(node_correct)
+                current.correct_at_decendents[attr].update(decendents_correct)
+                decendents_performance[attr].append(node_correct)
+
+            #print(current.count)
+            #pprint(current.correct_at_node)
+            #pprint(current.correct_at_decendents)
+
+            if current.parent:
+                #print("-going to parent->")
+                current = current.parent
+            else:
+                break
+
+
     def shallow_copy(self):
-        """Create a shallow copy of the current node (and not its children)
+        """
+        Create a shallow copy of the current node (and not its children)
 
         This can be used to copy only the information relevant to the node's
         probability table without maintaining reference to other elements of the
@@ -350,7 +426,8 @@ class CobwebNode(object):
         return temp
 
     def increment_counts(self, instance):
-        """Increment the counts at the current node according to the specified
+        """
+        Increment the counts at the current node according to the specified
         instance.
 
         :param instance: A new instances to incorporate into the node.
@@ -1018,7 +1095,16 @@ class CobwebNode(object):
         if attr not in self.tree.root.av_counts:
             return None
 
-        choices = self.get_weighted_values(attr)
+        # get the right concept for this attribute using past performance
+        best = self
+        curr = self
+        while curr is not None:
+            if (curr.correct_at_node[attr].unbiased_mean() >=
+                curr.correct_at_decendents[attr].unbiased_mean()):
+                best = curr
+            curr = curr.parent
+
+        choices = best.get_weighted_values(attr)
         choices.sort(key=lambda x: -x[1])
         return choices[0][0]
 
