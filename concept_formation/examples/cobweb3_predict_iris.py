@@ -19,7 +19,7 @@ irises = load_iris()
 naive_data = incremental_prediction(DummyTree(), irises,
                                   run_length=num_examples,
                                   runs=num_runs, attr="class")
-cobweb_data = incremental_prediction(Cobweb3Tree(alpha=0.01), irises,
+cobweb_data = incremental_prediction(Cobweb3Tree(), irises,
                                   run_length=num_examples,
                                   runs=num_runs, attr="class")
 

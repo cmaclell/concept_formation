@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 from __future__ import absolute_import
 from __future__ import division
 from random import shuffle
+from random import seed
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -12,6 +13,7 @@ from concept_formation.cobweb3 import Cobweb3Tree
 
 # Generate sample data
 np.random.seed(0)
+seed(0)
 X = np.sort(5 * np.random.rand(40, 1), axis=0)
 T = np.linspace(0, 5, 500)[:, np.newaxis]
 T_y = np.sin(T).ravel()
@@ -31,7 +33,7 @@ test_data = [{'X': v[0]} for i,v in enumerate(T)]
 
 # Fit cobweb models
 cbt = CobwebTree()
-cb3t = Cobweb3Tree()
+cb3t = Cobweb3Tree(acuity = 0.1)
 cbt.fit(training_data, iterations=1)
 cb3t.fit(training_data, iterations=1)
 

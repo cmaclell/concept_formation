@@ -9,8 +9,6 @@ from math import sqrt
 from math import pi
 from math import exp
 
-from concept_formation.utils import weighted_choice
-from concept_formation.utils import most_likely_choice
 from concept_formation.cobweb import CobwebNode
 from concept_formation.cobweb import CobwebTree
 from concept_formation.continuous_value import ContinuousValue
@@ -57,61 +55,6 @@ class Cobweb3Tree(CobwebTree):
         # Number of stds to divide by when normalizing (2.0 -> everything
         # normalized to half a std deviation)
         self.std_to_scale = 1.0 
-
-    def infer_missing(self, instance, choice_fn="most likely", allow_none=True):
-        """
-        Given a tree and an instance, returns a new instance with attribute 
-        values picked using the specified choice function (wither "most likely"
-        or "sampled"). 
-
-        :param instance: an instance to be completed.
-        :type instance: {a1: v1, a2: v2, ...}
-        :param choice_fn: a string specifying the choice function to use,
-            either "most likely" or "sampled". 
-        :type choice_fn: a string
-        :return: A completed instance
-        :rtype: instance
-        """
-        if choice_fn == "most likely" or choice_fn == "m":
-            choice_fn = most_likely_choice
-        elif choice_fn == "sampled" or choice_fn == "s":
-            choice_fn = weighted_choice
-        else:
-            raise Exception("Unknown choice_fn")
-
-        temp_instance = {a:instance[a] for a in instance}
-        concept = self._cobweb_categorize(temp_instance)
-
-        for attr in concept.av_counts:
-            if attr in temp_instance:
-                continue
-
-            if isinstance(concept.av_counts[attr], ContinuousValue):
-                if choice_fn == most_likely_choice:
-                    val = concept.av_counts[attr].unbiased_mean()
-                else:
-                    val = normalvariate(concept.av_counts[attr].unbiased_mean(),
-                                        concept.av_counts[attr].unbiased_std())
-                if not allow_none:
-                    temp_instance[attr] = val
-                else:
-                    missing_prob = concept.get_probability_missing(attr)
-                    val_choices = ((None, missing_prob), (val, 1 - missing_prob))
-                    temp_instance[attr] = choice_fn(val_choices)
-
-            else:
-                val_choices = concept.get_weighted_values(attr)
-                if not allow_none:
-                    val_choices = [(choice, prob) for choice,prob in val_choices if
-                                  choice is not None]
-
-                val = choice_fn(val_choices)
-                if val is not None:
-                    temp_instance[attr] = val
-
-        probs = {attr: concept.get_probability(attr, temp_instance[attr]) for
-                 attr in temp_instance}
-        return temp_instance, probs
 
     def clear(self):
         """
@@ -358,40 +301,9 @@ class Cobweb3Node(CobwebNode):
 
         return ret
 
-    def sample(self, attr):
+    def predict(self, attr, choice_fn="most likely", allow_none=True):
         """
-        Samples the value of an attribute from the node's probability table.
-
-        If the attribute is a nominal then this function behaves the same as
-        :meth:`CobwebNode.sample <concept_formation.cobweb.CobwebNode.sample>`.
-        If the attribute is numeric then a value is sampled from the normal
-        distribution defined by the :class:`ContinuousValue` of the attribute.
-
-        :param attr: an attribute of an instance
-        :type attr: str
-        :return: A value sampled from the distribution of values in the node's
-            probability table.
-        :rtype: str or float
-
-        .. seealso :meth:`Cobweb3Node.predict`
-        """
-        if attr not in self.tree.root.av_counts:
-            return None
-
-        if isinstance(self.tree.root.av_counts[attr], ContinuousValue):
-            prob_attr = self.av_counts[attr].num / self.count
-
-            if prob_attr < random():
-                return None
-
-            return normalvariate(self.av_counts[attr].mean,
-                                 self.av_counts[attr].unbiased_std())
-        else:
-            return super(Cobweb3Node, self).sample(attr)
-
-    def predict(self, attr):
-        """
-        Predict the value of an attribute, by returning the most likely value.
+        Predict the value of an attribute, using the provided strategy.
 
         If the attribute is a nominal then this function behaves the same as
         :meth:`CobwebNode.predict <concept_formation.cobweb.CobwebNode.predict>`.
@@ -421,10 +333,18 @@ class Cobweb3Node(CobwebNode):
 
             prob_attr = best.av_counts[attr].num / best.count
 
-            if prob_attr < 0.5:
-                return None
+            if choice_fn == "most likely" or choice_fn == "m":
+                if allow_none and prob_attr < 0.5:
+                    return None
+                return best.av_counts[attr].mean
+            elif choice_fn == "sampled" or choice_fn == "s":
+                if allow_none and prob_attr < random():
+                    return None
+                return normalvariate(self.av_counts[attr].mean,
+                                     self.av_counts[attr].unbiased_std())
+            else:
+                raise Exception("Unknown choice_fn")
 
-            return best.av_counts[attr].mean
         else:
             return super(Cobweb3Node, self).predict(attr)
 
@@ -450,9 +370,10 @@ class Cobweb3Node(CobwebNode):
         if (attr in self.tree.root.av_counts and
             isinstance(self.tree.root.av_counts[attr], ContinuousValue)):
 
-            prob_attr = 0.0
             if attr in self.av_counts:
                 prob_attr = self.av_counts[attr].num / self.count
+            else:
+                return float(val == None)
 
             if val is None:
                 return 1.0 - prob_attr

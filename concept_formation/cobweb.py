@@ -266,33 +266,17 @@ class CobwebTree(object):
         :return: A completed instance
         :rtype: instance
         """
-        if choice_fn == "most likely" or choice_fn == "m":
-            choice_fn = most_likely_choice
-        elif choice_fn == "sampled" or choice_fn == "s":
-            choice_fn = weighted_choice
-        else:
-            raise Exception("Unknown choice_fn")
-
         temp_instance = {a:instance[a] for a in instance}
         concept = self._cobweb_categorize(temp_instance)
 
-        for attr in concept.av_counts:
+        for attr in self.root.av_counts:
             if attr in temp_instance:
                 continue
-
-            val_choices = concept.get_weighted_values(attr)
-            if not allow_none:
-                val_choices = [(choice, prob) for choice,prob in val_choices if
-                              choice is not None]
-
-            val = choice_fn(val_choices)
+            val = concept.predict(attr, choice_fn, allow_none)
             if val is not None:
                 temp_instance[attr] = val
 
-        probs = {attr: concept.get_probability(attr, temp_instance[attr]) for
-                 attr in temp_instance}
-
-        return temp_instance, probs
+        return temp_instance
 
     def categorize(self, instance): 
         """
@@ -1050,7 +1034,7 @@ class CobwebNode(object):
 
         return output
 
-    def get_weighted_values(self, attr):
+    def get_weighted_values(self, attr, allow_none=True):
         """
         Return a list of weighted choices for an attribute based on the node's
         probability table.
@@ -1078,20 +1062,29 @@ class CobwebNode(object):
             choices.append((val, count / self.count))
             val_count += count
 
-        choices.append((None, ((self.count - val_count) / self.count)))
+        if allow_none:
+            choices.append((None, ((self.count - val_count) / self.count)))
         return choices
 
-    def predict(self, attr):
+    def predict(self, attr, choice_fn="most likely", allow_none=True):
         """
         Predict the value of an attribute, by returning the most likely value.
 
         :param attr: an attribute of an instance.
         :type attr: str
+        :param choice_fn: a string specifying the choice function to use,
+            either "most likely" or "sampled". 
+        :type choice_fn: a string
         :return: The most likely value for the given attribute in the node's probability table.
         :rtype: str
-
-        .. seealso :meth:`CobwebNode.sample`
         """
+        if choice_fn == "most likely" or choice_fn == "m":
+            choice_fn = most_likely_choice
+        elif choice_fn == "sampled" or choice_fn == "s":
+            choice_fn = weighted_choice
+        else:
+            raise Exception("Unknown choice_fn")
+
         if attr not in self.tree.root.av_counts:
             return None
 
@@ -1104,29 +1097,10 @@ class CobwebNode(object):
                 best = curr
             curr = curr.parent
 
-        choices = best.get_weighted_values(attr)
-        choices.sort(key=lambda x: -x[1])
-        return choices[0][0]
-
-    def sample(self, attr):
-        """
-        Samples the value of an attribute from the node's probability table.
-
-        :param attr: an attribute of an instance
-        :type attr: str
-        :return: A value sampled from the distribution of values in the node's
-            probability table.
-        :rtype: str
-
-        .. seealso :meth:`CobwebNode.predict`
-        
-        """
-        if attr not in self.tree.root.av_counts:
-            return None
-
-        choices = self.get_weighted_values(attr)
-
-        return weighted_choice(choices)
+        choices = best.get_weighted_values(attr, allow_none)
+        val = choice_fn(choices)
+        #prob = best.av_counts[attr][val]
+        return val
 
     def get_probability(self, attr, val):
         """

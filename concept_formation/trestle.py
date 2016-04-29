@@ -2,6 +2,8 @@ from __future__ import print_function
 from __future__ import unicode_literals
 from __future__ import absolute_import
 from __future__ import division
+from math import sqrt
+from math import pi
 
 from concept_formation.cobweb3 import Cobweb3Tree
 from concept_formation.cobweb3 import Cobweb3Node
@@ -56,7 +58,8 @@ class TrestleTree(Cobweb3Tree):
     :type vars_only: bool
     """
 
-    def __init__(self, alpha=0.001, scaling=None, beam_width=2, vars_only=True):
+    def __init__(self, scaling=None, acuity=1.0/sqrt(2.0*pi), beam_width=2,
+                 vars_only=True):
         """
         The tree constructor. 
 
@@ -66,8 +69,8 @@ class TrestleTree(Cobweb3Tree):
         """
         self.root = Cobweb3Node()
         self.root.tree = self
-        self.alpha = alpha
         self.scaling = scaling
+        self.acuity = acuity
         self.std_to_scale = 1.0
         self.beam_width = beam_width
         self.vars_only = vars_only
@@ -149,10 +152,10 @@ class TrestleTree(Cobweb3Tree):
                                            beam_width=self.beam_width,
                                            vars_only=self.vars_only)
         temp_instance = structure_mapper.transform(instance)
-        temp_instance, probs = super(TrestleTree,
+        temp_instance = super(TrestleTree,
                                      self).infer_missing(temp_instance,
                                                          choice_fn, allow_none)
-        return structure_mapper.undo_transform(temp_instance), structure_mapper.undo_transform(probs)
+        return structure_mapper.undo_transform(temp_instance)
 
     def categorize(self, instance):
         """
