@@ -1092,7 +1092,7 @@ class CobwebNode(object):
         best = self
         curr = self
         while curr is not None:
-            if (attr in curr.correct_at_node or
+            if (attr in curr.correct_at_node and
                 (curr.correct_at_node[attr].unbiased_mean() >=
                  curr.correct_at_decendents[attr].unbiased_mean())):
                 best = curr
