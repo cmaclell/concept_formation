@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 from __future__ import absolute_import
 from __future__ import division
 from random import uniform
+from random import random
 from math import sqrt
 
 
@@ -52,7 +53,8 @@ def c4(n) :
         return c4n_table[n] if n < 30 else 1.0
 
 def mean(values):
-    """Computes the mean of a list of values.
+    """
+    Computes the mean of a list of values.
 
     This is primarily included to reduce dependency on external math libraries
     like numpy in the core algorithm.
@@ -127,7 +129,7 @@ def weighted_choice(choices):
 def most_likely_choice(choices):
     """
     Given a list of tuples [(val, prob),...(val, prob)], returns the
-    value with the highest probability.
+    value with the highest probability. Ties are randomly broken.
 
     >>> options = [('a',.25),('b',.12),('c',.46),('d',.07)]
     >>> most_likely_choice(options)
@@ -137,13 +139,12 @@ def most_likely_choice(choices):
     >>> most_likely_choice(options)
     'c'
 
-
     :param choices: A list of tuples
     :type choices: [(val, prob),...(val, prob)]
     :return: the val with the hightest prob
     :rtype: val
     """
-    val, prob = sorted(choices, key=lambda a: -a[1])[0]
-    return val
+    updated_choices = [(prob, random(), val) for val, prob in choices]
+    return sorted(updated_choices, reverse=True)[0][2]
 
 

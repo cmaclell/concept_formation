@@ -41,7 +41,7 @@ class ContinuousValue():
 
     def unbiased_mean(self):
         """
-        Returns the mean value.
+        Returns an unbiased estimate of the mean.
 
         :return: the unbiased mean
         :rtype: float
@@ -50,7 +50,8 @@ class ContinuousValue():
 
     def scaled_unbiased_mean(self, shift, scale):
         """
-        Returns (self.mean - shift) / scale
+        Returns a shifted and scaled unbiased mean. This is equivelent to
+        (self.unbiased_mean() - shift) / scale
 
         This is used as part of numerical value scaling.
 
@@ -75,7 +76,9 @@ class ContinuousValue():
         return sqrt(self.meanSq / (self.num))
 
     def unbiased_std(self):
-        """Returns an unbiased estimate of the std 
+        """
+        Returns an unbiased estimate of the std, but for n < 2 the std is
+        estimated to be 0.0.
 
         This implementation uses Bessel's correction and Cochran's theorem: 
         `<https://en.wikipedia.org/wiki/Unbiased_estimation_of_standard_deviation#Bias_correction>`_
@@ -88,6 +91,25 @@ class ContinuousValue():
         if self.num < 2:
             return 0.0
         return sqrt(self.meanSq / (self.num - 1)) / c4(self.num)
+
+    def scaled_biased_std(self, scale):
+        """
+        Returns an biased estimate of the std (see:
+        :meth:`ContinuousValue.biased_std`), but also adjusts the std given a
+        scale parameter.
+
+        This is used to return std values that have been normalized by some
+        value. For edge cases, if scale is less than or equal to 0, then scaling
+        is disabled (i.e., scale = 1.0).
+
+        :param scale: an amount to scale biased std estimates by
+        :type scale: float
+        :return: A scaled unbiased estimate of std
+        :rtype: float
+        """
+        if scale <= 0:
+            scale = 1.0
+        return self.biased_std() / scale
 
     def scaled_unbiased_std(self, scale):
         """

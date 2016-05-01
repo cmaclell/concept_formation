@@ -5,6 +5,7 @@ from __future__ import division
 from random import normalvariate
 from random import shuffle
 from random import uniform
+from random import seed
 #import time
 
 import matplotlib.pyplot as plt
@@ -12,6 +13,8 @@ import matplotlib.patches as mpatches
 from matplotlib.patches import Ellipse
 
 from concept_formation.cobweb3 import Cobweb3Tree
+
+seed(0)
 
 num_clusters = 4 
 num_samples = 30
