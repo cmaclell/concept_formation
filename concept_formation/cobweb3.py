@@ -225,7 +225,8 @@ class Cobweb3Node(CobwebNode):
         add Acuity to :math:`\\sigma` and replace the :math:`\\frac{1}{2 * 
         \\sqrt{\\pi}}` with Acuity. This ensures the probability (and
         expected correct guesses) never exceed 1. It basically is an assumption
-        that there is some measurement error equal to Acuity. 
+        that there is some measurement error equal to Acuity and that the 
+        correct guesses should be normalized so as to never exceed 1. 
 
         :return: The number of attribute values that would be correctly guessed
             in the current concept.
@@ -383,9 +384,17 @@ class Cobweb3Node(CobwebNode):
         This takes into account the possibilities that an attribute can take any
         of the values available at the root, or be missing. 
 
-        For numerical attributes the probability of val given a normal
-        distribution is returned. This normal distribution is defined by the
-        mean and std of past values stored in the concept.
+        For numerical attributes the probability of val given a gaussian 
+        distribution is returned. This distribution is defined by the
+        mean and std of past values stored in the concept. However like
+        :meth:`Cobweb3Node.expected_correct_guesses
+        <concept_formation.cobweb3.Cobweb3Node.expected_correct_guesses>` it
+        adds Acuity to the estimated std (i.e, assumes some noise even when the
+        estimated std is 0) and the distribution is normalized so the
+        "probability" of the mean value is equal to 1. While technically this
+        is not a valid probability density function (the area under the curve
+        is less than 1) it maps the correctness of continuous values onto the
+        range [0,1], so the most likely value (the mean) gets a value of 1. 
         
         :param attr: an attribute of an instance
         :type attr: str
@@ -421,6 +430,7 @@ class Cobweb3Node(CobwebNode):
             p = (prob_attr * 
                  self.tree.acuity * (1/std) *  
                  exp(-((val - mean) * (val - mean)) / (2.0 * std * std)))
+            print(p)
             assert p <= 1.0 and p >= 0
             return p
 
