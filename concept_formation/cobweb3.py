@@ -393,8 +393,9 @@ class Cobweb3Node(CobwebNode):
         estimated std is 0) and the distribution is normalized so the
         "probability" of the mean value is equal to 1. While technically this
         is not a valid probability density function (the area under the curve
-        is less than 1) it maps the correctness of continuous values onto the
-        range [0,1], so the most likely value (the mean) gets a value of 1. 
+        is less than 1) it maps the correctness of continuous values onto a
+        value between 0 and 1, where the most likely value (the mean) gets a
+        value of 1. 
         
         :param attr: an attribute of an instance
         :type attr: str
