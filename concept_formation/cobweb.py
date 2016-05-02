@@ -236,16 +236,18 @@ class CobwebTree(object):
         :rtype: instance
         """
         temp_instance = {a:instance[a] for a in instance}
+        probs = {a:1.0 for a in instance}
         concept = self._cobweb_categorize(temp_instance)
 
         for attr in self.root.av_counts:
             if attr in temp_instance:
                 continue
-            val = concept.predict(attr, choice_fn, allow_none)
+            val, prob = concept.predict(attr, choice_fn, allow_none)
             if val is not None:
                 temp_instance[attr] = val
+                probs[attr] = prob
 
-        return temp_instance
+        return temp_instance, probs
 
     def categorize(self, instance): 
         """
@@ -1048,22 +1050,25 @@ class CobwebNode(object):
             raise Exception("Unknown choice_fn")
 
         if attr not in self.tree.root.av_counts:
-            return None
+            # If the attribute isn't in the tree then we can't do much.
+            return None, 1.0
 
         # get the right concept for this attribute using past performance
         curr = self
 
         # if we are not allowing none, then get to a place where we have
-        # something to use.
+        # something to use. We need at least 2 values that are not none to get
+        # a reasonable past performance estimate.
         if not allow_none:
-            while curr.parent and curr.get_probability(attr, None) == 1.0:
+            while (curr.parent and curr.get_probability(attr, None) >=
+                   ((curr.count - 1)/curr.count)):
                 curr = curr.parent
 
         best = curr
         while curr is not None:
             #if attr in curr.correct_at_node:
             #    print("AT NODE " + str(curr.correct_at_node[attr].unbiased_mean()))
-            #    print("AT NODE " + str(curr.correct_at_decendents[attr].unbiased_mean()))
+            #    print("AT DESC " + str(curr.correct_at_decendents[attr].unbiased_mean()))
             if (attr in curr.correct_at_node and
                 (curr.correct_at_node[attr].unbiased_mean() >=
                  curr.correct_at_decendents[attr].unbiased_mean())):
@@ -1072,8 +1077,12 @@ class CobwebNode(object):
 
         choices = best.get_weighted_values(attr, allow_none)
         val = choice_fn(choices)
-        #prob = best.av_counts[attr][val]
-        return val
+        prob = best.get_probability(attr, val)
+
+        if not allow_none:
+            prob = round(prob / (1 - best.get_probability(attr, None)), 10)
+
+        return val, prob
 
     def get_prediction_probability(self, attr, val):
         """

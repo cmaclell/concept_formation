@@ -152,10 +152,10 @@ class TrestleTree(Cobweb3Tree):
                                            beam_width=self.beam_width,
                                            vars_only=self.vars_only)
         temp_instance = structure_mapper.transform(instance)
-        temp_instance = super(TrestleTree,
+        temp_instance, probs = super(TrestleTree,
                                      self).infer_missing(temp_instance,
                                                          choice_fn, allow_none)
-        return structure_mapper.undo_transform(temp_instance)
+        return structure_mapper.undo_transform(temp_instance), structure_mapper.undo_transform(probs)
 
     def categorize(self, instance):
         """

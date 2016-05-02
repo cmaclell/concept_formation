@@ -50,7 +50,7 @@ Fast Example
     In [12]: print(concept.predict('f1'))
 
     # Or to get the probability of a particular attribute value
-    In [13]: print(concept.get_probability('f1', 'v1'))
+    In [13]: print(concept.get_prediction_probability('f1', 'v1'))
 
     # Trees can also be used to produce flat clusterings
     In [14]: new_tree = TrestleTree()

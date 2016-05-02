@@ -40,7 +40,7 @@ class Cobweb3Tree(CobwebTree):
     will yield a dispersed distribution that is less sensitive to difference,
     will tend to yield fewer more generalization clusters, but will also
     usually have higher error. The default value is set to
-    :math:`\\frac{1}{\\sqrt{2 * \\pi}}` which gives a standard normal
+    :math:`\\frac{1}{2 * \\sqrt{\\pi}}` which gives a standard normal
     distribution. 
 
     :param scaling: whether or not numerical values should be scaled using
@@ -51,7 +51,7 @@ class Cobweb3Tree(CobwebTree):
     :type acuity: float
     """
 
-    def __init__(self, scaling=False, acuity=1.0/sqrt(2.0*pi)):
+    def __init__(self, scaling=False, acuity=1.0/(2 * sqrt(pi))):
         """
         The tree constructor.
         """
@@ -222,10 +222,10 @@ class Cobweb3Node(CobwebNode):
             P(A_i = V_{ij})^2 = P(A_i)^2 * Acuity * \\frac{1}{\\sigma + Acuity}
 
         Now :math:`\\sigma` is no longer bounded (i.e., it can be 0), but we
-        add Acuity to :math:`\\sigma` and replace the :math:`\\frac{1}{2 *
-        \\sqrt{\\pi}}` with Acuity. This ensures the probability (and expected
-        correct guesses) never exceed 1. It basically is an assumption that
-        there is some measurement error equal to Acuity. 
+        add Acuity to :math:`\\sigma` and replace the :math:`\\frac{1}{2 * 
+        \\sqrt{\\pi}}` with Acuity. This ensures the probability (and
+        expected correct guesses) never exceed 1. It basically is an assumption
+        that there is some measurement error equal to Acuity. 
 
         :return: The number of attribute values that would be correctly guessed
             in the current concept.
@@ -327,13 +327,14 @@ class Cobweb3Node(CobwebNode):
         .. seealso :meth:`Cobweb3Node.sample`
         """
         if attr not in self.tree.root.av_counts:
-            return None
+            return None, 1.0
 
         if isinstance(self.tree.root.av_counts[attr], ContinuousValue):
             # get the right concept for this attribute using past performance
             curr = self
             if not allow_none:
-                while curr.parent and curr.get_probability(attr, None) == 1.0:
+                while (curr.parent and curr.get_probability(attr, None) >=
+                       ((curr.count - 1)/curr.count)):
                     curr = curr.parent
             best = curr
 
@@ -353,15 +354,22 @@ class Cobweb3Node(CobwebNode):
 
             if choice_fn == "most likely" or choice_fn == "m":
                 if allow_none and prob_attr < 0.5:
-                    return None
-                return best.av_counts[attr].mean
+                    return None, 1 - prob_attr
+                val = best.av_counts[attr].mean
+                prob = best.get_probability(attr, val)
             elif choice_fn == "sampled" or choice_fn == "s":
                 if allow_none and prob_attr < random():
                     return None
-                return normalvariate(self.av_counts[attr].unbiased_mean(),
-                                     self.av_counts[attr].unbiased_std())
+                val = normalvariate(self.av_counts[attr].unbiased_mean(),
+                                    self.av_counts[attr].unbiased_std())
+                prob = best.get_probability(attr, val)
             else:
                 raise Exception("Unknown choice_fn")
+            
+            if not allow_none:
+                prob = round(prob / (1 - best.get_probability(attr, None)),10)
+            
+            return val, prob
 
         else:
             return super(Cobweb3Node, self).predict(attr, choice_fn=choice_fn,
