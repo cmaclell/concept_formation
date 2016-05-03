@@ -31,34 +31,23 @@ class Cobweb3Tree(CobwebTree):
     utility calculation meaning numbers that are naturally larger will recieve
     preference in the category utility calculation.
 
-    Acuity is used to control sensitivity to differences in numeric values. It
-    basically controls the peakedness of the normal distribution, which is
-    subsequently normalized to the probability of any specific value can never
-    exceed 1. A very small acuity (e.g., < 0.01) will yield a very peaked
-    distribution, will be more sensitive to small differences, and will tend to
-    yield many clusters with worse generalization.  In contrast a large acuity
-    will yield a dispersed distribution that is less sensitive to difference,
-    will tend to yield fewer more generalization clusters, but will also
-    usually have higher error. The default value is set to
-    :math:`\\frac{1}{2 * \\sqrt{\\pi}}` which gives a standard normal
-    distribution. 
-
     :param scaling: whether or not numerical values should be scaled using
         online normalization.
     :type scaling: a boolean
-    :param acuity: A lower bound on the standard deviation estimates for
-        numeric attributes.
-    :type acuity: float
     """
 
-    def __init__(self, scaling=False, acuity=1.0/(2 * sqrt(pi))):
+    def __init__(self, scaling=False):
         """
         The tree constructor.
         """
         self.root = Cobweb3Node()
         self.root.tree = self
         self.scaling = scaling
-        self.acuity = acuity
+
+        # The amount of additive noise added to all measurements
+        # the current value ensures the number of correct guesses
+        # never exceeds 1.
+        self.acuity = 1.0/(2 * sqrt(pi))
 
     def clear(self):
         """
@@ -179,14 +168,14 @@ class Cobweb3Node(CobwebNode):
                              self.tree.acuity)
             before_prob = ((1.0 * self.av_counts[attr].num) / (self.count + 1.0))
             before_count = ((before_prob * before_prob) * 
-                            self.tree.acuity * (1/before_std))
+                            (1/(2 * sqrt(pi) * before_std)))
 
             temp = self.av_counts[attr].copy()
             temp.update(val)
             after_std = (temp.scaled_unbiased_std(scale) + self.tree.acuity)
             after_prob = ((1.0 + self.av_counts[attr].num) / (self.count + 1.0))
             after_count = ((after_prob * after_prob) * 
-                           self.tree.acuity * (1/after_std))
+                           (1/(2 * sqrt(pi) * after_std)))
             return after_count - before_count
         elif val not in self.av_counts[attr]:
             # TODO check that this should be 0
@@ -209,24 +198,32 @@ class Cobweb3Node(CobwebNode):
             P(A_i = V_{ij})^2 = \\frac{1}{2 * \\sqrt{\\pi} * \\sigma}
 
         However, this does not take into account situations when 
-        :math:`P(A_i) \\neq 1.0`. The original formulation set :math:`\\sigma`
-        to have a minimum value equal to acuity. However, for small acuity,
-        this returns a probability greater than 1. This causes problems when
-        both nominal and continuous values are being used (continuous get
-        higher preference). 
+        :math:`P(A_i) < 1.0`. Additionally, the original formulation set
+        :math:`\\sigma` to have a user specified minimum value. However, for
+        small lower bounds, this lets cobweb achieve more than 1 expected
+        correct guess per attribute, which is impossible for nominal attributes
+        (and does not really make sense for continuous either). This causes
+        problems when both nominal and continuous values are being used
+        together; i.e., continuous attributes will get higher preference. 
 
         To account for this we use a modified equation:
 
         .. math::
 
-            P(A_i = V_{ij})^2 = P(A_i)^2 * Acuity * \\frac{1}{\\sigma + Acuity}
+            P(A_i = V_{ij})^2 = P(A_i)^2 * \\frac{1}{2 * \\sqrt{\\pi} * \\sigma}
 
-        Now :math:`\\sigma` is no longer bounded (i.e., it can be 0), but we
-        add Acuity to :math:`\\sigma` and replace the :math:`\\frac{1}{2 * 
-        \\sqrt{\\pi}}` with Acuity. This ensures the probability (and
-        expected correct guesses) never exceed 1. It basically is an assumption
-        that there is some measurement error equal to Acuity and that the 
-        correct guesses should be normalized so as to never exceed 1. 
+        The key change here is that we multiply by :math:`P(A_i)^2`. 
+        Further, instead of bounding :math:`\\sigma` by a user specified lower
+        bound (often called acuity), we add :math:`\\frac{1}{2 * \\sqrt{\\pi}}`
+        to :math:`\\sigma`.  This ensures the expected correct guesses never
+        exceeds 1. From a theoretical point of view, it basically is an
+        assumption that there is some independent, normally distributed
+        measurement error equal to :math:`\\frac{1}{2 * \\sqrt{\\pi}}` that is
+        added to the estimated error of the attribute
+        (`<https://en.wikipedia.org/wiki/Sum_of_normally_distributed_random_variables>`_).
+        It is possible that there is additional measurement error, but the
+        value is chosen so as to yield a sensical upper bound on the expected
+        correct guesses. 
 
         :return: The number of attribute values that would be correctly guessed
             in the current concept.
@@ -254,7 +251,7 @@ class Cobweb3Node(CobwebNode):
                        self.tree.acuity)
                 prob_attr = self.av_counts[attr].num / self.count
                 correct_guesses += ((prob_attr * prob_attr) * 
-                                    self.tree.acuity * (1/std))
+                                    (1/(2 * sqrt(pi) * std)))
                 val_count = self.av_counts[attr].num
 
             else:
@@ -389,13 +386,8 @@ class Cobweb3Node(CobwebNode):
         mean and std of past values stored in the concept. However like
         :meth:`Cobweb3Node.expected_correct_guesses
         <concept_formation.cobweb3.Cobweb3Node.expected_correct_guesses>` it
-        adds Acuity to the estimated std (i.e, assumes some noise even when the
-        estimated std is 0) and the distribution is normalized so the
-        "probability" of the mean value is equal to 1. While technically this
-        is not a valid probability density function (the area under the curve
-        is less than 1) it maps the correctness of continuous values onto a
-        value between 0 and 1, where the most likely value (the mean) gets a
-        value of 1. 
+        adds :math:`\\frac{1}{2 * \\sqrt{\\pi}}` to the estimated std (i.e,
+        assumes some independent, normally distributed noise).
         
         :param attr: an attribute of an instance
         :type attr: str
@@ -429,10 +421,8 @@ class Cobweb3Node(CobwebNode):
             std = (self.av_counts[attr].scaled_unbiased_std(scale) +
                    self.tree.acuity)
             p = (prob_attr * 
-                 self.tree.acuity * (1/std) *  
+                 (1/(sqrt(2*pi) * std)) * 
                  exp(-((val - mean) * (val - mean)) / (2.0 * std * std)))
-            print(p)
-            assert p <= 1.0 and p >= 0
             return p
 
         else:
