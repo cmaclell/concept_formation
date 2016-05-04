@@ -45,21 +45,20 @@ class TrestleTree(Cobweb3Tree):
     constant attributes also increases the search space taking more time to find
     matches.
 
-    :param alpha: constant to use for laplacian smoothing.
-    :type alpha: float
-    :param scaling: whether or not numerical values should be scaled in
-        online normalization.
-    :type scaling: bool
+    :param scaling: What number of standard deviations numeric attributes
+        should be scaled to.  By default this value is 0.5 (half a std), which
+        is the max std of nominal values. If disabiling scaling is desirable,
+        then it can be set to False or None.
+    :type scaling: a float greater than 0.0, None, or False
     :param beam_width: the initial beam width to use in structure mapping's
         search step.
     :type beam_width: int
     :param vars_only: whether matching should be performed only between variable
         or if variables can be matched to constant values.
-    :type vars_only: bool
+    :type vars_only: boolean
     """
 
-    def __init__(self, scaling=None, acuity=1.0/sqrt(2.0*pi), beam_width=2,
-                 vars_only=True):
+    def __init__(self, scaling=0.5, beam_width=2, vars_only=True):
         """
         The tree constructor. 
 
@@ -70,8 +69,6 @@ class TrestleTree(Cobweb3Tree):
         self.root = Cobweb3Node()
         self.root.tree = self
         self.scaling = scaling
-        self.acuity = acuity
-        self.std_to_scale = 1.0
         self.beam_width = beam_width
         self.vars_only = vars_only
         self.gensym_counter = 0

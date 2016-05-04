@@ -18,9 +18,7 @@ y[::5] += 3 * (0.5 - rng.rand(16))
 
 # Fit regression models (Decision Tree and TRESTLE)
 # For TRESTLE the y attribute is hidden, so only the X is used to make
-# predictions. TRESTLE is order dependent, so the fit function shuffles the
-# data. More stable results might be attained by increasing the number of
-# iterations.
+# predictions. 
 dtree = DecisionTreeRegressor(max_depth=3)
 dtree.fit(X, y)
 ttree = TrestleTree()

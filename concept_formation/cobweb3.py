@@ -31,23 +31,20 @@ class Cobweb3Tree(CobwebTree):
     utility calculation meaning numbers that are naturally larger will recieve
     preference in the category utility calculation.
 
-    :param scaling: whether or not numerical values should be scaled using
-        online normalization.
-    :type scaling: a boolean
+    :param scaling: What number of standard deviations numeric attributes
+        should be scaled to.  By default this value is 0.5 (half a std), which
+        is the max std of nominal values. If disabiling scaling is desirable,
+        then it can be set to False or None.
+    :type scaling: a float greater than 0.0, None, or False
     """
 
-    def __init__(self, scaling=False):
+    def __init__(self, scaling=0.5):
         """
         The tree constructor.
         """
         self.root = Cobweb3Node()
         self.root.tree = self
         self.scaling = scaling
-
-        # The amount of additive noise added to all measurements
-        # the current value ensures the number of correct guesses
-        # never exceeds 1.
-        self.acuity = 1.0/(2 * sqrt(pi))
 
     def clear(self):
         """
@@ -160,19 +157,21 @@ class Cobweb3Node(CobwebNode):
             return 0.0
         elif isinstance(self.av_counts[attr], ContinuousValue):
             if self.tree.scaling:
-                scale = self.tree.root.av_counts[attr].unbiased_std()
+                scale = (1/self.tree.scaling) * self.tree.root.av_counts[attr].unbiased_std()
             else:
                 scale = 1.0
 
-            before_std = (self.av_counts[attr].scaled_unbiased_std(scale) +
-                             self.tree.acuity)
+            before_std = sqrt(self.av_counts[attr].scaled_unbiased_std(scale) *
+                              self.av_counts[attr].scaled_unbiased_std(scale) +
+                             1/(4*pi))
             before_prob = ((1.0 * self.av_counts[attr].num) / (self.count + 1.0))
             before_count = ((before_prob * before_prob) * 
                             (1/(2 * sqrt(pi) * before_std)))
 
             temp = self.av_counts[attr].copy()
             temp.update(val)
-            after_std = (temp.scaled_unbiased_std(scale) + self.tree.acuity)
+            after_std = sqrt(temp.scaled_unbiased_std(scale) *
+                             temp.scaled_unbiased_std(scale) + 1/(4*pi)) 
             after_prob = ((1.0 + self.av_counts[attr].num) / (self.count + 1.0))
             after_count = ((after_prob * after_prob) * 
                            (1/(2 * sqrt(pi) * after_std)))
@@ -214,12 +213,13 @@ class Cobweb3Node(CobwebNode):
 
         The key change here is that we multiply by :math:`P(A_i)^2`. 
         Further, instead of bounding :math:`\\sigma` by a user specified lower
-        bound (often called acuity), we add :math:`\\frac{1}{2 * \\sqrt{\\pi}}`
-        to :math:`\\sigma`.  This ensures the expected correct guesses never
+        bound (often called acuity), we add some independent, normally
+        distributed noise to sigma: :math:`\\sigma = \\sqrt(\\sigma^2 +
+        \\sigma_{noise}^2})`, where :math:`\\sigma_{noise} = \\frac{1}{2 *
+        \\sqrt{\\pi}}`. This ensures the expected correct guesses never
         exceeds 1. From a theoretical point of view, it basically is an
         assumption that there is some independent, normally distributed
-        measurement error equal to :math:`\\frac{1}{2 * \\sqrt{\\pi}}` that is
-        added to the estimated error of the attribute
+        measurement error that is added to the estimated error of the attribute
         (`<https://en.wikipedia.org/wiki/Sum_of_normally_distributed_random_variables>`_).
         It is possible that there is additional measurement error, but the
         value is chosen so as to yield a sensical upper bound on the expected
@@ -240,15 +240,17 @@ class Cobweb3Node(CobwebNode):
                 
             elif isinstance(self.tree.root.av_counts[attr], ContinuousValue):
                 if self.tree.scaling:
-                    scale = self.tree.root.av_counts[attr].unbiased_std()
+                    scale = ((1 / self.tree.scaling) * 
+                             self.tree.root.av_counts[attr].unbiased_std())
                 else:
                     scale = 1.0
 
                 # we basically add noise to the std and adjust the normalizing
                 # constant to ensure the probability of a particular value
                 # never exceeds 1.
-                std = (self.av_counts[attr].scaled_unbiased_std(scale) +
-                       self.tree.acuity)
+                std = sqrt(self.av_counts[attr].scaled_unbiased_std(scale) *
+                           self.av_counts[attr].scaled_unbiased_std(scale) +
+                           (1 / (4 * pi)))
                 prob_attr = self.av_counts[attr].num / self.count
                 correct_guesses += ((prob_attr * prob_attr) * 
                                     (1/(2 * sqrt(pi) * std)))
@@ -408,7 +410,7 @@ class Cobweb3Node(CobwebNode):
                 return 1.0 - prob_attr
 
             if self.tree.scaling:
-                scale = self.tree.root.av_counts[attr].unbiased_std()
+                scale = (1/self.tree.scaling) * self.tree.root.av_counts[attr].unbiased_std()
                 if scale == 0:
                     scale = 1
                 shift = self.tree.root.av_counts[attr].mean
@@ -418,8 +420,9 @@ class Cobweb3Node(CobwebNode):
                 shift = 0.0
 
             mean = (self.av_counts[attr].mean - shift) / scale
-            std = (self.av_counts[attr].scaled_unbiased_std(scale) +
-                   self.tree.acuity)
+            std = sqrt(self.av_counts[attr].scaled_unbiased_std(scale) *
+                       self.av_counts[attr].scaled_unbiased_std(scale) + 
+                       (1 / (4 * pi)))
             p = (prob_attr * 
                  (1/(sqrt(2*pi) * std)) * 
                  exp(-((val - mean) * (val - mean)) / (2.0 * std * std)))
