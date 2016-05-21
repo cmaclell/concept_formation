@@ -82,6 +82,18 @@ class Preprocessor(object):
         """
         raise NotImplementedError("Class must implement undo_transform function")
 
+    def batch_transform(self,instances):
+        """
+        Transforms a collection of instances.
+        """
+        return [self.transform(instance) for instance in instances]
+
+    def batch_undo(self,instances):
+        """
+        Undoes transformation for a collection of instances
+        """
+        return [self.undo_transform(instance) for instance in instances]
+
 class Pipeline(Preprocessor):
     """
     A special preprocessor class used to chain together many preprocessors.
