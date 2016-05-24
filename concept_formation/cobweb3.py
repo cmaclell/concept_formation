@@ -494,6 +494,9 @@ class Cobweb3Node(CobwebNode):
                 output['guid'] = guid
         output["name"] = "Concept" + self.concept_id
         output["size"] = self.count
+        output['past_performance'] = self.correct_at_node
+        output['decendent_performance'] = self.correct_at_decendents
+
         output["children"] = []
 
         temp = {}
