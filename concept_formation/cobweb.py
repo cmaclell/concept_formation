@@ -983,7 +983,7 @@ class CobwebNode(object):
         output['name'] = "Concept" + self.concept_id
         output['size'] = self.count
         output['children'] = []
-        output['past_performance'] = {str(k):str(self.past_performance[k]) for k in self.past_performance}
+        output['past_performance'] = {str(k):str(self.correct_at_node[k]) for k in self.correct_at_node}
         output['decendent_performance'] = {str(k):str(self.correct_at_decendents[k]) for k in self.correct_at_decendents}
 
         temp = {}
