@@ -12,7 +12,6 @@ from math import exp
 from concept_formation.cobweb import CobwebNode
 from concept_formation.cobweb import CobwebTree
 from concept_formation.continuous_value import ContinuousValue
-from concept_formation.preprocessor import Tuplizer
 
 class Cobweb3Tree(CobwebTree):
     """
@@ -495,10 +494,8 @@ class Cobweb3Node(CobwebNode):
                 output['guid'] = guid
         output["name"] = "Concept" + self.concept_id
         output["size"] = self.count
-        tup = Tuplizer()
-        output['past_performance'] = tup.undo_transform(self.correct_at_node)
-        output['decendent_performance'] = tup.undo_transform(self.correct_at_decendents)
-
+        output['past_performance'] = {str(k):str(self.past_performance[k]) for k in self.past_performance}
+        output['decendent_performance'] = {str(k):str(self.correct_at_decendents[k]) for k in self.correct_at_decendents}
         output["children"] = []
 
         temp = {}
