@@ -9,7 +9,7 @@ import json
 from concept_formation.utils import weighted_choice
 from concept_formation.utils import most_likely_choice
 from concept_formation.continuous_value import ContinuousValue
-from concept_formation.preprocessor import Tupilzer
+from concept_formation.preprocessor import Tuplizer
 
 class CobwebTree(object):
     """
@@ -984,7 +984,7 @@ class CobwebNode(object):
         output['name'] = "Concept" + self.concept_id
         output['size'] = self.count
         output['children'] = []
-        tup = Tupilzer()
+        tup = Tuplizer()
         output['past_performance'] = tup.undo_transform(self.correct_at_node)
         output['decendent_performance'] = tup.undo_transform(self.correct_at_decendents)
 
