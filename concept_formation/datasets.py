@@ -38,6 +38,8 @@ def load_forest_fires():
 
     >>> import pprint
     >>> data = load_forest_fires()
+    >>> print(len(data))
+    517
     >>> pprint.pprint(data[0])
     {'DC': 94.3,
      'DMC': 26.2,
@@ -70,6 +72,8 @@ def load_congressional_voting():
 
     >>> import pprint
     >>> data = load_congressional_voting()
+    >>> print(len(data))
+    435
     >>> pprint.pprint(data[0])
     {'Class Name': 'republican',
      'adoption-of-the-budget-resolution': 'n',
@@ -103,6 +107,8 @@ def load_iris():
 
     >>> import pprint
     >>> data = load_iris()
+    >>> print(len(data))
+    150
     >>> pprint.pprint(data[0])
     {'class': 'Iris-setosa',
      'petal length': 1.4,
@@ -124,6 +130,8 @@ def load_mushroom():
 
     >>> import pprint
     >>> data = load_mushroom()
+    >>> print(len(data))
+    8124
     >>> pprint.pprint(data[0])
     {'bruises?': 'yes',
      'cap-color': 'brown',
@@ -159,6 +167,8 @@ def load_rb_com_11():
 
     >>> import pprint
     >>> data = load_rb_com_11()
+    >>> print(len(data))
+    251
     >>> pprint.pprint(data[0])
     {'_guid': 'ea022d3d-5c9e-46d7-be23-8ea718fe7816',
      '_human_cluster_label': '0',
@@ -179,6 +189,8 @@ def load_rb_s_07():
 
     >>> import pprint
     >>> data = load_rb_s_07()
+    >>> print(len(data))
+    141
     >>> pprint.pprint(data[0])
     {'_guid': '660ac76d-93b3-4ce7-8a15-a3213e9103f5',
      'component0': {'b': 0.0, 'l': 0.0, 'r': 3.0, 't': 1.0, 'type': 'plat0'},
@@ -195,13 +207,18 @@ def load_rb_s_13():
     attributes.
 
     >>> import pprint
-    >>> data = load_rb_s_07()
+    >>> data = load_rb_s_13()
+    >>> print(len(data))
+    249
     >>> pprint.pprint(data[0])
-    {'_guid': '660ac76d-93b3-4ce7-8a15-a3213e9103f5',
-     'component0': {'b': 0.0, 'l': 0.0, 'r': 3.0, 't': 1.0, 'type': 'plat0'},
-     'component1': {'b': 1.0, 'l': 1.0, 'r': 2.0, 't': 4.0, 'type': 'plat90'},
-     'component8': {'b': 4.0, 'l': 0.0, 'r': 3.0, 't': 5.0, 'type': 'ufoo0'},
-     'success': '0'}
+    {'_guid': '684b4ce5-0f55-481c-ae9a-1474de8418ea',
+     '_human_cluster_label': '0',
+     'component0': {'b': 3.0, 'l': 2.0, 'r': 3.0, 't': 4.0, 'type': 'cube0'},
+     'component1': {'b': 4.0, 'l': 2.0, 'r': 3.0, 't': 5.0, 'type': 'cube0'},
+     'component14': {'b': 0.0, 'l': 0.0, 'r': 4.0, 't': 1.0, 'type': 'trap0'},
+     'component15': {'b': 5.0, 'l': 1.0, 'r': 3.0, 't': 6.0, 'type': 'ufoo0'},
+     'component2': {'b': 1.0, 'l': 0.0, 'r': 3.0, 't': 2.0, 'type': 'plat0'},
+     'component3': {'b': 2.0, 'l': 0.0, 'r': 3.0, 't': 3.0, 'type': 'plat0'}}
     """
     return _load_json('rb_s_13_continuous.json')
 
@@ -212,13 +229,17 @@ def load_rb_wb_03():
     attributes.
 
     >>> import pprint
-    >>> data = load_rb_s_07()
+    >>> data = load_rb_wb_03()
+    >>> print(len(data))
+    254
     >>> pprint.pprint(data[0])
-    {'_guid': '660ac76d-93b3-4ce7-8a15-a3213e9103f5',
-     'component0': {'b': 0.0, 'l': 0.0, 'r': 3.0, 't': 1.0, 'type': 'plat0'},
-     'component1': {'b': 1.0, 'l': 1.0, 'r': 2.0, 't': 4.0, 'type': 'plat90'},
-     'component8': {'b': 4.0, 'l': 0.0, 'r': 3.0, 't': 5.0, 'type': 'ufoo0'},
-     'success': '0'}
+    {'_guid': 'aa5eff72-0572-4eff-a007-3def9a82ba5b',
+     '_human_cluster_label': '0',
+     'component0': {'b': 2.0, 'l': 2.0, 'r': 3.0, 't': 3.0, 'type': 'cube0'},
+     'component1': {'b': 2.0, 'l': 3.0, 'r': 4.0, 't': 3.0, 'type': 'cube0'},
+     'component11': {'b': 3.0, 'l': 1.0, 'r': 4.0, 't': 4.0, 'type': 'ufoo0'},
+     'component2': {'b': 1.0, 'l': 2.0, 'r': 5.0, 't': 2.0, 'type': 'plat0'},
+     'component3': {'b': 0.0, 'l': 0.0, 'r': 5.0, 't': 1.0, 'type': 'rect0'}}
     """
     return _load_json('rb_wb_03_continuous.json')
 
@@ -233,8 +254,11 @@ def load_rb_s_07_human_predictions():
 
     >>> import pprint
     >>> data = load_rb_s_07_human_predictions()
+    >>> print(len(data))
+    601
     >>> pprint.pprint(data[0:2])
     ['user_id,instance_guid,time,order,prediction,correctness',
-     '1,2fda0bde-95a7-4bda-9851-785275c3f56d,2015-02-15 19:21:14.327344+00:00,1,0,1']
+     '1,2fda0bde-95a7-4bda-9851-785275c3f56d,2015-02-15 '
+     '19:21:14.327344+00:00,1,0,1']
     """
     return _load_file('human_s_07_success_predictions.csv')
