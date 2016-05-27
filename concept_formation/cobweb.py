@@ -970,7 +970,7 @@ class CobwebNode(object):
            children_count += c.num_concepts() 
         return 1 + children_count 
 
-    def output_json(self):
+    def output_json(self, limit_by_performance):
         """
         Outputs the categorization tree in JSON form
 
@@ -989,10 +989,21 @@ class CobwebNode(object):
         temp = {}
         for attr in self.av_counts:
             for value in self.av_counts[attr]:
-                temp[attr + " = " + str(value)] = self.av_counts[attr][value]
+                temp[str(attr)] = {str(value):self.av_counts[attr][value] for value in self.av_counts[attr]}
+                #temp[attr + " = " + str(value)] = self.av_counts[attr][value]
 
-        for child in self.children:
-            output['children'].append(child.output_json())
+        if limit_by_performance:
+            tot_at = 0
+            tot_dec = 0
+            for k in self.correct_at_node:
+                tot_at += self.correct_at_node[k].mean
+                tot_dec += self.correct_at_decendents[k].mean
+            if tot_at < tot_dec:
+                for child in self.children:
+                    output["children"].append(child.output_json())
+        else:
+             for child in self.children:
+                    output["children"].append(child.output_json())
 
         output['counts'] = temp
 

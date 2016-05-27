@@ -476,7 +476,7 @@ class Cobweb3Node(CobwebNode):
                     return False
         return True
 
-    def output_json(self):
+    def output_json(self, limit_by_performance=False):
         """
         Outputs the categorization tree in JSON form. 
 
@@ -500,15 +500,27 @@ class Cobweb3Node(CobwebNode):
 
         temp = {}
         for attr in self.av_counts:
-            #float_vals = []
             if isinstance(self.av_counts[attr], ContinuousValue):
-                temp[str(attr) + " = " + str(self.av_counts[attr])] = self.av_counts[attr].num
+                temp[str(attr)] = {str(self.av_counts[attr]):self.av_counts[attr].num}
+                #temp[str(attr) + " = " + str(self.av_counts[attr])] = self.av_counts[attr].num
             else:
-                for value in self.av_counts[attr]:
-                    temp[str(attr) + " = " + str(value)] = self.av_counts[attr][value]
+                temp[str(attr)] = {str(value):self.av_counts[attr][value] for value in self.av_counts[attr]}
+                #for value in self.av_counts[attr]:
+                #    temp[str(attr) + " = " + str(value)] = self.av_counts[attr][value]
 
-        for child in self.children:
-            output["children"].append(child.output_json())
+
+        if limit_by_performance:
+            tot_at = 0
+            tot_dec = 0
+            for k in self.correct_at_node:
+                tot_at += self.correct_at_node[k].mean
+                tot_dec += self.correct_at_decendents[k].mean
+            if tot_at < tot_dec:
+                for child in self.children:
+                    output["children"].append(child.output_json())
+        else:
+             for child in self.children:
+                    output["children"].append(child.output_json())
 
         output["counts"] = temp
 
