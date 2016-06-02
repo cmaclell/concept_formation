@@ -8,7 +8,7 @@ from concept_formation.trestle import TrestleTree
 from concept_formation.preprocessor import ObjectVariablizer
 
 
-def output_json(file="forest_fire",size=100,prune=True,seed=50):
+def output_json(file="forest_fire",size=100,prune=True,seed=50,burn=1):
     random.seed(seed)
     if file == "forest_fires":
         instances = ds.load_forest_fires()
@@ -34,9 +34,9 @@ def output_json(file="forest_fire",size=100,prune=True,seed=50):
     elif file == "rb_wb_03":
         instances = ds.load_rb_wb_03()
         variables = True 
-
-    instances = ds.load_forest_fires()
-    variables = False
+    else:
+        instances = ds.load_forest_fires()
+        variables = False
 
     random.shuffle(instances)
     pprint.pprint(instances[0])
@@ -48,10 +48,10 @@ def output_json(file="forest_fire",size=100,prune=True,seed=50):
         instances = [variablizer.transform(t) for t in instances]
 
     tree = TrestleTree()
-    tree.fit(instances)
+    tree.fit(instances,iterations=burn)
 
     with open('output.js','w') as out:
-        out.write("var output = ")
+        out.write("var trestle_output = ")
         out.write(json.dumps(tree.root.output_json(prune)))
         out.write(";")
 
@@ -61,7 +61,9 @@ if __name__ == "__main__":
     parser.add_argument('-size',type=int,default=100,help='how many instances to use')
     parser.add_argument('-prune',action='store_true',help='whether to output the tree with pruning applied.')
     parser.add_argument('-seed',type=int,default=50,help='seed to use when shuffling instances for training.')
+    parser.add_argument('-burn',type=int,default=1,help='number of iterations to burn in the data.')
 
     args = parser.parse_args()
 
-    output_json(args.file,args.size,args.prune,args.seed)
+    print(args.file)
+    output_json(args.file,args.size,args.prune,args.seed,args.burn)

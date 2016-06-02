@@ -187,19 +187,49 @@ td.swatch{
       <script type="text/javascript" src="output.js"></script>
       <script type="text/javascript">
 
-      function parseNumeric(numeric) {
-        var nm = numeric.split(" ");
-        var mean = parseFloat(nm[0]);
-        var std = parseFloat(nm[1].substring(1,nm[1].length-1));
-        var count = parseFloat(nm[2].substring(1,nm[1].length-1));
-        return {"mean":mean,"std":std,"min":mean-2*std,"max":mean+2*std,"count":count}
-      }
+      var w = 1280,
+          h = window.innerHeight,
+          r = 720,
+          x = d3.scale.linear().range([0, r]),
+          y = d3.scale.linear().range([0, r]),
+          node,
+          root;
+
+      var pack = d3.layout.pack()
+          .size([r, r])
+          .value(function(d) { return d.size; })
+
+      var vis = d3.select("body").insert("svg:svg", "h2")
+          .attr("width", w)
+          .attr("height", h)
+          .append("svg:g")
+          .attr("transform", "translate(" + (w - r) / 2 + "," + (h - r) / 2 + ")");
+
+      var data = trestle_output;
+      node = root = data;
 
       var attributeScales = {};
-      var redGreenScale = d3_scale.scaleLinear().domain([0,1]).range(["Red","LimeGreen"]);
+      var redGreenScale = d3_scale.scaleLinear()
+                              .domain([0,1])
+                              .range(["Red","LimeGreen"]);
+      var saturationScale = d3_scale.scaleLinear()
+                              .domain([0,1])
+                              .range(["#cccccc","steelblue"]);
+      var defaultGrey = "#cccccc";
 
-      //This is the base 12-class qualitative scheme from www.colorbrewer2.org
-      var categoicalScale = d3_scale.scaleOrdinal().range(['#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99','#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a','#ffff99','#b15928']);
+      function parseNumeric(numeric) {
+        var patt = /\d+\.\d+\s\(\d+\.\d+\)\s\[\d+\]/g;
+        if (patt.test(numeric)) {
+          var nm = numeric.split(" ");
+          var mean = parseFloat(nm[0]);
+          var std = parseFloat(nm[1].substring(1,nm[1].length-1));
+          var count = parseFloat(nm[2].substring(1,nm[1].length-1));
+          return {"mean":mean,"std":std,"min":mean-2*std,"max":mean+2*std,"count":count}
+        }
+        else {
+          return null;
+        }
+      }
 
       /*
        * unary - there is only 1 value and it is not numeric
@@ -225,17 +255,23 @@ td.swatch{
         if(vals.length > 1) {
           return 'binary';
         }
-        // 0.0000 (0.0000) [2]
+        // example - '0.0000 (0.0000) [2]'
         var patt = /\d+\.\d+\s\(\d+\.\d+\)\s\[\d+\]/g;
         if(patt.test(vals[0])) {
           return "numeric";
         }
         else {
-          return "unique";
+          return "unary";
         }
+      }
+
+      function isRelation(val) {
+        var patt = /\('.+'\,.*\)/g;
+        return patt.test(val);
       }      
 
       function setupAttributes(rootObj) {
+        attributeScales["none"] = {"type":"default","scale":null};
         var attrs = Object.keys(rootObj['counts']);
         for (var i = 0; i < attrs.length; i ++) {
           var attr = attrs[i];
@@ -243,50 +279,28 @@ td.swatch{
           vals.sort();
           vals.reverse();
           var attType = attributeType(rootObj,attr);
-          var scal = {"type":attType,"scale":null};
+          var at_scale = {"type":attType,"scale":null};
           if (attType === "nominal") {
-            scal.scale = d3_scale.scaleCategory10();
+            at_scale.scale = d3_scale.scaleCategory10();
           }
           else if (attType === "nominal20") {
-            scal.scale = d3_scale.scaleCategory20();
+            at_scale.scale = d3_scale.scaleCategory20();
           }
           else if (attType === "binary") {
-            scal.scale = redGreenScale; //d3_scale.scalePlasma();
+            at_scale.scale = redGreenScale; //d3_scale.scalePlasma();
           }
           else if (attType === "numeric") {
             var num = parseNumeric(vals[0]);
-            scal.scale = redGreenScale.copy().domain([num.min,num.max]);
+            at_scale.scale = redGreenScale.copy().domain([num.min,num.max]);
           }
-          attributeScales[attr] = scal;
+          else if (attType === "unary") {
+            at_scale.scale = saturationScale;
+          }
+          attributeScales[attr] = at_scale;
         }
       }
 
-
-      var w = 1280,
-          //h = 800,
-          h = window.innerHeight,
-          r = 720,
-          x = d3.scale.linear().range([0, r]),
-          y = d3.scale.linear().range([0, r]),
-          node,
-          root;
-
-      var pack = d3.layout.pack()
-          .size([r, r])
-          .value(function(d) { return d.size; })
-
-      var vis = d3.select("body").insert("svg:svg", "h2")
-          .attr("width", w)
-          .attr("height", h)
-          .append("svg:g")
-          .attr("transform", "translate(" + (w - r) / 2 + "," + (h - r) / 2 + ")");
-
-          var data = output;
-         // console.log(hackObj);
-
-      //d3.json(output, function(data) {
-        node = root = data;
-
+      //This is mainly built on the d3 circle packing example
       function buildTree(images=false,names=false) {
         var nodes = pack.nodes(root);
 
@@ -304,14 +318,14 @@ td.swatch{
         if(images){
           vis.selectAll("image.tower")
           .data(nodes.filter(function(d){
-                  if (d.children || !d.guid){ 
+                  if (d.children || !d._guid){ 
                     return false; 
                   } else {
                     return true;
                   }}))
             .enter().append("image")
                 .attr('class', 'tower')
-                .attr("xlink:href", function(d) { return "images/" + d.guid +
+                .attr("xlink:href", function(d) { return "images/" + d._guid +
                         ".png"})
             .attr("width", function(d) { return (1.33 * d.r); })
             .attr("height", function(d) { return d.r; })
@@ -335,7 +349,7 @@ td.swatch{
                   else {
                     return "";
                   }
-                  guid = "";
+                 /* guid = "";
                   if (d.counts['has-guid = 1']){
                       console.log(d.counts);
                       guid = "X";
@@ -352,7 +366,7 @@ td.swatch{
                       d.counts['success = 1'] > 0){
                   return "S = " + (d.counts['success = 1'] / (d.counts['success = 1']
                           + d.counts['success = 0'])) + guid;
-                  }
+                  }*/
                   });
 
         d3.select(window).on("click", function() { zoom(root); });
@@ -373,39 +387,69 @@ td.swatch{
         return maj.n;
       }
 
-      function binaryRatio(table) {
+      function binaryRatio(table,targetAttr) {
+        var rootVals = Object.keys(data['counts'][targetAttr]);
+        rootVals.sort();
+        rootVals.reverse();
         var values = Object.keys(table);
         values.sort();
         values.reverse();
-        return table[values[0]]/(table[values[0]]+table[values[1]]);
+        console.log({"vals":values,"rootvals":rootVals})
+        if(values.length === 1) {
+          if (values[0] === rootVals[0]){
+            return 0.0;
+          }
+          else {
+            return 1.0;
+          }
+        }
+        else {
+          return table[values[1]]/(table[values[0]]+table[values[1]]);
+        }
       }
 
       function recolor(d) {
         var targetAttr = $("#color-by").val();
         var scale = attributeScales[targetAttr];
         if(!scale){
+          console.log("No scale found for attribute:" + targetAttr);
           return;
         }
         var circle = $("#"+d.name);
-
-        if (scale.type === "unary" || scale.type === "unique"){
-          if(d.children) {
-            circle.css("fill","#1f77b4");
+        if (targetAttr !== "none" && !d['counts'][targetAttr]) {
+          circle.css("fill",defaultGrey);
+        }
+        else {
+          switch(scale.type) {
+            case "unary":
+              var val = Object.keys(d['counts'][targetAttr])[0];
+              circle.css("fill",scale.scale(d['counts'][targetAttr][val]/d['size']));
+              break;
+            
+            case "nominal":
+            case "nominal20":
+              circle.css("fill",scale.scale(majorityValue(d['counts'][targetAttr])));
+              break;
+            
+            case "binary":
+             circle.css("fill",scale.scale(binaryRatio(d['counts'][targetAttr],targetAttr)));
+              break;
+            
+            case "numeric":
+              var num = parseNumeric(Object.keys(d['counts'][targetAttr])[0]);
+              circle.css("fill",scale.scale(num.mean));
+              break;
+            
+            case "unique":
+            default:
+              if(d.children) {
+                circle.css("fill","steelblue");
+              }
+              else {
+                circle.css("fill",defaultGrey);
+              }
+              break;
           }
-          else {
-            circle.css("fill","#cccccc");
-          }
-        }
-        else if (scale.type === "nominal20" || scale.type === "nominal") {
-          console.log(d);
-          circle.css("fill",scale.scale(majorityValue(d['counts'][targetAttr])));
-        }
-        else if (scale.type === "binary") {
-          circle.css("fill",scale.scale(binaryRatio(d['counts'][targetAttr])));
-        }
-        else if (scale.type === "numeric") {
-          var num = parseNumeric(Object.keys(d['counts'][targetAttr])[0]);
-          circle.css("fill",scale.scale(num.mean));
         }
         for(var child in d.children){
           recolor(d.children[child]);
@@ -452,16 +496,14 @@ td.swatch{
         var attrs = Object.keys(d['counts']);
         attrs.sort();
         attrs.reverse();
-
-        var colorBy = document.getElementById("color-by");
+        var colorBy = $("#color-by");
 
         for (var i=0; i < attrs.length;i++){
-          var opt = document.createElement('option');
-          opt.setAttribute("value",attrs[i]);
-          opt.innerHTML=attrs[i]
-          colorBy.appendChild(opt);
+          var opt = $("<option>"+attrs[i]+"</option>");
+          opt.attr("value",attrs[i]);
+          colorBy.append(opt);
         }
-        colorBy.addEventListener("changed",colorSelectChanged);
+        colorBy.change(colorSelectChanged);
       }
 
       function colorSelectChanged() {
@@ -480,22 +522,20 @@ td.swatch{
           }
           if(attrScale.type ==="nominal" || attrScale.type === "nominal20"){
             $("#color-by-type").text("Nominal");
-            var colorTable = document.getElementById("nom-val-colors");
-            colorTable.innerHTML = "";
+            var colorTable = $("#nom-val-colors");
+            colorTable.html('');
             var vals = Object.keys(data['counts'][attr]);
             vals.sort();
             vals.reverse();
             for(i=0;i<vals.length;i++) {
-              var tr = document.createElement('tr');
-              var valName = document.createElement('td');
-              valName.innerHTML = vals[i];
-              tr.appendChild(valName);
-              var colorCell = document.createElement('td');
-              colorCell.class += "swatch";
-              colorCell.style = "background-color: "+ attrScale.scale(vals[i]);
-              tr.appendChild(colorCell);
-
-              colorTable.appendChild(tr);  
+              var tr = $("<tr></tr>");
+              var valName = $("<td>"+ vals[i] +"</td>");
+              var colorCell = $("<td></td>");
+              colorCell.addClass("swatch");
+              colorCell.css("background-color",attrScale.scale(vals[i]));
+              tr.append(valName);
+              tr.append(colorCell);
+              colorTable.append(tr);
             }
             $("#numeric-colors").hide();
             $("#nominal-colors").show();
@@ -505,6 +545,18 @@ td.swatch{
             $("#col-min-val").text(attrScale.scale.domain()[0].toFixed(3));
             $("#col-min-color").css("background-color",attrScale.scale.range()[0]);
             $("#col-max-val").text(attrScale.scale.domain()[1].toFixed(3));
+            $("#col-max-color").css("background-color",attrScale.scale.range()[1]);
+            $("#numeric-colors").show();
+            $("#nominal-colors").hide();
+          }
+          else if (attrScale.type === "binary") {
+            $("#color-by-type").text("Binary");
+            var rootVals = Object.keys(data['counts'][attr]);
+            rootVals.sort();
+            rootVals.reverse();
+            $("#col-min-val").text(rootVals[0]);
+            $("#col-min-color").css("background-color",attrScale.scale.range()[0]);
+            $("#col-max-val").text(rootVals[1]);
             $("#col-max-color").css("background-color",attrScale.scale.range()[1]);
             $("#numeric-colors").show();
             $("#nominal-colors").hide();
@@ -519,9 +571,9 @@ td.swatch{
 
       function make_property_sheet(node_data) {
         d = node_data['counts']
-        var property_sheet = document.getElementById('properties');//$('#properties');
-        var prop_filter = document.getElementById('property-filter');//
-        property_sheet.innerHTML = '';
+        var property_sheet = $("#properties"); 
+        var prop_filter = $("#property-filter");
+        property_sheet.html('');
 
         $("#concept-name").text(node_data['name'])
         $("#concept-size").text(node_data['size'])
@@ -531,7 +583,7 @@ td.swatch{
         var d_keys = Object.keys(d);
         var attrs = []
         for (var i = 0; i < d_keys.length; i++){
-          switch(prop_filter.value){
+          switch(prop_filter.val()){
             case "all":
               attrs.push(d_keys[i])
               break;
@@ -541,12 +593,12 @@ td.swatch{
               }
               break;
             case "no-r":
-              if(d_keys[i][0] !== "(") {
+              if(!isRelation(d_keys[i][0])) {
                 attrs.push(d_keys[i])
               }
               break;
             case "no-hr":
-              if (d_keys[i][0] !== "_" && d_keys[i][0] !== "("){
+              if (d_keys[i][0] !== "_" && !isRelation(d_keys[i][0])) {
                 attrs.push(d_keys[i])
               }
               break;
@@ -554,53 +606,40 @@ td.swatch{
         }
         attrs.sort();
         attrs.reverse();
-
-
         for (var a in attrs) {
           attr = attrs[a]
-          var tr = document.createElement('tr');
-          var ad = document.createElement('td');
-          ad.appendChild(document.createTextNode(attr));
-          tr.appendChild(ad);
-          tr.className += " info";
-          tr.appendChild(document.createElement('td'));
-          tr.appendChild(document.createElement('td'));
-          property_sheet.appendChild(tr);
-
+          var tr = $("<tr></tr>");
+          var ar = $("<td>"+attr+"</td>");
+          tr.addClass("info");
+          tr.append(ar);
+          tr.append("<td></td><td></td>");
+          property_sheet.append(tr);
           vals = Object.keys(d[attr]);
           vals.sort();
           vals.reverse();
-
           for (var v in vals){
             val = vals[v];
-           
-            tr = document.createElement('tr');
-            var vd = document.createElement('td');
-            vd.appendChild(document.createTextNode(val.split('[')[0]));
-            vd.className += " val-row";
-            tr.appendChild(vd);
-            var cd = document.createElement('td');
-            var pd = document.createElement('td');
-            var count = d[attr][val]
-            var perc = count/node_data['size']*100;
-            cd.innerHTML=count;
-            pd.innerHTML=perc.toFixed(2) +"%";
-            tr.appendChild(cd);
-            tr.appendChild(pd);
-            property_sheet.appendChild(tr);
+            tr = $("<tr></tr>");
+            var vd = $("<td></td>");
+            vd.text(parseNumeric(val) ? val.split('[')[0] : val);
+            vd.addClass("val-row");
+            tr.append(vd);
+            var cd = $("<td>"+d[attr][val]+"</td>");
+            var pd = $("<td>"+(d[attr][val]/node_data['size']*100).toFixed(2)+"%</td>")
+            tr.append(cd);
+            tr.append(pd);
+            property_sheet.append(tr);
           }
         }
       }
       $( "#color-by" ).change( colorSelectChanged );
-      colorSelectChanged();
       setupAttributes(data);
+      colorSelectChanged();
       populateColorByOptions(data);
       buildTree();
       make_property_sheet(data);
       </script>
     </div>
-
-
     </div>
   </body>
 </html>
