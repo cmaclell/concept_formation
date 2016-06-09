@@ -37,12 +37,6 @@ circle.parent:hover {
   stroke-width: .5px;
 }
 
-/*
-circle.child {
-  pointer-events: none;
-}
-*/
-
 #property-panel{
   position:absolute;
   right:0px;
@@ -76,13 +70,22 @@ table td.absorbing-column{
 }
 
 .color-ops {
-  padding-left:30px;
-  padding-right:30px;
-  text-align: center;
+  padding-right: 60px;
+  padding-left: 30px; 
+  /*text-align: center;*/
+}
+
+.max-color {
+  text-align: right;
+  width:50%;
 }
 
 td.swatch{
   width: 50px;
+}
+
+#filter-form {
+  padding-left: 30px;
 }
 </style>
 
@@ -114,6 +117,27 @@ td.swatch{
             </tr>
           </tbody>
         </table>
+
+        <label>Show Node Names<input id="show-names" type="checkbox"> </label><br>
+        <label>Image Field
+            <select id="img-attr">
+                <option value="none">None</option> 
+            </select> 
+        </label><br>
+
+        <a class="btn btn-default btn-xs" role="button" data-toggle="collapse" href="#filter-props"><strong>Filter Properties</strong></a>
+        <div class="collapse" id="filter-props">
+            Select the properties types you want to filter out:
+            <form id="filter-form">
+              <div class="form-group">
+                <div class="checkbox"><label><input id="unq-filter" type="checkbox" >Unique Values</label></div>
+                <div class="checkbox"><label><input id="una-filter" type="checkbox" >Unary Values</label></div>
+                <div class="checkbox"><label><input id="rel-filter" type="checkbox" >Relations Attribtues</label></div>
+                <div class="checkbox"><label><input id="hid-filter" type="checkbox" >Hidden Attributes</label></div>
+                <div class="checkbox"><label><input id="com-filter" type="checkbox" >Component Property Attributes</label></div>
+              </div>
+            </form>
+        </div><br>
         <label><strong>Color By</strong>
           <select id="color-by">
             <option value="none">None</option>
@@ -121,11 +145,12 @@ td.swatch{
         </label><br>
         <p><strong>Attribute Type:</strong><span id="color-by-type">Default</span></p>
         <div id="nominal-colors" class="color-ops">
-          <table>
+          <table class="table table-condensed">
             <thead>
               <tr>
-                <td><strong>Value</strong></td>
+                <td class="absorbing-column"><strong>Value</strong></td>
                 <td><strong>Color</strong></td>
+                <!-- <td class="absorbing-column" ></td> -->
               </tr>
             </thead>
             <tbody id="nom-val-colors">
@@ -138,29 +163,22 @@ td.swatch{
           <thead>
             <tr>
               <td><strong>Min</strong></td>
-              <td><strong>Max</strong></td>
+              <td class="max-color" ><strong>Max</strong></td>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td id="col-min-color" class="swatch"><br></td>
-              <td id="col-max-color" class="swatch"><br></td>
+              <td class="max-color" id="col-max-color" class="swatch"><br></td>
             </tr>
             <tr>
               <td id="col-min-val"></td>
-              <td id="col-max-val"></td>
+              <td class="max-color" id="col-max-val"></td>
             </tr>
           </tbody>
           </table>
         </div>
-        <label><strong>Filter Properties</strong>
-        <select id="property-filter">
-            <option value="all">All</option>
-            <option value="no-h">No Hidden</option>
-            <option value="no-r">No Relations</option>
-            <option value="no-hr">No Hidden or Relations</option>
-        </select>
-        </label>
+
         <table id="property-sheet" class="table table-bordered table-condensed">
           <thead>
             <tr>
@@ -185,28 +203,30 @@ td.swatch{
       <script src="https://d3js.org/d3-time-format.v0.3.min.js"></script>
       <script src="https://d3js.org/d3-scale.v0.7.min.js"></script>
       <script type="text/javascript" src="output.js"></script>
+      
       <script type="text/javascript">
 
+   
+
+      var data = {}
+
       var w = 1280,
-          h = window.innerHeight,
-          r = 720,
-          x = d3.scale.linear().range([0, r]),
-          y = d3.scale.linear().range([0, r]),
-          node,
-          root;
+        h = window.innerHeight,
+        r = 720,
+        x = d3.scale.linear().range([0, r]),
+        y = d3.scale.linear().range([0, r]),
+        node,
+        root;
 
       var pack = d3.layout.pack()
-          .size([r, r])
-          .value(function(d) { return d.size; })
+                  .size([r, r])
+                  .value(function(d) { return d.size; });
 
       var vis = d3.select("body").insert("svg:svg", "h2")
-          .attr("width", w)
-          .attr("height", h)
-          .append("svg:g")
-          .attr("transform", "translate(" + (w - r) / 2 + "," + (h - r) / 2 + ")");
-
-      var data = trestle_output;
-      node = root = data;
+            .attr("width", w)
+            .attr("height", h)
+            .append("svg:g")
+            .attr("transform", "translate(" + (w - r) / 2 + "," + (h - r) / 2 + ")");
 
       var attributeScales = {};
       var redGreenScale = d3_scale.scaleLinear()
@@ -268,7 +288,21 @@ td.swatch{
       function isRelation(val) {
         var patt = /\('.+'\,.*\)/g;
         return patt.test(val);
-      }      
+      }
+
+      function filterTypes(attr) {
+        var typs = []
+        if(attr[0] === '_'){
+          typs.push('hidden');
+        }
+        if(/\('.+'\,.*\)/g.test(attr)){
+          typs.push('relation');
+        }
+        if(/\('.+'\,'\?.+'\)/g.test(attr)) {
+          typs.push('component');
+        }
+        return typs;
+      }   
 
       function setupAttributes(rootObj) {
         attributeScales["none"] = {"type":"default","scale":null};
@@ -279,7 +313,8 @@ td.swatch{
           vals.sort();
           vals.reverse();
           var attType = attributeType(rootObj,attr);
-          var at_scale = {"type":attType,"scale":null};
+          //var filType = filterType(rootObj,attr);
+          var at_scale = {"type":attType,"scale":null,"filterTypes":filterTypes(attr)};
           if (attType === "nominal") {
             at_scale.scale = d3_scale.scaleCategory10();
           }
@@ -300,9 +335,53 @@ td.swatch{
         }
       }
 
+      function randomImage(d,attr) {
+        if(attr === "none"){
+            return "";
+        }
+        if(d.counts){
+            d=d.counts;
+        }
+        var vals = Object.keys(d[attr]);
+        return  "images/" + vals[Math.floor(Math.random() * vals.length)] + ".jpg";
+      }
+
+      function hasImageData(d) {
+        if(d.counts){
+            d=d.counts;
+        }
+        return d[$("#img-attr").val()];
+      }
+
+      function imageSelectChanged() {
+        changeImages(data);
+      }
+
+      function changeImages(d){
+        var img = $("#"+d.name+"-img");
+        if(img){
+            img.attr("href",randomImage(d,$("#img-attr").val()));
+        }
+        if(d.children) {
+            for(var i in d.children){
+              changeImages(d.children[i]);
+            }
+        }
+      }
+
+      function changeText() {
+        $("text").css("display", $("#show-names").is(':checked') ? "block" : "none");
+      }
+
       //This is mainly built on the d3 circle packing example
-      function buildTree(images=false,names=false) {
+      function buildTree(tree_data) {
+        node = root = data = tree_data;
+
         var nodes = pack.nodes(root);
+
+        vis.selectAll("circle").remove();
+        vis.selectAll("image").remove();
+        vis.selectAll("text").remove();
 
         vis.selectAll("circle")
         .data(nodes)
@@ -315,23 +394,23 @@ td.swatch{
             .on("click", function(d) { return zoom(node == d ? root : d); });
             //.style("opacity", function(d) { return (d.r > 100) ? 1 : 0; });
 
-        if(images){
-          vis.selectAll("image.tower")
+          vis.selectAll("image.screenshot")
           .data(nodes.filter(function(d){
-                  if (d.children || !d._guid){ 
+                  if (d.children){// || !hasImageData(d)){ 
                     return false; 
                   } else {
                     return true;
                   }}))
             .enter().append("image")
-                .attr('class', 'tower')
-                .attr("xlink:href", function(d) { return "images/" + d._guid +
-                        ".png"})
+                .attr("id",function(d) { return d.name+"-img";})
+                .attr('class', 'screenshot')
+                .attr("xlink:href", function(d) { return randomImage(d,$("#img-attr").val());})
             .attr("width", function(d) { return (1.33 * d.r); })
             .attr("height", function(d) { return d.r; })
             .attr("x", function(d) { return d.x - ((1.33 * d.r)/2); })
-            .attr("y", function(d) { return d.y - (d.r/2); });
-        }
+            .attr("y", function(d) { return d.y - (d.r/2); })
+            .on("click", function(d) { return zoom(node == d ? root : d); });
+
         vis.selectAll("text")
             .data(nodes)
             .enter().append("svg:text")
@@ -340,37 +419,47 @@ td.swatch{
             .attr("y", function(d) { return d.y; })
             .attr("dy", ".35em")
             .attr("text-anchor", "middle")
-            //.style("opacity", function(d) { return (d.r > 100 && d.r < 200) ? 1 : 0; })
-            .text(function(d) { 
-                  //return "";
-                  if(names){
-                   return d.name;
-                  }
-                  else {
-                    return "";
-                  }
-                 /* guid = "";
-                  if (d.counts['has-guid = 1']){
-                      console.log(d.counts);
-                      guid = "X";
-                  }
-                  if (!d.children && d.counts['success = 1'] > 0 && 
-                        !d.counts['success = 0']){
-                      return "S " + guid;
-                  }
-                  else if (!d.children && d.counts['success = 0'] > 0 &&
-                      !d.counts['success = 1']){
-                      return "F " + guid;
-                  }
-                  else if (!d.children && d.counts['success = 0'] > 0 &&
-                      d.counts['success = 1'] > 0){
-                  return "S = " + (d.counts['success = 1'] / (d.counts['success = 1']
-                          + d.counts['success = 0'])) + guid;
-                  }*/
-                  });
+            .text(function(d) { return d.name; })
+            .on("click", function(d) { return zoom(node == d ? root : d); });
 
-        d3.select(window).on("click", function() { zoom(root); });
-      //});
+        //d3.select(window).on("click", function() { zoom(root); });
+        vis.on("click", function() { zoom(root); });
+        changeText();
+      }
+
+      function zoom(d, i) {
+        //console.log(d);
+        make_property_sheet(d);
+
+        scale = 1.0;
+        //console.log(d.CU)
+        //console.log(d.counts)
+        var k = r / d.r / 2;
+        x.domain([d.x - d.r, d.x + d.r]);
+        y.domain([d.y - d.r, d.y + d.r]);
+
+        var t = vis.transition()
+            .duration(d3.event.altKey ? 7500 : 750);
+
+        t.selectAll("image.screenshot")
+            .attr("width", function(d) { return (scale * 1.33 * k * d.r); })
+            .attr("height", function(d) { return scale * k * d.r; })
+            .attr("x", function(d) { return scale * (x(d.x) - ((1.33 * k * d.r)/2)); })
+            .attr("y", function(d) { return scale * (y(d.y) - ((k * d.r)/2)); });
+
+        t.selectAll("circle")
+            .attr("cx", function(d) { return scale * x(d.x); })
+            .attr("cy", function(d) { return scale * y(d.y); })
+            .attr("r", function(d) { return scale * k * d.r; });
+            //.style("opacity", function(d) { return (k * d.r > 100) ? 1 : 0; });
+
+        t.selectAll("text")
+            .attr("x", function(d) { return scale * x(d.x); })
+            .attr("y", function(d) { return scale * y(d.y); })
+            //.style("opacity", function(d) { return (k * d.r > 100 && k * d.r < 200) ? 1 : 0; });
+
+        node = d;
+        d3.event.stopPropagation();
       }
 
       function majorityValue(table) {
@@ -387,6 +476,13 @@ td.swatch{
         return maj.n;
       }
 
+      // a bit of a hack to make sure binary variaables that have sensible meaning are ordered correctly
+      // the values in each list are based on the test datasets we have and my own thoughts
+      function isPositiveBinary(vals) {
+        return $.inArray(vals[0].toLowerCase(), ["success","yea","yes","y","pro","pass"]) > -1 &&
+              $.inArray(vals[1].toLowerCase(), ["failure", "fail","nay","no","n","con"]) > -1;
+      }
+
       function binaryRatio(table,targetAttr) {
         var rootVals = Object.keys(data['counts'][targetAttr]);
         rootVals.sort();
@@ -394,7 +490,13 @@ td.swatch{
         var values = Object.keys(table);
         values.sort();
         values.reverse();
-        console.log({"vals":values,"rootvals":rootVals})
+
+        //Special case to properly sort a success/failure binary
+        if(isPositiveBinary(rootVals)){
+          values.reverse();
+          rootVals.reverse();
+        }
+
         if(values.length === 1) {
           if (values[0] === rootVals[0]){
             return 0.0;
@@ -432,7 +534,7 @@ td.swatch{
               break;
             
             case "binary":
-             circle.css("fill",scale.scale(binaryRatio(d['counts'][targetAttr],targetAttr)));
+              circle.css("fill",scale.scale(binaryRatio(d['counts'][targetAttr],targetAttr)));
               break;
             
             case "numeric":
@@ -451,56 +553,54 @@ td.swatch{
               break;
           }
         }
-        for(var child in d.children){
-          recolor(d.children[child]);
+        if(d.children){
+            for(var child in d.children){
+              recolor(d.children[child]);
+            }
         }
 
       }
 
-      function zoom(d, i) {
-        //console.log(d);
-        make_property_sheet(d);
-
-        scale = 1.0;
-        //console.log(d.CU)
-        //console.log(d.counts)
-        var k = r / d.r / 2;
-        x.domain([d.x - d.r, d.x + d.r]);
-        y.domain([d.y - d.r, d.y + d.r]);
-
-        var t = vis.transition()
-            .duration(d3.event.altKey ? 7500 : 750);
-
-        t.selectAll("image.tower")
-            .attr("width", function(d) { return (scale * 1.33 * k * d.r); })
-            .attr("height", function(d) { return scale * k * d.r; })
-            .attr("x", function(d) { return scale * (x(d.x) - ((1.33 * k * d.r)/2)); })
-            .attr("y", function(d) { return scale * (y(d.y) - ((k * d.r)/2)); });
-
-        t.selectAll("circle")
-            .attr("cx", function(d) { return scale * x(d.x); })
-            .attr("cy", function(d) { return scale * y(d.y); })
-            .attr("r", function(d) { return scale * k * d.r; });
-            //.style("opacity", function(d) { return (k * d.r > 100) ? 1 : 0; });
-
-        t.selectAll("text")
-            .attr("x", function(d) { return scale * x(d.x); })
-            .attr("y", function(d) { return scale * y(d.y); })
-            //.style("opacity", function(d) { return (k * d.r > 100 && k * d.r < 200) ? 1 : 0; });
-
-        node = d;
-        d3.event.stopPropagation();
-      }
+  
 
       function populateColorByOptions(d) {
         var attrs = Object.keys(d['counts']);
         attrs.sort();
         attrs.reverse();
         var colorBy = $("#color-by");
+        var imgOptions = $("#img-attr");
+        colorBy.html('<option value="none">None</option>');
+        var hid_filter = $("#hid-filter").is(':checked');
+        var rel_filter = $("#rel-filter").is(':checked');
+        var una_filter = $("#una-filter").is(':checked');
+        var unq_filter = $("#unq-filter").is(':checked');
+        var com_filter = $("#com-filter").is(':checked');
+
 
         for (var i=0; i < attrs.length;i++){
+          var attrScale = attributeScales[attrs[i]];
+          
           var opt = $("<option>"+attrs[i]+"</option>");
           opt.attr("value",attrs[i]);
+          imgOptions.append(opt.clone());
+
+          if(attrScale) {
+            if(unq_filter && attrScale.type === "unique") {
+              continue;
+            }
+            else if(una_filter && attrScale.type === "unary") {
+              continue;
+            }
+            else if(hid_filter && attrScale.filterTypes.indexOf("hidden") !== -1){
+              continue;
+            }
+            else if(com_filter && attrScale.filterTypes.indexOf("component") !== -1) {
+              continue;
+            }
+            else if(rel_filter && attrScale.filterTypes.indexOf("relation") !== -1) {
+              continue;
+            }
+          }
           colorBy.append(opt);
         }
         colorBy.change(colorSelectChanged);
@@ -531,10 +631,12 @@ td.swatch{
               var tr = $("<tr></tr>");
               var valName = $("<td>"+ vals[i] +"</td>");
               var colorCell = $("<td></td>");
+              valName.addClass("absorbing-column");
               colorCell.addClass("swatch");
               colorCell.css("background-color",attrScale.scale(vals[i]));
               tr.append(valName);
               tr.append(colorCell);
+              //tr.append('<td class="absorbing-column"></td>');
               colorTable.append(tr);
             }
             $("#numeric-colors").hide();
@@ -554,6 +656,11 @@ td.swatch{
             var rootVals = Object.keys(data['counts'][attr]);
             rootVals.sort();
             rootVals.reverse();
+            //Special case to properly sort a success/failure binary
+            if(isPositiveBinary(rootVals)){
+              rootVals.reverse();
+            }
+            
             $("#col-min-val").text(rootVals[0]);
             $("#col-min-color").css("background-color",attrScale.scale.range()[0]);
             $("#col-max-val").text(rootVals[1]);
@@ -582,27 +689,34 @@ td.swatch{
 
         var d_keys = Object.keys(d);
         var attrs = []
+        var hid_filter = $("#hid-filter").is(':checked');
+        var una_filter = $("#una-filter").is(':checked');
+        var rel_filter = $("#rel-filter").is(':checked');
+        var unq_filter = $("#unq-filter").is(':checked');
+        var com_filter = $("#com-filter").is(':checked');
+
         for (var i = 0; i < d_keys.length; i++){
-          switch(prop_filter.val()){
-            case "all":
-              attrs.push(d_keys[i])
-              break;
-            case "no-h":
-              if(d_keys[i][0] !== "_") {
-                attrs.push(d_keys[i])
-              }
-              break;
-            case "no-r":
-              if(!isRelation(d_keys[i][0])) {
-                attrs.push(d_keys[i])
-              }
-              break;
-            case "no-hr":
-              if (d_keys[i][0] !== "_" && !isRelation(d_keys[i][0])) {
-                attrs.push(d_keys[i])
-              }
-              break;
+          var attrScale = attributeScales[d_keys[i]];
+
+          if(attrScale) {
+            if(unq_filter && attrScale.type === "unique") {
+              continue;
+            }
+            else if(una_filter && attrScale.type === "unary") {
+              continue;
+            }
+            else if(hid_filter && attrScale.filterTypes.indexOf("hidden") !== -1){
+              continue;
+            }
+            else if(com_filter && attrScale.filterTypes.indexOf("component") !== -1) {
+              continue;
+            }
+            else if(rel_filter && attrScale.filterTypes.indexOf("relation") !== -1) {
+              continue;
+            }
+            attrs.push(d_keys[i]);
           }
+
         }
         attrs.sort();
         attrs.reverse();
@@ -632,11 +746,26 @@ td.swatch{
           }
         }
       }
+
+      function updateFilters() {
+        populateColorByOptions(data);
+        colorSelectChanged();
+        make_property_sheet(node);
+      }
+
+      
+      data = trestle_output;
       $( "#color-by" ).change( colorSelectChanged );
+      $("#img-attr").change(imageSelectChanged);
+      $("#show-names").change(changeText);
+      $("#com-filter").change(updateFilters);
+      $("#rel-filter").change(updateFilters);
+      $("#unq-filter").change(updateFilters);
+      $("#hid-filter").change(updateFilters);
       setupAttributes(data);
       colorSelectChanged();
       populateColorByOptions(data);
-      buildTree();
+      buildTree(data);
       make_property_sheet(data);
       </script>
     </div>
