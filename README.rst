@@ -56,7 +56,7 @@ Examples
 
 We have created a number of examples to demonstrate the basic functionality of
 this library. The examples can be found 
-`here <http://concept-formation.readthedocs.org>`_.  
+`here <http://concept-formation.readthedocs.io/en/latest/examples.html>`_.  
 
 Citing this Software 
 ====================
