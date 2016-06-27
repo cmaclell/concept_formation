@@ -64,18 +64,17 @@ Citing this Software
 If you use this software in a scientific publiction, then we would appreciate
 citation of the following paper:
 
-MacLellan, C.J., Harpstead, E., Aleven, V., Koedinger, K.R. (2015) `TRESTLE:
-Incremental Learning in Structured Domains using Partial Matching and
-Categorization <http://christopia.net/data/articles/publications/maclellan1-2015.pdf>`_.
-The Third Annual Conference on Advances in Cognitive Systems.
-Atlanta, GA. May 28-31, 2015.
+MacLellan, C.J., Harpstead, E., Aleven, V., Koedinger K.R. (2016) `TRESTLE: A
+Model of Concept Formation in Structured Domains
+<http://christopia.net/media/publications/maclellan-trestle-2016.pdf>`_.
+Advances in Cognitive Systems, 4, 131-150.
 
 Bibtex entry::
 
-    @inproceedings{trestle:2015a,
+    @article{trestle:2016a,
     author={MacLellan, C.J. and Harpstead, E. and Aleven, V. and Koedinger, K.R.},
-    title={TRESTLE: Incremental Learning in Structured Domains using Partial
-           Matching and Categorization.},
-    booktitle = {The Annual Third Conference on Advances in Cognitive Systems},
-    year={2015}
+    title={TRESTLE: A Model of Concept Formation in Structured Domains},
+    journal={Advances in Cognitive Systems},
+    volume={4},
+    year={2016}
     }
