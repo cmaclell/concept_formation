@@ -182,7 +182,7 @@ class Cobweb3Node(CobwebNode):
         else:
             before_prob = (self.av_counts[attr][val] / (self.count + counts))
             after_prob = ((self.av_counts[attr][val] + counts) / 
-                          (self.count + counts)
+                          (self.count + counts))
             return (after_prob * after_prob) - (before_prob * before_prob)
 
     def expected_correct_guesses(self):
