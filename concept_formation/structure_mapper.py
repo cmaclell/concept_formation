@@ -199,12 +199,16 @@ def contains_component(component, attr):
     
     return False
 
-def compute_rewards(names, instance, concept):
+def compute_rewards(names, target, base):
     """
     Consider trying to speed this up
     """
     rewards = {}
-    for attr in instance:
+
+    if not isinstance(target, dict):
+        target = target.av_counts
+
+    for attr in target:
         a_comps = get_attribute_components(attr)
         if len(a_comps) == 0:
             continue
@@ -212,7 +216,16 @@ def compute_rewards(names, instance, concept):
         for c_comps in permutations(names, len(a_comps)):
             mapping = dict(zip(a_comps, c_comps))
             new_attr = bind_flat_attr(attr, mapping)
-            r = concept.attr_val_guess_gain(new_attr, instance[attr])
+
+            # TODO need to iterate over all of the instance values and 
+            # sum them up.
+            if isinstance(target[attr], dict):
+                r = 0
+                for val in target[attr]:
+                    r += base.attr_val_guess_gain(new_attr, val)
+            else:
+                r = base.attr_val_guess_gain(new_attr, target[attr])
+
             if r != 0:
                 items = sorted(mapping.items())
                 keys = tuple(i[0] for i in items)
@@ -222,11 +235,42 @@ def compute_rewards(names, instance, concept):
                 if values not in rewards[keys]:
                     rewards[keys][values] = 0
                 rewards[keys][values] += r
+
     return rewards
+
+# TODO TEST AND REVISE
+def flat_match_new(target, base, beam_width=1, vars_only=True):
+    """
+    A variation of flat match that structure maps one concept onto another.
+    Returns a mapping that can be applied to concept1 to align it to concept2.
+    """
+    if isinstance(target, dict):
+        target_names = frozenset(get_component_names(target))
+    else:
+        target_names = frozenset(get_component_names(target.av_counts))
+
+    base_names = frozenset(get_component_names(base.av_counts, vars_only))
+
+    if(len(target_names) == 0 or len(base_names) == 0):
+        return {}
+
+    rewards = compute_rewards(base_names, target, base)
+    problem = StructureMappingProblem((frozenset(), target_names, base_names),
+                                      extra=rewards)
+    if beam_width == float('inf'):
+        solution = next(best_first_search(problem))
+    else:
+        solution = next(beam_search(problem, beam_width=beam_width))
+
+    if solution:
+        mapping, unnamed, availableNames = solution.state
+        return {a:v for a,v in mapping}
+    else:
+        return None
 
 def flat_match(concept, instance, beam_width=1, vars_only=True):
     """
-    Given a concept and instance this function returns a mapping  that can be
+    Given a concept and instance this function returns a mapping that can be
     used to rename components in the instance. The mapping returned maximizes
     similarity between the instance and the concept.
 
@@ -281,7 +325,7 @@ class StructureMappingProblem(Problem):
         and assumes that you get the highest guess_gain match. This provides an
         over estimation of the possible reward (i.e., is admissible).
 
-        This heuristic is used by the :func:`node_value` method to compute
+        This heuristic is used by the :func:`node_value` method to
         estimate how promising the state is. 
         """
         mapping, unnamed, availableNames = node.state

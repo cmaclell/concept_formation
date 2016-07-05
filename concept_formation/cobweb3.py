@@ -137,7 +137,7 @@ class Cobweb3Node(CobwebNode):
                     self.av_counts[attr][val] = (self.av_counts[attr].get(val,0) +
                                          node.av_counts[attr][val])
     
-    def attr_val_guess_gain(self, attr, val):
+    def attr_val_guess_gain(self, attr, val, counts=1.0):
         """
         Returns the gain in number of correct guesses if a particular attr/val
         was added to a concept.
@@ -180,8 +180,9 @@ class Cobweb3Node(CobwebNode):
             # TODO check that this should be 0
             return 0.0
         else:
-            before_prob = (self.av_counts[attr][val] / (self.count + 1.0))
-            after_prob = (self.av_counts[attr][val] + 1) / (self.count + 1.0)
+            before_prob = (self.av_counts[attr][val] / (self.count + counts))
+            after_prob = ((self.av_counts[attr][val] + counts) / 
+                          (self.count + counts)
             return (after_prob * after_prob) - (before_prob * before_prob)
 
     def expected_correct_guesses(self):
