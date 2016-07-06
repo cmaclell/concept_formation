@@ -419,6 +419,18 @@ def _check_instance(instance):
                 ',\nStructureMapper requires that attributes be of type str or tuple.')
         if isinstance(instance[attr],dict):
             _check_instance(instance[attr])
+        if isinstance(attr,tuple):
+            _check_relation(attr,instance)
+
+def _check_relation(relation, instance):
+    for v in relation:
+        if not isinstance(v,str) and not isinstance(v,tuple):
+            raise(ValueError('Invalid relation value: '+str(v)+
+                ' of type: '+str(type(v))+
+                ' in instance: '+str(instance)+
+                ',\nStructureMapper requires that values inside relation tuples be of type str or tuple.'))
+        if isinstance(v,tuple):
+            _check_relation(v,instance)
 
 class StructureMapper(Preprocessor):
     """
