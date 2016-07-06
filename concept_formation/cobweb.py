@@ -5,6 +5,7 @@ from __future__ import division
 from random import shuffle
 from random import random
 import json
+import collections
 
 from concept_formation.utils import weighted_choice
 from concept_formation.utils import most_likely_choice
@@ -50,6 +51,19 @@ class CobwebTree(object):
 
         .. seealso:: :meth:`CobwebTree.cobweb`
         """
+        for attr in instance:
+            if not isinstance(attr,str):
+                raise ValueError('Invalid attribute: '+str(attr)+
+                    ' of type: '+str(type(attr))+
+                    ' in instance: '+str(instance)+
+                    ',\n'+type(self).__name__+
+                    ' only works with constant attributes of type str.')
+            if not isinstance(instance[attr],collections.Hashable):
+                raise ValueError('Invalid value: '+str(instance[attr])+
+                    ' of type: '+str(type(instance[attr]))+
+                    ' in instance: '+str(instance) +
+                    ',\n'+type(self).__name__+
+                    ' only works with Hashable values.')
         return self.cobweb(instance)
 
     def fit(self, instances, iterations=1, randomize_first=True):
@@ -970,7 +984,7 @@ class CobwebNode(object):
            children_count += c.num_concepts() 
         return 1 + children_count 
 
-    def output_json(self, limit_by_performance):
+    def output_json(self, limit_by_performance=False):
         """
         Outputs the categorization tree in JSON form
 
@@ -1000,10 +1014,10 @@ class CobwebNode(object):
                 tot_dec += self.correct_at_decendents[k].mean
             if tot_at < tot_dec:
                 for child in self.children:
-                    output["children"].append(child.output_json())
+                    output["children"].append(child.output_json(limit_by_performance))
         else:
              for child in self.children:
-                    output["children"].append(child.output_json())
+                    output["children"].append(child.output_json(limit_by_performance))
 
         output['counts'] = temp
 

@@ -14,6 +14,7 @@ from __future__ import unicode_literals
 from __future__ import absolute_import
 from __future__ import division
 from itertools import permutations
+import json
 
 from py_search.search import Problem
 from py_search.search import Node
@@ -403,6 +404,23 @@ def is_partial_match(iAttr, cAttr, mapping, unnamed):
 
     return iAttr == cAttr
 
+def _check_instance(instance):
+    """
+    Checks the attributes of an instance to ensure they are properly
+    subscriptable types and throws an excpetion if they are not.
+    Lots of sub-processes in the structure mapper freak out if you have
+    non-str non-tuple attributes so I decided it was best to do a one
+    time check at the first call to transform.
+    """
+    for attr in instance:
+        if not isinstance(attr,str) and not isinstance(attr,tuple):
+            raise ValueError('Invalid attribute: '+str(attr)+
+                ' of type: '+str(type(attr))+
+                ' in instance: '+str(instance)+
+                ',\nStructureMapper requires that attributes be of type str or tuple.')
+        if isinstance(instance[attr],dict):
+            _check_instance(instance[attr])
+
 class StructureMapper(Preprocessor):
     """
     Flatten the instance, perform structure mapping to the concept, rename
@@ -446,6 +464,7 @@ class StructureMapper(Preprocessor):
         return {self.reverse_mapping[o]: o for o in self.reverse_mapping}
     
     def transform(self, instance):
+        check_instance(instance)
         instance = self.pipeline.transform(instance)
         mapping = flat_match(self.concept, instance,
                              beam_width=self.beam_width,
