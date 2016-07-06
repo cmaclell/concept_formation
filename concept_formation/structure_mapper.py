@@ -464,7 +464,7 @@ class StructureMapper(Preprocessor):
         return {self.reverse_mapping[o]: o for o in self.reverse_mapping}
     
     def transform(self, instance):
-        check_instance(instance)
+        _check_instance(instance)
         instance = self.pipeline.transform(instance)
         mapping = flat_match(self.concept, instance,
                              beam_width=self.beam_width,
