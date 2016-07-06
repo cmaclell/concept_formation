@@ -14,7 +14,6 @@ from __future__ import unicode_literals
 from __future__ import absolute_import
 from __future__ import division
 from itertools import permutations
-import json
 
 from py_search.search import Problem
 from py_search.search import Node
