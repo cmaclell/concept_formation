@@ -21,52 +21,10 @@ from py_search.search import beam_search
 from py_search.search import best_first_search
 from concept_formation.cobweb import CobwebNode
 from concept_formation.preprocessor import NameStandardizer
-from concept_formation.preprocessor import SubComponentProcessor
-from concept_formation.preprocessor import Flattener
-from concept_formation.preprocessor import Pipeline
 from concept_formation.preprocessor import Preprocessor
 from concept_formation.preprocessor import rename_relation
+from concept_formation.preprocessor import get_attribute_components
 from concept_formation.continuous_value import ContinuousValue
-
-def get_attribute_components(attribute, vars_only=True):
-    """
-    Gets component names out of an attribute
-
-    >>> attr = ('a', ('sub1', '?c1'))
-    >>> get_attribute_components(attr)
-    {'?c1'}
-     
-    >>> attr = '?c1'
-    >>> get_attribute_components(attr)
-    {'?c1'}
-
-    >>> attr = ('a', ('sub1', 'c1'))
-    >>> get_attribute_components(attr)
-    set()
-
-    >>> attr = 'c1'
-    >>> get_attribute_components(attr)
-    set()
-    """
-    names = set()
-
-    if vars_only is not True and attribute[0] != '_':
-        names.add(attribute)
-
-    if isinstance(attribute, tuple):
-        for ele in attribute:
-            if isinstance(ele, tuple):
-                for name in get_attribute_components(ele, vars_only):
-                    names.add(name)
-            else:
-                if ((vars_only is not True or ele[0] == '?') and ele != '_' and
-                    ele[0] != '_'):
-                    names.add(ele)
-
-    elif (vars_only is not True and attribute[0] != '_') or attribute[0] == '?':
-            names.add(attribute)
-
-    return names
 
 def get_component_names(instance, vars_only=True):
     """
@@ -102,7 +60,7 @@ def get_component_names(instance, vars_only=True):
             names.add(name)
     return names
 
-def rename_flat(instance, mapping):
+def rename_flat(target, mapping):
     """
     Given an instance and a mapping rename the components and relations and
     return the renamed instance.
@@ -123,13 +81,13 @@ def rename_flat(instance, mapping):
     """
     temp_instance = {}
 
-    for attr in instance:
+    for attr in target:
         if attr in mapping:
-            temp_instance[mapping[attr]] = instance[attr]
+            temp_instance[mapping[attr]] = target[attr]
         elif isinstance(attr, tuple):
-            temp_instance[rename_relation(attr, mapping)] = instance[attr]
+            temp_instance[rename_relation(attr, mapping)] = target[attr]
         else:
-            temp_instance[attr] = instance[attr]
+            temp_instance[attr] = target[attr]
 
     return temp_instance
 
@@ -212,11 +170,6 @@ def compute_rewards(names, target, base):
     """
     rewards = {}
 
-    if isinstance(target, CobwebNode):
-        target = target.av_counts
-    elif not isinstance(target, dict):
-        raise Exception("target must be an instance (i.e., dict) or a concept")
-
     for attr in target:
         a_comps = get_attribute_components(attr)
 
@@ -250,7 +203,7 @@ def compute_rewards(names, target, base):
 
     return rewards
 
-def flat_match(concept, instance, beam_width=1, vars_only=True):
+def flat_match(target, base, beam_width=1, vars_only=True):
     """
     Given a concept and instance this function returns a mapping that can be
     used to rename components in the instance. The mapping returned maximizes
@@ -260,8 +213,8 @@ def flat_match(concept, instance, beam_width=1, vars_only=True):
     lower the beam width the more greedy (and faster) the search.  If the beam
     width is set to `float('inf')` then uses A* instead.
 
-    :param concept: A concept to map the instance to
-    :type concept: TrestleNode
+    :param base: A concept to map the target to
+    :type base: TrestleNode
     :param instance: An instance to be mapped to the concept
     :type instance: instance
     :param beam_width: The width of the beam used for Beam Search. Uses A* if
@@ -274,13 +227,13 @@ def flat_match(concept, instance, beam_width=1, vars_only=True):
     :return: a mapping for renaming components in the instance.
     :rtype: dict
     """
-    inames = frozenset(get_component_names(instance))
-    cnames = frozenset(get_component_names(concept.av_counts, vars_only))
+    inames = frozenset(get_component_names(target))
+    cnames = frozenset(get_component_names(base.av_counts, vars_only))
 
     if(len(inames) == 0 or len(cnames) == 0):
         return {}
 
-    rewards = compute_rewards(cnames, instance, concept)
+    rewards = compute_rewards(cnames, target, base)
     problem = StructureMappingProblem((frozenset(), inames, cnames),
                                       extra=rewards)
     if beam_width == float('inf'):
@@ -336,17 +289,39 @@ class StructureMappingProblem(Problem):
         new_rewards = {}
 
         mapped = frozenset(mapping.keys())
+        reverse_mapping = {mapping[a]:a for a in mapping}
+
         for iattr in rewards:
             if frozenset(iattr).issubset(mapped):
                 bindings = tuple(mapping[o] for o in iattr)
                 if bindings in rewards[iattr]:
                     reward += rewards[iattr][bindings]
-            elif new[0] in iattr:
-                idx = iattr.index(new[0])
-                new_rewards[iattr] = {vals: rewards[iattr][vals] for vals in
-                                      rewards[iattr] if vals[idx] == new[1]}
             else:
-                new_rewards[iattr] = rewards[iattr]
+                nrw = {}
+                for vals in rewards[iattr]:
+                    partial_match = True
+                    for i,v in enumerate(vals):
+                        if iattr[i] in mapping and mapping[iattr[i]] != v:
+                            partial_match = False
+                            break
+                        if (v in reverse_mapping and reverse_mapping[v] !=
+                            iattr[i]):
+                            partial_match = False
+                            break
+                    if partial_match:
+                        nrw[vals] = rewards[iattr][vals]
+                if len(nrw) > 0:
+                    new_rewards[iattr] = nrw
+
+            #elif new[0] in iattr:
+            #    # TODO double check we cannot knock out more possible matches
+            #    idx = iattr.index(new[0])
+            #    new_rewards[iattr] = {vals: rewards[iattr][vals] for vals in
+            #                          rewards[iattr] if vals[idx] == new[1]}
+            #else:
+            #    new_rewards[iattr] = {val: rewards[iattr][val] for val in 
+            #                          rewards[iattr] if len(val) > 1 or 
+            #                          val[0] != new[1]}
 
         return reward, new_rewards
 
@@ -382,6 +357,8 @@ class StructureMappingProblem(Problem):
         more details of how this function is used in search.
         """
         mapping, unnamed, availableNames = node.state
+        #print(unnamed)
+        #print(node.extra)
         return len(unnamed) == 0
 
 def is_partial_match(iAttr, cAttr, mapping, unnamed):
@@ -456,31 +433,26 @@ class StructureMapper(Preprocessor):
     :return: A flattened and mapped copy of the instance
     :rtype: instance
     """
-    def __init__(self, concept, gensym, beam_width=1, vars_only=True, pipeline=None):
-        self.concept = concept        
+    def __init__(self, base, gensym, beam_width=1, vars_only=True):
+        self.base = base
         self.reverse_mapping = None
         self.beam_width = beam_width
         self.vars_only = vars_only
-
-        if pipeline is None:
-        	self.pipeline = Pipeline(NameStandardizer(gensym),
-                                 SubComponentProcessor(), Flattener())
-        else :
-        	self.pipeline = pipeline
+        self.name_standardizer = NameStandardizer(gensym)
 
     def get_mapping(self):
         return {self.reverse_mapping[o]: o for o in self.reverse_mapping}
     
-    def transform(self, instance):
-        instance = self.pipeline.transform(instance)
-        mapping = flat_match(self.concept, instance,
+    def transform(self, target):
+        target = self.name_standardizer.transform(target)
+        mapping = flat_match(target, self.base,
                              beam_width=self.beam_width,
                              vars_only=self.vars_only)
         self.reverse_mapping = {mapping[o]: o for o in mapping}
-        return rename_flat(instance, mapping)
+        return rename_flat(target, mapping)
 
-    def undo_transform(self, instance):
+    def undo_transform(self, target):
         if self.reverse_mapping is None:
             raise Exception("Must transform before undoing transform")
-        instance = rename_flat(instance, self.reverse_mapping)
-        return self.pipeline.undo_transform(instance)
+        target = rename_flat(target, self.reverse_mapping)
+        return self.name_standardizer.undo_transform(target)
