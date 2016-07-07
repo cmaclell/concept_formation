@@ -8,6 +8,9 @@ from math import pi
 from concept_formation.cobweb3 import Cobweb3Tree
 from concept_formation.cobweb3 import Cobweb3Node
 from concept_formation.structure_mapper import StructureMapper
+from concept_formation.preprocessor import SubComponentProcessor
+from concept_formation.preprocessor import Flattener
+from concept_formation.preprocessor import Pipeline
 
 class TrestleTree(Cobweb3Tree):
     """
@@ -127,7 +130,9 @@ class TrestleTree(Cobweb3Tree):
                                            gensym=self.gensym,
                                            beam_width=self.beam_width,
                                            vars_only=self.vars_only)
-        temp_instance = structure_mapper.transform(instance)
+        preprocessing = Pipeline(SubComponentProcessor(), Flattener(),
+                                 structure_mapper)
+        temp_instance = preprocessing.transform(instance)
         return self._cobweb_categorize(temp_instance)
 
     def infer_missing(self, instance, choice_fn="most likely", allow_none=True):
@@ -148,11 +153,15 @@ class TrestleTree(Cobweb3Tree):
                                            gensym=self.gensym,
                                            beam_width=self.beam_width,
                                            vars_only=self.vars_only)
-        temp_instance = structure_mapper.transform(instance)
+        preprocessing = Pipeline(SubComponentProcessor(), Flattener(),
+                                 structure_mapper)
+        temp_instance = preprocessing.transform(instance)
         temp_instance, probs = super(TrestleTree,
                                      self).infer_missing(temp_instance,
                                                          choice_fn, allow_none)
-        return structure_mapper.undo_transform(temp_instance), structure_mapper.undo_transform(probs)
+        temp_instance = preprocessing.undo_transform(temp_instance)
+        probs = preprocessing.undo_transform(probs)
+        return temp_instance, probs
 
     def categorize(self, instance):
         """
@@ -200,5 +209,7 @@ class TrestleTree(Cobweb3Tree):
                                            gensym=self.gensym,
                                            beam_width=self.beam_width,
                                            vars_only=self.vars_only)
-        temp_instance = structure_mapper.transform(instance)
+        preprocessing = Pipeline(SubComponentProcessor(), Flattener(),
+                                 structure_mapper)
+        temp_instance = preprocessing.transform(instance)
         return self.cobweb(temp_instance)
