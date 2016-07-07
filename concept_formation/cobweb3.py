@@ -140,20 +140,24 @@ class Cobweb3Node(CobwebNode):
     def attr_val_guess_gain(self, attr, val, counts=1.0):
         """
         Returns the gain in number of correct guesses if a particular attr/val
-        was added to a concept.
+        was added to a concept ``counts'' times. Effectively, it compares the
+        expected correct guesses of the attribute if the overall counts is
+        increased by one (i.e., a none is added) vs. if a particular value of
+        the attribute is added. 
 
         :param attr: An attribute in the concept
         :type attr: str
         :param val: A value for the given attribute in the concept
         :type val: float or str
-        :return:  the gain in number of correct guesses from adding the partiucluar attr/val
+        :param counts: the number of times to add the attr val to the concept
+        :type counts: integer or float
+        :return: the gain in number of correct guesses from adding the
+                 partiucluar attr/val
         :rtype: float               
         """
-
         if attr[0] == "_":
             return 0.0
         elif attr not in self.av_counts:
-            # TODO check that this should be 0
             return 0.0
         elif isinstance(self.av_counts[attr], ContinuousValue):
             if self.tree.scaling:
@@ -164,20 +168,25 @@ class Cobweb3Node(CobwebNode):
             before_std = sqrt(self.av_counts[attr].scaled_unbiased_std(scale) *
                               self.av_counts[attr].scaled_unbiased_std(scale) +
                              1/(4*pi))
-            before_prob = ((1.0 * self.av_counts[attr].num) / (self.count + 1.0))
+            before_prob = ((1.0 * self.av_counts[attr].num) / 
+                           (self.count + counts))
             before_count = ((before_prob * before_prob) * 
                             (1/(2 * sqrt(pi) * before_std)))
 
             temp = self.av_counts[attr].copy()
-            temp.update(val)
+            if isinstance(val, ContinuousValue):
+                temp.combine(val)
+            else:
+                temp.update(val)
+
             after_std = sqrt(temp.scaled_unbiased_std(scale) *
                              temp.scaled_unbiased_std(scale) + 1/(4*pi)) 
-            after_prob = ((1.0 + self.av_counts[attr].num) / (self.count + 1.0))
+            after_prob = ((self.av_counts[attr].num + counts) / 
+                          (self.count + counts))
             after_count = ((after_prob * after_prob) * 
                            (1/(2 * sqrt(pi) * after_std)))
             return after_count - before_count
         elif val not in self.av_counts[attr]:
-            # TODO check that this should be 0
             return 0.0
         else:
             before_prob = (self.av_counts[attr][val] / (self.count + counts))
@@ -241,7 +250,7 @@ class Cobweb3Node(CobwebNode):
                 
             elif isinstance(self.tree.root.av_counts[attr], ContinuousValue):
                 if self.tree.scaling:
-                    scale = ((1 / self.tree.scaling) * 
+                    scale = ((1.0 / self.tree.scaling) * 
                              self.tree.root.av_counts[attr].unbiased_std())
                 else:
                     scale = 1.0
@@ -259,12 +268,9 @@ class Cobweb3Node(CobwebNode):
 
             else:
                 val_count = 0
-                for val in self.tree.root.av_counts[attr]:
-                    if val not in self.av_counts[attr]:
-                        prob = 0
-                    else:
-                        val_count += self.av_counts[attr][val]
-                        prob = (self.av_counts[attr][val]) / (1.0 * self.count)
+                for val in self.av_counts[attr]:
+                    val_count += self.av_counts[attr][val]
+                    prob = (self.av_counts[attr][val]) / (1.0 * self.count)
                     correct_guesses += (prob * prob)
 
             #Factors in the probability mass of missing values
