@@ -19,12 +19,14 @@ from py_search.search import Problem
 from py_search.search import Node
 from py_search.search import beam_search
 from py_search.search import best_first_search
+from concept_formation.cobweb import CobwebNode
 from concept_formation.preprocessor import NameStandardizer
 from concept_formation.preprocessor import SubComponentProcessor
 from concept_formation.preprocessor import Flattener
 from concept_formation.preprocessor import Pipeline
 from concept_formation.preprocessor import Preprocessor
 from concept_formation.preprocessor import rename_relation
+from concept_formation.continuous_value import ContinuousValue
 
 def get_attribute_components(attribute, vars_only=True):
     """
@@ -201,15 +203,23 @@ def contains_component(component, attr):
 
 def compute_rewards(names, target, base):
     """
-    Consider trying to speed this up
+    The function computes the rewards for renaming the target to match it to
+    the base. All of the rewards for possible mappings are computed at once so
+    that they don't have to be recomputed at each step in the search. 
+
+    .. todo:: 
+        Consider trying to speed this up
     """
     rewards = {}
 
-    if not isinstance(target, dict):
+    if isinstance(target, CobwebNode):
         target = target.av_counts
+    elif not isinstance(target, dict):
+        raise Exception("target must be an instance (i.e., dict) or a concept")
 
     for attr in target:
         a_comps = get_attribute_components(attr)
+
         if len(a_comps) == 0:
             continue
 
@@ -217,12 +227,14 @@ def compute_rewards(names, target, base):
             mapping = dict(zip(a_comps, c_comps))
             new_attr = bind_flat_attr(attr, mapping)
 
-            # TODO need to iterate over all of the instance values and 
-            # sum them up.
             if isinstance(target[attr], dict):
                 r = 0
                 for val in target[attr]:
-                    r += base.attr_val_guess_gain(new_attr, val)
+                    r += base.attr_val_guess_gain(new_attr, val, 
+                                                  target[attr][val])
+            elif isinstance(target[attr], ContinuousValue):
+                r = base.attr_val_guess_gain(new_attr, target[attr],
+                                             target[attr].num)
             else:
                 r = base.attr_val_guess_gain(new_attr, target[attr])
 
@@ -237,36 +249,6 @@ def compute_rewards(names, target, base):
                 rewards[keys][values] += r
 
     return rewards
-
-# TODO TEST AND REVISE
-def flat_match_new(target, base, beam_width=1, vars_only=True):
-    """
-    A variation of flat match that structure maps one concept onto another.
-    Returns a mapping that can be applied to concept1 to align it to concept2.
-    """
-    if isinstance(target, dict):
-        target_names = frozenset(get_component_names(target))
-    else:
-        target_names = frozenset(get_component_names(target.av_counts))
-
-    base_names = frozenset(get_component_names(base.av_counts, vars_only))
-
-    if(len(target_names) == 0 or len(base_names) == 0):
-        return {}
-
-    rewards = compute_rewards(base_names, target, base)
-    problem = StructureMappingProblem((frozenset(), target_names, base_names),
-                                      extra=rewards)
-    if beam_width == float('inf'):
-        solution = next(best_first_search(problem))
-    else:
-        solution = next(beam_search(problem, beam_width=beam_width))
-
-    if solution:
-        mapping, unnamed, availableNames = solution.state
-        return {a:v for a,v in mapping}
-    else:
-        return None
 
 def flat_match(concept, instance, beam_width=1, vars_only=True):
     """
