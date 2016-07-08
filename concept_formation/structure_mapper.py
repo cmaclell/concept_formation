@@ -19,7 +19,6 @@ from py_search.search import Problem
 from py_search.search import Node
 from py_search.search import beam_search
 from py_search.search import best_first_search
-from concept_formation.cobweb import CobwebNode
 from concept_formation.preprocessor import NameStandardizer
 from concept_formation.preprocessor import Preprocessor
 from concept_formation.preprocessor import rename_relation
@@ -165,6 +164,9 @@ def compute_rewards(names, target, base):
     the base. All of the rewards for possible mappings are computed at once so
     that they don't have to be recomputed at each step in the search. 
 
+    target here can be either an instance or an av_counts object from a
+    concept.
+
     .. todo:: 
         Consider trying to speed this up
     """
@@ -213,10 +215,11 @@ def flat_match(target, base, beam_width=1, vars_only=True):
     lower the beam width the more greedy (and faster) the search.  If the beam
     width is set to `float('inf')` then uses A* instead.
 
+    :param target: An instance or concept.av_counts object to be mapped to the
+        base concept.
+    :type target: instance or av_counts obj from concept
     :param base: A concept to map the target to
     :type base: TrestleNode
-    :param instance: An instance to be mapped to the concept
-    :type instance: instance
     :param beam_width: The width of the beam used for Beam Search. Uses A* if
         the beam width is `float('inf')` 
     :type beam_width: int, or float('inf') for A* 
