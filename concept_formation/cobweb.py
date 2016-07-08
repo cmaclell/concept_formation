@@ -454,12 +454,9 @@ class CobwebNode(object):
 
             val_count = 0
             if attr in self.av_counts:
-                for val in self.tree.root.av_counts[attr]:
-                    if val not in self.av_counts[attr]:
-                        prob = 0
-                    else:
-                        val_count += self.av_counts[attr][val]
-                        prob = (self.av_counts[attr][val]) / (1.0 * self.count)
+                for val in self.av_counts[attr]:
+                    val_count += self.av_counts[attr][val]
+                    prob = (self.av_counts[attr][val]) / (1.0 * self.count)
                     correct_guesses += (prob * prob)
 
             #Factors in the probability mass of missing values

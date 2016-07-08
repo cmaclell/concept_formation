@@ -47,6 +47,46 @@ import json
 
 _gensym_counter = 0;
 
+def get_attribute_components(attribute, vars_only=True):
+    """
+    Gets component names out of an attribute
+
+    >>> attr = ('a', ('sub1', '?c1'))
+    >>> get_attribute_components(attr)
+    {'?c1'}
+     
+    >>> attr = '?c1'
+    >>> get_attribute_components(attr)
+    {'?c1'}
+
+    >>> attr = ('a', ('sub1', 'c1'))
+    >>> get_attribute_components(attr)
+    set()
+
+    >>> attr = 'c1'
+    >>> get_attribute_components(attr)
+    set()
+    """
+    names = set()
+
+    if vars_only is not True and attribute[0] != '_':
+        names.add(attribute)
+
+    if isinstance(attribute, tuple):
+        for ele in attribute:
+            if isinstance(ele, tuple):
+                for name in get_attribute_components(ele, vars_only):
+                    names.add(name)
+            else:
+                if ((vars_only is not True or ele[0] == '?') and ele != '_' and
+                    ele[0] != '_'):
+                    names.add(ele)
+
+    elif (vars_only is not True and attribute[0] != '_') or attribute[0] == '?':
+            names.add(attribute)
+
+    return names
+
 def default_gensym():
     """
     Generates unique names for naming renaming apart objects.
@@ -409,7 +449,6 @@ class NameStandardizer(Preprocessor):
          ('relation2', ('a1', '?o1'), ('relation3', ('a3', ('c2', 'c3')))): 4.3}
         
         """
-
         new_instance = {}
         relations = []
 
@@ -436,6 +475,9 @@ class NameStandardizer(Preprocessor):
                          isinstance(ele, dict) else ele for ele in value]
             
             if isinstance(name, tuple):
+                for o in get_attribute_components(name):
+                    if o not in mapping:
+                        mapping[o] = self.gensym()
                 relations.append((name, value))
             else:
                 new_instance[name] = value
