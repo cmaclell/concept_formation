@@ -4,6 +4,7 @@ from __future__ import absolute_import
 from __future__ import division
 from math import sqrt
 from math import pi
+import collections
 
 from concept_formation.cobweb3 import Cobweb3Tree
 from concept_formation.cobweb3 import Cobweb3Node
@@ -91,6 +92,43 @@ class TrestleTree(Cobweb3Tree):
         self.root = Cobweb3Node()
         self.root.tree = self
 
+    def _sanity_check_instance(self,instance):
+        """
+        Checks the attributes of an instance to ensure they are properly
+        subscriptable types and throws an excpetion if they are not.
+        Lots of sub-processes in the structure mapper freak out if you have
+        non-str non-tuple attributes so I decided it was best to do a one
+        time check at the first call to transform.
+        """
+        for attr in instance:
+            if not isinstance(attr,str) and not isinstance(attr,tuple):
+                raise ValueError('Invalid attribute: '+str(attr)+
+                    ' of type: '+str(type(attr))+
+                    ' in instance: '+str(instance)+
+                    ',\n'+type(self).__name__+
+                    ' requires that attributes be of type str or tuple.')
+            if isinstance(instance[attr],dict):
+                self._sanity_check_instance(instance[attr])
+            if isinstance(attr,tuple):
+                self._sanity_check_instance(attr,instance)
+            if not isinstance(instance[attr],collections.Hashable):
+                raise ValueError('Invalid value: '+str(instance[attr])+
+                    ' of type: '+str(type(instance[attr]))+
+                    ' in instance: '+str(instance) +
+                    ',\n'+type(self).__name__+
+                    ' only works with Hashable values.')
+
+    def _sanity_check_relation(self,relation, instance):
+        for v in relation:
+            if not isinstance(v,str) and not isinstance(v,tuple):
+                raise(ValueError('Invalid relation value: '+str(v)+
+                    ' of type: '+str(type(v))+
+                    ' in instance: '+str(instance)+
+                    ',\n'+type(self).__name__+
+                    'requires that values inside relation tuples be of type str or tuple.'))
+            if isinstance(v,tuple):
+                self._sanity_check_relation(v,instance)
+
     def ifit(self, instance):
         """
         Incrementally fit a new instance into the tree and return its resulting
@@ -111,6 +149,7 @@ class TrestleTree(Cobweb3Tree):
 
         .. seealso:: :meth:`TrestleTree.trestle`
         """
+        self._sanity_check_instance(instance)
         return self.trestle(instance)
 
     def _trestle_categorize(self, instance):
@@ -178,6 +217,7 @@ class TrestleTree(Cobweb3Tree):
 
         .. seealso:: :meth:`TrestleTree.trestle`
         """
+        self._sanity_check_instance(instance)
         return self._trestle_categorize(instance)
 
     def trestle(self, instance):
@@ -196,6 +236,7 @@ class TrestleTree(Cobweb3Tree):
         :return: A concept describing the instance
         :rtype: CobwebNode
         """
+        self._sanity_check_instance(instance)
         structure_mapper = StructureMapper(self.root,
                                            gensym=self.gensym,
                                            beam_width=self.beam_width,
