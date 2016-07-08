@@ -42,6 +42,8 @@ from __future__ import division
 
 from copy import deepcopy
 from numbers import Number
+import collections
+import json
 
 _gensym_counter = 0;
 
@@ -635,10 +637,7 @@ class ListProcessor(Preprocessor):
                        'b',
                        {'sub-a': 'c',
                         'sub-sub': {'s': 'd',
-                                    'sslist': ['w',
-                                               'x',
-                                               'y',
-                                               {'issue': 'here'}]}},
+                                    'sslist': ['w', 'x', 'y', {'issue': 'here'}]}},
                        'g']}}
 
     >>> lp = ListProcessor()
@@ -678,10 +677,7 @@ class ListProcessor(Preprocessor):
                        'b',
                        {'sub-a': 'c',
                         'sub-sub': {'s': 'd',
-                                    'sslist': ['w',
-                                               'x',
-                                               'y',
-                                               {'issue': 'here'}]}},
+                                    'sslist': ['w', 'x', 'y', {'issue': 'here'}]}},
                        'g']}}
 
     """
@@ -1437,3 +1433,127 @@ class NominalToNumeric(Preprocessor):
             raise an Exception.
         """
         raise NotImplementedError("no reverse transformation currently implemented")
+
+
+class Sanitizer(Preprocessor):
+    """
+
+    This is a preprocessor that santizes instances to adhere to the general
+    expectations of either cobweb or the structure mapper. In general this
+    means enforcing that attribute keys are either of type str or tuple and
+    that relational tuples contain only values of str or tuple. The  main
+    reason for having this preprocessor is because many other things are valid
+    dictionary keys in python and its possible to have weird behavior as a
+    result.
+
+
+    >>> from pprint import pprint
+    >>> instance = {'a1':'v1','a2':2,'a3':{'aa1':'1','aa2':2},1:'v2',len:'v3',('r1',2,'r3'):'v4',('r4','r5'):{'aa3':4,3:'v6'}}
+    >>> pprint(instance)
+    {<built-in function len>: 'v3',
+     1: 'v2',
+     'a1': 'v1',
+     'a2': 2,
+     'a3': {'aa1': '1', 'aa2': 2},
+     ('r1', 2, 'r3'): 'v4',
+     ('r4', 'r5'): {3: 'v6', 'aa3': 4}}
+    >>> san = Sanitizer('cobweb')
+    >>> inst = san.transform(instance)
+    >>> pprint(inst)
+    {'1': 'v2',
+     '<built-in function len>': 'v3',
+     'a1': 'v1',
+     'a2': 2,
+     'a3': "{'aa1':'1','aa2':2}",
+     ('r1', 2, 'r3'): 'v4',
+     ('r4', 'r5'): "{3:'v6','aa3':4}"}
+    >>> san = Sanitizer('trestle')
+    >>> inst = san.transform(instance)
+    >>> pprint(inst)
+    {'1': 'v2',
+     '<built-in function len>': 'v3',
+     'a1': 'v1',
+     'a2': 2,
+     'a3': {'aa1': '1', 'aa2': 2},
+     ('r1', '2', 'r3'): 'v4',
+     ('r4', 'r5'): {'3': 'v6', 'aa3': 4}}
+    """
+
+    def __init__(self,spec='trestle'):
+        if spec.lower() not in ['trestle','cobweb','cobweb3']:
+            raise ValueError("Invalid Spec: must be one of: 'trestle','cobweb','cobweb3'")
+        self.spec = spec
+
+    def transform(self, instance):
+        return self._sanitize(instance)
+
+    def undo_transform(self,instance):
+        raise NotImplementedError("no reverse transformation currently implemented")
+
+    def _cob_str(self,d):
+        """
+        Calling str on a dictionary is not gauranteed to print its keys
+        deterministically so we need this function to ensure any stringified
+        subobjects will be treated the same.
+        """
+        if isinstance(d,str):
+            return "'"+d+"'"
+        if isinstance(d,dict):
+            return '{'+','.join([ self._cob_str(k)+':'+self._cob_str(d[k]) for k in sorted(d.keys(),key=str)])+'}'
+        else:
+            return str(d)
+
+    def _sanitize_tuple(self,tup):
+        ret = []
+        for v in tup:
+            if isinstance(v,str):
+                ret.append(v)
+            elif isinstance(v,tuple):
+                ret.append(self._sanitize_tuple(v))
+            else:
+                ret.append(str(v))
+        return tuple(ret)
+
+    def _sanitize(self, instance):
+        ret = {}
+        for attr in instance:
+            val = instance[attr]
+            if not isinstance(attr,str) and not isinstance(attr,tuple):
+                if str(attr) in instance:
+                    print('Santitizing',attr,'is clobbering an existing value')
+                
+                if self.spec == 'trestle':
+                    if isinstance(val,collections.Hashable):
+                        ret[str(attr)] = val
+                    elif isinstance(val,dict):
+                        ret[str(attr)] = self._sanitize(val)
+                    else:
+                        ret[str(attr)] = self._cob_str(val)
+                else:
+                    ret[str(attr)] = val if isinstance(val,collections.Hashable) else self._cob_str(val)
+            if isinstance(attr,str):
+                if self.spec == 'trestle':
+                    if isinstance(val,collections.Hashable):
+                        ret[attr] = val
+                    elif isinstance(val,dict):
+                        ret[attr] = self._sanitize(val)
+                    else:
+                        ret[attr] = self._cob_str(val)
+                else:
+                    ret[attr] = val if isinstance(val,collections.Hashable) else self._cob_str(val)
+                    
+            if isinstance(attr,tuple):
+                if self.spec == 'trestle':
+                    san_tup = self._sanitize_tuple(attr)
+                    if san_tup != attr and san_tup in instance:
+                        print('Sanitizing',attr,'is clobbering an existing vlaue')
+                    
+                    if isinstance(val,collections.Hashable):
+                        ret[san_tup] = val
+                    elif isinstance(val,dict):
+                        ret[san_tup] = self._sanitize(val)
+                    else:
+                        ret[san_tup] = self._cob_str(val)
+                else:
+                    ret[attr] = val if isinstance(val,collections.Hashable) else self._cob_str(val)
+        return ret
