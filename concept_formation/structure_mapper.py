@@ -403,35 +403,6 @@ def is_partial_match(iAttr, cAttr, mapping, unnamed):
 
     return iAttr == cAttr
 
-def _check_instance(instance):
-    """
-    Checks the attributes of an instance to ensure they are properly
-    subscriptable types and throws an excpetion if they are not.
-    Lots of sub-processes in the structure mapper freak out if you have
-    non-str non-tuple attributes so I decided it was best to do a one
-    time check at the first call to transform.
-    """
-    for attr in instance:
-        if not isinstance(attr,str) and not isinstance(attr,tuple):
-            raise ValueError('Invalid attribute: '+str(attr)+
-                ' of type: '+str(type(attr))+
-                ' in instance: '+str(instance)+
-                ',\nStructureMapper requires that attributes be of type str or tuple.')
-        if isinstance(instance[attr],dict):
-            _check_instance(instance[attr])
-        if isinstance(attr,tuple):
-            _check_relation(attr,instance)
-
-def _check_relation(relation, instance):
-    for v in relation:
-        if not isinstance(v,str) and not isinstance(v,tuple):
-            raise(ValueError('Invalid relation value: '+str(v)+
-                ' of type: '+str(type(v))+
-                ' in instance: '+str(instance)+
-                ',\nStructureMapper requires that values inside relation tuples be of type str or tuple.'))
-        if isinstance(v,tuple):
-            _check_relation(v,instance)
-
 class StructureMapper(Preprocessor):
     """
     Flatten the instance, perform structure mapping to the concept, rename
@@ -475,7 +446,6 @@ class StructureMapper(Preprocessor):
         return {self.reverse_mapping[o]: o for o in self.reverse_mapping}
     
     def transform(self, instance):
-        _check_instance(instance)
         instance = self.pipeline.transform(instance)
         mapping = flat_match(self.concept, instance,
                              beam_width=self.beam_width,
