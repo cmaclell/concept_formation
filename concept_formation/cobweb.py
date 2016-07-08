@@ -34,6 +34,21 @@ class CobwebTree(object):
     def __str__(self):
         return str(self.root)
 
+    def _sanity_check_instance(self,instance):
+        for attr in instance:
+            if not isinstance(attr,str):
+                raise ValueError('Invalid attribute: '+str(attr)+
+                    ' of type: '+str(type(attr))+
+                    ' in instance: '+str(instance)+
+                    ',\n'+type(self).__name__+
+                    ' only works with constant attributes of type str.')
+            if not isinstance(instance[attr],collections.Hashable):
+                raise ValueError('Invalid value: '+str(instance[attr])+
+                    ' of type: '+str(type(instance[attr]))+
+                    ' in instance: '+str(instance) +
+                    ',\n'+type(self).__name__+
+                    ' only works with Hashable values.')
+
     def ifit(self, instance):
         """
         Incrementally fit a new instance into the tree and return its resulting
@@ -51,19 +66,7 @@ class CobwebTree(object):
 
         .. seealso:: :meth:`CobwebTree.cobweb`
         """
-        for attr in instance:
-            if not isinstance(attr,str):
-                raise ValueError('Invalid attribute: '+str(attr)+
-                    ' of type: '+str(type(attr))+
-                    ' in instance: '+str(instance)+
-                    ',\n'+type(self).__name__+
-                    ' only works with constant attributes of type str.')
-            if not isinstance(instance[attr],collections.Hashable):
-                raise ValueError('Invalid value: '+str(instance[attr])+
-                    ' of type: '+str(type(instance[attr]))+
-                    ' in instance: '+str(instance) +
-                    ',\n'+type(self).__name__+
-                    ' only works with Hashable values.')
+        self._sanity_check_instance(instance) 
         return self.cobweb(instance)
 
     def fit(self, instances, iterations=1, randomize_first=True):
@@ -249,6 +252,7 @@ class CobwebTree(object):
         :return: A completed instance
         :rtype: instance
         """
+        self._sanity_check_instance(instance)
         temp_instance = {a:instance[a] for a in instance}
         probs = {a:1.0 for a in instance}
         concept = self._cobweb_categorize(temp_instance)
@@ -281,6 +285,7 @@ class CobwebTree(object):
 
         .. seealso:: :meth:`CobwebTree.cobweb`
         """
+        self._sanity_check_instance(instance)
         return self._cobweb_categorize(instance)
     
     def train_from_json(self, filename, length=None):
