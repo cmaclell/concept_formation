@@ -113,7 +113,7 @@ class TrestleTree(Cobweb3Tree):
             if isinstance(instance[attr],dict):
                 self._sanity_check_instance(instance[attr])
             if isinstance(attr,tuple):
-                self._sanity_check_instance(attr,instance)
+                self._sanity_check_relation(attr,instance)
             if not isinstance(instance[attr],collections.Hashable):
                 raise ValueError('Invalid value: '+str(instance[attr])+
                     ' of type: '+str(type(instance[attr]))+
@@ -152,7 +152,6 @@ class TrestleTree(Cobweb3Tree):
 
         .. seealso:: :meth:`TrestleTree.trestle`
         """
-        self._sanity_check_instance(instance)
         return self.trestle(instance)
 
     def _trestle_categorize(self, instance):
@@ -172,6 +171,7 @@ class TrestleTree(Cobweb3Tree):
         preprocessing = Pipeline(SubComponentProcessor(), Flattener(),
                                  structure_mapper)
         temp_instance = preprocessing.transform(instance)
+        self._sanity_check_instance(temp_instance)
         return self._cobweb_categorize(temp_instance)
 
     def infer_missing(self, instance, choice_fn="most likely", allow_none=True):
@@ -226,7 +226,6 @@ class TrestleTree(Cobweb3Tree):
 
         .. seealso:: :meth:`TrestleTree.trestle`
         """
-        self._sanity_check_instance(instance)
         return self._trestle_categorize(instance)
 
     def trestle(self, instance):
@@ -245,7 +244,6 @@ class TrestleTree(Cobweb3Tree):
         :return: A concept describing the instance
         :rtype: CobwebNode
         """
-        self._sanity_check_instance(instance)
         structure_mapper = StructureMapper(self.root,
                                            gensym=self.gensym,
                                            beam_width=self.beam_width,
@@ -253,4 +251,5 @@ class TrestleTree(Cobweb3Tree):
         preprocessing = Pipeline(SubComponentProcessor(), Flattener(),
                                  structure_mapper)
         temp_instance = preprocessing.transform(instance)
+        self._sanity_check_instance(temp_instance)
         return self.cobweb(temp_instance)
