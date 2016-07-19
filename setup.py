@@ -11,5 +11,5 @@ setuptools.setup(
     license='LICENSE.txt',
     description='A library for doing incremental concept formation using algorithms in the COBWEB family.',
     long_description=open('README.rst').read(),
-    install_requires=['py_search>=0.1.9'],
+    install_requires=['py_search>=0.2.0'],
 )

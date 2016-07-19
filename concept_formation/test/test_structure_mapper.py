@@ -3,9 +3,19 @@ from __future__ import unicode_literals
 from __future__ import absolute_import
 from __future__ import division
 
-from concept_formation.trestle import TrestleTree
 from random import normalvariate
+from pprint import pprint
+from random import shuffle
+from random import choice
+from random import random
+
+from munkres import Munkres
+
+from concept_formation.trestle import TrestleTree
 from concept_formation.structure_mapper import StructureMappingProblem
+from concept_formation.structure_mapper import StructureMappingOptimizationProblem
+from concept_formation.structure_mapper import mapping_cost
+from concept_formation.structure_mapper import greedy_best_mapping
 from concept_formation.structure_mapper import get_component_names
 from concept_formation.structure_mapper import compute_rewards
 from concept_formation.structure_mapper import StructureMapper
@@ -19,63 +29,33 @@ from py_search.search import widening_beam_search
 from py_search.search import best_first_search
 from py_search.search import Problem
 from py_search.search import Node
-from pprint import pprint
-import random
+from py_search.search import beam_optimization
+from py_search.search import simulated_annealing_optimization
 
-class NoHeuristic(StructureMappingProblem):
+def unmapped_mapping(inames):
+    mapping = []
+    for ot in inames:
+        mapping.append((ot, ot))
+    return frozenset(mapping)
 
-    def node_value(self, node):
-        return node.cost()
+def random_mapping(inames, cnames):
+    available = set(cnames)
+    available.add(None)
+    base = list(inames.union(cnames))
+    shuffle(base)
 
-class OptimizationProblem(Problem):
+    mapping = []
+    for ot in inames:
+        bt = choice(list(available))
+        if bt is None:
+            mapping.append((ot, ot))
+        else:
+            mapping.append((ot, bt))
+        available.remove(bt)
+    
+    return frozenset(mapping)
 
-    def node_value(self, node):
-        return node.cost()
-
-    def reward(self, mapping, rewards):
-        reward = 0
-        mapped = frozenset(mapping.keys())
-        for iattr in rewards:
-            if frozenset(iattr).issubset(mapped):
-                bindings = tuple(mapping[o] for o in iattr)
-                if bindings in rewards[iattr]:
-                    reward += rewards[iattr][bindings]
-        return reward
-
-    def successor(self, node):
-        mapping, others = node.state
-        rewards = node.extra
-        mapping = dict(mapping)
-
-        for o1 in mapping:
-            for o2 in mapping:
-                if o1 == o2:
-                    continue
-                new_mapping = {a:mapping[a] for a in mapping}
-                new_mapping[o1] = mapping[o2]
-                new_mapping[o2] = mapping[o1]
-                path_cost = -1 * self.reward(new_mapping, rewards)
-                yield Node((frozenset(mapping.items()), others), node, 
-                           ('swap', o1, o2), path_cost, node.extra)
-
-        for o1 in mapping:
-            for o2 in others:
-                new_mapping = {a:mapping[a] for a in mapping}
-                new_mapping[o1] = o2
-                new_others = (others -
-                              frozenset([o2])).union(frozenset([mapping[o1]]))
-                path_cost = -1 * self.reward(new_mapping, rewards)
-                yield Node((frozenset(mapping.items()), new_others), node,
-                            ('swap', o1, 'others', o2), path_cost, node.extra)
-
-    def goal_test(self, node):
-        min_adjacent = min([n.cost() for n in self.successor(node)])
-        print(node.cost(), min_adjacent)
-        if node.cost() <= min_adjacent:
-            return True
-        return False
-
-def random_instance(num_objects=10, num_sub_objects=0, num_attributes=2):
+def random_instance(num_objects=10, num_sub_objects=0, num_attributes=1):
     i = {}
     for o in range(num_objects):
         obj = '?rand_obj' + str(o)
@@ -97,46 +77,60 @@ def random_instance(num_objects=10, num_sub_objects=0, num_attributes=2):
 
     return i
 
-def random_concept(num_instances=3):
+def random_concept(num_instances=1, num_objects=10):
     tree = TrestleTree()
     for i in range(num_instances):
-        print("Training concept with instance", i+1)
-        inst = random_instance()
-        pprint(inst)
+        #print("Training concept with instance", i+1)
+        inst = random_instance(num_objects)
+        #pprint(inst)
         tree.ifit(inst)
     return tree.root
 
-instance = random_instance()
-#x = {'?w1': {'x': 75, 'y': 25, 'value': '5000'},
-#     '?w2': {'x': 19, 'y': 25, 'value': '+'}}
-#x = {'?widget58': {'width': 75, 'value': '5000', 'height': 25, 'type': 'input', 'left': 127.21875, 'top': 59}, '?widget59': {'width': 19, 'value': '+', 'height': 25, 'type': 'Label', 'left': 100, 'top': 59}, '?widget55': {'width': 75, 'value': '', 'height': 25, 'type': 'input', 'left': 226.03125, 'top': 59}, '?widget56': {'width': 75, 'value': 'Button', 'height': 25, 'type': 'button', 'left': 115.09375, 'top': 253}, '?widget57': {'width': 75, 'value': '1012', 'height': 25, 'type': 'input', 'left': 17.21875, 'top': 59}, '?widget60': {'width': 10, 'value': '=', 'height': 24, 'type': 'Label', 'left': 209, 'top': 60}}
-#instance = pipeline.transform(x)
-##pprint(instance)
-#t = TrestleTree()
-#t.ifit(x)
-#concept = t.root
-#pprint(t.root.av_counts)
-concept = random_concept()
-subconcept = concept.children[0]
-print(concept.av_counts)
-print("EC:")
-print(concept.expected_correct_guesses())
+def test(c, i):
+    sm = StructureMapper(c, c.tree.gensym)
+    sm.transform(i)
+
+def gen_cost_matrix(targetlist, baselist, rewards):
+    for m in rewards:
+        if len(m) > 1:
+            raise Exception("Cannot generate matrix with relations")
+
+    return [[-rewards.get((v,),{}).get((v2,), 0.0) for j,v2 in enumerate(baselist)] for i, v in enumerate(targetlist)]
+
+#import timeit
+#for i in range(1,26,2):
+#    setup = "from __main__ import random_concept\n"
+#    setup += "from __main__ import random_instance\n"
+#    setup += "from __main__ import test\n"
+#    setup += "c = random_concept(1, %i)\n" % i
+#    setup += "i = random_instance(%i)\n" % i
+#
+#    for j in range(10):
+#        print("%i\t%0.3f" % (i, timeit.timeit("test(c,i)", setup=setup,
+#                                         number=10)))
+
+
+num_c_inst = 1
+num_objs = 100 
+
+concept = random_concept(num_instances=num_c_inst, num_objects=num_objs)
+instance = random_instance(num_objects=num_objs)
 
 pl = Pipeline(Tuplizer(), SubComponentProcessor(), Flattener())
-sm = StructureMapper(concept, concept.tree.gensym)
 
-i = sm.transform(pl.transform(subconcept.av_counts))
-print("STRUCTURE MAPPED INSTANCE")
-print(i)
+#i = sm.transform(pl.transform(subconcept.av_counts))
+#print("STRUCTURE MAPPED INSTANCE")
+#print(i)
 
 
 pipeline = Pipeline(Tuplizer(), NameStandardizer(concept.tree.gensym),
                                  SubComponentProcessor(), Flattener())
-ns = NameStandardizer(concept.tree.gensym)
+#ns = NameStandardizer(concept.tree.gensym)
 
-pprint(subconcept.av_counts)
+#pprint(subconcept.av_counts)
 
-instance = ns.transform(subconcept.av_counts)
+#instance = ns.transform(subconcept.av_counts)
+instance = pipeline.transform(random_instance(num_objects=num_objs))
 pprint(instance)
 
 inames = frozenset(get_component_names(instance))
@@ -145,8 +139,36 @@ cnames = frozenset(get_component_names(concept.av_counts, True))
 rewards = compute_rewards(cnames, instance, concept)
 pprint(rewards)
 
+print("INAMES:")
 print(inames)
+print("CNAMES:")
 print(cnames)
+
+
+print("########################")
+print("MUNKRES OPTIMIZATION")
+print("########################")
+targetlist = list(inames)
+baselist = list(inames.union(cnames))
+cost_matrix = gen_cost_matrix(targetlist, baselist, rewards)
+
+for row in cost_matrix:
+    print("\t".join(["%0.2f" % v for v in row]))
+
+mun = Munkres()
+s = mun.compute(cost_matrix)
+mun_sol = {targetlist[ti]: baselist[bi] for ti, bi in s}
+print("Munkres solution:")
+pprint(mun_sol)
+print("Munkres cost:")
+#print(mapping_cost(frozenset(mun_sol.items()), rewards))
+
+#munkres_sol = 
+
+print("########################")
+print("TREE SEARCH OPTIMIZATION")
+print("########################")
+
 problem = StructureMappingProblem((frozenset(), inames, cnames),
                                   extra=rewards)
 #noproblem = NoHeuristic((frozenset(), inames, cnames),
@@ -159,8 +181,7 @@ problem = StructureMappingProblem((frozenset(), inames, cnames),
 #op_problem = OptimizationProblem((initial, remaining), extra=rewards)
 #
 #
-#sol = next(best_first_search(problem))
-#pprint(sol.path())
+
 #mapping, unnamed, availableNames = sol.state
 #print({a:v for a,v in mapping})
 #
@@ -173,4 +194,80 @@ def beam_2(problem):
 def beam_3(problem):
     return widening_beam_search(problem, initial_beam_width=3)
 
-compare_searches([problem], [beam_1, beam_2, beam_3])#, best_first_search])
+compare_searches([problem], [beam_1])#, beam_2, beam_3])#, best_first_search])
+
+#print("BFS solution")
+#sol = next(best_first_search(problem))
+#pprint(dict(sol.state[0]))
+
+
+#print()
+#print("#########################")
+#print("Local search optimization")
+#print("#########################")
+#print()
+#rm = random_mapping(inames, cnames)
+#um = unmapped_mapping(inames)
+#gm = greedy_best_mapping(inames, cnames, rewards)
+##m = frozenset(mun_sol.items())
+##unmapped = inames.union(cnames) - frozenset(dict(m).values())
+#
+#print("Random Mapping:")
+#print(rm)
+#print("Random Unmapped:")
+#runmapped = cnames - frozenset(dict(rm).values())
+#print(runmapped)
+#print("Random Cost:")
+#rc = mapping_cost(rm, rewards)
+#print(rc)
+#print()
+#
+#print("Unmapped Mapping:")
+#print(um)
+#print("Unmapped Unmapped:")
+#uunmapped = cnames - frozenset(dict(um).values())
+#print(runmapped)
+#print("Unmapped Cost:")
+#uc = mapping_cost(um, rewards)
+#print(uc)
+#print()
+#
+#print("Unmapped Mapping:")
+#print(gm)
+#print("Unmapped Unmapped:")
+#gunmapped = cnames - frozenset(dict(gm).values())
+#print(gunmapped)
+#print("Unmapped Cost:")
+#gc = mapping_cost(gm, rewards)
+#print(gc)
+#
+##op_problem1 = OptimizationProblem((rm, runmapped), initial_cost=rc, extra=rewards)
+##op_problem2 = OptimizationProblem((um, uunmapped), initial_cost=uc, extra=rewards)
+#op_problem3 = StructureMappingOptimizationProblem((gm, gunmapped), initial_cost=gc, extra=rewards)
+#
+#def annealing5x2(problem):
+#    return simulated_annealing_optimization(problem, limit=5*num_objs*num_objs)
+#
+#def annealing10x2(problem):
+#    return simulated_annealing_optimization(problem, limit=10*num_objs*num_objs)
+#
+#def beam1(problem):
+#    return beam_optimization(problem, beam_width=1)
+#
+#compare_searches([
+#                  #op_problem1, 
+#                  #op_problem2,
+#                  op_problem3
+#                 ], [
+#                  beam1, 
+#                  annealing5x2, 
+#                  annealing10x2
+#                 ])
+#
+##s = next(annealing(op_problem))
+##pprint(dict(s.state[0]))
+##print(mapping_cost(s.state[0], rewards))
+##print(s.cost())
+
+
+
