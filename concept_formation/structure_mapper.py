@@ -17,15 +17,11 @@ from __future__ import division
 from itertools import permutations
 from random import choice
 from random import random
-from random import shuffle
 from heapq import heappush
 from heapq import heappop
 
 from py_search.search import Problem
 from py_search.search import Node
-from py_search.search import beam_search
-from py_search.search import best_first_search
-from py_search.search import simulated_annealing_optimization
 from py_search.search import beam_optimization
 from concept_formation.preprocessor import NameStandardizer
 from concept_formation.preprocessor import Preprocessor
@@ -227,16 +223,16 @@ def build_index(onames, instance):
             index[o].append(attr)
     return index
 
-def flat_match(target, base, beam_width=1, vars_only=True):
+def flat_match(target, base, beam_width=1):
     """
     Given a concept and instance this function returns a mapping that can be
     used to rename components in the instance. Search is used to find a mapping
     that maximizes the expected number of correct guesses in the concept after
     incorporating the instance. 
 
-    Beam search is used to find a mapping between instance and concept.  The
-    lower the beam width the more greedy (and faster) the search.  If the beam
-    width is set to `float('inf')` then uses A* instead.
+    The current approach is to generate a solution via a greedy
+    object-to-object assignment (no relations). Then this assignment is refined
+    by using a beam search.
 
     :param target: An instance or concept.av_counts object to be mapped to the
         base concept.
@@ -251,86 +247,70 @@ def flat_match(target, base, beam_width=1, vars_only=True):
     """
     inames = frozenset(get_component_names(target))
     cnames = frozenset(get_component_names(base.av_counts))
-    print("%i x %i Mapping" % (len(inames), len(cnames)))
 
     if(len(inames) == 0 or len(cnames) == 0):
         return {}
 
     index = build_index(inames, target)
     initial_mapping = greedy_best_mapping(inames, cnames, index, target, base)
-    print(initial_mapping)
     unmapped = cnames - frozenset(dict(initial_mapping).values())
     initial_cost = mapping_cost(initial_mapping, target, base, index)
-    print(initial_cost)
     op_problem = StructureMappingOptimizationProblem((initial_mapping, unmapped),
                                                      initial_cost=initial_cost,
                                                      extra=(target, base,
                                                             index))
     solution = next(beam_optimization(op_problem, beam_width=1))
-    print("Beam Solution")
-    print(solution.cost())
     #solution = next(simulated_annealing_optimization(op_problem,
-    #                                                 limit=1000+10*len(inames)*len(cnames)))
+    #                                                 limit=1000+100*len(inames)*len(cnames)))
     #print("Annealing Solution")
     #print(solution.cost())
     #print(1000+10*len(inames)*len(cnames))
 
-    if len(set(dict(initial_mapping).keys())) != len(set(dict(initial_mapping).values())):
-        from pprint import pprint
-        pprint("INITIAL")
-        pprint(initial_mapping)
-        assert False
-
-    if len(set(dict(solution.state[0]).keys())) != len(set(dict(solution.state[0]).values())):
-        from pprint import pprint
-        pprint(dict(solution.state[0]))
-        print(solution.path())
-        assert False
-
     return dict(solution.state[0])
 
-def eval_obj_mapping(target_o, mapping, target, base, index):
+def eval_obj_mapping(target_o, mapping, target, base, index, partial=False):
+    """
+    Used to compute the value of the specified object (target_o) in the current
+    mapping. Partial specifies whether partial relation matches should be
+    computed. Including these is much more expensive.
+    """
     r = 0.0
     for attr in index[target_o]:
-        new_attr = bind_flat_attr(attr, mapping)
-
-        if isinstance(target[attr], dict):
-            for val in target[attr]:
-                r += base.attr_val_guess_gain(new_attr, val, 
-                                              target[attr][val])
-        elif isinstance(target[attr], ContinuousValue):
-            r += base.attr_val_guess_gain(new_attr, target[attr],
-                                         target[attr].num)
+        new_attrs = []
+        num_comps = len(get_attribute_components(attr))
+        if partial and num_comps > 1:
+            for cattr in base.av_counts:
+                if is_partial_match(attr, cattr, mapping):
+                    new_attrs.append(cattr)
         else:
-            r += base.attr_val_guess_gain(new_attr, target[attr])
+            new_attrs.append(bind_flat_attr(attr, mapping))
+
+        #    print("has components")
+        #new_attr = bind_flat_attr(attr, mapping)
+
+        for new_attr in new_attrs:
+            if isinstance(target[attr], dict):
+                for val in target[attr]:
+                    r += (base.attr_val_guess_gain(new_attr, val, 
+                                                  target[attr][val]) /
+                          num_comps)
+            elif isinstance(target[attr], ContinuousValue):
+                r += (base.attr_val_guess_gain(new_attr, target[attr],
+                                             target[attr].num) / num_comps)
+            else:
+                r += (base.attr_val_guess_gain(new_attr, target[attr]) /
+                      num_comps)
 
     return r
 
-def find_best_c(o, cnames, mapping, target, base, index):
-    best = o
-    best_reward = 0.0
-    for c in cnames:
-        nm = {a:mapping[a] for a in mapping}
-        nm[o] = c
-        r = eval_obj_mapping(o, nm, target, base, index)
-        if r > best_reward:
-            best = c
-            best_reward = r
-    return (best_reward, o, best)
-
-
-def greedy_best_mapping(inames, cnames, index, target, base):
+def greedy_best_mapping(inames, cnames, index, target, base, partial=False):
     """
     A very greedy approach to finding an initial solution for the search.
 
-    Currently it computes all of the matches and chooses the best for each
-    starting with the strongest match. If a conflict is encountered, then it 
-    recomputes the best match for the conflict and continues. 
-
-    While it does take into account relations, it might be better to recompute
-    the best possible after each assignment, so that relations can be
-    collected. Alternatively the find_best_c could be updated to collect
-    partial match rewards (i.e., assume you can get all relations). 
+    Currently, it computes a pairwaise match between each object and instance.
+    It then iterates through the best matches and assigning legal matches and
+    skipping illegal matches. When all objects have been assigned the resulting
+    mapping is returned. 
     """
     mapping = {}
     cnames = set(cnames)
@@ -338,26 +318,32 @@ def greedy_best_mapping(inames, cnames, index, target, base):
     possible = []
 
     for o in inames:
-        heappush(possible, find_best_c(o, cnames, mapping, target, base,
-                                       index))
+        heappush(possible, (0.0, o, o))
+        for c in cnames:
+            nm = {}
+            nm[o] = c
+            r = eval_obj_mapping(o, nm, target, base, index, partial=partial)
+            heappush(possible, (-r, o, c))
 
     while len(inames) > 0:
-        while len(possible) > 0:
-            r, o, c = heappop(possible)
-            if o not in inames:
-                continue
-            if c not in cnames and c != o:
-                heappush(possible, find_best_c(o, cnames, mapping, target, base,
-                                               index))
-                continue
-            mapping[o] = c
-            inames.remove(o)
-            if c in cnames:
-                cnames.remove(c)
+        r, o, c = heappop(possible)
+        if o not in inames:
+            continue
+        if c not in cnames and c != o:
+            continue
+        mapping[o] = c
+        inames.remove(o)
+        if c in cnames:
+            cnames.remove(c)
 
     return frozenset(mapping.items())
 
 def swap_two_mapping_cost(initial_cost, o1, o2, old_mapping, new_mapping, target, base, index):
+    """
+    A function for computing the cost of a successor in the optimization
+    search. This function has O(n) time where n is the number of features in
+    the object index.
+    """
     cost = initial_cost
 
     if isinstance(old_mapping, frozenset):
@@ -383,6 +369,11 @@ def swap_two_mapping_cost(initial_cost, o1, o2, old_mapping, new_mapping, target
 
 def swap_unnamed_mapping_cost(initial_cost, o1, old_mapping, new_mapping,
                               target, base, index):
+    """
+    A function for computing the cost of a successor in the optimization
+    search. This function has O(n) time where n is the number of features in
+    the object index.
+    """
     cost = initial_cost
 
     if isinstance(old_mapping, frozenset):
@@ -399,6 +390,10 @@ def swap_unnamed_mapping_cost(initial_cost, o1, old_mapping, new_mapping,
     return cost
 
 def object_mapping_cost(o, mapping, target, base, index, div_relations=True):
+    """
+    A function that is used to compute the cost of a particular object in a
+    mapping
+    """
     cost = 0.0
 
     for attr in index[o]:
@@ -422,6 +417,9 @@ def object_mapping_cost(o, mapping, target, base, index, div_relations=True):
 
 
 def mapping_cost(mapping, target, base, index):
+    """
+    An overall function for evaluating a mapping.
+    """
     if isinstance(mapping, frozenset):
         mapping = dict(mapping)
     cost = 0
@@ -430,12 +428,27 @@ def mapping_cost(mapping, target, base, index):
     return cost
 
 class StructureMappingOptimizationProblem(Problem):
+    """
+    A class for describing a structure mapping problem to be solved using the
+    `py_search<http://py-search.readthedocs.org/>_` library. This class defines
+    the node_value, the successor, and goal_test methods used by the search
+    library.
 
+    Unlike StructureMappingProblem, this class uses a local search approach;
+    i.e., given an initial mapping it tries to improve the mapping by permuting
+    it. 
+    """
     def node_value(self, node):
+        """
+        The value is the precomputed cost.
+        """
         return node.cost()
 
     def swap_two(self, o1, o2, mapping, unmapped_cnames, target, base, index,
                        node):
+        """
+        returns the child node generated from swapping two mappings.
+        """
         new_mapping = {a:mapping[a] for a in mapping}
 
         if mapping[o2] == o2:
@@ -463,6 +476,10 @@ class StructureMappingOptimizationProblem(Problem):
 
     def swap_unnamed(self, o1, o2, mapping, unmapped_cnames, target, base, index,
                        node):
+        """
+        Returns the child node generated from assigning an unmapped component
+        object to one of the instance objects.
+        """
         new_mapping = {a:mapping[a] for a in mapping}
         new_unmapped_cnames = set(unmapped_cnames)
         new_unmapped_cnames.remove(o2)
@@ -483,6 +500,10 @@ class StructureMappingOptimizationProblem(Problem):
                     ('swap', (o1, mapping[o1]), ('unmapped', o2)), path_cost, node.extra)
 
     def random_successor(self, node):
+        """
+        Similar to the successor function, but generates only a single random
+        successor.
+        """
         mapping, unmapped_cnames = node.state
         target, base, index = node.extra
         mapping = dict(mapping)
@@ -506,6 +527,9 @@ class StructureMappingOptimizationProblem(Problem):
                                      base, index, node)
 
     def successors(self, node):
+        """
+        An iterator that returns all successors.
+        """
         mapping, unmapped_cnames = node.state
         target, base, index = node.extra
         mapping = dict(mapping)
@@ -640,7 +664,7 @@ class StructureMappingProblem(Problem):
         #print(node.extra)
         return len(unnamed) == 0
 
-def is_partial_match(iAttr, cAttr, mapping, unnamed):
+def is_partial_match(iAttr, cAttr, mapping):
     """
     Returns True if the instance attribute (iAttr) partially matches the
     concept attribute (cAttr) given the mapping.
@@ -656,13 +680,13 @@ def is_partial_match(iAttr, cAttr, mapping, unnamed):
     :return: ``True`` if the instance attribute matches the concept attribute in the mapping otherwise ``False``
     :rtype: bool
 
-    >>> is_partial_match(('<', ('a', '?o2'), ('a', '?o1')), ('<', ('a', '?c2'), ('b', '?c1')), {'?o1': '?c1'}, {'?o2'})
+    >>> is_partial_match(('<', ('a', '?o2'), ('a', '?o1')), ('<', ('a', '?c2'), ('b', '?c1')), {'?o1': '?c1'})
     False
 
-    >>> is_partial_match(('<', ('a', '?o2'), ('a', '?o1')), ('<', ('a', '?c2'), ('a', '?c1')), {'?o1': '?c1'}, {'?o2'})
+    >>> is_partial_match(('<', ('a', '?o2'), ('a', '?o1')), ('<', ('a', '?c2'), ('a', '?c1')), {'?o1': '?c1'})
     True
 
-    >>> is_partial_match(('<', ('a', '?o2'), ('a', '?o1')), ('<', ('a', '?c2'), ('a', '?c1')), {'?o1': '?c1', '?o2': '?c2'}, {})
+    >>> is_partial_match(('<', ('a', '?o2'), ('a', '?o1')), ('<', ('a', '?c2'), ('a', '?c1')), {'?o1': '?c1', '?o2': '?c2'})
     True
     """
     if type(iAttr) != type(cAttr):
@@ -673,7 +697,7 @@ def is_partial_match(iAttr, cAttr, mapping, unnamed):
 
     if isinstance(iAttr, tuple):
         for i,v in enumerate(iAttr):
-            if not is_partial_match(iAttr[i], cAttr[i], mapping, unnamed):
+            if not is_partial_match(iAttr[i], cAttr[i], mapping):
                 return False
         return True
 
@@ -696,10 +720,6 @@ class StructureMapper(Preprocessor):
     :param beam_width: The width of the beam used for Beam Search. If set to
         float('inf'), then A* will be used.
     :type beam_width: int (or float('inf') for optimal) 
-    :param vars_only: Determines whether or not variables in the instance can
-        be matched only to variables in the concept or if they can also be bound to
-        constants. 
-    :type vars_only: boolean
     :param pipeline: A preprocessing pipeline to apply before structure mapping
         and to undo when undoing the structure mapping. If ``None`` then the
         default pipeline of
@@ -712,11 +732,10 @@ class StructureMapper(Preprocessor):
     :return: A flattened and mapped copy of the instance
     :rtype: instance
     """
-    def __init__(self, base, gensym, beam_width=1, vars_only=True):
+    def __init__(self, base, gensym, beam_width=1):
         self.base = base
         self.reverse_mapping = None
         self.beam_width = beam_width
-        self.vars_only = vars_only
         self.name_standardizer = NameStandardizer(gensym)
 
     def get_mapping(self):
@@ -725,8 +744,7 @@ class StructureMapper(Preprocessor):
     def transform(self, target):
         target = self.name_standardizer.transform(target)
         mapping = flat_match(target, self.base,
-                             beam_width=self.beam_width,
-                             vars_only=self.vars_only)
+                             beam_width=self.beam_width)
         self.reverse_mapping = {mapping[o]: o for o in mapping}
         return rename_flat(target, mapping)
 

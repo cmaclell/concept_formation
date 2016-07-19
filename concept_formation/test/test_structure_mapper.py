@@ -16,6 +16,8 @@ from concept_formation.structure_mapper import StructureMappingProblem
 from concept_formation.structure_mapper import StructureMappingOptimizationProblem
 from concept_formation.structure_mapper import mapping_cost
 from concept_formation.structure_mapper import greedy_best_mapping
+from concept_formation.structure_mapper import greedy_best_mapping2
+from concept_formation.structure_mapper import build_index
 from concept_formation.structure_mapper import get_component_names
 from concept_formation.structure_mapper import compute_rewards
 from concept_formation.structure_mapper import StructureMapper
@@ -111,7 +113,7 @@ def gen_cost_matrix(targetlist, baselist, rewards):
 
 
 num_c_inst = 1
-num_objs = 100 
+num_objs = 30 
 
 concept = random_concept(num_instances=num_c_inst, num_objects=num_objs)
 instance = random_instance(num_objects=num_objs)
@@ -135,6 +137,8 @@ pprint(instance)
 
 inames = frozenset(get_component_names(instance))
 cnames = frozenset(get_component_names(concept.av_counts, True))
+
+index = build_index(inames, instance)
 
 rewards = compute_rewards(cnames, instance, concept)
 pprint(rewards)
@@ -161,7 +165,8 @@ mun_sol = {targetlist[ti]: baselist[bi] for ti, bi in s}
 print("Munkres solution:")
 pprint(mun_sol)
 print("Munkres cost:")
-#print(mapping_cost(frozenset(mun_sol.items()), rewards))
+
+print(mapping_cost(frozenset(mun_sol.items()), instance, concept, index))
 
 #munkres_sol = 
 
@@ -201,24 +206,24 @@ compare_searches([problem], [beam_1])#, beam_2, beam_3])#, best_first_search])
 #pprint(dict(sol.state[0]))
 
 
-#print()
-#print("#########################")
-#print("Local search optimization")
-#print("#########################")
-#print()
-#rm = random_mapping(inames, cnames)
-#um = unmapped_mapping(inames)
-#gm = greedy_best_mapping(inames, cnames, rewards)
-##m = frozenset(mun_sol.items())
-##unmapped = inames.union(cnames) - frozenset(dict(m).values())
-#
+print()
+print("#########################")
+print("Local search optimization")
+print("#########################")
+print()
+rm = random_mapping(inames, cnames)
+um = unmapped_mapping(inames)
+gm = greedy_best_mapping2(inames, cnames, index, instance, concept)
+#m = frozenset(mun_sol.items())
+#unmapped = inames.union(cnames) - frozenset(dict(m).values())
+
 #print("Random Mapping:")
 #print(rm)
 #print("Random Unmapped:")
 #runmapped = cnames - frozenset(dict(rm).values())
 #print(runmapped)
 #print("Random Cost:")
-#rc = mapping_cost(rm, rewards)
+#rc = mapping_cost(rm, instance, concept, index)
 #print(rc)
 #print()
 #
@@ -228,46 +233,49 @@ compare_searches([problem], [beam_1])#, beam_2, beam_3])#, best_first_search])
 #uunmapped = cnames - frozenset(dict(um).values())
 #print(runmapped)
 #print("Unmapped Cost:")
-#uc = mapping_cost(um, rewards)
+#uc = mapping_cost(um, instance, concept, index)
 #print(uc)
 #print()
-#
-#print("Unmapped Mapping:")
-#print(gm)
-#print("Unmapped Unmapped:")
-#gunmapped = cnames - frozenset(dict(gm).values())
-#print(gunmapped)
-#print("Unmapped Cost:")
-#gc = mapping_cost(gm, rewards)
-#print(gc)
-#
-##op_problem1 = OptimizationProblem((rm, runmapped), initial_cost=rc, extra=rewards)
-##op_problem2 = OptimizationProblem((um, uunmapped), initial_cost=uc, extra=rewards)
-#op_problem3 = StructureMappingOptimizationProblem((gm, gunmapped), initial_cost=gc, extra=rewards)
-#
-#def annealing5x2(problem):
-#    return simulated_annealing_optimization(problem, limit=5*num_objs*num_objs)
-#
-#def annealing10x2(problem):
-#    return simulated_annealing_optimization(problem, limit=10*num_objs*num_objs)
-#
-#def beam1(problem):
-#    return beam_optimization(problem, beam_width=1)
-#
-#compare_searches([
-#                  #op_problem1, 
-#                  #op_problem2,
-#                  op_problem3
-#                 ], [
-#                  beam1, 
-#                  annealing5x2, 
-#                  annealing10x2
-#                 ])
-#
-##s = next(annealing(op_problem))
-##pprint(dict(s.state[0]))
-##print(mapping_cost(s.state[0], rewards))
-##print(s.cost())
+
+print("Greedy Best Mapping:")
+print(gm)
+print("Greedy Best Unmapped:")
+gunmapped = cnames - frozenset(dict(gm).values())
+print(gunmapped)
+print("Greedy Best Cost:")
+gc = mapping_cost(gm, instance, concept, index)
+print(gc)
+
+#op_problem1 = OptimizationProblem((rm, runmapped), initial_cost=rc, extra=rewards)
+#op_problem2 = OptimizationProblem((um, uunmapped), initial_cost=uc, extra=rewards)
+op_problem3 = StructureMappingOptimizationProblem((gm, gunmapped),
+                                                  initial_cost=gc,
+                                                  extra=(instance, concept,
+                                                         index))
+
+def annealing5x2(problem):
+    return simulated_annealing_optimization(problem, limit=5*num_objs*num_objs)
+
+def annealing10x2(problem):
+    return simulated_annealing_optimization(problem, limit=10*num_objs*num_objs)
+
+def beam1(problem):
+    return beam_optimization(problem, beam_width=1)
+
+compare_searches([
+                  #op_problem1, 
+                  #op_problem2,
+                  op_problem3
+                 ], [
+                  beam1, 
+                  annealing5x2, 
+                  annealing10x2
+                 ])
+
+#s = next(annealing(op_problem))
+#pprint(dict(s.state[0]))
+#print(mapping_cost(s.state[0], rewards))
+#print(s.cost())
 
 
 

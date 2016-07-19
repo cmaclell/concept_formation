@@ -246,8 +246,7 @@ class TrestleTree(Cobweb3Tree):
         """
         structure_mapper = StructureMapper(self.root,
                                            gensym=self.gensym,
-                                           beam_width=self.beam_width,
-                                           vars_only=self.vars_only)
+                                           beam_width=self.beam_width)
         preprocessing = Pipeline(SubComponentProcessor(), Flattener(),
                                  structure_mapper)
         temp_instance = preprocessing.transform(instance)
