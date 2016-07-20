@@ -41,13 +41,16 @@ class TrestleTree(Cobweb3Tree):
     is set to ``float('inf')`` then A* search will be used, but typically this is
     prohibitively slow.
 
-    The vars_only parameter determines whether the matcher should only allow
-    variable attributes to match to other variable attributes or if variable
-    attributes should also be allowed to match to constant attributes. This
-    setting will generally depend on the domain of the data and whether
-    variables mapping to constant attributes makes sense. Allowing the match to
-    constant attributes also increases the search space taking more time to find
-    matches.
+    .. deprecated::
+        The vars_only parameter used to determine whether the matcher should only allow
+        variable attributes to match to other variable attributes or if variable
+        attributes should also be allowed to match to constant attributes. This
+        setting will generally depend on the domain of the data and whether
+        variables mapping to constant attributes makes sense. Allowing the match to
+        constant attributes also increases the search space taking more time to find
+        matches.
+
+        It wasn't actually being used so we removed it.
 
     :param scaling: What number of standard deviations numeric attributes
         should be scaled to.  By default this value is 0.5 (half a std), which
@@ -57,12 +60,9 @@ class TrestleTree(Cobweb3Tree):
     :param beam_width: the initial beam width to use in structure mapping's
         search step.
     :type beam_width: int
-    :param vars_only: whether matching should be performed only between variable
-        or if variables can be matched to constant values.
-    :type vars_only: boolean
     """
 
-    def __init__(self, scaling=0.5, beam_width=2, vars_only=True):
+    def __init__(self, scaling=0.5, beam_width=2):
         """
         The tree constructor. 
 
@@ -74,7 +74,6 @@ class TrestleTree(Cobweb3Tree):
         self.root.tree = self
         self.scaling = scaling
         self.beam_width = beam_width
-        self.vars_only = vars_only
         self.gensym_counter = 0
 
     def gensym(self):
@@ -166,8 +165,7 @@ class TrestleTree(Cobweb3Tree):
         """
         structure_mapper = StructureMapper(self.root,
                                            gensym=self.gensym,
-                                           beam_width=self.beam_width,
-                                           vars_only=self.vars_only)
+                                           beam_width=self.beam_width)
         preprocessing = Pipeline(SubComponentProcessor(), Flattener(),
                                  structure_mapper)
         temp_instance = preprocessing.transform(instance)
@@ -190,8 +188,7 @@ class TrestleTree(Cobweb3Tree):
         """
         structure_mapper = StructureMapper(self.root,
                                            gensym=self.gensym,
-                                           beam_width=self.beam_width,
-                                           vars_only=self.vars_only)
+                                           beam_width=self.beam_width)
         preprocessing = Pipeline(SubComponentProcessor(), Flattener(),
                                  structure_mapper)
         temp_instance = preprocessing.transform(instance)
