@@ -103,26 +103,35 @@ class TrestleTree(Cobweb3Tree):
         time check at the first call to transform.
         """
         for attr in instance:
-            if not isinstance(attr,str) and not isinstance(attr,tuple):
+            try:
+                hash(attr)
+                attr[0]
+            except:
                 raise ValueError('Invalid attribute: '+str(attr)+
                     ' of type: '+str(type(attr))+
                     ' in instance: '+str(instance)+
                     ',\n'+type(self).__name__+
-                    ' requires that attributes be of type str or tuple.')
-            if isinstance(instance[attr],dict):
-                self._sanity_check_instance(instance[attr])
+                    ' only works with hashable and subscriptable attributes' +
+                    ' (e.g., strings).')
             if isinstance(attr,tuple):
                 self._sanity_check_relation(attr,instance)
-            if not isinstance(instance[attr],collections.Hashable):
-                raise ValueError('Invalid value: '+str(instance[attr])+
-                    ' of type: '+str(type(instance[attr]))+
-                    ' in instance: '+str(instance) +
-                    ',\n'+type(self).__name__+
-                    ' only works with Hashable values.')
+            if isinstance(instance[attr],dict):
+                self._sanity_check_instance(instance[attr])
+            else:
+                try:
+                    hash(instance[attr])
+                except:
+                    raise ValueError('Invalid value: '+str(instance[attr])+
+                        ' of type: '+str(type(instance[attr]))+
+                        ' in instance: '+str(instance) +
+                        ',\n'+type(self).__name__+
+                        ' only works with hashable values.')
 
     def _sanity_check_relation(self,relation, instance):
         for v in relation:
-            if not isinstance(v,str) and not isinstance(v,tuple):
+            try:
+                v[0]
+            except:
                 raise(ValueError('Invalid relation value: '+str(v)+
                     ' of type: '+str(type(v))+
                     ' in instance: '+str(instance)+

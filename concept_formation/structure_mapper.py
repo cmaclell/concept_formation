@@ -20,6 +20,8 @@ from random import random
 from heapq import heappush
 from heapq import heappop
 
+from munkres import Munkres
+
 from py_search.base import Problem
 from py_search.base import Node
 from py_search.optimization import local_beam_search
@@ -252,7 +254,8 @@ def flat_match(target, base, beam_width=1):
         return {}
 
     index = build_index(inames, target)
-    initial_mapping = greedy_best_mapping(inames, cnames, index, target, base)
+    #initial_mapping = greedy_best_mapping(inames, cnames, index, target, base)
+    initial_mapping = hungarian_mapping(inames, cnames, index, target, base)
     unmapped = cnames - frozenset(dict(initial_mapping).values())
     initial_cost = mapping_cost(initial_mapping, target, base, index)
     op_problem = StructureMappingOptimizationProblem((initial_mapping, unmapped),
@@ -302,6 +305,40 @@ def eval_obj_mapping(target_o, mapping, target, base, index, partial=False):
                       num_comps)
 
     return r
+
+def hungarian_mapping(inames, cnames, index, target, base, partial=False):
+    """
+    Utilize the hungarian/munkres matching algorithm over the object to object
+    features (ignoring the relations) to compute the initial assignment. Then
+    utilize local search techniques to improve this matching by taking into
+    account the relations
+    """
+    cnames = list(cnames)
+    inames = list(inames)
+
+    cost_matrix = []
+    for o in inames:
+        row = []
+        for c in cnames:
+            nm = {}
+            nm[o] = c
+            r = eval_obj_mapping(o, nm, target, base, index, partial=partial)
+            row.append(-r)
+        for o in inames:
+            row.append(0.0)
+        cost_matrix.append(row)
+
+    m = Munkres()
+    indices = m.compute(cost_matrix)
+
+    mapping = {}
+    for row,col in indices:
+        if col >= len(cnames):
+            mapping[inames[row]] = inames[row]
+        else:
+            mapping[inames[row]] = cnames[col]
+
+    return frozenset(mapping.items())
 
 def greedy_best_mapping(inames, cnames, index, target, base, partial=False):
     """

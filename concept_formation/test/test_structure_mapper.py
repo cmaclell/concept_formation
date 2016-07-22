@@ -16,6 +16,7 @@ from concept_formation.structure_mapper import StructureMappingProblem
 from concept_formation.structure_mapper import StructureMappingOptimizationProblem
 from concept_formation.structure_mapper import mapping_cost
 from concept_formation.structure_mapper import greedy_best_mapping
+from concept_formation.structure_mapper import hungarian_mapping
 from concept_formation.structure_mapper import build_index
 from concept_formation.structure_mapper import get_component_names
 from concept_formation.structure_mapper import compute_rewards
@@ -212,7 +213,8 @@ print("#########################")
 print()
 rm = random_mapping(inames, cnames)
 um = unmapped_mapping(inames)
-gm = greedy_best_mapping(inames, cnames, index, instance, concept)
+#gm = greedy_best_mapping(inames, cnames, index, instance, concept)
+gm = hungarian_mapping(inames, cnames, index, instance, concept)
 #m = frozenset(mun_sol.items())
 #unmapped = inames.union(cnames) - frozenset(dict(m).values())
 
