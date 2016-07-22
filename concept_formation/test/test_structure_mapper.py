@@ -16,7 +16,6 @@ from concept_formation.structure_mapper import StructureMappingProblem
 from concept_formation.structure_mapper import StructureMappingOptimizationProblem
 from concept_formation.structure_mapper import mapping_cost
 from concept_formation.structure_mapper import greedy_best_mapping
-from concept_formation.structure_mapper import greedy_best_mapping2
 from concept_formation.structure_mapper import build_index
 from concept_formation.structure_mapper import get_component_names
 from concept_formation.structure_mapper import compute_rewards
@@ -26,13 +25,13 @@ from concept_formation.preprocessor import Tuplizer
 from concept_formation.preprocessor import NameStandardizer
 from concept_formation.preprocessor import SubComponentProcessor
 from concept_formation.preprocessor import Flattener
-from py_search.search import compare_searches
-from py_search.search import widening_beam_search
-from py_search.search import best_first_search
-from py_search.search import Problem
-from py_search.search import Node
-from py_search.search import beam_optimization
-from py_search.search import simulated_annealing_optimization
+from py_search.utils import compare_searches
+from py_search.informed import widening_beam_search
+from py_search.informed import best_first_search
+from py_search.base import Problem
+from py_search.base import Node
+from py_search.optimization import local_beam_search
+from py_search.optimization import simulated_annealing
 
 def unmapped_mapping(inames):
     mapping = []
@@ -213,7 +212,7 @@ print("#########################")
 print()
 rm = random_mapping(inames, cnames)
 um = unmapped_mapping(inames)
-gm = greedy_best_mapping2(inames, cnames, index, instance, concept)
+gm = greedy_best_mapping(inames, cnames, index, instance, concept)
 #m = frozenset(mun_sol.items())
 #unmapped = inames.union(cnames) - frozenset(dict(m).values())
 
@@ -254,13 +253,13 @@ op_problem3 = StructureMappingOptimizationProblem((gm, gunmapped),
                                                          index))
 
 def annealing5x2(problem):
-    return simulated_annealing_optimization(problem, limit=5*num_objs*num_objs)
+    return simulated_annealing(problem, limit=5*num_objs*num_objs)
 
 def annealing10x2(problem):
-    return simulated_annealing_optimization(problem, limit=10*num_objs*num_objs)
+    return simulated_annealing(problem, limit=10*num_objs*num_objs)
 
 def beam1(problem):
-    return beam_optimization(problem, beam_width=1)
+    return local_beam_search(problem, beam_width=1)
 
 compare_searches([
                   #op_problem1, 

@@ -20,9 +20,9 @@ from random import random
 from heapq import heappush
 from heapq import heappop
 
-from py_search.search import Problem
-from py_search.search import Node
-from py_search.search import beam_optimization
+from py_search.base import Problem
+from py_search.base import Node
+from py_search.optimization import local_beam_search
 from concept_formation.preprocessor import NameStandardizer
 from concept_formation.preprocessor import Preprocessor
 from concept_formation.preprocessor import rename_relation
@@ -259,8 +259,8 @@ def flat_match(target, base, beam_width=1):
                                                      initial_cost=initial_cost,
                                                      extra=(target, base,
                                                             index))
-    solution = next(beam_optimization(op_problem, beam_width=1))
-    #solution = next(simulated_annealing_optimization(op_problem,
+    solution = next(local_beam_search(op_problem, beam_width=1))
+    #solution = next(simulated_annealing(op_problem,
     #                                                 limit=1000+100*len(inames)*len(cnames)))
     #print("Annealing Solution")
     #print(solution.cost())
