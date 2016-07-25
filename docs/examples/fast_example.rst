@@ -10,18 +10,18 @@ Fast Example
     In [3]: from concept_formation.cluster import cluster
 
     # Data is stored in a list of dictionaries where values can be either nominal,
-    # numeric, component, or relational.
+    # numeric, component.
     In [4]: data = [{'f1': 'v1', #nominal value
        ...:          'f2': 2.6, #numeric value
        ...:          '?f3': {'sub-feature1': 'v1'}, # component value
        ...:          '?f4': {'sub-feature1': 'v1'}, # component value
-       ...:          '(some-relation ?f3 ?f4)': True #relational value
+       ...:          ('some-relation','?f3','?f4'): True #relational attribute
        ...:         },
        ...:         {'f1': 'v1', #nominal value
        ...:          'f2': 2.8, #numeric value
        ...:          '?f3': {'sub-feature1': 'v2'}, # component value
        ...:          '?f4': {'sub-feature1': 'v1'}, # component value
-       ...:          '(some-relation ?f3 ?f4)': True #relational value
+       ...:          ('some-relation','?f3','?f4'): True #relational attribute
        ...:         }]
 
     # Data can be clustered with a TrestleTree, which supports all data types or
@@ -42,7 +42,7 @@ Fast Example
        ...:        '?f4': {'sub-feature1': 'v1'}}
 
     # Here we see that 'f1' and 'some-relation' are infered.
-    In [10]: pprint(tree.infer_missing(new))
+    In [10]: pprint(tree.infer_missing(new)[0])
 
     # They can also be used to predict specific attribute values
     In [11]: concept = tree.categorize(new)

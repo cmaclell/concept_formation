@@ -37,7 +37,7 @@ test_data = [{'X': v[0]} for i,v in enumerate(T)]
 
 # Fit cobweb models
 cbt = CobwebTree()
-cb3t = Cobweb3Tree(acuity=0.1)
+cb3t = Cobweb3Tree()
 
 cbt.fit(training_data, iterations=1)
 cb3t.fit(training_data, iterations=1)
@@ -54,8 +54,8 @@ while curr.parent is not None:
     print(curr)
 
 # Predict test data
-cby = [cbt.categorize(e).predict('_y') for e in test_data]
-cb3y = [cb3t.categorize(e).predict('_y') for e in test_data]
+cby = [cbt.categorize(e).predict('_y')[0] for e in test_data]
+cb3y = [cb3t.categorize(e).predict('_y')[0] for e in test_data]
 
 # Plot the results
 plt.scatter(X, y, c='k', label='training data')

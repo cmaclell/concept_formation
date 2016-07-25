@@ -36,18 +36,24 @@ class CobwebTree(object):
 
     def _sanity_check_instance(self,instance):
         for attr in instance:
-            if not isinstance(attr,str):
+            try:
+                hash(attr)
+                attr[0]
+            except:
                 raise ValueError('Invalid attribute: '+str(attr)+
                     ' of type: '+str(type(attr))+
                     ' in instance: '+str(instance)+
                     ',\n'+type(self).__name__+
-                    ' only works with constant attributes of type str.')
-            if not isinstance(instance[attr],collections.Hashable):
+                    ' only works with hashable and subscriptable attributes' +
+                    ' (e.g., strings).')
+            try:
+                hash(instance[attr])
+            except:
                 raise ValueError('Invalid value: '+str(instance[attr])+
                     ' of type: '+str(type(instance[attr]))+
                     ' in instance: '+str(instance) +
                     ',\n'+type(self).__name__+
-                    ' only works with Hashable values.')
+                    ' only works with hashable values.')
 
     def ifit(self, instance):
         """
