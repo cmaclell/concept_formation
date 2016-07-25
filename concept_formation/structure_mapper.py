@@ -24,7 +24,7 @@ from munkres import Munkres
 
 from py_search.base import Problem
 from py_search.base import Node
-from py_search.optimization import local_beam_search
+from py_search.optimization import hill_climbing
 from concept_formation.preprocessor import NameStandardizer
 from concept_formation.preprocessor import Preprocessor
 from concept_formation.preprocessor import rename_relation
@@ -254,7 +254,6 @@ def flat_match(target, base, beam_width=1):
         return {}
 
     index = build_index(inames, target)
-    #initial_mapping = greedy_best_mapping(inames, cnames, index, target, base)
     initial_mapping = hungarian_mapping(inames, cnames, index, target, base)
     unmapped = cnames - frozenset(dict(initial_mapping).values())
     initial_cost = mapping_cost(initial_mapping, target, base, index)
@@ -262,13 +261,7 @@ def flat_match(target, base, beam_width=1):
                                                      initial_cost=initial_cost,
                                                      extra=(target, base,
                                                             index))
-    solution = next(local_beam_search(op_problem, beam_width=1))
-    #solution = next(simulated_annealing(op_problem,
-    #                                                 limit=1000+100*len(inames)*len(cnames)))
-    #print("Annealing Solution")
-    #print(solution.cost())
-    #print(1000+10*len(inames)*len(cnames))
-
+    solution = next(hill_climbing(op_problem))
     return dict(solution.state[0])
 
 def eval_obj_mapping(target_o, mapping, target, base, index, partial=False):
