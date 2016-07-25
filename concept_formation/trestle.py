@@ -2,9 +2,6 @@ from __future__ import print_function
 from __future__ import unicode_literals
 from __future__ import absolute_import
 from __future__ import division
-from math import sqrt
-from math import pi
-import collections
 
 from concept_formation.cobweb3 import Cobweb3Tree
 from concept_formation.cobweb3 import Cobweb3Node
@@ -20,12 +17,6 @@ class TrestleTree(Cobweb3Tree):
     handle component attributes as well as relations in addition to the
     numerical and nominal attributes of Cobweb and Cobweb/3.
 
-    The alpha parameter is the parameter used for laplacian smoothing of
-    nominal values (or whether an attribute is present or not for both
-    nominal and numeric attributes). The higher the value, the higher the
-    prior that all attributes/values are equally likely. By default a minor
-    smoothing is used: 0.001.
-        
     The scaling parameter determines whether online normalization of
     continuous attributes is used. By default scaling is used. Scaling
     divides the std of each attribute by the std of the attribute in the
@@ -35,34 +26,14 @@ class TrestleTree(Cobweb3Tree):
     calculation meaning numbers that are naturally larger will recieve
     extra weight in the calculation.
 
-    The beam width parameter detemines the inital beam width used by Beam
-    Search to perform structure mapping.  A smaller beam width results in a
-    faster search but is not gauranteed to find an optimal match. If beam width
-    is set to ``float('inf')`` then A* search will be used, but typically this is
-    prohibitively slow.
-
-    .. deprecated::
-        The vars_only parameter used to determine whether the matcher should only allow
-        variable attributes to match to other variable attributes or if variable
-        attributes should also be allowed to match to constant attributes. This
-        setting will generally depend on the domain of the data and whether
-        variables mapping to constant attributes makes sense. Allowing the match to
-        constant attributes also increases the search space taking more time to find
-        matches.
-
-        It wasn't actually being used so we removed it.
-
     :param scaling: What number of standard deviations numeric attributes
         should be scaled to.  By default this value is 0.5 (half a std), which
         is the max std of nominal values. If disabiling scaling is desirable,
         then it can be set to False or None.
     :type scaling: a float greater than 0.0, None, or False
-    :param beam_width: the initial beam width to use in structure mapping's
-        search step.
-    :type beam_width: int
     """
 
-    def __init__(self, scaling=0.5, beam_width=2):
+    def __init__(self, scaling=0.5):
         """
         The tree constructor. 
 
@@ -73,7 +44,6 @@ class TrestleTree(Cobweb3Tree):
         self.root = Cobweb3Node()
         self.root.tree = self
         self.scaling = scaling
-        self.beam_width = beam_width
         self.gensym_counter = 0
 
     def gensym(self):
@@ -173,8 +143,7 @@ class TrestleTree(Cobweb3Tree):
         :rtype: Cobweb3Node
         """
         structure_mapper = StructureMapper(self.root,
-                                           gensym=self.gensym,
-                                           beam_width=self.beam_width)
+                                           gensym=self.gensym)
         preprocessing = Pipeline(SubComponentProcessor(), Flattener(),
                                  structure_mapper)
         temp_instance = preprocessing.transform(instance)
@@ -196,8 +165,7 @@ class TrestleTree(Cobweb3Tree):
         :rtype: instance
         """
         structure_mapper = StructureMapper(self.root,
-                                           gensym=self.gensym,
-                                           beam_width=self.beam_width)
+                                           gensym=self.gensym)
         preprocessing = Pipeline(SubComponentProcessor(), Flattener(),
                                  structure_mapper)
         temp_instance = preprocessing.transform(instance)
@@ -251,8 +219,7 @@ class TrestleTree(Cobweb3Tree):
         :rtype: CobwebNode
         """
         structure_mapper = StructureMapper(self.root,
-                                           gensym=self.gensym,
-                                           beam_width=self.beam_width)
+                                           gensym=self.gensym)
         preprocessing = Pipeline(SubComponentProcessor(), Flattener(),
                                  structure_mapper)
         temp_instance = preprocessing.transform(instance)

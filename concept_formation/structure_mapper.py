@@ -225,25 +225,23 @@ def build_index(onames, instance):
             index[o].append(attr)
     return index
 
-def flat_match(target, base, beam_width=1):
+def flat_match(target, base):
     """
     Given a concept and instance this function returns a mapping that can be
     used to rename components in the instance. Search is used to find a mapping
     that maximizes the expected number of correct guesses in the concept after
     incorporating the instance. 
 
-    The current approach is to generate a solution via a greedy
-    object-to-object assignment (no relations). Then this assignment is refined
-    by using a beam search.
+    The current approach is to generate a solution via Munkres / Hungarian
+    matching on object-to-object assignment (no relations). Then this
+    assignment is refined by using a hill climbing search to account for the
+    relations.
 
     :param target: An instance or concept.av_counts object to be mapped to the
         base concept.
     :type target: instance or av_counts obj from concept
     :param base: A concept to map the target to
     :type base: TrestleNode
-    :param beam_width: The width of the beam used for Beam Search. Uses A* if
-        the beam width is `float('inf')` 
-    :type beam_width: int, or float('inf') for A* 
     :return: a mapping for renaming components in the instance.
     :rtype: dict
     """
@@ -747,9 +745,6 @@ class StructureMapper(Preprocessor):
 
     :param concept: A concept to structure map the instance to
     :type concept: TrestleNode
-    :param beam_width: The width of the beam used for Beam Search. If set to
-        float('inf'), then A* will be used.
-    :type beam_width: int (or float('inf') for optimal) 
     :param pipeline: A preprocessing pipeline to apply before structure mapping
         and to undo when undoing the structure mapping. If ``None`` then the
         default pipeline of
@@ -762,10 +757,9 @@ class StructureMapper(Preprocessor):
     :return: A flattened and mapped copy of the instance
     :rtype: instance
     """
-    def __init__(self, base, gensym, beam_width=1):
+    def __init__(self, base, gensym):
         self.base = base
         self.reverse_mapping = None
-        self.beam_width = beam_width
         self.name_standardizer = NameStandardizer(gensym)
 
     def get_mapping(self):
@@ -773,8 +767,7 @@ class StructureMapper(Preprocessor):
     
     def transform(self, target):
         target = self.name_standardizer.transform(target)
-        mapping = flat_match(target, self.base,
-                             beam_width=self.beam_width)
+        mapping = flat_match(target, self.base)
         self.reverse_mapping = {mapping[o]: o for o in mapping}
         return rename_flat(target, mapping)
 
