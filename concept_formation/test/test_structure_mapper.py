@@ -88,10 +88,6 @@ def random_concept(num_instances=1, num_objects=10):
         tree.ifit(inst)
     return tree.root
 
-def test(c, i):
-    sm = StructureMapper(c, c.tree.gensym)
-    sm.transform(i)
-
 def gen_cost_matrix(targetlist, baselist, rewards):
     for m in rewards:
         if len(m) > 1:
