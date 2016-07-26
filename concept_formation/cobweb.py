@@ -512,7 +512,7 @@ class CobwebNode(object):
         Given the following starting tree the results of the 4 standard Cobweb
         operations are shown below:
 
-        .. image:: images/original.png
+        .. image:: images/Original.png
             :width: 200px
             :align: center
 
@@ -520,7 +520,7 @@ class CobwebNode(object):
           utility. This results in a recurisve call to :meth:`cobweb
           <concept_formation.cobweb.CobwebTree.cobweb>`.
             
-            .. image:: images/best.png
+            .. image:: images/Best.png
                 :width: 200px
                 :align: center
 
@@ -528,7 +528,7 @@ class CobwebNode(object):
           instance there. See: :meth:`create_new_child
           <concept_formation.cobweb.CobwebNode.create_new_child>`.
 
-            .. image:: images/new.png
+            .. image:: images/New.png
                 :width: 200px
                 :align: center
 
@@ -536,7 +536,7 @@ class CobwebNode(object):
           mutual parent and add the instance there. See: :meth:`merge
           <concept_formation.cobweb.CobwebNode.merge>`.
 
-            .. image:: images/merge.png
+            .. image:: images/Merge.png
                     :width: 200px
                     :align: center
 
@@ -544,7 +544,7 @@ class CobwebNode(object):
           of the current node and recurse on the current node. See:
           :meth:`split <concept_formation.cobweb.CobwebNode.split>`
 
-            .. image:: images/split.png
+            .. image:: images/Split.png
                 :width: 200px
                 :align: center
 
