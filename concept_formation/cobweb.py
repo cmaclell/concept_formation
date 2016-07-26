@@ -252,8 +252,8 @@ class CobwebTree(object):
             either "most likely" or "sampled". 
         :type choice_fn: a string
         :param allow_none: whether attributes not in the instance can be
-        inferred to be missing. If False, then all attributes will be inferred
-        with some value.
+            inferred to be missing. If False, then all attributes will be inferred
+            with some value.
         :type allow_none: a boolean
         :return: A completed instance
         :rtype: instance
@@ -293,18 +293,6 @@ class CobwebTree(object):
         """
         self._sanity_check_instance(instance)
         return self._cobweb_categorize(instance)
-    
-    def train_from_json(self, filename, length=None):
-        """
-        Build the concept tree from a set of examples in a provided json file.
-        """
-        json_data = open(filename, "r")
-        instances = json.load(json_data)
-        if length:
-            shuffle(instances)
-            instances = instances[:length]
-        self.fit(instances)
-        json_data.close()
 
 class CobwebNode(object):
     """

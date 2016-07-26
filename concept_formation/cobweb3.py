@@ -140,7 +140,7 @@ class Cobweb3Node(CobwebNode):
     def attr_val_guess_gain(self, attr, val, counts=1.0):
         """
         Returns the gain in number of correct guesses if a particular attr/val
-        was added to a concept ``counts'' times. Effectively, it compares the
+        was added to a concept "counts" times. Effectively, it compares the
         expected correct guesses of the attribute if the overall counts is
         increased by one (i.e., a none is added) vs. if a particular value of
         the attribute is added. 
@@ -224,16 +224,16 @@ class Cobweb3Node(CobwebNode):
         The key change here is that we multiply by :math:`P(A_i)^2`. 
         Further, instead of bounding :math:`\\sigma` by a user specified lower
         bound (often called acuity), we add some independent, normally
-        distributed noise to sigma: :math:`\\sigma = \\sqrt(\\sigma^2 +
-        \\sigma_{noise}^2})`, where :math:`\\sigma_{noise} = \\frac{1}{2 *
-        \\sqrt{\\pi}}`. This ensures the expected correct guesses never
-        exceeds 1. From a theoretical point of view, it basically is an
-        assumption that there is some independent, normally distributed
-        measurement error that is added to the estimated error of the attribute
-        (`<https://en.wikipedia.org/wiki/Sum_of_normally_distributed_random_variables>`_).
-        It is possible that there is additional measurement error, but the
-        value is chosen so as to yield a sensical upper bound on the expected
-        correct guesses. 
+        distributed noise to sigma: 
+        :math:`\\sigma = \\sqrt{\\sigma^2 + \\sigma_{noise}^2}`, where 
+        :math:`\\sigma_{noise} = \\frac{1}{2 * \\sqrt{\\pi}}`. 
+        This ensures the expected correct guesses never exceeds 1. From a
+        theoretical point of view, it basically is an assumption that there is
+        some independent, normally distributed measurement error that is added
+        to the estimated error of the attribute (`<https://en.wikipedia.org/wi
+        ki/Sum_of_normally_distributed_random_variables>`_). It is possible
+        that there is additional measurement error, but the value is chosen so
+        as to yield a sensical upper bound on the expected correct guesses.
 
         :return: The number of attribute values that would be correctly guessed
             in the current concept.
