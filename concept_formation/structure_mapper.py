@@ -743,17 +743,13 @@ class StructureMapper(Preprocessor):
     the instance based on this structure mapping, and return the renamed
     instance.
 
-    :param concept: A concept to structure map the instance to
-    :type concept: TrestleNode
+    :param base: A concept to structure map the instance to
+    :type base: TrestleNode
     :param pipeline: A preprocessing pipeline to apply before structure mapping
         and to undo when undoing the structure mapping. If ``None`` then the
-        default pipeline of
-        :class:`Tuplizer<concept_formation.preprocessor.Tuplizer>` ->
+        default pipeline containing only 
         :class:`NameStandardizer<concept_formation.preprocessor.NameStandardizer>`
-        ->
-        :class:`SubComponentProcessor<concept_formation.preprocessor.SubComponentProcessor>`
-        -> :class:`Flattener<concept_formation.preprocessor.Flattener>` is
-        applied
+        is applied. 
     :return: A flattened and mapped copy of the instance
     :rtype: instance
     """
@@ -766,12 +762,30 @@ class StructureMapper(Preprocessor):
         return {self.reverse_mapping[o]: o for o in self.reverse_mapping}
     
     def transform(self, target):
+        """
+        Transforms a provided target (either an instance or an av_counts table
+        from a CobwebNode or Cobweb3Node).
+
+        :param target: An instance or av_counts table to rename to bring into
+            alignment with the provided base. 
+        :type target: instance or av_counts table (from CobwebNode or
+            Cobweb3Node).
+        """
         target = self.name_standardizer.transform(target)
         mapping = flat_match(target, self.base)
         self.reverse_mapping = {mapping[o]: o for o in mapping}
         return rename_flat(target, mapping)
 
     def undo_transform(self, target):
+        """
+        Takes a transformed target and reverses the structure mapping using the
+        mapping discovered by transform.
+
+        :param target: An instance or av_counts table to reverse the structure
+            mapping on.
+        :type target: previously structure mapped instance or av_counts table
+            (from CobwebNode or Cobweb3Node).
+        """
         if self.reverse_mapping is None:
             raise Exception("Must transform before undoing transform")
         target = rename_flat(target, self.reverse_mapping)
