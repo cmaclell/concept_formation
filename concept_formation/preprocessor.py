@@ -50,11 +50,12 @@ _gensym_counter = 0;
 def get_attribute_components(attribute, vars_only=True):
     """
     Gets component names out of an attribute
-
+    
+    >>> from pprint import pprint
     >>> attr = ('a', ('sub1', '?c1'))
     >>> get_attribute_components(attr)
     {'?c1'}
-     
+
     >>> attr = '?c1'
     >>> get_attribute_components(attr)
     {'?c1'}
@@ -325,7 +326,7 @@ class NameStandardizer(Preprocessor):
 
     >>> _reset_gensym()     # Reset the symbol generator for doctesting purposes. 
     >>> import pprint
-    >>> instance = {'nominal': 'v1', 'numeric': 2.3, 'c1': {'a1': 'v1'}, '?c2': {'a2': 'v2', '?c3': {'a3': 'v3'}}, '(relation1 c1 ?c2)': True, 'lists': [{'c1': {'inner': 'val'}}, 's2', 's3'], '(relation2 (a1 c1) (relation3 (a3 (?c3 ?c2))))': 4.3}
+    >>> instance = {'nominal': 'v1', 'numeric': 2.3, 'c1': {'a1': 'v1'}, '?c2': {'a2': 'v2', '?c3': {'a3': 'v3'}}, '(relation1 c1 ?c2)': True, 'lists': [{'c1': {'inner': 'val'}}, 's2', 's3'], '(relation2 (a1 c1) (relation3 (a3 (?c3 ?c2))))': 4.3, ('relation4', '?c2', '?c4'):True}
     >>> tuplizer = Tuplizer()
     >>> instance = tuplizer.transform(instance)
     >>> std = NameStandardizer()
@@ -342,7 +343,8 @@ class NameStandardizer(Preprocessor):
      'nominal': 'v1',
      'numeric': 2.3,
      ('relation1', 'c1', '?c2'): True,
-     ('relation2', ('a1', 'c1'), ('relation3', ('a3', ('?c3', '?c2')))): 4.3}
+     ('relation2', ('a1', 'c1'), ('relation3', ('a3', ('?c3', '?c2')))): 4.3,
+     ('relation4', '?c2', '?c4'): True}
     >>> pprint.pprint(new_i)
     {'?o1': {'?o2': {'a3': 'v3'}, 'a2': 'v2'},
      'c1': {'a1': 'v1'},
@@ -350,7 +352,8 @@ class NameStandardizer(Preprocessor):
      'nominal': 'v1',
      'numeric': 2.3,
      ('relation1', 'c1', '?o1'): True,
-     ('relation2', ('a1', 'c1'), ('relation3', ('a3', '?o2'))): 4.3}
+     ('relation2', ('a1', 'c1'), ('relation3', ('a3', ('?o2', '?o1')))): 4.3,
+     ('relation4', '?o1', '?o3'): True}
     >>> pprint.pprint(old_i)
     {'?c2': {'?c3': {'a3': 'v3'}, 'a2': 'v2'},
      'c1': {'a1': 'v1'},
@@ -358,7 +361,8 @@ class NameStandardizer(Preprocessor):
      'nominal': 'v1',
      'numeric': 2.3,
      ('relation1', 'c1', '?c2'): True,
-     ('relation2', ('a1', 'c1'), ('relation3', ('a3', ('?c3', '?c2')))): 4.3}
+     ('relation2', ('a1', 'c1'), ('relation3', ('a3', ('?c3', '?c2')))): 4.3,
+     ('relation4', '?c2', '?c4'): True}
     """
 
     def __init__(self, gensym=None):
@@ -457,21 +461,22 @@ class NameStandardizer(Preprocessor):
         #for attr in instance:
         for attr in sorted(instance, key=lambda at: str(at)):
 
-            if prefix is None:
-                new_a = attr
-            else:
-                new_a = (attr, prefix)
+            # if prefix is None:
+            #     new_a = attr
+            # else:
+            #     new_a = (attr, prefix)
 
             name = attr
             if attr[0] == '?' and not isinstance(attr, tuple):
-                mapping[new_a] = self.gensym()
-                name = mapping[new_a]
+                if name not in mapping:
+                    mapping[name] = self.gensym()
+                name = mapping[name]
 
             value = instance[attr]
             if isinstance(value, dict):
-                value = self._standardize(value, mapping, new_a)
+                value = self._standardize(value, mapping, name)
             elif isinstance(value, list):
-                value = [self._standardize(ele, mapping, new_a) if
+                value = [self._standardize(ele, mapping, name) if
                          isinstance(ele, dict) else ele for ele in value]
             
             if isinstance(name, tuple):
@@ -481,11 +486,11 @@ class NameStandardizer(Preprocessor):
                 relations.append((name, value))
             else:
                 new_instance[name] = value
-
+        
         for relation, val in relations:
             temp_rel = rename_relation(relation, mapping)
             new_instance[temp_rel] = val
-
+        #print(mapping)
         return new_instance
 
 class Flattener(Preprocessor):

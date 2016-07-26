@@ -16,3 +16,5 @@ visualize/output.js
 visualize/output*
 visualize/images
 *.egg-info
+.cache
+.eggs/
