@@ -31,7 +31,7 @@ Variable Attributes
     and a concept. This allows for matching attributes based on the similarity
     of their values rather than strictly on their attribute names. Variable are
     denoted with a question mark ``'?'`` as their first element (e.g.,
-    ``'?variable- attribute'``).
+    ``'?variable-attribute'``).
 
 Relational Attributes
     An attribute that represents a relationship between other attributes or
@@ -44,21 +44,25 @@ Relational Attributes
     ``('relation', ('feature1', 'subobject1')``).
 
 Hidden Attributes
-    Attributes that are maintained in the concept knoweldge base but are not
+    Attributes that are maintained in the concept knowledge base but are not
     considered during concept formation. These are useful for propagating unique
     ids or other bookkeeping labels into the knoweldge base without biasing
     concept formation. Hidden attributes are denoted as constant or relational
     attributes that have an ``'_'`` as their first element (i.e., ``attribute[0]
     == '_'``). For constants, this means that the first character is an
     underscore (e.g., ``"_hidden"``). For relations, this means that the first
-    element in the tuple is an string underscore (e.g., ``('_', 'hidden-
-    relation', 'obj')``).
+    element in the tuple is an string underscore (e.g., 
+    ``('_', 'hidden-relation', 'obj')``).
 
 Only the **constant** and **hidden** attributes are supported by
 :class:`CobwebTree<concept_formation.cobweb.CobwebTree>` and
 :class:`Cobweb3Tree<concept_formation.cobweb3.Cobweb3Tree>`.
 :class:`TrestleTree<concept_formation.trestle.TrestleTree>` supports all
 attribute types. 
+
+In general attribute names must be hashable (so they can be used in a
+dictionary and must be zero index-able (e.g., ``attribute[0]``, so that they
+can be tested to determine if they are hidden.
 
 Values
 ------
