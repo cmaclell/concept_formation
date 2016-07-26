@@ -12,8 +12,10 @@ from concept_formation.cobweb3 import Cobweb3Tree
 from concept_formation.dummy import DummyTree
 from concept_formation.datasets import load_iris
 
+from pprint import pprint
+
 num_runs = 30
-num_examples = 30
+num_examples = 20
 irises = load_iris()
 
 naive_data = incremental_prediction(DummyTree(), irises,
@@ -22,6 +24,7 @@ naive_data = incremental_prediction(DummyTree(), irises,
 cobweb_data = incremental_prediction(Cobweb3Tree(), irises,
                                   run_length=num_examples,
                                   runs=num_runs, attr="class")
+pprint(cobweb_data)
 
 naive_data.sort()
 cobweb_data.sort()

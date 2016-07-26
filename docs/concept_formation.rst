@@ -76,6 +76,15 @@ concept_formation.predict module
     :undoc-members:
     :show-inheritance:
 
+concept_formation.evaluation module
+------------------------------------
+
+.. automodule:: concept_formation.evaluation
+    :members: incremental_evaluation, probability, error, absolute_error, squared_error
+    :undoc-members:
+
+    
+
 concept_formation.preprocessor module
 -------------------------------------
 
