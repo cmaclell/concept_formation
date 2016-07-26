@@ -17,29 +17,26 @@ class TrestleTree(Cobweb3Tree):
     handle component attributes as well as relations in addition to the
     numerical and nominal attributes of Cobweb and Cobweb/3.
 
-    The scaling parameter determines whether online normalization of
-    continuous attributes is used. By default scaling is used. Scaling
-    divides the std of each attribute by the std of the attribute in the
-    parent node (no scaling is performed in the root). Scaling is useful to
-    balance the weight of different numerical attributes, without scaling
-    the magnitude of numerical attributes can affect category utility
-    calculation meaning numbers that are naturally larger will recieve
-    extra weight in the calculation.
+    The scaling parameter determines whether online normalization of continuous
+    attributes is used, and to what standard deviation the values are scaled
+    to. Scaling divides the std of each attribute by the std of the attribute
+    in the root divided by the scaling constant (i.e., 
+    :math:`\\sigma_{root} / scaling` when making category utility calculations.
+    Scaling is useful to balance the weight of different numerical attributes,
+    without scaling the magnitude of numerical attributes can affect category
+    utility calculation meaning numbers that are naturally larger will recieve
+    preference in the category utility calculation.
 
     :param scaling: What number of standard deviations numeric attributes
-        should be scaled to.  By default this value is 0.5 (half a std), which
-        is the max std of nominal values. If disabiling scaling is desirable,
-        then it can be set to False or None.
+        should be scaled to. By default this value is 0.5 (half a standard
+        deviation), which is the max std of nominal values. If disabiling
+        scaling is desirable, then it can be set to False or None.
     :type scaling: a float greater than 0.0, None, or False
     """
 
     def __init__(self, scaling=0.5):
         """
         The tree constructor. 
-
-        .. todo:: Need to test scaling by 1 std vs. 2 std. It might be
-        preferrable to standardize by 2 std because that gives it the same
-        variance as a nominal value. 
         """
         self.root = Cobweb3Node()
         self.root.tree = self
