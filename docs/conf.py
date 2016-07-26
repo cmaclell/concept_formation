@@ -76,9 +76,6 @@ release = version
 # Usually you set "language" from the command line for these cases.
 language = 'en'
 
-# suppress warnings for non-local URI
-suppress_warnings = ['image.nonlocal_uri']
-
 # There are two options for replacing |today|: either, you set today to some
 # non-false value, then it is used:
 #today = ''
