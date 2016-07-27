@@ -324,6 +324,11 @@ class NameStandardizer(Preprocessor):
     <concept_formation.structure_mapper.StructureMapper>`'s standard
     pipeline.
 
+    :param gensym: a function that returns unique object names (str) on each
+        call. If None, then :func:`default_gensym` is used, which keeps a
+        global object counter. 
+    :type gensym: a function
+
     >>> _reset_gensym()     # Reset the symbol generator for doctesting purposes. 
     >>> import pprint
     >>> instance = {'nominal': 'v1', 'numeric': 2.3, 'c1': {'a1': 'v1'}, '?c2': {'a2': 'v2', '?c3': {'a3': 'v3'}}, '(relation1 c1 ?c2)': True, 'lists': [{'c1': {'inner': 'val'}}, 's2', 's3'], '(relation2 (a1 c1) (relation3 (a3 (?c3 ?c2))))': 4.3, ('relation4', '?c2', '?c4'):True}

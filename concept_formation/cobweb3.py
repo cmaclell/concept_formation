@@ -323,9 +323,10 @@ class Cobweb3Node(CobwebNode):
         Predict the value of an attribute, using the provided strategy.
 
         If the attribute is a nominal then this function behaves the same as
-        :meth:`CobwebNode.predict <concept_formation.cobweb.CobwebNode.predict>`.
-        If the attribute is numeric then the mean value from the
-        :class:`ContinuousValue` is chosen.
+        :meth:`CobwebNode.predict
+        <concept_formation.cobweb.CobwebNode.predict>`.  If the attribute is
+        numeric then the mean value from the :class:`ContinuousValue` is
+        chosen.
 
         :param attr: an attribute of an instance.
         :type attr: str

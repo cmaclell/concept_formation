@@ -12,15 +12,14 @@ from random import random
 from munkres import Munkres
 
 from concept_formation.trestle import TrestleTree
-from concept_formation.structure_mapper import StructureMappingProblem
 from concept_formation.structure_mapper import StructureMappingOptimizationProblem
 from concept_formation.structure_mapper import mapping_cost
 from concept_formation.structure_mapper import greedy_best_mapping
 from concept_formation.structure_mapper import hungarian_mapping
 from concept_formation.structure_mapper import build_index
 from concept_formation.structure_mapper import get_component_names
-from concept_formation.structure_mapper import compute_rewards
 from concept_formation.structure_mapper import StructureMapper
+from concept_formation.structure_mapper import eval_obj_mapping
 from concept_formation.preprocessor import Pipeline
 from concept_formation.preprocessor import Tuplizer
 from concept_formation.preprocessor import NameStandardizer
@@ -88,12 +87,19 @@ def random_concept(num_instances=1, num_objects=10):
         tree.ifit(inst)
     return tree.root
 
-def gen_cost_matrix(targetlist, baselist, rewards):
-    for m in rewards:
-        if len(m) > 1:
-            raise Exception("Cannot generate matrix with relations")
-
-    return [[-rewards.get((v,),{}).get((v2,), 0.0) for j,v2 in enumerate(baselist)] for i, v in enumerate(targetlist)]
+def gen_cost_matrix(target, base, index):
+    cost_matrix = []
+    for o in inames:
+        row = []
+        for c in cnames:
+            nm = {}
+            nm[o] = c
+            r = eval_obj_mapping(o, nm, target, base, index)
+            row.append(-r)
+        for o in inames:
+            row.append(0.0)
+        cost_matrix.append(row)
+    return cost_matrix
 
 #import timeit
 #for i in range(1,26,2):
@@ -136,9 +142,6 @@ cnames = frozenset(get_component_names(concept.av_counts, True))
 
 index = build_index(inames, instance)
 
-rewards = compute_rewards(cnames, instance, concept)
-pprint(rewards)
-
 print("INAMES:")
 print(inames)
 print("CNAMES:")
@@ -150,7 +153,7 @@ print("MUNKRES OPTIMIZATION")
 print("########################")
 targetlist = list(inames)
 baselist = list(inames.union(cnames))
-cost_matrix = gen_cost_matrix(targetlist, baselist, rewards)
+cost_matrix = gen_cost_matrix(instance, concept, index)
 
 for row in cost_matrix:
     print("\t".join(["%0.2f" % v for v in row]))
@@ -166,12 +169,12 @@ print(mapping_cost(frozenset(mun_sol.items()), instance, concept, index))
 
 #munkres_sol = 
 
-print("########################")
-print("TREE SEARCH OPTIMIZATION")
-print("########################")
-
-problem = StructureMappingProblem((frozenset(), inames, cnames),
-                                  extra=rewards)
+#print("########################")
+#print("TREE SEARCH OPTIMIZATION")
+#print("########################")
+#
+#problem = StructureMappingProblem((frozenset(), inames, cnames),
+#                                  extra=rewards)
 #noproblem = NoHeuristic((frozenset(), inames, cnames),
 #                                  extra=rewards)
 #
@@ -186,16 +189,16 @@ problem = StructureMappingProblem((frozenset(), inames, cnames),
 #mapping, unnamed, availableNames = sol.state
 #print({a:v for a,v in mapping})
 #
-def beam_1(problem):
-    return widening_beam_search(problem, initial_beam_width=1)
-
-def beam_2(problem):
-    return widening_beam_search(problem, initial_beam_width=2)
-
-def beam_3(problem):
-    return widening_beam_search(problem, initial_beam_width=3)
-
-compare_searches([problem], [beam_1])#, beam_2, beam_3])#, best_first_search])
+#def beam_1(problem):
+#    return widening_beam_search(problem, initial_beam_width=1)
+#
+#def beam_2(problem):
+#    return widening_beam_search(problem, initial_beam_width=2)
+#
+#def beam_3(problem):
+#    return widening_beam_search(problem, initial_beam_width=3)
+#
+#compare_searches([problem], [beam_1])#, beam_2, beam_3])#, best_first_search])
 
 #print("BFS solution")
 #sol = next(best_first_search(problem))
