@@ -1,3 +1,8 @@
+"""
+The Cobweb module contains the :class:`CobwebTree` and :class:`CobwebNode`
+classes which are used to achieve the basic Cobweb functionality. 
+"""
+
 from __future__ import print_function
 from __future__ import unicode_literals
 from __future__ import absolute_import

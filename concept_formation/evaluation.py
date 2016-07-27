@@ -1,3 +1,8 @@
+"""
+The evaluation module contains functions for evaluating the predictive
+capabilities of CobwebTrees and their derivatives.
+"""
+
 from __future__ import print_function
 from __future__ import unicode_literals
 from __future__ import absolute_import

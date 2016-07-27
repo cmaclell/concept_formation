@@ -1,3 +1,9 @@
+"""
+The Cobweb3 module contains the :class:`Cobweb3Tree` and :class:`Cobweb3Node`
+classes, which extend the traditional Cobweb capabilities to support numeric
+values on attributes. 
+"""
+
 from __future__ import print_function
 from __future__ import unicode_literals
 from __future__ import absolute_import

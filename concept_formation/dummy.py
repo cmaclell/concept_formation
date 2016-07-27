@@ -1,3 +1,9 @@
+"""
+The dummy module contains the :class:`DummyTree` class, which can be used as a
+naive baseline for comparison against CobwebTrees. This class makes predictions
+based on the overall average of instances it has seen. 
+"""
+
 from __future__ import print_function
 from __future__ import unicode_literals
 from __future__ import absolute_import
@@ -5,9 +11,6 @@ from __future__ import division
 from concept_formation.cobweb3 import Cobweb3Node
 from concept_formation.trestle import TrestleTree
 from concept_formation.structure_mapper import StructureMapper
-from concept_formation.preprocessor import Tuplizer
-from concept_formation.preprocessor import ListProcessor
-from concept_formation.preprocessor import NameStandardizer
 from concept_formation.preprocessor import SubComponentProcessor
 from concept_formation.preprocessor import Flattener
 from concept_formation.preprocessor import Pipeline
