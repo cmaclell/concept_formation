@@ -198,7 +198,7 @@ def incremental_evaluation(tree, instances, attr, run_length, runs=1,
 
     scores = []
     for r in range(runs):
-        print(r)
+        #print(r)
         tree.clear()
 
         if randomize_first or r > 0:
@@ -210,7 +210,7 @@ def incremental_evaluation(tree, instances, attr, run_length, runs=1,
             val = None
             if attr in instance:
                 val = instance[attr]
-            row.append((i, score(tree, instance, attr, val)))
+            row.append(score(tree, instance, attr, val))
             tree.ifit(instance)
         scores.append(row)
     return scores
