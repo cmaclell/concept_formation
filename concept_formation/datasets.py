@@ -1,3 +1,8 @@
+"""
+The dataset module has functions for loading a variety of datasets that
+are properly formated for use with CobwebTrees and their derivatives.
+"""
+
 from __future__ import print_function
 from __future__ import unicode_literals
 from __future__ import absolute_import

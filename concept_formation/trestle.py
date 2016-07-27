@@ -1,3 +1,8 @@
+"""
+The Trestle module contains the :class:`TrestleTree` class, which extends
+Cobweb3 to support component and relational attributes.
+"""
+
 from __future__ import print_function
 from __future__ import unicode_literals
 from __future__ import absolute_import
