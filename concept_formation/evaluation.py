@@ -45,12 +45,12 @@ def probability(tree, instance, attr, val):
         #mapping = flat_match(concept, temp_instance)
         #temp_instance = rename_flat(temp_instance, mapping)
 
-        probs = [concept.get_probability(sub_attr, temp_instance[sub_attr]) 
+        probs = [concept.probability(sub_attr, temp_instance[sub_attr]) 
                  for sub_attr in temp_instance 
                  if search('^' + mapping[attr], sub_attr)]
         return mean(probs)
     else:
-        return concept.get_probability(attr, val)
+        return concept.probability(attr, val)
 
 def error(tree, instance, attr, val):
     """

@@ -210,7 +210,7 @@ class CobwebTree(object):
     def infer_missing(self, instance, choice_fn="most likely", allow_none=True):
         """
         Given a tree and an instance, returns a new instance with attribute 
-        values picked using the specified choice function (wither "most likely"
+        values picked using the specified choice function (either "most likely"
         or "sampled"). 
 
         :param instance: an instance to be completed.
@@ -219,26 +219,24 @@ class CobwebTree(object):
             either "most likely" or "sampled". 
         :type choice_fn: a string
         :param allow_none: whether attributes not in the instance can be
-            inferred to be missing. If False, then all attributes will be inferred
-            with some value.
-        :type allow_none: a boolean
+            inferred to be missing. If False, then all attributes will be
+            inferred with some value.
+        :type allow_none: Boolean
         :return: A completed instance
         :rtype: instance
         """
         self._sanity_check_instance(instance)
         temp_instance = {a:instance[a] for a in instance}
-        probs = {a:1.0 for a in instance}
         concept = self._cobweb_categorize(temp_instance)
 
         for attr in self.root.av_counts:
             if attr in temp_instance:
                 continue
-            val, prob = concept.predict(attr, choice_fn, allow_none)
+            val = concept.predict(attr, choice_fn, allow_none)
             if val is not None:
                 temp_instance[attr] = val
-                probs[attr] = prob
 
-        return temp_instance, probs
+        return temp_instance
 
     def categorize(self, instance): 
         """
@@ -937,6 +935,10 @@ class CobwebNode(object):
 
         :param attr: an attribute of an instance
         :type attr: str
+        :param allow_none: whether attributes in the nodes probability table
+            can be inferred to be missing. If False, then None will not be
+            cosidered as a possible value.
+        :type allow_none: Boolean
         :return: a list of weighted choices for attr's value
         :rtype: [(choice1, choice1_weight), (choice2, choice2_weight), ...]
         """
@@ -960,13 +962,17 @@ class CobwebNode(object):
     def predict(self, attr, choice_fn="most likely", allow_none=True):
         """
         Predict the value of an attribute, using the specified choice function
-        (either the most likely value or a sampled value).
+        (either the "most likely" value or a "sampled" value).
 
         :param attr: an attribute of an instance.
         :type attr: str
         :param choice_fn: a string specifying the choice function to use,
             either "most likely" or "sampled". 
         :type choice_fn: a string
+        :param allow_none: whether attributes not in the instance can be
+            inferred to be missing. If False, then all attributes will be
+            inferred with some value.
+        :type allow_none: Boolean
         :return: The most likely value for the given attribute in the node's
                  probability table.
         :rtype: str
@@ -979,30 +985,25 @@ class CobwebNode(object):
             raise Exception("Unknown choice_fn")
 
         if attr not in self.tree.root.av_counts:
-            # If the attribute isn't in the tree then we can't do much.
-            return None, 1.0
+            return None
 
         choices = self.get_weighted_values(attr, allow_none)
         val = choice_fn(choices)
-        prob = self.get_probability(attr, val)
+        return val
 
-        if not allow_none:
-            prob = round(prob / (1 - self.get_probability(attr, None)), 10)
-
-        return val, prob
-
-    def get_probability(self, attr, val):
+    def probability(self, attr, val):
         """
         Returns the probability of a particular attribute value at the current
-        concept. 
+        concept. This takes into account the possibilities that an attribute
+        can take any of the values available at the root, or be missing. 
 
-        This takes into account the possibilities that an attribute can take any
-        of the values available at the root, or be missing. 
+        If you you want to check if the probability that an attribute is
+        missing, then check for the probability that the val is ``None``.
         
         :param attr: an attribute of an instance
-        :type attr: str
-        :param val: a value for the given attribute
-        :type val: str:
+        :type attr: any valid attribute type
+        :param val: a value for the given attribute or None
+        :type val: a numeric or norminal value (or None)
         :return: The probability of attr having the value val in the current
             concept.
         :rtype: float
@@ -1017,19 +1018,3 @@ class CobwebNode(object):
             return self.av_counts[attr][val] / self.count
 
         return 0.0
-
-    def get_probability_missing(self, attr):
-        """
-        Returns the probability of a particular attribute not being present in a
-        given concept.
-
-        This takes into account the possibilities that an attribute can take any
-        of the values available at the root, or be missing. 
-
-        :param attr: an attribute of an instance
-        :type attr: str
-        :return: The probability of attr not being present from an instance in
-            the current concept.
-        :rtype: float 
-        """
-        return self.get_probability(attr, None)

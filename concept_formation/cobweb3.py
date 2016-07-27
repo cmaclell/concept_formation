@@ -329,6 +329,10 @@ class Cobweb3Node(CobwebNode):
 
         :param attr: an attribute of an instance.
         :type attr: str
+        :param allow_none: whether attributes not in the instance can be
+            inferred to be missing. If False, then all attributes will be
+            inferred with some value.
+        :type allow_none: Boolean
         :return: The most likely value for the given attribute in the node's 
             probability table.
         :rtype: str or float
@@ -336,35 +340,29 @@ class Cobweb3Node(CobwebNode):
         .. seealso :meth:`Cobweb3Node.sample`
         """
         if attr not in self.tree.root.av_counts:
-            return None, 1.0
+            return None
 
         if isinstance(self.tree.root.av_counts[attr], ContinuousValue):
             prob_attr = self.av_counts[attr].num / self.count
 
             if choice_fn == "most likely" or choice_fn == "m":
                 if allow_none and prob_attr < 0.5:
-                    return None, 1 - prob_attr
+                    return None
                 val = self.av_counts[attr].mean
-                prob = self.get_probability(attr, val)
             elif choice_fn == "sampled" or choice_fn == "s":
                 if allow_none and prob_attr < random():
                     return None
                 val = normalvariate(self.av_counts[attr].unbiased_mean(),
                                     self.av_counts[attr].unbiased_std())
-                prob = self.get_probability(attr, val)
             else:
                 raise Exception("Unknown choice_fn")
             
-            if not allow_none:
-                prob = round(prob / (1 - self.get_probability(attr, None)),10)
-            
-            return val, prob
+            return val
 
         else:
-            return super(Cobweb3Node, self).predict(attr, choice_fn=choice_fn,
-                                                   allow_none=allow_none)
+            return super(Cobweb3Node, self).predict(attr, choice_fn=choice_fn)
 
-    def get_probability(self, attr, val):
+    def probability(self, attr, val):
         """
         Returns the probability of a particular attribute value at the current
         concept. 
@@ -418,23 +416,7 @@ class Cobweb3Node(CobwebNode):
             return p
 
         else:
-            return super(Cobweb3Node, self).get_probability(attr, val)
-
-    def get_probability_missing(self, attr):
-        """
-        Returns the probability of a particular attribute not being present in a
-        given concept.
-
-        This takes into account the possibilities that an attribute can take any
-        of the values available at the root, or be missing. 
-
-        :param attr: an attribute of an instance
-        :type attr: str
-        :return: The probability of attr not being present from an instance in
-            the current concept.
-        :rtype: float 
-        """
-        return self.get_probability(attr, None)
+            return super(Cobweb3Node, self).probability(attr, val)
 
     def is_exact_match(self, instance):
         """

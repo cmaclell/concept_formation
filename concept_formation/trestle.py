@@ -158,6 +158,10 @@ class TrestleTree(Cobweb3Tree):
         :param choice_fn: a string specifying the choice function to use,
             either "most likely" or "sampled". 
         :type choice_fn: a string
+        :param allow_none: whether attributes not in the instance can be
+            inferred to be missing. If False, then all attributes will be
+            inferred with some value.
+        :type allow_none: Boolean
         :return: A completed instance
         :rtype: instance
         """
@@ -166,12 +170,11 @@ class TrestleTree(Cobweb3Tree):
         preprocessing = Pipeline(SubComponentProcessor(), Flattener(),
                                  structure_mapper)
         temp_instance = preprocessing.transform(instance)
-        temp_instance, probs = super(TrestleTree,
+        temp_instance = super(TrestleTree,
                                      self).infer_missing(temp_instance,
                                                          choice_fn, allow_none)
         temp_instance = preprocessing.undo_transform(temp_instance)
-        probs = preprocessing.undo_transform(probs)
-        return temp_instance, probs
+        return temp_instance
 
     def categorize(self, instance):
         """
