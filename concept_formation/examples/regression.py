@@ -54,8 +54,8 @@ while curr.parent is not None:
     print(curr)
 
 # Predict test data
-cby = [cbt.categorize(e).predict('_y')[0] for e in test_data]
-cb3y = [cb3t.categorize(e).predict('_y')[0] for e in test_data]
+cby = [cbt.categorize(e).predict('_y') for e in test_data]
+cb3y = [cb3t.categorize(e).predict('_y') for e in test_data]
 
 # Plot the results
 plt.scatter(X, y, c='k', label='training data')

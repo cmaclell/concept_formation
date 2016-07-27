@@ -14,7 +14,6 @@ from __future__ import unicode_literals
 from __future__ import absolute_import
 from __future__ import division
 
-from itertools import permutations
 from random import choice
 from random import random
 from heapq import heappush
@@ -164,58 +163,16 @@ def contains_component(component, attr):
     
     return False
 
-def compute_rewards(names, target, base):
-    """
-    The function computes the rewards for renaming the target to match it to
-    the base. All of the rewards for possible mappings are computed at once so
-    that they don't have to be recomputed at each step in the search. 
-
-    target here can be either an instance or an av_counts object from a
-    concept.
-
-    .. todo:: 
-        Consider trying to speed this up
-    """
-    rewards = {}
-
-    for attr in target:
-        a_comps = get_attribute_components(attr)
-
-        if len(a_comps) == 0:
-            continue
-
-        for c_comps in permutations(names, len(a_comps)):
-            mapping = dict(zip(a_comps, c_comps))
-            new_attr = bind_flat_attr(attr, mapping)
-
-            if isinstance(target[attr], dict):
-                r = 0
-                for val in target[attr]:
-                    r += base.attr_val_guess_gain(new_attr, val, 
-                                                  target[attr][val])
-            elif isinstance(target[attr], ContinuousValue):
-                r = base.attr_val_guess_gain(new_attr, target[attr],
-                                             target[attr].num)
-            else:
-                r = base.attr_val_guess_gain(new_attr, target[attr])
-
-            if r != 0:
-                items = sorted(mapping.items())
-                keys = tuple(i[0] for i in items)
-                values = tuple(i[1] for i in items)
-                if keys not in rewards:
-                    rewards[keys] = {}
-                if values not in rewards[keys]:
-                    rewards[keys][values] = 0
-                rewards[keys][values] += r
-
-    return rewards
-
 def build_index(onames, instance):
     """
     Given a set of object names and an instance (or av_count table), builds a
     an index (a dict) that has object names as key and a list of all relations
     that refer to that object as a value.
+
+    :param onames: A set of objects in the instance.
+    :type onames: an iterable
+    :param instance: an instance or dictionary of attributes
+    :type instance: :ref:`Instance<instance-rep>`
     """
     index = {}
     for o in onames:
@@ -239,7 +196,7 @@ def flat_match(target, base):
 
     :param target: An instance or concept.av_counts object to be mapped to the
         base concept.
-    :type target: instance or av_counts obj from concept
+    :type target: :ref:`Instance<instance-rep>` or av_counts obj from concept
     :param base: A concept to map the target to
     :type base: TrestleNode
     :return: a mapping for renaming components in the instance.
@@ -267,6 +224,20 @@ def eval_obj_mapping(target_o, mapping, target, base, index, partial=False):
     Used to compute the value of the specified object (target_o) in the current
     mapping. Partial specifies whether partial relation matches should be
     computed. Including these is much more expensive.
+
+    :param target_o: The current object that has been modified in the mapping.
+    :type target_o: str
+    :param mapping: the current mapping
+    :type mapping: dict
+    :param target: the target of the structure mapping
+    :type target: :ref:`Instance<instance-rep>` or concept av_counts table
+    :param base: the base of the structure mapping
+    :type base: concept av_counts table
+    :param index: an index mapping objects to the relations they appear in
+    :type index: dict
+    :param partial: whether to compute partial rewards for partially met
+        relations.
+    :type partial: Boolean
     """
     r = 0.0
     for attr in index[target_o]:
@@ -278,9 +249,6 @@ def eval_obj_mapping(target_o, mapping, target, base, index, partial=False):
                     new_attrs.append(cattr)
         else:
             new_attrs.append(bind_flat_attr(attr, mapping))
-
-        #    print("has components")
-        #new_attr = bind_flat_attr(attr, mapping)
 
         for new_attr in new_attrs:
             if isinstance(target[attr], dict):
@@ -458,7 +426,7 @@ def mapping_cost(mapping, target, base, index):
 class StructureMappingOptimizationProblem(Problem):
     """
     A class for describing a structure mapping problem to be solved using the
-    `py_search<http://py-search.readthedocs.org/>_` library. This class defines
+    `py_search <http://py-search.readthedocs.io/>`_ library. This class defines
     the node_value, the successor, and goal_test methods used by the search
     library.
 
@@ -577,121 +545,6 @@ class StructureMappingOptimizationProblem(Problem):
                 yield self.swap_unnamed(o1, o2, mapping, unmapped_cnames,
                                         target, base, index, node)
                 
-
-class StructureMappingProblem(Problem):
-    """
-    A class for describing a structure mapping problem to be solved using the
-    `py_search<http://py-search.readthedocs.org/>_` library. This class defines
-    the node_value, the successor, and goal_test methods used by the search
-    library.
-    """
-    def partial_match_heuristic(self, node):
-        """
-        Given a node, considers all partial matches for each unbound attribute
-        and assumes that you get the highest guess_gain match. This provides an
-        over estimation of the possible reward (i.e., is admissible).
-
-        This heuristic is used by the :func:`node_value` method to
-        estimate how promising the state is. 
-        """
-        mapping, unnamed, availableNames = node.state
-        rewards = node.extra
-
-        h = 0
-        for iattr in rewards:
-            values = rewards[iattr].values()
-            if len(values) > 0:
-                h -= max(rewards[iattr].values())
-
-        return h
-
-    def node_value(self, node):
-        """
-        The value of a node. Uses cost + heuristic to achieve A* and other
-        greedy variants.
-
-        See the `py_search<http://py-search.readthedocs.org/>_` library for
-        more details of how this function is used in search.
-        """
-        return node.cost() #+ self.partial_match_heuristic(node)
-
-    def reward(self, new, mapping, rewards):
-        reward = 0
-        new_rewards = {}
-
-        mapped = frozenset(mapping.keys())
-        reverse_mapping = {mapping[a]:a for a in mapping}
-
-        for iattr in rewards:
-            if frozenset(iattr).issubset(mapped):
-                bindings = tuple(mapping[o] for o in iattr)
-                if bindings in rewards[iattr]:
-                    reward += rewards[iattr][bindings]
-            else:
-                nrw = {}
-                for vals in rewards[iattr]:
-                    partial_match = True
-                    for i,v in enumerate(vals):
-                        if iattr[i] in mapping and mapping[iattr[i]] != v:
-                            partial_match = False
-                            break
-                        if (v in reverse_mapping and reverse_mapping[v] !=
-                            iattr[i]):
-                            partial_match = False
-                            break
-                    if partial_match:
-                        nrw[vals] = rewards[iattr][vals]
-                if len(nrw) > 0:
-                    new_rewards[iattr] = nrw
-
-            #elif new[0] in iattr:
-            #    # TODO double check we cannot knock out more possible matches
-            #    idx = iattr.index(new[0])
-            #    new_rewards[iattr] = {vals: rewards[iattr][vals] for vals in
-            #                          rewards[iattr] if vals[idx] == new[1]}
-            #else:
-            #    new_rewards[iattr] = {val: rewards[iattr][val] for val in 
-            #                          rewards[iattr] if len(val) > 1 or 
-            #                          val[0] != new[1]}
-
-        return reward, new_rewards
-
-    def successors(self, node):
-        """
-        Given a search node (contains mapping, instance, concept), this
-        function computes the successor nodes where an additional mapping has
-        been added for each possible additional mapping. 
-
-        See the `py_search<http://py-search.readthedocs.org/>_` library for
-        more details of how this function is used in search.
-        """
-        mapping, inames, availableNames = node.state
-        rewards = node.extra
-
-        for a in inames:
-            for b in frozenset([a]).union(availableNames):
-                m = {a:v for a,v in mapping}
-                m[a] = b
-                state = (mapping.union(frozenset([(a, b)])), inames -
-                            frozenset([a]), availableNames - frozenset([b]))
-                reward, new_rewards = self.reward((a,b), m, rewards)
-                path_cost = node.cost() - reward
-
-                yield Node(state, node, (a, b), path_cost, extra=new_rewards)
-
-    def goal_test(self, node):
-        """
-        Given a search node, this returns True if every component in the
-        original instance has been renamed in the given node.
-
-        See the `py_search<http://py-search.readthedocs.org/>_` library for
-        more details of how this function is used in search.
-        """
-        mapping, unnamed, availableNames = node.state
-        #print(unnamed)
-        #print(node.extra)
-        return len(unnamed) == 0
-
 def is_partial_match(iAttr, cAttr, mapping):
     """
     Returns True if the instance attribute (iAttr) partially matches the
@@ -743,17 +596,11 @@ class StructureMapper(Preprocessor):
     the instance based on this structure mapping, and return the renamed
     instance.
 
-    :param concept: A concept to structure map the instance to
-    :type concept: TrestleNode
-    :param pipeline: A preprocessing pipeline to apply before structure mapping
-        and to undo when undoing the structure mapping. If ``None`` then the
-        default pipeline of
-        :class:`Tuplizer<concept_formation.preprocessor.Tuplizer>` ->
-        :class:`NameStandardizer<concept_formation.preprocessor.NameStandardizer>`
-        ->
-        :class:`SubComponentProcessor<concept_formation.preprocessor.SubComponentProcessor>`
-        -> :class:`Flattener<concept_formation.preprocessor.Flattener>` is
-        applied
+    :param base: A concept to structure map the instance to
+    :type base: TrestleNode
+    :param gensym: a function that returns unique object names (str) on each
+        call
+    :type gensym: function
     :return: A flattened and mapped copy of the instance
     :rtype: instance
     """
@@ -763,15 +610,44 @@ class StructureMapper(Preprocessor):
         self.name_standardizer = NameStandardizer(gensym)
 
     def get_mapping(self):
+        """
+        Returns the currently established mapping.
+
+        :return: The current mapping.
+        :rtype: dict
+        """
         return {self.reverse_mapping[o]: o for o in self.reverse_mapping}
     
     def transform(self, target):
+        """
+        Transforms a provided target (either an instance or an av_counts table
+        from a CobwebNode or Cobweb3Node).
+
+        :param target: An instance or av_counts table to rename to bring into
+            alignment with the provided base. 
+        :type target: instance or av_counts table (from CobwebNode or
+            Cobweb3Node).
+        :return: The renamed instance or av_counts table
+        :rtype: instance or av_counts table
+        """
         target = self.name_standardizer.transform(target)
         mapping = flat_match(target, self.base)
         self.reverse_mapping = {mapping[o]: o for o in mapping}
         return rename_flat(target, mapping)
 
     def undo_transform(self, target):
+        """
+        Takes a transformed target and reverses the structure mapping using the
+        mapping discovered by transform.
+
+        :param target: A previously renamed instance or av_counts table to
+            reverse the structure mapping on.
+        :type target: previously structure mapped instance or av_counts table
+            (from CobwebNode or Cobweb3Node).
+        :return: An instance or concept av_counts table with original object
+            names
+        :rtype: dict
+        """
         if self.reverse_mapping is None:
             raise Exception("Must transform before undoing transform")
         target = rename_flat(target, self.reverse_mapping)

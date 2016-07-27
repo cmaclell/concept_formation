@@ -7,34 +7,33 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 from concept_formation.examples.examples_utils import avg_lines
-from concept_formation.predict import incremental_prediction
+from concept_formation.evaluation import incremental_evaluation
 from concept_formation.cobweb3 import Cobweb3Tree
 from concept_formation.dummy import DummyTree
 from concept_formation.datasets import load_iris
 
 num_runs = 30
-num_examples = 30
+num_examples = 20
 irises = load_iris()
 
-naive_data = incremental_prediction(DummyTree(), irises,
+naive_data = incremental_evaluation(DummyTree(), irises,
                                   run_length=num_examples,
                                   runs=num_runs, attr="class")
-cobweb_data = incremental_prediction(Cobweb3Tree(), irises,
+cobweb_data = incremental_evaluation(Cobweb3Tree(), irises,
                                   run_length=num_examples,
                                   runs=num_runs, attr="class")
-
-naive_data.sort()
-cobweb_data.sort()
-
 cobweb_x, cobweb_y = [], []
 naive_x, naive_y = [], []
 
-for x,y in cobweb_data:
-    cobweb_x.append(x)
-    cobweb_y.append(y)
-for x,y in naive_data:
-    naive_x.append(x)
-    naive_y.append(y)
+for opp in range(len(cobweb_data[0])):
+  for run in range(len(cobweb_data)):
+    cobweb_x.append(opp)
+    cobweb_y.append(cobweb_data[run][opp])
+
+for opp in range(len(naive_data[0])):
+  for run in range(len(naive_data)):
+    naive_x.append(opp)
+    naive_y.append(naive_data[run][opp])
 
 cobweb_x = np.array(cobweb_x)
 cobweb_y = np.array(cobweb_y)

@@ -9,9 +9,9 @@ from concept_formation.utils import c4
 class ContinuousValue():
     """ 
     This class is used to store the number of samples, the mean of the samples,
-    and the squared error of the samples for numeric attribute values. It can be
-    used to perform incremental estimation of the attribute's mean, std, and
-    unbiased std.
+    and the squared error of the samples for :ref:`Numeric Values<val-num>`. 
+    It can be used to perform incremental estimation of the attribute's mean, 
+    std, and unbiased std.
 
     Initially the number of values, the mean of the values, and the
     squared errors of the values are set to 0.

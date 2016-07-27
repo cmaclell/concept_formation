@@ -20,12 +20,12 @@ concept hierarchy. The resulting hierarchy can be used for clustering and
 prediction.
 
 This library also includes
-`TRESTLE <http://christopia.net/data/articles/publications/maclellan1-2015.pdf>`_,
+`TRESTLE <http://christopia.net/data/articles/publications/maclellan-trestle-2016.pdf>`_,
 an extension of COBWEB and COBWEB/3 that support structured and relational data
 objects. This system employs partial matching to rename new objects to align
 with previous examples, then categorizes these renamed objects.
 
-Lastly, we have extended the COBWEB/3 algorithm to support two key
+Lastly, we have extended the COBWEB/3 algorithm to support three key
 improvements. First, COBWEB/3 now uses an `unbiased estimator
 <https://en.wikipedia.org/wiki/Unbiased_estimation_of_standard_deviation>`_ to
 calculate the standard deviation of numeric values. This is particularly useful
@@ -33,6 +33,9 @@ in situations where the number of available data points is low. Second,
 COBWEB/3 supports online normalization of the continuous values, which is
 useful in situations where numeric values are on different scales and helps to
 ensure that numeric values do not impact the model more than nominal values.
+Finally, it is assumed that there is some base noise in measuring continuous
+values, this noise insures that the probability of any one value never exceeds
+1, even when the standard deviation is small. 
 
 Installation
 ============

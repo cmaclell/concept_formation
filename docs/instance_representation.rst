@@ -1,3 +1,5 @@
+.. _instance-rep:
+
 Instance Representation
 =======================
 
@@ -16,22 +18,30 @@ dictionaries as values). Furthermore, it is a general format that many other
 representations, such as JSON, can be easily converted into. In fact, the
 concept_formation package has methods for facilitating such conversions.
 
+.. _attributes:
+
 Attributes
 ----------
 
 The concept_formation package supports four kinds of attributes:
+
+.. _attr-const:
 
 Constant Attributes
     The default attribute type. Constant attributes are typically strings but
     any attribute that does not satisfy the conditions for the other categories
     will be assumed to be constant.
 
+.. _attr-var:
+
 Variable Attributes
     Any attribute that can be renamed to maximize mapping between an instance
     and a concept. This allows for matching attributes based on the similarity
     of their values rather than strictly on their attribute names. Variable are
     denoted with a question mark ``'?'`` as their first element (e.g.,
-    ``'?variable- attribute'``).
+    ``'?variable-attribute'``).
+
+.. _attr-rel:
 
 Relational Attributes
     An attribute that represents a relationship between other attributes or
@@ -43,16 +53,18 @@ Relational Attributes
     express a relationship of feature1 of subobject1 I might have:
     ``('relation', ('feature1', 'subobject1')``).
 
+.. _attr-hid:
+
 Hidden Attributes
-    Attributes that are maintained in the concept knoweldge base but are not
+    Attributes that are maintained in the concept knowledge base but are not
     considered during concept formation. These are useful for propagating unique
     ids or other bookkeeping labels into the knoweldge base without biasing
     concept formation. Hidden attributes are denoted as constant or relational
     attributes that have an ``'_'`` as their first element (i.e., ``attribute[0]
     == '_'``). For constants, this means that the first character is an
     underscore (e.g., ``"_hidden"``). For relations, this means that the first
-    element in the tuple is an string underscore (e.g., ``('_', 'hidden-
-    relation', 'obj')``).
+    element in the tuple is an string underscore (e.g., 
+    ``('_', 'hidden-relation', 'obj')``).
 
 Only the **constant** and **hidden** attributes are supported by
 :class:`CobwebTree<concept_formation.cobweb.CobwebTree>` and
@@ -60,18 +72,30 @@ Only the **constant** and **hidden** attributes are supported by
 :class:`TrestleTree<concept_formation.trestle.TrestleTree>` supports all
 attribute types. 
 
+In general attribute names must be hashable (so they can be used in a
+dictionary and must be zero index-able (e.g., ``attribute[0]``, so that they
+can be tested to determine if they are hidden.
+
+.. _values:
+
 Values
 ------
 
 For each of these attribute type, the concept_formation package supports three
 kinds of values:
 
+.. _val-nom:
+
 Nominal Values
     All non-numerical values (typically strings or booleans).
+
+.. _val-num:
 
 Numerical Values
     All values that are recognized by Python as numbers (i.e.,
     ``isinstance(val, Number)``).
+
+.. _val-comp:
 
 Component Values
     All dictionary values (i.e., sub-instances). All component values are

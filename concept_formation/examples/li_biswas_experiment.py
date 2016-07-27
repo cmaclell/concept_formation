@@ -162,7 +162,7 @@ def run_noise_exp(scaling=False):
 nominal = []
 numeric = []
 
-for i in range(30):
+for i in range(1):
     noise, miss_nominal, miss_numeric = run_noise_exp(scaling=False)
     nominal.append(miss_nominal)
     numeric.append(miss_numeric)

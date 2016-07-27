@@ -1,3 +1,9 @@
+"""
+The Cobweb3 module contains the :class:`Cobweb3Tree` and :class:`Cobweb3Node`
+classes, which extend the traditional Cobweb capabilities to support numeric
+values on attributes. 
+"""
+
 from __future__ import print_function
 from __future__ import unicode_literals
 from __future__ import absolute_import
@@ -23,18 +29,20 @@ class Cobweb3Tree(CobwebTree):
     attribute is any value where ``isinstance(instance[attr], Number)`` returns
     ``True``.
 
-    The scaling parameter determines whether online normalization of
-    continuous attributes is used. By default scaling is not used. Scaling
-    divides the std of each attribute by the std of the attribute in the root.
+    The scaling parameter determines whether online normalization of continuous
+    attributes is used, and to what standard deviation the values are scaled
+    to. Scaling divides the std of each attribute by the std of the attribute
+    in the root divided by the scaling constant (i.e., 
+    :math:`\\sigma_{root} / scaling` when making category utility calculations.
     Scaling is useful to balance the weight of different numerical attributes,
     without scaling the magnitude of numerical attributes can affect category
     utility calculation meaning numbers that are naturally larger will recieve
     preference in the category utility calculation.
 
     :param scaling: What number of standard deviations numeric attributes
-        should be scaled to.  By default this value is 0.5 (half a std), which
-        is the max std of nominal values. If disabiling scaling is desirable,
-        then it can be set to False or None.
+        should be scaled to. By default this value is 0.5 (half a standard
+        deviation), which is the max std of nominal values. If disabiling
+        scaling is desirable, then it can be set to False or None.
     :type scaling: a float greater than 0.0, None, or False
     """
 
@@ -86,8 +94,7 @@ class Cobweb3Node(CobwebNode):
             this error.
         
         :param instance: A new instances to incorporate into the node.
-        :type instance: {a1: v1, a2: v2, ...} - a hashtable of attr and values,
-            where values can be numeric or nominal.
+        :type instance: :ref:`Instance<instance-rep>`
 
         """
         self.count += 1 
@@ -146,9 +153,9 @@ class Cobweb3Node(CobwebNode):
         the attribute is added. 
 
         :param attr: An attribute in the concept
-        :type attr: str
+        :type attr: :ref:`Attribute<attributes>`
         :param val: A value for the given attribute in the concept
-        :type val: float or str
+        :type val: :ref:`Value<values>`
         :param counts: the number of times to add the attr val to the concept
         :type counts: integer or float
         :return: the gain in number of correct guesses from adding the
@@ -323,66 +330,44 @@ class Cobweb3Node(CobwebNode):
         If the attribute is a nominal then this function behaves the same as
         :meth:`CobwebNode.predict <concept_formation.cobweb.CobwebNode.predict>`.
         If the attribute is numeric then the mean value from the
-        :class:`ContinuousValue` is chosen.
+        :class:`ContinuousValue<concept_formation.continuous_value.ContinuousValue>` is chosen.
 
         :param attr: an attribute of an instance.
-        :type attr: str
+        :type attr: :ref:`Attribute<attributes>`
+        :param allow_none: whether attributes not in the instance can be
+            inferred to be missing. If False, then all attributes will be
+            inferred with some value.
+        :type allow_none: Boolean
         :return: The most likely value for the given attribute in the node's 
             probability table.
-        :rtype: str or float
+        :rtype: :ref:`Value<values>`
 
         .. seealso :meth:`Cobweb3Node.sample`
         """
         if attr not in self.tree.root.av_counts:
-            return None, 1.0
+            return None
 
         if isinstance(self.tree.root.av_counts[attr], ContinuousValue):
-            # get the right concept for this attribute using past performance
-            curr = self
-            if not allow_none:
-                while (curr.parent and curr.get_probability(attr, None) >=
-                       ((curr.count - 1)/curr.count)):
-                    curr = curr.parent
-            best = curr
-
-            #print("STARTING AT CHILD")
-            while curr is not None:
-                #if attr in curr.correct_at_node:
-                #    print()
-                #    print("AT NODE " + str(curr.correct_at_node[attr]))
-                #    print("AT DECS " + str(curr.correct_at_decendents[attr]))
-                if (attr in curr.correct_at_node and
-                    (curr.correct_at_node[attr].unbiased_mean() >=
-                     curr.correct_at_decendents[attr].unbiased_mean())):
-                    best = curr
-                curr = curr.parent
-
-            prob_attr = best.av_counts[attr].num / best.count
+            prob_attr = self.av_counts[attr].num / self.count
 
             if choice_fn == "most likely" or choice_fn == "m":
                 if allow_none and prob_attr < 0.5:
-                    return None, 1 - prob_attr
-                val = best.av_counts[attr].mean
-                prob = best.get_probability(attr, val)
+                    return None
+                val = self.av_counts[attr].mean
             elif choice_fn == "sampled" or choice_fn == "s":
                 if allow_none and prob_attr < random():
                     return None
                 val = normalvariate(self.av_counts[attr].unbiased_mean(),
                                     self.av_counts[attr].unbiased_std())
-                prob = best.get_probability(attr, val)
             else:
                 raise Exception("Unknown choice_fn")
             
-            if not allow_none:
-                prob = round(prob / (1 - best.get_probability(attr, None)),10)
-            
-            return val, prob
+            return val
 
         else:
-            return super(Cobweb3Node, self).predict(attr, choice_fn=choice_fn,
-                                                   allow_none=allow_none)
+            return super(Cobweb3Node, self).predict(attr, choice_fn=choice_fn)
 
-    def get_probability(self, attr, val):
+    def probability(self, attr, val):
         """
         Returns the probability of a particular attribute value at the current
         concept. 
@@ -399,9 +384,9 @@ class Cobweb3Node(CobwebNode):
         assumes some independent, normally distributed noise).
         
         :param attr: an attribute of an instance
-        :type attr: str
+        :type attr: :ref:`Attribute<attributes>`
         :param val: a value for the given attribute
-        :type val: str:
+        :type val: :ref:`Value<values>`
         :return: The probability of attr having the value val in the current concept.
         :rtype: float
         """
@@ -436,30 +421,14 @@ class Cobweb3Node(CobwebNode):
             return p
 
         else:
-            return super(Cobweb3Node, self).get_probability(attr, val)
-
-    def get_probability_missing(self, attr):
-        """
-        Returns the probability of a particular attribute not being present in a
-        given concept.
-
-        This takes into account the possibilities that an attribute can take any
-        of the values available at the root, or be missing. 
-
-        :param attr: an attribute of an instance
-        :type attr: str
-        :return: The probability of attr not being present from an instance in
-            the current concept.
-        :rtype: float 
-        """
-        return self.get_probability(attr, None)
+            return super(Cobweb3Node, self).probability(attr, val)
 
     def is_exact_match(self, instance):
         """
         Returns true if the concept exactly matches the instance.
 
         :param instance: The instance currently being categorized
-        :type instance: {a1: v1, a2: v2, ...} - a hashtable of attr and values
+        :type instance: :ref:`Instance<instance-rep>`
         :return: whether the instance perfectly matches the concept
         :rtype: boolean
 
@@ -483,7 +452,7 @@ class Cobweb3Node(CobwebNode):
                     return False
         return True
 
-    def output_json(self, limit_by_performance=False):
+    def output_json(self):
         """
         Outputs the categorization tree in JSON form. 
 
@@ -501,8 +470,6 @@ class Cobweb3Node(CobwebNode):
                 output['guid'] = guid
         output["name"] = "Concept" + self.concept_id
         output["size"] = self.count
-        output['past_performance'] = {str(k):str(self.correct_at_node[k]) for k in self.correct_at_node}
-        output['decendent_performance'] = {str(k):str(self.correct_at_decendents[k]) for k in self.correct_at_decendents}
         output["children"] = []
 
         temp = {}
@@ -516,18 +483,8 @@ class Cobweb3Node(CobwebNode):
                 #    temp[str(attr) + " = " + str(value)] = self.av_counts[attr][value]
 
 
-        if limit_by_performance:
-            tot_at = 0
-            tot_dec = 0
-            for k in self.correct_at_node:
-                tot_at += self.correct_at_node[k].mean
-                tot_dec += self.correct_at_decendents[k].mean
-            if tot_at < tot_dec:
-                for child in self.children:
-                    output["children"].append(child.output_json())
-        else:
-             for child in self.children:
-                    output["children"].append(child.output_json())
+        for child in self.children:
+               output["children"].append(child.output_json())
 
         output["counts"] = temp
 

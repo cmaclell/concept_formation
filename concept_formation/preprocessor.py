@@ -12,13 +12,14 @@ Two abstract preprocessors are defined:
 Trestle's normal implementation uses a standard pipeline of preprocessors that
 run in the following order:
 
-#. :class:`NameStandardizer` - Gives any variables unique names so they can be 
-   renamed in matching without colliding.
 #. :class:`SubComponentProcessor` - Pulls any sub-components present in the
    instance to the top level of the instance and adds ``has-component``
    relations to preserve semantics.
 #. :class:`Flattener` - Flattens component instances into a number of tuples
    (i.e. ``(attr,component)``) for faster hashing and access.
+#. :class:`StructureMapper<concept_formation.structure_mapper.StructureMapper>` 
+    - Gives any variables unique names so they can be renamed in matching without 
+    colliding, and matches instances to the root concept.
 
 The remaining preprocessors are helper classes designed to support data that is
 not stored in Trestle's conventional representation:
@@ -43,7 +44,6 @@ from __future__ import division
 from copy import deepcopy
 from numbers import Number
 import collections
-import json
 
 _gensym_counter = 0;
 
@@ -136,6 +136,19 @@ class Preprocessor(object):
         Undoes transformation for a collection of instances
         """
         return [self.undo_transform(instance) for instance in instances]
+
+class OneWayPreprocessor(Preprocessor):
+    """
+    A template class that defines a transformation function that only works in
+    the forward direction. If undo_transform is called then an exact copy of
+    the given object is returned.
+    """
+
+    def undo_transform(self, instance):
+        """
+        No-op
+        """
+        return {k:instance[k] for k in instance}
 
 class Pipeline(Preprocessor):
     """
@@ -277,7 +290,7 @@ def rename_relation(relation, mapping):
     the NameStandardizer.
 
     :param attr: The relational attribute containing components to be renamed
-    :type attr: tuple
+    :type attr: :ref:`Relation Attribute<attr-rel>`
     :param mapping: A dictionary of mappings between component names
     :type mapping: dict
     :return: A new relational attribute with components renamed
@@ -323,6 +336,11 @@ class NameStandardizer(Preprocessor):
     This is the first operation in :class:`StructureMapper
     <concept_formation.structure_mapper.StructureMapper>`'s standard
     pipeline.
+
+    :param gensym: a function that returns unique object names (str) on each
+        call. If None, then :func:`default_gensym` is used, which keeps a
+        global object counter. 
+    :type gensym: a function
 
     >>> _reset_gensym()     # Reset the symbol generator for doctesting purposes. 
     >>> import pprint
@@ -432,9 +450,9 @@ class NameStandardizer(Preprocessor):
         :param instance: An instance to be named apart.
         :param mapping: An existing mapping to add new mappings to; used for
             recursive calls.
-        :type instance: instance
+        :type instance: :ref:`Instance<instance-rep>`
         :return: an instance with component attributes renamed
-        :rtype: :ref:`standardized instance <standard-instance>`
+        :rtype: :ref:`Instance<instance-rep>`
 
         >>> _reset_gensym()     # Reset the symbol generator for doctesting purposes. 
         >>> import pprint
@@ -617,13 +635,12 @@ class ListProcessor(Preprocessor):
     <concept_formation.structure_mapper.StructureMapper>`'s standard
     pipeline.
 
-        .. warning:: The ListProcessor's undo_transform function is not
-            guaranteed to be deterministic and attempts a best guess at a partial ordering.
-            In most cases this will be fine but in complex instances with multiple lists and
-            user defined ordering relations it can break down. If an ordering cannot be
-            determined then ordering relations are left in place.
+    .. warning:: The ListProcessor's undo_transform function is not
+        guaranteed to be deterministic and attempts a best guess at a partial ordering.
+        In most cases this will be fine but in complex instances with multiple lists and
+        user defined ordering relations it can break down. If an ordering cannot be
+        determined then ordering relations are left in place.
 
-    
     >>> _reset_gensym()     # Reset the symbol generator for doctesting purposes. 
     >>> import pprint
     >>> instance = {"att1":"val1","list1":["a","b","a","c","d"]}
@@ -1209,7 +1226,7 @@ class SubComponentProcessor(Preprocessor):
 
 
 
-class ObjectVariablizer(Preprocessor):
+class ObjectVariablizer(OneWayPreprocessor):
     """
     Converts all attributes with dictionary values into variables by adding a
     question mark.
@@ -1223,21 +1240,21 @@ class ObjectVariablizer(Preprocessor):
     :class:`StructureMapper
     <concept_formation.structure_mapper.StructureMapper>`'s standard pipeline.
 
-    >>> import pprint
+    >>> from pprint import pprint
     >>> instance = {"ob1":{"myX":12.4,"myY":13.1,"myType":"square"},"ob2":{"myX":9.5,"myY":12.6,"myType":"rect"}}
     >>> ov = ObjectVariablizer()
     >>> instance = ov.transform(instance)
-    >>> pprint.pprint(instance)
+    >>> pprint(instance)
     {'?ob1': {'myType': 'square', 'myX': 12.4, 'myY': 13.1},
      '?ob2': {'myType': 'rect', 'myX': 9.5, 'myY': 12.6}}
     >>> instance = ov.undo_transform(instance)
-    Traceback (most recent call last):
-        ...
-    NotImplementedError: no reverse transformation currently implemented
+    >>> pprint(instance)
+    {'?ob1': {'myType': 'square', 'myX': 12.4, 'myY': 13.1},
+     '?ob2': {'myType': 'rect', 'myX': 9.5, 'myY': 12.6}}
     >>> instance = {"p1":{"x":12,"y":3},"p2":{"x":5,"y":14},"p3":{"x":4,"y":18},"setttings":{"x_lab":"height","y_lab":"age"}}
     >>> ov = ObjectVariablizer("p1","p2","p3")
     >>> instance = ov.transform(instance)
-    >>> pprint.pprint(instance)
+    >>> pprint(instance)
     {'?p1': {'x': 12, 'y': 3},
      '?p2': {'x': 5, 'y': 14},
      '?p3': {'x': 4, 'y': 18},
@@ -1258,13 +1275,6 @@ class ObjectVariablizer(Preprocessor):
         Variablize target attributes.
         """
         return self._variablize(instance)
-
-    def undo_transform(self, instance):
-        """
-        .. warning:: There is currently no implementation for reversing
-            variablization. Calling this function will raise an Exception.
-        """
-        raise NotImplementedError("no reverse transformation currently implemented")
 
     def _variablize(self, instance, mapping={}, prefix=None):
         new_instance = {}
@@ -1299,7 +1309,7 @@ class ObjectVariablizer(Preprocessor):
 
         return new_instance
 
-class NumericToNominal(Preprocessor):
+class NumericToNominal(OneWayPreprocessor):
     """
     Converts numeric values to nominal ones.
 
@@ -1358,15 +1368,7 @@ class NumericToNominal(Preprocessor):
                 new_instance[a] = instance[a]
         return new_instance
 
-    def undo_transform(self,instance):
-        """
-        .. warning:: There is currently no implementation for reversing
-            the numeric to nominal conversion. Calling this function will 
-            raise an Exception.
-        """
-        raise NotImplementedError("no reverse transformation currently implemented")
-
-class NominalToNumeric(Preprocessor):
+class NominalToNumeric(OneWayPreprocessor):
     """
     Converts nominal values to numeric ones.
 
@@ -1473,20 +1475,11 @@ class NominalToNumeric(Preprocessor):
         
         return new_instance
 
-    def undo_transform(self,instance):
-        """
-        .. warning:: There is currently no implementation for reversing
-            the nominal to numeric conversion. Calling this function will 
-            raise an Exception.
-        """
-        raise NotImplementedError("no reverse transformation currently implemented")
 
-
-class Sanitizer(Preprocessor):
+class Sanitizer(OneWayPreprocessor):
     """
-
     This is a preprocessor that santizes instances to adhere to the general
-    expectations of either cobweb or the structure mapper. In general this
+    expectations of either Cobweb, Cobweb3 or Trestle. In general this
     means enforcing that attribute keys are either of type str or tuple and
     that relational tuples contain only values of str or tuple. The  main
     reason for having this preprocessor is because many other things are valid
@@ -1533,9 +1526,6 @@ class Sanitizer(Preprocessor):
 
     def transform(self, instance):
         return self._sanitize(instance)
-
-    def undo_transform(self,instance):
-        raise NotImplementedError("no reverse transformation currently implemented")
 
     def _cob_str(self,d):
         """

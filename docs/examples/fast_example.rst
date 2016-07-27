@@ -42,7 +42,7 @@ Fast Example
        ...:        '?f4': {'sub-feature1': 'v1'}}
 
     # Here we see that 'f1' and 'some-relation' are infered.
-    In [10]: pprint(tree.infer_missing(new)[0])
+    In [10]: pprint(tree.infer_missing(new))
 
     # They can also be used to predict specific attribute values
     In [11]: concept = tree.categorize(new)
@@ -50,7 +50,7 @@ Fast Example
     In [12]: print(concept.predict('f1'))
 
     # Or to get the probability of a particular attribute value
-    In [13]: print(concept.get_prediction_probability('f1', 'v1'))
+    In [13]: print(concept.probability('f1', 'v1'))
 
     # Trees can also be used to produce flat clusterings
     In [14]: new_tree = TrestleTree()

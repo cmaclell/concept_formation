@@ -36,4 +36,5 @@ v0.2.18,1/28/16 -- Fixed error in infer_missing that gave higher chance of
 v0.2.19,1/28/16 -- Changed categorize function to use the concept that most
                    closely matches the instance (max # of correct guesses in
                    instance). Also, added cobweb3 regression example. 
- 
+v0.3.0, 7/27/16 -- Improved docs, added tests, improved speed and performance
+                   of structure mapper.
