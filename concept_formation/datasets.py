@@ -34,7 +34,8 @@ def load_forest_fires():
     """
     Load the forest fires dataset.
 
-    This is an example of instances with nominal and numeric attributes.
+    This is an example of instances with :ref:`Nominal<val-nom>` and
+    :ref:`Numeric<val-num>` values and :ref:`Constant<attr-const>` attributes.
 
     This dataset was downloaded from the `UCI machine learning repository
     <http://archive.ics.uci.edu/ml/datasets/Forest+Fires>`__.
@@ -67,8 +68,9 @@ def load_congressional_voting():
     """
     Load the voting dataset.
 
-    This is an example of instances with only nominal attributes and some
-    missing attributes. 
+    This is an example of instances with only :ref:`Nominal<val-nom>` values
+    and :ref:`Constant<attr-const>` attributes but some attributes are
+    occasionally missing.
 
     This dataset was downloaded from the `UCI machine learning repository
     <http://archive.ics.uci.edu/ml/datasets/Congressional+Voting+Records>`__.
@@ -104,7 +106,8 @@ def load_iris():
     """
     Load the iris dataset.
 
-    This is an example of instances with numeric and nominal attributes.
+    This is an example of instances with :ref:`Nominal<val-nom>` and
+    :ref:`Numeric<val-num>` values and :ref:`Constant<attr-const>` attributes.
 
     This dataset was downloaded from the `UCI machine learning repository
     <https://archive.ics.uci.edu/ml/datasets/Iris>`__. We processed the data
@@ -127,7 +130,8 @@ def load_iris():
 def load_mushroom():
     """Load the mushroom dataset.
 
-    This is an example of instances with only nominal attributes.
+    This is an example of instances with only :ref:`Nominal<val-nom>` values
+    and :ref:`Constant<attr-const>` attributes.
 
     This dataset was downloaded from the `UCI machine learning repository
     <https://archive.ics.uci.edu/ml/datasets/Mushroom>`__. We processed the data
@@ -167,8 +171,8 @@ def load_mushroom():
 def load_rb_com_11():
     """Load the RumbleBlocks, Center of Mass Level 11, dataset.
 
-    This is an example of instances with only component, numeric, and nominal
-    attributes.
+    This is an example of instances with all the attribute and value types
+    described in the :ref:`instance-rep`.
 
     >>> import pprint
     >>> data = load_rb_com_11()
@@ -189,8 +193,8 @@ def load_rb_com_11():
 def load_rb_s_07():
     """Load the RumbleBlocks, Symmetry Level 7, dataset.
 
-    This is an example of instances with only component, numeric, and nominal
-    attributes.
+    This is an example of instances with all the attribute and value types
+    described in the :ref:`instance-rep`.
 
     >>> import pprint
     >>> data = load_rb_s_07()
@@ -208,8 +212,8 @@ def load_rb_s_07():
 def load_rb_s_13():
     """Load the RumbleBlocks, Symmetry Level 13, dataset.
 
-    This is an example of instances with only component, numeric, and nominal
-    attributes.
+    This is an example of instances with all the attribute and value types
+    described in the :ref:`instance-rep`.
 
     >>> import pprint
     >>> data = load_rb_s_13()
@@ -230,8 +234,8 @@ def load_rb_s_13():
 def load_rb_wb_03():
     """Load the RumbleBlocks, Wide Base Level 03, dataset.
 
-    This is an example of instances with only component, numeric, and nominal
-    attributes.
+    This is an example of instances with all the attribute and value types
+    described in the :ref:`instance-rep`.
 
     >>> import pprint
     >>> data = load_rb_wb_03()
