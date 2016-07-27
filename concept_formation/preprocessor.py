@@ -1240,21 +1240,21 @@ class ObjectVariablizer(OneWayPreprocessor):
     :class:`StructureMapper
     <concept_formation.structure_mapper.StructureMapper>`'s standard pipeline.
 
-    >>> import pprint
+    >>> from pprint import pprint
     >>> instance = {"ob1":{"myX":12.4,"myY":13.1,"myType":"square"},"ob2":{"myX":9.5,"myY":12.6,"myType":"rect"}}
     >>> ov = ObjectVariablizer()
     >>> instance = ov.transform(instance)
-    >>> pprint.pprint(instance)
+    >>> pprint(instance)
     {'?ob1': {'myType': 'square', 'myX': 12.4, 'myY': 13.1},
      '?ob2': {'myType': 'rect', 'myX': 9.5, 'myY': 12.6}}
     >>> instance = ov.undo_transform(instance)
-    Traceback (most recent call last):
-        ...
-    NotImplementedError: no reverse transformation currently implemented
+    >>> pprint(instance)
+    {'?ob1': {'myType': 'square', 'myX': 12.4, 'myY': 13.1},
+     '?ob2': {'myType': 'rect', 'myX': 9.5, 'myY': 12.6}}
     >>> instance = {"p1":{"x":12,"y":3},"p2":{"x":5,"y":14},"p3":{"x":4,"y":18},"setttings":{"x_lab":"height","y_lab":"age"}}
     >>> ov = ObjectVariablizer("p1","p2","p3")
     >>> instance = ov.transform(instance)
-    >>> pprint.pprint(instance)
+    >>> pprint(instance)
     {'?p1': {'x': 12, 'y': 3},
      '?p2': {'x': 5, 'y': 14},
      '?p3': {'x': 4, 'y': 18},
