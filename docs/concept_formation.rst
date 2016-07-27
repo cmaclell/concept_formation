@@ -68,22 +68,12 @@ concept_formation.cluster module
     :undoc-members:
     :show-inheritance:
 
-concept_formation.predict module
---------------------------------
-
-.. automodule:: concept_formation.predict
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 concept_formation.evaluation module
 ------------------------------------
 
 .. automodule:: concept_formation.evaluation
     :members: incremental_evaluation, probability, error, absolute_error, squared_error
     :undoc-members:
-
-    
 
 concept_formation.preprocessor module
 -------------------------------------
