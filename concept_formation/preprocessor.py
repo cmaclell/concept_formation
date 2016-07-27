@@ -137,6 +137,19 @@ class Preprocessor(object):
         """
         return [self.undo_transform(instance) for instance in instances]
 
+class OneWayPreprocessor(Preprocessor):
+    """
+    A template class that defines a transformation function that only works in
+    the forward direction. If undo_transform is called then an exact copy of
+    the given object is returned.
+    """
+
+    def undo_transform(self, instance):
+        """
+        No-op
+        """
+        return {k:instance[k] for k in instance}
+
 class Pipeline(Preprocessor):
     """
     A special preprocessor class used to chain together many preprocessors.
@@ -277,7 +290,7 @@ def rename_relation(relation, mapping):
     the NameStandardizer.
 
     :param attr: The relational attribute containing components to be renamed
-    :type attr: tuple
+    :type attr: :ref:`Relation Attribute<attr-rel>`
     :param mapping: A dictionary of mappings between component names
     :type mapping: dict
     :return: A new relational attribute with components renamed
@@ -437,9 +450,9 @@ class NameStandardizer(Preprocessor):
         :param instance: An instance to be named apart.
         :param mapping: An existing mapping to add new mappings to; used for
             recursive calls.
-        :type instance: instance
+        :type instance: :ref:`Instance<instance-rep>`
         :return: an instance with component attributes renamed
-        :rtype: :ref:`standardized instance <standard-instance>`
+        :rtype: :ref:`Instance<instance-rep>`
 
         >>> _reset_gensym()     # Reset the symbol generator for doctesting purposes. 
         >>> import pprint
@@ -622,13 +635,12 @@ class ListProcessor(Preprocessor):
     <concept_formation.structure_mapper.StructureMapper>`'s standard
     pipeline.
 
-        .. warning:: The ListProcessor's undo_transform function is not
-            guaranteed to be deterministic and attempts a best guess at a partial ordering.
-            In most cases this will be fine but in complex instances with multiple lists and
-            user defined ordering relations it can break down. If an ordering cannot be
-            determined then ordering relations are left in place.
+    .. warning:: The ListProcessor's undo_transform function is not
+        guaranteed to be deterministic and attempts a best guess at a partial ordering.
+        In most cases this will be fine but in complex instances with multiple lists and
+        user defined ordering relations it can break down. If an ordering cannot be
+        determined then ordering relations are left in place.
 
-    
     >>> _reset_gensym()     # Reset the symbol generator for doctesting purposes. 
     >>> import pprint
     >>> instance = {"att1":"val1","list1":["a","b","a","c","d"]}
@@ -1214,7 +1226,7 @@ class SubComponentProcessor(Preprocessor):
 
 
 
-class ObjectVariablizer(Preprocessor):
+class ObjectVariablizer(OneWayPreprocessor):
     """
     Converts all attributes with dictionary values into variables by adding a
     question mark.
@@ -1264,13 +1276,6 @@ class ObjectVariablizer(Preprocessor):
         """
         return self._variablize(instance)
 
-    def undo_transform(self, instance):
-        """
-        .. warning:: There is currently no implementation for reversing
-            variablization. Calling this function will raise an Exception.
-        """
-        raise NotImplementedError("no reverse transformation currently implemented")
-
     def _variablize(self, instance, mapping={}, prefix=None):
         new_instance = {}
 
@@ -1304,7 +1309,7 @@ class ObjectVariablizer(Preprocessor):
 
         return new_instance
 
-class NumericToNominal(Preprocessor):
+class NumericToNominal(OneWayPreprocessor):
     """
     Converts numeric values to nominal ones.
 
@@ -1363,15 +1368,7 @@ class NumericToNominal(Preprocessor):
                 new_instance[a] = instance[a]
         return new_instance
 
-    def undo_transform(self,instance):
-        """
-        .. warning:: There is currently no implementation for reversing
-            the numeric to nominal conversion. Calling this function will 
-            raise an Exception.
-        """
-        raise NotImplementedError("no reverse transformation currently implemented")
-
-class NominalToNumeric(Preprocessor):
+class NominalToNumeric(OneWayPreprocessor):
     """
     Converts nominal values to numeric ones.
 
@@ -1478,20 +1475,11 @@ class NominalToNumeric(Preprocessor):
         
         return new_instance
 
-    def undo_transform(self,instance):
-        """
-        .. warning:: There is currently no implementation for reversing
-            the nominal to numeric conversion. Calling this function will 
-            raise an Exception.
-        """
-        raise NotImplementedError("no reverse transformation currently implemented")
 
-
-class Sanitizer(Preprocessor):
+class Sanitizer(OneWayPreprocessor):
     """
-
     This is a preprocessor that santizes instances to adhere to the general
-    expectations of either cobweb or the structure mapper. In general this
+    expectations of either Cobweb, Cobweb3 or Trestle. In general this
     means enforcing that attribute keys are either of type str or tuple and
     that relational tuples contain only values of str or tuple. The  main
     reason for having this preprocessor is because many other things are valid
@@ -1538,9 +1526,6 @@ class Sanitizer(Preprocessor):
 
     def transform(self, instance):
         return self._sanitize(instance)
-
-    def undo_transform(self,instance):
-        raise NotImplementedError("no reverse transformation currently implemented")
 
     def _cob_str(self,d):
         """
