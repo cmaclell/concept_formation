@@ -88,8 +88,7 @@ class Cobweb3Node(CobwebNode):
             this error.
         
         :param instance: A new instances to incorporate into the node.
-        :type instance: {a1: v1, a2: v2, ...} - a hashtable of attr and values,
-            where values can be numeric or nominal.
+        :type instance: :ref:`Instance<instance-rep>`
 
         """
         self.count += 1 
@@ -148,9 +147,9 @@ class Cobweb3Node(CobwebNode):
         the attribute is added. 
 
         :param attr: An attribute in the concept
-        :type attr: str
+        :type attr: :ref:`Attribute<attributes>`
         :param val: A value for the given attribute in the concept
-        :type val: float or str
+        :type val: :ref:`Value<values>`
         :param counts: the number of times to add the attr val to the concept
         :type counts: integer or float
         :return: the gain in number of correct guesses from adding the
@@ -325,17 +324,17 @@ class Cobweb3Node(CobwebNode):
         If the attribute is a nominal then this function behaves the same as
         :meth:`CobwebNode.predict <concept_formation.cobweb.CobwebNode.predict>`.
         If the attribute is numeric then the mean value from the
-        :class:`ContinuousValue` is chosen.
+        :class:`ContinuousValue<concept_formation.continuous_value.ContinuousValue>` is chosen.
 
         :param attr: an attribute of an instance.
-        :type attr: str
+        :type attr: :ref:`Attribute<attributes>`
         :param allow_none: whether attributes not in the instance can be
             inferred to be missing. If False, then all attributes will be
             inferred with some value.
         :type allow_none: Boolean
         :return: The most likely value for the given attribute in the node's 
             probability table.
-        :rtype: str or float
+        :rtype: :ref:`Value<values>`
 
         .. seealso :meth:`Cobweb3Node.sample`
         """
@@ -379,9 +378,9 @@ class Cobweb3Node(CobwebNode):
         assumes some independent, normally distributed noise).
         
         :param attr: an attribute of an instance
-        :type attr: str
+        :type attr: :ref:`Attribute<attributes>`
         :param val: a value for the given attribute
-        :type val: str:
+        :type val: :ref:`Value<values>`
         :return: The probability of attr having the value val in the current concept.
         :rtype: float
         """
@@ -423,7 +422,7 @@ class Cobweb3Node(CobwebNode):
         Returns true if the concept exactly matches the instance.
 
         :param instance: The instance currently being categorized
-        :type instance: {a1: v1, a2: v2, ...} - a hashtable of attr and values
+        :type instance: :ref:`Instance<instance-rep>`
         :return: whether the instance perfectly matches the concept
         :rtype: boolean
 
