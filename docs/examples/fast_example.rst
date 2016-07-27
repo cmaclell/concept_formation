@@ -42,7 +42,7 @@ Fast Example
        ...:        '?f4': {'sub-feature1': 'v1'}}
 
     # Here we see that 'f1' and 'some-relation' are infered.
-    In [10]: pprint(tree.infer_missing(new)[0])
+    In [10]: pprint(tree.infer_missing(new))
 
     # They can also be used to predict specific attribute values
     In [11]: concept = tree.categorize(new)
