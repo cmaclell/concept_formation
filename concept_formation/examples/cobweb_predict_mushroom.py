@@ -5,8 +5,6 @@ from __future__ import division
 import matplotlib.pyplot as plt
 import numpy as np
 
-from pprint import pprint
-
 from concept_formation.examples.examples_utils import avg_lines
 from concept_formation.evaluation import incremental_evaluation
 from concept_formation.cobweb import CobwebTree
@@ -24,28 +22,18 @@ cobweb_data = incremental_evaluation(CobwebTree(), mushrooms,
                                   run_length=num_examples,
                                   runs=num_runs, attr="classification")
 
-# naive_data.sort()
-# cobweb_data.sort()
-
 cobweb_x, cobweb_y = [], []
 naive_x, naive_y = [], []
 
-for run in cobweb_data:
-  cobweb_y.extend(run)
-  cobweb_x.extend(list([i for i in range(len(run))]))
+for opp in range(len(cobweb_data[0])):
+  for run in range(len(cobweb_data)):
+    cobweb_x.append(opp)
+    cobweb_y.append(cobweb_data[run][opp])
 
-for run in naive_data:
-  naive_y.extend(run)
-  naive_x.extend(list([i for i in range(len(run))]))
-
-pprint(cobweb_x)
-pprint(cobweb_y)
-# for x,y in cobweb_data:
-#     cobweb_x.append(x)
-    # cobweb_y.append(y)
-# for x,y in naive_data:
-#     naive_x.append(x)
-#     naive_y.append(y)
+for opp in range(len(naive_data[0])):
+  for run in range(len(naive_data)):
+    naive_x.append(opp)
+    naive_y.append(naive_data[run][opp])
 
 cobweb_x = np.array(cobweb_x)
 cobweb_y = np.array(cobweb_y)
