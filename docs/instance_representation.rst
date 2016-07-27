@@ -1,3 +1,5 @@
+.. _instance-rep:
+
 Instance Representation
 =======================
 
@@ -16,15 +18,21 @@ dictionaries as values). Furthermore, it is a general format that many other
 representations, such as JSON, can be easily converted into. In fact, the
 concept_formation package has methods for facilitating such conversions.
 
+.. _attributes:
+
 Attributes
 ----------
 
 The concept_formation package supports four kinds of attributes:
 
+.. _attr-const:
+
 Constant Attributes
     The default attribute type. Constant attributes are typically strings but
     any attribute that does not satisfy the conditions for the other categories
     will be assumed to be constant.
+
+.. _attr-var:
 
 Variable Attributes
     Any attribute that can be renamed to maximize mapping between an instance
@@ -32,6 +40,8 @@ Variable Attributes
     of their values rather than strictly on their attribute names. Variable are
     denoted with a question mark ``'?'`` as their first element (e.g.,
     ``'?variable-attribute'``).
+
+.. _attr-rel:
 
 Relational Attributes
     An attribute that represents a relationship between other attributes or
@@ -42,6 +52,8 @@ Relational Attributes
     component values, then preorder unary relations can be used. For example, to
     express a relationship of feature1 of subobject1 I might have:
     ``('relation', ('feature1', 'subobject1')``).
+
+.. _attr-hid:
 
 Hidden Attributes
     Attributes that are maintained in the concept knowledge base but are not
@@ -64,18 +76,26 @@ In general attribute names must be hashable (so they can be used in a
 dictionary and must be zero index-able (e.g., ``attribute[0]``, so that they
 can be tested to determine if they are hidden.
 
+.. _values:
+
 Values
 ------
 
 For each of these attribute type, the concept_formation package supports three
 kinds of values:
 
+.. _val-nom:
+
 Nominal Values
     All non-numerical values (typically strings or booleans).
+
+.. _val-num:
 
 Numerical Values
     All values that are recognized by Python as numbers (i.e.,
     ``isinstance(val, Number)``).
+
+.. _val-comp:
 
 Component Values
     All dictionary values (i.e., sub-instances). All component values are

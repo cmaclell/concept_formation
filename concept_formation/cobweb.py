@@ -63,8 +63,8 @@ class CobwebTree(object):
         for a non-modifying version of labeling use the
         :meth:`CobwebTree.categorize` function.
         
-        :param instance: an instance to be categorized into the tree.
-        :type instance: {a1:v1, a2:v2, ...}
+        :param instance: An instance to be categorized into the tree.
+        :type instance:  :ref:`Instance<instance-rep>`
         :return: A concept describing the instance
         :rtype: CobwebNode
 
@@ -84,8 +84,8 @@ class CobwebTree(object):
         original order of the list if desired, this is useful for initializing the
         tree with specific prior experience.
 
-        :param instaces: a collection of instances
-        :type instances: [{a1:v1, a2:v2, ...}, {a1:v1, a2:v2, ...}, ...]
+        :param instances: a collection of instances
+        :type instances:  [:ref:`Instance<instance-rep>`, :ref:`Instance<instance-rep>`, ...]
         :param iterations: number of times the list of instances should be fit.
         :type iterations: int
         :param randomize_first: whether or not the first iteration of fitting
@@ -130,7 +130,7 @@ class CobwebTree(object):
             siganture between the different cobweb family algorithms.
 
         :param instance: an instance to incorporate into the tree
-        :type instance: {a1:v1, a2:v2, ...}
+        :type instance: :ref:`Instance<instance-rep>`
         :return: a concept describing the instance
         :rtype: CobwebNode
 
@@ -214,7 +214,7 @@ class CobwebTree(object):
         or "sampled"). 
 
         :param instance: an instance to be completed.
-        :type instance: {a1: v1, a2: v2, ...}
+        :type instance: :ref:`Instance<instance-rep>`
         :param choice_fn: a string specifying the choice function to use,
             either "most likely" or "sampled". 
         :type choice_fn: a string
@@ -223,7 +223,7 @@ class CobwebTree(object):
             inferred with some value.
         :type allow_none: Boolean
         :return: A completed instance
-        :rtype: instance
+        :rtype: :ref:`Instance<instance-rep>`
         """
         self._sanity_check_instance(instance)
         temp_instance = {a:instance[a] for a in instance}
@@ -250,7 +250,7 @@ class CobwebTree(object):
         the :meth:`CobwebTree.ifit` function
 
         :param instance: an instance to be categorized into the tree.
-        :type instance: {a1:v1, a2:v2, ...}
+        :type instance: :ref:`Instance<instance-rep>`
         :return: A concept describing the instance
         :rtype: CobwebNode
 
@@ -318,7 +318,7 @@ class CobwebNode(object):
         instance.
 
         :param instance: A new instances to incorporate into the node.
-        :type instance: {a1: v1, a2: v2, ...} - a hashtable of attr and values. 
+        :type instance: :ref:`Instance<instance-rep>`
         """
         self.count += 1 
         for attr in instance:
@@ -471,7 +471,7 @@ class CobwebNode(object):
         new operators are used.
 
         :param instance: The instance currently being categorized
-        :type instance: {a1: v1, a2: v2, ...} - a hashtable of attr and values. 
+        :type instance: :ref:`Instance<instance-rep>`
         :param best1: The child with the best category utility as determined by
             :meth:`CobwebNode.two_best_children`
         :type best1: CobwebNode
@@ -518,7 +518,7 @@ class CobwebNode(object):
         by a random value.
 
         :param instance: The instance currently being categorized
-        :type instance: {a1: v1, a2: v2, ...} - a hashtable of attr and values. 
+        :type instance: :ref:`Instance<instance-rep>`
         :return: the category utility and indices for the two best children (the
             second tuple will be ``None`` if there is only 1 child).
         :rtype: ((cu_best1,index_best1),(cu_best2,index_best2))
@@ -552,7 +552,7 @@ class CobwebNode(object):
         :param child: a child of the current node
         :type child: CobwebNode
         :param instance: The instance currently being categorized
-        :type instance: {a1: v1, a2: v2, ...} - a hashtable of attr and values 
+        :type instance: :ref:`Instance<instance-rep>`
         :return: the category utility of adding the instance to the given node
         :rtype: float
 
@@ -579,7 +579,7 @@ class CobwebNode(object):
         the instance to it.
 
         :param instance: The instance currently being categorized
-        :type instance: {a1: v1, a2: v2, ...} - a hashtable of attr and values 
+        :type instance: :ref:`Instance<instance-rep>`
         :return: The new child
         :rtype: CobwebNode
         """
@@ -618,7 +618,7 @@ class CobwebNode(object):
         :meth:`CobwebNode.create_new_child`.
 
         :param instance: The instance currently being categorized
-        :type instance: {a1: v1, a2: v2, ...} - a hashtable of attr and values         
+        :type instance: :ref:`Instance<instance-rep>`
         :return: the category utility of adding the instance to a new child.
         :rtype: float
 
@@ -680,7 +680,7 @@ class CobwebNode(object):
         :param best2: The child of the current node with the second best category utility
         :type best2: CobwebNode
         :param instance: The instance currently being categorized
-        :type instance: {a1: v1, a2: v2, ...} - a hashtable of attr and values 
+        :type instance: :ref:`Instance<instance-rep>`
         :return: The category utility that would result from merging best1 and best2.
         :rtype: float
 
@@ -735,7 +735,7 @@ class CobwebNode(object):
         the tree from growing and to increase the tree's predictive accuracy.
 
         :param instance: The instance currently being categorized
-        :type instance: {a1: v1, a2: v2, ...} - a hashtable of attr and values
+        :type instance: :ref:`Instance<instance-rep>`
         :return: the category utility of fringe splitting at the current node.
         :rtype: float        
 
@@ -782,7 +782,7 @@ class CobwebNode(object):
         Returns true if the concept exactly matches the instance.
 
         :param instance: The instance currently being categorized
-        :type instance: {a1: v1, a2: v2, ...} - a hashtable of attr and values
+        :type instance: :ref:`Instance<instance-rep>`
         :return: whether the instance perfectly matches the concept
         :rtype: boolean
 
@@ -1001,9 +1001,9 @@ class CobwebNode(object):
         missing, then check for the probability that the val is ``None``.
         
         :param attr: an attribute of an instance
-        :type attr: any valid attribute type
+        :type attr: :ref:`attributes`
         :param val: a value for the given attribute or None
-        :type val: a numeric or norminal value (or None)
+        :type val: :ref:`values`
         :return: The probability of attr having the value val in the current
             concept.
         :rtype: float
