@@ -39,7 +39,7 @@ class DummyTree(TrestleTree):
         version see: :meth:`DummyTree.categorize`.
 
         :param instance: an instance to be categorized into the tree.
-        :type instance: {a1:v1, a2:v2, ...}
+        :type instance: :ref:`Instance<instance-rep>`
         :param do_mapping: a flag for whether or not to do structure mapping.
         :type do_mapping: bool
         :return: the root node of the tree containing everything ever added to
@@ -64,7 +64,7 @@ class DummyTree(TrestleTree):
         version see: :meth:`DummyTree.ifit`.
         
         :param instance: an instance to be categorized into the tree.
-        :type instance: {a1:v1, a2:v2, ...}
+        :type instance: :ref:`Instance<instance-rep>`
         :return: the root node of the tree containing everything ever added to it.
         :rtype: Cobweb3Node
         """
