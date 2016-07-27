@@ -121,7 +121,7 @@ class TrestleTree(Cobweb3Tree):
         the instance before fitting it into the knoweldge base. 
 
         :param instance: an instance to be categorized into the tree.
-        :type instance: {a1:v1, a2:v2, ...}
+        :type instance: :ref:`Instance<instance-rep>`
         :return: A concept describing the instance
         :rtype: Cobweb3Node
 
@@ -154,7 +154,7 @@ class TrestleTree(Cobweb3Tree):
         or "sampled"). 
 
         :param instance: an instance to be completed.
-        :type instance: {a1: v1, a2: v2, ...}
+        :type instance: :ref:`Instance<instance-rep>`
         :param choice_fn: a string specifying the choice function to use,
             either "most likely" or "sampled". 
         :type choice_fn: a string
@@ -194,7 +194,7 @@ class TrestleTree(Cobweb3Tree):
         instances before categorizing them.
 
         :param instance: an instance to be categorized into the tree.
-        :type instance: {a1:v1, a2:v2, ...}
+        :type instance: :ref:`Instance<instance-rep>`
         :return: A concept describing the instance
         :rtype: CobwebNode
 
@@ -214,7 +214,7 @@ class TrestleTree(Cobweb3Tree):
         through the normal cobweb algorithm.
 
         :param instance: an instance to be categorized into the tree.
-        :type instance: {a1:v1, a2:v2, ...}
+        :type instance: :ref:`Instance<instance-rep>`
         :return: A concept describing the instance
         :rtype: CobwebNode
         """

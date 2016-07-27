@@ -933,13 +933,13 @@ class CobwebNode(object):
         tree then it will return a 100% chance of None.
 
         :param attr: an attribute of an instance
-        :type attr: str
+        :type attr: :ref:`Attribute<attributes>`
         :param allow_none: whether attributes in the nodes probability table
             can be inferred to be missing. If False, then None will not be
             cosidered as a possible value.
         :type allow_none: Boolean
         :return: a list of weighted choices for attr's value
-        :rtype: [(choice1, choice1_weight), (choice2, choice2_weight), ...]
+        :rtype: [(:ref:`Value<values>`, float), (:ref:`Value<values>`, float), ...]
         """
         choices = []
         if attr not in self.tree.root.av_counts:
@@ -964,7 +964,7 @@ class CobwebNode(object):
         (either the "most likely" value or a "sampled" value).
 
         :param attr: an attribute of an instance.
-        :type attr: str
+        :type attr: :ref:`Attribute<attributes>`
         :param choice_fn: a string specifying the choice function to use,
             either "most likely" or "sampled". 
         :type choice_fn: a string
@@ -974,7 +974,7 @@ class CobwebNode(object):
         :type allow_none: Boolean
         :return: The most likely value for the given attribute in the node's
                  probability table.
-        :rtype: str
+        :rtype: :ref:`Value<values>`
         """
         if choice_fn == "most likely" or choice_fn == "m":
             choice_fn = most_likely_choice
@@ -1000,9 +1000,9 @@ class CobwebNode(object):
         missing, then check for the probability that the val is ``None``.
         
         :param attr: an attribute of an instance
-        :type attr: :ref:`attributes`
+        :type attr: :ref:`Attribute<attributes>`
         :param val: a value for the given attribute or None
-        :type val: :ref:`values`
+        :type val: :ref:`Value<values>`
         :return: The probability of attr having the value val in the current
             concept.
         :rtype: float
