@@ -29,7 +29,7 @@ ttree.fit(training_data, iterations=1)
 # Predict
 X_test = np.arange(0.0, 5.0, 0.01)[:, np.newaxis]
 y_dtree = dtree.predict(X_test)
-y_trestle = [ttree.categorize({'x': float(v)}).predict('_y')[0] for v in X_test]
+y_trestle = [ttree.categorize({'x': float(v)}).predict('_y') for v in X_test]
 
 # Plot the results
 plt.figure()

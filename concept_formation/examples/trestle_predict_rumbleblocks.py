@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 from concept_formation.examples.examples_utils import lowess
-from concept_formation.predict import incremental_prediction
+from concept_formation.evaluation import incremental_evaluation
 from concept_formation.trestle import TrestleTree
 from concept_formation.dummy import DummyTree
 from concept_formation.datasets import load_rb_s_07
@@ -20,10 +20,10 @@ towers = load_rb_s_07()
 variablizer = ObjectVariablizer()
 towers = [variablizer.transform(t) for t in towers]
 
-naive_data = incremental_prediction(DummyTree(), towers,
+naive_data = incremental_evaluation(DummyTree(), towers,
                                   run_length=num_examples,
                                   runs=num_runs, attr="success")
-cobweb_data = incremental_prediction(TrestleTree(), towers,
+cobweb_data = incremental_evaluation(TrestleTree(), towers,
                                   run_length=num_examples,
                                   runs=num_runs, attr="success")
 
@@ -40,20 +40,22 @@ for line in human_predictions:
                  int(line[key['prediction']])))
     human_data.append((x,y))
 
-naive_data.sort()
-cobweb_data.sort()
 human_data.sort()
 
 cobweb_x, cobweb_y = [], []
 naive_x, naive_y = [], []
 human_x, human_y = [], []
 
-for x,y in cobweb_data:
-    cobweb_x.append(x)
-    cobweb_y.append(y)
-for x,y in naive_data:
-    naive_x.append(x)
-    naive_y.append(y)
+for opp in range(len(cobweb_data[0])):
+  for run in range(len(cobweb_data)):
+    cobweb_x.append(opp)
+    cobweb_y.append(cobweb_data[run][opp])
+
+for opp in range(len(naive_data[0])):
+  for run in range(len(naive_data)):
+    naive_x.append(opp)
+    naive_y.append(naive_data[run][opp])
+
 for x,y in human_data:
     human_x.append(x)
     human_y.append(y)

@@ -1,15 +1,17 @@
+"""
+The Cobweb module contains the :class:`CobwebTree` and :class:`CobwebNode`
+classes which are used to achieve the basic Cobweb functionality. 
+"""
+
 from __future__ import print_function
 from __future__ import unicode_literals
 from __future__ import absolute_import
 from __future__ import division
 from random import shuffle
 from random import random
-import json
-import collections
 
 from concept_formation.utils import weighted_choice
 from concept_formation.utils import most_likely_choice
-from concept_formation.continuous_value import ContinuousValue
 
 class CobwebTree(object):
     """
@@ -65,8 +67,8 @@ class CobwebTree(object):
         for a non-modifying version of labeling use the
         :meth:`CobwebTree.categorize` function.
         
-        :param instance: an instance to be categorized into the tree.
-        :type instance: {a1:v1, a2:v2, ...}
+        :param instance: An instance to be categorized into the tree.
+        :type instance:  :ref:`Instance<instance-rep>`
         :return: A concept describing the instance
         :rtype: CobwebNode
 
@@ -86,8 +88,8 @@ class CobwebTree(object):
         original order of the list if desired, this is useful for initializing the
         tree with specific prior experience.
 
-        :param instaces: a collection of instances
-        :type instances: [{a1:v1, a2:v2, ...}, {a1:v1, a2:v2, ...}, ...]
+        :param instances: a collection of instances
+        :type instances:  [:ref:`Instance<instance-rep>`, :ref:`Instance<instance-rep>`, ...]
         :param iterations: number of times the list of instances should be fit.
         :type iterations: int
         :param randomize_first: whether or not the first iteration of fitting
@@ -132,30 +134,15 @@ class CobwebTree(object):
             siganture between the different cobweb family algorithms.
 
         :param instance: an instance to incorporate into the tree
-        :type instance: {a1:v1, a2:v2, ...}
+        :type instance: :ref:`Instance<instance-rep>`
         :return: a concept describing the instance
         :rtype: CobwebNode
 
         .. seealso:: :meth:`CobwebTree.ifit`, :meth:`CobwebTree.categorize`
         """
         current = self.root
-        was_split = False
-        performance = {attr:[] for attr in
-                       set(current.av_counts).union(instance)}
 
         while current:
-            # predict using original counts during training
-            # for tracking past-performance
-            if not was_split:
-                for attr in performance:
-                    if attr in instance:
-                        p = current.get_probability(attr, instance[attr])
-                    else:
-                        p = current.get_probability_missing(attr)
-                    performance[attr].append(p)
-            else:
-                was_split = False
-
             # the current.count == 0 here is for the initially empty tree.
             if not current.children and (current.is_exact_match(instance) or
                                          current.count == 0):
@@ -176,8 +163,6 @@ class CobwebTree(object):
                     self.root = new
 
                 new.increment_counts(instance)
-                for attr in performance:
-                    performance[attr].append(None)
                 current = new.create_new_child(instance)
                 break
 
@@ -199,8 +184,6 @@ class CobwebTree(object):
                 elif best_action == 'new':
                     current.increment_counts(instance)
                     current = current.create_new_child(instance)
-                    for attr in performance:
-                        performance[attr].append(None)
                     break
                 elif best_action == 'merge':
                     current.increment_counts(instance)
@@ -208,21 +191,9 @@ class CobwebTree(object):
                     current = new_child
                 elif best_action == 'split':
                     current.split(best1)
-                    was_split = True
                 else:
                     raise Exception('Best action choice "'+best_action+'" not a recognized option. This should be impossible...')
         
-        #from pprint import pprint
-        #pprint(performance)
-        #pc = 1
-        #cc = current
-        #while cc.parent:
-        #    cc = cc.parent
-        #    pc += 1
-        #print(pc)
-        #print()
-        
-        current.update_past_performance(performance)
         return current
 
     def _cobweb_categorize(self, instance):
@@ -243,35 +214,33 @@ class CobwebTree(object):
     def infer_missing(self, instance, choice_fn="most likely", allow_none=True):
         """
         Given a tree and an instance, returns a new instance with attribute 
-        values picked using the specified choice function (wither "most likely"
+        values picked using the specified choice function (either "most likely"
         or "sampled"). 
 
         :param instance: an instance to be completed.
-        :type instance: {a1: v1, a2: v2, ...}
+        :type instance: :ref:`Instance<instance-rep>`
         :param choice_fn: a string specifying the choice function to use,
             either "most likely" or "sampled". 
         :type choice_fn: a string
         :param allow_none: whether attributes not in the instance can be
-            inferred to be missing. If False, then all attributes will be inferred
-            with some value.
-        :type allow_none: a boolean
+            inferred to be missing. If False, then all attributes will be
+            inferred with some value.
+        :type allow_none: Boolean
         :return: A completed instance
-        :rtype: instance
+        :rtype: :ref:`Instance<instance-rep>`
         """
         self._sanity_check_instance(instance)
         temp_instance = {a:instance[a] for a in instance}
-        probs = {a:1.0 for a in instance}
         concept = self._cobweb_categorize(temp_instance)
 
         for attr in self.root.av_counts:
             if attr in temp_instance:
                 continue
-            val, prob = concept.predict(attr, choice_fn, allow_none)
+            val = concept.predict(attr, choice_fn, allow_none)
             if val is not None:
                 temp_instance[attr] = val
-                probs[attr] = prob
 
-        return temp_instance, probs
+        return temp_instance
 
     def categorize(self, instance): 
         """
@@ -285,7 +254,7 @@ class CobwebTree(object):
         the :meth:`CobwebTree.ifit` function
 
         :param instance: an instance to be categorized into the tree.
-        :type instance: {a1:v1, a2:v2, ...}
+        :type instance: :ref:`Instance<instance-rep>`
         :return: A concept describing the instance
         :rtype: CobwebNode
 
@@ -325,62 +294,13 @@ class CobwebNode(object):
         self.parent = None 
         self.tree = None
 
-        self.correct_at_node = {}
-        self.correct_at_decendents = {}
-
         if otherNode:
             self.update_counts_from_node(otherNode)
             self.parent = otherNode.parent
             self.tree = otherNode.tree
-            self.correct_at_node = otherNode.correct_at_node
-            self.correct_at_decendents = otherNode.correct_at_decendents
 
             for child in otherNode.children:
                 self.children.append(self.__class__(child))
-
-    def update_past_performance(self, performance):
-        #from pprint import pprint
-        current = self 
-        decendents_performance = {attr:[0] for attr in performance}
-
-        #print()
-        #print("START")
-
-        while True:
-            for attr in performance:
-                decendents_correct = max(decendents_performance[attr])
-                node_correct = performance[attr].pop()
-                if node_correct is None:
-                    continue 
-
-                if attr not in current.correct_at_node:
-                    current.correct_at_node[attr] = ContinuousValue()
-                    #print("adding " + attr + " " + str(current.count))
-                    #for i in range(int(current.count)):
-                    #    current.correct_at_node[attr].update(1.0)
-
-                if attr not in current.correct_at_decendents:
-                    current.correct_at_decendents[attr] = ContinuousValue()
-                    #for i in range(int(current.count)):
-                    #    current.correct_at_decendents[attr].update(1.0)
-
-                current.correct_at_node[attr].update(node_correct)
-                current.correct_at_decendents[attr].update(decendents_correct)
-                decendents_performance[attr].append(node_correct)
-
-            #print(current.count)
-            #from pprint import pprint
-            #pprint(current.correct_at_node)
-            #pprint(current.correct_at_decendents)
-
-            if current.parent:
-                #print()
-                #print("-going to parent->")
-                #print()
-                current = current.parent
-            else:
-                break
-
 
     def shallow_copy(self):
         """
@@ -402,7 +322,7 @@ class CobwebNode(object):
         instance.
 
         :param instance: A new instances to incorporate into the node.
-        :type instance: {a1: v1, a2: v2, ...} - a hashtable of attr and values. 
+        :type instance: :ref:`Instance<instance-rep>`
         """
         self.count += 1 
         for attr in instance:
@@ -512,7 +432,7 @@ class CobwebNode(object):
         Given the following starting tree the results of the 4 standard Cobweb
         operations are shown below:
 
-        .. image:: images/original.png
+        .. image:: images/Original.png
             :width: 200px
             :align: center
 
@@ -520,7 +440,7 @@ class CobwebNode(object):
           utility. This results in a recurisve call to :meth:`cobweb
           <concept_formation.cobweb.CobwebTree.cobweb>`.
             
-            .. image:: images/best.png
+            .. image:: images/Best.png
                 :width: 200px
                 :align: center
 
@@ -528,7 +448,7 @@ class CobwebNode(object):
           instance there. See: :meth:`create_new_child
           <concept_formation.cobweb.CobwebNode.create_new_child>`.
 
-            .. image:: images/new.png
+            .. image:: images/New.png
                 :width: 200px
                 :align: center
 
@@ -536,7 +456,7 @@ class CobwebNode(object):
           mutual parent and add the instance there. See: :meth:`merge
           <concept_formation.cobweb.CobwebNode.merge>`.
 
-            .. image:: images/merge.png
+            .. image:: images/Merge.png
                     :width: 200px
                     :align: center
 
@@ -544,7 +464,7 @@ class CobwebNode(object):
           of the current node and recurse on the current node. See:
           :meth:`split <concept_formation.cobweb.CobwebNode.split>`
 
-            .. image:: images/split.png
+            .. image:: images/Split.png
                 :width: 200px
                 :align: center
 
@@ -555,7 +475,7 @@ class CobwebNode(object):
         new operators are used.
 
         :param instance: The instance currently being categorized
-        :type instance: {a1: v1, a2: v2, ...} - a hashtable of attr and values. 
+        :type instance: :ref:`Instance<instance-rep>`
         :param best1: The child with the best category utility as determined by
             :meth:`CobwebNode.two_best_children`
         :type best1: CobwebNode
@@ -602,7 +522,7 @@ class CobwebNode(object):
         by a random value.
 
         :param instance: The instance currently being categorized
-        :type instance: {a1: v1, a2: v2, ...} - a hashtable of attr and values. 
+        :type instance: :ref:`Instance<instance-rep>`
         :return: the category utility and indices for the two best children (the
             second tuple will be ``None`` if there is only 1 child).
         :rtype: ((cu_best1,index_best1),(cu_best2,index_best2))
@@ -636,7 +556,7 @@ class CobwebNode(object):
         :param child: a child of the current node
         :type child: CobwebNode
         :param instance: The instance currently being categorized
-        :type instance: {a1: v1, a2: v2, ...} - a hashtable of attr and values 
+        :type instance: :ref:`Instance<instance-rep>`
         :return: the category utility of adding the instance to the given node
         :rtype: float
 
@@ -663,7 +583,7 @@ class CobwebNode(object):
         the instance to it.
 
         :param instance: The instance currently being categorized
-        :type instance: {a1: v1, a2: v2, ...} - a hashtable of attr and values 
+        :type instance: :ref:`Instance<instance-rep>`
         :return: The new child
         :rtype: CobwebNode
         """
@@ -702,7 +622,7 @@ class CobwebNode(object):
         :meth:`CobwebNode.create_new_child`.
 
         :param instance: The instance currently being categorized
-        :type instance: {a1: v1, a2: v2, ...} - a hashtable of attr and values         
+        :type instance: :ref:`Instance<instance-rep>`
         :return: the category utility of adding the instance to a new child.
         :rtype: float
 
@@ -764,7 +684,7 @@ class CobwebNode(object):
         :param best2: The child of the current node with the second best category utility
         :type best2: CobwebNode
         :param instance: The instance currently being categorized
-        :type instance: {a1: v1, a2: v2, ...} - a hashtable of attr and values 
+        :type instance: :ref:`Instance<instance-rep>`
         :return: The category utility that would result from merging best1 and best2.
         :rtype: float
 
@@ -819,7 +739,7 @@ class CobwebNode(object):
         the tree from growing and to increase the tree's predictive accuracy.
 
         :param instance: The instance currently being categorized
-        :type instance: {a1: v1, a2: v2, ...} - a hashtable of attr and values
+        :type instance: :ref:`Instance<instance-rep>`
         :return: the category utility of fringe splitting at the current node.
         :rtype: float        
 
@@ -866,7 +786,7 @@ class CobwebNode(object):
         Returns true if the concept exactly matches the instance.
 
         :param instance: The instance currently being categorized
-        :type instance: {a1: v1, a2: v2, ...} - a hashtable of attr and values
+        :type instance: :ref:`Instance<instance-rep>`
         :return: whether the instance perfectly matches the concept
         :rtype: boolean
 
@@ -980,7 +900,7 @@ class CobwebNode(object):
            children_count += c.num_concepts() 
         return 1 + children_count 
 
-    def output_json(self, limit_by_performance=False):
+    def output_json(self):
         """
         Outputs the categorization tree in JSON form
 
@@ -993,8 +913,6 @@ class CobwebNode(object):
         output['name'] = "Concept" + self.concept_id
         output['size'] = self.count
         output['children'] = []
-        output['past_performance'] = {str(k):str(self.correct_at_node[k]) for k in self.correct_at_node}
-        output['decendent_performance'] = {str(k):str(self.correct_at_decendents[k]) for k in self.correct_at_decendents}
 
         temp = {}
         for attr in self.av_counts:
@@ -1002,18 +920,8 @@ class CobwebNode(object):
                 temp[str(attr)] = {str(value):self.av_counts[attr][value] for value in self.av_counts[attr]}
                 #temp[attr + " = " + str(value)] = self.av_counts[attr][value]
 
-        if limit_by_performance:
-            tot_at = 0
-            tot_dec = 0
-            for k in self.correct_at_node:
-                tot_at += self.correct_at_node[k].mean
-                tot_dec += self.correct_at_decendents[k].mean
-            if tot_at < tot_dec:
-                for child in self.children:
-                    output["children"].append(child.output_json(limit_by_performance))
-        else:
-             for child in self.children:
-                    output["children"].append(child.output_json(limit_by_performance))
+        for child in self.children:
+            output["children"].append(child.output_json())
 
         output['counts'] = temp
 
@@ -1030,9 +938,13 @@ class CobwebNode(object):
         tree then it will return a 100% chance of None.
 
         :param attr: an attribute of an instance
-        :type attr: str
+        :type attr: :ref:`Attribute<attributes>`
+        :param allow_none: whether attributes in the nodes probability table
+            can be inferred to be missing. If False, then None will not be
+            cosidered as a possible value.
+        :type allow_none: Boolean
         :return: a list of weighted choices for attr's value
-        :rtype: [(choice1, choice1_weight), (choice2, choice2_weight), ...]
+        :rtype: [(:ref:`Value<values>`, float), (:ref:`Value<values>`, float), ...]
         """
         choices = []
         if attr not in self.tree.root.av_counts:
@@ -1054,16 +966,20 @@ class CobwebNode(object):
     def predict(self, attr, choice_fn="most likely", allow_none=True):
         """
         Predict the value of an attribute, using the specified choice function
-        (either the most likely value or a sampled value).
+        (either the "most likely" value or a "sampled" value).
 
         :param attr: an attribute of an instance.
-        :type attr: str
+        :type attr: :ref:`Attribute<attributes>`
         :param choice_fn: a string specifying the choice function to use,
             either "most likely" or "sampled". 
         :type choice_fn: a string
+        :param allow_none: whether attributes not in the instance can be
+            inferred to be missing. If False, then all attributes will be
+            inferred with some value.
+        :type allow_none: Boolean
         :return: The most likely value for the given attribute in the node's
                  probability table.
-        :rtype: str
+        :rtype: :ref:`Value<values>`
         """
         if choice_fn == "most likely" or choice_fn == "m":
             choice_fn = most_likely_choice
@@ -1073,83 +989,25 @@ class CobwebNode(object):
             raise Exception("Unknown choice_fn")
 
         if attr not in self.tree.root.av_counts:
-            # If the attribute isn't in the tree then we can't do much.
-            return None, 1.0
+            return None
 
-        # get the right concept for this attribute using past performance
-        curr = self
-
-        # if we are not allowing none, then get to a place where we have
-        # something to use. We need at least 2 values that are not none to get
-        # a reasonable past performance estimate.
-        if not allow_none:
-            while (curr.parent and curr.get_probability(attr, None) >=
-                   ((curr.count - 1)/curr.count)):
-                curr = curr.parent
-
-        best = curr
-        while curr is not None:
-            #if attr in curr.correct_at_node:
-            #    print("AT NODE " + str(curr.correct_at_node[attr].unbiased_mean()))
-            #    print("AT DESC " + str(curr.correct_at_decendents[attr].unbiased_mean()))
-            if (attr in curr.correct_at_node and
-                (curr.correct_at_node[attr].unbiased_mean() >=
-                 curr.correct_at_decendents[attr].unbiased_mean())):
-                best = curr
-            curr = curr.parent
-
-        choices = best.get_weighted_values(attr, allow_none)
+        choices = self.get_weighted_values(attr, allow_none)
         val = choice_fn(choices)
-        prob = best.get_probability(attr, val)
+        return val
 
-        if not allow_none:
-            prob = round(prob / (1 - best.get_probability(attr, None)), 10)
-
-        return val, prob
-
-    def get_prediction_probability(self, attr, val):
+    def probability(self, attr, val):
         """
         Returns the probability of a particular attribute value at the current
-        concept. 
+        concept. This takes into account the possibilities that an attribute
+        can take any of the values available at the root, or be missing. 
 
-        This takes into account the possibilities that an attribute can take any
-        of the values available at the root, or be missing. 
+        If you you want to check if the probability that an attribute is
+        missing, then check for the probability that the val is ``None``.
         
         :param attr: an attribute of an instance
-        :type attr: str
-        :param val: a value for the given attribute
-        :type val: str:
-        :return: The probability of attr having the value val in the current
-            concept.
-        :rtype: float
-        """
-        # get the right concept for this attribute using past performance
-        best = self
-        curr = self
-        while curr is not None:
-            #if attr in curr.correct_at_node:
-            #    print("AT NODE " + str(curr.correct_at_node[attr].unbiased_mean()))
-            #    print("AT NODE " + str(curr.correct_at_decendents[attr].unbiased_mean()))
-            if (attr in curr.correct_at_node and
-                (curr.correct_at_node[attr].unbiased_mean() >=
-                 curr.correct_at_decendents[attr].unbiased_mean())):
-                best = curr
-            curr = curr.parent
-
-        return best.get_probability(attr, val)
-
-    def get_probability(self, attr, val):
-        """
-        Returns the probability of a particular attribute value at the current
-        concept. 
-
-        This takes into account the possibilities that an attribute can take any
-        of the values available at the root, or be missing. 
-        
-        :param attr: an attribute of an instance
-        :type attr: str
-        :param val: a value for the given attribute
-        :type val: str:
+        :type attr: :ref:`Attribute<attributes>`
+        :param val: a value for the given attribute or None
+        :type val: :ref:`Value<values>`
         :return: The probability of attr having the value val in the current
             concept.
         :rtype: float
@@ -1164,19 +1022,3 @@ class CobwebNode(object):
             return self.av_counts[attr][val] / self.count
 
         return 0.0
-
-    def get_probability_missing(self, attr):
-        """
-        Returns the probability of a particular attribute not being present in a
-        given concept.
-
-        This takes into account the possibilities that an attribute can take any
-        of the values available at the root, or be missing. 
-
-        :param attr: an attribute of an instance
-        :type attr: str
-        :return: The probability of attr not being present from an instance in
-            the current concept.
-        :rtype: float 
-        """
-        return self.get_probability(attr, None)
