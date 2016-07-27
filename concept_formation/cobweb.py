@@ -7,7 +7,6 @@ from random import random
 
 from concept_formation.utils import weighted_choice
 from concept_formation.utils import most_likely_choice
-from concept_formation.continuous_value import ContinuousValue
 
 class CobwebTree(object):
     """
