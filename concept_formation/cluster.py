@@ -25,7 +25,7 @@ def cluster_iter(tree, instances, minsplit=1, maxsplit=100000,  mod=True):
     :param maxsplit: the maximum number of splits to perform on the tree
     :param mod: A flag to determine if instances will be fit (i.e. modifying knoweldge) or categorized (i.e. not modifiying knowledge)
     :type tree: :class:`CobwebTree <concept_formation.cobweb.CobwebTree>`, :class:`Cobweb3Tree <concept_formation.cobweb3.Cobweb3Tree>`, or :class:`TrestleTree <concept_formation.trestle.TrestleTree>`
-    :type instances: [{a1:v1, a2:v2, ...}, {a1:v1, a2:v2, ...}, ...]
+    :type instances: [:ref:`Instance<instance-rep>`, :ref:`Instance<instance-rep>`, ...]
     :type minsplit: int
     :type maxsplit: int
     :type mod: bool
@@ -80,7 +80,7 @@ def cluster(tree, instances, minsplit=1, maxsplit=1, mod=True):
     :param maxsplit: the maximum number of splits to perform on the tree
     :param mod: A flag to determine if instances will be fit (i.e. modifying knoweldge) or categorized (i.e. not modifiying knowledge)
     :type tree: :class:`CobwebTree <concept_formation.cobweb.CobwebTree>`, :class:`Cobweb3Tree <concept_formation.cobweb3.Cobweb3Tree>`, or :class:`TrestleTree <concept_formation.trestle.TrestleTree>`
-    :type instances: [{a1:v1, a2:v2, ...}, {a1:v1, a2:v2, ...}, ...]
+    :type instances: [:ref:`Instance<instance-rep>`, :ref:`Instance<instance-rep>`, ...]
     :type minsplit: int
     :type maxsplit: int
     :type mod: bool
@@ -106,7 +106,7 @@ def k_cluster(tree,instances,k=3,mod=True):
     :param k: A desired number of clusters to generate
     :param mod: A flag to determine if instances will be fit (i.e. modifying knoweldge) or categorized (i.e. not modifiying knowledge)
     :type tree: :class:`CobwebTree <concept_formation.cobweb.CobwebTree>`, :class:`Cobweb3Tree <concept_formation.cobweb3.Cobweb3Tree>`, or :class:`TrestleTree <concept_formation.trestle.TrestleTree>`
-    :type instances: [{a1:v1, a2:v2, ...}, {a1:v1, a2:v2, ...}, ...]
+    :type instances: [:ref:`Instance<instance-rep>`, :ref:`Instance<instance-rep>`, ...]
     :type k: int
     :type mod: bool
     :returns: a flat cluster labeling
@@ -127,20 +127,6 @@ def k_cluster(tree,instances,k=3,mod=True):
 
     return clustering
 
-def generate_d3_visualization(tree, fileName):
-    """
-    Export a .js file that is used to visualize the tree with d3js.
-
-    :param tree: A category tree to be output for d3 rendering
-    :param fileName: the name of afile to generate
-    :type tree: :class:`CobwebTree <concept_formation.cobweb.CobwebTree>`, :class:`Cobweb3Tree <concept_formation.cobweb3.Cobweb3Tree>`, or :class:`TrestleTree <concept_formation.trestle.TrestleTree>`
-    :type fileName: str
-    """
-    fname = 'visualize/'+fileName+'.js'
-    with open(fname, 'w') as f:
-        f.write("var output = '"+re.sub("'", '',
-                                        json.dumps(tree.root.output_json()))+"';")
-
 def depth_labels(tree,instances,mod=True):
     """Categorize a list of instances into a tree and return a list of lists of
     labelings for  each instance based on different depth cuts of the tree.
@@ -153,7 +139,7 @@ def depth_labels(tree,instances,mod=True):
     :param instances: A list of instances to cluster
     :param mod: A flag to determine if instances will be fit (i.e. modifying knoweldge) or categorized (i.e. not modifiying knowledge)
     :type tree: :class:`CobwebTree <concept_formation.cobweb.CobwebTree>`, :class:`Cobweb3Tree <concept_formation.cobweb3.Cobweb3Tree>`, or :class:`TrestleTree <concept_formation.trestle.TrestleTree>`
-    :type instances: [{a1:v1, a2:v2, ...}, {a1:v1, a2:v2, ...}, ...]
+    :type instances: [:ref:`Instance<instance-rep>`, :ref:`Instance<instance-rep>`, ...]
     :type mod: bool
     :returns: a list of lists of cluster labels based on each depth cut of the tree
     :rtype: [[root labeling], [depth1 labeling], ... [maxdepth labeling]]

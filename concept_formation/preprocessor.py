@@ -12,13 +12,14 @@ Two abstract preprocessors are defined:
 Trestle's normal implementation uses a standard pipeline of preprocessors that
 run in the following order:
 
-#. :class:`NameStandardizer` - Gives any variables unique names so they can be 
-   renamed in matching without colliding.
 #. :class:`SubComponentProcessor` - Pulls any sub-components present in the
    instance to the top level of the instance and adds ``has-component``
    relations to preserve semantics.
 #. :class:`Flattener` - Flattens component instances into a number of tuples
    (i.e. ``(attr,component)``) for faster hashing and access.
+#. :class:`StructureMapper<concept_formation.structure_mapper.StructureMapper>` 
+    - Gives any variables unique names so they can be renamed in matching without 
+    colliding, and matches instances to the root concept.
 
 The remaining preprocessors are helper classes designed to support data that is
 not stored in Trestle's conventional representation:
@@ -43,7 +44,6 @@ from __future__ import division
 from copy import deepcopy
 from numbers import Number
 import collections
-import json
 
 _gensym_counter = 0;
 

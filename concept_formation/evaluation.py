@@ -21,14 +21,19 @@ def probability(tree, instance, attr, val):
     If the instance currently contains the target attribute a  shallow copy is
     created to allow the attribute to be predicted.
 
+    .. warning:: This is an older function in the library and we are not quite
+        sure how to set it up for component values under the new
+        representation and so for the time being it will raise an Exception if
+        it encounts a component.
+
     :param tree: A category tree to evaluate.
     :type tree: :class:`CobwebTree <concept_formation.cobweb.CobwebTree>`, :class:`Cobweb3Tree <concept_formation.cobweb3.Cobweb3Tree>`, or :class:`TrestleTree <concept_formation.trestle.TrestleTree>`
     :param instance: An instance to use query the tree with
     :type instance: {a1:v1, a2:v2, ...}
     :param attr: A target instance attribute to evaluate probability on
-    :type attr: str or tuple
+    :type attr: :ref:`Attribute<attributes>`
     :param val: The target value of the given attr
-    :type val: nominal or numeric
+    :type val: A :ref:`Nominal<val-nom>` or :ref:`Numeric<val-num>` value.
     :returns: The probabily of the given instance attribute value in the given tree
     :rtype: float
     """
@@ -37,6 +42,7 @@ def probability(tree, instance, attr, val):
     concept = tree.categorize(instance)
 
     if isinstance(val, dict):
+        raise Exception("Probability cannot be estimated on component attributes!")
         structure_mapper = StructureMapper(concept)
         temp_instance = structure_mapper.transform(instance)
         mapping = structure_mapper.get_mapping()
@@ -47,7 +53,7 @@ def probability(tree, instance, attr, val):
 
         probs = [concept.probability(sub_attr, temp_instance[sub_attr]) 
                  for sub_attr in temp_instance 
-                 if search('^' + mapping[attr], sub_attr)]
+                 if search(r'^' + mapping[attr], sub_attr)]
         return mean(probs)
     else:
         return concept.probability(attr, val)
@@ -58,21 +64,21 @@ def error(tree, instance, attr, val):
     attribute. One of the scoring functions for incremental_evaluation.
 
     .. warning:: We are not quite sure how to compute error or squared for
-        missing values with continuous attributes (e.g., 0-1 vs. scale of the
-        continuous attribute cannot be averaged). So currently, this scoring
-        function raises an Exception when it encounters a missing continueous
+        a :ref:`Numeric values<val-num>` being missing (e.g., 0-1 vs. scale 
+        of the numeric value cannot be averaged). So currently, this scoring
+        function raises an Exception when it encounters a missing nunmeric
         value. We are also not sure how to handle error in the case of
-        component values so it will also throw an exception if encounters one
-        of those.
+        :ref:`Component Values<val-comp>` so it will also throw an exception 
+        if encounters one of those.
     
     :param tree: A category tree to evaluate.
     :type tree: :class:`CobwebTree <concept_formation.cobweb.CobwebTree>`, :class:`Cobweb3Tree <concept_formation.cobweb3.Cobweb3Tree>`, or :class:`TrestleTree <concept_formation.trestle.TrestleTree>`
     :param instance: An instance to use query the tree with
     :type instance: {a1:v1, a2:v2, ...}
     :param attr: A target instance attribute to evaluate error on
-    :type attr: str or tuple
+    :type attr: :ref:`Attribute<attributes>`
     :param val: The target value of the given attr
-    :type val: nominal or numeric
+    :type val: A :ref:`Nominal<val-nom>` or :ref:`Numeric<val-num>` value.
     :returns: The error of the given instance attribute value in the given tree
     :rtype: float, or int in the nominal case.
     """
@@ -112,9 +118,9 @@ def absolute_error(tree, instance, attr, val):
     :param instance: An instance to use query the tree with
     :type instance: {a1:v1, a2:v2, ...}
     :param attr: A target instance attribute to evaluate error on
-    :type attr: str or tuple
+    :type attr: :ref:`Attribute<attributes>`
     :param val: The target value of the given attr
-    :type val: nominal or numeric
+    :type val: A :ref:`Nominal<val-nom>` or :ref:`Numeric<val-num>` value.
     :returns: The error of the given instance attribute value in the given tree
     :rtype: float, or int in the nominal case.
 
@@ -132,9 +138,9 @@ def squared_error(tree, instance, attr, val):
     :param instance: An instance to use query the tree with
     :type instance: {a1:v1, a2:v2, ...}
     :param attr: A target instance attribute to evaluate error on
-    :type attr: str or tuple
+    :type attr: :ref:`Attribute<attributes>`
     :param val: The target value of the given attr
-    :type val: nominal or numeric
+    :type val: A :ref:`Nominal<val-nom>` or :ref:`Numeric<val-num>` value.
     :returns: The error of the given instance attribute value in the given tree
     :rtype: float, or int in the nominal case.
 
@@ -181,9 +187,9 @@ def incremental_evaluation(tree, instances, attr, run_length, runs=1,
     :param tree: A category tree to evaluate.
     :type tree: :class:`CobwebTree <concept_formation.cobweb.CobwebTree>`, :class:`Cobweb3Tree <concept_formation.cobweb3.Cobweb3Tree>`, or :class:`TrestleTree <concept_formation.trestle.TrestleTree>`
     :param instances: A list of instances to use for evaluation
-    :type instances: [{a1:v1, a2:v2, ...}, {a1:v1, a2:v2, ...}, ...]
+    :type instances: [:ref:`Instance<instance-rep>`, :ref:`Instance<instance-rep>`, ...]
     :param attr: A target instance attribute to use in evaluation.
-    :type attr: str or tuple
+    :type attr: :ref:`Attribute<attributes>`
     :param run_length: The number of training instances to use within a given run.
     :type run_length: int
     :param runs: The number of restarted runs to perform
