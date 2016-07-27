@@ -339,44 +339,24 @@ class Cobweb3Node(CobwebNode):
             return None, 1.0
 
         if isinstance(self.tree.root.av_counts[attr], ContinuousValue):
-            # get the right concept for this attribute using past performance
-            curr = self
-            if not allow_none:
-                while (curr.parent and curr.get_probability(attr, None) >=
-                       ((curr.count - 1)/curr.count)):
-                    curr = curr.parent
-            best = curr
-
-            #print("STARTING AT CHILD")
-            while curr is not None:
-                #if attr in curr.correct_at_node:
-                #    print()
-                #    print("AT NODE " + str(curr.correct_at_node[attr]))
-                #    print("AT DECS " + str(curr.correct_at_decendents[attr]))
-                if (attr in curr.correct_at_node and
-                    (curr.correct_at_node[attr].unbiased_mean() >=
-                     curr.correct_at_decendents[attr].unbiased_mean())):
-                    best = curr
-                curr = curr.parent
-
-            prob_attr = best.av_counts[attr].num / best.count
+            prob_attr = self.av_counts[attr].num / self.count
 
             if choice_fn == "most likely" or choice_fn == "m":
                 if allow_none and prob_attr < 0.5:
                     return None, 1 - prob_attr
-                val = best.av_counts[attr].mean
-                prob = best.get_probability(attr, val)
+                val = self.av_counts[attr].mean
+                prob = self.get_probability(attr, val)
             elif choice_fn == "sampled" or choice_fn == "s":
                 if allow_none and prob_attr < random():
                     return None
                 val = normalvariate(self.av_counts[attr].unbiased_mean(),
                                     self.av_counts[attr].unbiased_std())
-                prob = best.get_probability(attr, val)
+                prob = self.get_probability(attr, val)
             else:
                 raise Exception("Unknown choice_fn")
             
             if not allow_none:
-                prob = round(prob / (1 - best.get_probability(attr, None)),10)
+                prob = round(prob / (1 - self.get_probability(attr, None)),10)
             
             return val, prob
 
@@ -485,7 +465,7 @@ class Cobweb3Node(CobwebNode):
                     return False
         return True
 
-    def output_json(self, limit_by_performance=False):
+    def output_json(self):
         """
         Outputs the categorization tree in JSON form. 
 
@@ -503,8 +483,6 @@ class Cobweb3Node(CobwebNode):
                 output['guid'] = guid
         output["name"] = "Concept" + self.concept_id
         output["size"] = self.count
-        output['past_performance'] = {str(k):str(self.correct_at_node[k]) for k in self.correct_at_node}
-        output['decendent_performance'] = {str(k):str(self.correct_at_decendents[k]) for k in self.correct_at_decendents}
         output["children"] = []
 
         temp = {}
@@ -518,18 +496,8 @@ class Cobweb3Node(CobwebNode):
                 #    temp[str(attr) + " = " + str(value)] = self.av_counts[attr][value]
 
 
-        if limit_by_performance:
-            tot_at = 0
-            tot_dec = 0
-            for k in self.correct_at_node:
-                tot_at += self.correct_at_node[k].mean
-                tot_dec += self.correct_at_decendents[k].mean
-            if tot_at < tot_dec:
-                for child in self.children:
-                    output["children"].append(child.output_json())
-        else:
-             for child in self.children:
-                    output["children"].append(child.output_json())
+        for child in self.children:
+               output["children"].append(child.output_json())
 
         output["counts"] = temp
 
