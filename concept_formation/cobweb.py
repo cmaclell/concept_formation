@@ -1033,7 +1033,9 @@ class CobwebNode(object):
         for attr in self.av_counts:
             for val in self.av_counts[attr]:
                 p = self.probability(attr,val)
-                ll += self.count * p * log(p)
+                if p > 0:
+                    ll += self.count * p * log(p)
             p = self.probability(attr,None)
-            ll += self.count * p * log(p)
+            if p > 0:
+                ll += self.count * p * log(p)
         return ll
