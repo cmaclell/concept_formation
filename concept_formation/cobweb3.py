@@ -501,6 +501,8 @@ class Cobweb3Node(CobwebNode):
 
         ll = 0
         for attr in self.av_counts:
+            if attr[0] == '_':
+                continue
             if isinstance(self.av_counts[attr],ContinuousValue):
                 p = self.probability(attr,self.av_counts[attr].unbiased_mean())
                 #print(attr,p)
