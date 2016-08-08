@@ -251,6 +251,8 @@ def AICc(clusters,tree,instances):
         ll += conc.log_likelihood()
     r = 0
     for attr in tree.root.av_counts:
+        if attr[0] == '_':
+            continue
         if isinstance(tree.root.av_counts[attr],ContinuousValue):
             r += 3
         else:
@@ -290,6 +292,8 @@ def AIC(clusters,tree,instances):
         ll += conc.log_likelihood()
     r = 0
     for attr in tree.root.av_counts:
+        if attr[0] == '_':
+            continue
         if isinstance(tree.root.av_counts[attr],ContinuousValue):
             r += 3
         else:
@@ -333,6 +337,8 @@ def BIC(clusters,tree,instances):
         ll += conc.log_likelihood()
     r = 0
     for attr in tree.root.av_counts:
+        if attr[0] == '_':
+            continue
         if isinstance(tree.root.av_counts[attr],ContinuousValue):
             r += 3
         else:
@@ -359,6 +365,8 @@ def cluster_split_search(tree, instances, heuristic=BIC, minsplit=1, maxsplit=1,
     :param maxsplit: the maximum number of splits to perform on the tree
     :param mod: A flag to determine if instances will be fit (i.e. modifying
         knoweldge) or categorized (i.e. not modifiying knowledge)
+    :param verbose: If True, the process will print the heursitic at each
+        split as it searches.
     :type tree: :class:`CobwebTree <concept_formation.cobweb.CobwebTree>`,
         :class:`Cobweb3Tree <concept_formation.cobweb3.Cobweb3Tree>`, or
         :class:`TrestleTree <concept_formation.trestle.TrestleTree>`
@@ -367,20 +375,23 @@ def cluster_split_search(tree, instances, heuristic=BIC, minsplit=1, maxsplit=1,
     :type minsplit: int
     :type maxsplit: int
     :type mod: bool
-    :returns: a list of lists of cluster labels based on successive splits between minsplit and maxsplit.
-    :rtype: [[minsplit clustering], [minsplit+1 clustering], ... [maxsplit clustering]]
+    :type verbose: bool
+    :returns: a list of cluster labels based on the optimal number of splits according to the heuristic
+    :rtype: list
 
     .. seealso:: :meth:`cluster_iter`
     """
     clus_it = cluster_iter(tree,instances,minsplit=minsplit,maxsplit=maxsplit,mod=mod,labels=False)
-    min_h = (-1,float('inf'))
+    min_h = (-1,float('inf'),[])
     split = minsplit
+    if verbose:
+        print('Split\tClusters\tHueristic')
     for split_clus in clus_it:
         clus = {c for c in split_clus}
         h = heuristic(clus,tree,instances)
         if verbose:
-            print(split,'%.3f'%h)
+            print(split,len(clus), '%.3f'%h,sep='\t')
         if h < min_h[1]:
-            min_h = (split,h)
+            min_h = (split,h,["Concept" + c.concept_id for c in split_clus])
         split += 1
-    return cluster(tree, instances, minsplit=min_h[0], maxsplit=min_h[0], mod=False)[0]
+    return min_h[2]
