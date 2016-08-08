@@ -1031,6 +1031,8 @@ class CobwebNode(object):
 
         ll = 0
         for attr in self.av_counts:
+            if attr[0] == '_':
+                continue
             for val in self.av_counts[attr]:
                 p = self.probability(attr,val)
                 if p > 0:
