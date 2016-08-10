@@ -424,30 +424,30 @@ class Cobweb3Node(CobwebNode):
         else:
             return super(Cobweb3Node, self).probability(attr, val)
 
-    def log_likelihood(self):
+    def log_likelihood(self, other):
         """
         Returns the log-likelihood of the concept.
         """
 
         ll = 0
-        for attr in self.av_counts:
+        for attr in other.av_counts:
             if attr[0] == '_':
                 continue
-            if isinstance(self.av_counts[attr],ContinuousValue):
-                p = self.probability(attr,self.av_counts[attr].unbiased_mean())
+            if isinstance(other.av_counts[attr], ContinuousValue):
+                p = self.probability(attr, other.av_counts[attr].unbiased_mean()) * other.probability(attr, other.av_counts[attr].unbiased_mean())
                 #print(attr,p)
                 if p > 0:
-                    ll += self.count * p * log(p)
+                    ll += log(p)
             else:
-                for val in self.av_counts[attr]:
-                    p = self.probability(attr,val)
+                for val in other.av_counts[attr]:
+                    p = self.probability(attr,val) * other.probability(attr, val)
                     #print(attr,val,p)
                     if p > 0:
-                        ll += self.count * p * log(p)
-            p = self.probability(attr,None)
+                        ll += log(p)
+            p = self.probability(attr,None) * other.probability(attr, None)
             #print(attr,None,p)
             if p > 0:
-                ll += self.count * p * log(p)
+                ll += log(p)
         return ll
 
     def is_exact_match(self, instance):
