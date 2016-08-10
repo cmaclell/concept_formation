@@ -1024,20 +1024,21 @@ class CobwebNode(object):
 
         return 0.0
 
-    def log_likelihood(self):
+    def log_likelihood(self, other):
         """
         Returns the log-likelihood of the concept.
         """
 
         ll = 0
-        for attr in self.av_counts:
+
+        for attr in other.av_counts:
             if attr[0] == '_':
                 continue
-            for val in self.av_counts[attr]:
-                p = self.probability(attr,val)
+            for val in other.av_counts[attr]:
+                p = self.probability(attr,val) * other.probability(attr, val)
                 if p > 0:
-                    ll += self.count * p * log(p)
-            p = self.probability(attr,None)
+                    ll += log(p)
+            p = self.probability(attr, None) * other.probability(attr, None)
             if p > 0:
-                ll += self.count * p * log(p)
+                ll += log(p)
         return ll

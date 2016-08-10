@@ -215,7 +215,7 @@ def depth_labels(tree,instances,mod=True):
 
     return final_labels
 
-def AICc(clusters,tree,instances):
+def AICc(clusters, leaves):
     """
     Calculates the Akaike Information Criterion of the a given clustering
     from a given tree and set of instances with a correction for finite sample
@@ -232,6 +232,8 @@ def AICc(clusters,tree,instances):
       the tree root times the number of clusters
     * :math:`n` is the number of instances.
 
+    Given the particular math of AICc I decided that is n-k-1 = 0 then the function will return float('inf')
+
     :param clusters: A unique set of cluster concepts from the tree
     :type clusters: {:class:`CobwebNode<concept_formation.cobweb.CobwebNode>`,
         :class:`CobwebNode<concept_formation.cobweb.CobwebNode>`, ...}
@@ -245,22 +247,50 @@ def AICc(clusters,tree,instances):
     :rtype: float
     """
     ll = 0
-    n = len(instances)
-    c = len(clusters)
-    for conc in clusters:
-        ll += conc.log_likelihood()
-    r = 0
-    for attr in tree.root.av_counts:
-        if attr[0] == '_':
-            continue
-        if isinstance(tree.root.av_counts[attr],ContinuousValue):
-            r += 3
-        else:
-            r += len(tree.root.av_counts[attr]) + 1
-    k = r * c
-    return 2 * k - 2 * ll + 2 * k * (k + 1)/(n - k - 1)
+    n = len(leaves)
+    # c = len(clusters)
+    # r = 0
+    k=0
 
-def AIC(clusters,tree,instances):
+    for i, conc in enumerate(clusters):
+        ll += conc.log_likelihood(leaves[i])
+
+    for conc in set(clusters):
+        for attr in conc.av_counts:
+            if attr[0] == '_':
+                continue
+            if isinstance(conc.av_counts[attr],ContinuousValue):
+                k += 3
+                # r += 3
+            else:
+                k += len(conc.av_counts[attr])
+
+    # for conc in clusters:
+    #     ll += conc.log_likelihood()
+    #     for attr in conc.av_counts:
+    #         if attr[0] == '_':
+    #             continue
+    #         if isinstance(conc.av_counts[attr],ContinuousValue):
+    #             k += 3
+    #             # r += 3
+    #         else:
+    #             k += len(conc.av_counts[attr]) + 1
+                # r += len(conc.av_counts[attr]) + 1
+
+    # for attr in tree.root.av_counts:
+    #     if attr[0] == '_':
+    #         continue
+    #     if isinstance(tree.root.av_counts[attr],ContinuousValue):
+    #         r += 3
+    #     else:
+    #         r += len(tree.root.av_counts[attr]) + 1
+    # k = r * c
+    if n <= k - 1:
+        return float('inf')
+    else:
+        return 2 * k - 2 * ll + 2 * k * (k + 1)/(n - k - 1)
+
+def AIC(clusters, leaves):
     """
     Calculates the Akaike Information Criterion of the a given clustering
     from a given tree and set of instances.
@@ -288,20 +318,46 @@ def AIC(clusters,tree,instances):
     :rtype: float
     """
     ll = 0
-    for conc in clusters:
-        ll += conc.log_likelihood()
-    r = 0
-    for attr in tree.root.av_counts:
-        if attr[0] == '_':
-            continue
-        if isinstance(tree.root.av_counts[attr],ContinuousValue):
-            r += 3
-        else:
-            r += len(tree.root.av_counts[attr]) + 1
-    k = r * len(clusters)
+    # r = 0
+    # c = len(clusters)
+    k=0
+
+    for i, conc in enumerate(clusters):
+        ll += conc.log_likelihood(leaves[i])
+
+    for conc in set(clusters):
+        for attr in conc.av_counts:
+            if attr[0] == '_':
+                continue
+            if isinstance(conc.av_counts[attr],ContinuousValue):
+                k += 3
+                # r += 3
+            else:
+                k += len(conc.av_counts[attr])
+
+    # for conc in clusters:
+    #     ll += conc.log_likelihood()
+    #     for attr in conc.av_counts:
+    #         if attr[0] == '_':
+    #             continue
+    #         if isinstance(conc.av_counts[attr],ContinuousValue):
+    #             k += 3
+    #             # r += 3
+    #         else:
+    #             k += len(conc.av_counts[attr]) + 1
+                # r += len(conc.av_counts[attr]) + 1
+    
+    # for attr in tree.root.av_counts:
+    #     if attr[0] == '_':
+    #         continue
+    #     if isinstance(tree.root.av_counts[attr],ContinuousValue):
+    #         r += 3
+    #     else:
+    #         r += len(tree.root.av_counts[attr]) + 1
+    # k = r * c
     return 2 * k - 2 * ll
 
-def BIC(clusters,tree,instances):
+def BIC(clusters, leaves):
     """
     Calculates the Bayesian Information Criterion of the a given clustering
     from a given tree and set of instances.
@@ -329,21 +385,45 @@ def BIC(clusters,tree,instances):
     :returns: The BIC of the clustering
     :rtype: float
     """
-    c = len(clusters)
-    n = len(instances)
-
+    # c = len(clusters)
+    n = len(leaves)
     ll = 0
-    for conc in clusters:
-        ll += conc.log_likelihood()
-    r = 0
-    for attr in tree.root.av_counts:
-        if attr[0] == '_':
-            continue
-        if isinstance(tree.root.av_counts[attr],ContinuousValue):
-            r += 3
-        else:
-            r += len(tree.root.av_counts[attr]) + 1
-    k = r * c
+    # r = 0
+    k = 0 
+    
+    for i, conc in enumerate(clusters):
+        ll += conc.log_likelihood(leaves[i])
+
+    for conc in set(clusters):
+        for attr in conc.av_counts:
+            if attr[0] == '_':
+                continue
+            if isinstance(conc.av_counts[attr],ContinuousValue):
+                k += 3
+                # r += 3
+            else:
+                k += len(conc.av_counts[attr])
+
+    # for conc in clusters:
+    #     ll += conc.log_likelihood()
+    #     for attr in conc.av_counts:
+    #         if attr[0] == '_':
+    #             continue
+    #         if isinstance(conc.av_counts[attr],ContinuousValue):
+    #             k += 3
+    #             # r += 3
+    #         else:
+    #             k += len(conc.av_counts[attr]) + 1
+                # r += len(conc.av_counts[attr]) + 1
+    # r = 0
+    # for attr in tree.root.av_counts:
+    #     if attr[0] == '_':
+    #         continue
+    #     if isinstance(tree.root.av_counts[attr],ContinuousValue):
+    #         r += 3
+    #     else:
+    #         r += len(tree.root.av_counts[attr]) + 1
+    # k = r * c
     return -2 * ll + k * log(n)
 
 def cluster_split_search(tree, instances, heuristic=BIC, minsplit=1, maxsplit=1, mod=True,verbose=False):
@@ -381,17 +461,87 @@ def cluster_split_search(tree, instances, heuristic=BIC, minsplit=1, maxsplit=1,
 
     .. seealso:: :meth:`cluster_iter`
     """
-    clus_it = cluster_iter(tree,instances,minsplit=minsplit,maxsplit=maxsplit,mod=mod,labels=False)
+    clus_it = cluster_iter_experimental(tree,instances,heuristic=heuristic,minsplit=minsplit,maxsplit=maxsplit,mod=mod,labels=False)
     min_h = (-1,float('inf'),[])
     split = minsplit
     if verbose:
-        print('Split\tClusters\tHueristic')
-    for split_clus in clus_it:
-        clus = {c for c in split_clus}
-        h = heuristic(clus,tree,instances)
+        print('S\tC\tH')
+    for split_clus, h in clus_it:
+        #clus = set(split_clus)
+        #h = heuristic(clus,tree,instances)
         if verbose:
-            print(split,len(clus), '%.3f'%h,sep='\t')
+            print(split,len(set(split_clus)), '%.3f'%h,sep='\t')
         if h < min_h[1]:
             min_h = (split,h,["Concept" + c.concept_id for c in split_clus])
         split += 1
     return min_h[2]
+
+
+def cluster_iter_experimental(tree, instances, heuristic=BIC, minsplit=1, maxsplit=100000,  mod=True,labels=True):
+    """
+    This is an experimetnal implementation of the cluster iter that uses
+    something other than CU to choose what to split
+    """
+    if minsplit < 1: 
+        raise ValueError("minsplit must be >= 1") 
+    if minsplit > maxsplit: 
+        raise ValueError("maxsplit must be >= minsplit")
+
+    tree = copy.deepcopy(tree)
+
+    if mod:
+        temp_clusters = [tree.ifit(instance) for instance in instances]
+    else:
+        temp_clusters = [tree.categorize(instance) for instance in instances]
+    
+    for nth_split in range(1,maxsplit+1):
+
+        cluster_assign = []
+        child_cluster_assign = []
+        if nth_split >= minsplit:
+            clusters = []
+            for i,c in enumerate(temp_clusters):
+                child = None
+                while (c.parent and c.parent.parent):
+                    child = c
+                    c = c.parent
+                if labels:
+                    clusters.append("Concept" + c.concept_id)
+                else:
+                    clusters.append(c)
+                cluster_assign.append(c)
+                child_cluster_assign.append(child)
+            yield clusters, heuristic(cluster_assign, temp_clusters)
+
+        # split_cus = sorted([(tree.root.cu_for_split(c) -
+        #                      tree.root.category_utility(), i, c) for i,c in
+        #                     enumerate(tree.root.children) if c.children])
+
+        split_cus = []
+
+        for i, target in enumerate(set(cluster_assign)):
+            if len(target.children) == 0:
+                continue
+            c_labels = [label if label != target else child_cluster_assign[j] 
+                        for j, label in enumerate(cluster_assign)]
+            split_cus.append((heuristic(c_labels, temp_clusters), i, target))
+    
+        #for i,target in enumerate(tree.root.children):
+        #    if len(target.children) == 0:
+        #        continue
+        #    rest = [child for child in tree.root.children if child != target]
+        #    rest.extend(target.children)
+
+        #    split_cus.append((heuristic(rest,tree,instances),i,target))
+
+        split_cus = sorted(split_cus)
+
+        # Exit early, we don't need to re-reun the following part for the
+        # last time through
+        if not split_cus:
+            break
+
+        # Split the least cohesive cluster
+        tree.root.split(split_cus[0][2])
+
+        nth_split+=1
