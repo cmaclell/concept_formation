@@ -1031,14 +1031,16 @@ class CobwebNode(object):
 
         ll = 0
 
-        for attr in other.av_counts:
+        for attr in self.tree.root.av_counts:
             if attr[0] == '_':
                 continue
-            for val in other.av_counts[attr]:
-                p = self.probability(attr,val) * other.probability(attr, val)
-                if p > 0:
-                    ll += log(p)
-            p = self.probability(attr, None) * other.probability(attr, None)
-            if p > 0:
-                ll += log(p)
+            for val in list(self.tree.root.av_counts[attr]) + [None]:
+                op = other.probability(attr, val)
+                if op > 0:
+                    p = self.probability(attr,val) * op
+                    if p >= 0:
+                        ll += log(p)
+                    else:
+                        raise Exception("Should always be greater than 0")
+                        
         return ll

@@ -500,24 +500,21 @@ class Cobweb3Node(CobwebNode):
         """
 
         ll = 0
-        for attr in other.av_counts:
+        for attr in self.tree.root.av_counts:
             if attr[0] == '_':
                 continue
-            if isinstance(other.av_counts[attr], ContinuousValue):
+            if isinstance(self.tree.root.av_counts[attr], ContinuousValue):
                 p = self.probability(attr, other.av_counts[attr].unbiased_mean()) * other.probability(attr, other.av_counts[attr].unbiased_mean())
-                #print(attr,p)
-                if p > 0:
-                    ll += log(p)
-            else:
-                for val in other.av_counts[attr]:
-                    p = self.probability(attr,val) * other.probability(attr, val)
-                    #print(attr,val,p)
-                    if p > 0:
-                        ll += log(p)
-            p = self.probability(attr,None) * other.probability(attr, None)
-            #print(attr,None,p)
-            if p > 0:
                 ll += log(p)
+            else:
+                for val in list(self.tree.root.av_counts[attr]) + [None]:
+                    op = other.probability(attr, val)
+                    if op > 0:
+                        p = self.probability(attr,val) * op
+                        if p > 0:
+                            ll += log(p)
+                        else:
+                            raise Exception("p must be greater than 0")
         return ll
 
     def is_exact_match(self, instance):
