@@ -256,14 +256,14 @@ def AICc(clusters, leaves):
         ll += conc.log_likelihood(leaves[i])
 
     for conc in set(clusters):
-        for attr in conc.av_counts:
+        for attr in conc.tree.root.av_counts:
             if attr[0] == '_':
                 continue
-            if isinstance(conc.av_counts[attr],ContinuousValue):
+            if isinstance(conc.tree.root.av_counts[attr],ContinuousValue):
                 k += 3
                 # r += 3
             else:
-                k += len(conc.av_counts[attr])
+                k += len(conc.tree.root.av_counts[attr])
 
     # for conc in clusters:
     #     ll += conc.log_likelihood()
@@ -326,14 +326,14 @@ def AIC(clusters, leaves):
         ll += conc.log_likelihood(leaves[i])
 
     for conc in set(clusters):
-        for attr in conc.av_counts:
+        for attr in conc.tree.root.av_counts:
             if attr[0] == '_':
                 continue
-            if isinstance(conc.av_counts[attr],ContinuousValue):
+            if isinstance(conc.tree.root.av_counts[attr],ContinuousValue):
                 k += 3
                 # r += 3
             else:
-                k += len(conc.av_counts[attr])
+                k += len(conc.tree.root.av_counts[attr])
 
     # for conc in clusters:
     #     ll += conc.log_likelihood()
@@ -395,14 +395,14 @@ def BIC(clusters, leaves):
         ll += conc.log_likelihood(leaves[i])
 
     for conc in set(clusters):
-        for attr in conc.av_counts:
+        for attr in conc.tree.root.av_counts:
             if attr[0] == '_':
                 continue
-            if isinstance(conc.av_counts[attr],ContinuousValue):
+            if isinstance(conc.tree.root.av_counts[attr],ContinuousValue):
                 k += 3
                 # r += 3
             else:
-                k += len(conc.av_counts[attr])
+                k += len(conc.tree.root.av_counts[attr])
 
     # for conc in clusters:
     #     ll += conc.log_likelihood()
