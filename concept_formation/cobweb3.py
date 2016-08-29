@@ -503,9 +503,14 @@ class Cobweb3Node(CobwebNode):
         for attr in self.tree.root.av_counts:
             if attr[0] == '_':
                 continue
-            if isinstance(self.tree.root.av_counts[attr], ContinuousValue):
-                p = self.probability(attr, other.av_counts[attr].unbiased_mean()) * other.probability(attr, other.av_counts[attr].unbiased_mean())
-                ll += log(p)
+            elif isinstance(self.tree.root.av_counts[attr], ContinuousValue):
+                if attr in self.av_counts and attr in other.av_counts:
+                    p = self.probability(attr, other.av_counts[attr].unbiased_mean()) * other.probability(attr, other.av_counts[attr].unbiased_mean())
+                    if p > 0:
+                        ll += log(p)
+                p = self.probability(attr,None) * other.probability(attr,None)
+                if p > 0:
+                    ll += log(p)
             else:
                 for val in list(self.tree.root.av_counts[attr]) + [None]:
                     op = other.probability(attr, val)

@@ -426,17 +426,11 @@ def BIC(clusters, leaves):
     # k = r * c
     return -2 * ll + k * log(n)
 
-def cluster_split_search(tree, instances, heuristic=BIC, minsplit=1, maxsplit=1, mod=True,verbose=False):
+def cluster_split_search(tree, instances, heuristic=BIC, minsplit=1, maxsplit=1, mod=True,labels=True,verbose=False):
     """
     Find a clustering of the instances given the tree that is based on
     successive splittings of the tree in order to minimize some heuristic
     function.
-
-    .. todo:: for the moment this function should only really be used with a
-        tree that is trained on exactly the given instances and nothing more.
-        This is because the current heuristic functions rely on the tree's
-        loglikelihood functions and do not take into account the acutal
-        instance data.
 
     :param tree: A category tree to be used to generate clusters.
     :param instances: A list of instances to cluster
@@ -472,7 +466,7 @@ def cluster_split_search(tree, instances, heuristic=BIC, minsplit=1, maxsplit=1,
         if verbose:
             print(split,len(set(split_clus)), '%.3f'%h,sep='\t')
         if h < min_h[1]:
-            min_h = (split,h,["Concept" + c.concept_id for c in split_clus])
+            min_h = (split,h,["Concept" + c.concept_id for c in split_clus] if labels else split_clus)
         split += 1
     return min_h[2]
 
