@@ -14,7 +14,7 @@ from concept_formation.continuous_value import ContinuousValue
 
 
 
-def cluster_iter(tree, instances, minsplit=1, maxsplit=100000,  mod=True,labels=True):
+def cluster_iter_old(tree, instances, minsplit=1, maxsplit=100000,  mod=True,labels=True):
     """
     Categorize a list of instances into a tree and return an iterator over
     cluster labelings generated from successive splits of the tree.
@@ -215,6 +215,39 @@ def depth_labels(tree,instances,mod=True):
 
     return final_labels
 
+def CU(cluster,leaves):
+    """
+    Calculates the Category Utility of a tree state given clusters and leaves.
+
+    This just uses the basic category utility function of a node created from
+    the leave instances. This also negates the result so it can be minimized
+    like the other heuristic functions.
+
+    .. todo :: we might want to do this with infered missing instances rather
+        than leaves
+
+    :param clusters: A unique set of cluster concepts from the tree
+    :type clusters: {:class:`CobwebNode<concept_formation.cobweb.CobwebNode>`,
+        :class:`CobwebNode<concept_formation.cobweb.CobwebNode>`, ...}
+    :param tree: The tree that the clusters come from (used to calculated number of parameters)
+    :type tree: :class:`CobwebTree <concept_formation.cobweb.CobwebTree>`,
+        :class:`Cobweb3Tree <concept_formation.cobweb3.Cobweb3Tree>`, or
+        :class:`TrestleTree <concept_formation.trestle.TrestleTree>`
+    :param instances: The set of clustered instances
+    :type instances: [:ref:`Instance<instance-rep>`, :ref:`Instance<instance-rep>`, ...]
+    :returns: The CU of the clustering
+    :rtype: float
+    """
+    temp_root = cluster[0].__class__()
+    for c in set(cluster): 
+        temp_child = cluster[0].__class__()
+        for l in leaves:
+            if c.is_parent(l):
+                temp_child.update_counts_from_node(l)
+        temp_root.update_counts_from_node(temp_child)
+        temp_root.children.append(temp_child)
+    return -temp_root.category_utility()
+
 def AICc(clusters, leaves):
     """
     Calculates the Akaike Information Criterion of the a given clustering
@@ -248,8 +281,6 @@ def AICc(clusters, leaves):
     """
     ll = 0
     n = len(leaves)
-    # c = len(clusters)
-    # r = 0
     k=0
 
     for i, conc in enumerate(clusters):
@@ -264,27 +295,6 @@ def AICc(clusters, leaves):
                 # r += 3
             else:
                 k += len(conc.tree.root.av_counts[attr])
-
-    # for conc in clusters:
-    #     ll += conc.log_likelihood()
-    #     for attr in conc.av_counts:
-    #         if attr[0] == '_':
-    #             continue
-    #         if isinstance(conc.av_counts[attr],ContinuousValue):
-    #             k += 3
-    #             # r += 3
-    #         else:
-    #             k += len(conc.av_counts[attr]) + 1
-                # r += len(conc.av_counts[attr]) + 1
-
-    # for attr in tree.root.av_counts:
-    #     if attr[0] == '_':
-    #         continue
-    #     if isinstance(tree.root.av_counts[attr],ContinuousValue):
-    #         r += 3
-    #     else:
-    #         r += len(tree.root.av_counts[attr]) + 1
-    # k = r * c
     if n <= k - 1:
         return float('inf')
     else:
@@ -334,27 +344,6 @@ def AIC(clusters, leaves):
                 # r += 3
             else:
                 k += len(conc.tree.root.av_counts[attr])
-
-    # for conc in clusters:
-    #     ll += conc.log_likelihood()
-    #     for attr in conc.av_counts:
-    #         if attr[0] == '_':
-    #             continue
-    #         if isinstance(conc.av_counts[attr],ContinuousValue):
-    #             k += 3
-    #             # r += 3
-    #         else:
-    #             k += len(conc.av_counts[attr]) + 1
-                # r += len(conc.av_counts[attr]) + 1
-    
-    # for attr in tree.root.av_counts:
-    #     if attr[0] == '_':
-    #         continue
-    #     if isinstance(tree.root.av_counts[attr],ContinuousValue):
-    #         r += 3
-    #     else:
-    #         r += len(tree.root.av_counts[attr]) + 1
-    # k = r * c
     return 2 * k - 2 * ll
 
 def BIC(clusters, leaves):
@@ -400,33 +389,11 @@ def BIC(clusters, leaves):
                 continue
             if isinstance(conc.tree.root.av_counts[attr],ContinuousValue):
                 k += 3
-                # r += 3
             else:
                 k += len(conc.tree.root.av_counts[attr])
-
-    # for conc in clusters:
-    #     ll += conc.log_likelihood()
-    #     for attr in conc.av_counts:
-    #         if attr[0] == '_':
-    #             continue
-    #         if isinstance(conc.av_counts[attr],ContinuousValue):
-    #             k += 3
-    #             # r += 3
-    #         else:
-    #             k += len(conc.av_counts[attr]) + 1
-                # r += len(conc.av_counts[attr]) + 1
-    # r = 0
-    # for attr in tree.root.av_counts:
-    #     if attr[0] == '_':
-    #         continue
-    #     if isinstance(tree.root.av_counts[attr],ContinuousValue):
-    #         r += 3
-    #     else:
-    #         r += len(tree.root.av_counts[attr]) + 1
-    # k = r * c
     return -2 * ll + k * log(n)
 
-def cluster_split_search(tree, instances, heuristic=BIC, minsplit=1, maxsplit=1, mod=True,labels=True,verbose=False):
+def cluster_split_search(tree, instances, heuristic=CU, minsplit=1, maxsplit=1, mod=True,labels=True,verbose=False):
     """
     Find a clustering of the instances given the tree that is based on
     successive splittings of the tree in order to minimize some heuristic
@@ -455,7 +422,7 @@ def cluster_split_search(tree, instances, heuristic=BIC, minsplit=1, maxsplit=1,
 
     .. seealso:: :meth:`cluster_iter`
     """
-    clus_it = cluster_iter_experimental(tree,instances,heuristic=heuristic,minsplit=minsplit,maxsplit=maxsplit,mod=mod,labels=False)
+    clus_it = cluster_iter(tree,instances,heuristic=heuristic,minsplit=minsplit,maxsplit=maxsplit,mod=mod,labels=False)
     min_h = (-1,float('inf'),[])
     split = minsplit
     if verbose:
@@ -471,7 +438,7 @@ def cluster_split_search(tree, instances, heuristic=BIC, minsplit=1, maxsplit=1,
     return min_h[2]
 
 
-def cluster_iter_experimental(tree, instances, heuristic=BIC, minsplit=1, maxsplit=100000,  mod=True,labels=True):
+def cluster_iter(tree, instances, heuristic=CU, minsplit=1, maxsplit=100000,  mod=True,labels=True):
     """
     This is an experimetnal implementation of the cluster iter that uses
     something other than CU to choose what to split
@@ -507,10 +474,6 @@ def cluster_iter_experimental(tree, instances, heuristic=BIC, minsplit=1, maxspl
                 child_cluster_assign.append(child)
             yield clusters, heuristic(cluster_assign, temp_clusters)
 
-        # split_cus = sorted([(tree.root.cu_for_split(c) -
-        #                      tree.root.category_utility(), i, c) for i,c in
-        #                     enumerate(tree.root.children) if c.children])
-
         split_cus = []
 
         for i, target in enumerate(set(cluster_assign)):
@@ -518,15 +481,7 @@ def cluster_iter_experimental(tree, instances, heuristic=BIC, minsplit=1, maxspl
                 continue
             c_labels = [label if label != target else child_cluster_assign[j] 
                         for j, label in enumerate(cluster_assign)]
-            split_cus.append((heuristic(c_labels, temp_clusters), i, target))
-    
-        #for i,target in enumerate(tree.root.children):
-        #    if len(target.children) == 0:
-        #        continue
-        #    rest = [child for child in tree.root.children if child != target]
-        #    rest.extend(target.children)
-
-        #    split_cus.append((heuristic(rest,tree,instances),i,target))
+            split_cus.append((heuristic(c_labels, temp_clusters), i, target)) 
 
         split_cus = sorted(split_cus)
 
