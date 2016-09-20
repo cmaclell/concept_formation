@@ -13,6 +13,7 @@ import matplotlib.patches as mpatches
 from matplotlib.patches import Ellipse
 
 from concept_formation.cobweb3 import Cobweb3Tree
+from concept_formation.cobweb3 import cv_key as cv
 
 seed(0)
 
@@ -60,10 +61,10 @@ for datum in data:
         c.remove()
 
     # 4 * std gives two std on each side (~95% confidence)
-    clusters = [Ellipse([cluster.av_counts['x'].unbiased_mean(),
-                         cluster.av_counts['y'].unbiased_mean()],
-                        width=4*cluster.av_counts['x'].unbiased_std(),
-                        height=4*cluster.av_counts['y'].unbiased_std(), 
+    clusters = [Ellipse([cluster.av_counts['x'][cv].unbiased_mean(),
+                         cluster.av_counts['y'][cv].unbiased_mean()],
+                        width=4*cluster.av_counts['x'][cv].unbiased_std(),
+                        height=4*cluster.av_counts['y'][cv].unbiased_std(), 
                         angle=0) for cluster in tree.root.children]
 
     # draw the cluster circles
