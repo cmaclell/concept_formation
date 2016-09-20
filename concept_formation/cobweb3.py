@@ -18,6 +18,10 @@ from concept_formation.cobweb import CobwebNode
 from concept_formation.cobweb import CobwebTree
 from concept_formation.continuous_value import ContinuousValue
 from concept_formation.utils import isNumber
+from concept_formation.utils import weighted_choice
+from concept_formation.utils import most_likely_choice
+
+continuous_value = "#ContinuousValue#"
 
 class Cobweb3Tree(CobwebTree):
     """
@@ -164,18 +168,15 @@ class Cobweb3Node(CobwebNode):
         self.count += 1 
             
         for attr in instance:
+            self.av_counts[attr] = self.av_counts.setdefault(attr,{})
+
             if isNumber(instance[attr]):
-                if attr not in self.av_counts:
-                    self.av_counts[attr] = ContinuousValue()
-                elif not isinstance(self.av_counts[attr], ContinuousValue):
-                    raise Exception ('Numerical value found in nominal attribute. Try casting all values of "' + attr + '" to either string or a number type.')
-                    
-                self.av_counts[attr].update(instance[attr])
+                if continuous_value not in self.av_counts[attr]:
+                    self.av_counts[attr][continuous_value] = ContinuousValue()
+                self.av_counts[attr][continuous_value].update(instance[attr])
             else:
-                if attr in self.av_counts and isinstance(self.av_counts[attr],ContinuousValue):
-                    raise Exception ('Nominal value found in numerical attribute. Try casting all values of "' + attr + '" to either string or a number type.')
-                self.av_counts[attr] = self.av_counts.setdefault(attr,{})
-                self.av_counts[attr][instance[attr]] = (self.av_counts[attr].get(instance[attr], 0) + 1)
+                prior_count = self.av_counts[attr].get(instance[attr], 0)
+                self.av_counts[attr][instance[attr]] = prior_count + 1
 
     def update_counts_from_node(self, node):
         """
@@ -193,18 +194,12 @@ class Cobweb3Node(CobwebNode):
         """
         self.count += node.count
         for attr in node.av_counts:
-            if isinstance(node.av_counts[attr], ContinuousValue):
-                if attr not in self.av_counts:
-                    self.av_counts[attr] = ContinuousValue()
-                elif not isinstance(self.av_counts[attr], ContinuousValue):
-                    raise Exception ('Numerical value found in nominal attribute. Try casting all values of "'+attr+'" to either string or a number type.')
-                    
-                self.av_counts[attr].combine(node.av_counts[attr])
-            else:
-                if attr in self.av_counts and isinstance(self.av_counts[attr],ContinuousValue):
-                    raise Exception ('Nominal value found in numerical attribute. Try casting all values of "'+attr+'" to either string or a number type.')
-                for val in node.av_counts[attr]:
-                    self.av_counts[attr] = self.av_counts.setdefault(attr,{})
+            self.av_counts[attr] = self.av_counts.setdefault(attr, {})
+            for val in node.av_counts[attr]:
+                if val == continuous_value:
+                    self.av_counts[attr][val] = self.av_counts[attr].get(val, ContinuousValue())
+                    self.av_counts[attr][val].combine(node.av_counts[attr][val])
+                else:
                     self.av_counts[attr][val] = (self.av_counts[attr].get(val,0) +
                                          node.av_counts[attr][val])
     
@@ -228,9 +223,15 @@ class Cobweb3Node(CobwebNode):
         """
         if attr[0] == "_":
             return 0.0
-        elif attr not in self.av_counts:
+
+        if attr not in self.av_counts:
             return 0.0
-        elif isinstance(self.av_counts[attr], ContinuousValue):
+
+        if ((isNumber(val) or isinstance(val, ContinuousValue)) and
+            continuous_value not in self.av_counts[attr]):
+            return 0.0
+
+        if isNumber(val) or isinstance(val, ContinuousValue):
             if self.tree.scaling:
                 inner_attr = self.tree.get_inner_attr(attr)
                 scale = ((1/self.tree.scaling) *
@@ -238,15 +239,17 @@ class Cobweb3Node(CobwebNode):
             else:
                 scale = 1.0
 
-            before_std = sqrt(self.av_counts[attr].scaled_unbiased_std(scale) *
-                              self.av_counts[attr].scaled_unbiased_std(scale) +
+            value = self.av_counts[attr][continuous_value]
+
+            before_std = sqrt(value.scaled_unbiased_std(scale) *
+                              value.scaled_unbiased_std(scale) +
                              1/(4*pi))
-            before_prob = ((1.0 * self.av_counts[attr].num) / 
+            before_prob = ((1.0 * value.num) / 
                            (self.count + counts))
             before_count = ((before_prob * before_prob) * 
                             (1/(2 * sqrt(pi) * before_std)))
 
-            temp = self.av_counts[attr].copy()
+            temp = value.copy()
             if isinstance(val, ContinuousValue):
                 temp.combine(val)
             else:
@@ -254,18 +257,19 @@ class Cobweb3Node(CobwebNode):
 
             after_std = sqrt(temp.scaled_unbiased_std(scale) *
                              temp.scaled_unbiased_std(scale) + 1/(4*pi)) 
-            after_prob = ((self.av_counts[attr].num + counts) / 
+            after_prob = ((value.num + counts) / 
                           (self.count + counts))
             after_count = ((after_prob * after_prob) * 
                            (1/(2 * sqrt(pi) * after_std)))
             return after_count - before_count
-        elif val not in self.av_counts[attr]:
+
+        if val not in self.av_counts[attr]:
             return 0.0
-        else:
-            before_prob = (self.av_counts[attr][val] / (self.count + counts))
-            after_prob = ((self.av_counts[attr][val] + counts) / 
-                          (self.count + counts))
-            return (after_prob * after_prob) - (before_prob * before_prob)
+
+        before_prob = (self.av_counts[attr][val] / (self.count + counts))
+        after_prob = ((self.av_counts[attr][val] + counts) / 
+                      (self.count + counts))
+        return (after_prob * after_prob) - (before_prob * before_prob)
 
     def expected_correct_guesses(self):
         """
@@ -320,32 +324,33 @@ class Cobweb3Node(CobwebNode):
 
             if attr not in self.av_counts:
                 val_count = 0
-                
-            elif isinstance(self.tree.root.av_counts[attr], ContinuousValue):
-                if self.tree.scaling:
-                    inner_attr = self.tree.get_inner_attr(attr)
-                    scale = ((1/self.tree.scaling) *
-                             self.tree.attr_scales[inner_attr].unbiased_std())
-                else:
-                    scale = 1.0
-
-                # we basically add noise to the std and adjust the normalizing
-                # constant to ensure the probability of a particular value
-                # never exceeds 1.
-                std = sqrt(self.av_counts[attr].scaled_unbiased_std(scale) *
-                           self.av_counts[attr].scaled_unbiased_std(scale) +
-                           (1 / (4 * pi)))
-                prob_attr = self.av_counts[attr].num / self.count
-                correct_guesses += ((prob_attr * prob_attr) * 
-                                    (1/(2 * sqrt(pi) * std)))
-                val_count = self.av_counts[attr].num
 
             else:
                 val_count = 0
                 for val in self.av_counts[attr]:
-                    val_count += self.av_counts[attr][val]
-                    prob = (self.av_counts[attr][val]) / (1.0 * self.count)
-                    correct_guesses += (prob * prob)
+                    if val == continuous_value:
+                        if self.tree.scaling:
+                            inner_attr = self.tree.get_inner_attr(attr)
+                            scale = ((1/self.tree.scaling) *
+                                     self.tree.attr_scales[inner_attr].unbiased_std())
+                        else:
+                            scale = 1.0
+
+                        # we basically add noise to the std and adjust the normalizing
+                        # constant to ensure the probability of a particular value
+                        # never exceeds 1.
+                        cv = self.av_counts[attr][continuous_value]
+                        std = sqrt(cv.scaled_unbiased_std(scale) *
+                                   cv.scaled_unbiased_std(scale) +
+                                   (1 / (4 * pi)))
+                        prob_attr = cv.num / self.count
+                        correct_guesses += ((prob_attr * prob_attr) * 
+                                            (1/(2 * sqrt(pi) * std)))
+                        val_count += cv.num
+                    else:
+                        prob = (self.av_counts[attr][val]) / (1.0 * self.count)
+                        correct_guesses += (prob * prob)
+                        val_count += self.av_counts[attr][val]
 
             #Factors in the probability mass of missing values
             prob = (self.count - val_count) / self.count
@@ -371,17 +376,13 @@ class Cobweb3Node(CobwebNode):
         attributes = []
 
         for attr in self.av_counts:
-            if isinstance(self.av_counts[attr], ContinuousValue):
-                attributes.append("'%s': %s}" % (attr, str(self.av_counts[attr])))
-            else:
-                values = []
+            values = []
+            for val in self.av_counts[attr]:
+                values.append("'" + str(val) + "': " +
+                              str(self.av_counts[attr][val]))
 
-                for val in self.av_counts[attr]:
-                    values.append("'" + str(val) + "': " +
-                                  str(self.av_counts[attr][val]))
-
-                attributes.append("'" + str(attr) + "': {" + ", ".join(values)
-                                  + "}")
+            attributes.append("'" + str(attr) + "': {" + ", ".join(values)
+                              + "}")
                   
         ret += "{" + ", ".join(attributes) + "}: " + str(self.count) + '\n'
         
@@ -389,6 +390,45 @@ class Cobweb3Node(CobwebNode):
             ret += c.pretty_print(depth+1)
 
         return ret
+
+    def get_weighted_values(self, attr, allow_none=True):
+        """
+        Return a list of weighted choices for an attribute based on the node's
+        probability table.
+
+        This calculation will include an option for the change that an attribute
+        is missing from an instance all together. This is useful for probability
+        and sampling calculations. If the attribute has never appeared in the
+        tree then it will return a 100% chance of None.
+
+        :param attr: an attribute of an instance
+        :type attr: :ref:`Attribute<attributes>`
+        :param allow_none: whether attributes in the nodes probability table
+            can be inferred to be missing. If False, then None will not be
+            cosidered as a possible value.
+        :type allow_none: Boolean
+        :return: a list of weighted choices for attr's value
+        :rtype: [(:ref:`Value<values>`, float), (:ref:`Value<values>`, float), ...]
+        """
+        choices = []
+        if attr not in self.tree.root.av_counts:
+            choices.append((None, 1.0))
+            return choices
+
+        val_count = 0
+        for val in self.tree.root.av_counts[attr]:
+            count = 0
+            if attr in self.av_counts and val in self.av_counts[attr]:
+                if val == continuous_value:
+                    count = self.av_counts[attr][val].num
+                else:
+                    count = self.av_counts[attr][val]
+            choices.append((val, count / self.count))
+            val_count += count
+
+        if allow_none:
+            choices.append((None, ((self.count - val_count) / self.count)))
+        return choices
 
     def predict(self, attr, choice_fn="most likely", allow_none=True):
         """
@@ -411,28 +451,29 @@ class Cobweb3Node(CobwebNode):
 
         .. seealso :meth:`Cobweb3Node.sample`
         """
+        if choice_fn == "most likely" or choice_fn == "m":
+            choose = most_likely_choice
+        elif choice_fn == "sampled" or choice_fn == "s":
+            choose = weighted_choice
+        else:
+            raise Exception("Unknown choice_fn")
+
         if attr not in self.tree.root.av_counts:
             return None
 
-        if isinstance(self.tree.root.av_counts[attr], ContinuousValue):
-            prob_attr = self.av_counts[attr].num / self.count
+        choices = self.get_weighted_values(attr, allow_none)
+        val = choose(choices)
 
+        if val == continuous_value:
             if choice_fn == "most likely" or choice_fn == "m":
-                if allow_none and prob_attr < 0.5:
-                    return None
-                val = self.av_counts[attr].mean
+                val = self.av_counts[attr][val].mean
             elif choice_fn == "sampled" or choice_fn == "s":
-                if allow_none and prob_attr < random():
-                    return None
-                val = normalvariate(self.av_counts[attr].unbiased_mean(),
-                                    self.av_counts[attr].unbiased_std())
+                val = normalvariate(self.av_counts[attr][val].unbiased_mean(),
+                                    self.av_counts[attr][val].unbiased_std())
             else:
                 raise Exception("Unknown choice_fn")
-            
-            return val
 
-        else:
-            return super(Cobweb3Node, self).predict(attr, choice_fn=choice_fn)
+        return val
 
     def probability(self, attr, val):
         """
@@ -457,17 +498,19 @@ class Cobweb3Node(CobwebNode):
         :return: The probability of attr having the value val in the current concept.
         :rtype: float
         """
-        if (attr in self.tree.root.av_counts and
-            isinstance(self.tree.root.av_counts[attr], ContinuousValue)):
-
+        if val is None:
+            c = 0.0
             if attr in self.av_counts:
-                prob_attr = self.av_counts[attr].num / self.count
-            else:
-                return float(val == None)
+                c = sum([self.av_counts[attr][v].num if v == continuous_value
+                         else self.av_counts[attr][v] for v in
+                         self.av_counts[attr]])
+            return (self.count - c) / self.count
 
-            if val is None:
-                return 1.0 - prob_attr
+        if isNumber(val):
+            if continuous_value not in self.av_counts[attr]:
+                return 0.0
 
+            prob_attr = self.av_counts[attr][continuous_value].num / self.count
             if self.tree.scaling:
                 inner_attr = self.tree.get_inner_attr(attr)
                 scale = ((1/self.tree.scaling) *
@@ -475,23 +518,25 @@ class Cobweb3Node(CobwebNode):
 
                 if scale == 0:
                     scale = 1
-                shift = self.tree.root.av_counts[attr].mean
+                shift = self.tree.attr_scales[inner_attr].mean
                 val = (val - shift) / scale
             else:
                 scale = 1.0
                 shift = 0.0
 
-            mean = (self.av_counts[attr].mean - shift) / scale
-            std = sqrt(self.av_counts[attr].scaled_unbiased_std(scale) *
-                       self.av_counts[attr].scaled_unbiased_std(scale) + 
+            mean = (self.av_counts[attr][continuous_value].mean - shift) / scale
+            std = sqrt(self.av_counts[attr][continuous_value].scaled_unbiased_std(scale) *
+                       self.av_counts[attr][continuous_value].scaled_unbiased_std(scale) + 
                        (1 / (4 * pi)))
             p = (prob_attr * 
                  (1/(sqrt(2*pi) * std)) * 
                  exp(-((val - mean) * (val - mean)) / (2.0 * std * std)))
             return p
 
-        else:
-            return super(Cobweb3Node, self).probability(attr, val)
+        if attr in self.av_counts and val in self.av_counts[attr]:
+            return self.av_counts[attr][val] / self.count
+
+        return 0.0
 
     def is_exact_match(self, instance):
         """
@@ -510,10 +555,17 @@ class Cobweb3Node(CobwebNode):
             if attr in self.av_counts and attr not in instance:
                 return False
             if attr in self.av_counts and attr in instance:
-                if isinstance(self.av_counts[attr], ContinuousValue):
-                    if (not self.av_counts[attr].unbiased_std() == 0.0):
+                if (isNumber(instance[attr]) and 
+                    continuous_value not in self.av_counts[attr]):
+                    return False
+                if (isNumber(instance[attr]) and continuous_value in
+                    self.av_counts[attr]):
+                    if (len(self.av_counts[attr]) != 1 or 
+                        self.av_counts[attr][continuous_value].num != self.count):
                         return False
-                    if (not self.av_counts[attr].unbiased_mean() ==
+                    if (not self.av_counts[attr][continuous_value].unbiased_std() == 0.0):
+                        return False
+                    if (not self.av_counts[attr][continuous_value].unbiased_mean() ==
                         instance[attr]):
                         return False
                 elif not instance[attr] in self.av_counts[attr]:
@@ -544,14 +596,8 @@ class Cobweb3Node(CobwebNode):
 
         temp = {}
         for attr in self.av_counts:
-            if isinstance(self.av_counts[attr], ContinuousValue):
-                temp[str(attr)] = {str(self.av_counts[attr]):self.av_counts[attr].num}
-                #temp[str(attr) + " = " + str(self.av_counts[attr])] = self.av_counts[attr].num
-            else:
-                temp[str(attr)] = {str(value):self.av_counts[attr][value] for value in self.av_counts[attr]}
-                #for value in self.av_counts[attr]:
-                #    temp[str(attr) + " = " + str(value)] = self.av_counts[attr][value]
-
+                temp[str(attr)] = {str(value):self.av_counts[attr][value] for
+                                   value in self.av_counts[attr]}
 
         for child in self.children:
                output["children"].append(child.output_json())
