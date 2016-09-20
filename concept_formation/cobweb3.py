@@ -99,10 +99,6 @@ class Cobweb3Tree(CobwebTree):
                     self.attr_scales[inner_attr] = ContinuousValue()
                 self.attr_scales[inner_attr].update(instance[attr])
 
-        print("attr scales:")
-        from pprint import pprint
-        pprint(self.attr_scales)
-
     def cobweb(self, instance):
         """
         A modification of the cobweb function to update the scales object
@@ -336,9 +332,9 @@ class Cobweb3Node(CobwebNode):
                 # we basically add noise to the std and adjust the normalizing
                 # constant to ensure the probability of a particular value
                 # never exceeds 1.
-                std = min(sqrt(self.av_counts[attr].scaled_unbiased_std(scale) *
+                std = sqrt(self.av_counts[attr].scaled_unbiased_std(scale) *
                            self.av_counts[attr].scaled_unbiased_std(scale) +
-                           (1 / (4 * pi))), 1.0)
+                           (1 / (4 * pi)))
                 prob_attr = self.av_counts[attr].num / self.count
                 correct_guesses += ((prob_attr * prob_attr) * 
                                     (1/(2 * sqrt(pi) * std)))
