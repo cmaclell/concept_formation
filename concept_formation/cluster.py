@@ -239,8 +239,10 @@ def CU(cluster,leaves):
     :rtype: float
     """
     temp_root = cluster[0].__class__()
+    temp_root.tree = cluster[0].tree
     for c in set(cluster): 
         temp_child = cluster[0].__class__()
+        temp_child.tree = c.tree
         for l in leaves:
             if c.is_parent(l):
                 temp_child.update_counts_from_node(l)
@@ -423,7 +425,7 @@ def cluster_split_search(tree, instances, heuristic=CU, minsplit=1, maxsplit=1, 
     .. seealso:: :meth:`cluster_iter`
     """
     clus_it = cluster_iter(tree,instances,heuristic=heuristic,minsplit=minsplit,maxsplit=maxsplit,mod=mod,labels=False)
-    min_h = (-1,float('inf'),[])
+    min_h = (-1,float('inf'),["Concept"+tree.root.concept_id for i in range(len(instances))])
     split = minsplit
     if verbose:
         print('S\tC\tH')
@@ -485,7 +487,7 @@ def cluster_iter(tree, instances, heuristic=CU, minsplit=1, maxsplit=100000,  mo
 
         split_cus = sorted(split_cus)
 
-        # Exit early, we don't need to re-reun the following part for the
+        # Exit early, we don't need to re-run the following part for the
         # last time through
         if not split_cus:
             break
