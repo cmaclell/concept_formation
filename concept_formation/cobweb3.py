@@ -13,6 +13,7 @@ from random import random
 from math import sqrt
 from math import pi
 from math import exp
+from math import log
 
 from concept_formation.cobweb import CobwebNode
 from concept_formation.cobweb import CobwebTree
@@ -493,6 +494,34 @@ class Cobweb3Node(CobwebNode):
         else:
             return super(Cobweb3Node, self).probability(attr, val)
 
+    def log_likelihood(self, other):
+        """
+        Returns the log-likelihood of the concept.
+        """
+
+        ll = 0
+        for attr in self.tree.root.av_counts:
+            if attr[0] == '_':
+                continue
+            elif isinstance(self.tree.root.av_counts[attr], ContinuousValue):
+                if attr in self.av_counts and attr in other.av_counts:
+                    p = self.probability(attr, other.av_counts[attr].unbiased_mean()) * other.probability(attr, other.av_counts[attr].unbiased_mean())
+                    if p > 0:
+                        ll += log(p)
+                p = self.probability(attr,None) * other.probability(attr,None)
+                if p > 0:
+                    ll += log(p)
+            else:
+                for val in list(self.tree.root.av_counts[attr]) + [None]:
+                    op = other.probability(attr, val)
+                    if op > 0:
+                        p = self.probability(attr,val) * op
+                        if p > 0:
+                            ll += log(p)
+                        else:
+                            raise Exception("p must be greater than 0")
+        return ll
+
     def is_exact_match(self, instance):
         """
         Returns true if the concept exactly matches the instance.
@@ -559,3 +588,4 @@ class Cobweb3Node(CobwebNode):
         output["counts"] = temp
 
         return output
+

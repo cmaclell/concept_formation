@@ -9,6 +9,7 @@ from __future__ import absolute_import
 from __future__ import division
 from random import shuffle
 from random import random
+from math import log
 
 from concept_formation.utils import weighted_choice
 from concept_formation.utils import most_likely_choice
@@ -1022,3 +1023,24 @@ class CobwebNode(object):
             return self.av_counts[attr][val] / self.count
 
         return 0.0
+
+    def log_likelihood(self, other):
+        """
+        Returns the log-likelihood of the concept.
+        """
+
+        ll = 0
+
+        for attr in self.tree.root.av_counts:
+            if attr[0] == '_':
+                continue
+            for val in list(self.tree.root.av_counts[attr]) + [None]:
+                op = other.probability(attr, val)
+                if op > 0:
+                    p = self.probability(attr,val) * op
+                    if p >= 0:
+                        ll += log(p)
+                    else:
+                        raise Exception("Should always be greater than 0")
+                        
+        return ll

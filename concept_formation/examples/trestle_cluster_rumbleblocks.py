@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 from __future__ import absolute_import
 from __future__ import division
 from random import shuffle
+from random import seed
 
 from sklearn.metrics import adjusted_rand_score
 import matplotlib.pyplot as plt
@@ -12,9 +13,11 @@ from concept_formation.cluster import cluster
 from concept_formation.datasets import load_rb_wb_03
 from concept_formation.preprocessor import ObjectVariablizer
 
+seed(0)
+
 towers = load_rb_wb_03()
 shuffle(towers)
-towers = towers[:30]
+towers = towers[:60]
 
 variablizer = ObjectVariablizer()
 towers = [variablizer.transform(t) for t in towers]
