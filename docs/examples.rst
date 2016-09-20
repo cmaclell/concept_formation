@@ -26,5 +26,6 @@ Trestle:
 .. toctree::
 
     examples/trestle_cluster_rumbleblocks.rst
+    examples/trestle_cluster_split_search.rst
     examples/trestle_predict_rumbleblocks.rst
 
