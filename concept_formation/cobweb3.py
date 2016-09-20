@@ -10,7 +10,6 @@ from __future__ import absolute_import
 from __future__ import division
 from random import normalvariate
 from random import random
-from numbers import Number
 from math import sqrt
 from math import pi
 from math import exp
@@ -18,6 +17,7 @@ from math import exp
 from concept_formation.cobweb import CobwebNode
 from concept_formation.cobweb import CobwebTree
 from concept_formation.continuous_value import ContinuousValue
+from concept_formation.utils import isNumber
 
 class Cobweb3Tree(CobwebTree):
     """
@@ -44,15 +44,23 @@ class Cobweb3Tree(CobwebTree):
         deviation), which is the max std of nominal values. If disabiling
         scaling is desirable, then it can be set to False or None.
     :type scaling: a float greater than 0.0, None, or False
+    :param inner_attr_scaling: Whether to use the inner most attribute name
+        when scaling numeric attributes. For example, if `('attr', '?o1')` was
+        an attribute, then the inner most attribute would be 'attr'. When using
+        inner most attributes, some objects might have multiple attributes
+        (i.e., 'attr' for different objects) that contribute to the scaling. 
+    :param inner_attr_scaling: boolean
     """
 
-    def __init__(self, scaling=0.5):
+    def __init__(self, scaling=0.5, inner_attr_scaling=True):
         """
         The tree constructor.
         """
         self.root = Cobweb3Node()
         self.root.tree = self
         self.scaling = scaling
+        self.inner_attr_scaling = inner_attr_scaling 
+        self.attr_scales = {}
 
     def clear(self):
         """
@@ -60,6 +68,62 @@ class Cobweb3Tree(CobwebTree):
         """
         self.root = Cobweb3Node()
         self.root.tree = self
+        self.attr_scales = {}
+
+    def get_inner_attr(self, attr):
+        """
+        Extracts the inner most attribute name from the provided attribute, if
+        the attribute is a tuple and inner_attr_scaling is on. Otherwise it
+        just returns the attribute. This is used to for normalizing attributes. 
+
+        >>> t = Cobweb3Tree()
+        >>> t.get_inner_attr(('a', '?object1'))
+        'a'
+        >>> t.get_inner_attr('a')
+        'a'
+        """
+        if isinstance(attr, tuple) and self.inner_attr_scaling:
+            return attr[0]
+        else:
+            return attr
+
+    def update_scales(self, instance):
+        """
+        Reads through all the attributes in an instance and updates the
+        tree scales object so that the attributes can be properly scaled.
+        """
+        for attr in instance:
+            if isNumber(instance[attr]):
+                inner_attr = self.get_inner_attr(attr)
+                if inner_attr not in self.attr_scales:
+                    self.attr_scales[inner_attr] = ContinuousValue()
+                self.attr_scales[inner_attr].update(instance[attr])
+
+    def cobweb(self, instance):
+        """
+        A modification of the cobweb function to update the scales object
+        first, so that attribute values can be properly scaled. 
+        """
+        self.update_scales(instance)
+        return super(Cobweb3Tree, self).cobweb(instance)
+
+    def ifit(self, instance):
+        """
+        Incrementally fit a new instance into the tree and return its resulting
+        concept.
+
+        The cobweb3 version of the :meth:`CobwebTree.ifit` function. This
+        version keeps track of all of the continuous 
+
+        :param instance: An instance to be categorized into the tree.
+        :type instance:  :ref:`Instance<instance-rep>`
+        :return: A concept describing the instance
+        :rtype: Cobweb3Node
+
+        .. seealso:: :meth:`CobwebTree.cobweb`
+        """
+        self._sanity_check_instance(instance) 
+        return self.cobweb(instance)
 
 class Cobweb3Node(CobwebNode):
     """
@@ -100,7 +164,7 @@ class Cobweb3Node(CobwebNode):
         self.count += 1 
             
         for attr in instance:
-            if not isinstance(instance[attr], bool) and isinstance(instance[attr], Number):
+            if isNumber(instance[attr]):
                 if attr not in self.av_counts:
                     self.av_counts[attr] = ContinuousValue()
                 elif not isinstance(self.av_counts[attr], ContinuousValue):
@@ -168,7 +232,9 @@ class Cobweb3Node(CobwebNode):
             return 0.0
         elif isinstance(self.av_counts[attr], ContinuousValue):
             if self.tree.scaling:
-                scale = (1/self.tree.scaling) * self.tree.root.av_counts[attr].unbiased_std()
+                inner_attr = self.tree.get_inner_attr(attr)
+                scale = ((1/self.tree.scaling) *
+                         self.tree.attr_scales[inner_attr].unbiased_std())
             else:
                 scale = 1.0
 
@@ -257,8 +323,9 @@ class Cobweb3Node(CobwebNode):
                 
             elif isinstance(self.tree.root.av_counts[attr], ContinuousValue):
                 if self.tree.scaling:
-                    scale = ((1.0 / self.tree.scaling) * 
-                             self.tree.root.av_counts[attr].unbiased_std())
+                    inner_attr = self.tree.get_inner_attr(attr)
+                    scale = ((1/self.tree.scaling) *
+                             self.tree.attr_scales[inner_attr].unbiased_std())
                 else:
                     scale = 1.0
 
@@ -402,7 +469,10 @@ class Cobweb3Node(CobwebNode):
                 return 1.0 - prob_attr
 
             if self.tree.scaling:
-                scale = (1/self.tree.scaling) * self.tree.root.av_counts[attr].unbiased_std()
+                inner_attr = self.tree.get_inner_attr(attr)
+                scale = ((1/self.tree.scaling) *
+                         self.tree.attr_scales[inner_attr].unbiased_std())
+
                 if scale == 0:
                     scale = 1
                 shift = self.tree.root.av_counts[attr].mean

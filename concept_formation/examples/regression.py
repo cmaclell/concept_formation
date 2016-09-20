@@ -63,6 +63,6 @@ plt.plot(T, cby, c='g', label='Cobweb')
 plt.plot(T, cb3y, c='b', label='Cobweb3')
 plt.axis('tight')
 plt.legend(loc=3)
-plt.title("TrestleRegressor")
+plt.title("COBWEB and COBWEB3 Regressors")
 
 plt.show()

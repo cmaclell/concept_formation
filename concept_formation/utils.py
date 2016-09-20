@@ -6,6 +6,7 @@ from __future__ import print_function
 from __future__ import unicode_literals
 from __future__ import absolute_import
 from __future__ import division
+from numbers import Number
 from random import uniform
 from random import random
 from math import sqrt
@@ -55,6 +56,13 @@ def c4(n) :
         raise ValueError("Cannot apply correction for a sample size of 1.")
     else :
         return c4n_table[n] if n < 30 else 1.0
+
+def isNumber(n):
+    """
+    Check if a value is a number that should be handled differently
+    than nominals. 
+    """
+    return (not isinstance(n, bool) and isinstance(n, Number))
 
 def mean(values):
     """
