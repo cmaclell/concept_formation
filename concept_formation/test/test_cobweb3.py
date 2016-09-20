@@ -5,6 +5,7 @@ import random
 from numbers import Number
 
 from concept_formation.cobweb3 import ContinuousValue
+from concept_formation.cobweb3 import continuous_value
 from concept_formation.cobweb3 import Cobweb3Tree
 
 def verify_counts(node):
@@ -19,27 +20,29 @@ def verify_counts(node):
     temp = {}
     temp_count = node.count
     for attr in node.av_counts:
-        if isinstance(node.av_counts[attr], ContinuousValue):
-            temp[attr] = node.av_counts[attr].num
-        else:
-            if attr not in temp:
-                temp[attr] = {}
-            for val in node.av_counts[attr]:
+        if attr not in temp:
+            temp[attr] = {}
+        for val in node.av_counts[attr]:
+            if val == continuous_value:
+                temp[attr][val] = node.av_counts[attr][val].num
+            else:
                 temp[attr][val] = node.av_counts[attr][val]
 
     for child in node.children:
         temp_count -= child.count
         for attr in child.av_counts:
             assert attr in temp
-            if isinstance(child.av_counts[attr], ContinuousValue):
-                temp[attr] -= child.av_counts[attr].num
-            else:
-                for val in child.av_counts[attr]:
-                    if val not in temp[attr]:
-                        print(val.concept_name)
-                        print(attr)
-                        print(node)
-                    assert val in temp[attr]
+
+            for val in child.av_counts[attr]:
+                if val not in temp[attr]:
+                    print(val.concept_name)
+                    print(attr)
+                    print(node)
+                assert val in temp[attr]
+
+                if val == continuous_value:
+                    temp[attr][val] -= child.av_counts[attr][val].num
+                else:
                     temp[attr][val] -= child.av_counts[attr][val]
 
     assert temp_count == 0
