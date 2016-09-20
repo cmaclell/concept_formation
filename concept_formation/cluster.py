@@ -10,7 +10,7 @@ from __future__ import division
 import copy
 from math import log
 
-from concept_formation.continuous_value import ContinuousValue
+from concept_formation.cobweb3 import cv_key
 
 def cluster(tree, instances, minsplit=1, maxsplit=1, mod=True):
     """
@@ -36,7 +36,7 @@ def cluster(tree, instances, minsplit=1, maxsplit=1, mod=True):
     .. seealso:: :meth:`cluster_iter`
     
     """
-    return [c for c in cluster_iter(tree,instances,minsplit,maxsplit,mod)]
+    return [c[0] for c in cluster_iter(tree,instances,heuristic=CU,minsplit=minsplit,maxsplit=maxsplit,mod=mod,labels=True)]
 
 def k_cluster(tree,instances,k=3,mod=True):
     """
@@ -213,11 +213,11 @@ def AICc(clusters, leaves):
         for attr in conc.tree.root.av_counts:
             if attr[0] == '_':
                 continue
-            if isinstance(conc.tree.root.av_counts[attr],ContinuousValue):
-                k += 3
-                # r += 3
-            else:
-                k += len(conc.tree.root.av_counts[attr])
+            for val in conc.tree.root.av_counts[attr]:
+                if val == cv_key:
+                    k += 2
+                else:
+                    k += 1
     if n <= k - 1:
         return float('inf')
     else:
@@ -262,11 +262,11 @@ def AIC(clusters, leaves):
         for attr in conc.tree.root.av_counts:
             if attr[0] == '_':
                 continue
-            if isinstance(conc.tree.root.av_counts[attr],ContinuousValue):
-                k += 3
-                # r += 3
-            else:
-                k += len(conc.tree.root.av_counts[attr])
+            for val in conc.tree.root.av_counts[attr]:
+                if val == cv_key:
+                    k += 2
+                else:
+                    k += 1
     return 2 * k - 2 * ll
 
 def BIC(clusters, leaves):
@@ -310,10 +310,11 @@ def BIC(clusters, leaves):
         for attr in conc.tree.root.av_counts:
             if attr[0] == '_':
                 continue
-            if isinstance(conc.tree.root.av_counts[attr],ContinuousValue):
-                k += 3
-            else:
-                k += len(conc.tree.root.av_counts[attr])
+            for val in conc.tree.root.av_counts[attr]:
+                if val == cv_key:
+                    k += 2
+                else:
+                    k += 1
     return -2 * ll + k * log(n)
 
 def cluster_split_search(tree, instances, heuristic=CU, minsplit=1, maxsplit=1, mod=True,labels=True,verbose=False):

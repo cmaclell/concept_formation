@@ -22,7 +22,7 @@ from concept_formation.utils import isNumber
 from concept_formation.utils import weighted_choice
 from concept_formation.utils import most_likely_choice
 
-continuous_value = "#ContinuousValue#"
+cv_key = "#ContinuousValue#"
 
 class Cobweb3Tree(CobwebTree):
     """
@@ -172,9 +172,9 @@ class Cobweb3Node(CobwebNode):
             self.av_counts[attr] = self.av_counts.setdefault(attr,{})
 
             if isNumber(instance[attr]):
-                if continuous_value not in self.av_counts[attr]:
-                    self.av_counts[attr][continuous_value] = ContinuousValue()
-                self.av_counts[attr][continuous_value].update(instance[attr])
+                if cv_key not in self.av_counts[attr]:
+                    self.av_counts[attr][cv_key] = ContinuousValue()
+                self.av_counts[attr][cv_key].update(instance[attr])
             else:
                 prior_count = self.av_counts[attr].get(instance[attr], 0)
                 self.av_counts[attr][instance[attr]] = prior_count + 1
@@ -197,7 +197,7 @@ class Cobweb3Node(CobwebNode):
         for attr in node.av_counts:
             self.av_counts[attr] = self.av_counts.setdefault(attr, {})
             for val in node.av_counts[attr]:
-                if val == continuous_value:
+                if val == cv_key:
                     self.av_counts[attr][val] = self.av_counts[attr].get(val, ContinuousValue())
                     self.av_counts[attr][val].combine(node.av_counts[attr][val])
                 else:
@@ -229,7 +229,7 @@ class Cobweb3Node(CobwebNode):
             return 0.0
 
         if ((isNumber(val) or isinstance(val, ContinuousValue)) and
-            continuous_value not in self.av_counts[attr]):
+            cv_key not in self.av_counts[attr]):
             return 0.0
 
         if isNumber(val) or isinstance(val, ContinuousValue):
@@ -240,7 +240,7 @@ class Cobweb3Node(CobwebNode):
             else:
                 scale = 1.0
 
-            value = self.av_counts[attr][continuous_value]
+            value = self.av_counts[attr][cv_key]
 
             before_std = sqrt(value.scaled_unbiased_std(scale) *
                               value.scaled_unbiased_std(scale) +
@@ -329,7 +329,7 @@ class Cobweb3Node(CobwebNode):
             else:
                 val_count = 0
                 for val in self.av_counts[attr]:
-                    if val == continuous_value:
+                    if val == cv_key:
                         if self.tree.scaling:
                             inner_attr = self.tree.get_inner_attr(attr)
                             scale = ((1/self.tree.scaling) *
@@ -340,7 +340,7 @@ class Cobweb3Node(CobwebNode):
                         # we basically add noise to the std and adjust the normalizing
                         # constant to ensure the probability of a particular value
                         # never exceeds 1.
-                        cv = self.av_counts[attr][continuous_value]
+                        cv = self.av_counts[attr][cv_key]
                         std = sqrt(cv.scaled_unbiased_std(scale) *
                                    cv.scaled_unbiased_std(scale) +
                                    (1 / (4 * pi)))
@@ -420,7 +420,7 @@ class Cobweb3Node(CobwebNode):
         for val in self.tree.root.av_counts[attr]:
             count = 0
             if attr in self.av_counts and val in self.av_counts[attr]:
-                if val == continuous_value:
+                if val == cv_key:
                     count = self.av_counts[attr][val].num
                 else:
                     count = self.av_counts[attr][val]
@@ -438,7 +438,7 @@ class Cobweb3Node(CobwebNode):
         If the attribute is a nominal then this function behaves the same as
         :meth:`CobwebNode.predict <concept_formation.cobweb.CobwebNode.predict>`.
         If the attribute is numeric then the mean value from the
-        :class:`ContinuousValue<concept_formation.continuous_value.ContinuousValue>` is chosen.
+        :class:`ContinuousValue<concept_formation.cv_key.ContinuousValue>` is chosen.
 
         :param attr: an attribute of an instance.
         :type attr: :ref:`Attribute<attributes>`
@@ -465,7 +465,7 @@ class Cobweb3Node(CobwebNode):
         choices = self.get_weighted_values(attr, allow_none)
         val = choose(choices)
 
-        if val == continuous_value:
+        if val == cv_key:
             if choice_fn == "most likely" or choice_fn == "m":
                 val = self.av_counts[attr][val].mean
             elif choice_fn == "sampled" or choice_fn == "s":
@@ -502,16 +502,16 @@ class Cobweb3Node(CobwebNode):
         if val is None:
             c = 0.0
             if attr in self.av_counts:
-                c = sum([self.av_counts[attr][v].num if v == continuous_value
+                c = sum([self.av_counts[attr][v].num if v == cv_key
                          else self.av_counts[attr][v] for v in
                          self.av_counts[attr]])
             return (self.count - c) / self.count
 
         if isNumber(val):
-            if continuous_value not in self.av_counts[attr]:
+            if cv_key not in self.av_counts[attr]:
                 return 0.0
 
-            prob_attr = self.av_counts[attr][continuous_value].num / self.count
+            prob_attr = self.av_counts[attr][cv_key].num / self.count
             if self.tree.scaling:
                 inner_attr = self.tree.get_inner_attr(attr)
                 scale = ((1/self.tree.scaling) *
@@ -525,9 +525,9 @@ class Cobweb3Node(CobwebNode):
                 scale = 1.0
                 shift = 0.0
 
-            mean = (self.av_counts[attr][continuous_value].mean - shift) / scale
-            std = sqrt(self.av_counts[attr][continuous_value].scaled_unbiased_std(scale) *
-                       self.av_counts[attr][continuous_value].scaled_unbiased_std(scale) + 
+            mean = (self.av_counts[attr][cv_key].mean - shift) / scale
+            std = sqrt(self.av_counts[attr][cv_key].scaled_unbiased_std(scale) *
+                       self.av_counts[attr][cv_key].scaled_unbiased_std(scale) + 
                        (1 / (4 * pi)))
             p = (prob_attr * 
                  (1/(sqrt(2*pi) * std)) * 
@@ -548,16 +548,16 @@ class Cobweb3Node(CobwebNode):
         for attr in self.tree.root.av_counts:
             if attr[0] == '_':
                 continue
-            elif isinstance(self.tree.root.av_counts[attr], ContinuousValue):
-                if attr in self.av_counts and attr in other.av_counts:
-                    p = self.probability(attr, other.av_counts[attr].unbiased_mean()) * other.probability(attr, other.av_counts[attr].unbiased_mean())
-                    if p > 0:
-                        ll += log(p)
-                p = self.probability(attr,None) * other.probability(attr,None)
-                if p > 0:
-                    ll += log(p)
-            else:
-                for val in list(self.tree.root.av_counts[attr]) + [None]:
+
+            for val in list(self.tree.root.av_counts[attr]) + [None]:
+                if val == cv_key:
+                    if (attr in self.av_counts and cv_key in self.av_counts[attr] and 
+                        attr in other.av_counts and cv_key in other.av_counts[attr]):
+                        p = (self.probability(attr, other.av_counts[attr][cv_key].unbiased_mean()) * 
+                             other.probability(attr, other.av_counts[attr][cv_key].unbiased_mean()))
+                        if p > 0:
+                            ll += log(p)
+                else:
                     op = other.probability(attr, val)
                     if op > 0:
                         p = self.probability(attr,val) * op
@@ -585,16 +585,16 @@ class Cobweb3Node(CobwebNode):
                 return False
             if attr in self.av_counts and attr in instance:
                 if (isNumber(instance[attr]) and 
-                    continuous_value not in self.av_counts[attr]):
+                    cv_key not in self.av_counts[attr]):
                     return False
-                if (isNumber(instance[attr]) and continuous_value in
+                if (isNumber(instance[attr]) and cv_key in
                     self.av_counts[attr]):
                     if (len(self.av_counts[attr]) != 1 or 
-                        self.av_counts[attr][continuous_value].num != self.count):
+                        self.av_counts[attr][cv_key].num != self.count):
                         return False
-                    if (not self.av_counts[attr][continuous_value].unbiased_std() == 0.0):
+                    if (not self.av_counts[attr][cv_key].unbiased_std() == 0.0):
                         return False
-                    if (not self.av_counts[attr][continuous_value].unbiased_mean() ==
+                    if (not self.av_counts[attr][cv_key].unbiased_mean() ==
                         instance[attr]):
                         return False
                 elif not instance[attr] in self.av_counts[attr]:

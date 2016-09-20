@@ -13,7 +13,7 @@ import matplotlib.patches as mpatches
 from matplotlib.patches import Ellipse
 
 from concept_formation.cobweb3 import Cobweb3Tree
-from concept_formation.cobweb3 import continuous_value as cv
+from concept_formation.cobweb3 import cv_key as cv
 
 seed(0)
 

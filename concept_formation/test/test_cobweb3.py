@@ -5,7 +5,7 @@ import random
 from numbers import Number
 
 from concept_formation.cobweb3 import ContinuousValue
-from concept_formation.cobweb3 import continuous_value
+from concept_formation.cobweb3 import cv_key
 from concept_formation.cobweb3 import Cobweb3Tree
 
 def verify_counts(node):
@@ -23,7 +23,7 @@ def verify_counts(node):
         if attr not in temp:
             temp[attr] = {}
         for val in node.av_counts[attr]:
-            if val == continuous_value:
+            if val == cv_key:
                 temp[attr][val] = node.av_counts[attr][val].num
             else:
                 temp[attr][val] = node.av_counts[attr][val]
@@ -40,7 +40,7 @@ def verify_counts(node):
                     print(node)
                 assert val in temp[attr]
 
-                if val == continuous_value:
+                if val == cv_key:
                     temp[attr][val] -= child.av_counts[attr][val].num
                 else:
                     temp[attr][val] -= child.av_counts[attr][val]
