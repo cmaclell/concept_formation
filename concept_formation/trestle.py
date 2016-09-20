@@ -9,7 +9,6 @@ from __future__ import absolute_import
 from __future__ import division
 
 from concept_formation.cobweb3 import Cobweb3Tree
-from concept_formation.cobweb3 import Cobweb3Node
 from concept_formation.structure_mapper import StructureMapper
 from concept_formation.preprocessor import SubComponentProcessor
 from concept_formation.preprocessor import Flattener
@@ -37,16 +36,27 @@ class TrestleTree(Cobweb3Tree):
         deviation), which is the max std of nominal values. If disabiling
         scaling is desirable, then it can be set to False or None.
     :type scaling: a float greater than 0.0, None, or False
+    :param inner_attr_scaling: Whether to use the inner most attribute name
+        when scaling numeric attributes. For example, if `('attr', '?o1')` was
+        an attribute, then the inner most attribute would be 'attr'. When using
+        inner most attributes, some objects might have multiple attributes
+        (i.e., 'attr' for different objects) that contribute to the scaling. 
+    :param inner_attr_scaling: boolean
     """
 
-    def __init__(self, scaling=0.5):
+    def __init__(self, scaling=0.5, inner_attr_scaling=True):
         """
         The tree constructor. 
         """
-        self.root = Cobweb3Node()
-        self.root.tree = self
-        self.scaling = scaling
         self.gensym_counter = 0
+        super(TrestleTree, self).__init__(scaling, inner_attr_scaling)
+
+    def clear(self):
+        """
+        Clear the tree but keep initialization parameters
+        """
+        self.gensym_counter = 0
+        super(TrestleTree, self).clear()
 
     def gensym(self):
         """
@@ -57,14 +67,6 @@ class TrestleTree(Cobweb3Tree):
         """
         self.gensym_counter += 1
         return '?o' + str(self.gensym_counter)
-
-    def clear(self):
-        """
-        Clears the concepts stored in the tree, but maintains the alpha and
-        scaling parameters.
-        """
-        self.root = Cobweb3Node()
-        self.root.tree = self
 
     def _sanity_check_instance(self,instance):
         """
