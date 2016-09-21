@@ -9,7 +9,6 @@ from __future__ import unicode_literals
 from __future__ import absolute_import
 from __future__ import division
 from random import normalvariate
-from random import random
 from math import sqrt
 from math import pi
 from math import exp
@@ -318,10 +317,13 @@ class Cobweb3Node(CobwebNode):
         :rtype: float
         """
         correct_guesses = 0.0
+        attr_count = 0
 
         for attr in self.tree.root.av_counts:
             if attr[0] == "_":
                 continue
+
+            attr_count += 1
 
             if attr not in self.av_counts:
                 val_count = 0
@@ -357,7 +359,7 @@ class Cobweb3Node(CobwebNode):
             prob = (self.count - val_count) / self.count
             correct_guesses += (prob * prob)
 
-        return correct_guesses / len(self.tree.root.av_counts)
+        return correct_guesses / attr_count
 
     def pretty_print(self, depth=0):
         """
