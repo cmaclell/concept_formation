@@ -296,9 +296,9 @@ class CobwebNode(object):
         self.tree = None
 
         if otherNode:
-            self.update_counts_from_node(otherNode)
-            self.parent = otherNode.parent
             self.tree = otherNode.tree
+            self.parent = otherNode.parent
+            self.update_counts_from_node(otherNode)
 
             for child in otherNode.children:
                 self.children.append(self.__class__(child))
