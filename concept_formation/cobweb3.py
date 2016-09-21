@@ -337,9 +337,9 @@ class Cobweb3Node(CobwebNode):
                         else:
                             scale = 1.0
 
-                        # we basically add noise to the std and adjust the normalizing
-                        # constant to ensure the probability of a particular value
-                        # never exceeds 1.
+                        # we basically add noise to the std and adjust the
+                        # normalizing constant to ensure the probability of a
+                        # particular value never exceeds 1.
                         cv = self.av_counts[attr][cv_key]
                         std = sqrt(cv.scaled_unbiased_std(scale) *
                                    cv.scaled_unbiased_std(scale) +
@@ -357,7 +357,7 @@ class Cobweb3Node(CobwebNode):
             prob = (self.count - val_count) / self.count
             correct_guesses += (prob * prob)
 
-        return correct_guesses
+        return correct_guesses / len(self.tree.root.av_counts)
 
     def pretty_print(self, depth=0):
         """
