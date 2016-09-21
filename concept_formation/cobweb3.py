@@ -556,7 +556,7 @@ class Cobweb3Node(CobwebNode):
                         if p > 0:
                             ll += log(p)
                         else:
-                            raise Exception("p should be greater than 0 right?")
+                            raise Exception("p should be greater than 0")
                 else:
                     op = other.probability(attr, val)
                     if op > 0:
