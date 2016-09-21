@@ -20,6 +20,7 @@ from heapq import heappush
 from heapq import heappop
 
 from munkres import Munkres
+#from scipy.optimize import linear_sum_assignment
 
 from py_search.base import Problem
 from py_search.base import Node
@@ -28,11 +29,10 @@ from concept_formation.preprocessor import NameStandardizer
 from concept_formation.preprocessor import Preprocessor
 from concept_formation.preprocessor import rename_relation
 from concept_formation.preprocessor import get_attribute_components
-from concept_formation.continuous_value import ContinuousValue
 
 def get_component_names(instance, vars_only=True):
     """
-    Given  an instance or a concept's probability table return a list of all of
+    Given an instance or a concept's probability table return a list of all of
     the component names. If vars_only is false, than all constants and
     variables are returned. 
 
@@ -163,36 +163,17 @@ def contains_component(component, attr):
     
     return False
 
-def build_index(onames, instance):
-    """
-    Given a set of object names and an instance (or av_count table), builds a
-    an index (a dict) that has object names as key and a list of all relations
-    that refer to that object as a value.
-
-    :param onames: A set of objects in the instance.
-    :type onames: an iterable
-    :param instance: an instance or dictionary of attributes
-    :type instance: :ref:`Instance<instance-rep>`
-    """
-    index = {}
-    for o in onames:
-        index[o] = []
-    for attr in instance:
-        for o in get_attribute_components(attr):
-            index[o].append(attr)
-    return index
-
 def flat_match(target, base):
     """
-    Given a concept and instance this function returns a mapping that can be
-    used to rename components in the instance. Search is used to find a mapping
-    that maximizes the expected number of correct guesses in the concept after
-    incorporating the instance. 
+    Given a base (usually concept) and target (instance or concept av table)
+    this function returns a mapping that can be used to rename components in
+    the target. Search is used to find a mapping that maximizes the expected
+    number of correct guesses in the concept after incorporating the instance. 
 
-    The current approach is to generate a solution via Munkres / Hungarian
-    matching on object-to-object assignment (no relations). Then this
+    The current approach is to generate an initial solution via Munkres /
+    Hungarian matching on object-to-object assignment (no relations). Then this
     assignment is refined by using a hill climbing search to account for the
-    relations.
+    relations. 
 
     :param target: An instance or concept.av_counts object to be mapped to the
         base concept.
@@ -208,69 +189,35 @@ def flat_match(target, base):
     if(len(inames) == 0 or len(cnames) == 0):
         return {}
 
-    index = build_index(inames, target)
-    initial_mapping = hungarian_mapping(inames, cnames, index, target, base)
+    initial_mapping = hungarian_mapping(inames, cnames, target, base)
     unmapped = cnames - frozenset(dict(initial_mapping).values())
-    initial_cost = mapping_cost(initial_mapping, target, base, index)
+    initial_cost = mapping_cost(initial_mapping, target, base)
     op_problem = StructureMappingOptimizationProblem((initial_mapping, unmapped),
                                                      initial_cost=initial_cost,
-                                                     extra=(target, base,
-                                                            index))
+                                                     extra=(target, base))
     solution = next(hill_climbing(op_problem))
     return dict(solution.state[0])
 
-def eval_obj_mapping(target_o, mapping, target, base, index, partial=False):
+def hungarian_mapping(inames, cnames, target, base):
     """
-    Used to compute the value of the specified object (target_o) in the current
-    mapping. Partial specifies whether partial relation matches should be
-    computed. Including these is much more expensive.
+    Utilizes the hungarian/munkres matching algorithm to compute an initial
+    mapping of inames to cnames. The base cost is the expected correct guesses
+    if each object is matched to itself (i.e., a new object). Then the cost of
+    each object-object match is evaluated by setting each individual object and
+    computing the expected correct guesses. 
 
-    :param target_o: The current object that has been modified in the mapping.
-    :type target_o: str
-    :param mapping: the current mapping
-    :type mapping: dict
-    :param target: the target of the structure mapping
-    :type target: :ref:`Instance<instance-rep>` or concept av_counts table
-    :param base: the base of the structure mapping
-    :type base: concept av_counts table
-    :param index: an index mapping objects to the relations they appear in
-    :type index: dict
-    :param partial: whether to compute partial rewards for partially met
-        relations.
-    :type partial: Boolean
-    """
-    r = 0.0
-    for attr in index[target_o]:
-        new_attrs = []
-        num_comps = len(get_attribute_components(attr))
-        if partial and num_comps > 1:
-            for cattr in base.av_counts:
-                if is_partial_match(attr, cattr, mapping):
-                    new_attrs.append(cattr)
-        else:
-            new_attrs.append(bind_flat_attr(attr, mapping))
+    :param inames: the target component names
+    :type inames: collection
+    :param cnames: the base component names
+    :type cnames: collection
+    :param target: An instance or concept.av_counts object to be mapped to the
+        base concept.
+    :type target: :ref:`Instance<instance-rep>` or av_counts obj from concept
+    :param base: A concept to map the target to
+    :type base: TrestleNode
+    :return: a mapping for renaming components in the instance.
+    :rtype: frozenset
 
-        for new_attr in new_attrs:
-            if isinstance(target[attr], dict):
-                for val in target[attr]:
-                    r += (base.attr_val_guess_gain(new_attr, val, 
-                                                  target[attr][val]) /
-                          num_comps)
-            elif isinstance(target[attr], ContinuousValue):
-                r += (base.attr_val_guess_gain(new_attr, target[attr],
-                                             target[attr].num) / num_comps)
-            else:
-                r += (base.attr_val_guess_gain(new_attr, target[attr]) /
-                      num_comps)
-
-    return r
-
-def hungarian_mapping(inames, cnames, index, target, base, partial=False):
-    """
-    Utilize the hungarian/munkres matching algorithm over the object to object
-    features (ignoring the relations) to compute the initial assignment. Then
-    utilize local search techniques to improve this matching by taking into
-    account the relations
     """
     cnames = list(cnames)
     inames = list(inames)
@@ -281,17 +228,28 @@ def hungarian_mapping(inames, cnames, index, target, base, partial=False):
         for c in cnames:
             nm = {}
             nm[o] = c
-            r = eval_obj_mapping(o, nm, target, base, index, partial=partial)
-            row.append(-r)
-        for o in inames:
-            row.append(0.0)
+            cost = mapping_cost({o:c}, target, base)
+            row.append(cost)
+        unmapped_cost = mapping_cost({}, target, base)
+        for other_o in inames:
+            if other_o == o:
+                row.append(unmapped_cost)
+            else:
+                row.append(float('inf'))
         cost_matrix.append(row)
 
     m = Munkres()
     indices = m.compute(cost_matrix)
 
+    # comments for using scipy hungarian
+    #indices = linear_sum_assignment(cost_matrix)
+
     mapping = {}
     for row,col in indices:
+    #for i in range(len(indices[0])):
+    #    row = indices[0][i]
+    #    col = indices[1][i]
+
         if col >= len(cnames):
             mapping[inames[row]] = inames[row]
         else:
@@ -299,129 +257,31 @@ def hungarian_mapping(inames, cnames, index, target, base, partial=False):
 
     return frozenset(mapping.items())
 
-def greedy_best_mapping(inames, cnames, index, target, base, partial=False):
+def mapping_cost(mapping, target, base):
     """
-    A very greedy approach to finding an initial solution for the search.
+    Used to evaluate a mapping between a target and a base. This is performed
+    by renaming the target using the mapping, adding it to the base and
+    evaluating the expected number of correct guesses in the newly updated
+    concept. 
 
-    Currently, it computes a pairwaise match between each object and instance.
-    It then iterates through the best matches and assigning legal matches and
-    skipping illegal matches. When all objects have been assigned the resulting
-    mapping is returned. 
-    """
-    mapping = {}
-    cnames = set(cnames)
-    inames = set(inames)
-    possible = []
-
-    for o in inames:
-        heappush(possible, (0.0, o, o))
-        for c in cnames:
-            nm = {}
-            nm[o] = c
-            r = eval_obj_mapping(o, nm, target, base, index, partial=partial)
-            heappush(possible, (-r, o, c))
-
-    while len(inames) > 0:
-        r, o, c = heappop(possible)
-        if o not in inames:
-            continue
-        if c not in cnames and c != o:
-            continue
-        mapping[o] = c
-        inames.remove(o)
-        if c in cnames:
-            cnames.remove(c)
-
-    return frozenset(mapping.items())
-
-def swap_two_mapping_cost(initial_cost, o1, o2, old_mapping, new_mapping, target, base, index):
-    """
-    A function for computing the cost of a successor in the optimization
-    search. This function has O(n) time where n is the number of features in
-    the object index.
-    """
-    cost = initial_cost
-
-    if isinstance(old_mapping, frozenset):
-        old_mapping = dict(old_mapping)
-    if isinstance(new_mapping, frozenset):
-        new_mapping = dict(new_mapping)
-
-    # remove current assignments
-    cost -= object_mapping_cost(o1, old_mapping, target, base, index, False)
-    temp = old_mapping[o1]
-    del old_mapping[o1]
-    cost -= object_mapping_cost(o2, old_mapping, target, base, index, False)
-    old_mapping[o1] = temp
-
-    # add new assignments
-    temp = new_mapping[o2]
-    del new_mapping[o2]
-    cost += object_mapping_cost(o1, new_mapping, target, base, index, False)
-    new_mapping[o2] = temp
-    cost += object_mapping_cost(o2, new_mapping, target, base, index, False)
-
-    return cost
-
-def swap_unnamed_mapping_cost(initial_cost, o1, old_mapping, new_mapping,
-                              target, base, index):
-    """
-    A function for computing the cost of a successor in the optimization
-    search. This function has O(n) time where n is the number of features in
-    the object index.
-    """
-    cost = initial_cost
-
-    if isinstance(old_mapping, frozenset):
-        old_mapping = dict(old_mapping)
-    if isinstance(new_mapping, frozenset):
-        new_mapping = dict(new_mapping)
-
-    # remove current assignments
-    cost -= object_mapping_cost(o1, old_mapping, target, base, index, False)
-
-    # add new assignments
-    cost += object_mapping_cost(o1, new_mapping, target, base, index, False)
-
-    return cost
-
-def object_mapping_cost(o, mapping, target, base, index, div_relations=True):
-    """
-    A function that is used to compute the cost of a particular object in a
-    mapping
-    """
-    cost = 0.0
-
-    for attr in index[o]:
-        num_objs = 1
-        if div_relations:
-            num_objs = len(get_attribute_components(attr))
-        new_attr = bind_flat_attr(attr, mapping)
-
-        if isinstance(target[attr], dict):
-            for val in target[attr]:
-                cost -= (base.attr_val_guess_gain(new_attr, val, 
-                                                  target[attr][val]) / 
-                         num_objs)
-        elif isinstance(target[attr], ContinuousValue):
-            cost -= (base.attr_val_guess_gain(new_attr, target[attr],
-                                         target[attr].num) / num_objs)
-        else:
-            cost -= (base.attr_val_guess_gain(new_attr, target[attr]) /
-                     num_objs)
-    return cost
-
-
-def mapping_cost(mapping, target, base, index):
-    """
-    An overall function for evaluating a mapping.
+    :param mapping: the mapping of target items to base items
+    :type mapping: frozenset or dict
+    :param target: the target
+    :type target: an instance or concept.av_counts
+    :param base: the base
+    :type base: a concept
     """
     if isinstance(mapping, frozenset):
         mapping = dict(mapping)
-    cost = 0
-    for o in mapping:
-        cost += object_mapping_cost(o, mapping, target, base, index)
-    return cost
+    if not isinstance(mapping, dict):
+        raise Exception("mapping must be dict or frozenset")
+    renamed_target = rename_flat(target, mapping)
+    base = base.shallow_copy()
+
+    # TODO properly handle situations where the target is a concept.
+    base.increment_counts(renamed_target)
+
+    return -base.expected_correct_guesses()
 
 class StructureMappingOptimizationProblem(Problem):
     """
@@ -440,8 +300,7 @@ class StructureMappingOptimizationProblem(Problem):
         """
         return node.cost()
 
-    def swap_two(self, o1, o2, mapping, unmapped_cnames, target, base, index,
-                       node):
+    def swap_two(self, o1, o2, mapping, unmapped_cnames, target, base, node):
         """
         returns the child node generated from swapping two mappings.
         """
@@ -458,20 +317,14 @@ class StructureMappingOptimizationProblem(Problem):
             new_mapping[o2] = mapping[o1]
 
         new_mapping = frozenset(new_mapping.items())
-        #path_cost = mapping_cost(new_mapping, target, base, index)
-        path_cost = swap_two_mapping_cost(node.cost(), o1, o2, mapping,
-                                          new_mapping, target, base, index)
-        #if abs(path_cost - swap_cost) > 0.001:
-        #    print(path_cost)
-        #    print(swap_cost)
-        #    assert False
+        path_cost = mapping_cost(new_mapping, target, base)
 
         return Node((new_mapping, unmapped_cnames), node, 
                    ('swap', (o1, mapping[o1]), (o2, mapping[o2])), path_cost,
                     node.extra)
 
-    def swap_unnamed(self, o1, o2, mapping, unmapped_cnames, target, base, index,
-                       node):
+    def swap_unnamed(self, o1, o2, mapping, unmapped_cnames, target, base, 
+                     node):
         """
         Returns the child node generated from assigning an unmapped component
         object to one of the instance objects.
@@ -483,17 +336,12 @@ class StructureMappingOptimizationProblem(Problem):
             new_unmapped_cnames.add(new_mapping[o1])
         new_mapping[o1] = o2
         new_mapping = frozenset(new_mapping.items())
-        #path_cost = mapping_cost(new_mapping, target, base, index)
-        path_cost = swap_unnamed_mapping_cost(node.cost(), o1, mapping,
-                                          new_mapping, target, base, index)
-        #if abs(path_cost - swap_cost) > 0.001:
-        #    print(path_cost)
-        #    print(swap_cost)
-        #    assert False
+        path_cost = mapping_cost(new_mapping, target, base)
 
         return Node((new_mapping,
                     frozenset(new_unmapped_cnames)), node,
-                    ('swap', (o1, mapping[o1]), ('unmapped', o2)), path_cost, node.extra)
+                    ('swap', (o1, mapping[o1]), ('unmapped', o2)), path_cost, 
+                    node.extra)
 
     def random_successor(self, node):
         """
@@ -501,7 +349,7 @@ class StructureMappingOptimizationProblem(Problem):
         successor.
         """
         mapping, unmapped_cnames = node.state
-        target, base, index = node.extra
+        target, base = node.extra
         mapping = dict(mapping)
 
         o1 = choice(list(mapping))
@@ -516,18 +364,18 @@ class StructureMappingOptimizationProblem(Problem):
                                               len(unmapped_cnames)):
             o2 = choice(possible_flips)
             return self.swap_two(o1, o2, mapping, unmapped_cnames, target,
-                                 base, index, node)
+                                 base, node)
         else:
             o2 = choice(list(unmapped_cnames)) 
             return self.swap_unnamed(o1, o2, mapping, unmapped_cnames, target,
-                                     base, index, node)
+                                     base, node)
 
     def successors(self, node):
         """
         An iterator that returns all successors.
         """
         mapping, unmapped_cnames = node.state
-        target, base, index = node.extra
+        target, base = node.extra
         mapping = dict(mapping)
 
         for o1 in mapping:
@@ -537,13 +385,13 @@ class StructureMappingOptimizationProblem(Problem):
                     continue
 
                 yield self.swap_two(o1, o2, mapping, unmapped_cnames, target,
-                                      base, index, node)
+                                      base, node)
 
 
             # flip mapped with some unused cname
             for o2 in unmapped_cnames:
                 yield self.swap_unnamed(o1, o2, mapping, unmapped_cnames,
-                                        target, base, index, node)
+                                        target, base, node)
                 
 def is_partial_match(iAttr, cAttr, mapping):
     """
@@ -606,6 +454,7 @@ class StructureMapper(Preprocessor):
     """
     def __init__(self, base, gensym):
         self.base = base
+        self.mapping = None
         self.reverse_mapping = None
         self.name_standardizer = NameStandardizer(gensym)
 
@@ -631,9 +480,9 @@ class StructureMapper(Preprocessor):
         :rtype: instance or av_counts table
         """
         target = self.name_standardizer.transform(target)
-        mapping = flat_match(target, self.base)
-        self.reverse_mapping = {mapping[o]: o for o in mapping}
-        return rename_flat(target, mapping)
+        self.mapping = flat_match(target, self.base)
+        self.reverse_mapping = {self.mapping[o]: o for o in self.mapping}
+        return rename_flat(target, self.mapping)
 
     def undo_transform(self, target):
         """
