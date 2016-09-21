@@ -20,12 +20,13 @@ class CobwebTree(object):
     cobweb algorithm and can be used to fit and categorize instances.
     """
 
-    def __init__(self):
+    def __init__(self, implicit_missing=False):
         """
         The tree constructor.
         """
         self.root = CobwebNode()
         self.root.tree = self
+        self.implicit_missing = implicit_missing
 
     def clear(self):
         """
@@ -364,23 +365,40 @@ class CobwebNode(object):
         correct_guesses = 0.0
         attr_count = 0
 
-        for attr in self.tree.root.av_counts:
+        if self.tree.implicit_missing:
+            av_table = self.tree.root.av_counts
+        else:
+            av_table = self.av_counts
+
+        for attr in av_table:
             if attr[0] == "_":
                 continue
 
             attr_count += 1
             val_count = 0
             if attr in self.av_counts:
+                #sq_counts = []
                 for val in self.av_counts[attr]:
                     val_count += self.av_counts[attr][val]
-                    prob = self.av_counts[attr][val] / self.count
-                    correct_guesses += prob * prob
+                    prob = (self.av_counts[attr][val]) / self.count
+                    correct_guesses += (prob * prob)
+                    #c = (self.av_counts[attr][val])
+                    #sq_counts.append(c*c)
 
-            #Factors in the probability mass of missing values
-            prob = (self.count - val_count) / self.count
-            correct_guesses += prob * prob
+                #for sc in sq_counts:
+                #    if self.tree.implicit_missing:
+                #        correct_guesses += sc * 1/(self.count)
+                #    else:
+                #        correct_guesses += sc * 1/(val_count * val_count)
 
-        return correct_guesses / attr_count
+            if self.tree.implicit_missing:
+                if attr in self.av_counts and None in self.av_counts[attr]:
+                    raise Exception("Don't need to include None value, assumed implicitly")
+                #Factors in the probability mass of missing values
+                prob = (self.count - val_count) / self.count
+                correct_guesses += (prob * prob)
+
+        return correct_guesses / len(av_table)
 
     def category_utility(self):
         """
