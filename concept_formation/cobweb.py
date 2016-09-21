@@ -20,13 +20,12 @@ class CobwebTree(object):
     cobweb algorithm and can be used to fit and categorize instances.
     """
 
-    def __init__(self, implicit_missing=False):
+    def __init__(self):
         """
         The tree constructor.
         """
         self.root = CobwebNode()
         self.root.tree = self
-        self.implicit_missing = implicit_missing
 
     def clear(self):
         """
@@ -235,7 +234,7 @@ class CobwebTree(object):
         temp_instance = {a:instance[a] for a in instance}
         concept = self._cobweb_categorize(temp_instance)
 
-        for attr in self.root.av_counts:
+        for attr in self.concept:
             if attr in temp_instance:
                 continue
             val = concept.predict(attr, choice_fn, allow_none)
@@ -249,7 +248,7 @@ class CobwebTree(object):
         Sort an instance in the categorization tree and return its resulting
         concept.
 
-        The instance is passed down the the categorization tree according to the
+        The instance is passed down the categorization tree according to the
         normal cobweb algorithm except using only the best operator
         and without modifying nodes' probability tables. **This process does not
         modify the tree's knowledge** for a modifying version of labeling use

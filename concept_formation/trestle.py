@@ -44,14 +44,12 @@ class TrestleTree(Cobweb3Tree):
     :param inner_attr_scaling: boolean
     """
 
-    def __init__(self, implicit_missing=True, scaling=0.5,
-                 inner_attr_scaling=True):
+    def __init__(self, scaling=0.5, inner_attr_scaling=True):
         """
         The tree constructor. 
         """
         self.gensym_counter = 0
-        super(TrestleTree, self).__init__(implicit_missing=implicit_missing,
-                                          scaling=scaling,
+        super(TrestleTree, self).__init__(scaling=scaling,
                                           inner_attr_scaling=inner_attr_scaling)
 
     def clear(self):

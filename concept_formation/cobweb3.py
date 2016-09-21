@@ -56,8 +56,7 @@ class Cobweb3Tree(CobwebTree):
     :param inner_attr_scaling: boolean
     """
 
-    def __init__(self, implicit_missing=False, scaling=0.5,
-                 inner_attr_scaling=True):
+    def __init__(self, scaling=0.5, inner_attr_scaling=True):
         """
         The tree constructor.
         """
@@ -66,7 +65,6 @@ class Cobweb3Tree(CobwebTree):
         self.scaling = scaling
         self.inner_attr_scaling = inner_attr_scaling 
         self.attr_scales = {}
-        self.implicit_missing = implicit_missing
 
     def clear(self):
         """
