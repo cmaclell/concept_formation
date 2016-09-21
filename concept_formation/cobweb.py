@@ -378,7 +378,7 @@ class CobwebNode(object):
             prob = (self.count - val_count) / self.count
             correct_guesses += (prob * prob)
 
-        return correct_guesses
+        return correct_guesses / len(self.tree.root.av_counts)
 
     def category_utility(self):
         """

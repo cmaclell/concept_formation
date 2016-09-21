@@ -4,7 +4,6 @@ import unittest
 import random
 from numbers import Number
 
-from concept_formation.cobweb3 import ContinuousValue
 from concept_formation.cobweb3 import cv_key
 from concept_formation.cobweb3 import Cobweb3Tree
 
