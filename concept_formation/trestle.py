@@ -49,7 +49,8 @@ class TrestleTree(Cobweb3Tree):
         The tree constructor. 
         """
         self.gensym_counter = 0
-        super(TrestleTree, self).__init__(scaling, inner_attr_scaling)
+        super(TrestleTree, self).__init__(scaling=scaling,
+                                          inner_attr_scaling=inner_attr_scaling)
 
     def clear(self):
         """

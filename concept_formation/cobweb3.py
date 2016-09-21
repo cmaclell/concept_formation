@@ -319,45 +319,34 @@ class Cobweb3Node(CobwebNode):
         correct_guesses = 0.0
         attr_count = 0
 
-        for attr in self.tree.root.av_counts:
+        for attr in self.av_counts:
             if attr[0] == "_":
                 continue
 
             attr_count += 1
 
-            if attr not in self.av_counts:
-                val_count = 0
-
-            else:
-                val_count = 0
-                for val in self.av_counts[attr]:
-                    if val == cv_key:
-                        if self.tree.scaling:
-                            inner_attr = self.tree.get_inner_attr(attr)
-                            scale = ((1/self.tree.scaling) *
-                                     self.tree.attr_scales[inner_attr].unbiased_std())
-                        else:
-                            scale = 1.0
-
-                        # we basically add noise to the std and adjust the
-                        # normalizing constant to ensure the probability of a
-                        # particular value never exceeds 1.
-                        cv = self.av_counts[attr][cv_key]
-                        std = sqrt(cv.scaled_unbiased_std(scale) *
-                                   cv.scaled_unbiased_std(scale) +
-                                   (1 / (4 * pi)))
-                        prob_attr = cv.num / self.count
-                        correct_guesses += ((prob_attr * prob_attr) * 
-                                            (1/(2 * sqrt(pi) * std)))
-                        val_count += cv.num
+            for val in self.av_counts[attr]:
+                if val == cv_key:
+                    if self.tree.scaling:
+                        inner_attr = self.tree.get_inner_attr(attr)
+                        scale = ((1/self.tree.scaling) *
+                                 self.tree.attr_scales[inner_attr].unbiased_std())
                     else:
-                        prob = (self.av_counts[attr][val]) / (1.0 * self.count)
-                        correct_guesses += (prob * prob)
-                        val_count += self.av_counts[attr][val]
+                        scale = 1.0
 
-            #Factors in the probability mass of missing values
-            prob = (self.count - val_count) / self.count
-            correct_guesses += (prob * prob)
+                    # we basically add noise to the std and adjust the
+                    # normalizing constant to ensure the probability of a
+                    # particular value never exceeds 1.
+                    cv = self.av_counts[attr][cv_key]
+                    std = sqrt(cv.scaled_unbiased_std(scale) *
+                               cv.scaled_unbiased_std(scale) +
+                               (1 / (4 * pi)))
+                    prob_attr = cv.num / self.count
+                    correct_guesses += ((prob_attr * prob_attr) * 
+                                        (1/(2 * sqrt(pi) * std)))
+                else:
+                    prob = (self.av_counts[attr][val]) / self.count
+                    correct_guesses += (prob * prob)
 
         return correct_guesses / attr_count
 
@@ -414,23 +403,22 @@ class Cobweb3Node(CobwebNode):
         :rtype: [(:ref:`Value<values>`, float), (:ref:`Value<values>`, float), ...]
         """
         choices = []
-        if attr not in self.tree.root.av_counts:
+        if attr not in self.av_counts:
             choices.append((None, 1.0))
             return choices
 
         val_count = 0
-        for val in self.tree.root.av_counts[attr]:
-            count = 0
-            if attr in self.av_counts and val in self.av_counts[attr]:
-                if val == cv_key:
-                    count = self.av_counts[attr][val].num
-                else:
-                    count = self.av_counts[attr][val]
+        for val in self.av_counts[attr]:
+            if val == cv_key:
+                count = self.av_counts[attr][val].num
+            else:
+                count = self.av_counts[attr][val]
             choices.append((val, count / self.count))
             val_count += count
 
         if allow_none:
             choices.append((None, ((self.count - val_count) / self.count)))
+
         return choices
 
     def predict(self, attr, choice_fn="most likely", allow_none=True):
@@ -461,7 +449,7 @@ class Cobweb3Node(CobwebNode):
         else:
             raise Exception("Unknown choice_fn")
 
-        if attr not in self.tree.root.av_counts:
+        if attr not in self.av_counts:
             return None
 
         choices = self.get_weighted_values(attr, allow_none)
@@ -547,11 +535,17 @@ class Cobweb3Node(CobwebNode):
         """
 
         ll = 0
-        for attr in self.tree.root.av_counts:
+        for attr in set(self.av_counts).union(other.av_counts):
             if attr[0] == '_':
                 continue
 
-            for val in list(self.tree.root.av_counts[attr]) + [None]:
+            vals = set()
+            if attr in self.av_counts:
+                vals.update(self.av_counts[attr])
+            if attr in other.av_counts:
+                vals.update(other.av_counts[attr])
+
+            for val in vals:
                 if val == cv_key:
                     if (attr in self.av_counts and cv_key in self.av_counts[attr] and 
                         attr in other.av_counts and cv_key in other.av_counts[attr]):
@@ -559,6 +553,8 @@ class Cobweb3Node(CobwebNode):
                              other.probability(attr, other.av_counts[attr][cv_key].unbiased_mean()))
                         if p > 0:
                             ll += log(p)
+                        else:
+                            raise Exception("p should be greater than 0")
                 else:
                     op = other.probability(attr, val)
                     if op > 0:
@@ -580,7 +576,7 @@ class Cobweb3Node(CobwebNode):
 
         .. seealso:: :meth:`CobwebNode.get_best_operation`
         """
-        for attr in self.tree.root.av_counts:
+        for attr in set(instance).union(self.av_counts):
             if attr in instance and attr not in self.av_counts:
                 return False
             if attr in self.av_counts and attr not in instance:
