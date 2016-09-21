@@ -365,40 +365,17 @@ class CobwebNode(object):
         correct_guesses = 0.0
         attr_count = 0
 
-        if self.tree.implicit_missing:
-            av_table = self.tree.root.av_counts
-        else:
-            av_table = self.av_counts
-
-        for attr in av_table:
+        for attr in self.av_counts:
             if attr[0] == "_":
                 continue
 
             attr_count += 1
-            val_count = 0
             if attr in self.av_counts:
-                #sq_counts = []
                 for val in self.av_counts[attr]:
-                    val_count += self.av_counts[attr][val]
                     prob = (self.av_counts[attr][val]) / self.count
                     correct_guesses += (prob * prob)
-                    #c = (self.av_counts[attr][val])
-                    #sq_counts.append(c*c)
 
-                #for sc in sq_counts:
-                #    if self.tree.implicit_missing:
-                #        correct_guesses += sc * 1/(self.count)
-                #    else:
-                #        correct_guesses += sc * 1/(val_count * val_count)
-
-            if self.tree.implicit_missing:
-                if attr in self.av_counts and None in self.av_counts[attr]:
-                    raise Exception("Don't need to include None value, assumed implicitly")
-                #Factors in the probability mass of missing values
-                prob = (self.count - val_count) / self.count
-                correct_guesses += (prob * prob)
-
-        return correct_guesses / len(av_table)
+        return correct_guesses / attr_count
 
     def category_utility(self):
         """
@@ -813,7 +790,7 @@ class CobwebNode(object):
 
         .. seealso:: :meth:`CobwebNode.get_best_operation`
         """
-        for attr in self.tree.root.av_counts:
+        for attr in set(instance).union(self.av_counts):
             if attr in instance and attr not in self.av_counts:
                 return False
             if attr in self.av_counts and attr not in instance:
@@ -968,20 +945,19 @@ class CobwebNode(object):
         :rtype: [(:ref:`Value<values>`, float), (:ref:`Value<values>`, float), ...]
         """
         choices = []
-        if attr not in self.tree.root.av_counts:
+        if attr not in self.av_counts:
             choices.append((None, 1.0))
             return choices
 
         val_count = 0
-        for val in self.tree.root.av_counts[attr]:
-            count = 0
-            if attr in self.av_counts and val in self.av_counts[attr]:
-                count = self.av_counts[attr][val]
+        for val in self.av_counts[attr]:
+            count = self.av_counts[attr][val]
             choices.append((val, count / self.count))
             val_count += count
 
         if allow_none:
             choices.append((None, ((self.count - val_count) / self.count)))
+
         return choices
 
     def predict(self, attr, choice_fn="most likely", allow_none=True):
@@ -1003,17 +979,17 @@ class CobwebNode(object):
         :rtype: :ref:`Value<values>`
         """
         if choice_fn == "most likely" or choice_fn == "m":
-            choice_fn = most_likely_choice
+            choose = most_likely_choice
         elif choice_fn == "sampled" or choice_fn == "s":
-            choice_fn = weighted_choice
+            choose = weighted_choice
         else:
             raise Exception("Unknown choice_fn")
 
-        if attr not in self.tree.root.av_counts:
+        if attr not in self.av_counts:
             return None
 
         choices = self.get_weighted_values(attr, allow_none)
-        val = choice_fn(choices)
+        val = choose(choices)
         return val
 
     def probability(self, attr, val):
@@ -1051,10 +1027,17 @@ class CobwebNode(object):
 
         ll = 0
 
-        for attr in self.tree.root.av_counts:
+        for attr in set(self.av_counts).union(other.av_counts):
             if attr[0] == '_':
                 continue
-            for val in list(self.tree.root.av_counts[attr]) + [None]:
+
+            vals = set()
+            if attr in self.av_counts:
+                vals.update(self.av_counts[attr])
+            if attr in other.av_counts:
+                vals.update(other.av_counts[attr])
+
+            for val in vals:
                 op = other.probability(attr, val)
                 if op > 0:
                     p = self.probability(attr,val) * op
