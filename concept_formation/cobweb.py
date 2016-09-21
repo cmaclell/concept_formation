@@ -362,23 +362,25 @@ class CobwebNode(object):
 
         """
         correct_guesses = 0.0
+        attr_count = 0
 
         for attr in self.tree.root.av_counts:
             if attr[0] == "_":
                 continue
 
+            attr_count += 1
             val_count = 0
             if attr in self.av_counts:
                 for val in self.av_counts[attr]:
                     val_count += self.av_counts[attr][val]
-                    prob = (self.av_counts[attr][val]) / (1.0 * self.count)
-                    correct_guesses += (prob * prob)
+                    prob = self.av_counts[attr][val] / self.count
+                    correct_guesses += prob * prob
 
             #Factors in the probability mass of missing values
             prob = (self.count - val_count) / self.count
-            correct_guesses += (prob * prob)
+            correct_guesses += prob * prob
 
-        return correct_guesses / len(self.tree.root.av_counts)
+        return correct_guesses / attr_count
 
     def category_utility(self):
         """
