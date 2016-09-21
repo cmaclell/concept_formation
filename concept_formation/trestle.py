@@ -9,6 +9,7 @@ from __future__ import absolute_import
 from __future__ import division
 
 from concept_formation.cobweb3 import Cobweb3Tree
+from concept_formation.cobweb3 import Cobweb3Node
 from concept_formation.structure_mapper import StructureMapper
 from concept_formation.preprocessor import SubComponentProcessor
 from concept_formation.preprocessor import Flattener
@@ -44,20 +45,33 @@ class TrestleTree(Cobweb3Tree):
     :param inner_attr_scaling: boolean
     """
 
-    def __init__(self, scaling=0.5, inner_attr_scaling=True):
+    def __init__(self, scaling=0.5, inner_attr_scaling=True,
+                 structure_map_internally=False):
         """
         The tree constructor. 
         """
         self.gensym_counter = 0
-        super(TrestleTree, self).__init__(scaling=scaling,
-                                          inner_attr_scaling=inner_attr_scaling)
+        self.structure_map_internally = structure_map_internally
+        if self.structure_map_internally: 
+            self.root = TrestleNode()
+        else:
+            self.root = Cobweb3Node()
+        self.root.tree = self
+        self.scaling = scaling
+        self.inner_attr_scaling = inner_attr_scaling 
+        self.attr_scales = {}
 
     def clear(self):
         """
         Clear the tree but keep initialization parameters
         """
         self.gensym_counter = 0
-        super(TrestleTree, self).clear()
+        if self.structure_map_internally: 
+            self.root = TrestleNode()
+        else:
+            self.root = Cobweb3Node()
+        self.root.tree = self
+        self.attr_scales = {}
 
     def gensym(self):
         """
@@ -233,3 +247,22 @@ class TrestleTree(Cobweb3Tree):
         temp_instance = preprocessing.transform(instance)
         self._sanity_check_instance(temp_instance)
         return self.cobweb(temp_instance)
+
+class TrestleNode(Cobweb3Node):
+
+    def is_exact_match(self, instance):
+        structure_mapper = StructureMapper(self, gensym=self.tree.gensym)
+        instance = structure_mapper.transform(instance)
+        return super(TrestleNode, self).is_exact_match(instance)
+
+    def increment_counts(self, instance):
+        structure_mapper = StructureMapper(self, gensym=self.tree.gensym)
+        instance = structure_mapper.transform(instance)
+        #print('increment', structure_mapper.reverse_mapping)
+        return super(TrestleNode, self).increment_counts(instance)
+
+    def update_counts_from_node(self, node):
+        structure_mapper = StructureMapper(self, gensym=self.tree.gensym)
+        node.av_counts = structure_mapper.transform(node.av_counts)
+        #print('merge', structure_mapper.reverse_mapping)
+        return super(TrestleNode, self).update_counts_from_node(node)
