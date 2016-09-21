@@ -210,9 +210,7 @@ def AICc(clusters, leaves):
         ll += conc.log_likelihood(leaves[i])
 
     for conc in set(clusters):
-        for attr in conc.tree.root.av_counts:
-            if attr[0] == '_':
-                continue
+        for attr in conc.tree.root.attrs():
             for val in conc.tree.root.av_counts[attr]:
                 if val == cv_key:
                     k += 2
@@ -259,9 +257,7 @@ def AIC(clusters, leaves):
         ll += conc.log_likelihood(leaves[i])
 
     for conc in set(clusters):
-        for attr in conc.tree.root.av_counts:
-            if attr[0] == '_':
-                continue
+        for attr in conc.tree.root.attrs():
             for val in conc.tree.root.av_counts[attr]:
                 if val == cv_key:
                     k += 2
@@ -307,9 +303,7 @@ def BIC(clusters, leaves):
         ll += conc.log_likelihood(leaves[i])
 
     for conc in set(clusters):
-        for attr in conc.tree.root.av_counts:
-            if attr[0] == '_':
-                continue
+        for attr in conc.tree.root.attrs():
             for val in conc.tree.root.av_counts[attr]:
                 if val == cv_key:
                     k += 2

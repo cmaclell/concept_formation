@@ -193,7 +193,7 @@ class Cobweb3Node(CobwebNode):
         :type node: Cobweb3Node
         """
         self.count += node.count
-        for attr in node.av_counts:
+        for attr in node.attrs('all'):
             self.av_counts[attr] = self.av_counts.setdefault(attr, {})
             for val in node.av_counts[attr]:
                 if val == cv_key:
@@ -319,10 +319,7 @@ class Cobweb3Node(CobwebNode):
         correct_guesses = 0.0
         attr_count = 0
 
-        for attr in self.av_counts:
-            if attr[0] == "_":
-                continue
-
+        for attr in self.attrs():
             attr_count += 1
 
             for val in self.av_counts[attr]:
@@ -367,7 +364,7 @@ class Cobweb3Node(CobwebNode):
 
         attributes = []
 
-        for attr in self.av_counts:
+        for attr in self.attrs('all'):
             values = []
             for val in self.av_counts[attr]:
                 values.append("'" + str(val) + "': " +
@@ -535,10 +532,7 @@ class Cobweb3Node(CobwebNode):
         """
 
         ll = 0
-        for attr in set(self.av_counts).union(other.av_counts):
-            if attr[0] == '_':
-                continue
-
+        for attr in set(self.attrs()).union(set(other.attrs())):
             vals = set()
             if attr in self.av_counts:
                 vals.update(self.av_counts[attr])
@@ -576,7 +570,7 @@ class Cobweb3Node(CobwebNode):
 
         .. seealso:: :meth:`CobwebNode.get_best_operation`
         """
-        for attr in set(instance).union(self.av_counts):
+        for attr in set(instance).union(set(self.attrs())):
             if attr in instance and attr not in self.av_counts:
                 return False
             if attr in self.av_counts and attr not in instance:
@@ -622,7 +616,7 @@ class Cobweb3Node(CobwebNode):
         output["children"] = []
 
         temp = {}
-        for attr in self.av_counts:
+        for attr in self.attrs('all'):
                 temp[str(attr)] = {str(value):self.av_counts[attr][value] for
                                    value in self.av_counts[attr]}
 

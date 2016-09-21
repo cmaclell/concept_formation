@@ -234,7 +234,7 @@ class CobwebTree(object):
         temp_instance = {a:instance[a] for a in instance}
         concept = self._cobweb_categorize(temp_instance)
 
-        for attr in self.concept:
+        for attr in concept.attrs('all'):
             if attr in temp_instance:
                 continue
             val = concept.predict(attr, choice_fn, allow_none)
@@ -317,6 +317,25 @@ class CobwebNode(object):
         temp.update_counts_from_node(self)
         return temp
 
+    def attrs(self,attr_filter=None):
+        """
+        Iterates over the attributes present in the node's attribute-value
+        table with the option to filter certain types. By default the filter
+        will ignore hidden attributes and yield all others. If the string
+        'all' is provided then all attributes will be yielded. In neither of
+        those cases the filter will be interpreted as a function that returns 
+        true if an attribute should be yielded and false otherwise.
+        """
+        for attr in self.av_counts:
+            if attr_filter is None:
+                if attr[0] == '_':
+                    continue
+                yield attr
+            elif attr_filter == 'all':
+                yield attr
+            elif attr_filter(attr):
+                yield attr
+
     def increment_counts(self, instance):
         """
         Increment the counts at the current node according to the specified
@@ -342,7 +361,7 @@ class CobwebNode(object):
         :type node: CobwebNode
         """
         self.count += node.count
-        for attr in node.av_counts:
+        for attr in node.attrs('all'):
             for val in node.av_counts[attr]:
                 self.av_counts[attr] = self.av_counts.setdefault(attr,{})
                 self.av_counts[attr][val] = (self.av_counts[attr].get(val,0) +
@@ -364,10 +383,7 @@ class CobwebNode(object):
         correct_guesses = 0.0
         attr_count = 0
 
-        for attr in self.av_counts:
-            if attr[0] == "_":
-                continue
-
+        for attr in self.attrs():
             attr_count += 1
             if attr in self.av_counts:
                 for val in self.av_counts[attr]:
@@ -789,7 +805,7 @@ class CobwebNode(object):
 
         .. seealso:: :meth:`CobwebNode.get_best_operation`
         """
-        for attr in set(instance).union(self.av_counts):
+        for attr in set(instance).union(set(self.attrs())):
             if attr in instance and attr not in self.av_counts:
                 return False
             if attr in self.av_counts and attr not in instance:
@@ -912,7 +928,7 @@ class CobwebNode(object):
         output['children'] = []
 
         temp = {}
-        for attr in self.av_counts:
+        for attr in self.attrs('all'):
             for value in self.av_counts[attr]:
                 temp[str(attr)] = {str(value):self.av_counts[attr][value] for value in self.av_counts[attr]}
                 #temp[attr + " = " + str(value)] = self.av_counts[attr][value]
@@ -1026,10 +1042,7 @@ class CobwebNode(object):
 
         ll = 0
 
-        for attr in set(self.av_counts).union(other.av_counts):
-            if attr[0] == '_':
-                continue
-
+        for attr in set(self.attrs()).union(set(other.attrs())):
             vals = set()
             if attr in self.av_counts:
                 vals.update(self.av_counts[attr])
