@@ -8,14 +8,13 @@ from __future__ import unicode_literals
 from __future__ import absolute_import
 from __future__ import division
 from random import shuffle
-from numbers import Number
 from re import search
 
 from concept_formation.utils import mean
+from concept_formation.utils import isNumber
 #from concept_formation.structure_mapper import flatten_json
 #from concept_formation.structure_mapper import flat_match
 #from concept_formation.structure_mapper import rename_flat
-from concept_formation.cobweb3 import ContinuousValue
 from concept_formation.structure_mapper import StructureMapper
 
 def probability(tree, instance, attr, val):
@@ -94,17 +93,16 @@ def error(tree, instance, attr, val):
 
     if isinstance(val, dict):
         raise Exception("Currently does not support prediction error of component attributes.")
-    elif isinstance(val, Number):
+    elif isNumber(val):
         prediction = concept.predict(attr)
         if prediction is None:
             raise Exception("Not sure how to handle continuous values that are predicted to be missing.")
         e = val - prediction 
     else:
-        if val is None and isinstance(tree.root.av_counts[attr],
-                                      ContinuousValue):
-            raise Exception("Not sure how to handle missing continuous values.")
-
         prediction = concept.predict(attr)
+
+        if val is None and isNumber(prediction):
+            raise Exception("Not sure how to compare Continuous Values and None")
 
         if val == prediction:
             e = 0
