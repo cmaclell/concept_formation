@@ -10,16 +10,13 @@ from random import choice
 from random import random
 
 from munkres import Munkres
+#from scipy.optimize import linear_sum_assignment
 
 from concept_formation.trestle import TrestleTree
 from concept_formation.structure_mapper import StructureMappingOptimizationProblem
 from concept_formation.structure_mapper import mapping_cost
-from concept_formation.structure_mapper import greedy_best_mapping
 from concept_formation.structure_mapper import hungarian_mapping
-from concept_formation.structure_mapper import build_index
 from concept_formation.structure_mapper import get_component_names
-from concept_formation.structure_mapper import StructureMapper
-from concept_formation.structure_mapper import eval_obj_mapping
 from concept_formation.preprocessor import Pipeline
 from concept_formation.preprocessor import Tuplizer
 from concept_formation.preprocessor import NameStandardizer
@@ -87,17 +84,24 @@ def random_concept(num_instances=1, num_objects=10):
         tree.ifit(inst)
     return tree.root
 
-def gen_cost_matrix(target, base, index):
+def gen_cost_matrix(inames, cnames, target, base):
     cost_matrix = []
     for o in inames:
         row = []
         for c in cnames:
             nm = {}
             nm[o] = c
-            r = eval_obj_mapping(o, nm, target, base, index)
-            row.append(-r)
-        for o in inames:
-            row.append(0.0)
+            cost = mapping_cost({o:c}, target, base)
+            row.append(cost)
+            #r = eval_obj_mapping(o, nm, target, base, index, partial=partial)
+            #row.append(-r)
+        unmapped_cost = mapping_cost({}, target, base)
+        for other_o in inames:
+            if other_o == o:
+                row.append(unmapped_cost)
+            else:
+                row.append(float('inf'))
+
         cost_matrix.append(row)
     return cost_matrix
 
@@ -115,7 +119,7 @@ def gen_cost_matrix(target, base, index):
 
 
 num_c_inst = 1
-num_objs = 30 
+num_objs = 20 
 
 concept = random_concept(num_instances=num_c_inst, num_objects=num_objs)
 instance = random_instance(num_objects=num_objs)
@@ -135,12 +139,9 @@ pipeline = Pipeline(Tuplizer(), NameStandardizer(concept.tree.gensym),
 
 #instance = ns.transform(subconcept.av_counts)
 instance = pipeline.transform(random_instance(num_objects=num_objs))
-pprint(instance)
 
 inames = frozenset(get_component_names(instance))
 cnames = frozenset(get_component_names(concept.av_counts, True))
-
-index = build_index(inames, instance)
 
 print("INAMES:")
 print(inames)
@@ -152,20 +153,25 @@ print("########################")
 print("MUNKRES OPTIMIZATION")
 print("########################")
 targetlist = list(inames)
-baselist = list(inames.union(cnames))
-cost_matrix = gen_cost_matrix(instance, concept, index)
+baselist = list(cnames) + list(inames)
+cost_matrix = gen_cost_matrix(targetlist, baselist, instance, concept)
+print(len(cost_matrix), len(cost_matrix[0]))
 
 for row in cost_matrix:
     print("\t".join(["%0.2f" % v for v in row]))
 
 mun = Munkres()
 s = mun.compute(cost_matrix)
-mun_sol = {targetlist[ti]: baselist[bi] for ti, bi in s}
+print(s)
+#s = linear_sum_assignment(cost_matrix)
+#mun_sol = {targetlist[ti]: baselist[s[1][i]] for i, ti in enumerate(s[0])}
+mun_sol = {targetlist[row]: baselist[len(cnames)+row] if col > len(cnames) else
+           baselist[col] for row, col in s}
 print("Munkres solution:")
 pprint(mun_sol)
 print("Munkres cost:")
 
-print(mapping_cost(frozenset(mun_sol.items()), instance, concept, index))
+print(mapping_cost(frozenset(mun_sol.items()), instance, concept))
 
 #munkres_sol = 
 
@@ -213,7 +219,7 @@ print()
 rm = random_mapping(inames, cnames)
 um = unmapped_mapping(inames)
 #gm = greedy_best_mapping(inames, cnames, index, instance, concept)
-gm = hungarian_mapping(inames, cnames, index, instance, concept)
+gm = hungarian_mapping(inames, cnames, instance, concept)
 #m = frozenset(mun_sol.items())
 #unmapped = inames.union(cnames) - frozenset(dict(m).values())
 
@@ -238,20 +244,19 @@ gm = hungarian_mapping(inames, cnames, index, instance, concept)
 #print()
 
 print("Greedy Best Mapping:")
-print(gm)
+pprint(dict(gm))
 print("Greedy Best Unmapped:")
 gunmapped = cnames - frozenset(dict(gm).values())
 print(gunmapped)
 print("Greedy Best Cost:")
-gc = mapping_cost(gm, instance, concept, index)
+gc = mapping_cost(gm, instance, concept)
 print(gc)
 
 #op_problem1 = OptimizationProblem((rm, runmapped), initial_cost=rc, extra=rewards)
 #op_problem2 = OptimizationProblem((um, uunmapped), initial_cost=uc, extra=rewards)
 op_problem3 = StructureMappingOptimizationProblem((gm, gunmapped),
                                                   initial_cost=gc,
-                                                  extra=(instance, concept,
-                                                         index))
+                                                  extra=(instance, concept))
 
 def annealing5x2(problem):
     return simulated_annealing(problem, limit=5*num_objs*num_objs)
