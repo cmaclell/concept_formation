@@ -29,6 +29,8 @@ from concept_formation.preprocessor import NameStandardizer
 from concept_formation.preprocessor import Preprocessor
 from concept_formation.preprocessor import rename_relation
 from concept_formation.preprocessor import get_attribute_components
+from concept_formation.cobweb3 import Cobweb3Node
+from concept_formation.cobweb3 import cv_key
 
 def get_component_names(instance, vars_only=True):
     """
@@ -276,12 +278,26 @@ def mapping_cost(mapping, target, base):
     if not isinstance(mapping, dict):
         raise Exception("mapping must be dict or frozenset")
     renamed_target = rename_flat(target, mapping)
-    base = base.shallow_copy()
 
-    # TODO properly handle situations where the target is a concept.
-    base.increment_counts(renamed_target)
+    # Need to ensure structure mapping is not used internally here. (i.e.,
+    # there is no infinite recrusion)
+    temp_base = Cobweb3Node()
+    temp_base.update_counts_from_node(base)
+    temp_base.tree = base.tree
+    
+    # check if it is an av_counts table, then create concept to deal with it. 
+    if isinstance(next(iter(renamed_target.values())), dict):
+        temp_target = Cobweb3Node()
+        temp_target.av_counts = renamed_target
+        temp_target.count = max([sum([renamed_target[attr][val].num if val ==
+                                      cv_key else renamed_target[attr][val] for
+                                      val in renamed_target[attr]]) for attr in
+                                 renamed_target])
+        temp_base.update_counts_from_node(temp_target)
+    else:
+        temp_base.increment_counts(renamed_target)
 
-    return -base.expected_correct_guesses()
+    return -temp_base.expected_correct_guesses()
 
 class StructureMappingOptimizationProblem(Problem):
     """
