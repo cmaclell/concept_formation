@@ -317,6 +317,25 @@ class CobwebNode(object):
         temp.update_counts_from_node(self)
         return temp
 
+    def attrs(self,attr_filter=None):
+        """
+        Iterates over the attributes present in the node's attribute-value
+        table with the option to filter certain types. By default the filter
+        will ignore hidden attributes and yield all others. If the string
+        'all' is provided then all attributes will be yielded. In neither of
+        those cases the filter will be interpreted as a function that returns 
+        true if an attribute should be yielded and false otherwise.
+        """
+        for attr in self.av_counts:
+            if attr_filter is None:
+                if attr[0] == '_':
+                    continue
+                yield attr
+            elif attr_filter == 'all':
+                yield attr
+            elif attr_filter(attr):
+                yield attr
+
     def increment_counts(self, instance):
         """
         Increment the counts at the current node according to the specified
