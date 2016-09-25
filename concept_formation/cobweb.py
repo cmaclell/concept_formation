@@ -314,6 +314,7 @@ class CobwebNode(object):
         """
         temp = self.__class__()
         temp.tree = self.tree
+        temp.parent = self.parent
         temp.update_counts_from_node(self)
         return temp
 
