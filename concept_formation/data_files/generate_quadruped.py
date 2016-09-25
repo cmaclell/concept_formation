@@ -14,15 +14,15 @@ def bellrand(start, finish):
 
     return sample
 
-def generate_animals(num_instances, components=True):
-    return [generate_random_animal(components) for i in range(num_instances)]
+def generate_animals(num_instances):
+    return [generate_random_animal() for i in range(num_instances)]
 
-def generate_random_animal(components=True):
+def generate_random_animal():
     genfun = [generate_dog, generate_cat, generate_horse, generate_giraffe]
     f = choice(genfun)
-    return f(components)
+    return f()
 
-def generate_dog(components=True):
+def generate_dog():
     dog = {}
     dog['_type'] = 'dog'
 
@@ -35,16 +35,6 @@ def generate_dog(components=True):
     head = 'head'
     tail = 'tail'
     
-    if components:
-        torso = '?' + torso
-        leg1 = '?' + leg1
-        leg2 = '?' + leg2
-        leg3 = '?' + leg3
-        leg4 = '?' + leg4
-        neck = '?' + neck
-        head = '?' + head
-        tail = '?' + tail
-
     dog[torso] = {}
     dog[torso]['_type'] = 'torso'
     dog[torso]['locationX'] = 0
@@ -111,9 +101,9 @@ def generate_dog(components=True):
 
     dog[neck] = {}
     dog[neck]['_type'] = 'neck'
-    dog[neck]['locationX'] = dog['?torso']['height'] / 2 + neck_height / 2
+    dog[neck]['locationX'] = dog[torso]['height'] / 2 + neck_height / 2
     dog[neck]['locationY'] = 0
-    dog[neck]['locationZ'] = dog['?torso']['radius']
+    dog[neck]['locationZ'] = dog[torso]['radius']
     dog[neck]['axisX'] = 1
     dog[neck]['axisY'] = 0
     dog[neck]['axisZ'] = 1
@@ -148,7 +138,7 @@ def generate_dog(components=True):
 
     return dog
 
-def generate_cat(components=True):
+def generate_cat():
     cat = {}
     cat['_type'] = 'cat'
 
@@ -161,16 +151,6 @@ def generate_cat(components=True):
     head = 'head'
     tail = 'tail'
     
-    if components:
-        torso = '?' + torso
-        leg1 = '?' + leg1
-        leg2 = '?' + leg2
-        leg3 = '?' + leg3
-        leg4 = '?' + leg4
-        neck = '?' + neck
-        head = '?' + head
-        tail = '?' + tail
-
     cat[torso] = {}
     cat[torso]['_type'] = 'torso'
     cat[torso]['locationX'] = 0
@@ -237,9 +217,9 @@ def generate_cat(components=True):
 
     cat[neck] = {}
     cat[neck]['_type'] = 'neck'
-    cat[neck]['locationX'] = cat['?torso']['height'] / 2 + neck_height / 2
+    cat[neck]['locationX'] = cat[torso]['height'] / 2 + neck_height / 2
     cat[neck]['locationY'] = 0
-    cat[neck]['locationZ'] = cat['?torso']['radius']
+    cat[neck]['locationZ'] = cat[torso]['radius']
     cat[neck]['axisX'] = 1
     cat[neck]['axisY'] = 0
     cat[neck]['axisZ'] = 1
@@ -274,7 +254,7 @@ def generate_cat(components=True):
 
     return cat
 
-def generate_horse(components=True):
+def generate_horse():
     horse = {}
     horse['_type'] = 'horse'
 
@@ -287,16 +267,6 @@ def generate_horse(components=True):
     head = 'head'
     tail = 'tail'
     
-    if components:
-        torso = '?' + torso
-        leg1 = '?' + leg1
-        leg2 = '?' + leg2
-        leg3 = '?' + leg3
-        leg4 = '?' + leg4
-        neck = '?' + neck
-        head = '?' + head
-        tail = '?' + tail
-
     horse[torso] = {}
     horse[torso]['_type'] = 'torso'
     horse[torso]['locationX'] = 0
@@ -363,10 +333,10 @@ def generate_horse(components=True):
 
     horse[neck] = {}
     horse[neck]['_type'] = 'neck'
-    horse[neck]['locationX'] = (horse['?torso']['height'] / 2 + 
+    horse[neck]['locationX'] = (horse[torso]['height'] / 2 + 
                                 neck_height / 2.828)
     horse[neck]['locationY'] = 0
-    horse[neck]['locationZ'] = (horse['?torso']['radius'] + 
+    horse[neck]['locationZ'] = (horse[torso]['radius'] + 
                                 neck_height / 2.828)
     horse[neck]['axisX'] = 1
     horse[neck]['axisY'] = 0
@@ -402,7 +372,7 @@ def generate_horse(components=True):
 
     return horse
 
-def generate_giraffe(components=True):
+def generate_giraffe():
     giraffe = {}
     giraffe['_type'] = 'giraffe'
 
@@ -414,16 +384,6 @@ def generate_giraffe(components=True):
     neck = 'neck'
     head = 'head'
     tail = 'tail'
-    
-    if components:
-        torso = '?' + torso
-        leg1 = '?' + leg1
-        leg2 = '?' + leg2
-        leg3 = '?' + leg3
-        leg4 = '?' + leg4
-        neck = '?' + neck
-        head = '?' + head
-        tail = '?' + tail
 
     giraffe[torso] = {}
     giraffe[torso]['_type'] = 'torso'
@@ -491,10 +451,10 @@ def generate_giraffe(components=True):
 
     giraffe[neck] = {}
     giraffe[neck]['_type'] = 'neck'
-    giraffe[neck]['locationX'] = (giraffe['?torso']['height'] / 2 + 
+    giraffe[neck]['locationX'] = (giraffe[torso]['height'] / 2 + 
                                   neck_height / 2.828)
     giraffe[neck]['locationY'] = 0
-    giraffe[neck]['locationZ'] = (giraffe['?torso']['radius'] + 
+    giraffe[neck]['locationZ'] = (giraffe[torso]['radius'] + 
                                   neck_height / 2.828)
     giraffe[neck]['axisX'] = 1
     giraffe[neck]['axisY'] = 0
