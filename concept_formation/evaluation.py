@@ -12,9 +12,6 @@ from re import search
 
 from concept_formation.utils import mean
 from concept_formation.utils import isNumber
-#from concept_formation.structure_mapper import flatten_json
-#from concept_formation.structure_mapper import flat_match
-#from concept_formation.structure_mapper import rename_flat
 from concept_formation.structure_mapper import StructureMapper
 
 def probability(tree, instance, attr, val):
@@ -22,7 +19,7 @@ def probability(tree, instance, attr, val):
     Returns the probability of a particular value of an attribute in the
     instance. One of the scoring functions for incremental_evaluation.
 
-    If the instance currently contains the target attribute a  shallow copy is
+    If the instance currently contains the target attribute a shallow copy is
     created to allow the attribute to be predicted.
 
     .. warning:: This is an older function in the library and we are not quite
@@ -204,7 +201,6 @@ def incremental_evaluation(tree, instances, attr, run_length, runs=1,
     :returns: A table that is `runs` x `run_length` where each row represents the score for successive instances within a run.
     :rtype: A table of scores.
     """
-
     scores = []
     for r in range(runs):
         #print(r)
@@ -216,6 +212,7 @@ def incremental_evaluation(tree, instances, attr, run_length, runs=1,
         row = []
 
         for i,instance in enumerate(instances[:run_length+2]):
+            #print(i)
             val = None
             if attr in instance:
                 val = instance[attr]
