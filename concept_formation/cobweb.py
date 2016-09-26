@@ -218,6 +218,8 @@ class CobwebTree(object):
         values picked using the specified choice function (either "most likely"
         or "sampled"). 
 
+        .. todo:: write some kind of test for this.
+
         :param instance: an instance to be completed.
         :type instance: :ref:`Instance<instance-rep>`
         :param choice_fn: a string specifying the choice function to use,
