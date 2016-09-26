@@ -218,6 +218,8 @@ class CobwebTree(object):
         values picked using the specified choice function (either "most likely"
         or "sampled"). 
 
+        .. todo:: write some kind of test for this.
+
         :param instance: an instance to be completed.
         :type instance: :ref:`Instance<instance-rep>`
         :param choice_fn: a string specifying the choice function to use,
@@ -296,9 +298,9 @@ class CobwebNode(object):
         self.tree = None
 
         if otherNode:
-            self.update_counts_from_node(otherNode)
-            self.parent = otherNode.parent
             self.tree = otherNode.tree
+            self.parent = otherNode.parent
+            self.update_counts_from_node(otherNode)
 
             for child in otherNode.children:
                 self.children.append(self.__class__(child))
@@ -314,6 +316,7 @@ class CobwebNode(object):
         """
         temp = self.__class__()
         temp.tree = self.tree
+        temp.parent = self.parent
         temp.update_counts_from_node(self)
         return temp
 

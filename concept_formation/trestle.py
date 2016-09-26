@@ -9,6 +9,7 @@ from __future__ import absolute_import
 from __future__ import division
 
 from concept_formation.cobweb3 import Cobweb3Tree
+from concept_formation.cobweb3 import Cobweb3Node
 from concept_formation.structure_mapper import StructureMapper
 from concept_formation.preprocessor import SubComponentProcessor
 from concept_formation.preprocessor import Flattener
@@ -42,22 +43,34 @@ class TrestleTree(Cobweb3Tree):
         inner most attributes, some objects might have multiple attributes
         (i.e., 'attr' for different objects) that contribute to the scaling. 
     :param inner_attr_scaling: boolean
+    :param structure_map_internally: Determines whether structure mapping is
+        used at each node during categorization (and when merging), this
+        drastically reduces performance, but allows the category structure to
+        influcence structure mapping.
+    :type structure_map_internally: boolean
     """
 
-    def __init__(self, scaling=0.5, inner_attr_scaling=True):
+    def __init__(self, scaling=0.5, inner_attr_scaling=True,
+                 structure_map_internally=False):
         """
         The tree constructor. 
         """
         self.gensym_counter = 0
-        super(TrestleTree, self).__init__(scaling=scaling,
-                                          inner_attr_scaling=inner_attr_scaling)
+        self.structure_map_internally = structure_map_internally
+        self.root = TrestleNode()
+        self.root.tree = self
+        self.scaling = scaling
+        self.inner_attr_scaling = inner_attr_scaling 
+        self.attr_scales = {}
 
     def clear(self):
         """
         Clear the tree but keep initialization parameters
         """
         self.gensym_counter = 0
-        super(TrestleTree, self).clear()
+        self.root = TrestleNode()
+        self.root.tree = self
+        self.attr_scales = {}
 
     def gensym(self):
         """
@@ -140,17 +153,20 @@ class TrestleTree(Cobweb3Tree):
     def _trestle_categorize(self, instance):
         """
         The structure maps the instance, categorizes the matched instance, and
-        returns the resulting Cobweb3Node.
+        returns the resulting concept.
 
         :param instance: an instance to be categorized into the tree.
         :type instance: {a1:v1, a2:v2, ...}
         :return: A concept describing the instance
-        :rtype: Cobweb3Node
+        :rtype: concept
         """
-        structure_mapper = StructureMapper(self.root,
-                                           gensym=self.gensym)
-        preprocessing = Pipeline(SubComponentProcessor(), Flattener(),
-                                 structure_mapper)
+        if self.structure_map_internally:
+            preprocessing = Pipeline(SubComponentProcessor(), Flattener())
+        else:
+            structure_mapper = StructureMapper(self.root,
+                                               gensym=self.gensym)
+            preprocessing = Pipeline(SubComponentProcessor(), Flattener(),
+                                     structure_mapper)
         temp_instance = preprocessing.transform(instance)
         self._sanity_check_instance(temp_instance)
         return self._cobweb_categorize(temp_instance)
@@ -160,6 +176,8 @@ class TrestleTree(Cobweb3Tree):
         Given a tree and an instance, returns a new instance with attribute 
         values picked using the specified choice function (either "most likely"
         or "sampled"). 
+
+        .. todo:: write some kind of test for this.
 
         :param instance: an instance to be completed.
         :type instance: :ref:`Instance<instance-rep>`
@@ -173,14 +191,33 @@ class TrestleTree(Cobweb3Tree):
         :return: A completed instance
         :rtype: instance
         """
-        structure_mapper = StructureMapper(self.root,
-                                           gensym=self.gensym)
-        preprocessing = Pipeline(SubComponentProcessor(), Flattener(),
-                                 structure_mapper)
+        if self.structure_map_internally:
+            preprocessing = Pipeline(SubComponentProcessor(), Flattener())
+        else:
+            structure_mapper = StructureMapper(self.root,
+                                               gensym=self.gensym)
+            preprocessing = Pipeline(SubComponentProcessor(), Flattener(),
+                                     structure_mapper)
+
         temp_instance = preprocessing.transform(instance)
-        temp_instance = super(TrestleTree,
-                                     self).infer_missing(temp_instance,
-                                                         choice_fn, allow_none)
+        concept = self._cobweb_categorize(temp_instance)
+
+        # TODO consider doing this even when structure mapping doesn't happen
+        # internally!
+        if self.structure_map_internally:
+            structure_mapper2 = StructureMapper(concept, gensym=self.gensym)
+            temp_instance = structure_mapper2.transform(temp_instance)
+
+        for attr in concept.attrs('all'):
+            if attr in temp_instance:
+                continue
+            val = concept.predict(attr, choice_fn, allow_none)
+            if val is not None:
+                temp_instance[attr] = val
+
+        if self.structure_map_internally:
+            temp_instance = structure_mapper2.undo_transform(temp_instance)
+
         temp_instance = preprocessing.undo_transform(temp_instance)
         return temp_instance
 
@@ -226,10 +263,36 @@ class TrestleTree(Cobweb3Tree):
         :return: A concept describing the instance
         :rtype: CobwebNode
         """
-        structure_mapper = StructureMapper(self.root,
-                                           gensym=self.gensym)
-        preprocessing = Pipeline(SubComponentProcessor(), Flattener(),
-                                 structure_mapper)
+        if self.structure_map_internally:
+            preprocessing = Pipeline(SubComponentProcessor(), Flattener())
+        else:
+            structure_mapper = StructureMapper(self.root,
+                                               gensym=self.gensym)
+            preprocessing = Pipeline(SubComponentProcessor(), Flattener(),
+                                     structure_mapper)
         temp_instance = preprocessing.transform(instance)
         self._sanity_check_instance(temp_instance)
         return self.cobweb(temp_instance)
+
+class TrestleNode(Cobweb3Node):
+
+    def is_exact_match(self, instance):
+        if self.tree.structure_map_internally:
+            structure_mapper = StructureMapper(self, gensym=self.tree.gensym)
+            instance = structure_mapper.transform(instance)
+        return super(TrestleNode, self).is_exact_match(instance)
+
+    def increment_counts(self, instance):
+        if self.tree.structure_map_internally:
+            structure_mapper = StructureMapper(self, gensym=self.tree.gensym)
+            instance = structure_mapper.transform(instance)
+            #print('increment', structure_mapper.reverse_mapping)
+        return super(TrestleNode, self).increment_counts(instance)
+
+    def update_counts_from_node(self, node):
+        if self.tree.structure_map_internally:
+            if self.av_counts != {}:
+                structure_mapper = StructureMapper(self, gensym=self.tree.gensym)
+                node.av_counts = structure_mapper.transform(node.av_counts)
+                #print('merge', structure_mapper.reverse_mapping)
+        return super(TrestleNode, self).update_counts_from_node(node)

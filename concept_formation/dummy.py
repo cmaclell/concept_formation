@@ -27,6 +27,18 @@ class DummyTree(TrestleTree):
     def __init__(self):
         self.root = Cobweb3Node()
         self.root.tree = self
+        self.gensym_counter = 0
+        self.structure_map_internally = False
+
+    def gensym(self):
+        """
+        Generates unique names for naming renaming apart objects.
+
+        :return: a unique object name
+        :rtype: '?o'+counter
+        """
+        self.gensym_counter += 1
+        return '?o' + str(self.gensym_counter)
 
     def ifit(self, instance, do_mapping=False):
         """
