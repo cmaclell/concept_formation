@@ -485,12 +485,23 @@ class NameStandardizer(Preprocessor):
             #     new_a = (attr, prefix)
 
             name = attr
-            if attr[0] == '?' and not isinstance(attr, tuple):
+            indexable = False
+            try:
+                attr[0] == '?'
+                indexable = True
+            except:
+                pass
+
+            if indexable and attr[0] == '?' and not isinstance(attr, tuple):
                 if name not in mapping:
                     mapping[name] = self.gensym()
                 name = mapping[name]
 
             value = instance[attr]
+
+            # TODO I think this needs to be removed.
+            # Particularly, for standardizing an attribute value table that has
+            # boolean and continuous values and all that. 
             if isinstance(value, dict):
                 value = self._standardize(value, mapping, name)
             elif isinstance(value, list):
