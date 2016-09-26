@@ -271,3 +271,13 @@ def load_rb_s_07_human_predictions():
      '19:21:14.327344+00:00,1,0,1']
     """
     return _load_file('human_s_07_success_predictions.csv')
+
+def load_molecule():
+    """Load a dataset of 100 molecules from the pubchem database
+
+    This dataset was downloaded from the `Pubchem databse
+    <https://www.ncbi.nlm.nih.gov/pccompound>`__. We used a custom `molfile
+    parser<https://github.com/eharpste/molparser>`__ to process the data to be
+    in dictionary format with human readable labels.
+    """
+    return _load_json('molecule.json')
