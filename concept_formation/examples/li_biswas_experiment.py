@@ -162,8 +162,8 @@ def run_noise_exp(scaling=False):
 nominal = []
 numeric = []
 
-for i in range(1):
-    noise, miss_nominal, miss_numeric = run_noise_exp(scaling=False)
+for i in range(2):
+    noise, miss_nominal, miss_numeric = run_noise_exp(scaling=0.5)
     nominal.append(miss_nominal)
     numeric.append(miss_numeric)
     noise = noise
@@ -178,6 +178,9 @@ nominal_line, = plt.plot(noise, miss_nominal, linestyle="--", marker="o", color=
 numeric_line, = plt.plot(noise, miss_numeric, linestyle="-", marker="o", color="g")
 plt.legend([nominal_line, numeric_line], ["Noisy Nominal", "Noisy Numeric"],
            loc=2)
+
+plt.xlabel("Percentage Noise")
+plt.ylabel("Misclassification Count")
 
 
 plt.ylim(0,200)
