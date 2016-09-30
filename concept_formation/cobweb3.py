@@ -256,12 +256,12 @@ class Cobweb3Node(CobwebNode):
 
             for val in self.av_counts[attr]:
                 if val == cv_key:
+                    scale = 1.0
                     if self.tree.scaling:
                         inner_attr = self.tree.get_inner_attr(attr)
-                        scale = ((1/self.tree.scaling) *
-                                 self.tree.attr_scales[inner_attr].unbiased_std())
-                    else:
-                        scale = 1.0
+                        if inner_attr in self.tree.attr_scales:
+                            scale = ((1/self.tree.scaling) *
+                                     self.tree.attr_scales[inner_attr].unbiased_std())
 
                     # we basically add noise to the std and adjust the
                     # normalizing constant to ensure the probability of a
