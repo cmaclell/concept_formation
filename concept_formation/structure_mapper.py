@@ -16,8 +16,7 @@ from __future__ import division
 
 from random import choice
 from random import random
-from heapq import heappush
-from heapq import heappop
+from itertools import combinations
 
 from munkres import Munkres
 #from scipy.optimize import linear_sum_assignment
@@ -194,6 +193,7 @@ def flat_match(target, base):
     initial_mapping = hungarian_mapping(inames, cnames, target, base)
     unmapped = cnames - frozenset(dict(initial_mapping).values())
     initial_cost = mapping_cost(initial_mapping, target, base)
+
     op_problem = StructureMappingOptimizationProblem((initial_mapping, unmapped),
                                                      initial_cost=initial_cost,
                                                      extra=(target, base))
@@ -312,9 +312,12 @@ class StructureMappingOptimizationProblem(Problem):
     """
     def node_value(self, node):
         """
-        The value is the precomputed cost.
+        The value of a node (based on mapping_cost).
         """
-        return node.cost()
+        #return node.cost()
+        mapping, unmapped_cnames = node.state
+        target, base = node.extra
+        return mapping_cost(mapping, target, base)
 
     def swap_two(self, o1, o2, mapping, unmapped_cnames, target, base, node):
         """
@@ -333,11 +336,7 @@ class StructureMappingOptimizationProblem(Problem):
             new_mapping[o2] = mapping[o1]
 
         new_mapping = frozenset(new_mapping.items())
-        path_cost = mapping_cost(new_mapping, target, base)
-
-        return Node((new_mapping, unmapped_cnames), node, 
-                   ('swap', (o1, mapping[o1]), (o2, mapping[o2])), path_cost,
-                    node.extra)
+        return Node((new_mapping, unmapped_cnames), extra=node.extra) 
 
     def swap_unnamed(self, o1, o2, mapping, unmapped_cnames, target, base, 
                      node):
@@ -352,12 +351,9 @@ class StructureMappingOptimizationProblem(Problem):
             new_unmapped_cnames.add(new_mapping[o1])
         new_mapping[o1] = o2
         new_mapping = frozenset(new_mapping.items())
-        path_cost = mapping_cost(new_mapping, target, base)
 
         return Node((new_mapping,
-                    frozenset(new_unmapped_cnames)), node,
-                    ('swap', (o1, mapping[o1]), ('unmapped', o2)), path_cost, 
-                    node.extra)
+                    frozenset(new_unmapped_cnames)), extra=node.extra)
 
     def random_successor(self, node):
         """
@@ -394,17 +390,14 @@ class StructureMappingOptimizationProblem(Problem):
         target, base = node.extra
         mapping = dict(mapping)
 
+        for o1, o2 in combinations(mapping, 2):
+            if o1 == o2 or (mapping[o1] == o1 and mapping[o2] == o2):
+                continue
+
+            yield self.swap_two(o1, o2, mapping, unmapped_cnames, target, 
+                                base, node)
+
         for o1 in mapping:
-            # flip two non-self mappings
-            for o2 in mapping:
-                if o1 == o2 or (mapping[o1] == o1 and mapping[o2] == o2):
-                    continue
-
-                yield self.swap_two(o1, o2, mapping, unmapped_cnames, target,
-                                      base, node)
-
-
-            # flip mapped with some unused cname
             for o2 in unmapped_cnames:
                 yield self.swap_unnamed(o1, o2, mapping, unmapped_cnames,
                                         target, base, node)
