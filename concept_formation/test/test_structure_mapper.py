@@ -28,6 +28,7 @@ from py_search.informed import best_first_search
 from py_search.base import Problem
 from py_search.base import Node
 from py_search.optimization import local_beam_search
+from py_search.optimization import hill_climbing
 from py_search.optimization import simulated_annealing
 
 def unmapped_mapping(inames):
@@ -119,7 +120,7 @@ def gen_cost_matrix(inames, cnames, target, base):
 
 
 num_c_inst = 1
-num_objs = 20 
+num_objs = 20
 
 concept = random_concept(num_instances=num_c_inst, num_objects=num_objs)
 instance = random_instance(num_objects=num_objs)
@@ -258,11 +259,16 @@ op_problem3 = StructureMappingOptimizationProblem((gm, gunmapped),
                                                   initial_cost=gc,
                                                   extra=(instance, concept))
 
-def annealing5x2(problem):
-    return simulated_annealing(problem, limit=5*num_objs*num_objs)
+def annealing(problem):
+    n = (num_objs * num_objs) // 2
+    return simulated_annealing(problem, temp_length=n)
 
-def annealing10x2(problem):
-    return simulated_annealing(problem, limit=10*num_objs*num_objs)
+def greedy_annealing(problem):
+    n = (num_objs * num_objs) // 2
+    return simulated_annealing(problem, initial_temp=0, temp_length=n)
+
+def hill(problem):
+    return hill_climbing(problem)
 
 def beam1(problem):
     return local_beam_search(problem, beam_width=1)
@@ -272,9 +278,10 @@ compare_searches([
                   #op_problem2,
                   op_problem3
                  ], [
-                  beam1, 
-                  annealing5x2, 
-                  annealing10x2
+                     hill,
+                     beam1, 
+                     annealing, 
+                     greedy_annealing
                  ])
 
 #s = next(annealing(op_problem))
