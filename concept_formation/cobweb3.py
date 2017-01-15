@@ -257,7 +257,7 @@ class Cobweb3Node(CobwebNode):
             for val in self.av_counts[attr]:
                 if val == cv_key:
                     scale = 1.0
-                    if self.tree.scaling:
+                    if self.tree is not None and self.tree.scaling:
                         inner_attr = self.tree.get_inner_attr(attr)
                         if inner_attr in self.tree.attr_scales:
                             scale = ((1/self.tree.scaling) *
