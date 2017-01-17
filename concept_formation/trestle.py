@@ -14,6 +14,8 @@ from concept_formation.structure_mapper import StructureMapper
 from concept_formation.preprocessor import SubComponentProcessor
 from concept_formation.preprocessor import Flattener
 from concept_formation.preprocessor import Pipeline
+from concept_formation.preprocessor import NameStandardizer
+
 
 class TrestleTree(Cobweb3Tree):
     """
@@ -25,7 +27,7 @@ class TrestleTree(Cobweb3Tree):
     The scaling parameter determines whether online normalization of continuous
     attributes is used, and to what standard deviation the values are scaled
     to. Scaling divides the std of each attribute by the std of the attribute
-    in the root divided by the scaling constant (i.e., 
+    in the root divided by the scaling constant (i.e.,
     :math:`\\sigma_{root} / scaling` when making category utility calculations.
     Scaling is useful to balance the weight of different numerical attributes,
     without scaling the magnitude of numerical attributes can affect category
@@ -41,7 +43,7 @@ class TrestleTree(Cobweb3Tree):
         when scaling numeric attributes. For example, if `('attr', '?o1')` was
         an attribute, then the inner most attribute would be 'attr'. When using
         inner most attributes, some objects might have multiple attributes
-        (i.e., 'attr' for different objects) that contribute to the scaling. 
+        (i.e., 'attr' for different objects) that contribute to the scaling.
     :param inner_attr_scaling: boolean
     :param structure_map_internally: Determines whether structure mapping is
         used at each node during categorization (and when merging), this
@@ -53,14 +55,14 @@ class TrestleTree(Cobweb3Tree):
     def __init__(self, scaling=0.5, inner_attr_scaling=True,
                  structure_map_internally=False):
         """
-        The tree constructor. 
+        The tree constructor.
         """
         self.gensym_counter = 0
         self.structure_map_internally = structure_map_internally
         self.root = TrestleNode()
         self.root.tree = self
         self.scaling = scaling
-        self.inner_attr_scaling = inner_attr_scaling 
+        self.inner_attr_scaling = inner_attr_scaling
         self.attr_scales = {}
 
     def clear(self):
@@ -82,7 +84,7 @@ class TrestleTree(Cobweb3Tree):
         self.gensym_counter += 1
         return '?o' + str(self.gensym_counter)
 
-    def _sanity_check_instance(self,instance):
+    def _sanity_check_instance(self, instance):
         """
         Checks the attributes of an instance to ensure they are properly
         subscriptable types and throws an excpetion if they are not.
@@ -95,38 +97,39 @@ class TrestleTree(Cobweb3Tree):
                 hash(attr)
                 attr[0]
             except:
-                raise ValueError('Invalid attribute: '+str(attr)+
-                    ' of type: '+str(type(attr))+
-                    ' in instance: '+str(instance)+
-                    ',\n'+type(self).__name__+
-                    ' only works with hashable and subscriptable attributes' +
-                    ' (e.g., strings).')
-            if isinstance(attr,tuple):
-                self._sanity_check_relation(attr,instance)
-            if isinstance(instance[attr],dict):
+                raise ValueError('Invalid attribute: '+str(attr) +
+                                 ' of type: ' + str(type(attr)) +
+                                 ' in instance: ' + str(instance) +
+                                 ',\n' + type(self).__name__ +
+                                 ' only works with hashable and' +
+                                 ' subscriptable attributes (e.g., strings).')
+            if isinstance(attr, tuple):
+                self._sanity_check_relation(attr, instance)
+            if isinstance(instance[attr], dict):
                 self._sanity_check_instance(instance[attr])
             else:
                 try:
                     hash(instance[attr])
                 except:
-                    raise ValueError('Invalid value: '+str(instance[attr])+
-                        ' of type: '+str(type(instance[attr]))+
-                        ' in instance: '+str(instance) +
-                        ',\n'+type(self).__name__+
-                        ' only works with hashable values.')
+                    raise ValueError('Invalid value: ' + str(instance[attr]) +
+                                     ' of type: ' + str(type(instance[attr])) +
+                                     ' in instance: ' + str(instance) +
+                                     ',\n' + type(self).__name__ +
+                                     ' only works with hashable values.')
 
-    def _sanity_check_relation(self,relation, instance):
+    def _sanity_check_relation(self, relation, instance):
         for v in relation:
             try:
                 v[0]
             except:
-                raise(ValueError('Invalid relation value: '+str(v)+
-                    ' of type: '+str(type(v))+
-                    ' in instance: '+str(instance)+
-                    ',\n'+type(self).__name__+
-                    'requires that values inside relation tuples be of type str or tuple.'))
-            if isinstance(v,tuple):
-                self._sanity_check_relation(v,instance)
+                raise(ValueError('Invalid relation value: ' + str(v) +
+                                 ' of type: ' + str(type(v)) +
+                                 ' in instance: ' + str(instance) +
+                                 ',\n' + type(self).__name__ +
+                                 'requires that values inside relation' +
+                                 ' tuples be of type str or tuple.'))
+            if isinstance(v, tuple):
+                self._sanity_check_relation(v, instance)
 
     def ifit(self, instance):
         """
@@ -134,12 +137,12 @@ class TrestleTree(Cobweb3Tree):
         concept.
 
         The instance is passed down the tree and updates each node to
-        incorporate the instance. **This modifies the tree's knowledge** for a 
+        incorporate the instance. **This modifies the tree's knowledge** for a
         non-modifying version see: :meth:`TrestleTree.categorize`.
 
         This version is modified from the normal :meth:`CobwebTree.ifit
         <concept_formation.cobweb.CobwebTree.ifit>` by first structure mapping
-        the instance before fitting it into the knoweldge base. 
+        the instance before fitting it into the knoweldge base.
 
         :param instance: an instance to be categorized into the tree.
         :type instance: :ref:`Instance<instance-rep>`
@@ -161,28 +164,29 @@ class TrestleTree(Cobweb3Tree):
         :rtype: concept
         """
         if self.structure_map_internally:
-            preprocessing = Pipeline(SubComponentProcessor(), Flattener())
+            preprocessing = Pipeline(NameStandardizer(), Flattener(),
+                                     SubComponentProcessor())
         else:
-            structure_mapper = StructureMapper(self.root,
-                                               gensym=self.gensym)
-            preprocessing = Pipeline(SubComponentProcessor(), Flattener(),
-                                     structure_mapper)
+            preprocessing = Pipeline(NameStandardizer(), Flattener(),
+                                     SubComponentProcessor(),
+                                     StructureMapper(self.root))
         temp_instance = preprocessing.transform(instance)
         self._sanity_check_instance(temp_instance)
         return self._cobweb_categorize(temp_instance)
 
-    def infer_missing(self, instance, choice_fn="most likely", allow_none=True):
+    def infer_missing(self, instance, choice_fn="most likely",
+                      allow_none=True):
         """
-        Given a tree and an instance, returns a new instance with attribute 
+        Given a tree and an instance, returns a new instance with attribute
         values picked using the specified choice function (either "most likely"
-        or "sampled"). 
+        or "sampled").
 
         .. todo:: write some kind of test for this.
 
         :param instance: an instance to be completed.
         :type instance: :ref:`Instance<instance-rep>`
         :param choice_fn: a string specifying the choice function to use,
-            either "most likely" or "sampled". 
+            either "most likely" or "sampled".
         :type choice_fn: a string
         :param allow_none: whether attributes not in the instance can be
             inferred to be missing. If False, then all attributes will be
@@ -192,12 +196,12 @@ class TrestleTree(Cobweb3Tree):
         :rtype: instance
         """
         if self.structure_map_internally:
-            preprocessing = Pipeline(SubComponentProcessor(), Flattener())
+            preprocessing = Pipeline(NameStandardizer(), Flattener(),
+                                     SubComponentProcessor())
         else:
-            structure_mapper = StructureMapper(self.root,
-                                               gensym=self.gensym)
-            preprocessing = Pipeline(SubComponentProcessor(), Flattener(),
-                                     structure_mapper)
+            preprocessing = Pipeline(NameStandardizer(), Flattener(),
+                                     SubComponentProcessor(),
+                                     StructureMapper(self.root))
 
         temp_instance = preprocessing.transform(instance)
         concept = self._cobweb_categorize(temp_instance)
@@ -226,17 +230,17 @@ class TrestleTree(Cobweb3Tree):
         Sort an instance in the categorization tree and return its resulting
         concept.
 
-        The instance is passed down the the categorization tree according to the
-        normal cobweb algorithm except using only the new and best opperators
-        and without modifying nodes' probability tables. **This does not modify
-        the tree's knowledge base** for a modifying version see
+        The instance is passed down the the categorization tree according to
+        the normal cobweb algorithm except using only the new and best
+        opperators and without modifying nodes' probability tables. **This does
+        not modify the tree's knowledge base** for a modifying version see
         :meth:`TrestleTree.ifit`
 
         This version differs fomr the normal :meth:`CobwebTree.categorize
         <concept_formation.cobweb.CobwebTree.categorize>` and
         :meth:`Cobweb3Tree.categorize
-        <concept_formation.cobweb3.Cobweb3Tree.categorize>` by structure mapping
-        instances before categorizing them.
+        <concept_formation.cobweb3.Cobweb3Tree.categorize>` by structure
+        mapping instances before categorizing them.
 
         :param instance: an instance to be categorized into the tree.
         :type instance: :ref:`Instance<instance-rep>`
@@ -255,8 +259,8 @@ class TrestleTree(Cobweb3Tree):
         <concept_formation.cobweb.CobwebTree.cobweb>` The key difference
         between trestle and cobweb is that trestle performs structure mapping
         (see: :meth:`structure_map
-        <concept_formation.structure_mapper.StructureMapper.transform>`) before proceeding
-        through the normal cobweb algorithm.
+        <concept_formation.structure_mapper.StructureMapper.transform>`) before
+        proceeding through the normal cobweb algorithm.
 
         :param instance: an instance to be categorized into the tree.
         :type instance: :ref:`Instance<instance-rep>`
@@ -264,35 +268,36 @@ class TrestleTree(Cobweb3Tree):
         :rtype: CobwebNode
         """
         if self.structure_map_internally:
-            preprocessing = Pipeline(SubComponentProcessor(), Flattener())
+            preprocessing = Pipeline(NameStandardizer(), Flattener(),
+                                     SubComponentProcessor())
         else:
-            structure_mapper = StructureMapper(self.root,
-                                               gensym=self.gensym)
-            preprocessing = Pipeline(SubComponentProcessor(), Flattener(),
-                                     structure_mapper)
+            preprocessing = Pipeline(NameStandardizer(), Flattener(),
+                                     SubComponentProcessor(),
+                                     StructureMapper(self.root))
         temp_instance = preprocessing.transform(instance)
         self._sanity_check_instance(temp_instance)
         return self.cobweb(temp_instance)
+
 
 class TrestleNode(Cobweb3Node):
 
     def is_exact_match(self, instance):
         if self.tree.structure_map_internally:
-            structure_mapper = StructureMapper(self, gensym=self.tree.gensym)
+            structure_mapper = StructureMapper(self)
             instance = structure_mapper.transform(instance)
         return super(TrestleNode, self).is_exact_match(instance)
 
     def increment_counts(self, instance):
         if self.tree.structure_map_internally:
-            structure_mapper = StructureMapper(self, gensym=self.tree.gensym)
+            structure_mapper = StructureMapper(self)
             instance = structure_mapper.transform(instance)
-            #print('increment', structure_mapper.reverse_mapping)
+            # print('increment', structure_mapper.reverse_mapping)
         return super(TrestleNode, self).increment_counts(instance)
 
     def update_counts_from_node(self, node):
         if self.tree.structure_map_internally:
             if self.av_counts != {}:
-                structure_mapper = StructureMapper(self, gensym=self.tree.gensym)
+                structure_mapper = StructureMapper(self)
                 node.av_counts = structure_mapper.transform(node.av_counts)
-                #print('merge', structure_mapper.reverse_mapping)
+                # print('merge', structure_mapper.reverse_mapping)
         return super(TrestleNode, self).update_counts_from_node(node)

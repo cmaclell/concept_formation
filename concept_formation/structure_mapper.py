@@ -1,13 +1,12 @@
 """
 This module contains the
 :class:`StructureMapper<concept_formation.structure_mapper.StructureMapper>`
-class which is used to perform flattening (i.e., compilation of component
-attributes into relational attributes) and structure mapping (i.e., renaming
-variable attributes it improve the category utility) on instances.
+class which is used rename variable attributes it improve the category utility
+on instances.
 
 It is an instance of a
 :class:`preprocessor<concept_formation.preprocessor.Preprocessor>` with a
-:func:`transform` and :func:`undo_tranform` methods. 
+:func:`transform` and :func:`undo_tranform` methods.
 """
 from __future__ import print_function
 from __future__ import unicode_literals
@@ -19,26 +18,26 @@ from random import random
 from itertools import combinations
 
 from munkres import Munkres
-#from scipy.optimize import linear_sum_assignment
+# from scipy.optimize import linear_sum_assignment
 
 from py_search.base import Problem
 from py_search.base import Node
 from py_search.optimization import hill_climbing
-from concept_formation.preprocessor import NameStandardizer
 from concept_formation.preprocessor import Preprocessor
 from concept_formation.preprocessor import rename_relation
 from concept_formation.preprocessor import get_attribute_components
 from concept_formation.cobweb3 import Cobweb3Node
 from concept_formation.cobweb3 import cv_key
 
+
 def get_component_names(instance, vars_only=True):
     """
     Given an instance or a concept's probability table return a list of all of
     the component names. If vars_only is false, than all constants and
-    variables are returned. 
+    variables are returned.
 
     :param instance: An instance or a concept's probability table.
-    :type instance: an instance 
+    :type instance: an instance
     :param vars_only: Whether or not to return only variables (i.e., strings
         with a names with a '?' at the beginning) or both variables and
         constants.
@@ -46,9 +45,12 @@ def get_component_names(instance, vars_only=True):
     :return: A frozenset of all of the component names present in the instance
     :rtype: frozenset
 
-    >>> instance = {('a', ('sub1', 'c1')): 0, ('a', 'c2'): 0, ('_', '_a', 'c3'): 0}
+    >>> instance = {('a', ('sub1', 'c1')): 0, ('a', 'c2'): 0,
+    ...             ('_', '_a', 'c3'): 0}
     >>> names = get_component_names(instance, False)
-    >>> frozenset(names) == frozenset({'c3', 'c2', ('sub1', 'c1'), 'sub1', 'a', ('a', ('sub1', 'c1')), ('a', 'c2'), 'c1'})
+    >>> frozenset(names) == frozenset({'c3', 'c2', ('sub1', 'c1'), 'sub1', 'a',
+    ...                               ('a', ('sub1', 'c1')), ('a', 'c2'),
+    ...                                'c1'})
     True
     >>> names = get_component_names(instance, True)
     >>> frozenset(names) == frozenset()
@@ -56,7 +58,9 @@ def get_component_names(instance, vars_only=True):
 
     >>> instance = {('relation1', ('sub1', 'c1'), 'o3'): True}
     >>> names = get_component_names(instance, False)
-    >>> frozenset(names) == frozenset({'o3', ('relation1', ('sub1', 'c1'), 'o3'), 'sub1', ('sub1', 'c1'), 'c1', 'relation1'})
+    >>> frozenset(names) == frozenset({'o3', ('relation1', ('sub1', 'c1'),
+    ...                                       'o3'), 'sub1', ('sub1', 'c1'),
+    ...                                'c1', 'relation1'})
     True
     """
     names = set()
@@ -65,6 +69,7 @@ def get_component_names(instance, vars_only=True):
             names.add(name)
     return names
 
+
 def rename_flat(target, mapping):
     """
     Given an instance and a mapping rename the components and relations and
@@ -72,7 +77,8 @@ def rename_flat(target, mapping):
 
     :param instance: An instance to be renamed according to a mapping
     :type instance: instance
-    :param mapping: :param mapping: A dictionary of mappings between component names
+    :param mapping: :param mapping: A dictionary of mappings between component
+        names
     :type mapping: dict
     :return: A copy of the instance with components and relations renamed
     :rtype: instance
@@ -95,6 +101,7 @@ def rename_flat(target, mapping):
             temp_instance[attr] = target[attr]
 
     return temp_instance
+
 
 def bind_flat_attr(attr, mapping):
     """
@@ -129,12 +136,14 @@ def bind_flat_attr(attr, mapping):
     >>> bind_flat_attr(('<', ('a', '?o2'), ('a', '?o1')), {'?o1': '?c1'})
     ('<', ('a', '?o2'), ('a', '?c1'))
 
-    >>> bind_flat_attr(('<', ('a', '?o2'), ('a', '?o1')), {'?o1': '?c1', '?o2': '?c2'})
+    >>> bind_flat_attr(('<', ('a', '?o2'), ('a', '?o1')),
+    ...                {'?o1': '?c1', '?o2': '?c2'})
     ('<', ('a', '?c2'), ('a', '?c1'))
     """
     return tuple([bind_flat_attr(ele, mapping) if isinstance(ele, tuple)
                   else mapping[ele] if ele in mapping else ele for ele in
                   attr])
+
 
 def contains_component(component, attr):
     """
@@ -158,23 +167,20 @@ def contains_component(component, attr):
         for ele in attr:
             if contains_component(component, ele) is True:
                 return True
-    else:
-        if attr == component:
-            return True
-    
-    return False
+    return attr == component
+
 
 def flat_match(target, base):
     """
     Given a base (usually concept) and target (instance or concept av table)
     this function returns a mapping that can be used to rename components in
     the target. Search is used to find a mapping that maximizes the expected
-    number of correct guesses in the concept after incorporating the instance. 
+    number of correct guesses in the concept after incorporating the instance.
 
     The current approach is to generate an initial solution via Munkres /
     Hungarian matching on object-to-object assignment (no relations). Then this
     assignment is refined by using a hill climbing search to account for the
-    relations. 
+    relations.
 
     :param target: An instance or concept.av_counts object to be mapped to the
         base concept.
@@ -190,15 +196,23 @@ def flat_match(target, base):
     if(len(inames) == 0 or len(cnames) == 0):
         return {}
 
+    if len(inames.intersection(cnames)) > 0:
+        raise Exception("Objects in target and base must not collide. "
+                        "Consider running NameStandardizer first.")
+
+    # TODO consider allowing users to provide an initial mapping.
+    # TODO consider flipping target and base when one is larger than the other.
     initial_mapping = hungarian_mapping(inames, cnames, target, base)
     unmapped = cnames - frozenset(dict(initial_mapping).values())
     initial_cost = mapping_cost(initial_mapping, target, base)
 
-    op_problem = StructureMappingOptimizationProblem((initial_mapping, unmapped),
+    op_problem = StructureMappingOptimizationProblem((initial_mapping,
+                                                      unmapped),
                                                      initial_cost=initial_cost,
                                                      extra=(target, base))
     solution = next(hill_climbing(op_problem))
     return dict(solution.state[0])
+
 
 def hungarian_mapping(inames, cnames, target, base):
     """
@@ -206,7 +220,7 @@ def hungarian_mapping(inames, cnames, target, base):
     mapping of inames to cnames. The base cost is the expected correct guesses
     if each object is matched to itself (i.e., a new object). Then the cost of
     each object-object match is evaluated by setting each individual object and
-    computing the expected correct guesses. 
+    computing the expected correct guesses.
 
     :param inames: the target component names
     :type inames: collection
@@ -230,7 +244,7 @@ def hungarian_mapping(inames, cnames, target, base):
         for c in cnames:
             nm = {}
             nm[o] = c
-            cost = mapping_cost({o:c}, target, base)
+            cost = mapping_cost({o: c}, target, base)
             row.append(cost)
         unmapped_cost = mapping_cost({}, target, base)
         for other_o in inames:
@@ -244,14 +258,15 @@ def hungarian_mapping(inames, cnames, target, base):
     indices = m.compute(cost_matrix)
 
     # comments for using scipy hungarian
-    #indices = linear_sum_assignment(cost_matrix)
+    # indices = linear_sum_assignment(cost_matrix)
 
     mapping = {}
-    for row,col in indices:
-    #for i in range(len(indices[0])):
-    #    row = indices[0][i]
-    #    col = indices[1][i]
 
+    # for i in range(len(indices[0])):
+    #     row = indices[0][i]
+    #     col = indices[1][i]
+
+    for row, col in indices:
         if col >= len(cnames):
             mapping[inames[row]] = inames[row]
         else:
@@ -259,12 +274,13 @@ def hungarian_mapping(inames, cnames, target, base):
 
     return frozenset(mapping.items())
 
+
 def mapping_cost(mapping, target, base):
     """
     Used to evaluate a mapping between a target and a base. This is performed
     by renaming the target using the mapping, adding it to the base and
     evaluating the expected number of correct guesses in the newly updated
-    concept. 
+    concept.
 
     :param mapping: the mapping of target items to base items
     :type mapping: frozenset or dict
@@ -284,8 +300,8 @@ def mapping_cost(mapping, target, base):
     temp_base = Cobweb3Node()
     temp_base.update_counts_from_node(base)
     temp_base.tree = base.tree
-    
-    # check if it is an av_counts table, then create concept to deal with it. 
+
+    # check if it is an av_counts table, then create concept to deal with it.
     if isinstance(next(iter(renamed_target.values())), dict):
         temp_target = Cobweb3Node()
         temp_target.av_counts = renamed_target
@@ -299,6 +315,7 @@ def mapping_cost(mapping, target, base):
 
     return -temp_base.expected_correct_guesses()
 
+
 class StructureMappingOptimizationProblem(Problem):
     """
     A class for describing a structure mapping problem to be solved using the
@@ -308,13 +325,13 @@ class StructureMappingOptimizationProblem(Problem):
 
     Unlike StructureMappingProblem, this class uses a local search approach;
     i.e., given an initial mapping it tries to improve the mapping by permuting
-    it. 
+    it.
     """
     def node_value(self, node):
         """
         The value of a node (based on mapping_cost).
         """
-        #return node.cost()
+        # return node.cost()
         mapping, unmapped_cnames = node.state
         target, base = node.extra
         return mapping_cost(mapping, target, base)
@@ -323,7 +340,7 @@ class StructureMappingOptimizationProblem(Problem):
         """
         returns the child node generated from swapping two mappings.
         """
-        new_mapping = {a:mapping[a] for a in mapping}
+        new_mapping = {a: mapping[a] for a in mapping}
 
         if mapping[o2] == o2:
             new_mapping[o1] = o1
@@ -336,15 +353,15 @@ class StructureMappingOptimizationProblem(Problem):
             new_mapping[o2] = mapping[o1]
 
         new_mapping = frozenset(new_mapping.items())
-        return Node((new_mapping, unmapped_cnames), extra=node.extra) 
+        return Node((new_mapping, unmapped_cnames), extra=node.extra)
 
-    def swap_unnamed(self, o1, o2, mapping, unmapped_cnames, target, base, 
+    def swap_unnamed(self, o1, o2, mapping, unmapped_cnames, target, base,
                      node):
         """
         Returns the child node generated from assigning an unmapped component
         object to one of the instance objects.
         """
-        new_mapping = {a:mapping[a] for a in mapping}
+        new_mapping = {a: mapping[a] for a in mapping}
         new_unmapped_cnames = set(unmapped_cnames)
         new_unmapped_cnames.remove(o2)
         if mapping[o1] != o1:
@@ -368,17 +385,17 @@ class StructureMappingOptimizationProblem(Problem):
         while mapping[o1] == o1 and len(unmapped_cnames) == 0:
             o1 = choice(list(mapping))
 
-        possible_flips = [v for v in mapping if (v != o1 and 
-                                                not (mapping[o1] == o1 or 
-                                                     mapping[v] == v))]
+        possible_flips = [v for v in mapping if (v != o1 and
+                                                 not (mapping[o1] == o1 or
+                                                      mapping[v] == v))]
 
-        if random() <= len(possible_flips) / (len(possible_flips) + 
+        if random() <= len(possible_flips) / (len(possible_flips) +
                                               len(unmapped_cnames)):
             o2 = choice(possible_flips)
             return self.swap_two(o1, o2, mapping, unmapped_cnames, target,
                                  base, node)
         else:
-            o2 = choice(list(unmapped_cnames)) 
+            o2 = choice(list(unmapped_cnames))
             return self.swap_unnamed(o1, o2, mapping, unmapped_cnames, target,
                                      base, node)
 
@@ -394,14 +411,15 @@ class StructureMappingOptimizationProblem(Problem):
             if o1 == o2 or (mapping[o1] == o1 and mapping[o2] == o2):
                 continue
 
-            yield self.swap_two(o1, o2, mapping, unmapped_cnames, target, 
+            yield self.swap_two(o1, o2, mapping, unmapped_cnames, target,
                                 base, node)
 
         for o1 in mapping:
             for o2 in unmapped_cnames:
                 yield self.swap_unnamed(o1, o2, mapping, unmapped_cnames,
                                         target, base, node)
-                
+
+
 def is_partial_match(iAttr, cAttr, mapping):
     """
     Returns True if the instance attribute (iAttr) partially matches the
@@ -415,16 +433,21 @@ def is_partial_match(iAttr, cAttr, mapping):
     :type mapping: dict
     :param unnamed: A list of components that are not yet mapped.
     :type unnamed: dict
-    :return: ``True`` if the instance attribute matches the concept attribute in the mapping otherwise ``False``
+    :return: ``True`` if the instance attribute matches the concept attribute
+        in the mapping otherwise ``False``
     :rtype: bool
 
-    >>> is_partial_match(('<', ('a', '?o2'), ('a', '?o1')), ('<', ('a', '?c2'), ('b', '?c1')), {'?o1': '?c1'})
+    >>> is_partial_match(('<', ('a', '?o2'), ('a', '?o1')),
+    ...                  ('<', ('a', '?c2'), ('b', '?c1')), {'?o1': '?c1'})
     False
 
-    >>> is_partial_match(('<', ('a', '?o2'), ('a', '?o1')), ('<', ('a', '?c2'), ('a', '?c1')), {'?o1': '?c1'})
+    >>> is_partial_match(('<', ('a', '?o2'), ('a', '?o1')),
+    ...                  ('<', ('a', '?c2'), ('a', '?c1')), {'?o1': '?c1'})
     True
 
-    >>> is_partial_match(('<', ('a', '?o2'), ('a', '?o1')), ('<', ('a', '?c2'), ('a', '?c1')), {'?o1': '?c1', '?o2': '?c2'})
+    >>> is_partial_match(('<', ('a', '?o2'), ('a', '?o1')),
+    ...                  ('<', ('a', '?c2'), ('a', '?c1')),
+    ...                  {'?o1': '?c1', '?o2': '?c2'})
     True
     """
     if type(iAttr) != type(cAttr):
@@ -434,7 +457,7 @@ def is_partial_match(iAttr, cAttr, mapping):
         return False
 
     if isinstance(iAttr, tuple):
-        for i,v in enumerate(iAttr):
+        for i, v in enumerate(iAttr):
             if not is_partial_match(iAttr[i], cAttr[i], mapping):
                 return False
         return True
@@ -447,11 +470,13 @@ def is_partial_match(iAttr, cAttr, mapping):
 
     return iAttr == cAttr
 
+
 class StructureMapper(Preprocessor):
     """
-    Flatten the instance, perform structure mapping to the concept, rename
-    the instance based on this structure mapping, and return the renamed
-    instance.
+    Structure maps an instance that has been appropriately preprocessed (i.e.,
+    standardized apart, flattened, subcomponent processed, and lists processed
+    out). Transform renames the instance based on this structure mapping, and
+    return the renamed instance.
 
     :param base: A concept to structure map the instance to
     :type base: TrestleNode
@@ -461,11 +486,10 @@ class StructureMapper(Preprocessor):
     :return: A flattened and mapped copy of the instance
     :rtype: instance
     """
-    def __init__(self, base, gensym):
+    def __init__(self, base):
         self.base = base
         self.mapping = None
         self.reverse_mapping = None
-        self.name_standardizer = NameStandardizer(gensym)
 
     def get_mapping(self):
         """
@@ -475,20 +499,19 @@ class StructureMapper(Preprocessor):
         :rtype: dict
         """
         return {self.reverse_mapping[o]: o for o in self.reverse_mapping}
-    
+
     def transform(self, target):
         """
         Transforms a provided target (either an instance or an av_counts table
         from a CobwebNode or Cobweb3Node).
 
         :param target: An instance or av_counts table to rename to bring into
-            alignment with the provided base. 
+            alignment with the provided base.
         :type target: instance or av_counts table (from CobwebNode or
             Cobweb3Node).
         :return: The renamed instance or av_counts table
         :rtype: instance or av_counts table
         """
-        target = self.name_standardizer.transform(target)
         self.mapping = flat_match(target, self.base)
         self.reverse_mapping = {self.mapping[o]: o for o in self.mapping}
         return rename_flat(target, self.mapping)
@@ -508,5 +531,4 @@ class StructureMapper(Preprocessor):
         """
         if self.reverse_mapping is None:
             raise Exception("Must transform before undoing transform")
-        target = rename_flat(target, self.reverse_mapping)
-        return self.name_standardizer.undo_transform(target)
+        return rename_flat(target, self.reverse_mapping)
