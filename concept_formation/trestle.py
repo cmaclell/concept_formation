@@ -283,21 +283,38 @@ class TrestleNode(Cobweb3Node):
 
     def is_exact_match(self, instance):
         if self.tree.structure_map_internally:
+            parent_mapping = None
+            if self.parent is not None and (self.parent.last_mapping is not
+                                            None):
+                parent_mapping = self.parent.last_mapping
+
             structure_mapper = StructureMapper(self)
-            instance = structure_mapper.transform(instance)
+            instance = structure_mapper.transform(instance, parent_mapping)
         return super(TrestleNode, self).is_exact_match(instance)
 
     def increment_counts(self, instance):
         if self.tree.structure_map_internally:
+            parent_mapping = None
+            if self.parent is not None and (self.parent.last_mapping is not
+                                            None):
+                parent_mapping = self.parent.last_mapping
+
             structure_mapper = StructureMapper(self)
-            instance = structure_mapper.transform(instance)
+            instance = structure_mapper.transform(instance, parent_mapping)
+            self.last_mapping = frozenset(structure_mapper.mapping.items())
             # print('increment', structure_mapper.reverse_mapping)
         return super(TrestleNode, self).increment_counts(instance)
 
     def update_counts_from_node(self, node):
         if self.tree.structure_map_internally:
             if self.av_counts != {}:
+                parent_mapping = None
+                if self.parent is not None and (self.parent.last_mapping is not
+                                                None):
+                    parent_mapping = self.parent.last_mapping
+
                 structure_mapper = StructureMapper(self)
-                node.av_counts = structure_mapper.transform(node.av_counts)
+                node.av_counts = structure_mapper.transform(node.av_counts,
+                                                            parent_mapping)
                 # print('merge', structure_mapper.reverse_mapping)
         return super(TrestleNode, self).update_counts_from_node(node)
