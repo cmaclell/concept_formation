@@ -649,13 +649,35 @@ class Flattener(Preprocessor):
         >>> flat = flattener.transform(instance)
         >>> pprint.pprint(flat)
         {'a': 1, ('_', ('_c', 'c1')): 2, ('b', 'c1'): 1}
-
         >>> instance = {'l1': {'l2': {'l3': {'l4': 1}}}}
         >>> pprint.pprint(instance)
         {'l1': {'l2': {'l3': {'l4': 1}}}}
         >>> instance = flattener._flatten(instance)
         >>> pprint.pprint(instance)
         {('l4', ('l3', ('l2', 'l1'))): 1}
+        >>> instance = {'?check0': {'Position': {'X': 1.5990001, 'Y': -7.05200052}, 'Type': 'Checkpoint'}, '?cube01': {'Bounds': {'X': 1.7420001, 'Y': 1.751}, 'Name': 'cube01', 'Position': {'X': -12.0840006, 'Y': -7.1050005}, 'Rotation': {'Z': 0.0}, 'Type': 'cube'}, '?cube02': {'Bounds': {'X': 1.7420001, 'Y': 1.751}, 'Name': 'cube02', 'Position': {'X': -4.662, 'Y': -7.1050005}, 'Rotation': {'Z': 0.0}, 'Type': 'cube'}, 'Goal': {'Position': {'X': 8.599, 'Y': 0.715000033}, 'Type': 'Goal'}}
+        >>> flat = flattener.transform(instance)
+        >>> pprint.pprint(flat)
+        {('Name', '?cube01'): 'cube01',
+         ('Name', '?cube02'): 'cube02',
+         ('Type', '?check0'): 'Checkpoint',
+         ('Type', '?cube01'): 'cube',
+         ('Type', '?cube02'): 'cube',
+         ('Type', 'Goal'): 'Goal',
+         ('X', ('Bounds', '?cube01')): 1.7420001,
+         ('X', ('Bounds', '?cube02')): 1.7420001,
+         ('X', ('Position', '?check0')): 1.5990001,
+         ('X', ('Position', '?cube01')): -12.0840006,
+         ('X', ('Position', '?cube02')): -4.662,
+         ('X', ('Position', 'Goal')): 8.599,
+         ('Y', ('Bounds', '?cube01')): 1.751,
+         ('Y', ('Bounds', '?cube02')): 1.751,
+         ('Y', ('Position', '?check0')): -7.05200052,
+         ('Y', ('Position', '?cube01')): -7.1050005,
+         ('Y', ('Position', '?cube02')): -7.1050005,
+         ('Y', ('Position', 'Goal')): 0.715000033,
+         ('Z', ('Rotation', '?cube01')): 0.0,
+         ('Z', ('Rotation', '?cube02')): 0.0}
         """
         temp = {}
         for attr in instance:
