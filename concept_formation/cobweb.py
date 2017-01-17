@@ -809,6 +809,8 @@ class CobwebNode(object):
         .. seealso:: :meth:`CobwebNode.get_best_operation`
         """
         for attr in set(instance).union(set(self.attrs())):
+            if attr[0] == '_':
+                continue
             if attr in instance and attr not in self.av_counts:
                 return False
             if attr in self.av_counts and attr not in instance:
