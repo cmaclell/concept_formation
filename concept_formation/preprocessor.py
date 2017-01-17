@@ -45,12 +45,13 @@ from copy import deepcopy
 from numbers import Number
 import collections
 
-_gensym_counter = 0;
+_gensym_counter = 0
+
 
 def get_attribute_components(attribute, vars_only=True):
     """
     Gets component names out of an attribute
-    
+
     >>> from pprint import pprint
     >>> attr = ('a', ('sub1', '?c1'))
     >>> get_attribute_components(attr)
@@ -79,14 +80,17 @@ def get_attribute_components(attribute, vars_only=True):
                 for name in get_attribute_components(ele, vars_only):
                     names.add(name)
             else:
-                if ((vars_only is not True or ele[0] == '?') and ele != '_' and
-                    ele[0] != '_'):
+                if ((vars_only is not True or ele[0] == '?') and (ele != '_'
+                                                                  and ele[0] !=
+                                                                  '_')):
                     names.add(ele)
 
-    elif (vars_only is not True and attribute[0] != '_') or attribute[0] == '?':
-            names.add(attribute)
+    elif ((vars_only is not True and attribute[0] != '_') or attribute[0] ==
+          '?'):
+        names.add(attribute)
 
     return names
+
 
 def default_gensym():
     """
@@ -99,6 +103,7 @@ def default_gensym():
     _gensym_counter += 1
     return '?o' + str(_gensym_counter)
 
+
 def _reset_gensym():
     """
     Resets the gensym counter to 0, which is useful for doctesting. Do not call
@@ -106,6 +111,7 @@ def _reset_gensym():
     """
     global _gensym_counter
     _gensym_counter = 0
+
 
 class Preprocessor(object):
     """
@@ -117,25 +123,26 @@ class Preprocessor(object):
         """
         Transforms an instance.
         """
-        raise NotImplementedError("Class must implement transform function")
+        raise NotImplementedError("Class must implement transform")
 
     def undo_transform(self, instance):
         """
         Undoes a transformation to an instance.
         """
-        raise NotImplementedError("Class must implement undo_transform function")
+        raise NotImplementedError("Class must implement undo_transform")
 
-    def batch_transform(self,instances):
+    def batch_transform(self, instances):
         """
         Transforms a collection of instances.
         """
         return [self.transform(instance) for instance in instances]
 
-    def batch_undo(self,instances):
+    def batch_undo(self, instances):
         """
         Undoes transformation for a collection of instances
         """
         return [self.undo_transform(instance) for instance in instances]
+
 
 class OneWayPreprocessor(Preprocessor):
     """
@@ -148,7 +155,8 @@ class OneWayPreprocessor(Preprocessor):
         """
         No-op
         """
-        return {k:instance[k] for k in instance}
+        return {k: instance[k] for k in instance}
+
 
 class Pipeline(Preprocessor):
     """
@@ -174,6 +182,7 @@ class Pipeline(Preprocessor):
         for pp in reversed(self.preprocessors):
             instance = pp.undo_transform(instance)
         return instance
+
 
 class Tuplizer(Preprocessor):
     """
@@ -204,23 +213,25 @@ class Tuplizer(Preprocessor):
         """
         Convert at string specified relations into tuples.
         """
-        return {self._tuplize_relation(attr): instance[attr] for attr in instance}
+        return {self._tuplize_relation(attr): instance[attr] for attr in
+                instance}
 
     def undo_transform(self, instance):
         """
         Convert tuple relations back into their string forms.
         """
-        return {self._stringify_relation(attr): instance[attr] for attr in instance}
+        return {self._stringify_relation(attr): instance[attr] for attr in
+                instance}
 
     def _tuplize_relation(self, relation):
         """
-        Converts a string formatted relation into a tuplized relation. 
+        Converts a string formatted relation into a tuplized relation.
 
         :param attr: The relational attribute formatted as a string
         :type attr: string
-        :param mapping: A dictionary of mappings with component names as keys. Just
-            the keys are used (i.e., as a set) to determine if elements in the relation
-            are objects.
+        :param mapping: A dictionary of mappings with component names as keys.
+            Just the keys are used (i.e., as a set) to determine if elements in
+            the relation are objects.
         :type mapping: dict
         :return: A new relational attribute in tuple format
         :rtype: tuple
@@ -229,8 +240,6 @@ class Tuplizer(Preprocessor):
         >>> tuplizer = Tuplizer()
         >>> tuplizer._tuplize_relation(relation)
         ('foo1', 'o1', ('foo2', 'o2', 'o3'))
-
-
         """
         if relation[0] != '(':
             return relation
@@ -247,14 +256,14 @@ class Tuplizer(Preprocessor):
             while val[-1] == ')':
                 end += 1
                 val = val[:-1]
-            
+
             current = stack[-1]
             try:
                 val = float(val)
             except ValueError:
                 val = val
             current.append(val)
-            
+
             while end > 0:
                 last = tuple(stack.pop())
                 current = stack[-1]
@@ -262,7 +271,6 @@ class Tuplizer(Preprocessor):
                 end -= 1
 
         final = tuple(stack[-1][-1])
-        #final = self.tuplize_elements(final)
         return final
 
     def _stringify_relation(self, relation):
@@ -274,7 +282,6 @@ class Tuplizer(Preprocessor):
         >>> tuplizer._stringify_relation(relation)
         '(foo1 o1 (foo2 o2 o3))'
         """
-        #relation = convert_unary_to_dot(relation)
         if isinstance(relation, tuple):
             relation = [self._stringify_relation(ele) if isinstance(ele, tuple)
                         else ele for ele in relation]
@@ -282,12 +289,13 @@ class Tuplizer(Preprocessor):
         else:
             return relation
 
+
 def rename_relation(relation, mapping):
     """
-    Takes a tuplized relational attribute (e.g., ('before', 'o1', 'o2')) and
-    a mapping and renames the components based on mapping. This function
-    contains a special edge case for handling dot notation which is used in
-    the NameStandardizer.
+    Takes a tuplized relational attribute (e.g., ``('before', 'o1', 'o2')``)
+    and a mapping and renames the components based on the mapping. This
+    function contains a special edge case for handling dot notation which is
+    used in the NameStandardizer.
 
     :param attr: The relational attribute containing components to be renamed
     :type attr: :ref:`Relation Attribute<attr-rel>`
@@ -306,17 +314,8 @@ def rename_relation(relation, mapping):
     >>> rename_relation(relation, mapping)
     ('foo1', 'o100')
     """
-    new_relation = []
-
-    for v in relation:
-        if v in mapping:
-            new_relation.append(mapping[v])
-        elif isinstance(v, tuple):
-            new_relation.append(rename_relation(v, mapping))
-        else:
-            new_relation.append(v)
-
-    return tuple(new_relation)
+    return tuple(mapping[v] if v in mapping else rename_relation(v, mapping) if
+                 isinstance(v, tuple) else v for v in relation)
 
 
 class NameStandardizer(Preprocessor):
@@ -339,12 +338,17 @@ class NameStandardizer(Preprocessor):
 
     :param gensym: a function that returns unique object names (str) on each
         call. If None, then :func:`default_gensym` is used, which keeps a
-        global object counter. 
+        global object counter.
     :type gensym: a function
 
-    >>> _reset_gensym()     # Reset the symbol generator for doctesting purposes. 
+    # Reset the symbol generator for doctesting purposes.
+    >>> _reset_gensym()
     >>> import pprint
-    >>> instance = {'nominal': 'v1', 'numeric': 2.3, 'c1': {'a1': 'v1'}, '?c2': {'a2': 'v2', '?c3': {'a3': 'v3'}}, '(relation1 c1 ?c2)': True, 'lists': [{'c1': {'inner': 'val'}}, 's2', 's3'], '(relation2 (a1 c1) (relation3 (a3 (?c3 ?c2))))': 4.3, ('relation4', '?c2', '?c4'):True}
+    >>> instance = {'nominal': 'v1', 'numeric': 2.3, 'c1': {'a1': 'v1'}, '?c2':
+    ...             {'a2': 'v2', '?c3': {'a3': 'v3'}}, '(relation1 c1 ?c2)':
+    ...             True, 'lists': [{'c1': {'inner': 'val'}}, 's2', 's3'],
+    ...             '(relation2 (a1 c1) (relation3 (a3 (?c3 ?c2))))': 4.3,
+    ...             ('relation4', '?c2', '?c4'):True}
     >>> tuplizer = Tuplizer()
     >>> instance = tuplizer.transform(instance)
     >>> std = NameStandardizer()
@@ -382,10 +386,8 @@ class NameStandardizer(Preprocessor):
      ('relation2', ('a1', 'c1'), ('relation3', ('a3', ('?c3', '?c2')))): 4.3,
      ('relation4', '?c2', '?c4'): True}
     """
-
     def __init__(self, gensym=None):
         self.reverse_mapping = None
-
         if gensym:
             self.gensym = gensym
         else:
@@ -413,7 +415,7 @@ class NameStandardizer(Preprocessor):
         new_instance = {}
 
         for attr in instance:
-            
+
             name = attr
             if attr in self.reverse_mapping:
                 name = self.reverse_mapping[attr]
@@ -431,7 +433,7 @@ class NameStandardizer(Preprocessor):
                 new_instance[temp_rel] = instance[attr]
             else:
                 new_instance[attr] = instance[attr]
-        
+
         return new_instance
 
     def _standardize(self, instance, mapping={}, prefix=None):
@@ -439,13 +441,14 @@ class NameStandardizer(Preprocessor):
         Given an instance rename all the components so they
         have unique names.
 
-        .. :warning: relations cannot have dictionaries as values (i.e., cannot be
-            subojects).
-        .. :warning: relations can only exist at the top level, not in sub-objects.
+        .. :warning: relations cannot have dictionaries as values (i.e., canno
+            be subojects).
+        .. :warning: relations can only exist at the top level, not in
+            sub-objects.
 
         This will rename component attirbutes as well as any occurance of the
-        component's name within relation attributes. This renaming is necessary to
-        allow for a search between possible mappings without collisions.
+        component's name within relation attributes. This renaming is necessary
+        to allow for a search between possible mappings without collisions.
 
         :param instance: An instance to be named apart.
         :param mapping: An existing mapping to add new mappings to; used for
@@ -454,7 +457,8 @@ class NameStandardizer(Preprocessor):
         :return: an instance with component attributes renamed
         :rtype: :ref:`Instance<instance-rep>`
 
-        >>> _reset_gensym()     # Reset the symbol generator for doctesting purposes. 
+        # Reset the symbol generator for doctesting purposes.
+        >>> _reset_gensym()
         >>> import pprint
         >>> instance = {'nominal': 'v1', 'numeric': 2.3, '?c1': {'a1': 'v1'}, 'c2': {'a2': 'v2', 'c3': {'a3': 'v3'}}, '(relation1 ?c1 c2)': True, 'lists': ['s1', 's2', 's3'], '(relation2 (a1 ?c1) (relation3 (a3 (c2 c3))))': 4.3}
         >>> tuplizer = Tuplizer()
@@ -469,20 +473,14 @@ class NameStandardizer(Preprocessor):
          'numeric': 2.3,
          ('relation1', '?o1', 'c2'): True,
          ('relation2', ('a1', '?o1'), ('relation3', ('a3', ('c2', 'c3')))): 4.3}
-        
         """
         new_instance = {}
         relations = []
 
-        # I had to add the key function to the sort because python apparently can't
-        # naturally sort strings and tuples
-        #for attr in instance:
+        # I had to add the key function to the sort because python apparently
+        # can't naturally sort strings and tuples
+        # for attr in instance:
         for attr in sorted(instance, key=lambda at: str(at)):
-
-            # if prefix is None:
-            #     new_a = attr
-            # else:
-            #     new_a = (attr, prefix)
 
             name = attr
             indexable = False
@@ -499,15 +497,12 @@ class NameStandardizer(Preprocessor):
 
             value = instance[attr]
 
-            # TODO I think this needs to be removed.
-            # Particularly, for standardizing an attribute value table that has
-            # boolean and continuous values and all that. 
             if isinstance(value, dict):
                 value = self._standardize(value, mapping, name)
             elif isinstance(value, list):
                 value = [self._standardize(ele, mapping, name) if
                          isinstance(ele, dict) else ele for ele in value]
-            
+
             if isinstance(name, tuple):
                 for o in get_attribute_components(name):
                     if o not in mapping:
@@ -515,12 +510,13 @@ class NameStandardizer(Preprocessor):
                 relations.append((name, value))
             else:
                 new_instance[name] = value
-        
+
         for relation, val in relations:
             temp_rel = rename_relation(relation, mapping)
             new_instance[temp_rel] = val
-        #print(mapping)
+
         return new_instance
+
 
 class Flattener(Preprocessor):
     """
@@ -528,9 +524,9 @@ class Flattener(Preprocessor):
 
     Takes an instance that has already been standardized apart and flattens it.
 
-    .. :warning: important to note that relations can only exist at the top level,
-        not within subobjects. If they do exist than this function will return
-        incorrect results.
+    .. :warning: important to note that relations can only exist at the top
+        level, not within subobjects. If they do exist than this function will
+        return incorrect results.
 
     Hierarchy is represented with periods between variable names in the
     flattened attributes. However, this process converts the attributes with
@@ -552,13 +548,23 @@ class Flattener(Preprocessor):
     >>> instance = flattener.undo_transform(instance)
     >>> pprint.pprint(instance)
     {'a': 1, 'c1': {'_c': 2, 'b': 1}}
+
+    >>> instance = {'l1': {'l2': {'l3': {'l4': 1}}}}
+    >>> pprint.pprint(instance)
+    {'l1': {'l2': {'l3': {'l4': 1}}}}
+    >>> instance = flattener.transform(instance)
+    >>> pprint.pprint(instance)
+    {('l4', ('l3', ('l2', 'l1'))): 1}
+    >>> instance = flattener.undo_transform(instance)
+    >>> pprint.pprint(instance)
+    {'l1': {'l2': {'l3': {'l4': 1}}}}
     """
 
     def transform(self, instance):
         """
         Perform the flattening procedure.
         """
-        return self._flatten_json(instance)
+        return self._flatten(instance)
 
     def undo_transform(self, instance):
         """
@@ -566,41 +572,71 @@ class Flattener(Preprocessor):
         """
         return self._structurize(instance)
 
+    def _get_path(self, attr):
+        """
+        Unfolds a flattened attr to get the path
+
+        >>> import pprint
+        >>> flattener = Flattener()
+        >>> attribute = ('x', ('o1', ('o2', 'o3')))
+        >>> path = flattener._get_path(attribute)
+        >>> pprint.pprint(path)
+        ['o3', 'o2', 'o1', 'x']
+        """
+        path = []
+        curr = attr
+        while isinstance(curr, tuple) and len(curr) == 2:
+            if curr[0] == '_':
+                _, curr = curr
+            else:
+                a, curr = curr
+                path.append(a)
+        path.append(curr)
+        path.reverse()
+        return path
+
     def _structurize(self, instance):
         """
-        Undoes the flattening.
+        This undoes the flattening process. In particular, it takes an instance
+        that has unary relations and it unpacks them into structured objects
+        and returns the fully structured object.
+
+        >>> import pprint
+        >>> flattener = Flattener()
+        >>> instance = {('l4', ('l3', ('l2', 'l1'))): 1}
+        >>> pprint.pprint(instance)
+        {('l4', ('l3', ('l2', 'l1'))): 1}
+        >>> instance = flattener._structurize(instance)
+        >>> pprint.pprint(instance)
+        {'l1': {'l2': {'l3': {'l4': 1}}}}
         """
         temp = {}
         for attr in instance:
-            if (isinstance(attr, tuple) and len(attr) == 2): 
-                if attr[0] == '_':
-                    rel, (sub_attr, name) = attr
-                else:
-                    sub_attr, name = attr
-
-                if name not in temp:
-                    temp[name] = {}
-
-                temp[name][sub_attr] = instance[attr]
-
+            if (isinstance(attr, tuple) and len(attr) == 2):
+                path = self._get_path(attr)
+                curr = temp
+                for sa in path[:-1]:
+                    if sa not in curr:
+                        curr[sa] = {}
+                    curr = curr[sa]
+                curr[path[-1]] = instance[attr]
             else:
                 temp[attr] = instance[attr]
 
         return temp
 
-    def _flatten_json(self, instance):
+    def _flatten(self, instance, outer_attr=None):
         """
-        Takes an instance that has already been standardized apart and flattens
-        it.
+        Takes an instance with dictionary attributes and and flattens it, so
+        that there are no more dictionary attributes.
 
-        .. :warning: important to note that relations can only exist at the top level,
-            not within subobjects. If they do exist than this function will return
-            incorrect results.
+        .. :warning: important to note that relations can only exist at the top
+            level, not within subobjects. If they do exist than this function
+            will return incorrect results.
 
-        Hierarchy is represented with periods between variable names in the
-        flattened attributes. However, this process converts the attributes with
-        periods in them into a tuple of objects with an attribute as the last
-        element, this is more efficient for later processing.
+        To eliminate structure, the inner most attributes are pulled up to the
+        top level and renamed as tuples that contain information about the
+        structure.
 
         :param instance: An instance to be flattened.
         :type instance: instance
@@ -613,19 +649,29 @@ class Flattener(Preprocessor):
         >>> flat = flattener.transform(instance)
         >>> pprint.pprint(flat)
         {'a': 1, ('_', ('_c', 'c1')): 2, ('b', 'c1'): 1}
+
+        >>> instance = {'l1': {'l2': {'l3': {'l4': 1}}}}
+        >>> pprint.pprint(instance)
+        {'l1': {'l2': {'l3': {'l4': 1}}}}
+        >>> instance = flattener._flatten(instance)
+        >>> pprint.pprint(instance)
+        {('l4', ('l3', ('l2', 'l1'))): 1}
         """
-        
         temp = {}
         for attr in instance:
-            if isinstance(instance[attr], dict):
-                for so_attr in instance[attr]:
-                    if so_attr[0] == '_' or attr[0] == '_':
-                        new_attr = ('_', (so_attr, attr))
-                    else:
-                        new_attr = (so_attr, attr)
-                    temp[new_attr] = instance[attr][so_attr]
+            original = attr
+            if outer_attr is not None:
+                if attr[0] == "_":
+                    attr = ('_', (attr, outer_attr))
+                else:
+                    attr = (attr, outer_attr)
+
+            if isinstance(instance[original], dict):
+                so = self._flatten(instance[original], attr)
+                for so_attr in so:
+                    temp[so_attr] = so[so_attr]
             else:
-                temp[attr] = instance[attr]
+                temp[attr] = instance[original]
         return temp
 
 
@@ -647,14 +693,16 @@ class ListProcessor(Preprocessor):
     pipeline.
 
     .. warning:: The ListProcessor's undo_transform function is not
-        guaranteed to be deterministic and attempts a best guess at a partial ordering.
-        In most cases this will be fine but in complex instances with multiple lists and
-        user defined ordering relations it can break down. If an ordering cannot be
-        determined then ordering relations are left in place.
+        guaranteed to be deterministic and attempts a best guess at a partial
+        ordering.  In most cases this will be fine but in complex instances
+        with multiple lists and user defined ordering relations it can break
+        down. If an ordering cannot be determined then ordering relations are
+        left in place.
 
-    >>> _reset_gensym()     # Reset the symbol generator for doctesting purposes. 
+    # Reset the symbol generator for doctesting purposes.
+    >>> _reset_gensym()
     >>> import pprint
-    >>> instance = {"att1":"val1","list1":["a","b","a","c","d"]}
+    >>> instance = {"att1": "val1", "list1":["a", "b", "a", "c", "d"]}
     >>> lp = ListProcessor()
     >>> instance = lp.transform(instance)
     >>> pprint.pprint(instance)
@@ -679,8 +727,9 @@ class ListProcessor(Preprocessor):
     >>> pprint.pprint(instance)
     {'att1': 'val1', 'list1': ['a', 'b', 'a', 'c', 'd']}
 
-    >>> _reset_gensym()     # Reset the symbol generator for doctesting purposes. 
-    >>> instance = {'l1':['a',{'in1':3,'in2':4},{'ag':'b','ah':'c'},12,'again']}
+    # Reset the symbol generator for doctesting purposes.
+    >>> _reset_gensym()
+    >>> instance = {'l1': ['a', {'in1': 3, 'in2': 4}, {'ag': 'b', 'ah': 'c'}, 12, 'again']}
     >>> lp = ListProcessor()
     >>> instance = lp.transform(instance)
     >>> pprint.pprint(instance)
@@ -704,8 +753,9 @@ class ListProcessor(Preprocessor):
     >>> pprint.pprint(instance)
     {'l1': ['a', {'in1': 3, 'in2': 4}, {'ag': 'b', 'ah': 'c'}, 12, 'again']}
 
-    >>> _reset_gensym()     # Reset the symbol generator for doctesting purposes. 
-    >>> instance = {'tta':'alpha','ttb':{'tlist':['a','b',{'sub-a':'c','sub-sub':{'s':'d','sslist':['w','x','y',{'issue':'here'}]}},'g']}}
+    # Reset the symbol generator for doctesting purposes.
+    >>> _reset_gensym()
+    >>> instance = {'tta': 'alpha', 'ttb':{'tlist': ['a', 'b', {'sub-a': 'c', 'sub-sub': {'s': 'd', 'sslist': ['w', 'x', 'y', {'issue': 'here'}]}}, 'g']}}
     >>> pprint.pprint(instance)
     {'tta': 'alpha',
      'ttb': {'tlist': ['a',
@@ -757,13 +807,13 @@ class ListProcessor(Preprocessor):
 
     """
     def __init__(self):
-        self.processor = Pipeline(ExtractListElements(),ListsToRelations())
+        self.processor = Pipeline(ExtractListElements(), ListsToRelations())
 
     def transform(self, instance):
         """
         Extract list elements and replace lists with ordering relations.
         """
-        return self.processor.transform(instance)        
+        return self.processor.transform(instance)
 
     def undo_transform(self, instance):
         """
@@ -771,6 +821,7 @@ class ListProcessor(Preprocessor):
         list elements back to constructed lists.
         """
         return self.processor.undo_transform(instance)
+
 
 class ExtractListElements(Preprocessor):
     """
@@ -784,9 +835,10 @@ class ExtractListElements(Preprocessor):
     are part of :class:`StructureMapper
     <concept_formation.structure_mapper.StructureMapper>`'s standard pipeline.
 
-    >>> _reset_gensym()     # Reset the symbol generator for doctesting purposes. 
+    # Reset the symbol generator for doctesting purposes.
+    >>> _reset_gensym()
     >>> import pprint
-    >>> instance = {"a":"n","list1":["test",{"p":"q","j":"k"},{"n":"m"}]}
+    >>> instance = {"a": "n", "list1": ["test", {"p": "q", "j": "k"}, {"n": "m"}]}
     >>> pp = ExtractListElements()
     >>> instance = pp.transform(instance)
     >>> pprint.pprint(instance)
@@ -796,9 +848,10 @@ class ExtractListElements(Preprocessor):
      'a': 'n',
      'list1': ['?o1', '?o2', '?o3']}
 
-    >>> _reset_gensym()     # Reset the symbol generator for doctesting purposes. 
+    # Reset the symbol generator for doctesting purposes.
+    >>> _reset_gensym()
     >>> import pprint
-    >>> instance = {"att1":"V1",'subobj':{"list1":["a","b","c",{"B":"C","D":"E"}]}}
+    >>> instance = {"att1": "V1", 'subobj': {"list1": ["a", "b", "c", {"B": "C", "D": "E"}]}}
     >>> pprint.pprint(instance)
     {'att1': 'V1', 'subobj': {'list1': ['a', 'b', 'c', {'B': 'C', 'D': 'E'}]}}
     >>> pp = ExtractListElements()
@@ -835,7 +888,7 @@ class ExtractListElements(Preprocessor):
         """
         return self._undo_extract(instance)
 
-    def _undo_extract(self,instance):
+    def _undo_extract(self, instance):
         """
         Reverses the list element extraction process
         """
@@ -844,7 +897,7 @@ class ExtractListElements(Preprocessor):
         elements = {}
 
         for a in instance:
-            if isinstance(instance[a],list):
+            if isinstance(instance[a], list):
                 lists[a] = True
                 new_list = []
                 for i in range(len(instance[a])):
@@ -858,7 +911,7 @@ class ExtractListElements(Preprocessor):
                 new_instance[a] = new_list
 
         for a in instance:
-            if isinstance(instance[a],list) or a in elements:
+            if isinstance(instance[a], list) or a in elements:
                 continue
             elif isinstance(instance[a], dict):
                 new_instance[a] = self._undo_extract(instance[a])
@@ -867,14 +920,14 @@ class ExtractListElements(Preprocessor):
 
         return new_instance
 
-    def _extract(self,instance):
+    def _extract(self, instance):
         """
         Unlike the utils.extract_components function this one will extract ALL
         elements into their own objects not just object literals
         """
         new_instance = {}
         for a in instance.keys():
-            if isinstance(instance[a],list):
+            if isinstance(instance[a], list):
 
                 if a[0] == '_':
                     new_instance[a] = str(instance[a])
@@ -882,10 +935,10 @@ class ExtractListElements(Preprocessor):
 
                 new_list = []
                 for el in instance[a]:
-                    
-                    if isinstance(el,dict):
+
+                    if isinstance(el, dict):
                         new_obj = deepcopy(el)
-                    else :
+                    else:
                         new_obj = {"val": el}
 
                     new_att = self.gensym()
@@ -894,12 +947,13 @@ class ExtractListElements(Preprocessor):
 
                 new_instance[a] = new_list
 
-            elif isinstance(instance[a],dict):
+            elif isinstance(instance[a], dict):
                 new_instance[a] = self._extract(instance[a])
-            else :
+            else:
                 new_instance[a] = instance[a]
 
         return new_instance
+
 
 class ListsToRelations(Preprocessor):
     """
@@ -907,14 +961,15 @@ class ListsToRelations(Preprocessor):
     relations.
 
     This is a second subprocess of the :class:`ListProcessor
-    <concept_formation.preprocessor.ListProcessor>`. None of the list operations
-    are part of :class:`StructureMapper
+    <concept_formation.preprocessor.ListProcessor>`. None of the list
+    operations are part of :class:`StructureMapper
     <concept_formation.structure_mapper.StructureMapper>`'s standard pipeline.
 
-    >>> _reset_gensym()     # Reset the symbol generator for doctesting purposes. 
+    # Reset the symbol generator for doctesting purposes.
+    >>> _reset_gensym()
     >>> ltr = ListsToRelations()
     >>> import pprint
-    >>> instance = {"list1":['a','b','c']}
+    >>> instance = {"list1": ['a', 'b', 'c']}
     >>> instance = ltr.transform(instance)
     >>> pprint.pprint(instance)
     {'list1': {},
@@ -923,8 +978,8 @@ class ListsToRelations(Preprocessor):
      ('has-element', 'list1', 'c'): True,
      ('ordered-list', 'list1', 'a', 'b'): True,
      ('ordered-list', 'list1', 'b', 'c'): True}
-    
-    >>> instance = {"list1":['a','b','c'],"list2":['w','x','y','z']}
+
+    >>> instance = {"list1": ['a', 'b', 'c'], "list2": ['w', 'x', 'y', 'z']}
     >>> instance = ltr.transform(instance)
     >>> pprint.pprint(instance)
     {'list1': {},
@@ -942,7 +997,8 @@ class ListsToRelations(Preprocessor):
      ('ordered-list', 'list2', 'x', 'y'): True,
      ('ordered-list', 'list2', 'y', 'z'): True}
 
-    >>> _reset_gensym()     # Reset the symbol generator for doctesting purposes. 
+    # Reset the symbol generator for doctesting purposes.
+    >>> _reset_gensym()
     >>> ltr = ListsToRelations()
     >>> import pprint
     >>> instance = {'o1': {"list1":['c','b','a']}}
@@ -966,13 +1022,13 @@ class ListsToRelations(Preprocessor):
         """
         Traverse the instance and turns each set of totally ordered list
         relations into a list.
-        
+
         If there is a cycle or a partial ordering, than the relations are not
-        converted and left as they are. 
+        converted and left as they are.
         """
         return self._relations_to_lists(instance)
 
-    def _relations_to_lists(self, instance, path=None):       
+    def _relations_to_lists(self, instance, path=None):
         new_instance = {}
 
         elements = {}
@@ -989,7 +1045,7 @@ class ListsToRelations(Preprocessor):
                 if lname not in originals:
                     originals[lname] = []
                 originals[lname].append((attr, instance[attr]))
-            
+
             elif isinstance(attr, tuple) and attr[0] == 'ordered-list':
                 rel, lname, ele1, ele2 = attr
 
@@ -1011,35 +1067,35 @@ class ListsToRelations(Preprocessor):
 
             while len(elements[l]) > 0 and change:
                 change = False
-            
+
                 # chain to front
                 front = True
                 while front is not None:
                     front = None
-                    for a,b in order[l]:
+                    for a, b in order[l]:
                         if b == new_list[0]:
                             change = True
-                            front = (a,b)
+                            front = (a, b)
                             elements[l].remove(a)
                             new_list.insert(0, a)
                             break
                     if front is not None:
                         order[l].remove(front)
-                
+
                 # chain to end
                 back = True
                 while back is not None:
                     back = None
-                    for a,b in order[l]:
+                    for a, b in order[l]:
                         if a == new_list[-1]:
                             change = True
-                            back = (a,b)
+                            back = (a, b)
                             elements[l].remove(b)
                             new_list.append(b)
                             break
                     if back is not None:
                         order[l].remove(back)
-            
+
             if len(elements[l]) == 0:
                 path = self._get_path(l)
                 current = new_instance
@@ -1084,72 +1140,83 @@ class ListsToRelations(Preprocessor):
                     rel = ('has-element', lname, instance[attr][-1])
                     top_level[rel] = True
 
-                #if isinstance(lname, tuple):
-                #    rel = ('has-component', current, lname)
-                #    top_level[rel] = True
-
-            elif isinstance(instance[attr],dict):
+            elif isinstance(instance[attr], dict):
                 new_instance[attr] = self._lists_to_relations(instance[attr],
-                                                        lname,
-                                                        top_level)
+                                                              lname, top_level)
             else:
                 new_instance[attr] = instance[attr]
-        
+
         return new_instance
+
 
 class SubComponentProcessor(Preprocessor):
     """
-    Moves sub-objects to be top-level objects and adds has-component relations
-    to preserve semantics.
+    Takes a flattened instance and moves sub-objects (not sub-attributes) to be
+    top-level objects and adds has-component relations to preserve semantics.
 
-    This process is primairly used to speed up matching by having all sub-
+    This process is primairly used to improve matching by having all sub-
     component objects exist as their own top level objects with relations
-    describing their original position in the hierarchy.
+    describing their original position in the hierarchy. This allows the
+    structure mapper to partially match against subobjects.
 
-    This is the second operation in :class:`StructureMapper
-    <concept_formation.structure_mapper.StructureMapper>`'s standard
-    pipeline.
+    This is the second operation in :class:`TrestleTree
+    <concept_formation.trestle.TrestleTree>`'s standard pipeline (after
+    flattening).
 
     .. warning:: This assumes that the :class:`NameStandardizer
         <concept_formation.preprocessor.NameStandardizer>` has been run on the
         instance first otherwise there can be name collisions.
 
-    >>> _reset_gensym()     # Reset the symbol generator for doctesting purposes. 
+    # Reset the symbol generator for doctesting purposes.
+    >>> _reset_gensym()
     >>> import pprint
+    >>> flattener = Flattener()
     >>> psc = SubComponentProcessor()
-    >>> instance = {"a1":"v1","sub1":{"a2":"v2","a3":3},"sub2":{"a4":"v4","subsub1":{"a5":"v5","a6":"v6"},"subsub2":{"subsubsub":{"a8":"V8"},"a7":7}}}
+    >>> instance = {"a1": "v1", "?sub1": {"a2": "v2", "a3": 3},
+    ...             "?sub2": {"a4": "v4", "?subsub1": {"a5": "v5", "a6": "v6"},
+    ...                       "?subsub2":{"?subsubsub": {"a8": "V8"}, "a7": 7}},
+    ...             ('ordered-list', ('list1', ('?o2', '?o1')), 'b', 'a'):
+    ...             True}
+    >>> pprint.pprint(instance)
+    {'?sub1': {'a2': 'v2', 'a3': 3},
+     '?sub2': {'?subsub1': {'a5': 'v5', 'a6': 'v6'},
+               '?subsub2': {'?subsubsub': {'a8': 'V8'}, 'a7': 7},
+               'a4': 'v4'},
+     'a1': 'v1',
+     ('ordered-list', ('list1', ('?o2', '?o1')), 'b', 'a'): True}
+    >>> instance = psc.transform(flattener.transform(instance))
     >>> pprint.pprint(instance)
     {'a1': 'v1',
-     'sub1': {'a2': 'v2', 'a3': 3},
-     'sub2': {'a4': 'v4',
-              'subsub1': {'a5': 'v5', 'a6': 'v6'},
-              'subsub2': {'a7': 7, 'subsubsub': {'a8': 'V8'}}}}
-    >>> instance = psc.transform(instance)
-    >>> pprint.pprint(instance)
-    {'a1': 'v1',
-     'sub1': {'a2': 'v2', 'a3': 3},
-     'sub2': {'a4': 'v4'},
-     'subsub1': {'a5': 'v5', 'a6': 'v6'},
-     'subsub2': {'a7': 7},
-     'subsubsub': {'a8': 'V8'},
-     ('has-component', 'sub2', 'subsub1'): True,
-     ('has-component', 'sub2', 'subsub2'): True,
-     ('has-component', 'subsub2', 'subsubsub'): True}
+     ('a2', '?sub1'): 'v2',
+     ('a3', '?sub1'): 3,
+     ('a4', '?sub2'): 'v4',
+     ('a5', '?subsub1'): 'v5',
+     ('a6', '?subsub1'): 'v6',
+     ('a7', '?subsub2'): 7,
+     ('a8', '?subsubsub'): 'V8',
+     ('has-component', '?o1', '?o2'): True,
+     ('has-component', '?sub2', '?subsub1'): True,
+     ('has-component', '?sub2', '?subsub2'): True,
+     ('has-component', '?subsub2', '?subsubsub'): True,
+     ('ordered-list', ('list1', '?o2'), 'b', 'a'): True}
     >>> instance = psc.undo_transform(instance)
+    >>> instance = flattener.undo_transform(instance)
     >>> pprint.pprint(instance)
-    {'a1': 'v1',
-     'sub1': {'a2': 'v2', 'a3': 3},
-     'sub2': {'a4': 'v4',
-              'subsub1': {'a5': 'v5', 'a6': 'v6'},
-              'subsub2': {'a7': 7, 'subsubsub': {'a8': 'V8'}}}}
+    {'?sub1': {'a2': 'v2', 'a3': 3},
+     '?sub2': {'?subsub1': {'a5': 'v5', 'a6': 'v6'},
+               '?subsub2': {'?subsubsub': {'a8': 'V8'}, 'a7': 7},
+               'a4': 'v4'},
+     'a1': 'v1',
+     ('ordered-list', ('list1', ('?o2', '?o1')), 'b', 'a'): True}
     """
-    
+
     def transform(self, instance):
         """
-        Travese the instance for objects that contain subobjects and lifts the
-        subobjects to be their own objects at the top level of the instance. 
+        Travese the instance for objects that contain subobjects and extracts
+        the subobjects to be their own objects at the top level of the
+        instance.
         """
-        return self._hoist_sub_objects(instance)
+        return self._extract_sub_objects(instance)
 
     def undo_transform(self, instance):
         """
@@ -1160,81 +1227,82 @@ class SubComponentProcessor(Preprocessor):
         is left in relational form (i.e., it cannot be expressed in sub-object
         form).
         """
-        return self._add_sub_objects(instance)
+        return self._embed_sub_objects(instance)
 
-    def _add_sub_objects(self, instance):
+    def _embed_sub_objects(self, instance):
+        so_mapping = {attr[2]: (attr[2], attr[1]) for attr in instance
+                      if (isinstance(attr, tuple) and len(attr) == 3 and
+                          attr[0] == 'has-component')}
+
+        return {self._rename_embedding(attr, so_mapping): instance[attr] for
+                attr in instance if not (isinstance(attr, tuple) and len(attr)
+                                         == 3 and attr[0] == 'has-component')}
+
+    def _rename_embedding(self, attr, so_mapping):
+        if attr in so_mapping:
+            new_a = so_mapping[attr]
+            if isinstance(new_a, tuple) and len(new_a) == 2:
+                return (new_a[0], self._rename_embedding(new_a[1], so_mapping))
+            return new_a
+
+        if (isinstance(attr, tuple) and len(attr) == 2):
+            return (attr[0], self._rename_embedding(attr[1], so_mapping))
+
+        if (isinstance(attr, tuple) and len(attr) != 2):
+            return tuple(self._rename_embedding(ele, so_mapping) for ele in
+                         attr)
+
+        return attr
+
+    def _extract_sub_objects(self, instance):
         new_instance = {}
-
-        parents = {}
-        children = {}
-        leave_alone = set()
-
-        for attr in instance:
-            if isinstance(attr, tuple) and attr[0] == 'has-component':
-                rel, parent, child = attr
-                if child in leave_alone:
-                    new_instance[attr] = instance[attr]
-                elif child in parents:
-                    new_instance[attr] = instance[attr]
-                    rel = ('has-component', parents[child],
-                           children[parents[child]])
-                    new_instance[rel] = True
-                    leave_alone.add(child)
-
-                    p = parents[child]
-                    del children[p]
-                    del parents[child]
-                else:
-                    parents[child] = parent
-                    children[parent] = child
-            else:
-                new_instance[attr] = deepcopy(instance[attr])
-
-        while True:
-            child = None
-            for c in parents:
-                if c not in children:
-                    child = c
-                    break
-            if child is not None:
-                new_instance[parents[child]][child] = new_instance[child]
-                del new_instance[child]
-                dlist = [ele for ele in children if children[ele] == child]
-                for ele in dlist:
-                    del children[ele]
-                del parents[child]
-            else:
-                break
-
+        for a in instance:
+            rels = self._get_has_components(a)
+            for r in rels:
+                new_instance[r] = True
+            new_a = self._extract_attr(a)
+            new_instance[new_a] = instance[a]
         return new_instance
 
-    def _hoist_sub_objects(self, instance):        
-        new_instance = {}
-        
-        for a in instance.keys() :
-            # this is a subobject
-            if isinstance(instance[a],dict):
-                new_instance[a] = self._hoist_sub_objects_rec(instance[a],a,new_instance)
-            else :
-                new_instance[a] = instance[a]
+    def _extract_attr(self, attr):
+        if isinstance(attr, tuple) and len(attr) != 2:
+            return tuple([self._extract_attr(ele) for ele in attr])
 
-        return new_instance
+        if isinstance(attr, tuple) and len(attr) == 2:
+            outer, inner = attr
+            if isinstance(outer, str) and len(outer) > 0 and outer[0] == "?":
+                return outer
+            return (outer, self._extract_attr(inner))
 
-    def _hoist_sub_objects_rec(self, sub, attr, top_level):
-        """
-        The recursive version of subobject hoisting.
-        """
-        new_sub = {}
-        for a in sub.keys():
-            # this is a sub-sub object
-            if isinstance(sub[a],dict):
-                top_level[a] = self._hoist_sub_objects_rec(sub[a],a,top_level)
-                rel = ("has-component", str(attr), str(a))
-                top_level[rel] = True
-            else :
-                new_sub[a] = sub[a]
-        return new_sub
+        return attr
 
+    def _get_has_components(self, attr):
+        if not isinstance(attr, tuple):
+            return []
+
+        if len(attr) != 2:
+            relations = []
+            for ele in attr:
+                relations = relations + self._get_has_components(ele)
+            return relations
+
+        last_comp = None
+        inner = None
+        relations = []
+
+        while len(attr) == 2:
+            a, attr = attr
+            if isinstance(a, str) and len(a) > 0 and a[0] == '?':
+                if last_comp is not None:
+                    relations.append(('has-component', inner, last_comp))
+                last_comp = a
+                inner = self._extract_attr(attr)
+
+        if last_comp is not None and (isinstance(attr, str) and len(attr) > 0
+                                      and attr[0] == '?'):
+            relations.append(('has-component', inner, last_comp))
+
+        return relations
 
 
 class ObjectVariablizer(OneWayPreprocessor):
@@ -1246,7 +1314,7 @@ class ObjectVariablizer(OneWayPreprocessor):
     all other attributes names are considered constants. This process searches
     through an instances and variablizes attributes that might not have been
     defined this way in the original data.
-    
+
     This is a helper function preprocessor and so is not part of
     :class:`StructureMapper
     <concept_formation.structure_mapper.StructureMapper>`'s standard pipeline.
@@ -1270,7 +1338,7 @@ class ObjectVariablizer(OneWayPreprocessor):
      '?p2': {'x': 5, 'y': 14},
      '?p3': {'x': 4, 'y': 18},
      'setttings': {'x_lab': 'height', 'y_lab': 'age'}}
-    
+
     :param attrs: A list of specific attribute names to variablize. If left
         empty then all variables will be converted.
     :type attrs: strings
@@ -1298,7 +1366,7 @@ class ObjectVariablizer(OneWayPreprocessor):
             attrs = self.targets
 
         for attr in instance:
-            if prefix == None:
+            if prefix is None:
                 prefix = attr
             else:
                 prefix = (attr, prefix)
@@ -1310,8 +1378,8 @@ class ObjectVariablizer(OneWayPreprocessor):
                 name = attr
                 if attr[0] != '?':
                     name = '?' + attr
-                new_instance[name] = self._variablize(instance[attr], 
-                                                     mapping, prefix)
+                new_instance[name] = self._variablize(instance[attr], mapping,
+                                                      prefix)
             else:
                 new_instance[attr] = instance[attr]
 
@@ -1320,17 +1388,19 @@ class ObjectVariablizer(OneWayPreprocessor):
 
         return new_instance
 
+
 class NumericToNominal(OneWayPreprocessor):
     """
     Converts numeric values to nominal ones.
 
-    :class:`Cobweb3 <concept_formation.cobweb3.Cobweb3Tree>` and :class:`Trestle
-    <concept_formation.trestle.TrestleTree>` will treat anything that passes
-    ``isinstance(instance[attr],Number)`` as a numerical value. Because of how they
-    store numerical distribution information, If either algorithm encounts a
-    numerical value where it previously saw a nominal one it will throw an
-    error. This preprocessor is provided as a way to address that problem by
-    unifying the value types of attributes across an instance.
+    :class:`Cobweb3 <concept_formation.cobweb3.Cobweb3Tree>` and
+    :class:`Trestle <concept_formation.trestle.TrestleTree>` will treat
+    anything that passes ``isinstance(instance[attr],Number)`` as a numerical
+    value. Because of how they store numerical distribution information, If
+    either algorithm encounts a numerical value where it previously saw a
+    nominal one it will throw an error. This preprocessor is provided as a way
+    to address that problem by unifying the value types of attributes across an
+    instance.
 
     This is a helper function preprocessor and so is not part of
     :class:`StructureMapper
@@ -1359,37 +1429,39 @@ class NumericToNominal(OneWayPreprocessor):
         else:
             self.targets = attrs
 
-    def transform(self,instance):
+    def transform(self, instance):
         """
         Transform target attribute values to nominal if they are numeric.
         """
         if self.targets is None:
             attrs = [k for k in instance.keys()]
-        else :
+        else:
             attrs = self.targets
 
         new_instance = {}
 
         for a in instance:
-            if a in attrs and isinstance(instance[a],Number):
+            if a in attrs and isinstance(instance[a], Number):
                 new_instance[a] = str(instance[a])
-            elif isinstance(instance[a],dict):
+            elif isinstance(instance[a], dict):
                 new_instance[a] = self.transform(instance[a])
             else:
                 new_instance[a] = instance[a]
         return new_instance
 
+
 class NominalToNumeric(OneWayPreprocessor):
     """
     Converts nominal values to numeric ones.
 
-    :class:`Cobweb3 <concept_formation.cobweb3.Cobweb3Tree>` and :class:`Trestle
-    <concept_formation.trestle.TrestleTree>` will treat anything that passes
-    ``isinstance(instance[attr],Number)`` as a numerical value. Because of how they
-    store numerical distribution information, If either algorithm encounts a
-    numerical value where it previously saw a nominal one it will throw an
-    error. This preprocessor is provided as a way to address that problem by
-    unifying the value types of attributes across an instance.
+    :class:`Cobweb3 <concept_formation.cobweb3.Cobweb3Tree>` and
+    :class:`Trestle <concept_formation.trestle.TrestleTree>` will treat
+    anything that passes ``isinstance(instance[attr],Number)`` as a numerical
+    value. Because of how they store numerical distribution information, If
+    either algorithm encounts a numerical value where it previously saw a
+    nominal one it will throw an error. This preprocessor is provided as a way
+    to address that problem by unifying the value types of attributes across an
+    instance.
 
     Because parsing numbers is a less automatic function than casting things to
     strings this preprocessor has an extra parameter from
@@ -1461,7 +1533,7 @@ class NominalToNumeric(OneWayPreprocessor):
         """
         if self.targets is None:
             attrs = [k for k in instance.keys()]
-        else :
+        else:
             attrs = self.targets
 
         new_instance = {}
