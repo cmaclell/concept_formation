@@ -206,14 +206,21 @@ def flat_match(target, base, initial_mapping=None):
     # TODO consider flipping target and base when one is larger than the other.
     if initial_mapping is None:
         initial_mapping = hungarian_mapping(inames, cnames, target, base)
+    else:
+        initial_mapping = frozenset([(a, v) for a, v in initial_mapping if a in
+                                     inames and v in cnames])
 
     unmapped = cnames - frozenset(dict(initial_mapping).values())
+
+    # print("MATCHING", initial_mapping, target, base)
+
     initial_cost = mapping_cost(initial_mapping, target, base)
 
     op_problem = StructureMappingOptimizationProblem((initial_mapping,
                                                       unmapped),
                                                      initial_cost=initial_cost,
                                                      extra=(target, base))
+
     solution = next(hill_climbing(op_problem))
     return dict(solution.state[0])
 
@@ -299,8 +306,8 @@ def mapping_cost(mapping, target, base):
         raise Exception("mapping must be dict or frozenset")
     renamed_target = rename_flat(target, mapping)
 
-    # Need to ensure structure mapping is not used internally here. (i.e.,
-    # there is no infinite recrusion)
+    # Need to ensure structure mapping is not used internally here.
+    # (i.e., there is no infinite recrusion)
     temp_base = Cobweb3Node()
     temp_base.update_counts_from_node(base)
     temp_base.tree = base.tree

@@ -128,11 +128,12 @@ class CobwebTree(object):
         In the base case, i.e. a leaf node, the algorithm checks to see if
         the current leaf is an exact match to the current node. If it is, then
         the instance is inserted and the leaf is returned. Otherwise, a new
-        leaf is created. 
+        leaf is created.
 
-        .. note:: This function is equivalent to calling :meth:`CobwebTree.ifit`
-            but its better to call ifit because it is the polymorphic method
-            siganture between the different cobweb family algorithms.
+        .. note:: This function is equivalent to calling
+            :meth:`CobwebTree.ifit` but its better to call ifit because it is
+            the polymorphic method siganture between the different cobweb
+            family algorithms.
 
         :param instance: an instance to incorporate into the tree
         :type instance: :ref:`Instance<instance-rep>`
@@ -147,12 +148,12 @@ class CobwebTree(object):
             # the current.count == 0 here is for the initially empty tree.
             if not current.children and (current.is_exact_match(instance) or
                                          current.count == 0):
-                #print("leaf match")
+                # print("leaf match")
                 current.increment_counts(instance)
                 break
 
             elif not current.children:
-                #print("fringe split")
+                # print("fringe split")
                 new = current.__class__(current)
                 current.parent = new
                 new.children.append(current)
@@ -173,7 +174,7 @@ class CobwebTree(object):
                                                                     best1,
                                                                     best2)
 
-                #print(best_action)
+                # print(best_action)
                 if best1:
                     best1_cu, best1 = best1
                 if best2:
@@ -193,8 +194,10 @@ class CobwebTree(object):
                 elif best_action == 'split':
                     current.split(best1)
                 else:
-                    raise Exception('Best action choice "'+best_action+'" not a recognized option. This should be impossible...')
-        
+                    raise Exception('Best action choice "' + best_action +
+                                    '" not a recognized option. This should be'
+                                    ' impossible...')
+
         return current
 
     def _cobweb_categorize(self, instance):
@@ -212,18 +215,19 @@ class CobwebTree(object):
             best1, best2 = current.two_best_children(instance)
             current = best1[1]
 
-    def infer_missing(self, instance, choice_fn="most likely", allow_none=True):
+    def infer_missing(self, instance, choice_fn="most likely",
+                      allow_none=True):
         """
-        Given a tree and an instance, returns a new instance with attribute 
+        Given a tree and an instance, returns a new instance with attribute
         values picked using the specified choice function (either "most likely"
-        or "sampled"). 
+        or "sampled").
 
         .. todo:: write some kind of test for this.
 
         :param instance: an instance to be completed.
         :type instance: :ref:`Instance<instance-rep>`
         :param choice_fn: a string specifying the choice function to use,
-            either "most likely" or "sampled". 
+            either "most likely" or "sampled".
         :type choice_fn: a string
         :param allow_none: whether attributes not in the instance can be
             inferred to be missing. If False, then all attributes will be
@@ -310,8 +314,8 @@ class CobwebNode(object):
         Create a shallow copy of the current node (and not its children)
 
         This can be used to copy only the information relevant to the node's
-        probability table without maintaining reference to other elements of the
-        tree, except for the root which is necessary to calculate category
+        probability table without maintaining reference to other elements of
+        the tree, except for the root which is necessary to calculate category
         utility.
         """
         temp = self.__class__()
@@ -320,14 +324,14 @@ class CobwebNode(object):
         temp.update_counts_from_node(self)
         return temp
 
-    def attrs(self,attr_filter=None):
+    def attrs(self, attr_filter=None):
         """
         Iterates over the attributes present in the node's attribute-value
         table with the option to filter certain types. By default the filter
-        will ignore hidden attributes and yield all others. If the string
-        'all' is provided then all attributes will be yielded. In neither of
-        those cases the filter will be interpreted as a function that returns 
-        true if an attribute should be yielded and false otherwise.
+        will ignore hidden attributes and yield all others. If the string 'all'
+        is provided then all attributes will be yielded. In neither of those
+        cases the filter will be interpreted as a function that returns true if
+        an attribute should be yielded and false otherwise.
         """
         for attr in self.av_counts:
             if attr_filter is None:
@@ -586,6 +590,7 @@ class CobwebNode(object):
         for c in self.children:
             temp_child = c.shallow_copy()
             temp.children.append(temp_child)
+            temp_child.parent = temp
             if c == child:
                 temp_child.increment_counts(instance)
         return temp.category_utility()
@@ -595,8 +600,8 @@ class CobwebNode(object):
         Create a new child (to the current node) with the counts initialized by
         the *given instance*.
 
-        This is the operation used for creating a new child to a node and adding
-        the instance to it.
+        This is the operation used for creating a new child to a node and
+        adding the instance to it.
 
         :param instance: The instance currently being categorized
         :type instance: :ref:`Instance<instance-rep>`
@@ -648,8 +653,8 @@ class CobwebNode(object):
         for c in self.children:
             temp.children.append(c.shallow_copy())
 
-        #temp = self.shallow_copy()
-        
+        # temp = self.shallow_copy()
+
         temp.increment_counts(instance)
         temp.create_new_child(instance)
         return temp.category_utility()
@@ -662,9 +667,11 @@ class CobwebNode(object):
         given nodes. This new node becomes a child of the current node and the
         two given nodes become children of the new node.
 
-        :param best1: The child of the current node with the best category utility
+        :param best1: The child of the current node with the best category
+            utility
         :type best1: CobwebNode
-        :param best2: The child of the current node with the second best category utility
+        :param best2: The child of the current node with the second best
+            category utility
         :type best2: CobwebNode
         :return: The new child node that was created by the merge
         :rtype: CobwebNode
@@ -676,9 +683,9 @@ class CobwebNode(object):
         new_child.update_counts_from_node(best1)
         new_child.update_counts_from_node(best2)
         best1.parent = new_child
-        #best1.tree = new_child.tree
+        # best1.tree = new_child.tree
         best2.parent = new_child
-        #best2.tree = new_child.tree
+        # best2.tree = new_child.tree
         new_child.children.append(best1)
         new_child.children.append(best2)
         self.children.remove(best1)
@@ -711,6 +718,7 @@ class CobwebNode(object):
 
         new_child = self.__class__()
         new_child.tree = self.tree
+        new_child.parent = temp
         new_child.update_counts_from_node(best1)
         new_child.update_counts_from_node(best2)
         new_child.increment_counts(instance)
