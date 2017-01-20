@@ -170,23 +170,26 @@ def contains_component(component, attr):
     return attr == component
 
 
-def flat_match(target, base):
+def flat_match(target, base, initial_mapping=None):
     """
     Given a base (usually concept) and target (instance or concept av table)
     this function returns a mapping that can be used to rename components in
     the target. Search is used to find a mapping that maximizes the expected
     number of correct guesses in the concept after incorporating the instance.
 
-    The current approach is to generate an initial solution via Munkres /
-    Hungarian matching on object-to-object assignment (no relations). Then this
-    assignment is refined by using a hill climbing search to account for the
-    relations.
+    The current approach is to refine the initially provided mapping using a
+    local hill-climbing search. If no initial mapping is provided then one is
+    generated using the Munkres / Hungarian matching on object-to-object
+    assignment (no relations). This initialization approach is polynomial in
+    the size of the base.
 
     :param target: An instance or concept.av_counts object to be mapped to the
         base concept.
     :type target: :ref:`Instance<instance-rep>` or av_counts obj from concept
     :param base: A concept to map the target to
     :type base: TrestleNode
+    :param initial_mapping: An initial mapping to seed the local search
+    :type initial_mapping: A mapping dict
     :return: a mapping for renaming components in the instance.
     :rtype: dict
     """
@@ -200,16 +203,24 @@ def flat_match(target, base):
         raise Exception("Objects in target and base must not collide. "
                         "Consider running NameStandardizer first.")
 
-    # TODO consider allowing users to provide an initial mapping.
     # TODO consider flipping target and base when one is larger than the other.
-    initial_mapping = hungarian_mapping(inames, cnames, target, base)
+    if initial_mapping is None:
+        initial_mapping = hungarian_mapping(inames, cnames, target, base)
+    else:
+        initial_mapping = frozenset([(a, v) for a, v in initial_mapping if a in
+                                     inames and v in cnames])
+
     unmapped = cnames - frozenset(dict(initial_mapping).values())
+
+    # print("MATCHING", initial_mapping, target, base)
+
     initial_cost = mapping_cost(initial_mapping, target, base)
 
     op_problem = StructureMappingOptimizationProblem((initial_mapping,
                                                       unmapped),
                                                      initial_cost=initial_cost,
                                                      extra=(target, base))
+
     solution = next(hill_climbing(op_problem))
     return dict(solution.state[0])
 
@@ -295,8 +306,8 @@ def mapping_cost(mapping, target, base):
         raise Exception("mapping must be dict or frozenset")
     renamed_target = rename_flat(target, mapping)
 
-    # Need to ensure structure mapping is not used internally here. (i.e.,
-    # there is no infinite recrusion)
+    # Need to ensure structure mapping is not used internally here.
+    # (i.e., there is no infinite recrusion)
     temp_base = Cobweb3Node()
     temp_base.update_counts_from_node(base)
     temp_base.tree = base.tree
@@ -500,7 +511,7 @@ class StructureMapper(Preprocessor):
         """
         return {self.reverse_mapping[o]: o for o in self.reverse_mapping}
 
-    def transform(self, target):
+    def transform(self, target, initial_mapping=None):
         """
         Transforms a provided target (either an instance or an av_counts table
         from a CobwebNode or Cobweb3Node).
@@ -512,7 +523,7 @@ class StructureMapper(Preprocessor):
         :return: The renamed instance or av_counts table
         :rtype: instance or av_counts table
         """
-        self.mapping = flat_match(target, self.base)
+        self.mapping = flat_match(target, self.base, initial_mapping)
         self.reverse_mapping = {self.mapping[o]: o for o in self.mapping}
         return rename_flat(target, self.mapping)
 
