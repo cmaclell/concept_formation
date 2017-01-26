@@ -43,8 +43,8 @@ class Cobweb3Tree(CobwebTree):
     utility calculation meaning numbers that are naturally larger will recieve
     preference in the category utility calculation.
 
-    :param scaling: What number of standard deviations numeric attributes
-        should be scaled to. By default this value is 0.5 (half a standard
+    :param scaling: The number of standard deviations numeric attributes
+        are scaled to. By default this value is 0.5 (half a standard
         deviation), which is the max std of nominal values. If disabiling
         scaling is desirable, then it can be set to False or None.
     :type scaling: a float greater than 0.0, None, or False
@@ -52,7 +52,7 @@ class Cobweb3Tree(CobwebTree):
         when scaling numeric attributes. For example, if `('attr', '?o1')` was
         an attribute, then the inner most attribute would be 'attr'. When using
         inner most attributes, some objects might have multiple attributes
-        (i.e., 'attr' for different objects) that contribute to the scaling. 
+        (i.e., 'attr' for different objects) that contribute to the scaling.
     :param inner_attr_scaling: boolean
     """
 
@@ -63,7 +63,7 @@ class Cobweb3Tree(CobwebTree):
         self.root = Cobweb3Node()
         self.root.tree = self
         self.scaling = scaling
-        self.inner_attr_scaling = inner_attr_scaling 
+        self.inner_attr_scaling = inner_attr_scaling
         self.attr_scales = {}
 
     def clear(self):
@@ -78,7 +78,7 @@ class Cobweb3Tree(CobwebTree):
         """
         Extracts the inner most attribute name from the provided attribute, if
         the attribute is a tuple and inner_attr_scaling is on. Otherwise it
-        just returns the attribute. This is used to for normalizing attributes. 
+        just returns the attribute. This is used to for normalizing attributes.
 
         >>> t = Cobweb3Tree()
         >>> t.get_inner_attr(('a', '?object1'))
@@ -106,7 +106,7 @@ class Cobweb3Tree(CobwebTree):
     def cobweb(self, instance):
         """
         A modification of the cobweb function to update the scales object
-        first, so that attribute values can be properly scaled. 
+        first, so that attribute values can be properly scaled.
         """
         self.update_scales(instance)
         return super(Cobweb3Tree, self).cobweb(instance)
@@ -117,7 +117,7 @@ class Cobweb3Tree(CobwebTree):
         concept.
 
         The cobweb3 version of the :meth:`CobwebTree.ifit` function. This
-        version keeps track of all of the continuous 
+        version keeps track of all of the continuous
 
         :param instance: An instance to be categorized into the tree.
         :type instance:  :ref:`Instance<instance-rep>`
@@ -126,8 +126,9 @@ class Cobweb3Tree(CobwebTree):
 
         .. seealso:: :meth:`CobwebTree.cobweb`
         """
-        self._sanity_check_instance(instance) 
+        self._sanity_check_instance(instance)
         return self.cobweb(instance)
+
 
 class Cobweb3Node(CobwebNode):
     """
@@ -431,7 +432,7 @@ class Cobweb3Node(CobwebNode):
                 return 0.0
 
             prob_attr = self.av_counts[attr][cv_key].num / self.count
-            if self.tree.scaling:
+            if self.tree is not None and self.tree.scaling:
                 inner_attr = self.tree.get_inner_attr(attr)
                 scale = ((1/self.tree.scaling) *
                          self.tree.attr_scales[inner_attr].unbiased_std())
@@ -446,10 +447,10 @@ class Cobweb3Node(CobwebNode):
 
             mean = (self.av_counts[attr][cv_key].mean - shift) / scale
             std = sqrt(self.av_counts[attr][cv_key].scaled_unbiased_std(scale) *
-                       self.av_counts[attr][cv_key].scaled_unbiased_std(scale) + 
+                       self.av_counts[attr][cv_key].scaled_unbiased_std(scale) +
                        (1 / (4 * pi)))
-            p = (prob_attr * 
-                 (1/(sqrt(2*pi) * std)) * 
+            p = (prob_attr *
+                 (1/(sqrt(2*pi) * std)) *
                  exp(-((val - mean) * (val - mean)) / (2.0 * std * std)))
             return p
 

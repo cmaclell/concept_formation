@@ -34,8 +34,8 @@ class TrestleTree(Cobweb3Tree):
     utility calculation meaning numbers that are naturally larger will recieve
     preference in the category utility calculation.
 
-    :param scaling: What number of standard deviations numeric attributes
-        should be scaled to. By default this value is 0.5 (half a standard
+    :param scaling: The number of standard deviations numeric attributes
+        are scaled to. By default this value is 0.5 (half a standard
         deviation), which is the max std of nominal values. If disabiling
         scaling is desirable, then it can be set to False or None.
     :type scaling: a float greater than 0.0, None, or False
@@ -52,14 +52,12 @@ class TrestleTree(Cobweb3Tree):
     :type structure_map_internally: boolean
     """
 
-    def __init__(self, scaling=0.5, inner_attr_scaling=True,
-                 structure_map_internally=False):
+    def __init__(self, scaling=0.5, inner_attr_scaling=True):
         """
         The tree constructor.
         """
         self.gensym_counter = 0
-        self.structure_map_internally = structure_map_internally
-        self.root = TrestleNode()
+        self.root = Cobweb3Node()
         self.root.tree = self
         self.scaling = scaling
         self.inner_attr_scaling = inner_attr_scaling
@@ -70,7 +68,7 @@ class TrestleTree(Cobweb3Tree):
         Clear the tree but keep initialization parameters
         """
         self.gensym_counter = 0
-        self.root = TrestleNode()
+        self.root = Cobweb3Node()
         self.root.tree = self
         self.attr_scales = {}
 
@@ -163,13 +161,9 @@ class TrestleTree(Cobweb3Tree):
         :return: A concept describing the instance
         :rtype: concept
         """
-        if self.structure_map_internally:
-            preprocessing = Pipeline(NameStandardizer(), Flattener(),
-                                     SubComponentProcessor())
-        else:
-            preprocessing = Pipeline(NameStandardizer(), Flattener(),
-                                     SubComponentProcessor(),
-                                     StructureMapper(self.root))
+        preprocessing = Pipeline(NameStandardizer(self.gensym),
+                                 Flattener(), SubComponentProcessor(),
+                                 StructureMapper(self.root))
         temp_instance = preprocessing.transform(instance)
         self._sanity_check_instance(temp_instance)
         return self._cobweb_categorize(temp_instance)
@@ -195,22 +189,12 @@ class TrestleTree(Cobweb3Tree):
         :return: A completed instance
         :rtype: instance
         """
-        if self.structure_map_internally:
-            preprocessing = Pipeline(NameStandardizer(), Flattener(),
-                                     SubComponentProcessor())
-        else:
-            preprocessing = Pipeline(NameStandardizer(), Flattener(),
-                                     SubComponentProcessor(),
-                                     StructureMapper(self.root))
+        preprocessing = Pipeline(NameStandardizer(self.gensym),
+                                 Flattener(), SubComponentProcessor(),
+                                 StructureMapper(self.root))
 
         temp_instance = preprocessing.transform(instance)
         concept = self._cobweb_categorize(temp_instance)
-
-        # TODO consider doing this even when structure mapping doesn't happen
-        # internally!
-        if self.structure_map_internally:
-            structure_mapper2 = StructureMapper(concept, gensym=self.gensym)
-            temp_instance = structure_mapper2.transform(temp_instance)
 
         for attr in concept.attrs('all'):
             if attr in temp_instance:
@@ -218,9 +202,6 @@ class TrestleTree(Cobweb3Tree):
             val = concept.predict(attr, choice_fn, allow_none)
             if val is not None:
                 temp_instance[attr] = val
-
-        if self.structure_map_internally:
-            temp_instance = structure_mapper2.undo_transform(temp_instance)
 
         temp_instance = preprocessing.undo_transform(temp_instance)
         return temp_instance
@@ -267,37 +248,9 @@ class TrestleTree(Cobweb3Tree):
         :return: A concept describing the instance
         :rtype: CobwebNode
         """
-        if self.structure_map_internally:
-            preprocessing = Pipeline(NameStandardizer(), Flattener(),
-                                     SubComponentProcessor())
-        else:
-            preprocessing = Pipeline(NameStandardizer(), Flattener(),
-                                     SubComponentProcessor(),
-                                     StructureMapper(self.root))
+        preprocessing = Pipeline(NameStandardizer(self.gensym),
+                                 Flattener(), SubComponentProcessor(),
+                                 StructureMapper(self.root))
         temp_instance = preprocessing.transform(instance)
         self._sanity_check_instance(temp_instance)
         return self.cobweb(temp_instance)
-
-
-class TrestleNode(Cobweb3Node):
-
-    def is_exact_match(self, instance):
-        if self.tree.structure_map_internally:
-            structure_mapper = StructureMapper(self)
-            instance = structure_mapper.transform(instance)
-        return super(TrestleNode, self).is_exact_match(instance)
-
-    def increment_counts(self, instance):
-        if self.tree.structure_map_internally:
-            structure_mapper = StructureMapper(self)
-            instance = structure_mapper.transform(instance)
-            # print('increment', structure_mapper.reverse_mapping)
-        return super(TrestleNode, self).increment_counts(instance)
-
-    def update_counts_from_node(self, node):
-        if self.tree.structure_map_internally:
-            if self.av_counts != {}:
-                structure_mapper = StructureMapper(self)
-                node.av_counts = structure_mapper.transform(node.av_counts)
-                # print('merge', structure_mapper.reverse_mapping)
-        return super(TrestleNode, self).update_counts_from_node(node)

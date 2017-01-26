@@ -216,7 +216,7 @@ def AICc(clusters, leaves):
                     k += 2
                 else:
                     k += 1
-    if n <= k - 1:
+    if n  - k <= 1:
         return float('inf')
     else:
         return 2 * k - 2 * ll + 2 * k * (k + 1)/(n - k - 1)
