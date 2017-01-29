@@ -1,3 +1,4 @@
 include *.txt
 include *.rst
 recursive-include concept_formation/data_files *
+recursive-include concept_formation/visualization_files *

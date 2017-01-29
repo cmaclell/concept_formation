@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="viz_styling.css">
+  </head>
+  <body>
+  <div class="container-fluid">
+  <div class="row">
+      <div id="plot-panel" class="col-md-9 col-sm-8 col-xs-12"></div>
+      <div id="property-panel" class="col-md-3 col-sm-4 col-xs-6">
+        <table class="table table-condensed">
+          <tbody>
+            <tr>
+              <td class="concept-prop"><strong>Concept Name</strong></td>
+              <td class="absorbing-column" id="concept-name"></td>
+            </tr>
+            <tr>
+              <td class="concept-prop"><strong>Size</strong></td>
+              <td class="absorbing-column" id="concept-size"></td>
+            </tr>
+            <tr>
+              <td class="concept-prop"><strong>N Children</strong></td>
+              <td class="absorbing-column" id="concept-child-size"></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <label>Show Node Names<input id="show-names" type="checkbox"> </label><br>
+        <label>Image Field
+            <select id="img-attr">
+                <option value="none">None</option> 
+            </select> 
+        </label><br>
+
+        <a class="btn btn-default btn-xs" role="button" data-toggle="collapse" href="#filter-props"><strong>Filter Properties</strong></a>
+        <div class="collapse" id="filter-props">
+            Select the properties types you want to filter out:
+            <form id="filter-form">
+              <div class="form-group">
+                <div class="checkbox"><label><input id="unq-filter" type="checkbox" >Unique Values</label></div>
+                <div class="checkbox"><label><input id="una-filter" type="checkbox" >Unary Values</label></div>
+                <div class="checkbox"><label><input id="rel-filter" type="checkbox" >Relations Attribtues</label></div>
+                <div class="checkbox"><label><input id="hid-filter" type="checkbox" >Hidden Attributes</label></div>
+                <div class="checkbox"><label><input id="com-filter" type="checkbox" >Component Property Attributes</label></div>
+              </div>
+            </form>
+        </div><br>
+        <label><strong>Color By</strong>
+          <select id="color-by">
+            <option value="none">None</option>
+          </select>
+        </label><br>
+        <p><strong>Attribute Type:</strong><span id="color-by-type">Default</span></p>
+        <div id="nominal-colors" class="color-ops">
+          <table class="table table-condensed">
+            <thead>
+              <tr>
+                <td class="absorbing-column"><strong>Value</strong></td>
+                <td><strong>Color</strong></td>
+                <!-- <td class="absorbing-column" ></td> -->
+              </tr>
+            </thead>
+            <tbody id="nom-val-colors">
+
+            </tbody>
+          </table>
+        </div>
+        <div id="numeric-colors" class="color-ops">
+          <table>
+          <thead>
+            <tr>
+              <td><strong>Min</strong></td>
+              <td class="max-color" ><strong>Max</strong></td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td id="col-min-color" class="swatch"><br></td>
+              <td class="max-color" id="col-max-color" class="swatch"><br></td>
+            </tr>
+            <tr>
+              <td id="col-min-val"></td>
+              <td class="max-color" id="col-max-val"></td>
+            </tr>
+          </tbody>
+          </table>
+        </div>
+
+        <table id="property-sheet" class="table table-bordered table-condensed">
+          <thead>
+            <tr>
+              <td><b>Property</b></td>
+              <td><b>Count</b></td>
+              <td><b>Percent</b></td>
+            </tr>
+          </thead>
+          <tbody id="properties">
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="col-md-10">
+      <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+      <script src="https://d3js.org/d3-array.v0.7.min.js"></script>
+      <script src="https://d3js.org/d3-collection.v0.2.min.js"></script>
+      <script src="https://d3js.org/d3-color.v0.4.min.js"></script>
+      <script src="https://d3js.org/d3-format.v0.5.min.js"></script>
+      <script src="https://d3js.org/d3-interpolate.v0.8.min.js"></script>
+      <script src="https://d3js.org/d3-time.v0.2.min.js"></script>
+      <script src="https://d3js.org/d3-time-format.v0.3.min.js"></script>
+      <script src="https://d3js.org/d3-scale.v0.7.min.js"></script>
+      <script type="text/javascript" src="output.js"></script>
+      <script type="text/javascript" src="viz_logic.js"></script>
+      <script type="text/javascript">
+        if(typeof trestle_output === 'undefined'){
+          alert("Can't find the trestle output file. Use visualize(tree) to output an appropriate tree.");
+        }
+        else {
+          data = trestle_output;
+          $("#color-by").change(colorSelectChanged);
+          $("#img-attr").change(imageSelectChanged);
+          $("#show-names").change(changeText);
+          $("#com-filter").change(updateFilters);
+          $("#rel-filter").change(updateFilters);
+          $("#unq-filter").change(updateFilters);
+          $("#hid-filter").change(updateFilters);
+          setupAttributes(data);
+          colorSelectChanged();
+          populateColorByOptions(data);
+          buildTree(data);
+          make_property_sheet(data);
+        }
+      </script>
+    </div>
+    </div>
+  </body>
+</html>
+

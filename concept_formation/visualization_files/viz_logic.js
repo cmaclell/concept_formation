@@ -1,212 +1,4 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
-    <style type="text/css">
-text {
-  font-size: 11px;
-  pointer-events: none;
-}
-
-text.parent {
-  fill: #1f77b4;
-}
-
-circle.failure{
-    fill: #F5A9A9;
-}
-
-circle.success{
-    fill: #9FF781;
-}
-
-circle {
-  fill: #ccc;
-  stroke: #999;
-  pointer-events: all;
-}
-
-circle.parent {
-  fill: #1f77b4;
-  fill-opacity: .25;
-  stroke: steelblue;
-}
-
-circle.parent:hover {
-  stroke: #ff7f0e;
-  stroke-width: .5px;
-}
-
-#property-panel{
-  position:absolute;
-  right:0px;
-  top:0px;
-  overflow: scroll;
-  height: 100%;
-  background: white;
-  padding: 0px;
-}
-
-td{
-  background: white;
-}
-
-table{
-  table-layout: auto;
-  border-collapse: collapse;
-  width:100%;
-}
-
-table td.absorbing-column{
-  width:100%;
-}
-
-.concept-prop{
-  min-width: 110px;
-}
-
-.val-row {
-  padding-left:30px !important;
-}
-
-.color-ops {
-  padding-right: 60px;
-  padding-left: 30px; 
-  /*text-align: center;*/
-}
-
-.max-color {
-  text-align: right;
-  width:50%;
-}
-
-td.swatch{
-  width: 50px;
-}
-
-#filter-form {
-  padding-left: 30px;
-}
-</style>
-
-<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-
-<!-- jQuery library -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
-
-<!-- Latest compiled JavaScript -->
-<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-  </head>
-  <body>
-  <div class="container">
-  <div class="row">
-      <div id="property-panel" class="col-md-3">
-        <table class="table table-condensed">
-          <tbody>
-            <tr>
-              <td class="concept-prop"><strong>Concept Name</strong></td>
-              <td class="absorbing-column" id="concept-name"></td>
-            </tr>
-            <tr>
-              <td class="concept-prop"><strong>Size</strong></td>
-              <td class="absorbing-column" id="concept-size"></td>
-            </tr>
-            <tr>
-              <td class="concept-prop"><strong>N Children</strong></td>
-              <td class="absorbing-column" id="concept-child-size"></td>
-            </tr>
-          </tbody>
-        </table>
-
-        <label>Show Node Names<input id="show-names" type="checkbox"> </label><br>
-        <label>Image Field
-            <select id="img-attr">
-                <option value="none">None</option> 
-            </select> 
-        </label><br>
-
-        <a class="btn btn-default btn-xs" role="button" data-toggle="collapse" href="#filter-props"><strong>Filter Properties</strong></a>
-        <div class="collapse" id="filter-props">
-            Select the properties types you want to filter out:
-            <form id="filter-form">
-              <div class="form-group">
-                <div class="checkbox"><label><input id="unq-filter" type="checkbox" >Unique Values</label></div>
-                <div class="checkbox"><label><input id="una-filter" type="checkbox" >Unary Values</label></div>
-                <div class="checkbox"><label><input id="rel-filter" type="checkbox" >Relations Attribtues</label></div>
-                <div class="checkbox"><label><input id="hid-filter" type="checkbox" >Hidden Attributes</label></div>
-                <div class="checkbox"><label><input id="com-filter" type="checkbox" >Component Property Attributes</label></div>
-              </div>
-            </form>
-        </div><br>
-        <label><strong>Color By</strong>
-          <select id="color-by">
-            <option value="none">None</option>
-          </select>
-        </label><br>
-        <p><strong>Attribute Type:</strong><span id="color-by-type">Default</span></p>
-        <div id="nominal-colors" class="color-ops">
-          <table class="table table-condensed">
-            <thead>
-              <tr>
-                <td class="absorbing-column"><strong>Value</strong></td>
-                <td><strong>Color</strong></td>
-                <!-- <td class="absorbing-column" ></td> -->
-              </tr>
-            </thead>
-            <tbody id="nom-val-colors">
-
-            </tbody>
-          </table>
-        </div>
-        <div id="numeric-colors" class="color-ops">
-          <table>
-          <thead>
-            <tr>
-              <td><strong>Min</strong></td>
-              <td class="max-color" ><strong>Max</strong></td>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td id="col-min-color" class="swatch"><br></td>
-              <td class="max-color" id="col-max-color" class="swatch"><br></td>
-            </tr>
-            <tr>
-              <td id="col-min-val"></td>
-              <td class="max-color" id="col-max-val"></td>
-            </tr>
-          </tbody>
-          </table>
-        </div>
-
-        <table id="property-sheet" class="table table-bordered table-condensed">
-          <thead>
-            <tr>
-              <td><b>Property</b></td>
-              <td><b>Count</b></td>
-              <td><b>Percent</b></td>
-            </tr>
-          </thead>
-          <tbody id="properties">
-          </tbody>
-        </table>
-      </div>
-    </div>
-    <div class="col-md-10">
-      <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-      <script src="https://d3js.org/d3-array.v0.7.min.js"></script>
-      <script src="https://d3js.org/d3-collection.v0.2.min.js"></script>
-      <script src="https://d3js.org/d3-color.v0.4.min.js"></script>
-      <script src="https://d3js.org/d3-format.v0.5.min.js"></script>
-      <script src="https://d3js.org/d3-interpolate.v0.8.min.js"></script>
-      <script src="https://d3js.org/d3-time.v0.2.min.js"></script>
-      <script src="https://d3js.org/d3-time-format.v0.3.min.js"></script>
-      <script src="https://d3js.org/d3-scale.v0.7.min.js"></script>
-      <script type="text/javascript" src="output.js"></script>
-      
-      <script type="text/javascript">
-
-   
+const cv_key = "#ContinuousValue#"; 
 
       var data = {}
 
@@ -222,10 +14,13 @@ td.swatch{
                   .size([r, r])
                   .value(function(d) { return d.size; });
 
-      var vis = d3.select("body").insert("svg:svg", "h2")
-            .attr("width", w)
-            .attr("height", h)
-            .append("svg:g")
+      var vis = d3.select("div#plot-panel")
+            .append("div")
+            .classed("svg-container",true)
+            .insert("svg:svg", "h2")
+            .attr("preservAspectRatio", "xMinYMin meet")
+            .attr("viewBox", "0 0 750 750")
+            .classed("svg-content-responsive", true)
             .attr("transform", "translate(" + (w - r) / 2 + "," + (h - r) / 2 + ")");
 
       var attributeScales = {};
@@ -249,6 +44,12 @@ td.swatch{
         else {
           return null;
         }
+      }
+
+      function augmentNumeric(numeric){
+        numeric["min"] = numeric["mean"] - 2 * numeric["std"];
+        numeric["max"] = numeric["mean"] + 2 * numeric["std"];
+        return numeric;
       }
 
       /*
@@ -276,8 +77,9 @@ td.swatch{
           return 'binary';
         }
         // example - '0.0000 (0.0000) [2]'
-        var patt = /\d+\.\d+\s\(\d+\.\d+\)\s\[\d+\]/g;
-        if(patt.test(vals[0])) {
+        //var patt = /\d+\.\d+\s\(\d+\.\d+\)\s\[\d+\]/g;
+        //var patt = /#ContinuousValue#/g;
+        if(vals[0] === cv_key) {
           return "numeric";
         }
         else {
@@ -325,7 +127,8 @@ td.swatch{
             at_scale.scale = redGreenScale; //d3_scale.scalePlasma();
           }
           else if (attType === "numeric") {
-            var num = parseNumeric(vals[0]);
+            //var num = parseNumeric(rootObj['counts'][attr]['#ContinuousValue#']);
+            var num = augmentNumeric(rootObj['counts'][attr][cv_key]);
             at_scale.scale = redGreenScale.copy().domain([num.min,num.max]);
           }
           else if (attType === "unary") {
@@ -538,7 +341,9 @@ td.swatch{
               break;
             
             case "numeric":
-              var num = parseNumeric(Object.keys(d['counts'][targetAttr])[0]);
+              //var num = parseNumeric(Object.keys(d['counts'][targetAttr])[0]);
+              //var num = augmentNumeric(Object.keys(d['counts'][targetAttr][cv_key]))
+              var num = d['counts'][targetAttr][cv_key];
               circle.css("fill",scale.scale(num.mean));
               break;
             
@@ -561,8 +366,6 @@ td.swatch{
 
       }
 
-  
-
       function populateColorByOptions(d) {
         var attrs = Object.keys(d['counts']);
         attrs.sort();
@@ -575,7 +378,6 @@ td.swatch{
         var una_filter = $("#una-filter").is(':checked');
         var unq_filter = $("#unq-filter").is(':checked');
         var com_filter = $("#com-filter").is(':checked');
-
 
         for (var i=0; i < attrs.length;i++){
           var attrScale = attributeScales[attrs[i]];
@@ -735,11 +537,21 @@ td.swatch{
             val = vals[v];
             tr = $("<tr></tr>");
             var vd = $("<td></td>");
-            vd.text(parseNumeric(val) ? val.split('[')[0] : val);
+            var n = NaN;
+            //if this is a continuous value
+            if(val === cv_key){
+              vd.text(d[attr][val].mean.toFixed(3) + " (" + d[attr][val].std.toFixed(3)+ ")");
+              n = d[attr][val].n;
+            }
+            //else
+            else {
+              vd.text(val);
+              n = d[attr][val];
+            }
             vd.addClass("val-row");
             tr.append(vd);
-            var cd = $("<td>"+d[attr][val]+"</td>");
-            var pd = $("<td>"+(d[attr][val]/node_data['size']*100).toFixed(2)+"%</td>")
+            var cd = $("<td>"+n+"</td>");
+            var pd = $("<td>"+(n/node_data['size']*100).toFixed(2)+"%</td>")
             tr.append(cd);
             tr.append(pd);
             property_sheet.append(tr);
@@ -754,22 +566,3 @@ td.swatch{
       }
 
       
-      data = trestle_output;
-      $( "#color-by" ).change( colorSelectChanged );
-      $("#img-attr").change(imageSelectChanged);
-      $("#show-names").change(changeText);
-      $("#com-filter").change(updateFilters);
-      $("#rel-filter").change(updateFilters);
-      $("#unq-filter").change(updateFilters);
-      $("#hid-filter").change(updateFilters);
-      setupAttributes(data);
-      colorSelectChanged();
-      populateColorByOptions(data);
-      buildTree(data);
-      make_property_sheet(data);
-      </script>
-    </div>
-    </div>
-  </body>
-</html>
-

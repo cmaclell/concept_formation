@@ -1,0 +1,105 @@
+text {
+  font-size: 11px;
+  pointer-events: none;
+}
+
+text.parent {
+  fill: #1f77b4;
+}
+
+circle.failure{
+    fill: #F5A9A9;
+}
+
+circle.success{
+    fill: #9FF781;
+}
+
+circle {
+  fill: #ccc;
+  stroke: #999;
+  pointer-events: all;
+}
+
+circle.parent {
+  fill: #1f77b4;
+  fill-opacity: .25;
+  stroke: steelblue;
+}
+
+circle.parent:hover {
+  stroke: #ff7f0e;
+  stroke-width: .5px;
+}
+
+#property-panel{
+  /*position:absolute;*/
+  right:0px;
+  top:0px;
+  overflow: scroll;
+  height: 100%;
+  background: white;
+  /*padding: 5px;*/
+  border-left: 1px solid lightgray; 
+}
+
+.svg-container {
+  display:inline-block;
+  position: absolute;
+  top:0;
+  left:0;
+  width: 100%;
+  padding-bottom: 100%;
+  vertical-align: top;
+  overflow: hidden;
+}
+
+.svg-content-responsive {
+  display: inline-block;
+  position: absolute;
+  max-height: 100vh;
+  top:0;
+  left: 0;
+}
+
+td{
+  background: white;
+}
+
+table{
+  table-layout: auto;
+  border-collapse: collapse;
+  width:100%;
+}
+
+table td.absorbing-column{
+  width:100%;
+}
+
+.concept-prop{
+  min-width: 110px;
+}
+
+.val-row {
+  padding-left:30px !important;
+}
+
+.color-ops {
+  padding-right: 60px;
+  padding-left: 30px; 
+  /*text-align: center;*/
+}
+
+.max-color {
+  text-align: right;
+  width:50%;
+}
+
+td.swatch{
+  width: 50px;
+}
+
+#filter-form {
+  padding-left: 30px;
+}
+
