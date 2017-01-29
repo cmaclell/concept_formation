@@ -191,3 +191,10 @@ class ContinuousValue():
                      (self.num + other.num))
         self.num += other.num
 
+    def output_json(self):
+        return {
+            'mean':self.unbiased_mean(),
+            'std':self.unbiased_std(),
+            'n':self.num
+        }
+
