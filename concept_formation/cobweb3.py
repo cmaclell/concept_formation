@@ -552,8 +552,19 @@ class Cobweb3Node(CobwebNode):
 
         temp = {}
         for attr in self.attrs('all'):
-                temp[str(attr)] = {str(value):self.av_counts[attr][value] for
-                                   value in self.av_counts[attr]}
+            temp[str(attr)] = {}
+
+            for val in self.av_counts[attr]:
+                if val == cv_key:
+                    temp[str(attr)][cv_key] = self.av_counts[attr][val].output_json()
+                else:
+                    temp[str(attr)][str(val)] = self.av_counts[attr][val]
+
+
+
+
+                # temp[str(attr)] = {str(value):str(self.av_counts[attr][value]) for
+                #                    value in self.av_counts[attr]}
 
         for child in self.children:
                output["children"].append(child.output_json())
