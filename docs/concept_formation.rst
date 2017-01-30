@@ -107,6 +107,14 @@ concept_formation.datasets module
     :undoc-members:
     :show-inheritance:
 
+concept_formation.visualize module
+---------------------------------
+
+.. automodule:: concept_formation.visualize
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 concept_formation.utils module
 ------------------------------
 
