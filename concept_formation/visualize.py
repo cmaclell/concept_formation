@@ -6,6 +6,7 @@ from __future__ import print_function
 from __future__ import unicode_literals
 from __future__ import absolute_import
 from __future__ import division
+from os.path import realpath
 from os.path import dirname
 from os.path import join
 from os.path import exists
@@ -13,13 +14,15 @@ from shutil import copy
 import webbrowser
 import json
 
+
 def _copy_file(filename, target_dir):
     module_path = dirname(__file__)
     src = join(module_path, 'visualization_files', filename)
     dst = join(target_dir, filename)
-    copy(src,dst)
+    copy(src, dst)
 
-def visualize(tree,dst='.',recreate_html=True):
+
+def visualize(tree, dst='.', recreate_html=True):
     """
     Create an interactive visualization of a concept_formation tree and open
     it in your browswer.
@@ -38,12 +41,12 @@ def visualize(tree,dst='.',recreate_html=True):
     :type dst: str
     :type create_html: bool
     """
-    if recreate_html or not exists(join(dst,'viz.html')):
-        _copy_file('viz.html',dst)
-        _copy_file('viz_logic.js',dst)
-        _copy_file('viz_styling.css',dst)
-    with open(join(dst,'output.js'),'w') as out:
+    if recreate_html or not exists(join(dst, 'viz.html')):
+        _copy_file('viz.html', dst)
+        _copy_file('viz_logic.js', dst)
+        _copy_file('viz_styling.css', dst)
+    with open(join(dst, 'output.js'), 'w') as out:
         out.write('var trestle_output = ')
         out.write(json.dumps(tree.root.output_json()))
         out.write(';')
-    webbrowser.open(join(dst,'viz.html'))
+    webbrowser.open('file://' + realpath(join(dst, 'viz.html')))
