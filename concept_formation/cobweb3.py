@@ -201,9 +201,9 @@ class Cobweb3Node(CobwebNode):
                     self.av_counts[attr][val] = self.av_counts[attr].get(val, ContinuousValue())
                     self.av_counts[attr][val].combine(node.av_counts[attr][val])
                 else:
-                    self.av_counts[attr][val] = (self.av_counts[attr].get(val,0) +
+                    self.av_counts[attr][val] = (self.av_counts[attr].get(val, 0) +
                                          node.av_counts[attr][val])
-    
+
     def expected_correct_guesses(self):
         """
         Returns the number of attribute values that would be correctly guessed

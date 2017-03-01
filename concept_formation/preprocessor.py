@@ -80,13 +80,12 @@ def get_attribute_components(attribute, vars_only=True):
                 for name in get_attribute_components(ele, vars_only):
                     names.add(name)
             else:
-                if ((vars_only is not True or ele[0] == '?') and (ele != '_'
-                                                                  and ele[0] !=
-                                                                  '_')):
+                if ((vars_only is not True or (len(ele) > 0 and ele[0] == '?'))
+                    and (ele != '_' and len(ele) > 0 and ele[0] != '_')):
                     names.add(ele)
 
-    elif ((vars_only is not True and attribute[0] != '_') or attribute[0] ==
-          '?'):
+    elif ((vars_only is not True and attribute[0] != '_') or
+          attribute[0] == '?'):
         names.add(attribute)
 
     return names
