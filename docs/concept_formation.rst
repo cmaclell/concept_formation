@@ -108,7 +108,7 @@ concept_formation.datasets module
     :show-inheritance:
 
 concept_formation.visualize module
----------------------------------
+----------------------------------
 
 .. automodule:: concept_formation.visualize
     :members:
