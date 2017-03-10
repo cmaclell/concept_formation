@@ -1,4 +1,10 @@
 from concept_formation.cobweb3 import Cobweb3Tree, Cobweb3Node
+from concept_formation.trestle import TrestleTree
+from concept_formation.structure_mapper import StructureMapper
+from concept_formation.preprocessor import SubComponentProcessor
+from concept_formation.preprocessor import Flattener
+from concept_formation.preprocessor import Pipeline
+from concept_formation.preprocessor import NameStandardizer
 from random import random
 
 def init_tree(instances):
@@ -22,6 +28,33 @@ def init_tree(instances):
         n.tree = tree
         n.parent = tree.root
     return tree
+
+def init_tree_new(instances):
+    tree = TrestleTree()
+    for i in instances:
+        pipe = Pipeline(NameStandardizer(tree.gensym),
+                                 Flattener(), SubComponentProcessor(),
+                                 StructureMapper(tree.root))
+        temp_instance = pipe.transform(i)
+        tree.root.increment_counts(temp_instance)
+        is_match = False
+        for c in tree.children:
+            if c.is_exact_match(temp_instance):
+                c.increment_counts(temp_instance)
+                is_match = True
+                break
+
+        if is_match:
+            continue
+        else:
+            node = Cobweb3Node()
+            node.increment_counts(temp_instance)
+
+            tree.root.children.append(node)
+            node.parent = tree.root
+            node.tree = tree
+    return tree
+
 
 def cu_for_merge_into(node,c1,c2):
     temp = node.shallow_copy()
@@ -81,12 +114,12 @@ def merge_at_node(node):
 
 
 def glom2(instances):
-    tree = init_tree(instances)
+    tree = init_tree_new(instances)
     merge_at_node(tree.root)
     return tree
 
 if __name__ == '__main__':
-    from concept_formation.datasets import load_mushroom, load_forest_fires
+    import concept_formation.datasets as ds
     from random import normalvariate, uniform, shuffle, seed
     from concept_formation.visualize import visualize, visualize_clusters
     from concept_formation.cluster import cluster_split_search,AIC,CU,BIC
@@ -115,7 +148,8 @@ if __name__ == '__main__':
     #              range(num_samples)]
 
 
-    data = load_forest_fires()[:100]
+    # data = ds.load_forest_fires()[:100]
+    data = ds.load_rb_com_11()[:60]
 
     # data = load_mushroom()[:50]
     tree = glom2(data)
