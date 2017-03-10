@@ -1,8 +1,5 @@
 from concept_formation.cobweb3 import Cobweb3Tree, Cobweb3Node
 
-
-
-
 def all_pairs(clusters):
     pairs = []
     for i, c1 in enumerate(clusters):
@@ -70,6 +67,8 @@ def glom(instances):
 
     #clusters is not a list of 1 element that should become the new root of a Cobweb3Tree
     tree = Cobweb3Tree()
+    for i in instances:
+        tree.update_scales(i)
     tree.root = clusters[0]
     tree_point(clusters[0],tree)
 
@@ -77,11 +76,32 @@ def glom(instances):
 
 if __name__ == '__main__':
     from concept_formation.datasets import load_mushroom
-    from concept_formation.visualize import visualize_clusters
-    from concept_formation.cluster import cluster_split_search,AIC,CU
+    from random import normalvariate, uniform, shuffle, seed
+    from concept_formation.visualize import visualize, visualize_clusters
+    from concept_formation.cluster import cluster_split_search,AIC,CU,BIC
+
+    seed(0)
+
+    num_clusters = 4
+    num_samples = 30
+    sigma =1
+
+    xmean = [12,0,-9,-20]
+    ymean = [15,-8,-20,0]
+
+    # xmean = [uniform(-20, 20) for i in range(num_clusters)]
+    # ymean = [uniform(-20, 20) for i in range(num_clusters)]
+
+    data = []
 
 
-    data = load_mushroom()[:50]
+    for i in range(num_clusters):
+        data += [{'x': normalvariate(xmean[i], sigma), 'y':
+                  normalvariate(ymean[i], sigma), '_label': str(i)} for j in
+                 range(num_samples)]
+
+    # data = load_mushroom()[:50]
     tree = glom(data)
-    clus = cluster_split_search(tree,data,CU,1,40,False,True,True)
-    visualize_clusters(tree,clus)
+    visualize(tree)
+    # clus = cluster_split_search(tree,data,CU,1,40,False,True,True)
+    # visualize_clusters(tree,clus)
