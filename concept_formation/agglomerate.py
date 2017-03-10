@@ -118,42 +118,32 @@ def merge_into(parent, c1, c2):
     c2.parent = c1
     return c1
 
-def get_options(parent,new_child=None):
+def get_options(parent):
     if len(parent.children) <= 2:
             return []
     options = []
-    if new_child is None:
-        for i in range(len(parent.children)):
-            c1 = parent.children[i]
-            for j in range(i+1,len(parent.children)):
-                c2 = parent.children[j]
-                cu = cu_for_merge_into(parent,c1,c2)
-                options.append((cu,c1,c2))
-        return options
-    else:
-        for c2 in parent.children:
-            if c2 == new_child:
-                continue
-            cu = cu_for_merge_into(parent,new_child,c2)            
-            options.append((cu,new_child,c2))
-        return options
-
+    for i in range(len(parent.children)):
+        c1 = parent.children[i]
+        for j in range(i+1,len(parent.children)):
+            c2 = parent.children[j]
+            cu = cu_for_merge_into(parent,c1,c2)
+            options.append((cu,c1,c2))
+    return options
 
 def merge_at_node(node):
     if len(node.children) <= 2:
         return
 
     ops = get_options(node)
-    print([o[0] for o in ops])
+    # print([o[0] for o in ops])
     while len(ops) > 0:
         ops.sort(reverse=True)
         cu_opt, c1, c2 = ops[0]
         cu_curr = node.category_utility()
         if cu_opt > cu_curr:
-            new_node = merge_into(node,c1,c2)
-
+            merge_into(node,c1,c2)
             ops = [op for op in ops if op[1] != c2 and op[2] != c2]
-            ops += get_options(node,new_node)
+            ops += get_options(node)
         else:
             break
 
@@ -180,11 +170,14 @@ if __name__ == '__main__':
     num_samples = 30
     sigma =1
 
-    xmean = [6,0,-9,-3]
-    ymean = [7,-2,-8,0]
+    # xmean = [6,0,-9,-3]
+    # ymean = [7,-2,-8,0]
 
-    # xmean = [uniform(-20, 20) for i in range(num_clusters)]
-    # ymean = [uniform(-20, 20) for i in range(num_clusters)]
+    xmean = [uniform(-6, 6) for i in range(num_clusters)]
+    ymean = [uniform(-6, 6) for i in range(num_clusters)]
+
+    for i in range(len(xmean)):
+        print(i,xmean[i],ymean[i])
 
     data = []
 
