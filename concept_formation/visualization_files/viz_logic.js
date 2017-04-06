@@ -20,8 +20,9 @@ const cv_key = "#ContinuousValue#";
             .insert("svg:svg", "h2")
             .attr("preservAspectRatio", "xMinYMin meet")
             .attr("viewBox", "0 0 750 750")
-            .classed("svg-content-responsive", true)
-            .attr("transform", "translate(" + (w - r) / 2 + "," + (h - r) / 2 + ")");
+            .classed("svg-content-responsive", true);
+            /* .attr("transform", "translate(" + (w - r) / 2 + "," + (h - r) / 2 + ")"); */
+            /* in Firefox does not center the circle in the panel correctly */
 
       var attributeScales = {};
       var redGreenScale = d3_scale.scaleLinear()
