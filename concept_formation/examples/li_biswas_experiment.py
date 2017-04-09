@@ -153,8 +153,8 @@ def run_noise_exp(scaling=False):
             for minorities in v[1:]:
                 miss += 2 * minorities
 
-        #labels = [d['_label'] for d in data]
-        #aris.append(ari(labels, clustering))
+        # labels = [d['_label'] for d in data]
+        # aris.append(ari(labels, clustering))
         miss_numeric.append(miss)
 
     return noise, miss_nominal, miss_numeric
@@ -185,10 +185,3 @@ plt.ylabel("Misclassification Count")
 
 plt.ylim(0,200)
 plt.show()
-
-#for i in range(len(data)):
-#    c = clustering[i]
-#    d = data[i]
-#    print(c, d)
-#
-#
