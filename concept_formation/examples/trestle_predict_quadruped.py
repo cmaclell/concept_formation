@@ -12,8 +12,8 @@ from concept_formation.dummy import DummyTree
 from concept_formation.datasets import load_quadruped
 from concept_formation.preprocessor import ObjectVariablizer
 
-num_runs = 10
-num_examples = 25
+num_runs = 5
+num_examples = 15
 animals = load_quadruped(num_examples)
 
 variablizer = ObjectVariablizer()

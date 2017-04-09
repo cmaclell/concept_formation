@@ -338,6 +338,12 @@ class StructureMappingOptimizationProblem(Problem):
     i.e., given an initial mapping it tries to improve the mapping by permuting
     it.
     """
+    def goal_test(self, node):
+        """
+        This should always return False, so it never terminates early.
+        """
+        return False
+
     def node_value(self, node):
         """
         The value of a node (based on mapping_cost).
