@@ -4,6 +4,7 @@ from __future__ import absolute_import
 from __future__ import division
 import matplotlib.pyplot as plt
 import numpy as np
+from random import seed
 
 from concept_formation.examples.examples_utils import avg_lines
 from concept_formation.evaluation import incremental_evaluation
@@ -11,6 +12,8 @@ from concept_formation.trestle import TrestleTree
 from concept_formation.dummy import DummyTree
 from concept_formation.datasets import load_quadruped
 from concept_formation.preprocessor import ObjectVariablizer
+
+seed(0)
 
 num_runs = 5
 num_examples = 15

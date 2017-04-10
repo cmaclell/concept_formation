@@ -11,9 +11,11 @@ import matplotlib.pyplot as plt
 from concept_formation.cobweb import CobwebTree
 from concept_formation.cobweb3 import Cobweb3Tree
 
+
+
 # Generate sample data
-#np.random.seed(0)
-#seed(0)
+np.random.seed(0)
+seed(0)
 X = np.sort(5 * np.random.rand(40, 1), axis=0)
 y = np.sin(X).ravel()
 y2 = np.sin(X).ravel()

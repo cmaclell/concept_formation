@@ -3,9 +3,12 @@ import matplotlib.pyplot as plt
 from random import choice
 from random import shuffle
 from random import random
+from random import seed
 
 from concept_formation.cobweb3 import Cobweb3Tree
 from concept_formation.cluster import cluster
+
+seed(0)
 
 def run_clust_exp(nominal_noise=0, numeric_noise=0, scaling=False):
     data = []

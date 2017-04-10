@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 from __future__ import absolute_import
 from __future__ import division
 from random import shuffle
+from random import seed
 
 import matplotlib.pyplot as plt
 from sklearn.decomposition import PCA
@@ -13,6 +14,7 @@ from concept_formation.cobweb3 import Cobweb3Tree
 from concept_formation.cluster import cluster
 from concept_formation.datasets import load_iris
 
+seed(0)
 irises = load_iris()
 shuffle(irises)
 
