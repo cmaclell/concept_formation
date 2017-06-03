@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 from __future__ import absolute_import
 from __future__ import division
 from random import shuffle
+from random import seed
 
 import matplotlib.pyplot as plt
 from sklearn.decomposition import PCA
@@ -13,6 +14,7 @@ from concept_formation.cobweb import CobwebTree
 from concept_formation.cluster import cluster
 from concept_formation.datasets import load_mushroom
 
+seed(0)
 mushrooms = load_mushroom()
 shuffle(mushrooms)
 mushrooms = mushrooms[:150]

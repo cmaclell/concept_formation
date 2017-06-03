@@ -5,6 +5,7 @@ from __future__ import division
 
 import matplotlib.pyplot as plt
 import numpy as np
+from random import seed
 
 from concept_formation.examples.examples_utils import avg_lines
 from concept_formation.evaluation import incremental_evaluation
@@ -12,6 +13,7 @@ from concept_formation.cobweb3 import Cobweb3Tree
 from concept_formation.dummy import DummyTree
 from concept_formation.datasets import load_iris
 
+seed(0)
 num_runs = 30
 num_examples = 20
 irises = load_iris()
