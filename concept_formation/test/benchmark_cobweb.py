@@ -33,13 +33,11 @@ if __name__ == "__main__":
     plt.plot(sizes, times, 'r-')
 
     # 10 attributes
-    sizes = [10, 30, 60, 120, 180, 220]
     times = [time(i, 10, 5) for i in sizes]
     plt.plot(sizes, times, 'bo')
     plt.plot(sizes, times, 'b-')
 
     # 20 attributes
-    sizes = [10, 30, 60, 120, 180, 220]
     times = [time(i, 20, 5) for i in sizes]
     plt.plot(sizes, times, 'go')
     plt.plot(sizes, times, 'g-')
