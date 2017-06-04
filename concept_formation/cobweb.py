@@ -11,6 +11,8 @@ from random import shuffle
 from random import random
 from math import log
 
+import numpy as np
+
 from concept_formation.utils import weighted_choice
 from concept_formation.utils import most_likely_choice
 
@@ -27,6 +29,10 @@ class CobwebTree(object):
         """
         self.root = CobwebNode()
         self.root.tree = self
+        self.hidden_nominal_key = {}
+        self.nominal_key = {}
+        self.hidden_nominal_count = 0
+        self.nominal_count = 0
 
     def clear(self):
         """
@@ -34,6 +40,8 @@ class CobwebTree(object):
         """
         self.root = CobwebNode()
         self.root.tree = self
+        self.hidden_nominal_key = {}
+        self.nominal_key = {}
 
     def __str__(self):
         return str(self.root)
@@ -63,6 +71,45 @@ class CobwebTree(object):
                                  ',\n'+type(self).__name__ +
                                  ' only works with hashable values.')
 
+    def update_keys(self, instance):
+        """
+        Updates the keys in the tree, so that it can be used to construct a new
+        concept with the instance.
+        """
+        for attr in instance:
+            key = self.nominal_key
+            if attr[0] == "_":
+                key = self.hidden_nominal_key
+            if attr not in key:
+                key[attr] = {}
+
+            val = instance[attr]
+            if val not in key[attr]:
+                if attr[0] == "_":
+                    key[attr][val] = self.hidden_nominal_count
+                    self.hidden_nominal_count += 1
+                else:
+                    key[attr][val] = self.nominal_count
+                    self.nominal_count += 1
+
+    def create_instance_concept(self, instance):
+        concept = CobwebNode()
+        concept.count = 1
+        concept.hidden_nominal_counts = np.zeros(self.hidden_nominal_count)
+        concept.nominal_counts = np.zeros(self.nominal_count)
+        concept.attributes = set(instance)
+        concept.tree = self
+
+        for attr in instance:
+            if attr[0] == "_":
+                idx = self.hidden_nominal_key[attr][instance[attr]]
+                concept.hidden_nominal_counts[idx] += 1
+            else:
+                idx = self.nominal_key[attr][instance[attr]]
+                concept.nominal_counts[idx] += 1
+
+        return concept
+
     def ifit(self, instance):
         """
         Incrementally fit a new instance into the tree and return its resulting
@@ -81,6 +128,8 @@ class CobwebTree(object):
         .. seealso:: :meth:`CobwebTree.cobweb`
         """
         self._sanity_check_instance(instance)
+        self.update_keys(instance)
+        instance = self.create_instance_concept(instance)
         return self.cobweb(instance)
 
     def fit(self, instances, iterations=1, randomize_first=True):
@@ -297,7 +346,9 @@ class CobwebNode(object):
         """Create a new CobwebNode"""
         self.concept_id = self.gensym()
         self.count = 0.0
-        self.av_counts = {}
+        self.hidden_nominal_counts = np.array([])
+        self.nominal_counts = np.array([])
+        self.attributes = set()
         self.children = []
         self.parent = None
         self.tree = None
@@ -325,21 +376,21 @@ class CobwebNode(object):
         temp.update_counts_from_node(self)
         return temp
 
-    def attrs(self, attr_filter=None):
-        """
-        Iterates over the attributes present in the node's attribute-value
-        table with the option to filter certain types. By default the filter
-        will ignore hidden attributes and yield all others. If the string 'all'
-        is provided then all attributes will be yielded. In neither of those
-        cases the filter will be interpreted as a function that returns true if
-        an attribute should be yielded and false otherwise.
-        """
-        if attr_filter is None:
-            return filter(lambda x: x[0] != "_", self.av_counts)
-        elif attr_filter == 'all':
-            return self.av_counts
-        else:
-            return filter(attr_filter, self.av_counts)
+    # def attrs(self, attr_filter=None):
+    #     """
+    #     Iterates over the attributes present in the node's attribute-value
+    #     table with the option to filter certain types. By default the filter
+    #     will ignore hidden attributes and yield all others. If the string 'all'
+    #     is provided then all attributes will be yielded. In neither of those
+    #     cases the filter will be interpreted as a function that returns true if
+    #     an attribute should be yielded and false otherwise.
+    #     """
+    #     if attr_filter is None:
+    #         return filter(lambda x: x[0] != "_", self.av_counts)
+    #     elif attr_filter == 'all':
+    #         return self.av_counts
+    #     else:
+    #         return filter(attr_filter, self.av_counts)
 
     def increment_counts(self, instance):
         """
@@ -349,13 +400,7 @@ class CobwebNode(object):
         :param instance: A new instances to incorporate into the node.
         :type instance: :ref:`Instance<instance-rep>`
         """
-        self.count += 1
-        for attr in instance:
-            if attr not in self.av_counts:
-                self.av_counts[attr] = {}
-            if instance[attr] not in self.av_counts[attr]:
-                self.av_counts[attr][instance[attr]] = 0
-            self.av_counts[attr][instance[attr]] += 1
+        self.update_counts_from_node(instance)
 
     def update_counts_from_node(self, node):
         """
@@ -368,13 +413,20 @@ class CobwebNode(object):
         :type node: CobwebNode
         """
         self.count += node.count
-        for attr in node.attrs('all'):
-            if attr not in self.av_counts:
-                self.av_counts[attr] = {}
-            for val in node.av_counts[attr]:
-                if val not in self.av_counts[attr]:
-                    self.av_counts[attr][val] = 0
-                self.av_counts[attr][val] += node.av_counts[attr][val]
+
+        if len(self.hidden_nominal_counts) < len(node.hidden_nominal_counts):
+            self.hidden_nominal_counts.resize(node.hidden_nominal_counts.shape)
+        if len(node.hidden_nominal_counts) < len(self.hidden_nominal_counts):
+            node.hidden_nominal_counts.resize(self.hidden_nominal_counts.shape)
+        self.hidden_nominal_counts += node.hidden_nominal_counts
+
+        if len(self.nominal_counts) < len(node.nominal_counts):
+            self.nominal_counts.resize(node.nominal_counts.shape)
+        if len(node.nominal_counts) < len(self.nominal_counts):
+            node.nominal_counts.resize(self.nominal_counts.shape)
+        self.nominal_counts += node.nominal_counts
+        
+        self.attributes.update(node.attributes)
 
     def expected_correct_guesses(self):
         """
@@ -388,17 +440,8 @@ class CobwebNode(object):
                  concept.
         :rtype: float
         """
-        correct_guesses = 0.0
-        attr_count = 0
-
-        for attr in self.attrs():
-            attr_count += 1
-            if attr in self.av_counts:
-                for val in self.av_counts[attr]:
-                    prob = (self.av_counts[attr][val]) / self.count
-                    correct_guesses += (prob * prob)
-
-        return correct_guesses / attr_count
+        p = self.nominal_counts / self.count
+        return np.dot(p, p) / len(self.attributes)
 
     def category_utility(self):
         """
@@ -918,19 +961,36 @@ class CobwebNode(object):
 
         .. seealso:: :meth:`CobwebNode.get_best_operation`
         """
-        for attr in set(instance).union(set(self.attrs())):
-            if attr[0] == '_':
-                continue
-            if attr in instance and attr not in self.av_counts:
-                return False
-            if attr in self.av_counts and attr not in instance:
-                return False
-            if attr in self.av_counts and attr in instance:
-                if instance[attr] not in self.av_counts[attr]:
-                    return False
-                if not self.av_counts[attr][instance[attr]] == self.count:
-                    return False
+        if len(self.nominal_counts) < len(instance.nominal_counts):
+            self.nominal_counts.resize(instance.nominal_counts.shape)
+        if len(self.nominal_counts) > len(instance.nominal_counts):
+            instance.nominal_counts.resize(self.nominal_counts.shape)
+
+        if (not np.array_equal(self.nominal_counts > 0,
+                               instance.nominal_counts > 0)):
+            return False
+
+        if not np.array_equal(np.where(instance.nominal_counts > 0,
+                                       np.full(self.nominal_counts.shape,
+                                               self.count), 0),
+                              self.nominal_counts):
+            return False
+
         return True
+
+        # for attr in set(instance).union(set(self.attrs())):
+        #     if attr[0] == '_':
+        #         continue
+        #     if attr in instance and attr not in self.av_counts:
+        #         return False
+        #     if attr in self.av_counts and attr not in instance:
+        #         return False
+        #     if attr in self.av_counts and attr in instance:
+        #         if instance[attr] not in self.av_counts[attr]:
+        #             return False
+        #         if not self.av_counts[attr][instance[attr]] == self.count:
+        #             return False
+        # return True
 
     def __hash__(self):
         """
@@ -958,6 +1018,32 @@ class CobwebNode(object):
         """
         return self.pretty_print()
 
+    def av_counts(self):
+        av_counts = {}
+
+        if len(self.hidden_nominal_counts) < self.tree.hidden_nominal_count:
+            self.hidden_nominal_counts.resize(self.tree.hidden_nominal_count)
+        if len(self.nominal_counts) < self.tree.nominal_count:
+            self.nominal_counts.resize(self.tree.nominal_count)
+
+        key = self.tree.hidden_nominal_key
+        for attr in key:
+            if attr not in av_counts:
+                av_counts[attr] = {}
+            for val in key[attr]:
+                if self.hidden_nominal_counts[key[attr][val]] > 0:
+                    av_counts[attr][val] = self.hidden_nominal_counts[key[attr][val]]
+
+        key = self.tree.nominal_key
+        for attr in key:
+            if attr not in av_counts:
+                av_counts[attr] = {}
+            for val in key[attr]:
+                if self.nominal_counts[key[attr][val]] > 0:
+                    av_counts[attr][val] = self.nominal_counts[key[attr][val]]
+
+        return av_counts
+
     def pretty_print(self, depth=0):
         """
         Print the categorization tree
@@ -971,8 +1057,7 @@ class CobwebNode(object):
         :return: a formated string displaying the tree and its children
         :rtype: str
         """
-
-        ret = str(('\t' * depth) + "|-" + str(self.av_counts) + ":" +
+        ret = str(('\t' * depth) + "|-" + str(self.av_counts()) + ":" +
                   str(self.count) + '\n')
 
         for c in self.children:
@@ -1041,10 +1126,13 @@ class CobwebNode(object):
         output['children'] = []
 
         temp = {}
-        for attr in self.attrs('all'):
-            for value in self.av_counts[attr]:
-                temp[str(attr)] = {str(value): self.av_counts[attr][value] for
-                                   value in self.av_counts[attr]}
+        av_counts = self.av_counts()
+
+        for attr in av_counts:
+            # for attr in self.attrs('all'):
+            for value in av_counts[attr]:
+                temp[str(attr)] = {str(value): av_counts[attr][value] for
+                                   value in av_counts[attr]}
                 # temp[attr + " = " + str(value)] = self.av_counts[attr][value]
 
         for child in self.children:
