@@ -336,15 +336,12 @@ class CobwebNode(object):
         cases the filter will be interpreted as a function that returns true if
         an attribute should be yielded and false otherwise.
         """
-        for attr in self.av_counts:
-            if attr_filter is None:
-                if attr[0] == '_':
-                    continue
-                yield attr
-            elif attr_filter == 'all':
-                yield attr
-            elif attr_filter(attr):
-                yield attr
+        if attr_filter is None:
+            return filter(lambda x: x[0] != "_", self.av_counts)
+        elif attr_filter == 'all':
+            return self.av_counts
+        else:
+            return filter(attr_filter, self.av_counts)
 
     def increment_counts(self, instance):
         """
@@ -356,9 +353,11 @@ class CobwebNode(object):
         """
         self.count += 1
         for attr in instance:
-            self.av_counts[attr] = self.av_counts.setdefault(attr, {})
-            self.av_counts[attr][instance[attr]] = (self.av_counts[attr].get(
-                instance[attr], 0) + 1)
+            if attr not in self.av_counts:
+                self.av_counts[attr] = {}
+            if instance[attr] not in self.av_counts[attr]:
+                self.av_counts[attr][instance[attr]] = 0
+            self.av_counts[attr][instance[attr]] += 1
 
     def update_counts_from_node(self, node):
         """
@@ -372,10 +371,12 @@ class CobwebNode(object):
         """
         self.count += node.count
         for attr in node.attrs('all'):
+            if attr not in self.av_counts:
+                self.av_counts[attr] = {}
             for val in node.av_counts[attr]:
-                self.av_counts[attr] = self.av_counts.setdefault(attr, {})
-                self.av_counts[attr][val] = (self.av_counts[attr].get(val, 0) +
-                                             node.av_counts[attr][val])
+                if val not in self.av_counts[attr]:
+                    self.av_counts[attr][val] = 0
+                self.av_counts[attr][val] += node.av_counts[attr][val]
 
     def expected_correct_guesses(self):
         """
@@ -881,7 +882,6 @@ class CobwebNode(object):
 
         .. seealso:: :meth:`CobwebNode.get_best_operation`
         """
-
         temp = self.shallow_copy()
 
         temp.create_child_with_current_counts()
