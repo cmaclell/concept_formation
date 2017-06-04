@@ -42,6 +42,8 @@ class CobwebTree(object):
         self.root.tree = self
         self.hidden_nominal_key = {}
         self.nominal_key = {}
+        self.hidden_nominal_count = 0
+        self.nominal_count = 0
 
     def __str__(self):
         return str(self.root)
