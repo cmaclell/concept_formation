@@ -319,6 +319,8 @@ class CobwebTree(object):
         .. seealso:: :meth:`CobwebTree.cobweb`
         """
         self._sanity_check_instance(instance)
+        self.update_keys(instance)
+        instance = self.create_instance_concept(instance)
         return self._cobweb_categorize(instance)
 
 
