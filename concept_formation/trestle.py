@@ -9,7 +9,6 @@ from __future__ import absolute_import
 from __future__ import division
 
 from concept_formation.cobweb3 import Cobweb3Tree
-from concept_formation.cobweb3 import Cobweb3Node
 from concept_formation.structure_mapper import StructureMapper
 from concept_formation.preprocessor import SubComponentProcessor
 from concept_formation.preprocessor import Flattener
@@ -45,32 +44,21 @@ class TrestleTree(Cobweb3Tree):
         inner most attributes, some objects might have multiple attributes
         (i.e., 'attr' for different objects) that contribute to the scaling.
     :param inner_attr_scaling: boolean
-    :param structure_map_internally: Determines whether structure mapping is
-        used at each node during categorization (and when merging), this
-        drastically reduces performance, but allows the category structure to
-        influcence structure mapping.
-    :type structure_map_internally: boolean
     """
 
     def __init__(self, scaling=0.5, inner_attr_scaling=True):
         """
         The tree constructor.
         """
+        super().__init__(scaling, inner_attr_scaling)
         self.gensym_counter = 0
-        self.root = Cobweb3Node()
-        self.root.tree = self
-        self.scaling = scaling
-        self.inner_attr_scaling = inner_attr_scaling
-        self.attr_scales = {}
 
     def clear(self):
         """
         Clear the tree but keep initialization parameters
         """
+        super().clear()
         self.gensym_counter = 0
-        self.root = Cobweb3Node()
-        self.root.tree = self
-        self.attr_scales = {}
 
     def gensym(self):
         """
@@ -166,6 +154,11 @@ class TrestleTree(Cobweb3Tree):
                                  StructureMapper(self.root))
         temp_instance = preprocessing.transform(instance)
         self._sanity_check_instance(temp_instance)
+
+        self.update_keys(temp_instance)
+        temp_instance = self.create_instance_concept(temp_instance)
+        self.update_scales(temp_instance)
+
         return self._cobweb_categorize(temp_instance)
 
     def infer_missing(self, instance, choice_fn="most likely",
@@ -253,4 +246,9 @@ class TrestleTree(Cobweb3Tree):
                                  StructureMapper(self.root))
         temp_instance = preprocessing.transform(instance)
         self._sanity_check_instance(temp_instance)
+
+        self.update_keys(temp_instance)
+        temp_instance = self.create_instance_concept(temp_instance)
+        self.update_scales(temp_instance)
+
         return self.cobweb(temp_instance)

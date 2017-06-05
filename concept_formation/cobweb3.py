@@ -1,7 +1,7 @@
 """
 The Cobweb3 module contains the :class:`Cobweb3Tree` and :class:`Cobweb3Node`
 classes, which extend the traditional Cobweb capabilities to support numeric
-values on attributes. 
+values on attributes.
 """
 
 from __future__ import print_function
@@ -14,19 +14,24 @@ from math import pi
 from math import exp
 from math import log
 
+import numpy as np
+
 from concept_formation.cobweb import CobwebNode
 from concept_formation.cobweb import CobwebTree
 from concept_formation.continuous_value import ContinuousValue
-from concept_formation.utils import isNumber
+from concept_formation.utils import is_number
 from concept_formation.utils import weighted_choice
 from concept_formation.utils import most_likely_choice
+from concept_formation.utils import c4
 
 cv_key = "#ContinuousValue#"
+vc4 = np.vectorize(c4)
+
 
 class Cobweb3Tree(CobwebTree):
     """
-    The Cobweb3Tree contains the knowledge base of a partiucluar instance of the
-    Cobweb/3 algorithm and can be used to fit and categorize instances.
+    The Cobweb3Tree contains the knowledge base of a partiucluar instance of
+    the Cobweb/3 algorithm and can be used to fit and categorize instances.
     Cobweb/3's main difference over Cobweb is the ability to handle numerical
     attributes by applying an assumption that they should follow a normal
     distribution. For the purposes of Cobweb/3's core algorithms a numeric
@@ -36,12 +41,12 @@ class Cobweb3Tree(CobwebTree):
     The scaling parameter determines whether online normalization of continuous
     attributes is used, and to what standard deviation the values are scaled
     to. Scaling divides the std of each attribute by the std of the attribute
-    in the root divided by the scaling constant (i.e., 
-    :math:`\\sigma_{root} / scaling` when making category utility calculations.
-    Scaling is useful to balance the weight of different numerical attributes,
-    without scaling the magnitude of numerical attributes can affect category
-    utility calculation meaning numbers that are naturally larger will recieve
-    preference in the category utility calculation.
+    in the root divided by the scaling constant (i.e., :math:`\\sigma_{root} /
+    scaling` when making category utility calculations.  Scaling is useful to
+    balance the weight of different numerical attributes, without scaling the
+    magnitude of numerical attributes can affect category utility calculation
+    meaning numbers that are naturally larger will recieve preference in the
+    category utility calculation.
 
     :param scaling: The number of standard deviations numeric attributes
         are scaled to. By default this value is 0.5 (half a standard
@@ -62,9 +67,20 @@ class Cobweb3Tree(CobwebTree):
         """
         self.root = Cobweb3Node()
         self.root.tree = self
+        self.hidden_nominal_key = {}
+        self.nominal_key = {}
+        self.hidden_nominal_count = 0
+        self.nominal_count = 0
+
+        self.hidden_numeric_key = {}
+        self.numeric_key = {}
+        self.hidden_numeric_count = 0
+        self.numeric_count = 0
+
         self.scaling = scaling
         self.inner_attr_scaling = inner_attr_scaling
-        self.attr_scales = {}
+        self.attr_scales = Cobweb3Node()
+        self.attr_scales.tree = self
 
     def clear(self):
         """
@@ -72,7 +88,18 @@ class Cobweb3Tree(CobwebTree):
         """
         self.root = Cobweb3Node()
         self.root.tree = self
-        self.attr_scales = {}
+        self.hidden_nominal_key = {}
+        self.nominal_key = {}
+        self.hidden_nominal_count = 0
+        self.nominal_count = 0
+
+        self.hidden_numeric_key = {}
+        self.numeric_key = {}
+        self.hidden_numeric_count = 0
+        self.numeric_count = 0
+
+        self.attr_scales = Cobweb3Node()
+        self.attr_scales.tree = self
 
     def get_inner_attr(self, attr):
         """
@@ -96,20 +123,83 @@ class Cobweb3Tree(CobwebTree):
         Reads through all the attributes in an instance and updates the
         tree scales object so that the attributes can be properly scaled.
         """
-        for attr in instance:
-            if isNumber(instance[attr]):
-                inner_attr = self.get_inner_attr(attr)
-                if inner_attr not in self.attr_scales:
-                    self.attr_scales[inner_attr] = ContinuousValue()
-                self.attr_scales[inner_attr].update(instance[attr])
+        self.attr_scales.increment_counts(instance)
 
-    def cobweb(self, instance):
+    def update_keys(self, instance):
         """
-        A modification of the cobweb function to update the scales object
-        first, so that attribute values can be properly scaled.
+        Updates the keys in the tree, so that it can be used to construct a new
+        concept with the instance.
         """
-        self.update_scales(instance)
-        return super(Cobweb3Tree, self).cobweb(instance)
+        for attr in instance:
+            val = instance[attr]
+
+            if is_number(val):
+                if attr[0] == "_":
+                    key = self.hidden_numeric_key
+                    if attr not in key:
+                        key[attr] = self.hidden_numeric_count
+                        self.hidden_numeric_count += 1
+                else:
+                    key = self.numeric_key
+                    if attr not in key:
+                        key[attr] = self.numeric_count
+                        self.numeric_count += 1
+
+            else:
+                key = self.nominal_key
+                if attr[0] == "_":
+                    key = self.hidden_nominal_key
+                if attr not in key:
+                    key[attr] = {}
+
+                if val not in key[attr]:
+                    if attr[0] == "_":
+                        key[attr][val] = self.hidden_nominal_count
+                        self.hidden_nominal_count += 1
+                    else:
+                        key[attr][val] = self.nominal_count
+                        self.nominal_count += 1
+
+    def create_instance_concept(self, instance):
+        concept = Cobweb3Node()
+        concept.count = 1
+        concept.hidden_counts = np.zeros(self.hidden_nominal_count)
+        concept.counts = np.zeros(self.nominal_count)
+
+        concept.hidden_num = np.zeros(self.hidden_numeric_count)
+        concept.hidden_mean = np.zeros(self.hidden_numeric_count)
+        concept.hidden_meansq = np.zeros(self.hidden_numeric_count)
+
+        concept.num = np.zeros(self.numeric_count)
+        concept.mean = np.zeros(self.numeric_count)
+        concept.meansq = np.zeros(self.numeric_count)
+
+        concept.attributes = set(instance)
+        concept.tree = self
+
+        for attr in instance:
+            val = instance[attr]
+
+            if is_number(val):
+                if attr[0] == "_":
+                    idx = self.hidden_numeric_key[attr]
+                    concept.hidden_num[idx] = 1
+                    concept.hidden_mean[idx] = val
+                    concept.hidden_meansq[idx] = 0.0
+                else:
+                    idx = self.numeric_key[attr]
+                    concept.num[idx] = 1
+                    concept.mean[idx] = val
+                    concept.meansq[idx] = 0.0
+            else:
+                if attr[0] == "_":
+                    idx = self.hidden_nominal_key[attr][instance[attr]]
+                    concept.hidden_counts[idx] = 1
+                else:
+                    idx = self.nominal_key[attr][instance[attr]]
+                    concept.counts[idx] = 1
+
+        return concept
 
     def ifit(self, instance):
         """
@@ -127,6 +217,10 @@ class Cobweb3Tree(CobwebTree):
         .. seealso:: :meth:`CobwebTree.cobweb`
         """
         self._sanity_check_instance(instance)
+        self.update_keys(instance)
+        instance = self.create_instance_concept(instance)
+        self.update_scales(instance)
+        # print(instance)
         return self.cobweb(instance)
 
 
@@ -139,9 +233,69 @@ class Cobweb3Node(CobwebNode):
 
     In general the :meth:`Cobweb3Tree.ifit`, :meth:`Cobweb3Tree.categorize`
     functions should be used to initially interface with the Cobweb/3 knowledge
-    base and then the returned concept can be used to calculate probabilities of
-    certain attributes or determine concept labels.
+    base and then the returned concept can be used to calculate probabilities
+    of certain attributes or determine concept labels.
     """
+
+    def __init__(self, otherNode=None):
+        """Create a new Cobweb3Node"""
+        self.concept_id = self.gensym()
+        self.count = 0.0
+        self.hidden_counts = np.array([])
+        self.counts = np.array([])
+
+        self.hidden_num = np.array([])
+        self.hidden_mean = np.array([])
+        self.hidden_meansq = np.array([])
+
+        self.num = np.array([])
+        self.mean = np.array([])
+        self.meansq = np.array([])
+
+        self.attributes = set()
+        self.children = []
+        self.parent = None
+        self.tree = None
+
+        if otherNode:
+            self.tree = otherNode.tree
+            self.parent = otherNode.parent
+            self.update_counts_from_node(otherNode)
+
+            for child in otherNode.children:
+                self.children.append(self.__class__(child))
+
+    def unbiased_means(self):
+        return self.mean
+
+    def scaled_unbiased_mean(self, shift, scale):
+        if scale <= 0:
+            scale = 1
+        return (self.mean - shift) / scale
+
+    def biased_stds(self):
+        """
+        Returns a biased estimate of the std (i.e., the sample std)
+
+        :return: biased estimate of the std (i.e., the sample std)
+        :rtype: float
+        """
+        return np.sqrt(np.divide(self.meansq, self.num))
+
+    def scaled_biased_std(self, scale):
+        scale[scale <= 0] = 1.0
+        return np.divide(self.biased_stds(), scale)
+
+    def unbiased_stds(self):
+        if len(self.num) == 0:
+            return np.array([])
+        resp = np.sqrt(np.divide(self.meansq, self.num - 1.5))
+        resp[self.num < 2] = 0.0
+        return resp
+
+    def scaled_unbiased_stds(self, scale):
+        scale[scale <= 0] = 1.0
+        return np.divide(self.unbiased_stds(), scale)
 
     def increment_counts(self, instance):
         """
@@ -161,28 +315,17 @@ class Cobweb3Node(CobwebNode):
             function will raise an exception. See: :class:`NumericToNominal
             <concept_formation.preprocessor.NumericToNominal>` for a way to fix
             this error.
-        
+
         :param instance: A new instances to incorporate into the node.
         :type instance: :ref:`Instance<instance-rep>`
 
         """
-        self.count += 1 
-            
-        for attr in instance:
-            self.av_counts[attr] = self.av_counts.setdefault(attr,{})
-
-            if isNumber(instance[attr]):
-                if cv_key not in self.av_counts[attr]:
-                    self.av_counts[attr][cv_key] = ContinuousValue()
-                self.av_counts[attr][cv_key].update(instance[attr])
-            else:
-                prior_count = self.av_counts[attr].get(instance[attr], 0)
-                self.av_counts[attr][instance[attr]] = prior_count + 1
+        self.update_counts_from_node(instance)
 
     def update_counts_from_node(self, node):
         """
-        Increments the counts of the current node by the amount in the specified
-        node, modified to handle numbers.
+        Increments the counts of the current node by the amount in the
+        specified node, modified to handle numbers.
 
         .. warning:: If a numeric attribute is found in an instance with the
             name of a previously nominal attribute, or vice versa, this
@@ -194,49 +337,97 @@ class Cobweb3Node(CobwebNode):
         :type node: Cobweb3Node
         """
         self.count += node.count
-        for attr in node.attrs('all'):
-            self.av_counts[attr] = self.av_counts.setdefault(attr, {})
-            for val in node.av_counts[attr]:
-                if val == cv_key:
-                    self.av_counts[attr][val] = self.av_counts[attr].get(val, ContinuousValue())
-                    self.av_counts[attr][val].combine(node.av_counts[attr][val])
-                else:
-                    self.av_counts[attr][val] = (self.av_counts[attr].get(val, 0) +
-                                         node.av_counts[attr][val])
+        self.attributes.update(node.attributes)
+
+        # Update nominal counts
+        if len(self.hidden_counts) < len(node.hidden_counts):
+            self.hidden_counts.resize(node.hidden_counts.shape)
+        if len(node.hidden_counts) < len(self.hidden_counts):
+            node.hidden_counts.resize(self.hidden_counts.shape)
+        self.hidden_counts += node.hidden_counts
+
+        if len(self.counts) < len(node.counts):
+            self.counts.resize(node.counts.shape)
+        if len(node.counts) < len(self.counts):
+            node.counts.resize(self.counts.shape)
+        self.counts += node.counts
+
+        # Update numeric counts
+        if len(self.hidden_num) < len(node.hidden_num):
+            self.hidden_num.resize(node.hidden_num.shape)
+            self.hidden_mean.resize(node.hidden_mean.shape)
+            self.hidden_meansq.resize(node.hidden_meansq.shape)
+        if len(self.hidden_num) > len(node.hidden_num):
+            node.hidden_num.resize(self.hidden_num.shape)
+            node.hidden_mean.resize(self.hidden_mean.shape)
+            node.hidden_meansq.resize(self.hidden_meansq.shape)
+        delta = node.hidden_mean - self.hidden_mean
+        self.hidden_meansq = (self.hidden_meansq + node.hidden_meansq +
+                              np.multiply(np.multiply(delta, delta),
+                                          (np.divide(
+                                              np.multiply(self.hidden_num,
+                                                          node.hidden_num),
+                                              (self.hidden_num +
+                                               node.hidden_num)))))
+        self.hidden_mean = (np.divide((np.multiply(self.hidden_num,
+                                                   self.hidden_mean) +
+                                       np.multiply(node.hidden_num,
+                                                   node.hidden_mean)),
+                                      (self.hidden_num + node.hidden_num)))
+        self.hidden_num += node.hidden_num
+
+        if len(self.num) > len(node.num):
+            node.num.resize(self.num.shape)
+            node.mean.resize(self.mean.shape)
+            node.meansq.resize(self.meansq.shape)
+        if len(self.num) < len(node.num):
+            self.num.resize(node.num.shape)
+            self.mean.resize(node.mean.shape)
+            self.meansq.resize(node.meansq.shape)
+        delta = node.mean - self.mean
+        self.meansq = (self.meansq + node.meansq +
+                       np.multiply(np.multiply(delta, delta),
+                                   (np.divide(np.multiply(self.num, node.num),
+                                              (self.num + node.num)))))
+        self.mean = (np.divide((np.multiply(self.num, self.mean) +
+                                np.multiply(node.num, node.mean)), (self.num +
+                                                                    node.num)))
+        self.num += node.num
 
     def expected_correct_guesses(self):
         """
         Returns the number of attribute values that would be correctly guessed
         in the current concept. This extension supports both nominal and
-        numeric attribute values. 
-        
+        numeric attribute values.
+
         The typical Cobweb/3 calculation for correct guesses is:
 
         .. math::
 
             P(A_i = V_{ij})^2 = \\frac{1}{2 * \\sqrt{\\pi} * \\sigma}
 
-        However, this does not take into account situations when 
+        However, this does not take into account situations when
         :math:`P(A_i) < 1.0`. Additionally, the original formulation set
         :math:`\\sigma` to have a user specified minimum value. However, for
         small lower bounds, this lets cobweb achieve more than 1 expected
         correct guess per attribute, which is impossible for nominal attributes
         (and does not really make sense for continuous either). This causes
         problems when both nominal and continuous values are being used
-        together; i.e., continuous attributes will get higher preference. 
+        together; i.e., continuous attributes will get higher preference.
 
         To account for this we use a modified equation:
 
         .. math::
 
-            P(A_i = V_{ij})^2 = P(A_i)^2 * \\frac{1}{2 * \\sqrt{\\pi} * \\sigma}
+            P(A_i = V_{ij})^2 = P(A_i)^2 * \\frac{1}{2 * \\sqrt{\\pi} *
+            \\sigma}
 
-        The key change here is that we multiply by :math:`P(A_i)^2`. 
+        The key change here is that we multiply by :math:`P(A_i)^2`.
         Further, instead of bounding :math:`\\sigma` by a user specified lower
         bound (often called acuity), we add some independent, normally
-        distributed noise to sigma: 
-        :math:`\\sigma = \\sqrt{\\sigma^2 + \\sigma_{noise}^2}`, where 
-        :math:`\\sigma_{noise} = \\frac{1}{2 * \\sqrt{\\pi}}`. 
+        distributed noise to sigma:
+        :math:`\\sigma = \\sqrt{\\sigma^2 + \\sigma_{noise}^2}`, where
+        :math:`\\sigma_{noise} = \\frac{1}{2 * \\sqrt{\\pi}}`.
         This ensures the expected correct guesses never exceeds 1. From a
         theoretical point of view, it basically is an assumption that there is
         some independent, normally distributed measurement error that is added
@@ -249,46 +440,118 @@ class Cobweb3Node(CobwebNode):
             in the current concept.
         :rtype: float
         """
-        correct_guesses = 0.0
-        attr_count = 0
+        p = self.counts / self.count
+        ec = np.dot(p, p)
 
-        for attr in self.attrs():
-            attr_count += 1
+        scale = 1.0
+        scale = ((1/self.tree.scaling) * self.tree.attr_scales.unbiased_stds())
+        scaled_stds = self.scaled_unbiased_stds(scale)
+        std = np.sqrt(np.multiply(scaled_stds, scaled_stds) +
+                      (1 / (4 * pi)))
 
-            for val in self.av_counts[attr]:
-                if val == cv_key:
-                    scale = 1.0
-                    if self.tree is not None and self.tree.scaling:
-                        inner_attr = self.tree.get_inner_attr(attr)
-                        if inner_attr in self.tree.attr_scales:
-                            scale = ((1/self.tree.scaling) *
-                                     self.tree.attr_scales[inner_attr].unbiased_std())
+        prob_attr = self.num / self.count
+        ec += np.dot(np.multiply(prob_attr, prob_attr),
+                     (1/(2 * sqrt(pi) * std)))
 
-                    # we basically add noise to the std and adjust the
-                    # normalizing constant to ensure the probability of a
-                    # particular value never exceeds 1.
-                    cv = self.av_counts[attr][cv_key]
-                    std = sqrt(cv.scaled_unbiased_std(scale) *
-                               cv.scaled_unbiased_std(scale) +
-                               (1 / (4 * pi)))
-                    prob_attr = cv.num / self.count
-                    correct_guesses += ((prob_attr * prob_attr) * 
-                                        (1/(2 * sqrt(pi) * std)))
-                else:
-                    prob = (self.av_counts[attr][val]) / self.count
-                    correct_guesses += (prob * prob)
+        return ec / len(self.attributes)
 
-        return correct_guesses / attr_count
+        # correct_guesses = 0.0
+        # attr_count = 0
+
+        # for attr in self.attrs():
+        #     attr_count += 1
+
+        #     for val in self.av_counts[attr]:
+        #         if val == cv_key:
+        #             scale = 1.0
+        #             if self.tree is not None and self.tree.scaling:
+        #                 inner_attr = self.tree.get_inner_attr(attr)
+        #                 if inner_attr in self.tree.attr_scales:
+        #                     scale = ((1/self.tree.scaling) *
+        #                              self.tree.attr_scales[inner_attr].unbiased_std())
+
+        #             # we basically add noise to the std and adjust the
+        #             # normalizing constant to ensure the probability of a
+        #             # particular value never exceeds 1.
+        #             cv = self.av_counts[attr][cv_key]
+        #             std = sqrt(cv.scaled_unbiased_std(scale) *
+        #                        cv.scaled_unbiased_std(scale) +
+        #                        (1 / (4 * pi)))
+        #             prob_attr = cv.num / self.count
+        #             correct_guesses += ((prob_attr * prob_attr) * 
+        #                                 (1/(2 * sqrt(pi) * std)))
+        #         else:
+        #             prob = (self.av_counts[attr][val]) / self.count
+        #             correct_guesses += (prob * prob)
+
+        # return correct_guesses / attr_count
+
+    def av_counts(self):
+        av_counts = {}
+
+        if len(self.hidden_counts) < self.tree.hidden_nominal_count:
+            self.hidden_counts.resize(self.tree.hidden_nominal_count)
+        if len(self.counts) < self.tree.nominal_count:
+            self.counts.resize(self.tree.nominal_count)
+        if len(self.hidden_num) < self.tree.hidden_numeric_count:
+            self.hidden_num.resize(self.tree.hidden_numeric_count)
+            self.hidden_mean.resize(self.tree.hidden_numeric_count)
+            self.hidden_meansq.resize(self.tree.hidden_numeric_count)
+        if len(self.num) < self.tree.numeric_count:
+            self.num.resize(self.tree.numeric_count)
+            self.mean.resize(self.tree.numeric_count)
+            self.meansq.resize(self.tree.numeric_count)
+
+        key = self.tree.hidden_nominal_key
+        for attr in key:
+            if attr not in av_counts:
+                av_counts[attr] = {}
+            for val in key[attr]:
+                if self.hidden_counts[key[attr][val]] > 0:
+                    av_counts[attr][val] = self.hidden_counts[key[attr][val]]
+
+        key = self.tree.nominal_key
+        for attr in key:
+            if attr not in av_counts:
+                av_counts[attr] = {}
+            for val in key[attr]:
+                if self.counts[key[attr][val]] > 0:
+                    av_counts[attr][val] = self.counts[key[attr][val]]
+
+        key = self.tree.hidden_numeric_key
+        for attr in key:
+            if attr not in av_counts:
+                av_counts[attr] = {}
+            idx = key[attr]
+            val = ContinuousValue()
+            val.num = self.hidden_num[idx]
+            val.mean = self.hidden_mean[idx]
+            val.meanSq = self.hidden_meansq[idx]
+            av_counts[attr][cv_key] = val
+
+        key = self.tree.numeric_key
+        for attr in key:
+            if attr not in av_counts:
+                av_counts[attr] = {}
+            idx = key[attr]
+            val = ContinuousValue()
+            val.num = self.num[idx]
+            val.mean = self.mean[idx]
+            val.meanSq = self.meansq[idx]
+            av_counts[attr][cv_key] = val
+
+        return av_counts
 
     def pretty_print(self, depth=0):
         """
         Print the categorization tree
 
-        The string formatting inserts tab characters to align child nodes of the
-        same depth. Numerical values are printed with their means and standard
-        deviations.
-        
-        :param depth: The current depth in the print, intended to be called recursively
+        The string formatting inserts tab characters to align child nodes of
+        the same depth. Numerical values are printed with their means and
+        standard deviations.
+
+        :param depth: The current depth in the print, intended to be called
+            recursively
         :type depth: int
         :return: a formated string displaying the tree and its children
         :rtype: str
@@ -297,17 +560,19 @@ class Cobweb3Node(CobwebNode):
 
         attributes = []
 
-        for attr in self.attrs('all'):
+        av_counts = self.av_counts()
+
+        for attr in av_counts:
             values = []
-            for val in self.av_counts[attr]:
+            for val in av_counts[attr]:
                 values.append("'" + str(val) + "': " +
-                              str(self.av_counts[attr][val]))
+                              str(av_counts[attr][val]))
 
             attributes.append("'" + str(attr) + "': {" + ", ".join(values)
                               + "}")
-                  
+
         ret += "{" + ", ".join(attributes) + "}: " + str(self.count) + '\n'
-        
+
         for c in self.children:
             ret += c.pretty_print(depth+1)
 
@@ -318,10 +583,10 @@ class Cobweb3Node(CobwebNode):
         Return a list of weighted choices for an attribute based on the node's
         probability table.
 
-        This calculation will include an option for the change that an attribute
-        is missing from an instance all together. This is useful for probability
-        and sampling calculations. If the attribute has never appeared in the
-        tree then it will return a 100% chance of None.
+        This calculation will include an option for the change that an
+        attribute is missing from an instance all together. This is useful for
+        probability and sampling calculations. If the attribute has never
+        appeared in the tree then it will return a 100% chance of None.
 
         :param attr: an attribute of an instance
         :type attr: :ref:`Attribute<attributes>`
@@ -330,19 +595,21 @@ class Cobweb3Node(CobwebNode):
             cosidered as a possible value.
         :type allow_none: Boolean
         :return: a list of weighted choices for attr's value
-        :rtype: [(:ref:`Value<values>`, float), (:ref:`Value<values>`, float), ...]
+        :rtype: [(:ref:`Value<values>`, float), (:ref:`Value<values>`, float),
+            ...]
         """
         choices = []
-        if attr not in self.av_counts:
+        av_counts = self.av_counts()
+        if attr not in av_counts:
             choices.append((None, 1.0))
             return choices
 
         val_count = 0
-        for val in self.av_counts[attr]:
+        for val in av_counts[attr]:
             if val == cv_key:
-                count = self.av_counts[attr][val].num
+                count = av_counts[attr][val].num
             else:
-                count = self.av_counts[attr][val]
+                count = av_counts[attr][val]
             choices.append((val, count / self.count))
             val_count += count
 
@@ -379,7 +646,9 @@ class Cobweb3Node(CobwebNode):
         else:
             raise Exception("Unknown choice_fn")
 
-        if attr not in self.av_counts:
+        av_counts = self.av_counts()
+
+        if attr not in av_counts:
             return None
 
         choices = self.get_weighted_values(attr, allow_none)
@@ -387,10 +656,10 @@ class Cobweb3Node(CobwebNode):
 
         if val == cv_key:
             if choice_fn == "most likely" or choice_fn == "m":
-                val = self.av_counts[attr][val].mean
+                val = av_counts[attr][val].mean
             elif choice_fn == "sampled" or choice_fn == "s":
-                val = normalvariate(self.av_counts[attr][val].unbiased_mean(),
-                                    self.av_counts[attr][val].unbiased_std())
+                val = normalvariate(av_counts[attr][val].unbiased_mean(),
+                                    av_counts[attr][val].unbiased_std())
             else:
                 raise Exception("Unknown choice_fn")
 
@@ -399,39 +668,42 @@ class Cobweb3Node(CobwebNode):
     def probability(self, attr, val):
         """
         Returns the probability of a particular attribute value at the current
-        concept. 
+        concept.
 
-        This takes into account the possibilities that an attribute can take any
-        of the values available at the root, or be missing. 
+        This takes into account the possibilities that an attribute can take
+        any of the values available at the root, or be missing.
 
-        For numerical attributes the probability of val given a gaussian 
-        distribution is returned. This distribution is defined by the
-        mean and std of past values stored in the concept. However like
+        For numerical attributes the probability of val given a gaussian
+        distribution is returned. This distribution is defined by the mean and
+        std of past values stored in the concept. However like
         :meth:`Cobweb3Node.expected_correct_guesses
         <concept_formation.cobweb3.Cobweb3Node.expected_correct_guesses>` it
         adds :math:`\\frac{1}{2 * \\sqrt{\\pi}}` to the estimated std (i.e,
         assumes some independent, normally distributed noise).
-        
+
         :param attr: an attribute of an instance
         :type attr: :ref:`Attribute<attributes>`
         :param val: a value for the given attribute
         :type val: :ref:`Value<values>`
-        :return: The probability of attr having the value val in the current concept.
+        :return: The probability of attr having the value val in the current
+            concept.
         :rtype: float
         """
+        av_counts = self.av_counts()
+
         if val is None:
             c = 0.0
-            if attr in self.av_counts:
-                c = sum([self.av_counts[attr][v].num if v == cv_key
-                         else self.av_counts[attr][v] for v in
-                         self.av_counts[attr]])
+            if attr in av_counts:
+                c = sum([av_counts[attr][v].num if v == cv_key
+                         else av_counts[attr][v] for v in
+                         av_counts[attr]])
             return (self.count - c) / self.count
 
-        if isNumber(val):
-            if cv_key not in self.av_counts[attr]:
+        if is_number(val):
+            if cv_key not in av_counts[attr]:
                 return 0.0
 
-            prob_attr = self.av_counts[attr][cv_key].num / self.count
+            prob_attr = av_counts[attr][cv_key].num / self.count
             if self.tree is not None and self.tree.scaling:
                 inner_attr = self.tree.get_inner_attr(attr)
                 scale = ((1/self.tree.scaling) *
@@ -445,17 +717,17 @@ class Cobweb3Node(CobwebNode):
                 scale = 1.0
                 shift = 0.0
 
-            mean = (self.av_counts[attr][cv_key].mean - shift) / scale
-            std = sqrt(self.av_counts[attr][cv_key].scaled_unbiased_std(scale) *
-                       self.av_counts[attr][cv_key].scaled_unbiased_std(scale) +
+            mean = (av_counts[attr][cv_key].mean - shift) / scale
+            std = sqrt(av_counts[attr][cv_key].scaled_unbiased_std(scale) *
+                       av_counts[attr][cv_key].scaled_unbiased_std(scale) +
                        (1 / (4 * pi)))
             p = (prob_attr *
                  (1/(sqrt(2*pi) * std)) *
                  exp(-((val - mean) * (val - mean)) / (2.0 * std * std)))
             return p
 
-        if attr in self.av_counts and val in self.av_counts[attr]:
-            return self.av_counts[attr][val] / self.count
+        if attr in av_counts and val in av_counts[attr]:
+            return av_counts[attr][val] / self.count
 
         return 0.0
 
@@ -503,36 +775,54 @@ class Cobweb3Node(CobwebNode):
 
         .. seealso:: :meth:`CobwebNode.get_best_operation`
         """
-        for attr in set(instance).union(set(self.attrs())):
-            if attr[0] == '_':
-                continue
-            if attr in instance and attr not in self.av_counts:
-                return False
-            if attr in self.av_counts and attr not in instance:
-                return False
-            if attr in self.av_counts and attr in instance:
-                if (isNumber(instance[attr]) and 
-                    cv_key not in self.av_counts[attr]):
-                    return False
-                if (isNumber(instance[attr]) and cv_key in
-                    self.av_counts[attr]):
-                    if (len(self.av_counts[attr]) != 1 or 
-                        self.av_counts[attr][cv_key].num != self.count):
-                        return False
-                    if (not self.av_counts[attr][cv_key].unbiased_std() == 0.0):
-                        return False
-                    if (not self.av_counts[attr][cv_key].unbiased_mean() ==
-                        instance[attr]):
-                        return False
-                elif not instance[attr] in self.av_counts[attr]:
-                    return False
-                elif not self.av_counts[attr][instance[attr]] == self.count:
-                    return False
-        return True
+        if len(self.num) < len(instance.num):
+            self.num.resize(instance.num.shape)
+            self.mean.resize(instance.mean.shape)
+            self.meansq.resize(instance.meansq.shape)
+        if len(self.num) > len(instance.num):
+            instance.num.resize(self.num.shape)
+            instance.mean.resize(self.mean.shape)
+            instance.meansq.resize(self.meansq.shape)
+
+        if (not np.array_equal(self.mean,
+                               instance.mean)):
+            return False
+
+        if 0.0 not in self.meansq:
+            return False
+
+        return super().is_exact_match(instance)
+
+        # for attr in set(instance).union(set(self.attrs())):
+        #     if attr[0] == '_':
+        #         continue
+        #     if attr in instance and attr not in self.av_counts:
+        #         return False
+        #     if attr in self.av_counts and attr not in instance:
+        #         return False
+        #     if attr in self.av_counts and attr in instance:
+        #         if (is_number(instance[attr]) and 
+        #             cv_key not in self.av_counts[attr]):
+        #             return False
+        #         if (is_number(instance[attr]) and cv_key in
+        #             self.av_counts[attr]):
+        #             if (len(self.av_counts[attr]) != 1 or 
+        #                 self.av_counts[attr][cv_key].num != self.count):
+        #                 return False
+        #             if (not self.av_counts[attr][cv_key].unbiased_std() == 0.0):
+        #                 return False
+        #             if (not self.av_counts[attr][cv_key].unbiased_mean() ==
+        #                 instance[attr]):
+        #                 return False
+        #         elif not instance[attr] in self.av_counts[attr]:
+        #             return False
+        #         elif not self.av_counts[attr][instance[attr]] == self.count:
+        #             return False
+        # return True
 
     def output_json(self):
         """
-        Outputs the categorization tree in JSON form. 
+        Outputs the categorization tree in JSON form.
 
         This is a modification of the :meth:`CobwebNode.output_json
         <concept_formation.cobweb.CobwebNode.output_json>` to handle numeric
@@ -543,22 +833,23 @@ class Cobweb3Node(CobwebNode):
         :rtype: obj
         """
         output = {}
-        if "_guid" in self.av_counts:
-            for guid in self.av_counts['_guid']:
+        av_counts = self.av_counts()
+        if "_guid" in av_counts:
+            for guid in av_counts['_guid']:
                 output['guid'] = guid
         output["name"] = "Concept" + self.concept_id
         output["size"] = self.count
         output["children"] = []
 
         temp = {}
-        for attr in self.attrs('all'):
+        for attr in av_counts:
             temp[str(attr)] = {}
 
-            for val in self.av_counts[attr]:
+            for val in av_counts[attr]:
                 if val == cv_key:
-                    temp[str(attr)][cv_key] = self.av_counts[attr][val].output_json()
+                    temp[str(attr)][cv_key] = av_counts[attr][val].output_json()
                 else:
-                    temp[str(attr)][str(val)] = self.av_counts[attr][val]
+                    temp[str(attr)][str(val)] = av_counts[attr][val]
 
 
 
@@ -567,9 +858,8 @@ class Cobweb3Node(CobwebNode):
                 #                    value in self.av_counts[attr]}
 
         for child in self.children:
-               output["children"].append(child.output_json())
+            output["children"].append(child.output_json())
 
         output["counts"] = temp
 
         return output
-

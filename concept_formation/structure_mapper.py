@@ -194,7 +194,7 @@ def flat_match(target, base, initial_mapping=None):
     :rtype: dict
     """
     inames = frozenset(get_component_names(target))
-    cnames = frozenset(get_component_names(base.av_counts))
+    cnames = frozenset(get_component_names(base.av_counts()))
 
     if(len(inames) == 0 or len(cnames) == 0):
         return {}
@@ -322,7 +322,9 @@ def mapping_cost(mapping, target, base):
                                  renamed_target])
         temp_base.update_counts_from_node(temp_target)
     else:
-        temp_base.increment_counts(renamed_target)
+        base.tree.update_keys(renamed_target)
+        temp = base.tree.create_instance_concept(renamed_target)
+        temp_base.increment_counts(temp)
 
     return -temp_base.expected_correct_guesses()
 

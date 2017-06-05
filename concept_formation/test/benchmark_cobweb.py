@@ -50,10 +50,3 @@ if __name__ == "__main__":
     plt.xlabel('Number of training instances (5 possible values / attr)')
     plt.ylabel('Runtime in Seconds')
     plt.show()
-
-    from concept_formation.cobweb import CobwebTree
-    tree = CobwebTree()
-    x = generate_dataset(300, 1, 5)
-    tree.fit(x)
-    from concept_formation.visualize import visualize
-    visualize(tree)

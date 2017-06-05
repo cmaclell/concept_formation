@@ -11,7 +11,7 @@ from random import shuffle
 from re import search
 
 from concept_formation.utils import mean
-from concept_formation.utils import isNumber
+from concept_formation.utils import is_number
 from concept_formation.structure_mapper import StructureMapper
 
 def probability(tree, instance, attr, val):
@@ -90,7 +90,7 @@ def error(tree, instance, attr, val):
 
     if isinstance(val, dict):
         raise Exception("Currently does not support prediction error of component attributes.")
-    elif isNumber(val):
+    elif is_number(val):
         prediction = concept.predict(attr)
         if prediction is None:
             raise Exception("Not sure how to handle continuous values that are predicted to be missing.")
@@ -98,7 +98,7 @@ def error(tree, instance, attr, val):
     else:
         prediction = concept.predict(attr)
 
-        if val is None and isNumber(prediction):
+        if val is None and is_number(prediction):
             raise Exception("Not sure how to compare Continuous Values and None")
 
         if val == prediction:
