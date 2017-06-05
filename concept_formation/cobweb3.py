@@ -546,7 +546,7 @@ class Cobweb3Node(CobwebNode):
         if "_guid" in self.av_counts:
             for guid in self.av_counts['_guid']:
                 output['guid'] = guid
-        output["name"] = "Concept" + self.concept_id
+        output["name"] = "Concept" + str(self.concept_id)
         output["size"] = self.count
         output["children"] = []
 

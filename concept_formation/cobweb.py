@@ -172,16 +172,11 @@ class CobwebTree(object):
                 break
 
             else:
-                best1, best2 = current.two_best_children(instance)
+                best1_cu, best1, best2 = current.two_best_children(instance)
                 _, best_action = current.get_best_operation(instance, best1,
-                                                            best2)
+                                                            best2, best1_cu)
 
                 # print(best_action)
-                if best1:
-                    _, best1 = best1
-                if best2:
-                    _, best2 = best2
-
                 if best_action == 'best':
                     current.increment_counts(instance)
                     current = best1
@@ -214,8 +209,8 @@ class CobwebTree(object):
             if not current.children:
                 return current
 
-            best1, best2 = current.two_best_children(instance)
-            current = best1[1]
+            _, best1, best2 = current.two_best_children(instance)
+            current = best1
 
     def infer_missing(self, instance, choice_fn="most likely",
                       allow_none=True):
@@ -445,7 +440,7 @@ class CobwebNode(object):
         return ((child_correct_guesses - self.expected_correct_guesses()) /
                 len(self.children))
 
-    def get_best_operation(self, instance, best1, best2,
+    def get_best_operation(self, instance, best1, best2, best1_cu,
                            possible_ops=["best", "new", "merge", "split"]):
         """
         Given an instance, the two best children based on category utility and
@@ -519,10 +514,6 @@ class CobwebNode(object):
         if not best1:
             raise ValueError("Need at least one best child.")
 
-        if best1:
-            best1_cu, best1 = best1
-        if best2:
-            _, best2 = best2
         operations = []
 
         if "best" in possible_ops:
@@ -571,17 +562,12 @@ class CobwebNode(object):
         best1_relative_cu = children_relative_cu[0][0]
         best1_cu = (best1_relative_cu / (self.count+1) / len(self.children)
                     + const)
-        best1 = (best1_cu, best1)
 
         best2 = None
         if len(children_relative_cu) > 1:
             best2 = children_relative_cu[1][3]
-            best2_relative_cu = children_relative_cu[1][0]
-            best2_cu = (best2_relative_cu / (self.count+1) / len(self.children)
-                        + const)
-            best2 = (best2_cu, best2)
 
-        return best1, best2
+        return best1_cu, best1, best2
 
     def compute_relative_CU_const(self, instance):
         """
@@ -960,7 +946,8 @@ class CobwebNode(object):
 
         """
         self.__class__._counter += 1
-        return str(self.__class__._counter)
+        return self.__class__._counter
+        # return str(self.__class__._counter)
 
     def __str__(self):
         """
@@ -1046,7 +1033,7 @@ class CobwebNode(object):
         :rtype: obj
         """
         output = {}
-        output['name'] = "Concept" + self.concept_id
+        output['name'] = "Concept" + str(self.concept_id)
         output['size'] = self.count
         output['children'] = []
 
