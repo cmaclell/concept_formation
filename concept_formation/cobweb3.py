@@ -689,6 +689,19 @@ class Cobweb3Node(CobwebNode):
             concept.
         :rtype: float
         """
+        if len(self.counts) < self.tree.nominal_count:
+            self.counts.resize(self.tree.nominal_count)
+        if len(self.hidden_counts) < self.tree.hidden_nominal_count:
+            self.hidden_counts.resize(self.tree.hidden_nominal_count)
+        if len(self.num) < self.tree.numeric_count:
+            self.num.resize(self.tree.numeric_count)
+            self.mean.resize(self.tree.numeric_count)
+            self.meansq.resize(self.tree.numeric_count)
+        if len(self.hidden_num) < self.tree.hidden_numeric_count:
+            self.hidden_num.resize(self.tree.hidden_numeric_count)
+            self.hidden_mean.resize(self.tree.hidden_numeric_count)
+            self.hidden_meansq.resize(self.tree.hidden_numeric_count)
+
         av_counts = self.av_counts()
 
         if val is None:
