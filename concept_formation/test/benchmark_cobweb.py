@@ -5,6 +5,20 @@ from matplotlib import pyplot as plt
 import matplotlib.patches as mpatches
 
 
+def generate_dt_dataset(n_inst, n_attr, n_val):
+    y = []
+    x = []
+    for i in range(n_inst):
+        i = []
+        for j in range(n_attr):
+            if j == 0:
+                y.append(randint(1, n_val))
+            else:
+                i.append(randint(1, n_val))
+        x.append(i)
+    return x, y
+
+
 def generate_dataset(n_inst, n_attr, n_val):
     instances = []
     for i in range(n_inst):
@@ -13,6 +27,17 @@ def generate_dataset(n_inst, n_attr, n_val):
             i[str(j)] = randint(1, n_val)
         instances.append(i)
     return instances
+
+
+def time_dt(n_inst, n_attr, n_val):
+    return timeit('[tree.fit(x[0:i+1], y[0:i+1]) for i in range(len(x))]',
+                  setup=('from __main__ import generate_dt_dataset; '
+                         'from sklearn.tree import DecisionTreeClassifier; '
+                         'tree = DecisionTreeClassifier(); '
+                         'x, y = generate_dt_dataset(%i, %i, %i)' % (n_inst,
+                                                                     n_attr,
+                                                                     n_val)),
+                  number=1)
 
 
 def time(n_inst, n_attr, n_val):
@@ -38,7 +63,7 @@ if __name__ == "__main__":
     plt.plot(sizes, times, 'b-')
 
     # 20 attributes
-    times = [time(i, 20, 5) for i in sizes]
+    times = [time(i, 10, 5) for i in sizes]
     plt.plot(sizes, times, 'go')
     plt.plot(sizes, times, 'g-')
 

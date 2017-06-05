@@ -384,10 +384,10 @@ class CobwebNode(object):
     #     """
     #     Iterates over the attributes present in the node's attribute-value
     #     table with the option to filter certain types. By default the filter
-    #     will ignore hidden attributes and yield all others. If the string 'all'
-    #     is provided then all attributes will be yielded. In neither of those
-    #     cases the filter will be interpreted as a function that returns true if
-    #     an attribute should be yielded and false otherwise.
+    #     will ignore hidden attributes and yield all others. If the string
+    #     'all' is provided then all attributes will be yielded. In neither of
+    #     those cases the filter will be interpreted as a function that returns
+    #     true if an attribute should be yielded and false otherwise.
     #     """
     #     if attr_filter is None:
     #         return filter(lambda x: x[0] != "_", self.av_counts)
@@ -1219,17 +1219,26 @@ class CobwebNode(object):
             concept.
         :rtype: float
         """
-        av_counts = self.av_counts()
+        if len(self.counts) < self.tree.nominal_count:
+            self.counts.resize(self.tree.nominal_count)
+        if len(self.hidden_counts) < self.tree.hidden_nominal_count:
+            self.hidden_counts.resize(self.tree.hidden_nominal_count)
+
+        key = self.tree.nominal_key
+        counts = self.counts
+        if attr[0] == "_":
+            key = self.tree.hidden_nominal_key
+            counts = self.hidden_counts
 
         if val is None:
             c = 0.0
-            if attr in av_counts:
-                c = sum([av_counts[attr][v] for v in
-                         av_counts[attr]])
+            if attr in key:
+                c = sum([self.hidden_counts[key[attr][v]] for v in
+                         key[attr]])
             return (self.count - c) / self.count
 
-        if attr in av_counts and val in av_counts[attr]:
-            return av_counts[attr][val] / self.count
+        if attr in key and val in key[attr]:
+            return counts[key[attr][val]] / self.count
 
         return 0.0
 
@@ -1240,14 +1249,17 @@ class CobwebNode(object):
         treated as if it contained just a single instance (this function is
         just called multiple times for each instance in the leaf).
         """
+        key = self.tree.nominal_key
         ll = 0
 
-        for attr in set(self.attrs()).union(set(child_leaf.attrs())):
+        for attr in key:
             vals = set([None])
-            if attr in self.av_counts:
-                vals.update(self.av_counts[attr])
-            if attr in child_leaf.av_counts:
-                vals.update(child_leaf.av_counts[attr])
+            for val in key[attr]:
+                idx = key[attr][val]
+                if self.counts[idx] > 0:
+                    vals.update(val)
+                if child_leaf.counts[idx] > 0:
+                    vals.update(val)
 
             for val in vals:
                 op = child_leaf.probability(attr, val)
