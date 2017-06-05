@@ -1,4 +1,5 @@
 from random import randint
+from random import normalvariate
 from timeit import timeit
 
 from matplotlib import pyplot as plt
@@ -10,7 +11,7 @@ def generate_dataset(n_inst, n_attr, n_val):
     for i in range(n_inst):
         i = {}
         for j in range(n_attr):
-            i[str(j)] = randint(1, n_val)
+            i[str(j)] = normalvariate(randint(1, n_val), 0.5)
         instances.append(i)
     return instances
 
@@ -18,8 +19,8 @@ def generate_dataset(n_inst, n_attr, n_val):
 def time(n_inst, n_attr, n_val):
     return timeit('tree.fit(x)',
                   setup=('from __main__ import generate_dataset; '
-                         'from concept_formation.cobweb import CobwebTree; '
-                         'tree = CobwebTree(); '
+                         'from concept_formation.cobweb3 import Cobweb3Tree; '
+                         'tree = Cobweb3Tree(); '
                          'x = generate_dataset(%i, %i, %i)' % (n_inst, n_attr,
                                                                n_val)),
                   number=1)
@@ -27,7 +28,7 @@ def time(n_inst, n_attr, n_val):
 
 if __name__ == "__main__":
     # 5 attributes
-    sizes = [10, 30, 60, 120, 180, 220]
+    sizes = [5, 10, 15, 20, 25, 30, 35]
     times = [time(i, 5, 5) for i in sizes]
     plt.plot(sizes, times, 'ro')
     plt.plot(sizes, times, 'r-')
@@ -47,6 +48,6 @@ if __name__ == "__main__":
     green_patch = mpatches.Patch(color='green', label='# attr=20')
     plt.legend(handles=[red_patch, blue_patch, green_patch], loc=2)
 
-    plt.xlabel('Number of training instances (5 possible values / attr)')
+    plt.xlabel('Number of training instances (5 possible mean values / attr)')
     plt.ylabel('Runtime in Seconds')
     plt.show()

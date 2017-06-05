@@ -108,7 +108,8 @@ def _trim_to_clusters(j_ob,clusters):
         ret['children'] = []
     return ret
 
-def visualize_clusters(tree,clusters,dst='.',recreate_html=True):
+
+def visualize_clusters(tree, clusters, dst='.', recreate_html=True):
     """
     Create an interactive visualization of a concept_formation tree trimmed to
     the level specified by a clustering from the cluster module.
@@ -135,12 +136,11 @@ def visualize_clusters(tree,clusters,dst='.',recreate_html=True):
     :type dst: str
     :type create_html: bool
     """
-    if isinstance(clusters[0],CobwebNode):
-        clusters = {c.concept_id for c in clusters}
+    if isinstance(clusters[0], CobwebNode):
+        clusters = {str(c.concept_id) for c in clusters}
     else:
         clusters = set(clusters)
 
     j_ob = tree.root.output_json()
-    j_ob = _trim_to_clusters(j_ob,clusters)
-    _gen_viz(j_ob,dst,recreate_html)
-
+    j_ob = _trim_to_clusters(j_ob, clusters)
+    _gen_viz(j_ob, dst, recreate_html)
