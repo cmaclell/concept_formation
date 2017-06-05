@@ -1,7 +1,7 @@
 """
 The dummy module contains the :class:`DummyTree` class, which can be used as a
 naive baseline for comparison against CobwebTrees. This class makes predictions
-based on the overall average of instances it has seen. 
+based on the overall average of instances it has seen.
 """
 
 from __future__ import print_function
@@ -15,6 +15,7 @@ from concept_formation.preprocessor import SubComponentProcessor
 from concept_formation.preprocessor import Flattener
 from concept_formation.preprocessor import Pipeline
 
+
 class DummyTree(TrestleTree):
     """
     The DummyTree is designed to serve as a naive baseline to compare
@@ -27,6 +28,17 @@ class DummyTree(TrestleTree):
     def __init__(self):
         self.root = Cobweb3Node()
         self.root.tree = self
+
+        self.hidden_nominal_key = {}
+        self.nominal_key = {}
+        self.hidden_nominal_count = 0
+        self.nominal_count = 0
+
+        self.hidden_numeric_key = {}
+        self.numeric_key = {}
+        self.hidden_numeric_count = 0
+        self.numeric_count = 0
+
         self.gensym_counter = 0
         self.structure_map_internally = False
 
@@ -64,6 +76,10 @@ class DummyTree(TrestleTree):
         else:
             pipeline = Pipeline(SubComponentProcessor(), Flattener())
         temp_instance = pipeline.transform(instance)
+
+        self.update_keys(temp_instance)
+        temp_instance = self.create_instance_concept(temp_instance)
+
         self.root.increment_counts(temp_instance)
         return self.root
 
@@ -74,12 +90,11 @@ class DummyTree(TrestleTree):
 
         **This process does not modify the tree's knoweldge.** For a modifying
         version see: :meth:`DummyTree.ifit`.
-        
+
         :param instance: an instance to be categorized into the tree.
         :type instance: :ref:`Instance<instance-rep>`
-        :return: the root node of the tree containing everything ever added to it.
+        :return: the root node of the tree containing everything ever added to
+            it.
         :rtype: Cobweb3Node
         """
         return self.root
-
-
