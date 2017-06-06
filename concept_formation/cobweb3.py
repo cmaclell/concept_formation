@@ -510,9 +510,11 @@ class Cobweb3Node(CobwebNode):
 
         key = self.tree.hidden_numeric_key
         for attr in key:
+            idx = key[attr]
+            if self.hidden_num[idx] == 0:
+                continue
             if attr not in av_counts:
                 av_counts[attr] = {}
-            idx = key[attr]
             if (self.hidden_num[idx] == 0):
                 continue
             val = ContinuousValue()
@@ -523,9 +525,11 @@ class Cobweb3Node(CobwebNode):
 
         key = self.tree.numeric_key
         for attr in key:
+            idx = key[attr]
+            if self.num[idx] == 0:
+                continue
             if attr not in av_counts:
                 av_counts[attr] = {}
-            idx = key[attr]
             if (self.num[idx] == 0):
                 continue
             val = ContinuousValue()
