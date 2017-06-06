@@ -40,6 +40,9 @@ class CobwebTree(object):
 
     def _sanity_check_instance(self, instance):
         for attr in instance:
+            if instance[attr] is None:
+                raise ValueError("Attributes with value None should"
+                                 " be manually removed.")
             try:
                 hash(attr)
                 attr[0]
@@ -1148,22 +1151,24 @@ class CobwebNode(object):
 
         return 0.0
 
-    def log_likelihood(self, other):
+    def log_likelihood(self, child_leaf):
         """
-        Returns the log-likelihood of the concept.
+        Returns the log-likelihood of a leaf contained within the current
+        concept. Note, if the leaf contains multiple instances, then it is
+        treated as if it contained just a single instance (this function is
+        just called multiple times for each instance in the leaf).
         """
-
         ll = 0
 
-        for attr in set(self.attrs()).union(set(other.attrs())):
-            vals = set()
+        for attr in set(self.attrs()).union(set(child_leaf.attrs())):
+            vals = set([None])
             if attr in self.av_counts:
                 vals.update(self.av_counts[attr])
-            if attr in other.av_counts:
-                vals.update(other.av_counts[attr])
+            if attr in child_leaf.av_counts:
+                vals.update(child_leaf.av_counts[attr])
 
             for val in vals:
-                op = other.probability(attr, val)
+                op = child_leaf.probability(attr, val)
                 if op > 0:
                     p = self.probability(attr, val) * op
                     if p >= 0:

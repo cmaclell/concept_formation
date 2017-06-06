@@ -196,7 +196,8 @@ class ContinuousValue():
     def integral_of_gaussian_product(self, other):
         """
         Computes the integral (from -inf to inf) of the product of two
-        gaussians.
+        gaussians. It adds gaussian noise to both stds, so that the integral of
+        their product never exceeds 1.
 
         Use formula computed here:
             `<http://www.tina-vision.net/docs/memos/2003-003.pdf>`_

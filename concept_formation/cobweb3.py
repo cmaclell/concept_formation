@@ -1,7 +1,7 @@
 """
 The Cobweb3 module contains the :class:`Cobweb3Tree` and :class:`Cobweb3Node`
 classes, which extend the traditional Cobweb capabilities to support numeric
-values on attributes. 
+values on attributes.
 """
 
 from __future__ import print_function
@@ -23,10 +23,11 @@ from concept_formation.utils import most_likely_choice
 
 cv_key = "#ContinuousValue#"
 
+
 class Cobweb3Tree(CobwebTree):
     """
-    The Cobweb3Tree contains the knowledge base of a partiucluar instance of the
-    Cobweb/3 algorithm and can be used to fit and categorize instances.
+    The Cobweb3Tree contains the knowledge base of a partiucluar instance of
+    the Cobweb/3 algorithm and can be used to fit and categorize instances.
     Cobweb/3's main difference over Cobweb is the ability to handle numerical
     attributes by applying an assumption that they should follow a normal
     distribution. For the purposes of Cobweb/3's core algorithms a numeric
@@ -36,12 +37,12 @@ class Cobweb3Tree(CobwebTree):
     The scaling parameter determines whether online normalization of continuous
     attributes is used, and to what standard deviation the values are scaled
     to. Scaling divides the std of each attribute by the std of the attribute
-    in the root divided by the scaling constant (i.e., 
-    :math:`\\sigma_{root} / scaling` when making category utility calculations.
-    Scaling is useful to balance the weight of different numerical attributes,
-    without scaling the magnitude of numerical attributes can affect category
-    utility calculation meaning numbers that are naturally larger will recieve
-    preference in the category utility calculation.
+    in the root divided by the scaling constant (i.e., :math:`\\sigma_{root} /
+    scaling` when making category utility calculations.  Scaling is useful to
+    balance the weight of different numerical attributes, without scaling the
+    magnitude of numerical attributes can affect category utility calculation
+    meaning numbers that are naturally larger will recieve preference in the
+    category utility calculation.
 
     :param scaling: The number of standard deviations numeric attributes
         are scaled to. By default this value is 0.5 (half a standard
@@ -399,24 +400,34 @@ class Cobweb3Node(CobwebNode):
     def probability(self, attr, val):
         """
         Returns the probability of a particular attribute value at the current
-        concept. 
+        concept.
 
-        This takes into account the possibilities that an attribute can take any
-        of the values available at the root, or be missing. 
+        This takes into account the possibilities that an attribute can take
+        any of the values available at the root, or be missing.
 
-        For numerical attributes the probability of val given a gaussian 
-        distribution is returned. This distribution is defined by the
-        mean and std of past values stored in the concept. However like
+        For numerical attributes it returns the integral of the product of two
+        gaussians. One gaussian has :math:`\\mu = val` and :math:`\\sigma =
+        \\sigma_{noise} = \\frac{1}{2 * \\sqrt{\\pi}}` (where
+        :math:`\\sigma_{noise}` is from
         :meth:`Cobweb3Node.expected_correct_guesses
-        <concept_formation.cobweb3.Cobweb3Node.expected_correct_guesses>` it
-        adds :math:`\\frac{1}{2 * \\sqrt{\\pi}}` to the estimated std (i.e,
-        assumes some independent, normally distributed noise).
-        
+        <concept_formation.cobweb3.Cobweb3Node.expected_correct_guesses>` and
+        ensures the probability or expected correct guesses never exceeds 1).
+        The second gaussian has the mean ad std values from the current concept
+        with additional gaussian noise (independent and normally distributed
+        noise with :math:`\\sigma_{noise} = \\frac{1}{2 * \\sqrt{\\pi}}`).
+
+        The integral of this gaussian product is another gaussian with
+        :math:`\\mu` equal to the concept attribut mean and :math:`\\sigma =
+        \\sqrt{\\sigma_{attr}^2 + 2 * \\sigma_{noise}^2}` or, slightly
+        simplified, :math:`\\sigma =
+        \\sqrt{\\sigma_{attr}^2 + 2 * \\frac{1}{2 * \\pi}}`.
+
         :param attr: an attribute of an instance
         :type attr: :ref:`Attribute<attributes>`
         :param val: a value for the given attribute
         :type val: :ref:`Value<values>`
-        :return: The probability of attr having the value val in the current concept.
+        :return: The probability of attr having the value val in the current
+            concept.
         :rtype: float
         """
         if val is None:
@@ -446,9 +457,8 @@ class Cobweb3Node(CobwebNode):
                 shift = 0.0
 
             mean = (self.av_counts[attr][cv_key].mean - shift) / scale
-            std = sqrt(self.av_counts[attr][cv_key].scaled_unbiased_std(scale) *
-                       self.av_counts[attr][cv_key].scaled_unbiased_std(scale) +
-                       (1 / (4 * pi)))
+            ostd = self.av_counts[attr][cv_key].scaled_unbiased_std(scale)
+            std = sqrt(ostd * ostd + (1 / (2 * pi)))
             p = (prob_attr *
                  (1/(sqrt(2*pi) * std)) *
                  exp(-((val - mean) * (val - mean)) / (2.0 * std * std)))
@@ -459,35 +469,41 @@ class Cobweb3Node(CobwebNode):
 
         return 0.0
 
-    def log_likelihood(self, other):
+    def log_likelihood(self, child_leaf):
         """
-        Returns the log-likelihood of the concept.
+        Returns the log-likelihood of a leaf contained within the current
+        concept. Note, if the leaf contains multiple instances, then it is
+        treated as if it contained just a single instance (this function is
+        just called multiple times for each instance in the leaf).
         """
-
         ll = 0
-        for attr in set(self.attrs()).union(set(other.attrs())):
-            vals = set()
+        for attr in set(self.attrs()).union(set(child_leaf.attrs())):
+            vals = set([None])
             if attr in self.av_counts:
                 vals.update(self.av_counts[attr])
-            if attr in other.av_counts:
-                vals.update(other.av_counts[attr])
+            if attr in child_leaf.av_counts:
+                vals.update(child_leaf.av_counts[attr])
 
             for val in vals:
                 if val == cv_key:
-                    if (attr in self.av_counts and cv_key in self.av_counts[attr] and 
-                        attr in other.av_counts and cv_key in other.av_counts[attr]):
+                    if (attr in self.av_counts and cv_key in
+                            self.av_counts[attr] and attr in
+                            child_leaf.av_counts and cv_key in
+                            child_leaf.av_counts[attr]):
 
                         n1 = self.av_counts[attr][cv_key]
-                        n2 = other.av_counts[attr][cv_key]
-                        p = n1.integral_of_gaussian_product(n2)
+                        n2 = child_leaf.av_counts[attr][cv_key]
+                        pn1 = n1.num / self.count
+                        pn2 = n2.num / child_leaf.count
+                        p = pn1 * pn2 * n1.integral_of_gaussian_product(n2)
                         if p > 0:
                             ll += log(p)
                         else:
                             raise Exception("p should be greater than 0")
                 else:
-                    op = other.probability(attr, val)
+                    op = child_leaf.probability(attr, val)
                     if op > 0:
-                        p = self.probability(attr,val) * op
+                        p = self.probability(attr, val) * op
                         if p > 0:
                             ll += log(p)
                         else:
@@ -513,18 +529,19 @@ class Cobweb3Node(CobwebNode):
             if attr in self.av_counts and attr not in instance:
                 return False
             if attr in self.av_counts and attr in instance:
-                if (isNumber(instance[attr]) and 
-                    cv_key not in self.av_counts[attr]):
+                if (isNumber(instance[attr]) and
+                        cv_key not in self.av_counts[attr]):
                     return False
                 if (isNumber(instance[attr]) and cv_key in
-                    self.av_counts[attr]):
-                    if (len(self.av_counts[attr]) != 1 or 
-                        self.av_counts[attr][cv_key].num != self.count):
+                        self.av_counts[attr]):
+                    if (len(self.av_counts[attr]) != 1 or
+                            self.av_counts[attr][cv_key].num != self.count):
                         return False
-                    if (not self.av_counts[attr][cv_key].unbiased_std() == 0.0):
+                    if (not self.av_counts[attr][cv_key].unbiased_std() ==
+                            0.0):
                         return False
                     if (not self.av_counts[attr][cv_key].unbiased_mean() ==
-                        instance[attr]):
+                            instance[attr]):
                         return False
                 elif not instance[attr] in self.av_counts[attr]:
                     return False
@@ -562,16 +579,9 @@ class Cobweb3Node(CobwebNode):
                 else:
                     temp[str(attr)][str(val)] = self.av_counts[attr][val]
 
-
-
-
-                # temp[str(attr)] = {str(value):str(self.av_counts[attr][value]) for
-                #                    value in self.av_counts[attr]}
-
         for child in self.children:
-               output["children"].append(child.output_json())
+            output["children"].append(child.output_json())
 
         output["counts"] = temp
 
         return output
-
