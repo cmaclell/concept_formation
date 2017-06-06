@@ -1,5 +1,5 @@
 import concept_formation.datasets as ds
-from concept_formation.cluster import cluster_split_search,AIC,CU,BIC, depth_labels, cluster_iter
+from concept_formation.cluster import cluster_split_search,AIC,CU,BIC, depth_labels, cluster_iter, cluster
 from concept_formation.visualize import visualize, visualize_clusters
 from concept_formation.cobweb3 import Cobweb3Tree, Cobweb3Node
 from concept_formation.trestle import TrestleTree
@@ -236,8 +236,9 @@ def gen_numeric_data(num_clusters=4,num_samples=30,sigma=1,lop=0):
     xmean = [uniform(-6, 6) for i in range(num_clusters)]
     ymean = [uniform(-6, 6) for i in range(num_clusters)]
 
-    for i in range(len(xmean)):
-        print(i,xmean[i],ymean[i])
+
+    # for i in range(len(xmean)):
+    #     print(i,xmean[i],ymean[i])
 
     data = []
 
@@ -247,7 +248,7 @@ def gen_numeric_data(num_clusters=4,num_samples=30,sigma=1,lop=0):
                   'y': normalvariate(ymean[i], sigma), 
                   '_label': str(i), 
                   '_guid':str(uuid.uuid4())} 
-                for j in range(randint(num_samples-lop,randint+lop))]
+                for j in range(randint(max(num_samples-lop,1),randint+lop))]
         else :
             data += [{'x': normalvariate(xmean[i], sigma), 
                       'y': normalvariate(ymean[i], sigma), 
@@ -255,6 +256,8 @@ def gen_numeric_data(num_clusters=4,num_samples=30,sigma=1,lop=0):
                       '_guid':str(uuid.uuid4())} 
                     for j in range(num_samples)]
 
+    tab = [[i,xmean[i],ymean[i],len([c for c in data if c['_label']==str(i)])] for i in range(len(xmean))]
+    print(tabulate(tab,headers=('Cluster','X mean','Y mean','N')))
     return data
 
 
@@ -269,17 +272,31 @@ def order_independence_test():
     shuffle(data2)
 
     t1 = glom2(data1)
+    print('glommed tree 1')
     t2 = glom2(data2)
+    print('glommed tree 2')
 
     shuffle(data)
 
-    l1 = depth_labels(t1,data,mod=False)
-    l2 = depth_labels(t2,data,mod=False)
+    l1 = cluster(t1,data,maxsplit=40,mod=False)
+    l2 = cluster(t2,data,maxsplit=40,mod=False)
 
-    for d in range(len(l1)):
-        labels1 = [l for l in l1[d]]
-        labels2 = [l for l in l2[d]]
-        print(adjusted_rand_score(labels1,labels2))
+    print(tabulate([[i,len(set(l1[i])),len(set(l2[i])),adjusted_rand_score(l1[i],l2[i])]for i in range(40)],
+        headers =['Split','C shuffle1','C shuffle2','ARI']))
+
+
+
+    # for d in range(len(l1)):
+    #     labels1 = [l for l in l1[d]]
+    #     labels2 = [l for l in l2[d]]
+    #     print(adjusted_rand_score(labels1,labels2))
+
+    # l1 = cluster(t1,data,mod=False)[0]
+    # l2 = cluster(t2,data,mod=False)[0]
+
+    # print(adjusted_rand_score(l1,l2))
+
+
 
 
 def agreement_to_human():
@@ -406,9 +423,10 @@ def projective_accuracy_comp():
 
 
 if __name__ == '__main__':
-    # order_independence_test()
+    print('order independence test')
+    order_independence_test()
     # agreement_to_human()
-    test_resort(50,BIC)
+    # test_resort(50,BIC)
     # recover_test2()
     # incremental_comparison()
     # projective_accuracy_comp()
