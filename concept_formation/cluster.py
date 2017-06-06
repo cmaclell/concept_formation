@@ -374,7 +374,7 @@ def cluster_split_search(tree, instances, heuristic=CU, minsplit=1, maxsplit=1,
     clus_it = cluster_iter(tree, instances, heuristic=heuristic,
                            minsplit=minsplit, maxsplit=maxsplit, mod=mod,
                            labels=False)
-    min_h = (-1, float('inf'), ["Concept"+tree.root.concept_id for i in
+    min_h = (-1, float('inf'), ["Concept" + str(tree.root.concept_id) for i in
                                 range(len(instances))])
     split = minsplit
     if verbose:
@@ -385,8 +385,8 @@ def cluster_split_search(tree, instances, heuristic=CU, minsplit=1, maxsplit=1,
         if verbose:
             print(split, len(set(split_clus)), '%.3f' % h, sep='\t')
         if h < min_h[1]:
-            min_h = (split, h, ["Concept" + c.concept_id for c in split_clus]
-                     if labels else split_clus)
+            min_h = (split, h, ["Concept" + str(c.concept_id) for c in
+                                split_clus] if labels else split_clus)
         split += 1
     return min_h[2]
 

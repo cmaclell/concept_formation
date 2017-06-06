@@ -732,7 +732,6 @@ class Cobweb3Node(CobwebNode):
         This takes into account the possibilities that an attribute can take
         any of the values available at the root, or be missing.
 
-<<<<<<< HEAD
         For numerical attributes it returns the integral of the product of two
         gaussians. One gaussian has :math:`\\mu = val` and :math:`\\sigma =
         \\sigma_{noise} = \\frac{1}{2 * \\sqrt{\\pi}}` (where
@@ -749,15 +748,6 @@ class Cobweb3Node(CobwebNode):
         \\sqrt{\\sigma_{attr}^2 + 2 * \\sigma_{noise}^2}` or, slightly
         simplified, :math:`\\sigma =
         \\sqrt{\\sigma_{attr}^2 + 2 * \\frac{1}{2 * \\pi}}`.
-=======
-        For numerical attributes the probability of val given a gaussian
-        distribution is returned. This distribution is defined by the mean and
-        std of past values stored in the concept. However like
-        :meth:`Cobweb3Node.expected_correct_guesses
-        <concept_formation.cobweb3.Cobweb3Node.expected_correct_guesses>` it
-        adds :math:`\\frac{1}{2 * \\sqrt{\\pi}}` to the estimated std (i.e,
-        assumes some independent, normally distributed noise).
->>>>>>> b5c371f7982797c80bbb01d25f036062f7a66d55
 
         :param attr: an attribute of an instance
         :type attr: :ref:`Attribute<attributes>`
@@ -771,7 +761,6 @@ class Cobweb3Node(CobwebNode):
         assert self.tree is not None
 
         self.ensure_vector_size()
-<<<<<<< HEAD
 
         nominal_key = self.tree.nominal_key
         counts = self.counts
@@ -835,103 +824,25 @@ class Cobweb3Node(CobwebNode):
         of one concept's numeric value generating another we integrate the
         product of their two gaussians.
         """
-        ll = super(Cobweb3Node, self).log_likelihood(other)
+        ll = super(Cobweb3Node, self).log_likelihood(child_leaf)
 
         key = self.tree.numeric_key
 
-=======
-
-        nominal_key = self.tree.nominal_key
-        counts = self.counts
-        numeric_key = self.tree.numeric_key
-        num = self.num
-        if attr[0] == "_":
-            nominal_key = self.tree.hidden_nominal_key
-            counts = self.hidden_counts
-            numeric_key = self.tree.hidden_numeric_key
-            num = self.hidden_num
-
-        if val is None:
-            c = 0.0
-            if attr in nominal_key:
-                c = sum([counts[nominal_key[attr][v]] for v in
-                         nominal_key[attr]])
-            if attr in numeric_key:
-                c += num[numeric_key[attr]]
-            return (self.count - c) / self.count
-
-        if not is_number(val):
-            return super(Cobweb3Node, self).probability(attr, val)
-
-        if attr not in numeric_key or num[numeric_key[attr]] == 0:
-            return 0.0
-
-        prob_attr = num[numeric_key[attr]] / self.count
-        attr_scale = ContinuousValue()
-        attr_scale.num = self.tree.attr_scales.num[numeric_key[attr]]
-        attr_scale.mean = self.tree.attr_scales.mean[numeric_key[attr]]
-        attr_scale.meansq = self.tree.attr_scales.meansq[numeric_key[attr]]
-
-        cv = ContinuousValue()
-        cv.num = self.num[numeric_key[attr]]
-        cv.mean = self.mean[numeric_key[attr]]
-        cv.meansq = self.meansq[numeric_key[attr]]
-
-        if self.tree.scaling:
-            scale = (1/self.tree.scaling) * attr_scale.unbiased_std()
-            if scale == 0:
-                scale = 1
-            shift = attr_scale.unbiased_mean()
-            val = (val - shift) / scale
-        else:
-            scale = 1.0
-            shift = 0.0
-
-        # mean = (av_counts[attr][cv_key].mean - shift) / scale
-        mean = cv.scaled_unbiased_mean(shift, scale)
-        noisy_std = sqrt(cv.scaled_unbiased_std(scale) *
-                         cv.scaled_unbiased_std(scale) + (1 / (4 * pi)))
-        p = (prob_attr *
-             (1/(sqrt(2*pi) * noisy_std)) *
-             exp(-((val - mean) * (val - mean)) /
-                 (2.0 * noisy_std * noisy_std)))
-        return p
-
-    def log_likelihood(self, other):
-        """
-        Returns the log-likelihood of the concept. To compute the probability
-        of one concept's numeric value generating another we integrate the
-        product of their two gaussians.
-        """
-        ll = super(Cobweb3Node, self).log_likelihood(other)
-
-        key = self.tree.numeric_key
-
->>>>>>> b5c371f7982797c80bbb01d25f036062f7a66d55
         for attr in key:
             idx = key[attr]
-            if self.num[idx] > 0 and other.num[idx] > 0:
+            if self.num[idx] > 0 and child_leaf.num[idx] > 0:
                 n1 = ContinuousValue()
                 n1.num = self.num[idx]
                 n1.mean = self.mean[idx]
                 n1.meansq = self.meansq[idx]
-<<<<<<< HEAD
-
-=======
-                    
->>>>>>> b5c371f7982797c80bbb01d25f036062f7a66d55
                 n2 = ContinuousValue()
-                n2.num = other.num[idx]
-                n2.mean = other.mean[idx]
-                n2.meansq = other.meansq[idx]
+                n2.num = child_leaf.num[idx]
+                n2.mean = child_leaf.mean[idx]
+                n2.meansq = child_leaf.meansq[idx]
 
-<<<<<<< HEAD
                 pn1 = n1.num / self.count
                 pn2 = n2.num / child_leaf.count
                 p = pn1 * pn2 * n1.integral_of_gaussian_product(n2)
-=======
-                p = n1.integral_of_gaussian_product(n2)
->>>>>>> b5c371f7982797c80bbb01d25f036062f7a66d55
 
                 if p > 0:
                     ll += log(p)
