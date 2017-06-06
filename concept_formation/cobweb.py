@@ -1039,6 +1039,8 @@ class CobwebNode(object):
                 if self.hidden_counts[key[attr][val]] == 0:
                     continue
                 av_counts[attr][val] = self.hidden_counts[key[attr][val]]
+            if av_counts[attr] == {}:
+                del av_counts[attr]
 
         key = self.tree.nominal_key
         for attr in key:
@@ -1048,6 +1050,8 @@ class CobwebNode(object):
                 if self.counts[key[attr][val]] == 0:
                     continue
                 av_counts[attr][val] = self.counts[key[attr][val]]
+            if av_counts[attr] == {}:
+                del av_counts[attr]
 
         return av_counts
 
