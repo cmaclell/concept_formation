@@ -400,31 +400,32 @@ class Cobweb3Node(CobwebNode):
 
         # Update numeric counts
         delta = node.hidden_mean - self.hidden_mean
-        self.hidden_meansq = (self.hidden_meansq + node.hidden_meansq +
-                              np.multiply(np.multiply(delta, delta),
-                                          (np.divide(
-                                              np.multiply(self.hidden_num,
-                                                          node.hidden_num),
-                                              (self.hidden_num +
-                                               node.hidden_num)))))
+        hidden_num = self.hidden_num + node.hidden_num
+        self.hidden_meansq += (node.hidden_meansq +
+                               np.multiply(np.multiply(delta, delta),
+                                           (np.divide(
+                                               np.multiply(self.hidden_num,
+                                                           node.hidden_num),
+                                               hidden_num))))
         self.hidden_mean = (np.divide((np.multiply(self.hidden_num,
                                                    self.hidden_mean) +
                                        np.multiply(node.hidden_num,
                                                    node.hidden_mean)),
-                                      (self.hidden_num + node.hidden_num)))
-        self.hidden_num += node.hidden_num
+                                      hidden_num))
+        self.hidden_num = hidden_num
         self.hidden_mean[self.hidden_num == 0] = 0.0
         self.hidden_meansq[self.hidden_num == 0] = 0.0
 
         delta = node.mean - self.mean
-        self.meansq = (self.meansq + node.meansq +
-                       np.multiply(np.multiply(delta, delta),
-                                   (np.divide(np.multiply(self.num, node.num),
-                                              (self.num + node.num)))))
+        num = self.num + node.num
+        self.meansq += (node.meansq +
+                        np.multiply(np.multiply(delta, delta),
+                                    (np.divide(np.multiply(self.num, node.num),
+                                               num))))
         self.mean = (np.divide((np.multiply(self.num, self.mean) +
-                                np.multiply(node.num, node.mean)), (self.num +
-                                                                    node.num)))
-        self.num += node.num
+                                np.multiply(node.num, node.mean)),
+                               num))
+        self.num = num
         self.mean[self.num == 0] = 0.0
         self.meansq[self.num == 0] = 0.0
 
@@ -739,12 +740,12 @@ class Cobweb3Node(CobwebNode):
         :meth:`Cobweb3Node.expected_correct_guesses
         <concept_formation.cobweb3.Cobweb3Node.expected_correct_guesses>` and
         ensures the probability or expected correct guesses never exceeds 1).
-        The second gaussian has the mean ad std values from the current concept
+        The second gaussian has the mean and std values from the current concept
         with additional gaussian noise (independent and normally distributed
         noise with :math:`\\sigma_{noise} = \\frac{1}{2 * \\sqrt{\\pi}}`).
 
         The integral of this gaussian product is another gaussian with
-        :math:`\\mu` equal to the concept attribut mean and :math:`\\sigma =
+        :math:`\\mu` equal to the concept attribute mean and :math:`\\sigma =
         \\sqrt{\\sigma_{attr}^2 + 2 * \\sigma_{noise}^2}` or, slightly
         simplified, :math:`\\sigma =
         \\sqrt{\\sigma_{attr}^2 + 2 * \\frac{1}{2 * \\pi}}`.

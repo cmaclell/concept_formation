@@ -438,14 +438,11 @@ class CobwebNode(object):
         :param node: Another node from the same CobwebTree
         :type node: CobwebNode
         """
-        self.count += node.count
-
         self.ensure_vector_size(node)
 
+        self.count += node.count
         self.hidden_counts += node.hidden_counts
-
         self.counts += node.counts
-
         self.attributes.update(node.attributes)
 
     def expected_correct_guesses(self):
@@ -608,9 +605,9 @@ class CobwebNode(object):
 
         :param instance: The instance currently being categorized
         :type instance: :ref:`Instance<instance-rep>`
-        :return: the category utility and indices for the two best children
+        :return: the category utility and the two best children
             (the second tuple will be ``None`` if there is only 1 child).
-        :rtype: ((cu_best1,index_best1),(cu_best2,index_best2))
+        :rtype: float, CobwebNode, CobwebNode
         """
         if len(self.children) == 0:
             raise Exception("No children!")
@@ -682,12 +679,12 @@ class CobwebNode(object):
 
         .. math::
 
-            relative_cu(cu) = (cu - const) * n * (count + 1)
+            relative\_cu(cu) = (cu - const) * n * (count + 1)
 
         where :math:`const` is the one returned by
         :meth:`CobwebNode.compute_relative_CU_const`, :math:`n` is the number
         of children of the current node, and :math:`count` is the number of
-        instances stored in the current node (the root).
+        instances stored in the current node (the parent).
 
         The particular :math:`const` value was chosen to make the calculation
         of the relative cu scores for each insert operation efficient. When
@@ -697,7 +694,9 @@ class CobwebNode(object):
         computing the relative CU for inserting into a particular child
         :math:`C_i` reduces to:
 
-            relative_cu_for_insert(C_i) = (C_i.count + 1) * \\sum_i \\sum_j
+        .. math::
+
+            relative\_cu\_for\_insert(C_i) = (C_i.count + 1) * \\sum_i \\sum_j
             P(A_i = V_{ij}| UpdatedC_i)^2 - (C_i.count) * \\sum_i \\sum_j P(A_i
             = V_{ij}| C_i)^2
 
@@ -705,7 +704,7 @@ class CobwebNode(object):
         with the counts from the given instance.
 
         By computing relative_CU scores instead of CU scores for each insert
-        operation, the time complexity of the underlying Cobweb algorithm is
+        operation, the cost of incorporating an instance into the tree is
         reduced from :math:`O(B^2 \\times log_B(n) \\times AV)` to
         :math:`O(B \\times log_B(n) \\times AV)` where :math:`B` is the average
         branching factor of the tree, :math`n` is the number of instances being
