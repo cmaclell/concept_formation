@@ -322,8 +322,8 @@ def mapping_cost(mapping, target, base):
                                  renamed_target])
         temp_base.update_counts_from_node(temp_target)
     else:
-        base.tree.update_keys(renamed_target)
-        temp = base.tree.create_instance_concept(renamed_target)
+        temp = base.tree.create_instance_concept(renamed_target,
+                                                 allow_extra=True)
         temp_base.increment_counts(temp)
 
     return -temp_base.expected_correct_guesses()

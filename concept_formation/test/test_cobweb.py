@@ -5,6 +5,7 @@ import random
 
 from concept_formation.cobweb import CobwebTree
 
+
 def verify_counts(node):
     """
     Checks the property that the counts of the children sum to the same
@@ -13,27 +14,29 @@ def verify_counts(node):
     renaming such as with Trestle) then this will start throwing errors.
     """
     if len(node.children) == 0:
-        return 
+        return
 
     temp = {}
     temp_count = node.count
-    for attr in node.av_counts:
+    node_av_counts = node.av_counts()
+    for attr in node_av_counts:
         if attr not in temp:
             temp[attr] = {}
-        for val in node.av_counts[attr]:
-            temp[attr][val] = node.av_counts[attr][val]
+        for val in node_av_counts[attr]:
+            temp[attr][val] = node_av_counts[attr][val]
 
     for child in node.children:
         temp_count -= child.count
-        for attr in child.av_counts:
+        child_av_counts = child.av_counts()
+        for attr in child_av_counts:
             assert attr in temp
-            for val in child.av_counts[attr]:
+            for val in child_av_counts[attr]:
                 if val not in temp[attr]:
                     print(val.concept_name)
                     print(attr)
                     print(node)
                 assert val in temp[attr]
-                temp[attr][val] -= child.av_counts[attr][val]
+                temp[attr][val] -= child_av_counts[attr][val]
 
     if temp_count != 0:
         print("Parent: %i" % node.count)
@@ -51,6 +54,7 @@ def verify_counts(node):
     for child in node.children:
         verify_counts(child)
 
+
 class TestCobweb(unittest.TestCase):
 
     def test_cobweb(self):
@@ -61,6 +65,7 @@ class TestCobweb(unittest.TestCase):
             data['a2'] = random.choice(['v1', 'v2', 'v3', 'v4'])
             tree.ifit(data)
         verify_counts(tree.root)
+
 
 if __name__ == "__main__":
     unittest.main()

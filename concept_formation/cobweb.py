@@ -94,7 +94,7 @@ class CobwebTree(object):
                     key[attr][val] = self.nominal_count
                     self.nominal_count += 1
 
-    def create_instance_concept(self, instance):
+    def create_instance_concept(self, instance, allow_extra=False):
         concept = CobwebNode()
         concept.count = 1
         concept.hidden_counts = np.zeros(self.hidden_nominal_count)
@@ -102,13 +102,36 @@ class CobwebTree(object):
         concept.attributes = set(instance)
         concept.tree = self
 
+        extra_hidden_nominals = 0
+        extra_nominals = 0
+
         for attr in instance:
+            val = instance[attr]
+
             if attr[0] == "_":
+                if (attr not in self.hidden_nominal_key or
+                        val not in self.hidden_nominal_key[attr]):
+                    extra_hidden_nominals += 1
+                    continue
                 idx = self.hidden_nominal_key[attr][instance[attr]]
-                concept.hidden_counts[idx] += 1
+                concept.hidden_counts[idx] = 1
+
             else:
+                if (attr not in self.nominal_key or
+                        val not in self.nominal_key[attr]):
+                    extra_nominals += 1
+                    continue
                 idx = self.nominal_key[attr][instance[attr]]
-                concept.counts[idx] += 1
+                concept.counts[idx] = 1
+
+        if (allow_extra is False and (extra_hidden_nominals > 0 or
+                                      extra_nominals > 0)):
+            raise ValueError("Extra attribue values that do not exist"
+                             " in the key. Call update_keys first.")
+
+        concept.hidden_counts = np.append(concept.hidden_counts,
+                                          np.ones(extra_hidden_nominals))
+        concept.counts = np.append(concept.counts, np.ones(extra_nominals))
 
         return concept
 
@@ -319,8 +342,7 @@ class CobwebTree(object):
         .. seealso:: :meth:`CobwebTree.cobweb`
         """
         self._sanity_check_instance(instance)
-        self.update_keys(instance)
-        instance = self.create_instance_concept(instance)
+        instance = self.create_instance_concept(instance, allow_extra=True)
         return self._cobweb_categorize(instance)
 
 
@@ -418,16 +440,10 @@ class CobwebNode(object):
         """
         self.count += node.count
 
-        if len(self.hidden_counts) < len(node.hidden_counts):
-            self.hidden_counts.resize(node.hidden_counts.shape)
-        if len(node.hidden_counts) < len(self.hidden_counts):
-            node.hidden_counts.resize(self.hidden_counts.shape)
+        self.ensure_vector_size(node)
+
         self.hidden_counts += node.hidden_counts
 
-        if len(self.counts) < len(node.counts):
-            self.counts.resize(node.counts.shape)
-        if len(node.counts) < len(self.counts):
-            node.counts.resize(self.counts.shape)
         self.counts += node.counts
 
         self.attributes.update(node.attributes)
@@ -965,10 +981,7 @@ class CobwebNode(object):
 
         .. seealso:: :meth:`CobwebNode.get_best_operation`
         """
-        if len(self.counts) < len(instance.counts):
-            self.counts.resize(instance.counts.shape)
-        if len(self.counts) > len(instance.counts):
-            instance.counts.resize(self.counts.shape)
+        self.ensure_vector_size(instance)
 
         if not np.array_equal(instance.counts, self.counts / self.count):
             return False
@@ -1002,28 +1015,26 @@ class CobwebNode(object):
         return self.pretty_print()
 
     def av_counts(self):
+        self.ensure_vector_size()
         av_counts = {}
-
-        if len(self.hidden_counts) < self.tree.hidden_nominal_count:
-            self.hidden_counts.resize(self.tree.hidden_nominal_count)
-        if len(self.counts) < self.tree.nominal_count:
-            self.counts.resize(self.tree.nominal_count)
 
         key = self.tree.hidden_nominal_key
         for attr in key:
             if attr not in av_counts:
                 av_counts[attr] = {}
             for val in key[attr]:
-                if self.hidden_counts[key[attr][val]] > 0:
-                    av_counts[attr][val] = self.hidden_counts[key[attr][val]]
+                if self.hidden_counts[key[attr][val]] == 0:
+                    continue
+                av_counts[attr][val] = self.hidden_counts[key[attr][val]]
 
         key = self.tree.nominal_key
         for attr in key:
             if attr not in av_counts:
                 av_counts[attr] = {}
             for val in key[attr]:
-                if self.counts[key[attr][val]] > 0:
-                    av_counts[attr][val] = self.counts[key[attr][val]]
+                if self.counts[key[attr][val]] == 0:
+                    continue
+                av_counts[attr][val] = self.counts[key[attr][val]]
 
         return av_counts
 
@@ -1145,6 +1156,7 @@ class CobwebNode(object):
         :rtype: [(:ref:`Value<values>`, float), (:ref:`Value<values>`, float),
                  ...]
         """
+        self.ensure_vector_size()
         choices = []
 
         key = self.tree.nominal_key
@@ -1158,7 +1170,7 @@ class CobwebNode(object):
             return choices
 
         val_count = 0
-        for val in key:
+        for val in key[attr]:
             idx = key[attr][val]
             count = counts[idx]
             choices.append((val, count / self.count))
@@ -1194,8 +1206,8 @@ class CobwebNode(object):
         else:
             raise Exception("Unknown choice_fn")
 
-        if ((attr[0] == '_' and attr not in self.tree.hidden_nominal_counts)
-                or attr not in self.tree.nominal_counts):
+        if (attr not in self.tree.hidden_nominal_key and
+                attr not in self.tree.nominal_key):
             return None
 
         choices = self.get_weighted_values(attr, allow_none)
@@ -1219,10 +1231,7 @@ class CobwebNode(object):
             concept.
         :rtype: float
         """
-        if len(self.counts) < self.tree.nominal_count:
-            self.counts.resize(self.tree.nominal_count)
-        if len(self.hidden_counts) < self.tree.hidden_nominal_count:
-            self.hidden_counts.resize(self.tree.hidden_nominal_count)
+        self.ensure_vector_size()
 
         key = self.tree.nominal_key
         counts = self.counts
@@ -1233,14 +1242,29 @@ class CobwebNode(object):
         if val is None:
             c = 0.0
             if attr in key:
-                c = sum([self.hidden_counts[key[attr][v]] for v in
-                         key[attr]])
+                c = sum([counts[key[attr][v]] for v in key[attr]])
             return (self.count - c) / self.count
 
         if attr in key and val in key[attr]:
             return counts[key[attr][val]] / self.count
 
         return 0.0
+
+    def ensure_vector_size(self, other=None):
+        if other is None:
+            if len(self.counts) < self.tree.nominal_count:
+                self.counts.resize(self.tree.nominal_count)
+            if len(self.hidden_counts) < self.tree.hidden_nominal_count:
+                self.hidden_counts.resize(self.tree.hidden_nominal_count)
+        else:
+            if len(self.counts) < len(other.counts):
+                self.counts.resize(other.counts.shape)
+            if len(other.counts) < len(self.counts):
+                other.counts.resize(self.counts.shape)
+            if len(self.hidden_counts) < len(other.hidden_counts):
+                self.hidden_counts.resize(other.hidden_counts.shape)
+            if len(other.hidden_counts) < len(self.hidden_counts):
+                other.hidden_counts.resize(self.hidden_counts.shape)
 
     def log_likelihood(self, child_leaf):
         """
