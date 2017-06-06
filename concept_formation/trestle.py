@@ -50,14 +50,14 @@ class TrestleTree(Cobweb3Tree):
         """
         The tree constructor.
         """
-        super().__init__(scaling, inner_attr_scaling)
+        super(TrestleTree, self).__init__(scaling, inner_attr_scaling)
         self.gensym_counter = 0
 
     def clear(self):
         """
         Clear the tree but keep initialization parameters
         """
-        super().clear()
+        super(TrestleTree, self).clear()
         self.gensym_counter = 0
 
     def gensym(self):
@@ -68,7 +68,7 @@ class TrestleTree(Cobweb3Tree):
         :rtype: '?o'+counter
         """
         self.gensym_counter += 1
-        return '?o' + str(self.gensym_counter)
+        return '?o%i' % self.gensym_counter
 
     def _sanity_check_instance(self, instance):
         """
@@ -154,11 +154,8 @@ class TrestleTree(Cobweb3Tree):
                                  StructureMapper(self.root))
         temp_instance = preprocessing.transform(instance)
         self._sanity_check_instance(temp_instance)
-
-        self.update_keys(temp_instance)
-        temp_instance = self.create_instance_concept(temp_instance)
-        self.update_scales(temp_instance)
-
+        temp_instance = self.create_instance_concept(temp_instance,
+                                                     allow_extra=True)
         return self._cobweb_categorize(temp_instance)
 
     def infer_missing(self, instance, choice_fn="most likely",
@@ -246,9 +243,7 @@ class TrestleTree(Cobweb3Tree):
                                  StructureMapper(self.root))
         temp_instance = preprocessing.transform(instance)
         self._sanity_check_instance(temp_instance)
-
         self.update_keys(temp_instance)
         temp_instance = self.create_instance_concept(temp_instance)
         self.update_scales(temp_instance)
-
         return self.cobweb(temp_instance)

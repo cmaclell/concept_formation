@@ -18,21 +18,23 @@ def verify_counts(node):
 
     temp = {}
     temp_count = node.count
-    for attr in node.av_counts:
+    node_av_counts = node.av_counts()
+    for attr in node_av_counts:
         if attr not in temp:
             temp[attr] = {}
-        for val in node.av_counts[attr]:
+        for val in node_av_counts[attr]:
             if val == cv_key:
-                temp[attr][val] = node.av_counts[attr][val].num
+                temp[attr][val] = node_av_counts[attr][val].num
             else:
-                temp[attr][val] = node.av_counts[attr][val]
+                temp[attr][val] = node_av_counts[attr][val]
 
     for child in node.children:
         temp_count -= child.count
-        for attr in child.av_counts:
+        child_av_counts = child.av_counts()
+        for attr in child_av_counts:
             assert attr in temp
 
-            for val in child.av_counts[attr]:
+            for val in child_av_counts[attr]:
                 if val not in temp[attr]:
                     print(val.concept_name)
                     print(attr)
@@ -40,9 +42,9 @@ def verify_counts(node):
                 assert val in temp[attr]
 
                 if val == cv_key:
-                    temp[attr][val] -= child.av_counts[attr][val].num
+                    temp[attr][val] -= child_av_counts[attr][val].num
                 else:
-                    temp[attr][val] -= child.av_counts[attr][val]
+                    temp[attr][val] -= child_av_counts[attr][val]
 
     assert temp_count == 0
 
