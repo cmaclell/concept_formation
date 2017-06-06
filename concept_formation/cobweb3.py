@@ -476,8 +476,10 @@ class Cobweb3Node(CobwebNode):
                 if val == cv_key:
                     if (attr in self.av_counts and cv_key in self.av_counts[attr] and 
                         attr in other.av_counts and cv_key in other.av_counts[attr]):
-                        p = (self.probability(attr, other.av_counts[attr][cv_key].unbiased_mean()) * 
-                             other.probability(attr, other.av_counts[attr][cv_key].unbiased_mean()))
+
+                        n1 = self.av_counts[attr][cv_key]
+                        n2 = other.av_counts[attr][cv_key]
+                        p = n1.integral_of_gaussian_product(n2)
                         if p > 0:
                             ll += log(p)
                         else:

@@ -3,6 +3,8 @@ from __future__ import unicode_literals
 from __future__ import absolute_import
 from __future__ import division
 from math import sqrt
+from math import exp
+from math import pi
 
 from concept_formation.utils import c4
 
@@ -190,6 +192,26 @@ class ContinuousValue():
         self.mean = ((self.num * self.mean + other.num * other.mean) / 
                      (self.num + other.num))
         self.num += other.num
+
+    def integral_of_gaussian_product(self, other):
+        """
+        Computes the integral (from -inf to inf) of the product of two
+        gaussians.
+
+        Use formula computed here:
+            `<http://www.tina-vision.net/docs/memos/2003-003.pdf>`_
+        """
+        mu1 = self.unbiased_mean()
+        mu2 = other.unbiased_mean()
+        sd1 = self.unbiased_std()
+        sd2 = other.unbiased_std()
+
+        noisy_sd_squared = 1 / (4 * pi)
+        sd1 = sqrt(sd1 * sd1 + noisy_sd_squared)
+        sd2 = sqrt(sd2 * sd2 + noisy_sd_squared)
+        return ((1 / sqrt(2 * pi * (sd1 * sd1 + sd2 * sd2))) *
+                exp(-1 * (mu1 - mu2) * (mu1 - mu2) /
+                    (2 * (sd1 * sd1 + sd2 * sd2))))
 
     def output_json(self):
         return {
