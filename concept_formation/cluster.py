@@ -365,6 +365,9 @@ def cluster_iter(tree, instances, heuristic=CU, minsplit=1, maxsplit=100000,  mo
         raise ValueError("minsplit must be >= 1") 
     if minsplit > maxsplit: 
         raise ValueError("maxsplit must be >= minsplit")
+    if len(instances) == 0:
+        raise ValueError("cluster_iter called on an empty list.")
+
 
     tree = copy.deepcopy(tree)
 
