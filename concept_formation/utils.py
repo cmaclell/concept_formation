@@ -10,6 +10,7 @@ from numbers import Number
 from random import uniform
 from random import random
 from math import sqrt
+from math import isnan
 
 
 # A hashtable of values to use in the c4(n) function to apply corrections to
@@ -62,7 +63,7 @@ def isNumber(n):
     Check if a value is a number that should be handled differently
     than nominals. 
     """
-    return (not isinstance(n, bool) and isinstance(n, Number))
+    return (not isinstance(n, bool) and isinstance(n, Number)) and not isnan(n)
 
 def mean(values):
     """
