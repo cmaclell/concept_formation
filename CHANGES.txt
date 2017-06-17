@@ -38,3 +38,7 @@ v0.2.19,1/28/16 -- Changed categorize function to use the concept that most
                    instance). Also, added cobweb3 regression example. 
 v0.3.0, 7/27/16 -- Improved docs, added tests, improved speed and performance
                    of structure mapper.
+v0.3.1, 6/17/17 -- Made improvement to underlying Cobweb algorithm to improve
+                   time complexity of categorizing with / updating the tree.
+                   Also, fixed bug in the probabilities returned for continuous
+                   values.
