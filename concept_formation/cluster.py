@@ -177,7 +177,7 @@ def AICc(clusters, leaves):
     from a given tree and set of instances with a correction for finite sample
     sizes.
 
-    This can be used as one of the heursitic functions in
+    This can be used as one of the heuristic functions in
     :meth:`cluster_split_search`.
     
     .. math :: 
@@ -226,7 +226,7 @@ def AIC(clusters, leaves):
     Calculates the Akaike Information Criterion of the a given clustering
     from a given tree and set of instances.
 
-    This can be used as one of the heursitic functions in
+    This can be used as one of the heuristic functions in
     :meth:`cluster_split_search`.
     
     .. math :: 
@@ -270,7 +270,7 @@ def BIC(clusters, leaves):
     Calculates the Bayesian Information Criterion of the a given clustering
     from a given tree and set of instances.
 
-    This can be used as one of the heursitic functions in
+    This can be used as one of the heuristic functions in
     :meth:`cluster_split_search`.
     
     .. math :: 
@@ -319,12 +319,12 @@ def cluster_split_search(tree, instances, heuristic=CU, minsplit=1, maxsplit=1, 
 
     :param tree: A category tree to be used to generate clusters.
     :param instances: A list of instances to cluster
-    :param heuristic: A heursitic function to minimize in search
+    :param heuristic: A heuristic function to minimize in search
     :param minsplit: The minimum number of splits to perform on the tree
     :param maxsplit: the maximum number of splits to perform on the tree
     :param mod: A flag to determine if instances will be fit (i.e. modifying
         knoweldge) or categorized (i.e. not modifiying knowledge)
-    :param verbose: If True, the process will print the heursitic at each
+    :param verbose: If True, the process will print the heuristic at each
         split as it searches.
     :type tree: :class:`CobwebTree <concept_formation.cobweb.CobwebTree>`,
         :class:`Cobweb3Tree <concept_formation.cobweb3.Cobweb3Tree>`, or
@@ -358,8 +358,7 @@ def cluster_split_search(tree, instances, heuristic=CU, minsplit=1, maxsplit=1, 
 
 def cluster_iter(tree, instances, heuristic=CU, minsplit=1, maxsplit=100000,  mod=True,labels=True):
     """
-    This is an experimetnal implementation of the cluster iter that uses
-    something other than CU to choose what to split
+    This is the core clustering process that splits the tree according to a given heuristic.
     """
     if minsplit < 1: 
         raise ValueError("minsplit must be >= 1") 
@@ -367,7 +366,17 @@ def cluster_iter(tree, instances, heuristic=CU, minsplit=1, maxsplit=100000,  mo
         raise ValueError("maxsplit must be >= minsplit")
     if len(instances) == 0:
         raise ValueError("cluster_iter called on an empty list.")
-
+    if isinstance(heuristic,str):
+        if heuristic.upper() == 'CU':
+            heuristic = CU
+        elif heuristic.upper() == 'AIC':
+            heuristic = AIC
+        elif heuristic.upper() == 'BIC':
+            heuristic = BIC
+        elif heuristic.upper() == 'AICC':
+            heuristic = AICc
+        else:
+            raise ValueError('unkown heuristic provided as str',heuristic)
 
     tree = copy.deepcopy(tree)
 
