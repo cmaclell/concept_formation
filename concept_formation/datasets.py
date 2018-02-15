@@ -13,14 +13,18 @@ import json
 
 from concept_formation.data_files.generate_quadruped import generate_animals
 
-def _load_json(filename):
+def _load_json(filename, num_instances=None):
     """
     Loads a json file and returns a python object generated from parsing the
     json.
     """
     module_path = dirname(__file__)
+    output = []
     with open(join(module_path, 'data_files', filename)) as dat:
-        output = json.load(dat)
+        for idx, lin in enumerate(dat):
+            if num_instances is not None and idx > num_instances:
+                break
+            output.append(json.loads(lin.strip('[],\n')))
     return output
 
 def _load_file(filename):
@@ -32,22 +36,21 @@ def _load_file(filename):
         output = [row[:-1] for row in dat]
     return output
 
-def load_forest_fires():
+def load_forest_fires(num_instances=None):
     """
     Load the forest fires dataset.
 
     This is an example of instances with :ref:`Nominal<val-nom>` and
     :ref:`Numeric<val-num>` values and :ref:`Constant<attr-const>` attributes.
+    This dataset contains 517 instances.
 
     This dataset was downloaded from the `UCI machine learning repository
     <http://archive.ics.uci.edu/ml/datasets/Forest+Fires>`__.
     We processed the data to be in dictionary format with human readable
-    labels. 
+    labels.
 
     >>> import pprint
-    >>> data = load_forest_fires()
-    >>> print(len(data))
-    517
+    >>> data = load_forest_fires(num_instances=1)
     >>> pprint.pprint(data[0])
     {'DC': 94.3,
      'DMC': 26.2,
@@ -64,25 +67,23 @@ def load_forest_fires():
      'y-axis': 5.0}
 
     """
-    return _load_json('forest_fires.json')
+    return _load_json('forest_fires.json', num_instances)
 
-def load_congressional_voting():
+def load_congressional_voting(num_instances=None):
     """
     Load the voting dataset.
 
     This is an example of instances with only :ref:`Nominal<val-nom>` values
     and :ref:`Constant<attr-const>` attributes but some attributes are
-    occasionally missing.
+    occasionally missing. This dataset contains 435 instances.
 
     This dataset was downloaded from the `UCI machine learning repository
     <http://archive.ics.uci.edu/ml/datasets/Congressional+Voting+Records>`__.
     We processed the data to be in dictionary format with human readable
-    labels. 
+    labels.
 
     >>> import pprint
-    >>> data = load_congressional_voting()
-    >>> print(len(data))
-    435
+    >>> data = load_congressional_voting(num_instances=1)
     >>> pprint.pprint(data[0])
     {'Class Name': 'republican',
      'adoption-of-the-budget-resolution': 'n',
@@ -102,23 +103,22 @@ def load_congressional_voting():
      'water-project-cost-sharing': 'y'}
 
     """
-    return _load_json('congressional_voting.json')
+    return _load_json('congressional_voting.json', num_instances)
 
-def load_iris():
+def load_iris(num_instances=None):
     """
     Load the iris dataset.
 
     This is an example of instances with :ref:`Nominal<val-nom>` and
     :ref:`Numeric<val-num>` values and :ref:`Constant<attr-const>` attributes.
+    This dataset contains 150 instances.
 
     This dataset was downloaded from the `UCI machine learning repository
     <https://archive.ics.uci.edu/ml/datasets/Iris>`__. We processed the data
-    to be in dictionary format with human readable labels. 
+    to be in dictionary format with human readable labels.
 
     >>> import pprint
-    >>> data = load_iris()
-    >>> print(len(data))
-    150
+    >>> data = load_iris(num_instances=1)
     >>> pprint.pprint(data[0])
     {'class': 'Iris-setosa',
      'petal length': 1.4,
@@ -127,23 +127,21 @@ def load_iris():
      'sepal width': 3.5}
 
     """
-    return _load_json('iris.json')
+    return _load_json('iris.json', num_instances)
 
-def load_mushroom():
+def load_mushroom(num_instances=None):
     """
     Load the mushroom dataset.
 
     This is an example of instances with only :ref:`Nominal<val-nom>` values
-    and :ref:`Constant<attr-const>` attributes.
+    and :ref:`Constant<attr-const>` attributes. This dataset contains 8124 instances.
 
     This dataset was downloaded from the `UCI machine learning repository
     <https://archive.ics.uci.edu/ml/datasets/Mushroom>`__. We processed the data
-    to be in dictionary format with human readable labels. 
+    to be in dictionary format with human readable labels.
 
     >>> import pprint
-    >>> data = load_mushroom()
-    >>> print(len(data))
-    8124
+    >>> data = load_mushroom(num_instances=1)
     >>> pprint.pprint(data[0])
     {'bruises?': 'yes',
      'cap-color': 'brown',
@@ -169,19 +167,17 @@ def load_mushroom():
      'veil-color': 'white',
      'veil-type': 'partial'}
     """
-    return _load_json('mushrooms.json')
+    return _load_json('mushrooms.json', num_instances)
 
 def load_rb_com_11():
     """
     Load the RumbleBlocks, Center of Mass Level 11, dataset.
 
     This is an example of instances with all the attribute and value types
-    described in the :ref:`instance-rep`.
+    described in the :ref:`instance-rep`. This dataset contains 251 instances.
 
     >>> import pprint
     >>> data = load_rb_com_11()
-    >>> print(len(data))
-    251
     >>> pprint.pprint(data[0])
     {'_guid': 'ea022d3d-5c9e-46d7-be23-8ea718fe7816',
      '_human_cluster_label': '0',
@@ -194,17 +190,15 @@ def load_rb_com_11():
     """
     return _load_json('rb_com_11_continuous.json')
 
-def load_rb_s_07():
+def load_rb_s_07(num_instances=None):
     """
     Load the RumbleBlocks, Symmetry Level 7, dataset.
 
     This is an example of instances with all the attribute and value types
-    described in the :ref:`instance-rep`.
+    described in the :ref:`instance-rep`. This dataset contains 141 instances.
 
     >>> import pprint
-    >>> data = load_rb_s_07()
-    >>> print(len(data))
-    141
+    >>> data = load_rb_s_07(num_instances=1)
     >>> pprint.pprint(data[0])
     {'_guid': '660ac76d-93b3-4ce7-8a15-a3213e9103f5',
      'component0': {'b': 0.0, 'l': 0.0, 'r': 3.0, 't': 1.0, 'type': 'plat0'},
@@ -212,19 +206,17 @@ def load_rb_s_07():
      'component8': {'b': 4.0, 'l': 0.0, 'r': 3.0, 't': 5.0, 'type': 'ufoo0'},
      'success': '0'}
     """
-    return _load_json('rb_s_07_continuous.json')
+    return _load_json('rb_s_07_continuous.json', num_instances)
 
-def load_rb_s_13():
+def load_rb_s_13(num_instances=None):
     """
     Load the RumbleBlocks, Symmetry Level 13, dataset.
 
     This is an example of instances with all the attribute and value types
-    described in the :ref:`instance-rep`.
+    described in the :ref:`instance-rep`. This dataset contains 249 instances.
 
     >>> import pprint
-    >>> data = load_rb_s_13()
-    >>> print(len(data))
-    249
+    >>> data = load_rb_s_13(num_instances=1)
     >>> pprint.pprint(data[0])
     {'_guid': '684b4ce5-0f55-481c-ae9a-1474de8418ea',
      '_human_cluster_label': '0',
@@ -235,19 +227,17 @@ def load_rb_s_13():
      'component2': {'b': 1.0, 'l': 0.0, 'r': 3.0, 't': 2.0, 'type': 'plat0'},
      'component3': {'b': 2.0, 'l': 0.0, 'r': 3.0, 't': 3.0, 'type': 'plat0'}}
     """
-    return _load_json('rb_s_13_continuous.json')
+    return _load_json('rb_s_13_continuous.json', num_instances)
 
-def load_rb_wb_03():
+def load_rb_wb_03(num_instances=None):
     """
     Load the RumbleBlocks, Wide Base Level 03, dataset.
 
     This is an example of instances with all the attribute and value types
-    described in the :ref:`instance-rep`.
+    described in the :ref:`instance-rep`. This dataset contains 254 instances.
 
     >>> import pprint
-    >>> data = load_rb_wb_03()
-    >>> print(len(data))
-    254
+    >>> data = load_rb_wb_03(num_instances=1)
     >>> pprint.pprint(data[0])
     {'_guid': 'aa5eff72-0572-4eff-a007-3def9a82ba5b',
      '_human_cluster_label': '0',
@@ -257,7 +247,7 @@ def load_rb_wb_03():
      'component2': {'b': 1.0, 'l': 2.0, 'r': 5.0, 't': 2.0, 'type': 'plat0'},
      'component3': {'b': 0.0, 'l': 0.0, 'r': 5.0, 't': 1.0, 'type': 'rect0'}}
     """
-    return _load_json('rb_wb_03_continuous.json')
+    return _load_json('rb_wb_03_continuous.json', num_instances)
 
 def load_rb_s_07_human_predictions():
     """
@@ -267,12 +257,10 @@ def load_rb_s_07_human_predictions():
     This is data collected from mechanical turk, where workers were tasked with
     predicting a concept label (success) given a picture of the tower. The
     element contains labels for the data and subsequent rows contain the actual
-    data.
+    data. This dataset contains 601 instances.
 
     >>> import pprint
     >>> data = load_rb_s_07_human_predictions()
-    >>> print(len(data))
-    601
     >>> pprint.pprint(data[0:2])
     ['user_id,instance_guid,time,order,prediction,correctness',
      '1,2fda0bde-95a7-4bda-9851-785275c3f56d,2015-02-15 '
@@ -283,15 +271,15 @@ def load_rb_s_07_human_predictions():
 def load_quadruped(num_instances):
     """
     Returns a randomly generated quadruped dataset of size `num_instances`
-    using the procedure employed in: 
-    
+    using the procedure employed in:
+
     Gennari, J. H., Langley, P., & Fisher, D. H. (1989). Models of incremental
-    concept formation. Artificial Intelligence, 40, 11–61. 
+    concept formation. Artificial Intelligence, 40, 11–61.
 
     This dataset contains four kinds of quadruped animals: dogs, cats, horses,
     and giraffes. The type of each component is included as a hidden variable,
     so that structure mapping can be tested. Additionally, the type of animal
-    (e.g., dog) is also included as a hidden variable. 
+    (e.g., dog) is also included as a hidden variable.
 
     >>> import pprint
     >>> import random
@@ -382,10 +370,10 @@ def load_quadruped(num_instances):
                 'radius': 12.845931778870957,
                 'texture': 171.2283287965781}}]
     """
-    return generate_animals(num_instances) 
+    return generate_animals(num_instances)
 
-def load_molecule():
-    """Load a dataset of 100 molecules from the pubchem database
+def load_molecule(num_instances=None):
+    """Load a dataset of 101 molecules from the pubchem database
 
     This dataset was downloaded from the `Pubchem databse
     <https://www.ncbi.nlm.nih.gov/pccompound>`__. We used a custom `molfile
@@ -394,8 +382,6 @@ def load_molecule():
 
     >>> import pprint
     >>> data = load_molecule()
-    >>> print(len(data))
-    101
     >>> pprint.pprint(data[3])
     {'(bond Single Not_stereo ?atom0001 ?atom0003)': True,
      '(bond Single Not_stereo ?atom0001 ?atom0014)': True,
@@ -541,5 +527,4 @@ def load_molecule():
      '_version': 'V2000',
      'chiral': True}
     """
-    return _load_json('molecule.json')
-
+    return _load_json('molecule.json', num_instances)
