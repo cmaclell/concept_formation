@@ -419,9 +419,13 @@ const cv_key = "#ContinuousValue#";
           var attrScale = attributeScales[attr];
           if(attrScale.type === "unique") {
             $("#color-by-type").text("Unique");
+            $("#numeric-colors").hide();
+            $("#nominal-colors").hide();
           }
           else if(attrScale.type === "unary") {
             $("#color-by-type").text("Unary"); 
+            $("#numeric-colors").hide();
+            $("#nominal-colors").hide();
           }
           if(attrScale.type ==="nominal" || attrScale.type === "nominal20"){
             $("#color-by-type").text("Nominal");
