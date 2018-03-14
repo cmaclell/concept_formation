@@ -324,6 +324,8 @@ def cluster_split_search(tree, instances, heuristic=CU, minsplit=1, maxsplit=1, 
     :param maxsplit: the maximum number of splits to perform on the tree
     :param mod: A flag to determine if instances will be fit (i.e. modifying
         knoweldge) or categorized (i.e. not modifiying knowledge)
+    :param labels: A flag to determine whether the process should return a
+        list of cluster labels (true) or a list of concept nodes (false).
     :param verbose: If True, the process will print the heuristic at each
         split as it searches.
     :type tree: :class:`CobwebTree <concept_formation.cobweb.CobwebTree>`,
@@ -334,8 +336,10 @@ def cluster_split_search(tree, instances, heuristic=CU, minsplit=1, maxsplit=1, 
     :type minsplit: int
     :type maxsplit: int
     :type mod: bool
+    :type labels: bool
     :type verbose: bool
-    :returns: a list of cluster labels based on the optimal number of splits according to the heuristic
+    :returns: a list of cluster labels based on the optimal number of splits
+        according to the heuristic
     :rtype: list
 
     .. seealso:: :meth:`cluster_iter`
