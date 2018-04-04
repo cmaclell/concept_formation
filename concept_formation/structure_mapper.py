@@ -222,7 +222,7 @@ def flat_match(target, base, initial_mapping=None):
                                                      extra=(target, base))
 
     solution = next(hill_climbing(op_problem))
-    return dict(solution.state[0])
+    return dict(solution.state_node.state[0])
 
 
 def hungarian_mapping(inames, cnames, target, base):
@@ -338,7 +338,7 @@ class StructureMappingOptimizationProblem(Problem):
     i.e., given an initial mapping it tries to improve the mapping by permuting
     it.
     """
-    def goal_test(self, node):
+    def goal_test(self, node, goal=None):
         """
         This should always return False, so it never terminates early.
         """
