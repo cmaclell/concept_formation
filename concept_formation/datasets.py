@@ -13,6 +13,7 @@ import json
 
 from concept_formation.data_files.generate_quadruped import generate_animals
 
+
 def _load_json(filename, num_instances=None):
     """
     Loads a json file and returns a python object generated from parsing the
@@ -27,6 +28,7 @@ def _load_json(filename, num_instances=None):
             output.append(json.loads(lin.strip('[],\n')))
     return output
 
+
 def _load_file(filename):
     """
     Reads the rows of a file and returns them as an array.
@@ -35,6 +37,7 @@ def _load_file(filename):
     with open(join(module_path, 'data_files', filename)) as dat:
         output = [row[:-1] for row in dat]
     return output
+
 
 def load_forest_fires(num_instances=None):
     """
@@ -68,6 +71,7 @@ def load_forest_fires(num_instances=None):
 
     """
     return _load_json('forest_fires.json', num_instances)
+
 
 def load_congressional_voting(num_instances=None):
     """
@@ -105,6 +109,7 @@ def load_congressional_voting(num_instances=None):
     """
     return _load_json('congressional_voting.json', num_instances)
 
+
 def load_iris(num_instances=None):
     """
     Load the iris dataset.
@@ -129,16 +134,18 @@ def load_iris(num_instances=None):
     """
     return _load_json('iris.json', num_instances)
 
+
 def load_mushroom(num_instances=None):
     """
     Load the mushroom dataset.
 
     This is an example of instances with only :ref:`Nominal<val-nom>` values
-    and :ref:`Constant<attr-const>` attributes. This dataset contains 8124 instances.
+    and :ref:`Constant<attr-const>` attributes. This dataset contains 8124
+    instances.
 
     This dataset was downloaded from the `UCI machine learning repository
-    <https://archive.ics.uci.edu/ml/datasets/Mushroom>`__. We processed the data
-    to be in dictionary format with human readable labels.
+    <https://archive.ics.uci.edu/ml/datasets/Mushroom>`__. We processed the
+    data to be in dictionary format with human readable labels.
 
     >>> import pprint
     >>> data = load_mushroom(num_instances=1)
@@ -169,6 +176,7 @@ def load_mushroom(num_instances=None):
     """
     return _load_json('mushrooms.json', num_instances)
 
+
 def load_rb_com_11():
     """
     Load the RumbleBlocks, Center of Mass Level 11, dataset.
@@ -190,6 +198,7 @@ def load_rb_com_11():
     """
     return _load_json('rb_com_11_continuous.json')
 
+
 def load_rb_s_07(num_instances=None):
     """
     Load the RumbleBlocks, Symmetry Level 7, dataset.
@@ -207,6 +216,7 @@ def load_rb_s_07(num_instances=None):
      'success': '0'}
     """
     return _load_json('rb_s_07_continuous.json', num_instances)
+
 
 def load_rb_s_13(num_instances=None):
     """
@@ -229,6 +239,7 @@ def load_rb_s_13(num_instances=None):
     """
     return _load_json('rb_s_13_continuous.json', num_instances)
 
+
 def load_rb_wb_03(num_instances=None):
     """
     Load the RumbleBlocks, Wide Base Level 03, dataset.
@@ -249,6 +260,7 @@ def load_rb_wb_03(num_instances=None):
     """
     return _load_json('rb_wb_03_continuous.json', num_instances)
 
+
 def load_rb_s_07_human_predictions():
     """
     Load the Human Predictions Data for the RumbleBlocks, Symmetry Level 7,
@@ -268,13 +280,14 @@ def load_rb_s_07_human_predictions():
     """
     return _load_file('human_s_07_success_predictions.csv')
 
+
 def load_quadruped(num_instances):
     """
     Returns a randomly generated quadruped dataset of size `num_instances`
     using the procedure employed in:
 
     Gennari, J. H., Langley, P., & Fisher, D. H. (1989). Models of incremental
-    concept formation. Artificial Intelligence, 40, 11–61.
+    concept formation. Artificial Intelligence, 40, 11-61.
 
     This dataset contains four kinds of quadruped animals: dogs, cats, horses,
     and giraffes. The type of each component is included as a hidden variable,
@@ -371,6 +384,7 @@ def load_quadruped(num_instances):
                 'texture': 171.2283287965781}}]
     """
     return generate_animals(num_instances)
+
 
 def load_molecule(num_instances=None):
     """Load a dataset of 101 molecules from the pubchem database
