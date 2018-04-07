@@ -50,7 +50,7 @@ def output_json(file="forest",size=100,prune=True,seed=50,burn=1):
     tree = TrestleTree()
     tree.fit(instances,iterations=burn)
 
-    pprint.pprint(tree.root.output_json())
+    # pprint.pprint(tree.root.output_json())
 
     with open('output.js','w') as out:
         out.write("var trestle_output = ")

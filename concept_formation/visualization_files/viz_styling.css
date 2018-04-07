@@ -1,18 +1,21 @@
-text {
+body{
+  overflow: hidden;
+}
+
+/*text {
   font-size: 11px;
   pointer-events: none;
 }
 
 text.parent {
   fill: #1f77b4;
-}
+}*/
 
-circle.failure{
-    fill: #F5A9A9;
-}
-
-circle.success{
-    fill: #9FF781;
+.label {
+  font: 11px "Helvetica Neue", Helvetica, Arial, sans-serif;
+  text-anchor: middle;
+  /*text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff, 0 -1px 0 #fff;*/
+  pointer-events: none;
 }
 
 circle {
@@ -29,18 +32,16 @@ circle.parent {
 
 circle.parent:hover {
   stroke: #ff7f0e;
-  stroke-width: .5px;
+  stroke-width: 1px;
 }
 
-#property-panel{
-  /*position:absolute;*/
-  right:0px;
-  top:0px;
-  overflow: scroll;
-  height: 100%;
-  background: white;
-  /*padding: 5px;*/
-  border-left: 1px solid lightgray; 
+#property-container{
+    position: absolute;
+    top: 0;
+    right: 0;
+    overflow-y: auto;
+    max-height: 100vh;
+    background: white;
 }
 
 .svg-container {
@@ -62,22 +63,47 @@ circle.parent:hover {
   left: 0;
 }
 
-td{
-  background: white;
-}
-
 table{
   table-layout: auto;
   border-collapse: collapse;
   width:100%;
+  empty-cells: hide
+}
+
+td.prop-column {
+  width:60%;
+  max-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+td.count-column {
+  width:20%;
+    max-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+td.perc-column {
+  width:20%;
+    max-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 table td.absorbing-column{
   width:100%;
+
 }
 
 .concept-prop{
-  min-width: 110px;
+  min-width:50%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .val-row {
@@ -85,18 +111,31 @@ table td.absorbing-column{
 }
 
 .color-ops {
-  padding-right: 60px;
-  padding-left: 30px; 
+  padding-right: 20%;
+  padding-left: 10%; 
   /*text-align: center;*/
 }
 
-.max-color {
-  text-align: right;
-  width:50%;
+
+#numeric-colors {
+  width:100%;
 }
 
 td.swatch{
   width: 50px;
+}
+
+.num-header {
+  width: 50%;
+}
+
+.num-val {
+  width:33.3%;
+}
+
+.num-swatch {
+  width: 11.1%;
+  min-height: 2rem;
 }
 
 #filter-form {
