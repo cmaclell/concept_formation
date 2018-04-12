@@ -30,6 +30,11 @@ circle.parent {
   stroke: steelblue;
 }
 
+circle.focus{
+  stroke: #98ff98;
+  stroke-width:2px;
+}
+
 circle.parent:hover {
   stroke: #ff7f0e;
   stroke-width: 1px;

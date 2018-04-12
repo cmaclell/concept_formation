@@ -40,6 +40,14 @@
               </tr>
             </tbody>
           </table>
+          <h3>Search</h3>
+          <div class="input-group">
+            <input id="search-concept-name" type="text" class="form-control" placeholder="Concept#">
+            <span class="input-group-btn">
+              <button id="search-concept-go" class="btn btn-default" type="button">Search</button>
+            </span>
+          </div>
+          <span id="search-not-found" class="text-danger"></span>
 
           <h3>Settings</h3>
           <!-- <label>Show Node Names<input id="show-names" type="checkbox"> </label><br>
@@ -85,7 +93,6 @@
                 <tr>
                   <td class="absorbing-column"><strong>Value</strong></td>
                   <td><strong>Color</strong></td>
-                  <!-- <td class="absorbing-column" ></td> -->
                 </tr>
               </thead>
               <tbody id="nom-val-colors">
@@ -155,6 +162,8 @@
           $("#rel-filter").change(updateFilters);
           $("#unq-filter").change(updateFilters);
           $("#hid-filter").change(updateFilters);
+          $("#search-concept-go").click(searchConceptByName);
+          $("#search-concept-name").change(searchConceptByName);
           init(data);
           colorSelectChanged();
           populateColorByOptions(data);

@@ -8,7 +8,8 @@ var w = 1280,
   x = d3.scaleLinear().range([0, r]),
   y = d3.scaleLinear().range([0, r]),
   focus,
-  root;
+  root,
+  nodes;
 
 var svg = d3.select("svg"),
     margin = 20,
@@ -63,7 +64,7 @@ function attrType(rootObj, attr) {
     if(/\('_.+'\,.*\)/g.test(attr)){
       return "hidden-relation";
     }
-    else if (/\('.+'\,'\?.+'\)/g.test(attr)){
+    else if (/\('.+'\,\s+'\?.+'\)/g.test(attr)){
       return "component-relation";
     }
     else {
@@ -192,15 +193,16 @@ function buildTree(tree_data) {
           .sort(function(a,b) { return b.value - a.value; });
   
   focus = root;
-  var nodes = pack(root).descendants(),
-      view;
+  nodes = pack(root).descendants();
+  var view;
 
   var circle = g.selectAll("circle")
     .data(nodes)
     .enter().append("circle")
       .attr("id",function(d) {return d.data.name; })
       .attr("class", function(d) { return d.children ? "parent" : "child"; })
-      .on("click", function(d) { if (focus !== d) zoom(d), d3.event.stopPropagation(); });
+                                                                //This is a stupid hack
+      .on("click", function(d) { if (focus !== d) zoom(d), d3.event ? d3.event.stopPropagation() : undefined });
 
   // I Removed images for the time being while updating to newer d3 code.
   // var images = g.selectAll("image.screenshot")
@@ -234,13 +236,13 @@ function buildTree(tree_data) {
 
   zoomTo([root.x, root.y, root.r * 2 + margin]);
 
-  function zoom(d) {
+  window.zoom = function(d) {
     // console.log(d)
     make_property_sheet(d.data);
     var focus0 = focus; focus = d;
 
     var transition = d3.transition()
-        .duration(d3.event.altKey ? 7500 : 750)
+        .duration(d3.event && d3.event.altKey ? 7500 : 750)
         .tween("zoom", function(d) {
           var i = d3.interpolateZoom(view, [focus.x, focus.y, focus.r * 2 + margin]);
           return function(t) { zoomTo(i(t)); };
@@ -298,12 +300,7 @@ function binaryRatio(table,targetAttr) {
   }
 
   if(values.length === 1) {
-    if (values[0] === rootVals[0]){
-      return 0.0;
-    }
-    else {
-      return 1.0;
-    }
+    return values[0] === rootVals[0] ? 0.0 : 1.0;
   }
   else {
     return table[values[1]]/(table[values[0]]+table[values[1]]);
@@ -517,29 +514,24 @@ function make_property_sheet(node_data) {
   $("#concept-child-size").text(n_children)
   var d_keys = Object.keys(d);
   var attrs = []
-  var hid_filter = $("#hid-filter").is(':checked');
-  var con_filter = $("#con-filter").is(':checked');
-  var rel_filter = $("#rel-filter").is(':checked');
-  var unq_filter = $("#unq-filter").is(':checked');
-  var com_filter = $("#com-filter").is(':checked');
 
   for (var i = 0; i < d_keys.length; i++){
     var attrScale = av_properties[d_keys[i]];
 
     if(attrScale) {
-      if(unq_filter && attrScale.valType === "unique") {
+      if($("#unq-filter").is(':checked') && attrScale.valType === "unique") {
         continue;
       }
-      else if(con_filter && (attrScale.valType === "constant" || attrScale.valType === "constant-numeric")) {
+      else if($("#con-filter").is(':checked') && (attrScale.valType === "constant" || attrScale.valType === "constant-numeric")) {
         continue;
       }
-      else if(hid_filter && attrScale.filterTypes.indexOf("hidden") !== -1){
+      else if($("#hid-filter").is(':checked') && attrScale.filterTypes.indexOf("hidden") !== -1){
         continue;
       }
-      else if(com_filter && attrScale.filterTypes.indexOf("component") !== -1) {
+      else if($("#com-filter").is(':checked') && attrScale.filterTypes.indexOf("component") !== -1) {
         continue;
       }
-      else if(rel_filter && attrScale.filterTypes.indexOf("relation") !== -1) {
+      else if($("#rel-filter").is(':checked') && attrScale.filterTypes.indexOf("relation") !== -1) {
         continue;
       }
       attrs.push(d_keys[i]);
@@ -551,11 +543,11 @@ function make_property_sheet(node_data) {
   for (var a in attrs) {
     attr = attrs[a]
     var tr = $("<tr></tr>");
-    var ar = $("<td>"+attr+"</td>");
+    var ar = $('<td colspan="3">'+attr+'</td>');
     ar.addClass("prop-column")
     tr.addClass("info");
     tr.append(ar);
-    tr.append('<td></td><td></td>');
+    // tr.append('<td></td><td></td>');
     property_sheet.append(tr);
     vals = Object.keys(d[attr]);
     vals.sort();
@@ -590,4 +582,35 @@ function updateFilters() {
   populateColorByOptions(data);
   colorSelectChanged();
   make_property_sheet(focus.data);
+}
+
+function searchConceptByName(e){
+  var conc_name = $("#search-concept-name").val();
+  if(conc_name.length === 0) {
+    $(".focus").removeClass("focus");  
+    $("#search-not-found").hide();
+    return;
+  }
+
+  if(!conc_name.startsWith("Concept")) {
+    conc_name = "Concept" + conc_name;
+  }
+  
+  if (/Concept\d+/g.test(conc_name)){
+    if($("#"+conc_name).length === 0) {
+      $("#search-not-found").text("No "+conc_name);
+      $("#search-not-found").show();
+    }
+    else {
+      $("#search-not-found").hide();
+      var n = undefined;
+      for (var i = nodes.length - 1; i >= 0; i--) {
+       if (nodes[i].data.name == conc_name) {
+        n = nodes[i];
+       }
+      }
+      if(n!==undefined) g.select("#"+conc_name).on("click")(n);
+      $("#"+conc_name).addClass("focus"); 
+    }
+  }  
 }
