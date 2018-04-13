@@ -11,7 +11,6 @@ from os.path import dirname
 from os.path import join
 from os.path import exists
 from os.path import isdir
-from os.path import realpath
 from os import mkdir
 from shutil import copy
 import webbrowser
@@ -26,23 +25,36 @@ def _copy_file(filename, target_dir):
     dst = join(target_dir, filename)
     copy(src, dst)
 
-def _gen_viz(js_ob,dst,recreate_html):
-    if not isdir(join(dst,'images')):
-        mkdir(join(dst,'images'))
-        with open(join(dst,'images','README.txt'),'w') as out:
-            out.write('Image files put into this directory can be referenced by properties in the tree to render in the viz.')
-    if recreate_html or not exists(join(dst,'viz.html')):
-        _copy_file('viz.html',dst)
-        _copy_file('viz_logic.js',dst)
-        _copy_file('viz_styling.css',dst)
-    with open(join(dst,'output.js'),'w') as out:
-        out.write('var trestle_output = ')
-        out.write(json.dumps(js_ob))
-        out.write(';')
-    # webbrowser.open(join(dst,'viz.html'))
-    webbrowser.open('file://' + realpath('viz.html'))
+def _gen_output_file(js_ob):
+    return '(function (){ window.trestle_output='+json.dumps(js_ob)+'; })();'
 
-def visualize(tree,dst='.',recreate_html=True):
+def _gen_viz(js_ob,dst,recreate_html):
+    if dst is None :
+        module_path = dirname(__file__)
+        output_file = join(module_path,'visualization_files','output.js')
+        with open(output_file,'w') as out:
+            out.write(_gen_output_file(js_ob))
+        viz_html_file = join(module_path,'visualization_files','viz.html')
+        webbrowser.open('file://'+realpath(viz_html_file))
+    else :
+        if not isdir(join(dst,'images')):
+            mkdir(join(dst,'images'))
+            with open(join(dst,'images','README.txt'),'w') as out:
+                out.write('Image files put into this directory can be referenced by properties in the tree to render in the viz.')
+        if recreate_html or not exists(join(dst,'viz.html')):
+            _copy_file('viz.html',dst)
+            _copy_file('viz_logic.js',dst)
+            _copy_file('viz_styling.css',dst)
+        with open(join(dst,'output.js'),'w') as out:
+            out.write('(function () { ')
+            out.write('window.trestle_output = ')
+            out.write(json.dumps(js_ob))
+            out.write(';')
+            out.write(' })();')
+        # webbrowser.open(join(dst,'viz.html'))
+        webbrowser.open('file://' + realpath('viz.html'))
+
+def visualize(tree,dst=None,recreate_html=True):
     """
     Create an interactive visualization of a concept_formation tree and open
     it in your browswer.

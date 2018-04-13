@@ -104,6 +104,14 @@ table td.absorbing-column{
 
 }
 
+a {
+  color:black;
+}
+
+a:hover {
+  color:black;
+}
+
 .concept-prop{
   min-width:50%;
   overflow: hidden;
