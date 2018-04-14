@@ -24,6 +24,7 @@ def _copy_file(filename, target_dir):
     src = join(module_path, 'visualization_files', filename)
     dst = join(target_dir, filename)
     copy(src, dst)
+    return dst
 
 def _gen_output_file(js_ob):
     return '(function (){ window.trestle_output='+json.dumps(js_ob)+'; })();'
@@ -42,29 +43,28 @@ def _gen_viz(js_ob,dst,recreate_html):
             with open(join(dst,'images','README.txt'),'w') as out:
                 out.write('Image files put into this directory can be referenced by properties in the tree to render in the viz.')
         if recreate_html or not exists(join(dst,'viz.html')):
-            _copy_file('viz.html',dst)
+            viz_file = _copy_file('viz.html',dst)
             _copy_file('viz_logic.js',dst)
             _copy_file('viz_styling.css',dst)
+        else :
+            viz_file = join(dst,'viz.html')
         with open(join(dst,'output.js'),'w') as out:
-            out.write('(function () { ')
-            out.write('window.trestle_output = ')
-            out.write(json.dumps(js_ob))
-            out.write(';')
-            out.write(' })();')
-        # webbrowser.open(join(dst,'viz.html'))
-        webbrowser.open('file://' + realpath('viz.html'))
+            out.write(_gen_output_file(js_ob))
+        webbrowser.open('file://' + realpath(viz_file))
 
 def visualize(tree,dst=None,recreate_html=True):
     """
     Create an interactive visualization of a concept_formation tree and open
     it in your browswer.
 
-    Note that this function will create html, js, and css files in the
-    destination directory provided. By default this will always recreate the
-    support html, js, and css files but a flag can turn this off.
+    If a destination directory is specified this function will create html,
+    js, and css files in the destination directory provided. By default this
+    will always recreate the support html, js, and css files but a flag can
+    turn this off.
 
     :param tree: A category tree to visualize
-    :param dst: A directory to generate visualization files into
+    :param dst: A directory to generate visualization files into. If None no
+        files will be generated
     :param create_html: A flag for whether new supporting html files should be
         created
     :type tree: :class:`CobwebTree <concept_formation.cobweb.CobwebTree>`,
@@ -81,7 +81,7 @@ def _trim_leaves(j_ob):
     ret['children'] = [_trim_leaves(child) for child in j_ob['children'] if len(child['children']) > 0]
     return ret
 
-def visualize_no_leaves(tree,cuts=1,dst='.',recreate_html=True):
+def visualize_no_leaves(tree,cuts=1,dst=None,recreate_html=True):
     """
     Create an interactive visualization of a concept_formation tree cuts levels
     above the leaves and open it in your browswer.
@@ -90,13 +90,15 @@ def visualize_no_leaves(tree,cuts=1,dst='.',recreate_html=True):
     the tree. This is often useful in seeing patterns when the individual
     leaves are overly frequent visual noise.
 
-    Note that this function will create html, js, and css files in the
-    destination directory provided. By default this will always recreate the
-    support html, js, and css files but a flag can turn this off.
+    If a destination directory is specified this function will create html,
+    js, and css files in the destination directory provided. By default this
+    will always recreate the support html, js, and css files but a flag can
+    turn this off.
 
     :param tree: A category tree to visualize
     :param cuts: The number of times to trim up the leaves
-    :param dst: A directory to generate visualization files into
+    :param dst: A directory to generate visualization files into. If None no
+        files will be generated
     :param create_html: A flag for whether new supporting html files should be
         created
     :type tree: :class:`CobwebTree <concept_formation.cobweb.CobwebTree>`,
@@ -121,7 +123,7 @@ def _trim_to_clusters(j_ob,clusters):
     return ret
 
 
-def visualize_clusters(tree, clusters, dst='.', recreate_html=True):
+def visualize_clusters(tree, clusters, dst=None, recreate_html=True):
     """
     Create an interactive visualization of a concept_formation tree trimmed to
     the level specified by a clustering from the cluster module.
@@ -131,14 +133,16 @@ def visualize_clusters(tree, clusters, dst='.', recreate_html=True):
     stops recursing if it hits a node in the clustering. Both label or concept
     based clusterings are supported as the relevant names will be extracted.
 
-    Note that this function will create html, js, and css files in the
-    destination directory provided. By default this will always recreate the
-    support html, js, and css files but a flag can turn this off.
+    If a destination directory is specified this function will create html,
+    js, and css files in the destination directory provided. By default this
+    will always recreate the support html, js, and css files but a flag can
+    turn this off.
 
     :param tree: A category tree to visualize
     :param clusters: A list of cluster labels or concept nodes generated by
         the cluster module.
-    :param dst: A directory to generate visualization files into
+    :param dst: A directory to generate visualization files into. If None no
+        files will be generated
     :param create_html: A flag for whether new supporting html files should be
         created
     :type tree: :class:`CobwebTree <concept_formation.cobweb.CobwebTree>`,
