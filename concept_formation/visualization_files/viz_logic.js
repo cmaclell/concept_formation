@@ -558,7 +558,7 @@
         if($("#fil-val-numeric").is(':checked') && attrScale.valType === "numeric") {
           continue;
         }
-        if($("#fil-val-nominal").is(':checked') && (attrScale.valType === "nominal" || attrScale.valType === "nominal20l")) {
+        if($("#fil-val-nominal").is(':checked') && (attrScale.valType === "nominal" || attrScale.valType === "nominal20")) {
           continue;
         }
         if($("#hid-filter").is(':checked') && attrScale.filterTypes.indexOf("hidden") !== -1){
@@ -583,7 +583,6 @@
       ar.addClass("prop-column")
       tr.addClass("info");
       tr.append(ar);
-      // tr.append('<td></td><td></td>');
       property_sheet.append(tr);
       vals = Object.keys(d[attr]);
       vals.sort();
