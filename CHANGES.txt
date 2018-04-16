@@ -44,3 +44,4 @@ v0.3.1, 6/17/17 -- Made improvement to underlying Cobweb algorithm to improve
                    values.
 v0.3.2, 6/17/17 -- Accidentally pushed experimental numpy version to pypi in
                    v0.3.1, this is the latest non-experimental version.
+v0.3.4, 4/16/18 -- Updated cluster visulization.
