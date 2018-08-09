@@ -50,12 +50,14 @@
                 <span id="setting-arrow" class="glyphicon glyphicon-menu-left pull-right"></span>
               </a>
             </h3>
-            <!-- <label>Show Node Names<input id="show-names" type="checkbox"> </label><br>
+            <!--
+            <label>Show Node Names<input id="show-names" type="checkbox"> </label><br>
+            -->
             <label>Image Field
               <select id="img-attr">
                 <option value="none">None</option>
               </select>
-            </label><br> -->
+          </label><br>
             <div class="collapse" id="settings-collapse">
               <label><strong>Treat Binary Values as</strong>
                 <select id="binary-style">
@@ -180,7 +182,7 @@
         else {
           data = trestle_output;
           $("#focus-attr").change(colorSelectChanged);
-          // $("#img-attr").change(imageSelectChanged);
+          $("#img-attr").change(imageSelectChanged);
           // $("#show-names").change(changeText);
           $(".filter-check").change(updateFilters);
           $("#search-concept-go").click(searchConceptByName);
