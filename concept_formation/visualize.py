@@ -38,10 +38,6 @@ def _gen_viz(js_ob,dst,recreate_html):
         viz_html_file = join(module_path,'visualization_files','viz.html')
         webbrowser.open('file://'+realpath(viz_html_file))
     else :
-        if not isdir(join(dst,'images')):
-            mkdir(join(dst,'images'))
-            with open(join(dst,'images','README.txt'),'w') as out:
-                out.write('Image files put into this directory can be referenced by properties in the tree to render in the viz.')
         if recreate_html or not exists(join(dst,'viz.html')):
             viz_file = _copy_file('viz.html',dst)
             _copy_file('viz_logic.js',dst)
