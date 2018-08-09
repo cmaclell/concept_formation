@@ -1,7 +1,7 @@
 (function () {
   const CV_KEY = "#ContinuousValue#"; 
 
-  window.data = {}
+  window.data = {};
 
   var w = 1280,
     h = window.innerHeight,
@@ -153,6 +153,18 @@
     }
   }
 
+  function sort_by_reverse_text(a, b){
+    var ra = a.toLowerCase().split("").reverse().join("").replace(/[()]/g, '');
+    var rb = b.toLowerCase().split("").reverse().join("").replace(/[()]/g, '');
+    if (ra < rb){
+        return -1;
+    } else if (rb < ra){
+        return 1;
+    } else {
+        return 0;
+    }
+  }
+
   function randomImage(d,attr) {
     if(attr === "none"){
         return "";
@@ -161,7 +173,8 @@
         d=d.counts;
     }
     var vals = Object.keys(d[attr]);
-    return  "images/" + vals[Math.floor(Math.random() * vals.length)] + ".jpg";
+    return  vals[Math.floor(Math.random() * vals.length)];
+    // return  "images/" + vals[Math.floor(Math.random() * vals.length)] + ".jpg";
   }
 
   function hasImageData(d) {
@@ -171,7 +184,7 @@
     return d[$("#img-attr").val()];
   }
 
-  function imageSelectChanged() {
+  window.imageSelectChanged = function() {
     changeImages(data);
   }
 
@@ -207,23 +220,24 @@
                                                                   //This is a stupid hack
         .on("click", function(d) { if (focus !== d) zoom(d), d3.event ? d3.event.stopPropagation() : undefined });
 
-    // I Removed images for the time being while updating to newer d3 code.
-    // var images = g.selectAll("image.screenshot")
-    //   .data(nodes.filter(function(d){
-    //         if (d.children){// || !hasImageData(d)){ 
-    //           return false; 
-    //         } else {
-    //           return true;
-    //         }}))
-    //   .enter().append("image")
-    //       .attr("id",function(d) { return d.name+"-img";})
-    //       .attr('class', 'screenshot')
-    //       .attr("xlink:href", function(d) { return randomImage(d,$("#img-attr").val());})
-    //   .attr("width", function(d) { return (1.33 * d.r); })
-    //   .attr("height", function(d) { return d.r; })
-    //   .attr("x", function(d) { return d.x - ((1.33 * d.r)/2); })
-    //   .attr("y", function(d) { return d.y - (d.r/2); })
-    //   .on("click", function(d) { return zoom(node == d ? root : d); });
+    var images = g.selectAll("image.screenshot")
+      .data(nodes.filter(function(d){
+            if (d.children){ // || !hasImageData(d)){ 
+              return false; 
+            } else {
+              return true;
+            }}))
+      .enter().append("image")
+          .attr("id",function(d) { return d.data.name+"-img";})
+          .attr('class', 'screenshot')
+          .attr("xlink:href", function(d) { 
+              return randomImage(d,$("#img-attr").val());
+          })
+      .attr("width", function(d) { return (1.33 * d.r); })
+      .attr("height", function(d) { return d.r; })
+      .attr("x", function(d) { return d.x - ((1.33 * d.r)/2); })
+      .attr("y", function(d) { return d.y - (d.r/2); })
+      .on("click", function(d) { return zoom(node == d ? root : d); });
 
     var text = g.selectAll("text")
       .data(nodes)
@@ -262,6 +276,10 @@
       var k = diameter / v[2]; view = v;
       node.attr("transform", function(d) { return "translate(" + (d.x - v[0]) * k + "," + (d.y - v[1]) * k + ")"; });
       circle.attr("r", function(d) { return d.r * k; });
+      images.attr("x", function(d) { return (d.x - ((1.33 * d.r)/2) - v[0]) * k; })
+      images.attr("y", function(d) { return (d.y - ((1.33 * d.r)/2) - v[1]) * k; })
+      images.attr("width", function(d) { return (1.33 * d.r * k); })
+      images.attr("height", function(d) { return d.r * k; })
     }
 
     // changeText();  
@@ -574,7 +592,7 @@
       }
 
     }
-    attrs.sort();
+    attrs.sort(sort_by_reverse_text);
     attrs.reverse();
     for (var a in attrs) {
       attr = attrs[a]
