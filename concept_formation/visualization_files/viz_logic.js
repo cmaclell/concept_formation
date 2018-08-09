@@ -154,8 +154,8 @@
   }
 
   function sort_by_reverse_text(a, b){
-    var ra = a.toLowerCase().split("").reverse().join("");
-    var rb = b.toLowerCase().split("").reverse().join("");
+    var ra = a.toLowerCase().split("").reverse().join("").replace(/[()]/g, '');
+    var rb = b.toLowerCase().split("").reverse().join("").replace(/[()]/g, '');
     if (ra < rb){
         return -1;
     } else if (rb < ra){
