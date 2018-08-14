@@ -14,7 +14,7 @@
     <div class="container-fluid">
       <div class="row">
         <div id="plot-panel" class="col-md-9 col-sm-8 col-xs-12">
-          <div class="svg-container">
+          <div>
             <svg class="svg-content-responsive" viewBox="0 0 750 750" preserveAspectRatio="xMinYMin meet"></svg>
           </div>
         </div>
@@ -44,22 +44,18 @@
                 </tr>
               </tbody>
             </table>
-            <!-- <h3>Search</h3> -->
+            
             <h3>
-              <a id="setting-control" data-toggle="collapse" href="#settings-collapse">Settings 
-                <span id="setting-arrow" class="glyphicon glyphicon-menu-left pull-right"></span>
+              <a data-toggle="collapse" href="#settings-collapse" class="collapse-header">Settings 
+                <span class="glyphicon glyphicon-menu-left pull-right collapse-arrow"></span>
               </a>
             </h3>
-            <!--
-            <label>Show Node Names<input id="show-names" type="checkbox"> </label><br>
-            -->
-            
             <div class="collapse" id="settings-collapse">
               <label>Image Field
               <select id="img-attr">
                 <option value="none">None</option>
               </select>
-          </label><br>
+              </label><br/>
               <label><strong>Treat Binary Values as</strong>
                 <select id="binary-style">
                   <option value="continuous">Continuous</option>
@@ -67,9 +63,7 @@
                 </select>
               </label>
               <br/>
-              <!-- <a class="btn btn-default btn-xs" role="button" data-toggle="collapse" href="#filter-props"><strong>Filter Properties</strong></a> -->
               <strong>Hide Properties</strong>
-              <!-- <div class="collapse" id="filter-props"> -->
               <form id="filter-form">
                 <div class="form-group">
                   <div class="checkbox"><label><input id="fil-val-unique" class="filter-check" type="checkbox" >Unique Values</label></div>
@@ -83,10 +77,55 @@
                 </div>
               </form>
             </div>
-            <!-- </div> -->
+
+            <h3 id="cluster-heading">
+              <a data-toggle="collapse" href="#cluster-collapse" class="collapse-header">Clusters
+                <span class="glyphicon glyphicon-menu-down pull-right collapse-arrow"></span>
+              </a>
+            </h3>
+            <div class="collapse in" id="cluster-collapse">
+              <label><strong>Clustering Layout</strong>
+                <select id="cluster-style">
+                  <option value="attr">Attributes</option>
+                  <option value="dist">Distance</option>
+                </select>
+              </label><br/>
+              <label><strong>Cluster Size</strong>
+                <select id="cluster-sizing">
+                  <option value="abs">Absolute</option>
+                  <option value="rel">Relative</option>
+                  <option value="equ">Equal</option>
+                </select>
+              </label><br/>
+              <div id="attr-cluster-settings">
+                <label><strong>X-Axis Attribute</strong>
+                  <select id="x-axis-attr" class="attr-axis">
+                    <option value="none">None</option>
+                  </select>
+                </label><br/>
+                <label><strong>Y-Axis Attribute</strong>
+                  <select id="y-axis-attr" class="attr-axis">
+                    <option value="none">None</option>
+                  </select>
+                </label>
+              </div>
+              <div id="dist-cluster-settings">
+                <label><strong>Anchor 1</strong>
+                  <select id="anchor-1" class="dist-anchor">
+                    <option value="none">None</option>
+                  </select>
+                </label><br/>
+                <label><strong>Anchor 2</strong>
+                  <select id="anchor-2" class="dist-anchor">
+                    <option value="none">None</option>
+                  </select>
+                </label>
+              </div>
+            </div>
+            
             <h3>
-              <a id="attr-exp-control" data-toggle="collapse" href="#attr-explorer-collapse">Attribute Explorer
-                <span id="attr-explorer-arrow" class="glyphicon glyphicon-menu-down pull-right"></span>
+              <a data-toggle="collapse" href="#attr-explorer-collapse" class="collapse-header">Attribute Explorer
+                <span class="glyphicon glyphicon-menu-down pull-right collapse-arrow"></span>
               </a>
             </h3>
             <div class="collapse in" id="attr-explorer-collapse">
@@ -140,8 +179,8 @@
             </div>
             
             <h3>
-              <a id="av-table-control" data-toggle="collapse" href="#av-table-collapse">Attribute-Value Table 
-                <span id="av-table-arrow" class="glyphicon glyphicon-menu-down pull-right"></span>
+              <a data-toggle="collapse" href="#av-table-collapse" class="collapse-header">Attribute-Value Table 
+                <span class="glyphicon glyphicon-menu-down pull-right collapse-arrow"></span>
               </a>
             </h3>
             <div class="collapse in" id="av-table-collapse">
@@ -157,61 +196,53 @@
                 </tbody>
               </table>
             </div>
+          
           </div>
         </div>
       </div>
       <script src="https://d3js.org/d3.v4.js"></script>
-      <script src="https://d3js.org/d3-array.v1.min.js"></script>
-      <script src="https://d3js.org/d3-collection.v1.min.js"></script>
-      <script src="https://d3js.org/d3-color.v1.min.js"></script>
-      <script src="https://d3js.org/d3-format.v1.min.js"></script>
-      <script src="https://d3js.org/d3-interpolate.v1.min.js"></script>
-      <script src="https://d3js.org/d3-time.v1.min.js"></script>
-      <script src="https://d3js.org/d3-time-format.v2.min.js"></script>
-      <script src="https://d3js.org/d3-scale.v2.min.js"></script>
       <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
       <script type="text/javascript" src="output.js"></script>
-      <script type="text/javascript" src="viz_logic.js"></script>
+      <script type="text/javascript" src="viz_tools.js"></script>
+      <script type="text/javascript" src="tree_viz.js"></script>
+      <script type="text/javascript" src="cluster_viz.js"></script>
       <script type="text/javascript">
-      (function () {
-        if(typeof trestle_output === 'undefined'){
+      $("document").ready(function(){
+        if(typeof window.trestle_output === 'undefined'){
           alert("Can't find the trestle output data. Use visualize(tree) to output an appropriate tree.");
         }
         else if (typeof d3 === 'undefined'){
-          alert("Can't find the d3 library. Currently the viz assumes it can get it from a CDN on the internet.")
+          alert("Can't find the d3 library. Currently the viz assumes it can get it from a CDN on the internet so it won't work if you are offline.")
         }
         else {
-          data = trestle_output;
-          $("#focus-attr").change(colorSelectChanged);
-          $("#img-attr").change(imageSelectChanged);
-          // $("#show-names").change(changeText);
-          $(".filter-check").change(updateFilters);
-          $("#search-concept-go").click(searchConceptByName);
-          $("#search-concept-name").change(searchConceptByName);
-          $("#binary-style").change(colorSelectChanged);
+          var renderer = undefined;
+          if(window.extra_data) {
+            renderer = new ClusterRenderer(window.trestle_output);
+          }
+          else {
+            renderer = new TreeRenderer(window.trestle_output);
+          }
+          renderer.render();
+          renderer.updateFilters();
 
-          $("#setting-control").click(function(e) {
-            $("#setting-arrow").toggleClass("glyphicon-menu-left");
-            $("#setting-arrow").toggleClass("glyphicon-menu-down");
+          $("#focus-attr").change(renderer.colorSelectChanged);
+          $(".filter-check").change(renderer.updateFilters);
+          $("#img-attr").change(renderer.imageSelectChanged)
+          $("#search-concept-go").click(renderer.searchConceptByName);
+          $("#search-concept-name").change(renderer.searchConceptByName);
+          $("#binary-style").change(renderer.colorSelectChanged);
+
+          $(".collapse-header").click(function(e){
+            $(e.target).children().toggleClass("glyphicon-menu-left");
+            $(e.target).children().toggleClass("glyphicon-menu-down");
           });
 
-          $("#attr-exp-control").click(function(e){
-            $("#attr-explorer-arrow").toggleClass("glyphicon-menu-left");
-            $("#attr-explorer-arrow").toggleClass("glyphicon-menu-down");
+          $(".collapse-arrow").click(function(e){
+            $(e.target).toggleClass("glyphicon-menu-left");
+            $(e.target).toggleClass("glyphicon-menu-down");
           });
-
-          $("#av-table-control").click(function(e){
-            $("#av-table-arrow").toggleClass("glyphicon-menu-left");
-            $("#av-table-arrow").toggleClass("glyphicon-menu-down");
-          });
-
-          init(data);
-          colorSelectChanged();
-          populateColorByOptions(data);
-          buildTree(data);
-          make_property_sheet(data);
         }
-      })();
+      });
       </script>
     </div>
 

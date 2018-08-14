@@ -549,7 +549,7 @@ class Cobweb3Node(CobwebNode):
                     return False
         return True
 
-    def output_json(self):
+    def output_json(self, recursive=True):
         """
         Outputs the categorization tree in JSON form. 
 
@@ -579,8 +579,9 @@ class Cobweb3Node(CobwebNode):
                 else:
                     temp[str(attr)][str(val)] = self.av_counts[attr][val]
 
-        for child in self.children:
-            output["children"].append(child.output_json())
+        if recursive:
+            for child in self.children:
+                output["children"].append(child.output_json())
 
         output["counts"] = temp
 

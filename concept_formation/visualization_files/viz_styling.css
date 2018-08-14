@@ -2,19 +2,9 @@ body{
   overflow: hidden;
 }
 
-/*text {
-  font-size: 11px;
-  pointer-events: none;
-}
-
-text.parent {
-  fill: #1f77b4;
-}*/
-
 .label {
   font: 11px "Helvetica Neue", Helvetica, Arial, sans-serif;
   text-anchor: middle;
-  /*text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff, 0 -1px 0 #fff;*/
   pointer-events: none;
 }
 
@@ -30,12 +20,19 @@ circle.parent {
   stroke: steelblue;
 }
 
+circle.cluster {
+  fill: #1f77b4;
+  fill-opacity: .5;
+  stroke: steelblue;
+}
+
 circle.focus{
   stroke: #98ff98;
   stroke-width:2px;
 }
 
-circle.parent:hover {
+circle.parent:hover,
+circle.cluster:hover {
   stroke: #ff7f0e;
   stroke-width: 1px;
 }
@@ -47,17 +44,6 @@ circle.parent:hover {
     overflow-y: auto;
     max-height: 100vh;
     background: white;
-}
-
-.svg-container {
-  display:inline-block;
-  position: absolute;
-  top:0;
-  left:0;
-  width: 100%;
-  padding-bottom: 100%;
-  vertical-align: top;
-  overflow: hidden;
 }
 
 .svg-content-responsive {
@@ -77,7 +63,7 @@ table{
 
 td.prop-column {
   width:60%;
-  max-width: 0;
+  max-width: 0px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -85,7 +71,7 @@ td.prop-column {
 
 td.count-column {
   width:20%;
-    max-width: 0;
+  max-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -101,7 +87,6 @@ td.perc-column {
 
 table td.absorbing-column{
   width:100%;
-
 }
 
 a {
@@ -121,14 +106,16 @@ a:hover {
 
 .val-row {
   padding-left:30px !important;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width:1px;
 }
 
 .color-ops {
   padding-right: 20%;
   padding-left: 10%; 
-  /*text-align: center;*/
 }
-
 
 #numeric-colors {
   width:100%;
@@ -155,3 +142,19 @@ td.swatch{
   padding-left: 30px;
 }
 
+.axis path,
+.axis line {
+    fill: none;
+    stroke: black;
+    shape-rendering: crispEdges;
+}
+
+.axis text {
+    font-family: sans-serif;
+    font-size: 14px;
+}
+
+.axis-label {
+    font-family: sans-serif;
+    font-size: 18px;
+}

@@ -15,6 +15,7 @@ from os import mkdir
 from shutil import copy
 import webbrowser
 import json
+import itertools
 
 from concept_formation.cobweb import CobwebNode
 
@@ -29,12 +30,12 @@ def _copy_file(filename, target_dir):
 def _gen_output_file(js_ob):
     return '(function (){ window.trestle_output='+json.dumps(js_ob)+'; })();'
 
-def _gen_viz(js_ob,dst,recreate_html):
+def _gen_viz(of_str,dst,recreate_html):
     if dst is None :
         module_path = dirname(__file__)
         output_file = join(module_path,'visualization_files','output.js')
         with open(output_file,'w') as out:
-            out.write(_gen_output_file(js_ob))
+            out.write(of_str)
         viz_html_file = join(module_path,'visualization_files','viz.html')
         webbrowser.open('file://'+realpath(viz_html_file))
     else :
@@ -45,7 +46,7 @@ def _gen_viz(js_ob,dst,recreate_html):
         else :
             viz_file = join(dst,'viz.html')
         with open(join(dst,'output.js'),'w') as out:
-            out.write(_gen_output_file(js_ob))
+            out.write(of_str)
         webbrowser.open('file://' + realpath(viz_file))
 
 def visualize(tree,dst=None,recreate_html=True):
@@ -69,7 +70,10 @@ def visualize(tree,dst=None,recreate_html=True):
     :type dst: str
     :type create_html: bool
     """
-    _gen_viz(tree.root.output_json(),dst,recreate_html)
+    of_str = '$("document").ready(function(){window.trestle_output='
+    of_str += json.dumps(tree.root.output_json())
+    of_str += '; window.extra_data=false;});'
+    _gen_viz(of_str,dst,recreate_html)
 
 
 def _trim_leaves(j_ob):
@@ -119,6 +123,22 @@ def _trim_to_clusters(j_ob,clusters):
     return ret
 
 
+def _expected_guesses_distance(a,b):
+    """
+    Given 2 concepts return the difference in expected correct guesses between
+    each cocept indvidually and a joint concpet between the two. I use this as
+    a form of distance metric between two concepts for the similarity
+    comparison in the viz.
+    """
+    a_exp = a.expected_correct_guesses()
+    b_exp = b.expected_correct_guesses()
+
+    shallow_a = a.shallow_copy()
+    shallow_a.update_counts_from_node(b)
+    joint_exp = shallow_a.expected_correct_guesses()
+
+    return abs(joint_exp - a_exp) + abs(joint_exp - b_exp)
+
 def visualize_clusters(tree, clusters, dst=None, recreate_html=True):
     """
     Create an interactive visualization of a concept_formation tree trimmed to
@@ -148,11 +168,26 @@ def visualize_clusters(tree, clusters, dst=None, recreate_html=True):
     :type dst: str
     :type create_html: bool
     """
-    if isinstance(clusters[0], CobwebNode):
-        clusters = {str(c.concept_id) for c in clusters}
-    else:
-        clusters = set(clusters)
+    if isinstance(clusters[0], str):
+        raise ValueError('The cluster viz requires that clusters be provided as'
+                         'ConceptNodes instead of str labels. Be sure to call '
+                         'the cluster functions with lables=False')
+    
+    clus = set(clusters)
+    distance_matrix = {}
+    
+    for x, y in itertools.permutations(clus,r=2):
+        conc_x = 'Concept' + str(x.concept_id)
+        conc_y = 'Concept' + str(y.concept_id)
 
-    j_ob = tree.root.output_json()
-    j_ob = _trim_to_clusters(j_ob, clusters)
-    _gen_viz(j_ob, dst, recreate_html)
+        if conc_x not in distance_matrix:
+            distance_matrix[conc_x] = {}
+        if conc_y not in distance_matrix[conc_x]:
+            distance_matrix[conc_x][conc_y] = _expected_guesses_distance(x,y)
+
+    of_str = '$("document").ready(function(){window.trestle_output='
+    of_str += json.dumps(tree.root.output_json())+'; '
+    of_str += 'window.extra_data = {'
+    of_str += '"clusters":'+json.dumps([c.output_json(recursive=False) for c in clus])+','
+    of_str += '"cluster_distance":'+json.dumps(distance_matrix)+'}});'
+    _gen_viz(of_str,dst,recreate_html)
