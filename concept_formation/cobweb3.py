@@ -557,6 +557,10 @@ class Cobweb3Node(CobwebNode):
         <concept_formation.cobweb.CobwebNode.output_json>` to handle numeric
         values.
 
+        :param recursive: A flag for whether to ``True`` recursively add
+            children to the resultant json ouptut or ``False`` output a json
+            representation of only this concept.
+        :type recurvsive: bool
         :return: an object that contains all of the structural information of
             the node and its children
         :rtype: obj
@@ -582,6 +586,10 @@ class Cobweb3Node(CobwebNode):
         if recursive:
             for child in self.children:
                 output["children"].append(child.output_json())
+        else:
+            for child in self.chidren:
+                output["children"].append("Concept" + str(child.concept_id))
+
 
         output["counts"] = temp
 
