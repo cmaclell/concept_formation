@@ -34,6 +34,12 @@ def output_json(file="forest",size=100,prune=True,seed=50,burn=1):
     elif file == "rb_wb_03":
         instances = ds.load_rb_wb_03()
         variables = True 
+    elif file == "molecule":
+        instances = ds.load_molecule(size)
+        variables = False
+    elif file == "quadruped":
+        instances = ds.load_quadruped(size)
+        variables = True
     else:
         instances = ds.load_forest_fires()
         variables = False
@@ -59,7 +65,7 @@ def output_json(file="forest",size=100,prune=True,seed=50,burn=1):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Output example files for testing Viz.')
-    parser.add_argument('-file',choices=["forest","voting","iris","mushroom","rb_com_11","rb_s_07","rb_s_13"],
+    parser.add_argument('-file',choices=["forest","voting","iris","mushroom","rb_com_11","rb_s_07","rb_s_13","molecule","quadruped"],
                             default="forest",help="which example dataset to use")
     parser.add_argument('-size',type=int,default=100,help='how many instances to use')
     parser.add_argument('-prune',action='store_true',help='whether to output the tree with pruning applied.')
