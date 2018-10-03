@@ -438,7 +438,7 @@ class Cobweb3Node(CobwebNode):
                          self.av_counts[attr]])
             return (self.count - c) / self.count
 
-        if isNumber(val):
+        if attr in self.av_counts and isNumber(val):
             if cv_key not in self.av_counts[attr]:
                 return 0.0
 
