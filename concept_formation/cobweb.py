@@ -46,21 +46,21 @@ class CobwebTree(object):
             try:
                 hash(attr)
                 attr[0]
-            except:
-                raise ValueError('Invalid attribute: '+str(attr) +
-                                 ' of type: '+str(type(attr)) +
-                                 ' in instance: '+str(instance) +
-                                 ',\n'+type(self).__name__ +
+            except TypeError:
+                raise ValueError('Invalid attribute: ' + str(attr) +
+                                 ' of type: ' + str(type(attr)) +
+                                 ' in instance: ' + str(instance) +
+                                 ',\n' + type(self).__name__ +
                                  ' only works with hashable ' +
                                  'and subscriptable attributes' +
                                  ' (e.g., strings).')
             try:
                 hash(instance[attr])
-            except:
-                raise ValueError('Invalid value: '+str(instance[attr]) +
-                                 ' of type: '+str(type(instance[attr])) +
-                                 ' in instance: '+str(instance) +
-                                 ',\n'+type(self).__name__ +
+            except TypeError:
+                raise ValueError('Invalid value: ' + str(instance[attr]) +
+                                 ' of type: ' + str(type(instance[attr])) +
+                                 ' in instance: ' + str(instance) +
+                                 ',\n' + type(self).__name__ +
                                  ' only works with hashable values.')
 
     def ifit(self, instance):
@@ -218,7 +218,7 @@ class CobwebTree(object):
     def infer_missing(self, instance, choice_fn="most likely",
                       allow_none=True):
         """
-        Given a tree and an instance, returns a new instance with attribute
+        Given a tree and an instance, return a new instance with attribute
         values picked using the specified choice function (either "most likely"
         or "sampled").
 
@@ -240,14 +240,7 @@ class CobwebTree(object):
         temp_instance = {a: instance[a] for a in instance}
         concept = self._cobweb_categorize(temp_instance)
 
-        for attr in concept.attrs('all'):
-            if attr in temp_instance:
-                continue
-            val = concept.predict(attr, choice_fn, allow_none)
-            if val is not None:
-                temp_instance[attr] = val
-
-        return temp_instance
+        return concept.infer_missing(temp_instance, choice_fn, allow_none)
 
     def categorize(self, instance):
         """
@@ -269,6 +262,24 @@ class CobwebTree(object):
         """
         self._sanity_check_instance(instance)
         return self._cobweb_categorize(instance)
+
+    def __len__(self):
+        """Return the number of instances fit into the tree."""
+        return self.root.count
+
+    def max_depth(self):
+        """Return the maximum depth of an node in the tree."""
+        depth = 0
+        for c in self._breadth_first_iter(self.root):
+            if c.depth() > depth:
+                depth = c.depth()
+        return depth
+
+    def _breadth_first_iter(self, concept):
+        yield concept
+        for c in concept.children:
+            self._breadth_first_iter(concept)
+        return StopIteration
 
 
 class CobwebNode(object):
@@ -293,7 +304,7 @@ class CobwebNode(object):
     # a counter used to generate unique concept names.
     _counter = 0
 
-    def __init__(self, otherNode=None):
+    def __init__(self, other_node=None):
         """Create a new CobwebNode"""
         self.concept_id = self.gensym()
         self.count = 0.0
@@ -302,17 +313,17 @@ class CobwebNode(object):
         self.parent = None
         self.tree = None
 
-        if otherNode:
-            self.tree = otherNode.tree
-            self.parent = otherNode.parent
-            self.update_counts_from_node(otherNode)
+        if other_node:
+            self.tree = other_node.tree
+            self.parent = other_node.parent
+            self.update_counts_from_node(other_node)
 
-            for child in otherNode.children:
+            for child in other_node.children:
                 self.children.append(self.__class__(child))
 
     def shallow_copy(self):
         """
-        Create a shallow copy of the current node (and not its children)
+        Create a shallow copy of the current node (and not its children).
 
         This can be used to copy only the information relevant to the node's
         probability table without maintaining reference to other elements of
@@ -327,8 +338,10 @@ class CobwebNode(object):
 
     def attrs(self, attr_filter=None):
         """
-        Iterates over the attributes present in the node's attribute-value
-        table with the option to filter certain types. By default the filter
+        Iterate over the attributes present in the node's attribute-value
+        table.
+
+        An option is provided to filter certain types. By default the filter
         will ignore hidden attributes and yield all others. If the string 'all'
         is provided then all attributes will be yielded. In neither of those
         cases the filter will be interpreted as a function that returns true if
@@ -340,6 +353,10 @@ class CobwebNode(object):
             return self.av_counts
         else:
             return filter(attr_filter, self.av_counts)
+
+    def __len__(self):
+        """Return the number of instances at this leaf."""
+        return self.count
 
     def increment_counts(self, instance):
         """
@@ -1027,6 +1044,12 @@ class CobwebNode(object):
             children_count += c.num_concepts()
         return 1 + children_count
 
+    def depth_below(self):
+        """Return the maximum concept depth below this concept"""
+        deps = [self.depth()]
+        deps += [c.depth_below() for c in self.children]
+        return max(deps)
+
     def output_json(self):
         """
         Outputs the categorization tree in JSON form
@@ -1177,3 +1200,45 @@ class CobwebNode(object):
                         raise Exception("Should always be greater than 0")
 
         return ll
+
+    def infer_missing(self, instance, choice_fn="most likely",
+                      allow_none=True):
+        """
+        Given an instance, return a new instance with attribute values picked
+        using the specified choice function (either "most likely" or "sampled").
+
+        .. todo:: write some kind of test for this.
+
+        :param instance: an instance to be completed.
+        :type instance: :ref:`Instance<instance-rep>`
+        :param choice_fn: a string specifying the choice function to use,
+            either "most likely" or "sampled".
+        :type choice_fn: a string
+        :param allow_none: whether attributes not in the instance can be
+            inferred to be missing. If False, then all attributes will be
+            inferred with some value.
+        :type allow_none: Boolean
+        :return: A completed instance
+        :rtype: :ref:`Instance<instance-rep>`
+        """
+        temp_instance = {a: instance[a] for a in instance}
+
+        for attr in self.attrs('all'):
+            if attr in temp_instance:
+                continue
+            val = self.predict(attr, choice_fn, allow_none)
+            if val is not None:
+                temp_instance[attr] = val
+
+        return temp_instance
+
+    def df_iter(self):
+        for c in self.children:
+            c.dfs_iter()
+        yield self
+
+    def bf_iter(self):
+        yield self
+        for c in self.children:
+            c.dfs_iter()
+        

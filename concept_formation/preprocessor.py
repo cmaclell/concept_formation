@@ -1698,3 +1698,30 @@ class Sanitizer(OneWayPreprocessor):
                 else:
                     ret[attr] = val if isinstance(val,collections.Hashable) else self._cob_str(val)
         return ret
+
+
+
+class TabularToDict(Preprocessor):
+
+    def __init__(self, header=None, filler=None):
+        self.header = header
+        self.filler = filler
+
+    def transform(self, instance):
+        if self.header is None:
+            return {'V'+str(i):instance[i] for i in range(len(instance))}
+        else:
+            ret = {}
+            
+            for i in max(len(instance), len(self.header)):
+                if i < len(instance):
+                    ret[self.header[i]] = instance[i]
+                elif self.filler is None:
+                    break
+                else:
+                    ret[self.header[i]] = self.filler
+                    
+            return ret
+
+
+
