@@ -1,0 +1,2 @@
+py_search>=2.0.0
+munkres>=1.0.12
