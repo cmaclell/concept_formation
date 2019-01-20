@@ -43,7 +43,7 @@ from __future__ import division
 
 from copy import deepcopy
 from numbers import Number
-import collections
+import collections.abc
 
 _gensym_counter = 0
 
@@ -81,7 +81,7 @@ def get_attribute_components(attribute, vars_only=True):
                     names.add(name)
             else:
                 if ((vars_only is not True or (len(ele) > 0 and ele[0] == '?'))
-                    and (ele != '_' and len(ele) > 0 and ele[0] != '_')):
+                        and (ele != '_' and len(ele) > 0 and ele[0] != '_')):
                     names.add(ele)
 
     elif ((vars_only is not True and attribute[0] != '_') or
@@ -118,6 +118,7 @@ class Preprocessor(object):
     implement. In particular, a preprocessor should tranform an instance and
     implement a function for undoing this transformation.
     """
+
     def transform(self, instance):
         """
         Transforms an instance.
@@ -163,6 +164,7 @@ class Pipeline(Preprocessor):
     Supports the same transform and undo_transform functions as a regular
     preprocessor.
     """
+
     def __init__(self, *preprocessors):
         self.preprocessors = preprocessors
 
@@ -208,6 +210,7 @@ class Tuplizer(Preprocessor):
     >>> tuplizer.transform(instance)
     {('place', 'x1', 12.4, 9.6, ('div', 'width', 18.2)): True}
     """
+
     def transform(self, instance):
         """
         Convert at string specified relations into tuples.
@@ -385,6 +388,7 @@ class NameStandardizer(Preprocessor):
      ('relation2', ('a1', 'c1'), ('relation3', ('a3', ('?c3', '?c2')))): 4.3,
      ('relation4', '?c2', '?c4'): True}
     """
+
     def __init__(self, gensym=None):
         self.reverse_mapping = None
         if gensym:
@@ -827,6 +831,7 @@ class ListProcessor(Preprocessor):
                        'g']}}
 
     """
+
     def __init__(self):
         self.processor = Pipeline(ExtractListElements(), ListsToRelations())
 
@@ -889,6 +894,7 @@ class ExtractListElements(Preprocessor):
     {'att1': 'V1', 'subobj': {'list1': ['a', 'b', 'c', {'B': 'C', 'D': 'E'}]}}
 
     """
+
     def __init__(self, gensym=None):
         if gensym:
             self.gensym = gensym
@@ -1036,6 +1042,7 @@ class ListsToRelations(Preprocessor):
     >>> pprint.pprint(instance)
     {'o1': {'list1': ['c', 'b', 'a']}}
     """
+
     def transform(self, instance):
         return self._lists_to_relations(instance)
 
@@ -1364,6 +1371,7 @@ class ObjectVariablizer(OneWayPreprocessor):
         empty then all variables will be converted.
     :type attrs: strings
     """
+
     def __init__(self, *attrs):
         if len(attrs) == 0:
             self.targets = None
@@ -1444,6 +1452,7 @@ class NumericToNominal(OneWayPreprocessor):
         numeric values will be converted.
     :type attrs: strings
     """
+
     def __init__(self, *attrs):
         if len(attrs) == 0:
             self.targets = None
@@ -1531,7 +1540,8 @@ class NominalToNumeric(OneWayPreprocessor):
     >>> pprint.pprint(instance)
     {'a': 123.0, 'b': 12.1241, 'c': 'bad'}
 
-    :param on_fail: defines what should be done in the event of a numerical parse error
+    :param on_fail: defines what should be done in the event of a numerical
+        parse error
     :type on_fail: 'break', 'drop', or 'zero'
     :param attrs: A list of specific attributes to convert. If left empty all
         non-component values will be converted.
@@ -1544,13 +1554,14 @@ class NominalToNumeric(OneWayPreprocessor):
         else:
             self.targets = attrs
 
-        if on_fail not in ["break","drop","zero"]:
+        if on_fail not in ["break", "drop", "zero"]:
             on_fail = "break"
         self.on_fail = on_fail
 
-    def transform(self,instance):
+    def transform(self, instance):
         """
-        Transform target attribute values to numeric if they are valid nominals.
+        Transform target attribute values to numeric if they are valid
+        nominals.
         """
         if self.targets is None:
             attrs = [k for k in instance.keys()]
@@ -1572,11 +1583,11 @@ class NominalToNumeric(OneWayPreprocessor):
                     elif self.on_fail == "zero":
                         val = 0.0
                 new_instance[a] = val
-            elif isinstance(instance[a],dict):
+            elif isinstance(instance[a], dict):
                 new_instance[a] = self.transform(instance[a])
             else:
                 new_instance[a] = instance[a]
-        
+
         return new_instance
 
 
@@ -1623,33 +1634,35 @@ class Sanitizer(OneWayPreprocessor):
      ('r4', 'r5'): {'3': 'v6', 'aa3': 4}}
     """
 
-    def __init__(self,spec='trestle'):
-        if spec.lower() not in ['trestle','cobweb','cobweb3']:
-            raise ValueError("Invalid Spec: must be one of: 'trestle','cobweb','cobweb3'")
+    def __init__(self, spec='trestle'):
+        if spec.lower() not in ['trestle', 'cobweb', 'cobweb3']:
+            raise ValueError(
+                "Invalid Spec: must be one of: 'trestle','cobweb','cobweb3'")
         self.spec = spec
 
     def transform(self, instance):
         return self._sanitize(instance)
 
-    def _cob_str(self,d):
+    def _cob_str(self, d):
         """
         Calling str on a dictionary is not gauranteed to print its keys
         deterministically so we need this function to ensure any stringified
         subobjects will be treated the same.
         """
-        if isinstance(d,str):
+        if isinstance(d, str):
             return "'"+d+"'"
-        if isinstance(d,dict):
-            return '{'+','.join([ self._cob_str(k)+':'+self._cob_str(d[k]) for k in sorted(d.keys(),key=str)])+'}'
+        if isinstance(d, dict):
+            return '{'+','.join([self._cob_str(k)+':'+self._cob_str(d[k]) for k
+                                 in sorted(d.keys(), key=str)])+'}'
         else:
             return str(d)
 
-    def _sanitize_tuple(self,tup):
+    def _sanitize_tuple(self, tup):
         ret = []
         for v in tup:
-            if isinstance(v,str):
+            if isinstance(v, str):
                 ret.append(v)
-            elif isinstance(v,tuple):
+            elif isinstance(v, tuple):
                 ret.append(self._sanitize_tuple(v))
             else:
                 ret.append(str(v))
@@ -1659,42 +1672,47 @@ class Sanitizer(OneWayPreprocessor):
         ret = {}
         for attr in instance:
             val = instance[attr]
-            if not isinstance(attr,str) and not isinstance(attr,tuple):
+            if not isinstance(attr, str) and not isinstance(attr, tuple):
                 if str(attr) in instance:
-                    print('Santitizing',attr,'is clobbering an existing value')
-                
+                    print('Santitizing', attr,
+                          'is clobbering an existing value')
+
                 if self.spec == 'trestle':
-                    if isinstance(val,collections.Hashable):
+                    if isinstance(val, collections.abc.Hashable):
                         ret[str(attr)] = val
-                    elif isinstance(val,dict):
+                    elif isinstance(val, dict):
                         ret[str(attr)] = self._sanitize(val)
                     else:
                         ret[str(attr)] = self._cob_str(val)
                 else:
-                    ret[str(attr)] = val if isinstance(val,collections.Hashable) else self._cob_str(val)
-            if isinstance(attr,str):
+                    ret[str(attr)] = val if isinstance(
+                        val, collections.abc.Hashable) else self._cob_str(val)
+            if isinstance(attr, str):
                 if self.spec == 'trestle':
-                    if isinstance(val,collections.Hashable):
+                    if isinstance(val, collections.abc.Hashable):
                         ret[attr] = val
-                    elif isinstance(val,dict):
+                    elif isinstance(val, dict):
                         ret[attr] = self._sanitize(val)
                     else:
                         ret[attr] = self._cob_str(val)
                 else:
-                    ret[attr] = val if isinstance(val,collections.Hashable) else self._cob_str(val)
-                    
-            if isinstance(attr,tuple):
+                    ret[attr] = val if isinstance(
+                        val, collections.abc.Hashable) else self._cob_str(val)
+
+            if isinstance(attr, tuple):
                 if self.spec == 'trestle':
                     san_tup = self._sanitize_tuple(attr)
                     if san_tup != attr and san_tup in instance:
-                        print('Sanitizing',attr,'is clobbering an existing vlaue')
-                    
-                    if isinstance(val,collections.Hashable):
+                        print('Sanitizing', attr,
+                              'is clobbering an existing vlaue')
+
+                    if isinstance(val, collections.abc.Hashable):
                         ret[san_tup] = val
-                    elif isinstance(val,dict):
+                    elif isinstance(val, dict):
                         ret[san_tup] = self._sanitize(val)
                     else:
                         ret[san_tup] = self._cob_str(val)
                 else:
-                    ret[attr] = val if isinstance(val,collections.Hashable) else self._cob_str(val)
+                    ret[attr] = val if isinstance(
+                        val, collections.abc.Hashable) else self._cob_str(val)
         return ret

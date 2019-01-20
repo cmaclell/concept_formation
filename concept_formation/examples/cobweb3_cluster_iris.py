@@ -20,7 +20,7 @@ shuffle(irises)
 
 tree = Cobweb3Tree()
 irises_no_class = [{a: iris[a] for a in iris if a != 'class'} for iris in irises]
-clusters = cluster(tree, irises_no_class)[0] 
+clusters = next(cluster(tree, irises_no_class))
 iris_class = [iris[a] for iris in irises for a in iris if a == 'class']
 ari = adjusted_rand_score(clusters, iris_class)
 
