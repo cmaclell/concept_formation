@@ -1,4 +1,6 @@
 pytest
+coverage
+flake8
 matplotlib
 numpy
 scikit-learn
