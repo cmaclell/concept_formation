@@ -62,5 +62,11 @@ class TestCobweb(unittest.TestCase):
             tree.ifit(data)
         verify_counts(tree.root)
 
+    def test_empty_instance(self):
+        t = CobwebTree()
+        t.ifit({'x': 1})
+        t.ifit({'x': 2})
+        t.categorize({})
+
 if __name__ == "__main__":
     unittest.main()
