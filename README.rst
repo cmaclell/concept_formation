@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/cmaclell/concept_formation.svg?branch=master)](https://travis-ci.com/cmaclell/concept_formation)
+
 =================
 Concept Formation
 =================
