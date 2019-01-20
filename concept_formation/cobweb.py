@@ -116,7 +116,7 @@ class CobwebTree(object):
         """
         The core cobweb algorithm used in fitting and categorization.
 
-        In the general case, the cobweb algorith entertains a number of sorting
+        In the general case, the cobweb algorithm entertains a number of sorting
         operations for the instance and then commits to the operation that
         maximizes the :meth:`category utility <CobwebNode.category_utility>` of
         the tree at the current node and then recurses.
@@ -619,7 +619,7 @@ class CobwebNode(object):
 
         .. math::
 
-            relative_cu(cu) = (cu - const) * n * (count + 1)
+            relative\_cu(cu) = (cu - const) * n * (count + 1)
 
         where :math:`const` is the one returned by
         :meth:`CobwebNode.compute_relative_CU_const`, :math:`n` is the number
@@ -634,7 +634,9 @@ class CobwebNode(object):
         computing the relative CU for inserting into a particular child
         :math:`C_i` reduces to:
 
-            relative_cu_for_insert(C_i) = (C_i.count + 1) * \\sum_i \\sum_j
+        .. math::
+
+            relative\_cu\_for\_insert(C_i) = (C_i.count + 1) * \\sum_i \\sum_j
             P(A_i = V_{ij}| UpdatedC_i)^2 - (C_i.count) * \\sum_i \\sum_j P(A_i
             = V_{ij}| C_i)^2
 
@@ -645,7 +647,7 @@ class CobwebNode(object):
         operation, the time complexity of the underlying Cobweb algorithm is
         reduced from :math:`O(B^2 \\times log_B(n) \\times AV)` to
         :math:`O(B \\times log_B(n) \\times AV)` where :math:`B` is the average
-        branching factor of the tree, :math`n` is the number of instances being
+        branching factor of the tree, :math:`n` is the number of instances being
         categorized, :math:`A` is the average number of attributes per
         instance, and :math:`V` is the average number of values per attribute.
 
