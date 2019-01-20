@@ -1,4 +1,8 @@
-[![Build Status](https://travis-ci.com/cmaclell/concept_formation.svg?branch=master)](https://travis-ci.com/cmaclell/concept_formation)
+.. image:: https://travis-ci.com/cmaclell/concept_formation.svg?branch=master
+    :target: https://travis-ci.com/cmaclell/concept_formation
+
+.. image:: https://coveralls.io/repos/github/cmaclell/concept_formation/badge.svg?branch=master
+:target: https://coveralls.io/github/cmaclell/concept_formation?branch=master
 
 =================
 Concept Formation
