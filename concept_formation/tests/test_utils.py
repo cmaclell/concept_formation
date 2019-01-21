@@ -3,6 +3,8 @@ from __future__ import absolute_import, division
 
 import random
 
+import pytest
+
 from concept_formation import utils
 from concept_formation.cobweb3 import ContinuousValue
 
@@ -33,6 +35,24 @@ def test_cv_mean():
         cv = ContinuousValue()
         cv.update_batch(values)
         assert cv.mean - utils.mean(values) < 0.00000000001
+
+
+def test_std():
+    with pytest.raises(ValueError):
+        utils.std([])
+
+    vals = [random.normalvariate(0, 1) for i in range(1000)]
+    assert utils.std(vals) - 1 < 0.1
+    assert utils.std([1, 1, 1]) == 0
+
+
+def test_mean():
+    with pytest.raises(ValueError):
+        utils.mean([])
+
+    vals = [random.normalvariate(0, 1) for i in range(1000)]
+    assert utils.mean(vals) - 0 < 0.1
+    assert utils.mean([1, 1, 1]) == 1
 
 
 def test_cv_std():
