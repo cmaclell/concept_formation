@@ -7,6 +7,14 @@ from concept_formation import utils
 from concept_formation.cobweb3 import ContinuousValue
 
 
+def test_most_likely_choice():
+    some_list = [('a', 0.99), ('b', 0.01)]
+    vals = [utils.most_likely_choice(some_list) for i in range(100)]
+    a_count = vals.count('a')
+    b_count = vals.count('b')
+    assert a_count / (a_count + b_count) > 0.75
+
+
 def test_cv_mean():
     for i in range(10):
         values = [random.normalvariate(0, 1) for i in range(100)]
