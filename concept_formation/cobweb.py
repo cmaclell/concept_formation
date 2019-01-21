@@ -611,7 +611,7 @@ class CobwebNode(object):
         return const
 
     def relative_cu_for_insert(self, child, instance):
-        r"""
+        """
         Computes a relative CU score for each insert operation. The relative CU
         score is more efficient to calculate for each insert operation and is
         guranteed to have the same rank ordering as the CU score so it can be
@@ -620,7 +620,7 @@ class CobwebNode(object):
 
         .. math::
 
-            relative\_cu(cu) = (cu - const) * n * (count + 1)
+            relative\\_cu(cu) = (cu - const) * n * (count + 1)
 
         where :math:`const` is the one returned by
         :meth:`CobwebNode.compute_relative_CU_const`, :math:`n` is the number
@@ -637,9 +637,9 @@ class CobwebNode(object):
 
         .. math::
 
-            relative\_cu\_for\_insert(C_i) = (C_i.count + 1) * \\sum_i \\sum_j
-            P(A_i = V_{ij}| UpdatedC_i)^2 - (C_i.count) * \\sum_i \\sum_j P(A_i
-            = V_{ij}| C_i)^2
+            relative\\_cu\\_for\\_insert(C_i) = (C_i.count + 1) * \\sum_i
+            \\sum_j P(A_i = V_{ij}| UpdatedC_i)^2 - (C_i.count) * \\sum_i
+            \\sum_j P(A_i = V_{ij}| C_i)^2
 
         where :math:`UpdatedC_i` is a copy of :math:`C_i` that has been updated
         with the counts from the given instance.

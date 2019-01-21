@@ -46,9 +46,9 @@ if __name__ == "__main__":
     # plt.legend([original, acuity, noise], ["Unbounded", "Acuity Bounded",
     #                                       "Noisy Estimate"])
     plt.legend([original, acuity, noise],
-               [r"$\\frac{1}{\sigma}$",
-                r"$\\frac{1}{max(\sigma, \sigma_{Acuity})}$",
-                r"$\\frac{1}{\sqrt{\sigma^2 + \sigma_{Acuity}^2}}$"])
+               ["$\\frac{1}{\\sigma}$",
+                "$\\frac{1}{max(\\sigma, \\sigma_{Acuity})}$",
+                "$\\frac{1}{\\sqrt{\\sigma^2 + \\sigma_{Acuity}^2}}$"])
     plt.show()
 
     X = np.arange(0, 2, 0.01)
@@ -56,7 +56,8 @@ if __name__ == "__main__":
     X2 = np.sqrt(X*X + 1/(4*pi))
     s, = plt.plot(X, X)
     ns, = plt.plot(X, X2)
-    plt.title(r"Comparison of Original and Noisy $\sigma$")
-    plt.xlabel(r"Standard Deviation of Values ($\sigma$)")
-    plt.legend([s, ns], [r"$\sigma$", r"$\sqrt{\sigma^2 + \sigma_{Acuity}}$"])
+    plt.title("Comparison of Original and Noisy $\\sigma$")
+    plt.xlabel("Standard Deviation of Values ($\\sigma$)")
+    plt.legend([s, ns], ["$\\sigma$",
+                         "$\\sqrt{\\sigma^2 + \\sigma_{Acuity}}$"])
     plt.show()

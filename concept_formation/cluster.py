@@ -291,7 +291,7 @@ def AIC(clusters, leaves):
 
 
 def BIC(clusters, leaves):
-    r"""
+    """
     Calculates the Bayesian Information Criterion of the a given clustering
     from a given tree and set of instances.
 
@@ -299,7 +299,7 @@ def BIC(clusters, leaves):
     :meth:`cluster_split_search`.
 
     .. math ::
-        BIC = k\\ln (n) - 2\ln (\\mathcal{L})
+        BIC = k\\ln (n) - 2\\ln (\\mathcal{L})
 
     * :math:`\\ln(\\mathcal{L})` is the total log-likelihood of the cluster
       concepts
