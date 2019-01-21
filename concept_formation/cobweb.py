@@ -46,7 +46,7 @@ class CobwebTree(object):
             try:
                 hash(attr)
                 attr[0]
-            except:
+            except Exception:
                 raise ValueError('Invalid attribute: '+str(attr) +
                                  ' of type: '+str(type(attr)) +
                                  ' in instance: '+str(instance) +
@@ -56,7 +56,7 @@ class CobwebTree(object):
                                  ' (e.g., strings).')
             try:
                 hash(instance[attr])
-            except:
+            except Exception:
                 raise ValueError('Invalid value: '+str(instance[attr]) +
                                  ' of type: '+str(type(instance[attr])) +
                                  ' in instance: '+str(instance) +
@@ -116,10 +116,11 @@ class CobwebTree(object):
         """
         The core cobweb algorithm used in fitting and categorization.
 
-        In the general case, the cobweb algorith entertains a number of sorting
-        operations for the instance and then commits to the operation that
-        maximizes the :meth:`category utility <CobwebNode.category_utility>` of
-        the tree at the current node and then recurses.
+        In the general case, the cobweb algorithm entertains a number of
+        sorting operations for the instance and then commits to the operation
+        that maximizes the :meth:`category utility
+        <CobwebNode.category_utility>` of the tree at the current node and then
+        recurses.
 
         At each node the alogrithm first calculates the category utility of
         inserting the instance at each of the node's children, keeping the best
@@ -619,7 +620,7 @@ class CobwebNode(object):
 
         .. math::
 
-            relative_cu(cu) = (cu - const) * n * (count + 1)
+            relative\\_cu(cu) = (cu - const) * n * (count + 1)
 
         where :math:`const` is the one returned by
         :meth:`CobwebNode.compute_relative_CU_const`, :math:`n` is the number
@@ -634,9 +635,11 @@ class CobwebNode(object):
         computing the relative CU for inserting into a particular child
         :math:`C_i` reduces to:
 
-            relative_cu_for_insert(C_i) = (C_i.count + 1) * \\sum_i \\sum_j
-            P(A_i = V_{ij}| UpdatedC_i)^2 - (C_i.count) * \\sum_i \\sum_j P(A_i
-            = V_{ij}| C_i)^2
+        .. math::
+
+            relative\\_cu\\_for\\_insert(C_i) = (C_i.count + 1) * \\sum_i
+            \\sum_j P(A_i = V_{ij}| UpdatedC_i)^2 - (C_i.count) * \\sum_i
+            \\sum_j P(A_i = V_{ij}| C_i)^2
 
         where :math:`UpdatedC_i` is a copy of :math:`C_i` that has been updated
         with the counts from the given instance.
@@ -645,8 +648,8 @@ class CobwebNode(object):
         operation, the time complexity of the underlying Cobweb algorithm is
         reduced from :math:`O(B^2 \\times log_B(n) \\times AV)` to
         :math:`O(B \\times log_B(n) \\times AV)` where :math:`B` is the average
-        branching factor of the tree, :math`n` is the number of instances being
-        categorized, :math:`A` is the average number of attributes per
+        branching factor of the tree, :math:`n` is the number of instances
+        being categorized, :math:`A` is the average number of attributes per
         instance, and :math:`V` is the average number of values per attribute.
 
         :param child: a child of the current node
@@ -1006,7 +1009,7 @@ class CobwebNode(object):
                 return True
             try:
                 temp = temp.parent
-            except:
+            except Exception:
                 print(temp)
                 assert False
         return False

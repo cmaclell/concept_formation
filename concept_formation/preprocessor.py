@@ -2,12 +2,14 @@
 This module contains an number of proprocessors that can be used on various
 forms of raw input data to convert an instance into a shape that Trestle would
 better understand. Almost all preprocessors preserve the original semantics of
-an instance and are mainly being used to prep for Trestle's internal operations.
+an instance and are mainly being used to prep for Trestle's internal
+operations.
 
 Two abstract preprocessors are defined:
 
 * :class:`Preprocessor` - Defines the general structure of a preprocessor.
-* :class:`Pipeline` - Allows for chaining a collection of preprocessors together.
+* :class:`Pipeline` - Allows for chaining a collection of preprocessors
+    together.
 
 Trestle's normal implementation uses a standard pipeline of preprocessors that
 run in the following order:
@@ -17,9 +19,9 @@ run in the following order:
    relations to preserve semantics.
 #. :class:`Flattener` - Flattens component instances into a number of tuples
    (i.e. ``(attr,component)``) for faster hashing and access.
-#. :class:`StructureMapper<concept_formation.structure_mapper.StructureMapper>` 
-    - Gives any variables unique names so they can be renamed in matching without 
-    colliding, and matches instances to the root concept.
+#. :class:`StructureMapper<concept_formation.structure_mapper.StructureMapper>`
+    - Gives any variables unique names so they can be renamed in matching
+    without colliding, and matches instances to the root concept.
 
 The remaining preprocessors are helper classes designed to support data that is
 not stored in Trestle's conventional representation:
@@ -29,7 +31,8 @@ not stored in Trestle's conventional representation:
   equivalent tuple representation of the relation.
 * :class:`ListProcessor` - Search for list values and extracts their elements
   into their own objects and replaces the list with ordering and element-of
-  relations. Intended to preserve the semenatics of a list in JSON representation.
+  relations. Intended to preserve the semenatics of a list in JSON
+  representation.
 * :class:`ObjectVariablizer` - Looks for component objects within an instance
   and variablizes their names by prepending a ``'?'``.
 * :class:`NumericToNominal` - Converts numeric values to nominal ones.
@@ -463,7 +466,10 @@ class NameStandardizer(Preprocessor):
         # Reset the symbol generator for doctesting purposes.
         >>> _reset_gensym()
         >>> import pprint
-        >>> instance = {'nominal': 'v1', 'numeric': 2.3, '?c1': {'a1': 'v1'}, 'c2': {'a2': 'v2', 'c3': {'a3': 'v3'}}, '(relation1 ?c1 c2)': True, 'lists': ['s1', 's2', 's3'], '(relation2 (a1 ?c1) (relation3 (a3 (c2 c3))))': 4.3}
+        >>> instance = {'nominal': 'v1', 'numeric': 2.3, '?c1': {'a1': 'v1'},
+            'c2': {'a2': 'v2', 'c3': {'a3': 'v3'}}, '(relation1 ?c1 c2)': True,
+            'lists': ['s1', 's2', 's3'], '(relation2 (a1 ?c1) (relation3 (a3
+            (c2 c3))))': 4.3}
         >>> tuplizer = Tuplizer()
         >>> instance = tuplizer.transform(instance)
         >>> std = NameStandardizer()
@@ -475,7 +481,8 @@ class NameStandardizer(Preprocessor):
          'nominal': 'v1',
          'numeric': 2.3,
          ('relation1', '?o1', 'c2'): True,
-         ('relation2', ('a1', '?o1'), ('relation3', ('a3', ('c2', 'c3')))): 4.3}
+         ('relation2', ('a1', '?o1'), ('relation3', ('a3', ('c2', 'c3')))):
+         4.3}
         """
         new_instance = {}
         relations = []
@@ -490,7 +497,7 @@ class NameStandardizer(Preprocessor):
             try:
                 attr[0] == '?'
                 indexable = True
-            except:
+            except Exception:
                 pass
 
             if indexable and attr[0] == '?' and not isinstance(attr, tuple):
@@ -658,7 +665,14 @@ class Flattener(Preprocessor):
         >>> instance = flattener._flatten(instance)
         >>> pprint.pprint(instance)
         {('l4', ('l3', ('l2', 'l1'))): 1}
-        >>> instance = {'?check0': {'Position': {'X': 1.5990001, 'Y': -7.05200052}, 'Type': 'Checkpoint'}, '?cube01': {'Bounds': {'X': 1.7420001, 'Y': 1.751}, 'Name': 'cube01', 'Position': {'X': -12.0840006, 'Y': -7.1050005}, 'Rotation': {'Z': 0.0}, 'Type': 'cube'}, '?cube02': {'Bounds': {'X': 1.7420001, 'Y': 1.751}, 'Name': 'cube02', 'Position': {'X': -4.662, 'Y': -7.1050005}, 'Rotation': {'Z': 0.0}, 'Type': 'cube'}, 'Goal': {'Position': {'X': 8.599, 'Y': 0.715000033}, 'Type': 'Goal'}}
+        >>> instance = {'?check0': {'Position': {'X': 1.5990001, 'Y':
+            -7.05200052}, 'Type': 'Checkpoint'}, '?cube01': {'Bounds': {'X':
+            1.7420001, 'Y': 1.751}, 'Name': 'cube01', 'Position': {'X':
+            -12.0840006, 'Y': -7.1050005}, 'Rotation': {'Z': 0.0}, 'Type':
+            'cube'}, '?cube02': {'Bounds': {'X': 1.7420001, 'Y': 1.751},
+            'Name': 'cube02', 'Position': {'X': -4.662, 'Y': -7.1050005},
+            'Rotation': {'Z': 0.0}, 'Type': 'cube'}, 'Goal': {'Position': {'X':
+            8.599, 'Y': 0.715000033}, 'Type': 'Goal'}}
         >>> flat = flattener.transform(instance)
         >>> pprint.pprint(flat)
         {('Name', '?cube01'): 'cube01',
@@ -754,7 +768,8 @@ class ListProcessor(Preprocessor):
 
     # Reset the symbol generator for doctesting purposes.
     >>> _reset_gensym()
-    >>> instance = {'l1': ['a', {'in1': 3, 'in2': 4}, {'ag': 'b', 'ah': 'c'}, 12, 'again']}
+    >>> instance = {'l1': ['a', {'in1': 3, 'in2': 4}, {'ag': 'b', 'ah': 'c'},
+    ... 12, 'again']}
     >>> lp = ListProcessor()
     >>> instance = lp.transform(instance)
     >>> pprint.pprint(instance)
@@ -780,15 +795,12 @@ class ListProcessor(Preprocessor):
 
     # Reset the symbol generator for doctesting purposes.
     >>> _reset_gensym()
-    >>> instance = {'tta': 'alpha', 'ttb':{'tlist': ['a', 'b', {'sub-a': 'c', 'sub-sub': {'s': 'd', 'sslist': ['w', 'x', 'y', {'issue': 'here'}]}}, 'g']}}
+    >>> instance = {'tta': 'alpha', 'ttb':{'tlist': ['a', 'b', {'sub-a': 'c',
+    ... 'sub-sub': {'s': 'd', 'sslist': ['w', 'x', 'y', {'issue': 'here'}]}},
+    ... 'g']}}
     >>> pprint.pprint(instance)
-    {'tta': 'alpha',
-     'ttb': {'tlist': ['a',
-                       'b',
-                       {'sub-a': 'c',
-                        'sub-sub': {'s': 'd',
-                                    'sslist': ['w', 'x', 'y', {'issue': 'here'}]}},
-                       'g']}}
+    {'tta': 'alpha', 'ttb': {'tlist': ['a', 'b', {'sub-a': 'c', 'sub-sub':
+    {'s': 'd', 'sslist': ['w', 'x', 'y', {'issue': 'here'}]}}, 'g']}}
 
     >>> lp = ListProcessor()
     >>> instance = lp.transform(instance)
@@ -813,9 +825,12 @@ class ListProcessor(Preprocessor):
      ('has-element', ('tlist', 'ttb'), '?o2'): True,
      ('has-element', ('tlist', 'ttb'), '?o3'): True,
      ('has-element', ('tlist', 'ttb'), '?o8'): True,
-     ('ordered-list', ('sslist', ('sub-sub', ('?o3', 'ttb'))), '?o4', '?o5'): True,
-     ('ordered-list', ('sslist', ('sub-sub', ('?o3', 'ttb'))), '?o5', '?o6'): True,
-     ('ordered-list', ('sslist', ('sub-sub', ('?o3', 'ttb'))), '?o6', '?o7'): True,
+     ('ordered-list', ('sslist', ('sub-sub', ('?o3', 'ttb'))), '?o4', '?o5'):
+     True,
+     ('ordered-list', ('sslist', ('sub-sub', ('?o3', 'ttb'))), '?o5', '?o6'):
+     True,
+     ('ordered-list', ('sslist', ('sub-sub', ('?o3', 'ttb'))), '?o6', '?o7'):
+     True,
      ('ordered-list', ('tlist', 'ttb'), '?o1', '?o2'): True,
      ('ordered-list', ('tlist', 'ttb'), '?o2', '?o3'): True,
      ('ordered-list', ('tlist', 'ttb'), '?o3', '?o8'): True}
@@ -827,7 +842,8 @@ class ListProcessor(Preprocessor):
                        'b',
                        {'sub-a': 'c',
                         'sub-sub': {'s': 'd',
-                                    'sslist': ['w', 'x', 'y', {'issue': 'here'}]}},
+                                    'sslist': ['w', 'x', 'y', {'issue':
+                                    'here'}]}},
                        'g']}}
 
     """
@@ -857,14 +873,15 @@ class ExtractListElements(Preprocessor):
     subjects of the main instance.
 
     This is a first subprocess of the :class:`ListProcessor
-    <concept_formation.preprocessor.ListProcessor>`. None of the list operations
-    are part of :class:`StructureMapper
+    <concept_formation.preprocessor.ListProcessor>`. None of the list
+    operations are part of :class:`StructureMapper
     <concept_formation.structure_mapper.StructureMapper>`'s standard pipeline.
 
     # Reset the symbol generator for doctesting purposes.
     >>> _reset_gensym()
     >>> import pprint
-    >>> instance = {"a": "n", "list1": ["test", {"p": "q", "j": "k"}, {"n": "m"}]}
+    >>> instance = {"a": "n", "list1": ["test", {"p": "q", "j": "k"}, {"n":
+    ... "m"}]}
     >>> pp = ExtractListElements()
     >>> instance = pp.transform(instance)
     >>> pprint.pprint(instance)
@@ -877,7 +894,8 @@ class ExtractListElements(Preprocessor):
     # Reset the symbol generator for doctesting purposes.
     >>> _reset_gensym()
     >>> import pprint
-    >>> instance = {"att1": "V1", 'subobj': {"list1": ["a", "b", "c", {"B": "C", "D": "E"}]}}
+    >>> instance = {"att1": "V1", 'subobj': {"list1": ["a", "b", "c", {"B":
+    ... "C", "D": "E"}]}}
     >>> pprint.pprint(instance)
     {'att1': 'V1', 'subobj': {'list1': ['a', 'b', 'c', {'B': 'C', 'D': 'E'}]}}
     >>> pp = ExtractListElements()
@@ -1200,11 +1218,10 @@ class SubComponentProcessor(Preprocessor):
     >>> import pprint
     >>> flattener = Flattener()
     >>> psc = SubComponentProcessor()
-    >>> instance = {"a1": "v1", "?sub1": {"a2": "v2", "a3": 3},
-    ...             "?sub2": {"a4": "v4", "?subsub1": {"a5": "v5", "a6": "v6"},
-    ...                       "?subsub2":{"?subsubsub": {"a8": "V8"}, "a7": 7}},
-    ...             ('ordered-list', ('list1', ('?o2', '?o1')), 'b', 'a'):
-    ...             True}
+    >>> instance = {"a1": "v1", "?sub1": {"a2": "v2", "a3": 3}, "?sub2": {"a4":
+    ... "v4", "?subsub1": {"a5": "v5", "a6": "v6"}, "?subsub2":{"?subsubsub":
+    ... {"a8": "V8"}, "a7": 7}}, ('ordered-list', ('list1', ('?o2', '?o1')),
+    ... 'b', 'a'): True}
     >>> pprint.pprint(instance)
     {'?sub1': {'a2': 'v2', 'a3': 3},
      '?sub2': {'?subsub1': {'a5': 'v5', 'a6': 'v6'},
@@ -1348,7 +1365,8 @@ class ObjectVariablizer(OneWayPreprocessor):
     <concept_formation.structure_mapper.StructureMapper>`'s standard pipeline.
 
     >>> from pprint import pprint
-    >>> instance = {"ob1":{"myX":12.4,"myY":13.1,"myType":"square"},"ob2":{"myX":9.5,"myY":12.6,"myType":"rect"}}
+    >>> instance = {"ob1": {"myX": 12.4, "myY": 13.1, "myType": "square"},
+    ... "ob2": {"myX": 9.5, "myY": 12.6, "myType": "rect"}}
     >>> ov = ObjectVariablizer()
     >>> instance = ov.transform(instance)
     >>> pprint(instance)
@@ -1358,7 +1376,8 @@ class ObjectVariablizer(OneWayPreprocessor):
     >>> pprint(instance)
     {'?ob1': {'myType': 'square', 'myX': 12.4, 'myY': 13.1},
      '?ob2': {'myType': 'rect', 'myX': 9.5, 'myY': 12.6}}
-    >>> instance = {"p1":{"x":12,"y":3},"p2":{"x":5,"y":14},"p3":{"x":4,"y":18},"setttings":{"x_lab":"height","y_lab":"age"}}
+    >>> instance = {"p1": {"x": 12, "y": 3}, "p2": {"x": 5, "y": 14}, "p3": {
+    ... "x": 4, "y": 18}, "setttings": {"x_lab": "height", "y_lab": "age"}}
     >>> ov = ObjectVariablizer("p1","p2","p3")
     >>> instance = ov.transform(instance)
     >>> pprint(instance)
@@ -1603,7 +1622,8 @@ class Sanitizer(OneWayPreprocessor):
 
 
     >>> from pprint import pprint
-    >>> instance = {'a1':'v1','a2':2,'a3':{'aa1':'1','aa2':2},1:'v2',len:'v3',('r1',2,'r3'):'v4',('r4','r5'):{'aa3':4,3:'v6'}}
+    >>> instance = {'a1': 'v1', 'a2': 2, 'a3': {'aa1': '1', 'aa2': 2}, 1: 'v2',
+    ... len: 'v3', ('r1', 2, 'r3'): 'v4', ('r4', 'r5'): {'aa3': 4, 3: 'v6'}}
     >>> pprint(instance)
     {<built-in function len>: 'v3',
      1: 'v2',
@@ -1679,6 +1699,7 @@ class Sanitizer(OneWayPreprocessor):
 
                 if self.spec == 'trestle':
                     if isinstance(val, collections.abc.Hashable):
+
                         ret[str(attr)] = val
                     elif isinstance(val, dict):
                         ret[str(attr)] = self._sanitize(val)
@@ -1690,6 +1711,7 @@ class Sanitizer(OneWayPreprocessor):
             if isinstance(attr, str):
                 if self.spec == 'trestle':
                     if isinstance(val, collections.abc.Hashable):
+
                         ret[attr] = val
                     elif isinstance(val, dict):
                         ret[attr] = self._sanitize(val)
@@ -1697,6 +1719,7 @@ class Sanitizer(OneWayPreprocessor):
                         ret[attr] = self._cob_str(val)
                 else:
                     ret[attr] = val if isinstance(
+
                         val, collections.abc.Hashable) else self._cob_str(val)
 
             if isinstance(attr, tuple):

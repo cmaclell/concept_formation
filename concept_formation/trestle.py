@@ -94,7 +94,7 @@ class TrestleTree(Cobweb3Tree):
             try:
                 hash(attr)
                 attr[0]
-            except:
+            except Exception:
                 raise ValueError('Invalid attribute: '+str(attr) +
                                  ' of type: ' + str(type(attr)) +
                                  ' in instance: ' + str(instance) +
@@ -108,7 +108,7 @@ class TrestleTree(Cobweb3Tree):
             else:
                 try:
                     hash(instance[attr])
-                except:
+                except Exception:
                     raise ValueError('Invalid value: ' + str(instance[attr]) +
                                      ' of type: ' + str(type(instance[attr])) +
                                      ' in instance: ' + str(instance) +
@@ -119,7 +119,7 @@ class TrestleTree(Cobweb3Tree):
         for v in relation:
             try:
                 v[0]
-            except:
+            except Exception:
                 raise(ValueError('Invalid relation value: ' + str(v) +
                                  ' of type: ' + str(type(v)) +
                                  ' in instance: ' + str(instance) +

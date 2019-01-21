@@ -12,7 +12,6 @@ from concept_formation.cobweb import CobwebTree
 from concept_formation.cobweb3 import Cobweb3Tree
 
 
-
 # Generate sample data
 np.random.seed(0)
 seed(0)
@@ -30,12 +29,12 @@ y2[::5] += 1 * (0.5 - np.random.rand(8))
 # Create dictionaries
 # Note that the y value is stored as a hidden variable because
 # in this case we only want to use the X value to make predictions.
-training_data = [{'X': v[0], '_y': y[i]} for i,v in enumerate(X)]
+training_data = [{'X': v[0], '_y': y[i]} for i, v in enumerate(X)]
 shuffle(training_data)
 
 # Build test data
-test_data = [{'X': v[0]} for i,v in enumerate(T)]
-#test_data = [{'X': float(v)} for i,v in enumerate(X)]
+test_data = [{'X': v[0]} for i, v in enumerate(T)]
+# test_data = [{'X': float(v)} for i,v in enumerate(X)]
 
 # Fit cobweb models
 cbt = CobwebTree()

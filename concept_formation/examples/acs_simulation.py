@@ -8,6 +8,7 @@ from concept_formation.trestle import TrestleTree
 from concept_formation.datasets import load_rb_s_07
 from concept_formation.preprocessor import ObjectVariablizer
 
+
 def convert_cat(tower):
     new_tower = {}
     for attr in tower:
@@ -23,6 +24,7 @@ def convert_cat(tower):
             new_tower[attr] = tower[attr]
     return new_tower
 
+
 if __name__ == "__main__":
     num_runs = 1000
     num_examples = 30
@@ -32,11 +34,10 @@ if __name__ == "__main__":
     towers = [convert_cat(variablizer.transform(t)) for t in towers]
 
     trestle_data = incremental_evaluation(TrestleTree(), towers,
-                                          run_length=num_examples, runs=num_runs,
-                                          attr="success")
+                                          run_length=num_examples,
+                                          runs=num_runs, attr="success")
 
     with open('acs_trestle_data.csv', "w") as fout:
         fout.write("opportunity,accuracy\n")
         for point in trestle_data:
             fout.write("%s,%s\n" % (point[0], point[1]))
-

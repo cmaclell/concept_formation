@@ -1,7 +1,7 @@
 """
 The dummy module contains the :class:`DummyTree` class, which can be used as a
 naive baseline for comparison against CobwebTrees. This class makes predictions
-based on the overall average of instances it has seen. 
+based on the overall average of instances it has seen.
 """
 
 from __future__ import print_function
@@ -14,6 +14,7 @@ from concept_formation.structure_mapper import StructureMapper
 from concept_formation.preprocessor import SubComponentProcessor
 from concept_formation.preprocessor import Flattener
 from concept_formation.preprocessor import Pipeline
+
 
 class DummyTree(TrestleTree):
     """
@@ -74,12 +75,11 @@ class DummyTree(TrestleTree):
 
         **This process does not modify the tree's knoweldge.** For a modifying
         version see: :meth:`DummyTree.ifit`.
-        
+
         :param instance: an instance to be categorized into the tree.
         :type instance: :ref:`Instance<instance-rep>`
-        :return: the root node of the tree containing everything ever added to it.
+        :return: the root node of the tree containing everything ever added to
+            it.
         :rtype: Cobweb3Node
         """
         return self.root
-
-

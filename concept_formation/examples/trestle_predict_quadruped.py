@@ -27,25 +27,25 @@ for animal in animals:
     del animal['_type']
 
 naive_data = incremental_evaluation(DummyTree(), animals,
-                                  run_length=num_examples,
-                                  runs=num_runs, attr="type")
+                                    run_length=num_examples,
+                                    runs=num_runs, attr="type")
 trestle_data = incremental_evaluation(TrestleTree(), animals,
-                                  run_length=num_examples,
-                                  runs=num_runs, attr="type")
+                                      run_length=num_examples,
+                                      runs=num_runs, attr="type")
 
 trestle_x, trestle_y = [], []
 naive_x, naive_y = [], []
 human_x, human_y = [], []
 
 for opp in range(len(trestle_data[0])):
-  for run in range(len(trestle_data)):
-    trestle_x.append(opp)
-    trestle_y.append(trestle_data[run][opp])
+    for run in range(len(trestle_data)):
+        trestle_x.append(opp)
+        trestle_y.append(trestle_data[run][opp])
 
 for opp in range(len(naive_data[0])):
-  for run in range(len(naive_data)):
-    naive_x.append(opp)
-    naive_y.append(naive_data[run][opp])
+    for run in range(len(naive_data)):
+        naive_x.append(opp)
+        naive_y.append(naive_data[run][opp])
 
 trestle_x = np.array(trestle_x)
 trestle_y = np.array(trestle_y)
@@ -58,8 +58,8 @@ naive_y_avg, _, _ = avg_lines(naive_x, naive_y)
 plt.plot(trestle_x, trestle_y_avg, label="TRESTLE", color="green")
 plt.plot(naive_x, naive_y_avg, label="Naive Predictor", color="red")
 
-plt.gca().set_ylim([0.00,1.0])
-plt.gca().set_xlim([0,max(naive_x)-1])
+plt.gca().set_ylim([0.00, 1.0])
+plt.gca().set_xlim([0, max(naive_x)-1])
 plt.title("Incremental Quadruped Prediction Accuracy")
 plt.xlabel("# of Training Examples")
 plt.ylabel("Avg. Probability of True Quadruped Type (Accuracy)")

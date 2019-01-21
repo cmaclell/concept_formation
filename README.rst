@@ -1,3 +1,9 @@
+.. image:: https://travis-ci.com/cmaclell/concept_formation.svg?branch=master
+   :target: https://travis-ci.com/cmaclell/concept_formation
+
+.. image:: https://coveralls.io/repos/github/cmaclell/concept_formation/badge.svg?branch=master
+   :target: https://coveralls.io/github/cmaclell/concept_formation?branch=master
+
 =================
 Concept Formation
 =================
@@ -69,7 +75,7 @@ citation of the following paper:
 
 MacLellan, C.J., Harpstead, E., Aleven, V., Koedinger K.R. (2016) `TRESTLE: A
 Model of Concept Formation in Structured Domains
-<http://christopia.net/media/publications/maclellan-trestle-2016.pdf>`_.
+<https://chrismaclellan.com/media/publications/MacLellan-2016-Trestle-ACS-Journal.pdf>`_.
 Advances in Cognitive Systems, 4, 131-150.
 
 Bibtex entry::
