@@ -19,7 +19,7 @@ def test_most_likely_choice():
     assert b_count == 0
 
     with pytest.raises(ValueError):
-        utils.weighted_choice([('a', -1)])
+        utils.most_likely_choice([('a', -1)])
 
 
 def test_weighted_choice():
