@@ -115,11 +115,13 @@ def std(values):
 
 def weighted_choice(choices):
     """
-    Given a list of tuples [(val, prob),...(val, prob)], return a
-    randomly chosen value where the choice is weighted by prob.
+    Given a list of tuples [(val, weight),...(val, weight)], return a randomly
+    chosen value where the choice frequency is proportional to the choice
+    weight divided by the sum of all weights. Note, weights must be greater
+    than or equal to 0.
 
     :param choices: A list of tuples
-    :type choices: [(val, prob),...(val, prob)]
+    :type choices: [(val, weight),...(val, weight)]
     :return: A choice sampled from the list according to the weightings
     :rtype: val
 
@@ -140,16 +142,17 @@ def weighted_choice(choices):
     r = uniform(0, total)
     upto = 0
     for c, w in choices:
+        if w < 0:
+            raise ValueError('All weights must be greater than or equal to 0.')
         if upto + w > r:
             return c
         upto += w
-    assert False, "Shouldn't get here"
 
 
 def most_likely_choice(choices):
     """
-    Given a list of tuples [(val, prob),...(val, prob)], returns the
-    value with the highest probability. Ties are randomly broken.
+    Given a list of tuples [(val, weight),...(val, weight)], returns the value
+    with the highest weight. Ties are randomly broken.
 
     >>> options = [('a',.25),('b',.12),('c',.46),('d',.07)]
     >>> most_likely_choice(options)
@@ -164,5 +167,8 @@ def most_likely_choice(choices):
     :return: the val with the hightest prob
     :rtype: val
     """
+    vals = [w for _, w in choices if w < 0]
+    if len(vals) > 0:
+        raise ValueError('All weights must be greater than or equal to 0')
     updated_choices = [(prob, random(), val) for val, prob in choices]
     return sorted(updated_choices, reverse=True)[0][2]

@@ -18,6 +18,9 @@ def test_most_likely_choice():
     assert a_count == n
     assert b_count == 0
 
+    with pytest.raises(ValueError):
+        utils.weighted_choice([('a', -1)])
+
 
 def test_weighted_choice():
     n = 1000
@@ -27,6 +30,9 @@ def test_weighted_choice():
     b_count = vals.count('b')
     assert a_count > b_count
     assert b_count > 0
+
+    with pytest.raises(ValueError):
+        utils.weighted_choice([('a', -1)])
 
 
 def test_cv_mean():
@@ -53,6 +59,11 @@ def test_mean():
     vals = [random.normalvariate(0, 1) for i in range(1000)]
     assert utils.mean(vals) - 0 < 0.1
     assert utils.mean([1, 1, 1]) == 1
+
+
+def test_c4():
+    with pytest.raises(ValueError):
+        utils.c4(1)
 
 
 def test_cv_std():
