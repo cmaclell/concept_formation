@@ -163,8 +163,8 @@ def most_likely_choice(choices):
     'c'
 
     :param choices: A list of tuples
-    :type choices: [(val, prob),...(val, prob)]
-    :return: the val with the hightest prob
+    :type choices: [(val, weight),...(val, weight)]
+    :return: the val with the hightest weight
     :rtype: val
     """
     vals = [w for _, w in choices if w < 0]
