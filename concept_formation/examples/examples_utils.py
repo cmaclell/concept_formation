@@ -16,13 +16,15 @@ import numpy as np
 
 from concept_formation.utils import mean
 
-def moving_average(a, n=3) :
+
+def moving_average(a, n=3):
     """A function for computing the moving average, so that we can smooth out the
     curves on a graph.
     """
     ret = np.cumsum(a, dtype=float)
     ret[n:] = ret[n:] - ret[:-n]
     return ret[n - 1:] / n
+
 
 def lowess(x, y, f=1./3., iter=3, confidence=0.95):
     """
@@ -47,19 +49,19 @@ def lowess(x, y, f=1./3., iter=3, confidence=0.95):
     n = len(x)
     r = int(np.ceil(f*n))
     h = [np.sort(np.abs(x - x[i]))[r] for i in range(n)]
-    w = np.clip(np.abs((x[:,None] - x[None,:]) / h), 0.0, 1.0)
+    w = np.clip(np.abs((x[:, None] - x[None, :]) / h), 0.0, 1.0)
     w = (1 - w**3)**3
     yest = np.zeros(n)
     delta = np.ones(n)
     for iteration in range(iter):
         for i in range(n):
-            weights = delta * w[:,i]
+            weights = delta * w[:, i]
             b = np.array([np.sum(weights*y), np.sum(weights*y*x)])
             A = np.array([[np.sum(weights), np.sum(weights*x)],
-                   [np.sum(weights*x), np.sum(weights*x*x)]])
+                          [np.sum(weights*x), np.sum(weights*x*x)]])
             beta = linalg.solve(A, b)
             yest[i] = beta[0] + beta[1]*x[i]
- 
+
         residuals = y - yest
         s = np.median(np.abs(residuals))
         delta = np.clip(residuals / (6.0 * s), -1, 1)
@@ -74,6 +76,7 @@ def lowess(x, y, f=1./3., iter=3, confidence=0.95):
 
     return yest, yest-h, yest+h
 
+
 def avg_lines(x, y, confidence=0.95):
     n = len(x)
     mean = np.zeros(n)
@@ -81,13 +84,14 @@ def avg_lines(x, y, confidence=0.95):
     upper = np.zeros(n)
 
     for x_idx, x_val in enumerate(x):
-        ys = np.array([v for i,v in enumerate(y) if x[i] == x_val])
-        m,l,u = mean_confidence_interval(ys)
+        ys = np.array([v for i, v in enumerate(y) if x[i] == x_val])
+        m, l, u = mean_confidence_interval(ys)
         mean[x_idx] = m
         lower[x_idx] = l
         upper[x_idx] = u
 
     return mean, lower, upper
+
 
 def mean_confidence_interval(data, confidence=0.95):
     """

@@ -216,10 +216,9 @@ def flat_match(target, base, initial_mapping=None):
 
     initial_cost = mapping_cost(initial_mapping, target, base)
 
-    op_problem = StructureMappingOptimizationProblem((initial_mapping,
-                                                      unmapped),
-                                                     initial_cost=initial_cost,
-                                                     extra=(target, base))
+    op_problem = StructureMappingOptProblem((initial_mapping, unmapped),
+                                            initial_cost=initial_cost,
+                                            extra=(target, base))
 
     solution = next(hill_climbing(op_problem))
     return dict(solution.state_node.state[0])
@@ -327,7 +326,7 @@ def mapping_cost(mapping, target, base):
     return -temp_base.expected_correct_guesses()
 
 
-class StructureMappingOptimizationProblem(Problem):
+class StructureMappingOptProblem(Problem):
     """
     A class for describing a structure mapping problem to be solved using the
     `py_search <http://py-search.readthedocs.io/>`_ library. This class defines

@@ -1,6 +1,7 @@
 from random import normalvariate
 from random import choice
 
+
 def bellrand(start, finish):
     """
     Meant to mimic Gennari's crude truncated normal.
@@ -14,13 +15,16 @@ def bellrand(start, finish):
 
     return sample
 
+
 def generate_animals(num_instances):
     return [generate_random_animal() for i in range(num_instances)]
+
 
 def generate_random_animal():
     genfun = [generate_dog, generate_cat, generate_horse, generate_giraffe]
     f = choice(genfun)
     return f()
+
 
 def generate_dog():
     dog = {}
@@ -34,7 +38,7 @@ def generate_dog():
     neck = 'neck'
     head = 'head'
     tail = 'tail'
-    
+
     dog[torso] = {}
     dog[torso]['_type'] = 'torso'
     dog[torso]['locationX'] = 0
@@ -54,12 +58,12 @@ def generate_dog():
     dog[leg1]['locationX'] = dog[torso]['height'] / 2
     dog[leg1]['locationY'] = dog[torso]['radius']
     dog[leg1]['locationZ'] = -dog[torso]['radius'] - leglength/2
-    dog[leg1]['axisX'] = bellrand(0,1)
+    dog[leg1]['axisX'] = bellrand(0, 1)
     dog[leg1]['axisY'] = 0
     dog[leg1]['axisZ'] = -1
     dog[leg1]['height'] = leglength
-    dog[leg1]['radius'] = bellrand(0.8,1.2)
-    dog[leg1]['texture'] = bellrand(170,180)
+    dog[leg1]['radius'] = bellrand(0.8, 1.2)
+    dog[leg1]['texture'] = bellrand(170, 180)
 
     dog[leg2] = {}
     dog[leg2]['_type'] = 'leg2'
@@ -138,6 +142,7 @@ def generate_dog():
 
     return dog
 
+
 def generate_cat():
     cat = {}
     cat['_type'] = 'cat'
@@ -150,7 +155,7 @@ def generate_cat():
     neck = 'neck'
     head = 'head'
     tail = 'tail'
-    
+
     cat[torso] = {}
     cat[torso]['_type'] = 'torso'
     cat[torso]['locationX'] = 0
@@ -170,12 +175,12 @@ def generate_cat():
     cat[leg1]['locationX'] = cat[torso]['height'] / 2
     cat[leg1]['locationY'] = cat[torso]['radius']
     cat[leg1]['locationZ'] = -cat[torso]['radius'] - leglength/2
-    cat[leg1]['axisX'] = bellrand(0,1)
+    cat[leg1]['axisX'] = bellrand(0, 1)
     cat[leg1]['axisY'] = 0
     cat[leg1]['axisZ'] = -1
     cat[leg1]['height'] = leglength
-    cat[leg1]['radius'] = bellrand(0.4,0.8)
-    cat[leg1]['texture'] = bellrand(170,180)
+    cat[leg1]['radius'] = bellrand(0.4, 0.8)
+    cat[leg1]['texture'] = bellrand(170, 180)
 
     cat[leg2] = {}
     cat[leg2]['_type'] = 'leg2'
@@ -254,6 +259,7 @@ def generate_cat():
 
     return cat
 
+
 def generate_horse():
     horse = {}
     horse['_type'] = 'horse'
@@ -266,7 +272,7 @@ def generate_horse():
     neck = 'neck'
     head = 'head'
     tail = 'tail'
-    
+
     horse[torso] = {}
     horse[torso]['_type'] = 'torso'
     horse[torso]['locationX'] = 0
@@ -333,10 +339,10 @@ def generate_horse():
 
     horse[neck] = {}
     horse[neck]['_type'] = 'neck'
-    horse[neck]['locationX'] = (horse[torso]['height'] / 2 + 
+    horse[neck]['locationX'] = (horse[torso]['height'] / 2 +
                                 neck_height / 2.828)
     horse[neck]['locationY'] = 0
-    horse[neck]['locationZ'] = (horse[torso]['radius'] + 
+    horse[neck]['locationZ'] = (horse[torso]['radius'] +
                                 neck_height / 2.828)
     horse[neck]['axisX'] = 1
     horse[neck]['axisY'] = 0
@@ -371,6 +377,7 @@ def generate_horse():
     horse[tail]['texture'] = bellrand(170, 180)
 
     return horse
+
 
 def generate_giraffe():
     giraffe = {}
@@ -451,10 +458,10 @@ def generate_giraffe():
 
     giraffe[neck] = {}
     giraffe[neck]['_type'] = 'neck'
-    giraffe[neck]['locationX'] = (giraffe[torso]['height'] / 2 + 
+    giraffe[neck]['locationX'] = (giraffe[torso]['height'] / 2 +
                                   neck_height / 2.828)
     giraffe[neck]['locationY'] = 0
-    giraffe[neck]['locationZ'] = (giraffe[torso]['radius'] + 
+    giraffe[neck]['locationZ'] = (giraffe[torso]['radius'] +
                                   neck_height / 2.828)
     giraffe[neck]['axisX'] = 1
     giraffe[neck]['axisY'] = 0
@@ -465,10 +472,10 @@ def generate_giraffe():
 
     giraffe[head] = {}
     giraffe[head]['_type'] = 'head'
-    giraffe[head]['locationX'] = (giraffe[torso]['height'] / 2 + 
+    giraffe[head]['locationX'] = (giraffe[torso]['height'] / 2 +
                                   neck_height / 1.414)
     giraffe[head]['locationY'] = 0
-    giraffe[head]['locationZ'] = (giraffe[torso]['radius'] + 
+    giraffe[head]['locationZ'] = (giraffe[torso]['radius'] +
                                   neck_height / 1.414)
     giraffe[head]['axisX'] = 1
     giraffe[head]['axisY'] = bellrand(-1, 1)
@@ -490,5 +497,4 @@ def generate_giraffe():
     giraffe[tail]['radius'] = bellrand(0.5, 1.0)
     giraffe[tail]['texture'] = bellrand(170, 180)
 
-    return giraffe 
-
+    return giraffe

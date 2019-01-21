@@ -26,7 +26,7 @@ tree = TrestleTree()
 clusters = cluster(tree, towers, maxsplit=10)
 human_labels = [tower['_human_cluster_label'] for tower in towers]
 
-x = [num_splits for num_splits in range(1,len(clusters)+1)]
+x = [num_splits for num_splits in range(1, len(clusters)+1)]
 y = [adjusted_rand_score(human_labels, split) for split in clusters]
 plt.plot(x, y, label="TRESTLE")
 
