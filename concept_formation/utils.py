@@ -15,55 +15,58 @@ from math import isnan
 
 # A hashtable of values to use in the c4(n) function to apply corrections to
 # estimates of std.
-c4n_table = {2: 0.7978845608028654, 
-      3:  0.886226925452758, 
-      4:  0.9213177319235613, 
-      5:  0.9399856029866254, 
-      6:  0.9515328619481445, 
-      7:  0.9593687886998328, 
-      8:  0.9650304561473722, 
-      9:  0.9693106997139539, 
-      10: 0.9726592741215884, 
-      11: 0.9753500771452293, 
-      12: 0.9775593518547722, 
-      13: 0.9794056043142177, 
-      14: 0.9809714367555161, 
-      15: 0.9823161771626504, 
-      16: 0.9834835316158412, 
-      17: 0.9845064054718315, 
-      18: 0.985410043808079, 
-      19: 0.9862141368601935, 
-      20: 0.9869342675246552, 
-      21: 0.9875829288261562, 
-      22: 0.9881702533158311, 
-      23: 0.988704545233999, 
-      24: 0.9891926749585048, 
-      25: 0.9896403755857028, 
-      26: 0.9900524688409107, 
-      27: 0.990433039209448, 
-      28: 0.9907855696217323, 
-      29: 0.9911130482419843}
+c4n_table = {2: 0.7978845608028654,
+             3:  0.886226925452758,
+             4:  0.9213177319235613,
+             5:  0.9399856029866254,
+             6:  0.9515328619481445,
+             7:  0.9593687886998328,
+             8:  0.9650304561473722,
+             9:  0.9693106997139539,
+             10: 0.9726592741215884,
+             11: 0.9753500771452293,
+             12: 0.9775593518547722,
+             13: 0.9794056043142177,
+             14: 0.9809714367555161,
+             15: 0.9823161771626504,
+             16: 0.9834835316158412,
+             17: 0.9845064054718315,
+             18: 0.985410043808079,
+             19: 0.9862141368601935,
+             20: 0.9869342675246552,
+             21: 0.9875829288261562,
+             22: 0.9881702533158311,
+             23: 0.988704545233999,
+             24: 0.9891926749585048,
+             25: 0.9896403755857028,
+             26: 0.9900524688409107,
+             27: 0.990433039209448,
+             28: 0.9907855696217323,
+             29: 0.9911130482419843}
 
-def c4(n) :
+
+def c4(n):
     """
-    Returns the correction factor to apply to unbias estimates of standard 
-    deviation in low sample sizes. This implementation is based on a lookup 
+    Returns the correction factor to apply to unbias estimates of standard
+    deviation in low sample sizes. This implementation is based on a lookup
     table for n in [2-29] and returns 1.0 for values >= 30.
 
     >>> c4(3)
     0.886226925452758
     """
-    if n <= 1 :
+    if n <= 1:
         raise ValueError("Cannot apply correction for a sample size of 1.")
-    else :
+    else:
         return c4n_table[n] if n < 30 else 1.0
+
 
 def isNumber(n):
     """
-    Check if a value is a number that should be handled differently
-    than nominals. 
+    Check if a value is a number that should be handled differently than
+    nominals.
     """
     return (not isinstance(n, bool) and isinstance(n, Number)) and not isnan(n)
+
 
 def mean(values):
     """
@@ -85,6 +88,7 @@ def mean(values):
 
     return float(sum(values))/len(values)
 
+
 def std(values):
     """
     Computes the standard deviation of a list of values.
@@ -104,9 +108,10 @@ def std(values):
         raise ValueError("Length of list must be greater than 0.")
 
     meanValue = mean(values)
-    variance =  float(sum([(v - meanValue) * (v - meanValue) for v in
-                           values]))/len(values)
+    variance = float(sum([(v - meanValue) * (v - meanValue) for v in
+                          values]))/len(values)
     return sqrt(variance)
+
 
 def weighted_choice(choices):
     """
@@ -128,16 +133,18 @@ def weighted_choice(choices):
     >>> weighted_choice(options)
     'a'
 
-    .. seealso:: :meth:`CobwebNode.sample <concept_formation.cobweb.CobwebNode.sample>`
+    .. seealso::
+        :meth:`CobwebNode.sample <concept_formation.cobweb.CobwebNode.sample>`
     """
     total = sum(w for c, w in choices)
     r = uniform(0, total)
     upto = 0
     for c, w in choices:
-       if upto + w > r:
-          return c
-       upto += w
+        if upto + w > r:
+            return c
+        upto += w
     assert False, "Shouldn't get here"
+
 
 def most_likely_choice(choices):
     """
@@ -159,5 +166,3 @@ def most_likely_choice(choices):
     """
     updated_choices = [(prob, random(), val) for val, prob in choices]
     return sorted(updated_choices, reverse=True)[0][2]
-
-

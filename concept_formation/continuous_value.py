@@ -8,11 +8,12 @@ from math import pi
 
 from concept_formation.utils import c4
 
+
 class ContinuousValue():
-    """ 
+    """
     This class is used to store the number of samples, the mean of the samples,
-    and the squared error of the samples for :ref:`Numeric Values<val-num>`. 
-    It can be used to perform incremental estimation of the attribute's mean, 
+    and the squared error of the samples for :ref:`Numeric Values<val-num>`.
+    It can be used to perform incremental estimation of the attribute's mean,
     std, and unbiased std.
 
     Initially the number of values, the mean of the values, and the
@@ -82,7 +83,7 @@ class ContinuousValue():
         Returns an unbiased estimate of the std, but for n < 2 the std is
         estimated to be 0.0.
 
-        This implementation uses Bessel's correction and Cochran's theorem: 
+        This implementation uses Bessel's correction and Cochran's theorem:
         `<https://en.wikipedia.org/wiki/Unbiased_estimation_of_standard_deviation#Bias_correction>`_
 
         :return: an unbiased estimate of the std
@@ -101,8 +102,8 @@ class ContinuousValue():
         scale parameter.
 
         This is used to return std values that have been normalized by some
-        value. For edge cases, if scale is less than or equal to 0, then scaling
-        is disabled (i.e., scale = 1.0).
+        value. For edge cases, if scale is less than or equal to 0, then
+        scaling is disabled (i.e., scale = 1.0).
 
         :param scale: an amount to scale biased std estimates by
         :type scale: float
@@ -120,8 +121,8 @@ class ContinuousValue():
         scale parameter.
 
         This is used to return std values that have been normalized by some
-        value. For edge cases, if scale is less than or equal to 0, then scaling
-        is disabled (i.e., scale = 1.0).
+        value. For edge cases, if scale is less than or equal to 0, then
+        scaling is disabled (i.e., scale = 1.0).
 
         :param scale: an amount to scale unbiased std estimates by
         :type scale: float
@@ -136,7 +137,7 @@ class ContinuousValue():
         """
         This hashing function returns the hash of a constant string, so that
         all lookups of a continuous value in a dictionary get mapped to the
-        same entry. 
+        same entry.
         """
         return hash("#ContinuousValue#")
 
@@ -144,7 +145,8 @@ class ContinuousValue():
         """
         The textual representation of a continuous value."
         """
-        return "%0.4f (%0.4f) [%i]" % (self.unbiased_mean(), self.unbiased_std(), self.num)
+        return "%0.4f (%0.4f) [%i]" % (self.unbiased_mean(),
+                                       self.unbiased_std(), self.num)
 
     def update_batch(self, data):
         """
@@ -159,7 +161,7 @@ class ContinuousValue():
     def update(self, x):
         """
         Incrementally update the mean and squared mean error (meanSq) values in
-        an efficient and practical (no precision problems) way. 
+        an efficient and practical (no precision problems) way.
 
         This uses and algorithm by Knuth found here:
         `<https://en.wikipedia.org/wiki/Algorithms_for_calculating_variance>`_
@@ -168,14 +170,14 @@ class ContinuousValue():
         :type x: Number
         """
         self.num += 1
-        delta = x - self.mean 
+        delta = x - self.mean
         self.mean += delta / self.num
         self.meanSq += delta * (x - self.mean)
 
     def combine(self, other):
         """
-        Combine another ContinuousValue's distribution into this one in
-        an efficient and practical (no precision problems) way. 
+        Combine another ContinuousValue's distribution into this one in an
+        efficient and practical (no precision problems) way.
 
         This uses the parallel algorithm by Chan et al. found at:
         `<https://en.wikipedia.org/wiki/Algorithms_for_calculating_variance#Parallel_algorithm>`_
@@ -187,9 +189,9 @@ class ContinuousValue():
         if not isinstance(other, ContinuousValue):
             raise ValueError("Can only merge 2 continuous values.")
         delta = other.mean - self.mean
-        self.meanSq = (self.meanSq + other.meanSq + delta * delta * 
+        self.meanSq = (self.meanSq + other.meanSq + delta * delta *
                        ((self.num * other.num) / (self.num + other.num)))
-        self.mean = ((self.num * self.mean + other.num * other.mean) / 
+        self.mean = ((self.num * self.mean + other.num * other.mean) /
                      (self.num + other.num))
         self.num += other.num
 
@@ -216,8 +218,7 @@ class ContinuousValue():
 
     def output_json(self):
         return {
-            'mean':self.unbiased_mean(),
-            'std':self.unbiased_std(),
-            'n':self.num
+            'mean': self.unbiased_mean(),
+            'std': self.unbiased_std(),
+            'n': self.num
         }
-

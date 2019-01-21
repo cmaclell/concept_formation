@@ -7,6 +7,7 @@ from numbers import Number
 from concept_formation.cobweb3 import cv_key
 from concept_formation.cobweb3 import Cobweb3Tree
 
+
 def verify_counts(node):
     """
     Checks the property that the counts of the children sum to the same
@@ -14,7 +15,7 @@ def verify_counts(node):
     from the test_cobweb.verify_counts to handle continuous values properly.
     """
     if len(node.children) == 0:
-        return 
+        return
 
     temp = {}
     temp_count = node.count
@@ -72,11 +73,11 @@ class TestCobweb(unittest.TestCase):
         tree = Cobweb3Tree()
         for i in range(40):
             data = {}
-            data['x'] = random.normalvariate(0,4)
-            data['y'] = random.normalvariate(0,4)
+            data['x'] = random.normalvariate(0, 4)
+            data['y'] = random.normalvariate(0, 4)
             tree.ifit(data)
         verify_counts(tree.root)
 
+
 if __name__ == "__main__":
     unittest.main()
-

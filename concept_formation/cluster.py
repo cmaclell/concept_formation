@@ -291,7 +291,7 @@ def AIC(clusters, leaves):
 
 
 def BIC(clusters, leaves):
-    """
+    r"""
     Calculates the Bayesian Information Criterion of the a given clustering
     from a given tree and set of instances.
 

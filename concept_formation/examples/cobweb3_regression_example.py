@@ -18,11 +18,11 @@ y[::5] += 3 * (0.5 - rng.rand(16))
 
 # Fit regression models (Decision Tree and TRESTLE)
 # For TRESTLE the y attribute is hidden, so only the X is used to make
-# predictions. 
+# predictions.
 dtree = DecisionTreeRegressor(max_depth=3)
 dtree.fit(X, y)
 ttree = TrestleTree()
-training_data = [{'x': float(X[i][0]), '_y': float(y[i])} for i,v in
+training_data = [{'x': float(X[i][0]), '_y': float(y[i])} for i, v in
                  enumerate(X)]
 ttree.fit(training_data, iterations=1)
 

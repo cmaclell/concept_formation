@@ -5,6 +5,7 @@ import random
 
 from concept_formation.cobweb import CobwebTree
 
+
 def verify_counts(node):
     """
     Checks the property that the counts of the children sum to the same
@@ -13,7 +14,7 @@ def verify_counts(node):
     renaming such as with Trestle) then this will start throwing errors.
     """
     if len(node.children) == 0:
-        return 
+        return
 
     temp = {}
     temp_count = node.count
@@ -51,6 +52,7 @@ def verify_counts(node):
     for child in node.children:
         verify_counts(child)
 
+
 class TestCobweb(unittest.TestCase):
 
     def test_cobweb(self):
@@ -67,6 +69,7 @@ class TestCobweb(unittest.TestCase):
         t.ifit({'x': 1})
         t.ifit({'x': 2})
         t.categorize({})
+
 
 if __name__ == "__main__":
     unittest.main()

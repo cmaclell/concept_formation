@@ -140,8 +140,8 @@ class Cobweb3Node(CobwebNode):
 
     In general the :meth:`Cobweb3Tree.ifit`, :meth:`Cobweb3Tree.categorize`
     functions should be used to initially interface with the Cobweb/3 knowledge
-    base and then the returned concept can be used to calculate probabilities of
-    certain attributes or determine concept labels.
+    base and then the returned concept can be used to calculate probabilities
+    of certain attributes or determine concept labels.
     """
 
     def increment_counts(self, instance):
@@ -162,15 +162,15 @@ class Cobweb3Node(CobwebNode):
             function will raise an exception. See: :class:`NumericToNominal
             <concept_formation.preprocessor.NumericToNominal>` for a way to fix
             this error.
-        
+
         :param instance: A new instances to incorporate into the node.
         :type instance: :ref:`Instance<instance-rep>`
 
         """
-        self.count += 1 
-            
+        self.count += 1
+
         for attr in instance:
-            self.av_counts[attr] = self.av_counts.setdefault(attr,{})
+            self.av_counts[attr] = self.av_counts.setdefault(attr, {})
 
             if isNumber(instance[attr]):
                 if cv_key not in self.av_counts[attr]:
@@ -182,8 +182,8 @@ class Cobweb3Node(CobwebNode):
 
     def update_counts_from_node(self, node):
         """
-        Increments the counts of the current node by the amount in the specified
-        node, modified to handle numbers.
+        Increments the counts of the current node by the amount in the
+        specified node, modified to handle numbers.
 
         .. warning:: If a numeric attribute is found in an instance with the
             name of a previously nominal attribute, or vice versa, this
@@ -199,45 +199,49 @@ class Cobweb3Node(CobwebNode):
             self.av_counts[attr] = self.av_counts.setdefault(attr, {})
             for val in node.av_counts[attr]:
                 if val == cv_key:
-                    self.av_counts[attr][val] = self.av_counts[attr].get(val, ContinuousValue())
-                    self.av_counts[attr][val].combine(node.av_counts[attr][val])
+                    self.av_counts[attr][val] = self.av_counts[attr].get(
+                        val, ContinuousValue())
+                    self.av_counts[attr][val].combine(
+                        node.av_counts[attr][val])
                 else:
-                    self.av_counts[attr][val] = (self.av_counts[attr].get(val, 0) +
-                                         node.av_counts[attr][val])
+                    self.av_counts[attr][val] = (self.av_counts[attr].get(val,
+                                                                          0) +
+                                                 node.av_counts[attr][val])
 
     def expected_correct_guesses(self):
         """
         Returns the number of attribute values that would be correctly guessed
         in the current concept. This extension supports both nominal and
-        numeric attribute values. 
-        
+        numeric attribute values.
+
         The typical Cobweb/3 calculation for correct guesses is:
 
         .. math::
 
             P(A_i = V_{ij})^2 = \\frac{1}{2 * \\sqrt{\\pi} * \\sigma}
 
-        However, this does not take into account situations when 
+        However, this does not take into account situations when
         :math:`P(A_i) < 1.0`. Additionally, the original formulation set
         :math:`\\sigma` to have a user specified minimum value. However, for
         small lower bounds, this lets cobweb achieve more than 1 expected
         correct guess per attribute, which is impossible for nominal attributes
         (and does not really make sense for continuous either). This causes
         problems when both nominal and continuous values are being used
-        together; i.e., continuous attributes will get higher preference. 
+        together; i.e., continuous attributes will get higher preference.
 
         To account for this we use a modified equation:
 
         .. math::
 
-            P(A_i = V_{ij})^2 = P(A_i)^2 * \\frac{1}{2 * \\sqrt{\\pi} * \\sigma}
+            P(A_i = V_{ij})^2 = P(A_i)^2 * \\frac{1}{2 * \\sqrt{\\pi} *
+                \\sigma}
 
-        The key change here is that we multiply by :math:`P(A_i)^2`. 
+        The key change here is that we multiply by :math:`P(A_i)^2`.
         Further, instead of bounding :math:`\\sigma` by a user specified lower
         bound (often called acuity), we add some independent, normally
-        distributed noise to sigma: 
-        :math:`\\sigma = \\sqrt{\\sigma^2 + \\sigma_{noise}^2}`, where 
-        :math:`\\sigma_{noise} = \\frac{1}{2 * \\sqrt{\\pi}}`. 
+        distributed noise to sigma:
+        :math:`\\sigma = \\sqrt{\\sigma^2 + \\sigma_{noise}^2}`, where
+        :math:`\\sigma_{noise} = \\frac{1}{2 * \\sqrt{\\pi}}`.
         This ensures the expected correct guesses never exceeds 1. From a
         theoretical point of view, it basically is an assumption that there is
         some independent, normally distributed measurement error that is added
@@ -262,8 +266,9 @@ class Cobweb3Node(CobwebNode):
                     if self.tree is not None and self.tree.scaling:
                         inner_attr = self.tree.get_inner_attr(attr)
                         if inner_attr in self.tree.attr_scales:
+                            inner = self.tree.attr_scales[inner_attr]
                             scale = ((1/self.tree.scaling) *
-                                     self.tree.attr_scales[inner_attr].unbiased_std())
+                                     inner.unbiased_std())
 
                     # we basically add noise to the std and adjust the
                     # normalizing constant to ensure the probability of a
@@ -273,7 +278,7 @@ class Cobweb3Node(CobwebNode):
                                cv.scaled_unbiased_std(scale) +
                                (1 / (4 * pi)))
                     prob_attr = cv.num / self.count
-                    correct_guesses += ((prob_attr * prob_attr) * 
+                    correct_guesses += ((prob_attr * prob_attr) *
                                         (1/(2 * sqrt(pi) * std)))
                 else:
                     prob = (self.av_counts[attr][val]) / self.count
@@ -285,11 +290,12 @@ class Cobweb3Node(CobwebNode):
         """
         Print the categorization tree
 
-        The string formatting inserts tab characters to align child nodes of the
-        same depth. Numerical values are printed with their means and standard
-        deviations.
-        
-        :param depth: The current depth in the print, intended to be called recursively
+        The string formatting inserts tab characters to align child nodes of
+        the same depth. Numerical values are printed with their means and
+        standard deviations.
+
+        :param depth: The current depth in the print, intended to be called
+            recursively
         :type depth: int
         :return: a formated string displaying the tree and its children
         :rtype: str
@@ -306,9 +312,9 @@ class Cobweb3Node(CobwebNode):
 
             attributes.append("'" + str(attr) + "': {" + ", ".join(values)
                               + "}")
-                  
+
         ret += "{" + ", ".join(attributes) + "}: " + str(self.count) + '\n'
-        
+
         for c in self.children:
             ret += c.pretty_print(depth+1)
 
@@ -319,10 +325,10 @@ class Cobweb3Node(CobwebNode):
         Return a list of weighted choices for an attribute based on the node's
         probability table.
 
-        This calculation will include an option for the change that an attribute
-        is missing from an instance all together. This is useful for probability
-        and sampling calculations. If the attribute has never appeared in the
-        tree then it will return a 100% chance of None.
+        This calculation will include an option for the change that an
+        attribute is missing from an instance all together. This is useful for
+        probability and sampling calculations. If the attribute has never
+        appeared in the tree then it will return a 100% chance of None.
 
         :param attr: an attribute of an instance
         :type attr: :ref:`Attribute<attributes>`
@@ -331,7 +337,8 @@ class Cobweb3Node(CobwebNode):
             cosidered as a possible value.
         :type allow_none: Boolean
         :return: a list of weighted choices for attr's value
-        :rtype: [(:ref:`Value<values>`, float), (:ref:`Value<values>`, float), ...]
+        :rtype: [(:ref:`Value<values>`, float), (:ref:`Value<values>`, float),
+            ...]
         """
         choices = []
         if attr not in self.av_counts:
@@ -357,9 +364,11 @@ class Cobweb3Node(CobwebNode):
         Predict the value of an attribute, using the provided strategy.
 
         If the attribute is a nominal then this function behaves the same as
-        :meth:`CobwebNode.predict <concept_formation.cobweb.CobwebNode.predict>`.
-        If the attribute is numeric then the mean value from the
-        :class:`ContinuousValue<concept_formation.cv_key.ContinuousValue>` is chosen.
+        :meth:`CobwebNode.predict
+        <concept_formation.cobweb.CobwebNode.predict>`.  If the attribute is
+        numeric then the mean value from the
+        :class:`ContinuousValue<concept_formation.cv_key.ContinuousValue>` is
+        chosen.
 
         :param attr: an attribute of an instance.
         :type attr: :ref:`Attribute<attributes>`
@@ -367,7 +376,7 @@ class Cobweb3Node(CobwebNode):
             inferred to be missing. If False, then all attributes will be
             inferred with some value.
         :type allow_none: Boolean
-        :return: The most likely value for the given attribute in the node's 
+        :return: The most likely value for the given attribute in the node's
             probability table.
         :rtype: :ref:`Value<values>`
 
@@ -551,7 +560,7 @@ class Cobweb3Node(CobwebNode):
 
     def output_json(self):
         """
-        Outputs the categorization tree in JSON form. 
+        Outputs the categorization tree in JSON form.
 
         This is a modification of the :meth:`CobwebNode.output_json
         <concept_formation.cobweb.CobwebNode.output_json>` to handle numeric
@@ -575,7 +584,8 @@ class Cobweb3Node(CobwebNode):
 
             for val in self.av_counts[attr]:
                 if val == cv_key:
-                    temp[str(attr)][cv_key] = self.av_counts[attr][val].output_json()
+                    json_str = self.av_counts[attr][val].output_json()
+                    temp[str(attr)][cv_key] = json_str
                 else:
                     temp[str(attr)][str(val)] = self.av_counts[attr][val]
 
