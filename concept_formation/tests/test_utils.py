@@ -8,11 +8,23 @@ from concept_formation.cobweb3 import ContinuousValue
 
 
 def test_most_likely_choice():
+    n = 100
     some_list = [('a', 0.99), ('b', 0.01)]
-    vals = [utils.most_likely_choice(some_list) for i in range(100)]
+    vals = [utils.most_likely_choice(some_list) for i in range(n)]
     a_count = vals.count('a')
     b_count = vals.count('b')
-    assert a_count / (a_count + b_count) > 0.75
+    assert a_count == n
+    assert b_count == 0
+
+
+def test_weighted_choice():
+    n = 1000
+    some_list = [('a', 0.9), ('b', 0.1)]
+    vals = [utils.weighted_choice(some_list) for i in range(n)]
+    a_count = vals.count('a')
+    b_count = vals.count('b')
+    assert a_count > b_count
+    assert b_count > 0
 
 
 def test_cv_mean():
