@@ -21,6 +21,9 @@ def test_most_likely_choice():
     with pytest.raises(ValueError):
         utils.most_likely_choice([('a', -1)])
 
+    with pytest.raises(ValueError):
+        utils.most_likely_choice([])
+
 
 def test_weighted_choice():
     n = 1000
@@ -33,6 +36,9 @@ def test_weighted_choice():
 
     with pytest.raises(ValueError):
         utils.weighted_choice([('a', -1)])
+
+    with pytest.raises(ValueError):
+        utils.weighted_choice([])
 
 
 def test_cv_mean():

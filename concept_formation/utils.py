@@ -147,6 +147,7 @@ def weighted_choice(choices):
         if upto + w > r:
             return c
         upto += w
+    raise ValueError("Choices cannot be an empty list")
 
 
 def most_likely_choice(choices):
@@ -167,8 +168,12 @@ def most_likely_choice(choices):
     :return: the val with the hightest weight
     :rtype: val
     """
+    if len(choices) == 0:
+        raise ValueError("Choices cannot be an empty list")
+
     vals = [w for _, w in choices if w < 0]
     if len(vals) > 0:
         raise ValueError('All weights must be greater than or equal to 0')
+
     updated_choices = [(prob, random(), val) for val, prob in choices]
     return sorted(updated_choices, reverse=True)[0][2]
