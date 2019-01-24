@@ -40,9 +40,9 @@ def cluster(tree, instances, minsplit=1, maxsplit=1, mod=True):
     .. seealso:: :meth:`cluster_iter`
 
     """
-    return [c[0] for c in cluster_iter(tree, instances, heuristic=CU,
-                                       minsplit=minsplit, maxsplit=maxsplit,
-                                       mod=mod, labels=True)]
+    for c in cluster_iter(tree, instances, heuristic=CU, minsplit=minsplit,
+                          maxsplit=maxsplit, mod=mod, labels=True):
+        yield c[0]
 
 
 def k_cluster(tree, instances, k=3, mod=True):

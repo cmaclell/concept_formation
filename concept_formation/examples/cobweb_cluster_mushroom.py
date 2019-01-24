@@ -22,7 +22,9 @@ mushrooms = mushrooms[:150]
 tree = CobwebTree()
 mushrooms_no_class = [{a: mushroom[a] for a in mushroom
                        if a != 'classification'} for mushroom in mushrooms]
-clusters = cluster(tree, mushrooms_no_class)[0]
+
+clusters = next(cluster(tree, mushrooms_no_class))
+
 mushroom_class = [mushroom[a] for mushroom in mushrooms for a in mushroom
                   if a == 'classification']
 ari = adjusted_rand_score(clusters, mushroom_class)

@@ -23,7 +23,7 @@ variablizer = ObjectVariablizer()
 towers = [variablizer.transform(t) for t in towers]
 
 tree = TrestleTree()
-clusters = cluster(tree, towers, maxsplit=10)
+clusters = [c for c in cluster(tree, towers, maxsplit=10)]
 human_labels = [tower['_human_cluster_label'] for tower in towers]
 
 x = [num_splits for num_splits in range(1, len(clusters)+1)]

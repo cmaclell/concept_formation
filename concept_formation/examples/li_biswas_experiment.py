@@ -101,7 +101,7 @@ def run_clust_exp(nominal_noise=0, numeric_noise=0, scaling=False):
     shuffle(data)
     t = Cobweb3Tree(scaling=scaling)
     clustering = cluster(t, data)
-    return data, clustering[0]
+    return data, next(clustering)
 
 
 def run_noise_exp(scaling=False):
