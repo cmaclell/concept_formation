@@ -46,7 +46,13 @@ from __future__ import division
 
 from copy import deepcopy
 from numbers import Number
-import collections.abc
+import collections
+
+try:
+    collectionsAbc = collections.abc
+except AttributeError:
+    collectionsAbc = collections
+
 
 _gensym_counter = 0
 
@@ -1698,7 +1704,7 @@ class Sanitizer(OneWayPreprocessor):
                           'is clobbering an existing value')
 
                 if self.spec == 'trestle':
-                    if isinstance(val, collections.abc.Hashable):
+                    if isinstance(val, collectionsAbc.Hashable):
 
                         ret[str(attr)] = val
                     elif isinstance(val, dict):
@@ -1707,10 +1713,10 @@ class Sanitizer(OneWayPreprocessor):
                         ret[str(attr)] = self._cob_str(val)
                 else:
                     ret[str(attr)] = val if isinstance(
-                        val, collections.abc.Hashable) else self._cob_str(val)
+                        val, collectionsAbc.Hashable) else self._cob_str(val)
             if isinstance(attr, str):
                 if self.spec == 'trestle':
-                    if isinstance(val, collections.abc.Hashable):
+                    if isinstance(val, collectionsAbc.Hashable):
 
                         ret[attr] = val
                     elif isinstance(val, dict):
@@ -1720,7 +1726,7 @@ class Sanitizer(OneWayPreprocessor):
                 else:
                     ret[attr] = val if isinstance(
 
-                        val, collections.abc.Hashable) else self._cob_str(val)
+                        val, collectionsAbc.Hashable) else self._cob_str(val)
 
             if isinstance(attr, tuple):
                 if self.spec == 'trestle':
@@ -1729,7 +1735,7 @@ class Sanitizer(OneWayPreprocessor):
                         print('Sanitizing', attr,
                               'is clobbering an existing vlaue')
 
-                    if isinstance(val, collections.abc.Hashable):
+                    if isinstance(val, collectionsAbc.Hashable):
                         ret[san_tup] = val
                     elif isinstance(val, dict):
                         ret[san_tup] = self._sanitize(val)
@@ -1737,5 +1743,5 @@ class Sanitizer(OneWayPreprocessor):
                         ret[san_tup] = self._cob_str(val)
                 else:
                     ret[attr] = val if isinstance(
-                        val, collections.abc.Hashable) else self._cob_str(val)
+                        val, collectionsAbc.Hashable) else self._cob_str(val)
         return ret
