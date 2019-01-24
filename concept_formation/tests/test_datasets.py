@@ -134,73 +134,9 @@ def test_load_quadruped():
     data = load_quadruped(10)
     assert len(data) == 10
 
-    known = [{'_type': 'giraffe', 'head': {'_type': 'head', 'axisX': 1,
-                                           'axisY': -0.23376215459531377,
-                                           'axisZ': 0, 'height':
-                                           19.069373148228724, 'locationX':
-                                           71.71171645023995, 'locationY': 0,
-                                           'locationZ': 49.26645266304532,
-                                           'radius': 4.05626484907961,
-                                           'texture': 177.5670433982545},
-              'leg1': {'_type': 'leg1', 'axisX': 0.25279896094692916, 'axisY':
-                       0, 'axisZ': -1, 'height': 60.13197726212744,
-                       'locationX': 35.29119556606559, 'locationY':
-                       12.845931778870957, 'locationZ': -42.91192040993468,
-                       'radius': 3.597944849223721, 'texture':
-                       179.23727389536953}, 'leg2': {'_type': 'leg2', 'axisX':
-                                                     0, 'axisY': 0, 'axisZ':
-                                                     -1, 'height':
-                                                     60.13197726212744,
-                                                     'locationX':
-                                                     35.29119556606559,
-                                                     'locationY':
-                                                     -12.845931778870957,
-                                                     'locationZ':
-                                                     -42.91192040993468,
-                                                     'radius':
-                                                     2.009043416794043,
-                                                     'texture':
-                                                     174.58392827108403},
-              'leg3': {'_type': 'leg3', 'axisX': 0, 'axisY': 0, 'axisZ': -1,
-                       'height': 60.13197726212744, 'locationX':
-                       -35.29119556606559, 'locationY': 12.845931778870957,
-                       'locationZ': -42.91192040993468, 'radius':
-                       2.348946587645933, 'texture': 178.9283460962157},
-              'leg4': {'_type': 'leg4', 'axisX': 0.28802829434429883, 'axisY':
-                       0, 'axisZ': -1, 'height': 60.13197726212744,
-                       'locationX': -35.29119556606559, 'locationY':
-                       -12.845931778870957, 'locationZ': -42.91192040993468,
-                       'radius': 2.9029316087251233, 'texture':
-                       171.86316987918838}, 'neck': {'_type': 'neck', 'axisX':
-                                                     1, 'axisY': 0, 'axisZ': 1,
-                                                     'height':
-                                                     51.49861653022255,
-                                                     'locationX':
-                                                     53.50145600815277,
-                                                     'locationY': 0,
-                                                     'locationZ':
-                                                     31.05619222095814,
-                                                     'radius':
-                                                     7.87732253394808,
-                                                     'texture':
-                                                     177.14627952379485},
-              'tail': {'_type': 'tail', 'axisX': -1, 'axisY':
-                       0.24883477194257322, 'axisZ': -0.531438665320418,
-                       'height': 20.918101962779517, 'locationX':
-                       -49.66428916935166, 'locationY': 0, 'locationZ': 0,
-                       'radius': 0.9455145384298446, 'texture':
-                       177.24907471005645}, 'torso': {'_type': 'torso',
-                                                      'axisX': 1, 'axisY': 0,
-                                                      'axisZ': 0, 'height':
-                                                      70.58239113213118,
-                                                      'locationX': 0,
-                                                      'locationY': 0,
-                                                      'locationZ': 0, 'radius':
-                                                      12.845931778870957,
-                                                      'texture':
-                                                      171.2283287965781}}]
-
-    assert data[0:1] == known
+    assert 'head' in data[0]
+    assert 'leg1' in data[0]
+    assert 'tail' in data[0]
 
 
 def test_load_molecule():
