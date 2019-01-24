@@ -177,7 +177,7 @@ def load_mushroom(num_instances=None):
     return _load_json('mushrooms.json', num_instances)
 
 
-def load_rb_com_11():
+def load_rb_com_11(num_instances=None):
     """
     Load the RumbleBlocks, Center of Mass Level 11, dataset.
 
@@ -185,7 +185,7 @@ def load_rb_com_11():
     described in the :ref:`instance-rep`. This dataset contains 251 instances.
 
     >>> import pprint
-    >>> data = load_rb_com_11()
+    >>> data = load_rb_com_11(num_instances=1)
     >>> pprint.pprint(data[0])
     {'_guid': 'ea022d3d-5c9e-46d7-be23-8ea718fe7816',
      '_human_cluster_label': '0',
@@ -196,7 +196,7 @@ def load_rb_com_11():
      'component3': {'b': 2.0, 'l': 1.0, 'r': 4.0, 't': 3.0, 'type': 'plat0'},
      'component4': {'b': 0.0, 'l': 0.0, 'r': 5.0, 't': 1.0, 'type': 'rect0'}}
     """
-    return _load_json('rb_com_11_continuous.json')
+    return _load_json('rb_com_11_continuous.json', num_instances)
 
 
 def load_rb_s_07(num_instances=None):
