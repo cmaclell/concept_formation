@@ -146,7 +146,7 @@ def test_cv_update():
         samples.append(s)
     assert cv.num == 1000
     assert abs(cv.mean) <= 0.1
-    assert abs(cv.meanSq - sum([(s - cv.mean)**2 for s in samples])) <= 1e-5
+    assert abs(cv.meanSq - sum([(v - cv.mean)**2 for v in samples])) <= 1e-5
 
 
 def test_cv_combine():
