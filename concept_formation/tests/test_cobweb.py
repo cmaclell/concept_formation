@@ -55,6 +55,21 @@ def verify_counts(node):
         verify_counts(child)
 
 
+def compare_two_nodes(node1, node2):
+    if node1.count != node2.count:
+        return False
+    if node1.av_counts != node2.av_counts:
+        return False
+    if len(node1.children) != len(node2.children):
+        return False
+
+    for i in range(len(node1.children)):
+        if not compare_two_nodes(node1.children[i], node2.children[i]):
+            return False
+
+    return True
+
+
 def test_cobweb_init():
     tree = CobwebTree()
     assert isinstance(tree.root, CobwebNode)
@@ -105,9 +120,24 @@ def test_cobweb_ifit():
 def test_cobweb_fit():
     tree = CobwebTree()
     tree2 = CobwebTree()
-    examples = [{'a': 'a'}, {'b': 'b'}, {'c': 'c'}]
-    tree.fit(examples)
-    tree2.fit(examples)
+    tree3 = CobwebTree()
+    tree4 = CobwebTree()
+    examples = []
+    for i in range(6):
+        data = {}
+        data['a1'] = random.choice(['v%i' % i for i in range(20)])
+        data['a2'] = random.choice(['v%i' % i for i in range(20)])
+        examples.append(data)
+
+    tree.fit(examples, randomize_first=False)
+    tree2.fit(examples, randomize_first=False)
+    tree3.fit(examples, randomize_first=True)
+    tree4.fit(examples, iterations=2)
+
+    assert compare_two_nodes(tree.root, tree2.root) is True
+    assert compare_two_nodes(tree.root, tree3.root) is False
+    assert len(tree.root.children) == len(tree2.root.children)
+    assert len(tree.root.children) != len(tree4.root.children)
 
 
 def test_cobweb():

@@ -106,11 +106,10 @@ class CobwebTree(object):
         instances = [i for i in instances]
 
         for x in range(iterations):
-            if x == 0 and randomize_first:
+            if x > 0 or randomize_first:
                 shuffle(instances)
             for i in instances:
                 self.ifit(i)
-            shuffle(instances)
 
     def cobweb(self, instance):
         """
