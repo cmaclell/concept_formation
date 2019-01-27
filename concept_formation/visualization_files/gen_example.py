@@ -8,7 +8,7 @@ from concept_formation.trestle import TrestleTree
 from concept_formation.preprocessor import ObjectVariablizer
 
 
-def output_json(file="forest",size=100,prune=True,seed=50,burn=1):
+def output_json(file="forest", size=100, prune=True, seed=50, burn=1):
     random.seed(seed)
     if file == "forest":
         instances = ds.load_forest_fires()
@@ -33,7 +33,7 @@ def output_json(file="forest",size=100,prune=True,seed=50,burn=1):
         variables = True
     elif file == "rb_wb_03":
         instances = ds.load_rb_wb_03()
-        variables = True 
+        variables = True
     elif file == "molecule":
         instances = ds.load_molecule(size)
         variables = False
@@ -54,25 +54,33 @@ def output_json(file="forest",size=100,prune=True,seed=50,burn=1):
         instances = [variablizer.transform(t) for t in instances]
 
     tree = TrestleTree()
-    tree.fit(instances,iterations=burn)
+    tree.fit(instances, iterations=burn)
 
     # pprint.pprint(tree.root.output_json())
 
-    with open('output.js','w') as out:
+    with open('output.js', 'w') as out:
         out.write("var trestle_output = ")
         out.write(json.dumps(tree.root.output_json()))
         out.write(";")
 
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Output example files for testing Viz.')
-    parser.add_argument('-file',choices=["forest","voting","iris","mushroom","rb_com_11","rb_s_07","rb_s_13","molecule","quadruped"],
-                            default="forest",help="which example dataset to use")
-    parser.add_argument('-size',type=int,default=100,help='how many instances to use')
-    parser.add_argument('-prune',action='store_true',help='whether to output the tree with pruning applied.')
-    parser.add_argument('-seed',type=int,default=50,help='seed to use when shuffling instances for training.')
-    parser.add_argument('-burn',type=int,default=1,help='number of iterations to burn in the data.')
+    parser.add_argument('-file', choices=["forest", "voting", "iris",
+                                          "mushroom", "rb_com_11", "rb_s_07",
+                                          "rb_s_13", "molecule", "quadruped"],
+                        default="forest",
+                        help="which example dataset to use")
+    parser.add_argument('-size', type=int, default=100,
+                        help='how many instances to use')
+    parser.add_argument('-prune', action='store_true',
+                        help='whether to output the tree with pruning applied.')
+    parser.add_argument('-seed', type=int, default=50,
+                        help='seed to use when shuffling instances for training.')
+    parser.add_argument('-burn', type=int, default=1,
+                        help='number of iterations to burn in the data.')
 
     args = parser.parse_args()
 
     print(args.file)
-    output_json(args.file,args.size,args.prune,args.seed,args.burn)
+    output_json(args.file, args.size, args.prune, args.seed, args.burn)

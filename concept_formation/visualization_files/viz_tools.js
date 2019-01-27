@@ -95,17 +95,18 @@
             $.inArray(vals[1].toLowerCase(), ["failure", "fail", "nay", "no", "n", "con"]) > -1;
     }
 
-    vt.binaryRatio = function(c, attr, rootObj){
+    vt.binaryRatio = function(c, targetAttr, rootObj){
         var rootVals = Object.keys(rootObj['counts'][targetAttr]);
         rootVals.sort();
         rootVals.reverse();
         if (c.counts) { c = c.counts; }
+        c = c[targetAttr]
         var values = Object.keys(c);
         values.sort();
         values.reverse();
 
         //Special case to properly sort a success/failure binary
-        if (isPositiveBinary(rootVals)) {
+        if (vt.isPositiveBinary(rootVals)) {
             values.reverse();
             rootVals.reverse();
         }

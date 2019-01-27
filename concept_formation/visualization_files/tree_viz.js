@@ -51,7 +51,7 @@ var TreeRenderer = /** @class */ (function() {
             } else if (vType === "binary") {
                 at_scale.scale = d3.scaleSequential(d3.interpolateViridis);
                 at_scale.cat_scale = d3.scaleOrdinal(d3.schemeCategory10).domain(vals);
-                at_scale.num_scale = d3.scaleSequential(d3.interpolateViridis);
+                at_scale.num_scale = d3.scaleSequential(d3.interpolateViridis).domain([0,1]);
             } else if (vType === "numeric") {
                 var mm = vt.min_max(rootObj, attr, [Infinity, -Infinity]);
                 if (mm[0] === mm[1]) {
@@ -204,7 +204,7 @@ var TreeRenderer = /** @class */ (function() {
                     if ($("#binary-style").val() === "categorical") {
                         circle.css("fill", scale.cat_scale(vt.majorityValue(d,trgtAttr), trgtAttr));
                     } else {
-                        circle.css("fill", scale.num_scale(vt.binaryRatio(d,trgtAttr,rootObj), trgtAttr));
+                        circle.css("fill", scale.num_scale(vt.binaryRatio(d,trgtAttr,local_data), trgtAttr));
                     }
                     break;
 
@@ -453,8 +453,13 @@ var TreeRenderer = /** @class */ (function() {
 
     TreeRenderer.prototype.updateFilters = function() {
         populateColorByOptions();
-        this.colorSelectChanged();
-        updateAVTable(this.focusNode.data);
+        // this.colorSelectChanged();
+        if(this.focusNode){
+            updateAVTable(this.focusNode.data);
+        }
+        else {
+            updateAVTable(local_data);   
+        }
     }
 
     TreeRenderer.prototype.searchConceptByName = function(e) {
