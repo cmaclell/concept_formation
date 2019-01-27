@@ -160,6 +160,29 @@ def test_cobweb_infer_missing():
     inst = tree.infer_missing({})
     assert inst == {'a': '1'}
 
+    tree = CobwebTree()
+    tree.ifit({'a': '1', 'b': '1'})
+    inst = tree.infer_missing({'a': '1'})
+    assert inst == {'a': '1', 'b': '1'}
+
+    tree.ifit({'a': '2', 'b': '2'})
+    inst = tree.infer_missing({'a': '1'})
+    assert inst == {'a': '1', 'b': '1'}
+    inst = tree.infer_missing({'a': '2'})
+    assert inst == {'a': '2', 'b': '2'}
+
+    tree.ifit({'a': '2', 'b': '3'})
+    tree.ifit({'a': '2', 'b': '3'})
+    inst = tree.infer_missing({'a': '2'})
+    assert inst == {'a': '2', 'b': '3'}
+
+    vals = []
+    for i in range(10):
+        inst = tree.infer_missing({'a': '2'}, 'sampled')
+        vals.append(inst['b'])
+    assert len(set(vals)) == 2
+
+    tree = CobwebTree()
     tree.ifit({'a': '1'})
     tree.ifit({'a': '2'})
     inst = tree.infer_missing({}, 'most likely')
