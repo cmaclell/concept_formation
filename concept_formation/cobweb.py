@@ -40,9 +40,6 @@ class CobwebTree(object):
 
     def _sanity_check_instance(self, instance):
         for attr in instance:
-            if instance[attr] is None:
-                raise ValueError("Attributes with value None should"
-                                 " be manually removed.")
             try:
                 hash(attr)
                 attr[0]
@@ -62,6 +59,9 @@ class CobwebTree(object):
                                  ' in instance: '+str(instance) +
                                  ',\n'+type(self).__name__ +
                                  ' only works with hashable values.')
+            if instance[attr] is None:
+                raise ValueError("Attributes with value None should"
+                                 " be manually removed.")
 
     def ifit(self, instance):
         """

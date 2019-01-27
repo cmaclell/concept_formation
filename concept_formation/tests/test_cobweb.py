@@ -1,9 +1,11 @@
 from __future__ import print_function, unicode_literals
 from __future__ import absolute_import, division
-import unittest
 import random
 
+import pytest
+
 from concept_formation.cobweb import CobwebTree
+from concept_formation.cobweb import CobwebNode
 
 
 def verify_counts(node):
@@ -53,23 +55,73 @@ def verify_counts(node):
         verify_counts(child)
 
 
-class TestCobweb(unittest.TestCase):
-
-    def test_cobweb(self):
-        tree = CobwebTree()
-        for i in range(40):
-            data = {}
-            data['a1'] = random.choice(['v1', 'v2', 'v3', 'v4'])
-            data['a2'] = random.choice(['v1', 'v2', 'v3', 'v4'])
-            tree.ifit(data)
-        verify_counts(tree.root)
-
-    def test_empty_instance(self):
-        t = CobwebTree()
-        t.ifit({'x': 1})
-        t.ifit({'x': 2})
-        t.categorize({})
+def test_cobweb_init():
+    tree = CobwebTree()
+    assert isinstance(tree.root, CobwebNode)
+    assert tree == tree.root.tree
 
 
-if __name__ == "__main__":
-    unittest.main()
+def test_cobweb_clear():
+    tree = CobwebTree()
+    tree.ifit({'a': 'b'})
+    tree.clear()
+
+    assert tree.root.count == 0
+    assert isinstance(tree.root, CobwebNode)
+    assert tree == tree.root.tree
+
+
+def test_cobweb_str():
+    tree = CobwebTree()
+    assert str(tree) == str(tree.root)
+
+
+def test_cobweb_sanity_check():
+    tree = CobwebTree()
+
+    with pytest.raises(ValueError):
+        tree._sanity_check_instance([set()])
+
+    with pytest.raises(ValueError):
+        tree._sanity_check_instance({1: 'a'})
+
+    with pytest.raises(ValueError):
+        tree._sanity_check_instance({'a': set([])})
+
+    with pytest.raises(ValueError):
+        tree._sanity_check_instance({'a': None})
+
+
+def test_cobweb_ifit():
+    tree = CobwebTree()
+    tree.ifit({'a': 'b'})
+
+    assert tree.root.count == 1
+    assert len(tree.root.children) == 0
+    assert 'a' in tree.root.av_counts
+    assert 'b' in tree.root.av_counts['a']
+
+
+def test_cobweb_fit():
+    tree = CobwebTree()
+    tree2 = CobwebTree()
+    examples = [{'a': 'a'}, {'b': 'b'}, {'c': 'c'}]
+    tree.fit(examples)
+    tree2.fit(examples)
+
+
+def test_cobweb():
+    tree = CobwebTree()
+    for i in range(40):
+        data = {}
+        data['a1'] = random.choice(['v1', 'v2', 'v3', 'v4'])
+        data['a2'] = random.choice(['v1', 'v2', 'v3', 'v4'])
+        tree.ifit(data)
+    verify_counts(tree.root)
+
+
+def test_empty_instance():
+    t = CobwebTree()
+    t.ifit({'x': 1})
+    t.ifit({'x': 2})
+    t.categorize({})
