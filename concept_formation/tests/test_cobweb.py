@@ -55,21 +55,6 @@ def verify_counts(node):
         verify_counts(child)
 
 
-def compare_two_nodes(node1, node2):
-    if node1.count != node2.count:
-        return False
-    if node1.av_counts != node2.av_counts:
-        return False
-    if len(node1.children) != len(node2.children):
-        return False
-
-    for i in range(len(node1.children)):
-        if not compare_two_nodes(node1.children[i], node2.children[i]):
-            return False
-
-    return True
-
-
 def test_cobweb_init():
     tree = CobwebTree()
     assert isinstance(tree.root, CobwebNode)
@@ -118,40 +103,120 @@ def test_cobweb_ifit():
 
 
 def test_cobweb_fit():
-    tree = CobwebTree()
+    tree1 = CobwebTree()
     tree2 = CobwebTree()
     tree3 = CobwebTree()
-    tree4 = CobwebTree()
     examples = []
-    for i in range(6):
+    for i in range(10):
         data = {}
-        data['a1'] = random.choice(['v%i' % i for i in range(20)])
-        data['a2'] = random.choice(['v%i' % i for i in range(20)])
+        data['a1'] = random.choice(['v%i' % i for i in range(4)])
+        data['a2'] = random.choice(['v%i' % i for i in range(4)])
         examples.append(data)
 
-    tree.fit(examples, randomize_first=False)
-    tree2.fit(examples, randomize_first=False)
-    tree3.fit(examples, randomize_first=True)
-    tree4.fit(examples, iterations=2)
+    tree1.fit(examples, randomize_first=False)
+    tree2.fit(examples, randomize_first=True)
+    tree3.fit(examples, iterations=2)
 
-    assert compare_two_nodes(tree.root, tree2.root) is True
-    assert compare_two_nodes(tree.root, tree3.root) is False
-    assert len(tree.root.children) == len(tree2.root.children)
-    assert len(tree.root.children) != len(tree4.root.children)
+    assert tree1.root.count == tree2.root.count
+    assert tree1.root.count * 2 == tree3.root.count
 
 
-def test_cobweb():
+def test_cobweb_cobweb():
     tree = CobwebTree()
     for i in range(40):
         data = {}
-        data['a1'] = random.choice(['v1', 'v2', 'v3', 'v4'])
-        data['a2'] = random.choice(['v1', 'v2', 'v3', 'v4'])
+        data['a1'] = random.choice(['v%i' % i for i in range(4)])
+        data['a2'] = random.choice(['v%i' % i for i in range(4)])
         tree.ifit(data)
     verify_counts(tree.root)
 
 
-def test_empty_instance():
-    t = CobwebTree()
-    t.ifit({'x': 1})
-    t.ifit({'x': 2})
-    t.categorize({})
+def test_cobweb_categorize():
+    """This tests that categorize always goes to a leaf."""
+    tree = CobwebTree()
+    node = tree.categorize({})
+    assert len(node.children) == 0
+
+    for i in range(15):
+        data = {}
+        data['a1'] = random.choice(['v%i' % i for i in range(4)])
+        data['a2'] = random.choice(['v%i' % i for i in range(4)])
+        tree.ifit(data)
+
+    node = tree.categorize({})
+    assert len(node.children) == 0
+
+    for i in range(10):
+        data = {}
+        data['a1'] = random.choice(['v%i' % i for i in range(4)])
+        data['a2'] = random.choice(['v%i' % i for i in range(4)])
+        node = tree.categorize(data)
+        assert len(node.children) == 0
+
+
+def test_cobweb_infer_missing():
+    tree = CobwebTree()
+    tree.ifit({'a': '1'})
+    inst = tree.infer_missing({})
+    assert inst == {'a': '1'}
+
+    tree.ifit({'a': '1'})
+    tree.ifit({'a': '2'})
+    inst = tree.infer_missing({}, 'most likely')
+    assert inst == {'a': '1'}
+
+    vals = []
+    for i in range(10):
+        inst = tree.infer_missing({}, 'sampled')
+        vals.append(inst['a'])
+    assert len(set(vals)) == 2
+
+
+def test_cobwebnode_init():
+    node = CobwebNode()
+
+    assert node.count == 0
+    assert node.av_counts == {}
+    assert node.children == []
+    assert node.parent is None
+    assert node.tree is None
+
+    node.increment_counts({'a': '1'})
+
+    node2 = CobwebNode()
+    node2.increment_counts({'b': '2'})
+    node.children.append(node2)
+
+    node3 = CobwebNode(node)
+    assert node3.count == 1
+    assert 'a' in node3.av_counts
+    assert '1' in node3.av_counts['a']
+    assert len(node3.children) == 1
+    assert 'b' in node3.children[0].av_counts
+    assert '2' in node3.children[0].av_counts['b']
+
+
+def test_cobwebnode_shallow_copy():
+    node = CobwebNode()
+
+    assert node.count == 0
+    assert node.av_counts == {}
+    assert node.children == []
+    assert node.parent is None
+    assert node.tree is None
+
+    node.increment_counts({'a': '1'})
+
+    node2 = CobwebNode()
+    node2.increment_counts({'b': '2'})
+    node.children.append(node2)
+
+    node3 = node.shallow_copy()
+    assert node3.count == 1
+    assert 'a' in node3.av_counts
+    assert '1' in node3.av_counts['a']
+    assert len(node3.children) == 0
+
+
+def test_cobwebnode_attrs():
+    pass
