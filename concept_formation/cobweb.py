@@ -203,7 +203,7 @@ class CobwebTree(object):
 
     def _cobweb_categorize(self, instance):
         """
-        A cobweb specific version of categorize, not inteded to be
+        A cobweb specific version of categorize, not intended to be
         externally called.
 
         .. seealso:: :meth:`CobwebTree.categorize`
