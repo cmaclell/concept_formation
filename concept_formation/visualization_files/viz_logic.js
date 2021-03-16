@@ -547,7 +547,7 @@
   }
 
   window.make_property_sheet = function(node_data) {
-    d = node_data['counts']
+    d = node_data['counts'];
     
     var property_sheet = $("#properties"); 
     var prop_filter = $("#property-filter");
