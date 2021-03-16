@@ -133,8 +133,8 @@ class Cobweb3Tree(CobwebTree):
 
 class Cobweb3Node(CobwebNode):
     """
-    A Cobweb3Node represents a concept within the knoweldge base of a
-    particular :class:`Cobweb3Tree`. Each node contians a probability table
+    A Cobweb3Node represents a concept within the knowledge base of a
+    particular :class:`Cobweb3Tree`. Each node contains a probability table
     that can be used to calculate the probability of different attributes given
     the concept that the node represents.
 
@@ -426,7 +426,7 @@ class Cobweb3Node(CobwebNode):
         noise with :math:`\\sigma_{noise} = \\frac{1}{2 * \\sqrt{\\pi}}`).
 
         The integral of this gaussian product is another gaussian with
-        :math:`\\mu` equal to the concept attribut mean and :math:`\\sigma =
+        :math:`\\mu` equal to the concept attribute mean and :math:`\\sigma =
         \\sqrt{\\sigma_{attr}^2 + 2 * \\sigma_{noise}^2}` or, slightly
         simplified, :math:`\\sigma =
         \\sqrt{\\sigma_{attr}^2 + 2 * \\frac{1}{2 * \\pi}}`.
