@@ -589,6 +589,19 @@ class Cobweb3Node(CobwebNode):
                 else:
                     temp[str(attr)][str(val)] = self.av_counts[attr][val]
 
+        if self.children:
+            temp['_category utility'] = {}
+            temp['_category utility']["#ContinuousValue#"] = {
+                'mean': self.category_utility(), 'std': 1, 'n': 1}
+
+        temp['_corter_and_gluck_category utility'] = {}
+        temp['_corter_and_gluck_category utility']["#ContinuousValue#"] = {
+            'mean': self.corter_and_gluck_category_utility(), 'std': 1, 'n': 1}
+
+        # temp['_binary_category utility'] = {}
+        # temp['_binary_category utility']["#ContinuousValue#"] = {
+        #     'mean': self.binary_category_utility(), 'std': 1, 'n': 1}
+
         for child in self.children:
             output["children"].append(child.output_json())
 

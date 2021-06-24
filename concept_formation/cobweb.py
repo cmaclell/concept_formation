@@ -14,6 +14,9 @@ from math import log
 from concept_formation.utils import weighted_choice
 from concept_formation.utils import most_likely_choice
 
+clumping_mult = 0.5
+clumping_const = 1
+
 
 class CobwebTree(object):
     """
@@ -442,7 +445,41 @@ class CobwebNode(object):
                                       child.expected_correct_guesses())
 
         return ((child_correct_guesses - self.expected_correct_guesses()) /
-                len(self.children))
+                (clumping_mult * len(self.children) + clumping_const))
+
+    def corter_and_gluck_category_utility(self):
+        if self.count == 0:
+            return 0.0
+
+        root = self.tree.root
+        p_of_c = self.count / root.count
+
+        return p_of_c * (self.expected_correct_guesses() -
+                         root.expected_correct_guesses())
+
+    def binary_category_utility(self):
+        if not self.parent:
+            return 0.0
+
+        temp = self.__class__()
+        curr = self
+        while curr.parent:
+            for child in curr.parent.children:
+                if child != curr:
+                    temp.update_counts_from_node(child)
+            curr = curr.parent
+
+        root = self.tree.root
+
+        assert root.count - self.count == temp.count
+
+        p_of_c = self.count / root.count
+        p_of_not_c = 1 - (self.count / root.count)
+
+        return (p_of_c * (self.expected_correct_guesses() -
+                          root.expected_correct_guesses()) +
+                p_of_not_c * (temp.expected_correct_guesses() -
+                              root.expected_correct_guesses()))
 
     def get_best_operation(self, instance, best1, best2, best1_cu,
                            possible_ops=["best", "new", "merge", "split"]):
@@ -564,7 +601,7 @@ class CobwebNode(object):
 
         best1 = children_relative_cu[0][3]
         best1_relative_cu = children_relative_cu[0][0]
-        best1_cu = (best1_relative_cu / (self.count+1) / len(self.children)
+        best1_cu = (best1_relative_cu / (self.count+1) / (clumping_mult * len(self.children) + clumping_const)
                     + const)
 
         best2 = None
@@ -607,7 +644,7 @@ class CobwebNode(object):
                       c.expected_correct_guesses())
 
         const -= ec_root_u
-        const /= len(self.children)
+        const /= (clumping_mult * len(self.children) + clumping_const)
         return const
 
     def relative_cu_for_insert(self, child, instance):
@@ -1049,6 +1086,19 @@ class CobwebNode(object):
                 temp[str(attr)] = {str(value): self.av_counts[attr][value] for
                                    value in self.av_counts[attr]}
                 # temp[attr + " = " + str(value)] = self.av_counts[attr][value]
+
+        if self.children:
+            temp['_category utility'] = {}
+            temp['_category utility']["#ContinuousValue#"] = {
+                'mean': self.category_utility(), 'std': 1, 'n': 1}
+
+        temp['_corter_and_gluck_category utility'] = {}
+        temp['_corter_and_gluck_category utility']["#ContinuousValue#"] = {
+            'mean': self.corter_and_gluck_category_utility(), 'std': 1, 'n': 1}
+
+        temp['_binary_category utility'] = {}
+        temp['_binary_category utility']["#ContinuousValue#"] = {
+            'mean': self.binary_category_utility(), 'std': 1, 'n': 1}
 
         for child in self.children:
             output["children"].append(child.output_json())

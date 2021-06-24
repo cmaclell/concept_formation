@@ -3,11 +3,11 @@ import numpy as np
 from sklearn.datasets import load_digits
 from sklearn.model_selection import StratifiedShuffleSplit
 
-from concept_formation.convo_cobweb import ConvoCobwebTree
+from concept_formation.cobweb3 import Cobweb3Tree
 
 from concept_formation.visualize import visualize
 
-digits = load_digits(n_class=2)
+digits = load_digits(n_class=5)
 
 imgs = digits.images  # [:200, :, :]
 labels = digits.target  # [:200]
@@ -20,7 +20,7 @@ errors = []
 # run_length = 50
 
 runs = 1
-run_length = 20
+run_length = 100
 
 for r in range(runs):
     print()
@@ -35,23 +35,24 @@ for r in range(runs):
 
     print(y)
 
-    tree = ConvoCobwebTree(filter_size=4)
+    tree = Cobweb3Tree()
 
     pred = []
 
     for i, img in enumerate(X):
         print("loading {} of {}.".format(i, len(X)))
-        inst = {}
-        inst['image_data'] = img
+        inst = {"{},{}".format(rowi, coli): v for rowi, row in enumerate(img)
+                for coli, v in enumerate(row) }
+        # inst['image_data'] = img
         # inst['test'] = random()
         # inst['_label'] = "{}".format(labels[i])
         curr = tree.categorize(inst)
 
-        while curr and '_label' not in curr.av_counts:
+        while curr and 'label' not in curr.av_counts:
             curr = curr.parent
 
         if curr:
-            p = curr.predict('_label')
+            p = curr.predict('label')
         else:
             p = 0
         if p is None:
@@ -59,9 +60,11 @@ for r in range(runs):
         print("pred={}, actual={}".format(p, y[i]))
         pred.append(int(p))
 
-        inst['_label'] = "{}".format(y[i])
+        inst['label'] = "{}".format(y[i])
 
         tree.ifit(inst)
+
+        print('# clusters', len(tree.root.children))
 
     print("Predicted")
     print([label for label in pred])
@@ -78,7 +81,7 @@ print(errors)
 
 errors = np.array(errors)
 
-# plt.plot(np.mean(errors, 0))
-# plt.show()
+plt.plot(np.mean(errors, 0))
+plt.show()
 
 visualize(tree)

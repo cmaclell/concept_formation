@@ -4,9 +4,9 @@ Cobweb3 to support component and relational attributes.
 """
 import numpy as np
 from pprint import pprint
-from collections import Counter
 from math import sqrt
 from math import pi
+from collections import Counter
 
 from concept_formation.utils import isNumber
 from concept_formation.cobweb3 import Cobweb3Tree
@@ -62,6 +62,7 @@ def find_common_parent(node1, node2):
 
     raise ValueError("No common parent, nodes not in same tree.")
 
+
 def is_parent(parent, child):
     curr = child
     while curr:
@@ -76,51 +77,21 @@ class ConvoCobwebNode(Cobweb3Node):
     def __str__(self):
         return "Concept" + str(self.concept_id)
 
-    def expected_correct_guesses(self):
-        """
-        handle concepts as values
-        """
-        correct_guesses = 0.0
-        attr_count = 0
+    def eval_av_merge(self, attr, m, root_ec):
+        child_ec = 0.0
 
-        for attr in self.attrs():
-            attr_count += 1
+        children = Counter()
+        for val in self.av_counts[attr]:
+            if is_parent(m, val):
+                children[m] += self.av_counts[attr][val]
+            else:
+                children[val] += self.av_counts[attr][val]
 
-            concept_avs = Counter()
-            for val in self.av_counts[attr]:
-                if val == cv_key:
-                    scale = 1.0
-                    if self.tree is not None and self.tree.scaling:
-                        inner_attr = self.tree.get_inner_attr(attr)
-                        if inner_attr in self.tree.attr_scales:
-                            inner = self.tree.attr_scales[inner_attr]
-                            scale = ((1/self.tree.scaling) *
-                                     inner.unbiased_std())
+        for child in children:
+            p_of_child = children[child] / self.count
+            child_ec += (p_of_child * child.expected_correct_guesses())
 
-                    # we basically add noise to the std and adjust the
-                    # normalizing constant to ensure the probability of a
-                    # particular value never exceeds 1.
-                    cv = self.av_counts[attr][cv_key]
-                    std = sqrt(cv.scaled_unbiased_std(scale) *
-                               cv.scaled_unbiased_std(scale) +
-                               (1 / (4 * pi)))
-                    prob_attr = cv.num / self.count
-                    correct_guesses += ((prob_attr * prob_attr) *
-                                        (1/(2 * sqrt(pi) * std)))
-                elif isinstance(val, ConvoCobwebNode):
-                    curr = val
-                    while curr:
-                        concept_avs[curr] += self.av_counts[attr][val]
-                        curr = curr.parent
-                else:
-                    prob = (self.av_counts[attr][val]) / self.count
-                    correct_guesses += (prob * prob)
-
-            for val in concept_avs:
-                prob = concept_avs[val] / self.count
-                correct_guesses += (prob * prob) / len(concept_avs)
-
-        return correct_guesses / attr_count
+        return (child_ec - root_ec) / len(children)
 
 
 class ConvoCobwebTree(Cobweb3Tree):
@@ -208,13 +179,26 @@ class ConvoCobwebTree(Cobweb3Tree):
 
         .. seealso:: :meth:`TrestleTree.trestle`
         """
-        instance = {attr: convert_img_to_dict_tree(
-            instance[attr], filter_size=self.filter_size, stride=self.stride)
-            if isinstance(instance[attr], np.ndarray) else instance[attr] for
-            attr in instance}
-        # pprint(instance)
+        for attr in instance:
+            if isinstance(instance[attr], np.ndarray):
+                temp = convert_img_to_dict_tree(instance[attr],
+                                                filter_size=self.filter_size,
+                                                stride=self.stride)
+                break
 
-        return self.convo_cobweb(instance)
+        for attr in instance:
+            if not isinstance(instance[attr], np.ndarray):
+                temp[attr] = instance[attr]
+
+        return self.convo_cobweb(temp)
+
+        # instance = {attr: convert_img_to_dict_tree(
+        #     instance[attr], filter_size=self.filter_size, stride=self.stride)
+        #     if isinstance(instance[attr], np.ndarray) else instance[attr] for
+        #     attr in instance}
+        # # pprint(instance)
+
+        # return self.convo_cobweb(instance)
 
     def convo_cobweb(self, instance):
         """
@@ -242,7 +226,29 @@ class ConvoCobwebTree(Cobweb3Tree):
         #     else:
         #         new[attr] = instance[attr]
 
-        return self.cobweb(new)
+        # return self.cobweb(new)
+
+        curr = self.cobweb(new)
+        best = curr
+        best_val = best.corter_and_gluck_category_utility()
+
+        # best_val = float('-inf')
+
+        # if curr.parent:
+        #     best_val = curr.parent.category_utility()
+        # else:
+        #     best_val = float('-inf')
+
+        # while curr.parent and curr.parent.parent:
+        while curr.parent:
+            curr = curr.parent
+            score = curr.corter_and_gluck_category_utility()
+            # score = curr.parent.category_utility()
+            if score > best_val:
+                best = curr
+                best_val = score
+
+        return best
 
     def _convo_cobweb_categorize(self, instance):
         """
@@ -274,14 +280,48 @@ class ConvoCobwebTree(Cobweb3Tree):
         #     else:
         #         new[attr] = instance[attr]
 
-        return self._cobweb_categorize(new)
+        # return self._cobweb_categorize(new)
+
+        curr = self._cobweb_categorize(new)
+        best = curr
+        best_val = best.corter_and_gluck_category_utility()
+        # best_val = float('-inf')
+
+        # if curr.parent:
+        #     best_val = curr.parent.category_utility()
+        # else:
+        #     best_val = float('-inf')
+
+        # while curr.parent and curr.parent.parent:
+        while curr.parent:
+            curr = curr.parent
+            score = curr.corter_and_gluck_category_utility()
+            # score = curr.parent.category_utility()
+            if score > best_val:
+                best = curr
+                best_val = score
+
+        return best
 
     def categorize(self, instance):
         """
         convo cobweb categorize without modifying.
         """
-        instance = {attr: convert_img_to_dict_tree(
-            instance[attr], filter_size=self.filter_size, stride=self.stride)
-            if isinstance(instance[attr], np.ndarray) else instance[attr] for
-            attr in instance}
-        return self._convo_cobweb_categorize(instance)
+        for attr in instance:
+            if isinstance(instance[attr], np.ndarray):
+                temp = convert_img_to_dict_tree(instance[attr],
+                                                filter_size=self.filter_size,
+                                                stride=self.stride)
+                break
+
+        for attr in instance:
+            if not isinstance(instance[attr], np.ndarray):
+                temp[attr] = instance[attr]
+
+        return self._convo_cobweb_categorize(temp)
+
+        # instance = {attr: convert_img_to_dict_tree(
+        #     instance[attr], filter_size=self.filter_size, stride=self.stride)
+        #     if isinstance(instance[attr], np.ndarray) else instance[attr] for
+        #     attr in instance}
+        # return self._convo_cobweb_categorize(instance)

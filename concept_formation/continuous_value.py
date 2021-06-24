@@ -6,7 +6,34 @@ from math import sqrt
 from math import exp
 from math import pi
 
+from scipy.stats import t
+
 from concept_formation.utils import c4
+
+
+class NormalGamma():
+
+    def __init__(self):
+        self.cv = ContinuousValue()
+        self.mu = 0
+        self.k = 1
+        self.a = 1
+        self.b = 1
+
+    def update(self, val):
+        self.cv.update(val)
+
+    def prob(self, val):
+        mu = ((self.k * self.mu + self.cv.num * self.cv.unbiased_mean()) / 
+              (self.k + self.cv.num))
+        k = self.k = self.cv.num
+        alpha = self.a + self.cv.num/2
+        beta = 1/(1/self.b + 1/2 * self.cv.meanSq + self.k * self.cv.num *
+                  (self.cv.unbiased_mean() - self.mu)**2 / (2 * (self.k +
+                                                                 self.cv.num)))
+
+        return t.pdf(val, 2 * alpha, mu,
+                     np.sqrt(((k * self.cv.num) / (k + self.cv.num)) * alpha * beta))
 
 
 class ContinuousValue():
@@ -76,6 +103,9 @@ class ContinuousValue():
         :return: biased estimate of the std (i.e., the sample std)
         :rtype: float
         """
+        if self.num < 1:
+            return 0.0
+
         return sqrt(self.meanSq / (self.num))
 
     def unbiased_std(self):
