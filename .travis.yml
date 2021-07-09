@@ -5,8 +5,13 @@ python:
 install:
   - pip install coveralls
   - pip install .
-script: pytest
+  - pip install -r test_requirements
+script:
+  - pytest
 after_success:
+  - coverage run --source concept_formation -m pytest
+  - coverage report
+  - flake8 concept_formation
   - coveralls
 deploy:
   provider: pypi
