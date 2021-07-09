@@ -1,14 +1,10 @@
 language: python
-sudo: required
-dist: xenial
 python:
-  - '3.7'
-  - 'pypy3.5-6.0'
+  - '3.9'
+  - 'pypy3'
 install:
-  - pip install tox-travis
   - pip install coveralls
-script:
-  - tox
+script: pytest
 after_success:
   - coveralls
 deploy:
