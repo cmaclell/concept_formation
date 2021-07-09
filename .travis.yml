@@ -1,14 +1,15 @@
 language: python
-sudo: required
-dist: xenial
 python:
-  - '3.7'
-  - 'pypy3.5-6.0'
+  - 'nightly'
+  - 'pypy3'
 install:
-  - pip install tox-travis
   - pip install coveralls
+  - pip install .
+  - pip install -r test_requirements.txt
 script:
-  - tox
+  - flake8 concept_formation
+  - coverage run --source concept_formation -m pytest
+  - coverage report
 after_success:
   - coveralls
 deploy:
