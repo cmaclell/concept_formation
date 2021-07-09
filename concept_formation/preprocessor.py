@@ -1113,43 +1113,43 @@ class ListsToRelations(Preprocessor):
             else:
                 new_instance[attr] = instance[attr]
 
-        for l in elements:
-            new_list = [elements[l].pop(0)]
+        for ele in elements:
+            new_list = [elements[ele].pop(0)]
             change = True
 
-            while len(elements[l]) > 0 and change:
+            while len(elements[ele]) > 0 and change:
                 change = False
 
                 # chain to front
                 front = True
                 while front is not None:
                     front = None
-                    for a, b in order[l]:
+                    for a, b in order[ele]:
                         if b == new_list[0]:
                             change = True
                             front = (a, b)
-                            elements[l].remove(a)
+                            elements[ele].remove(a)
                             new_list.insert(0, a)
                             break
                     if front is not None:
-                        order[l].remove(front)
+                        order[ele].remove(front)
 
                 # chain to end
                 back = True
                 while back is not None:
                     back = None
-                    for a, b in order[l]:
+                    for a, b in order[ele]:
                         if a == new_list[-1]:
                             change = True
                             back = (a, b)
-                            elements[l].remove(b)
+                            elements[ele].remove(b)
                             new_list.append(b)
                             break
                     if back is not None:
-                        order[l].remove(back)
+                        order[ele].remove(back)
 
-            if len(elements[l]) == 0:
-                path = self._get_path(l)
+            if len(elements[ele]) == 0:
+                path = self._get_path(ele)
                 current = new_instance
                 while len(path) > 1:
                     current = current[path.pop(0)]
