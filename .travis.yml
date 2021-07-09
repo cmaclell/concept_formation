@@ -8,7 +8,6 @@ install:
   - pip install -r test_requirements.txt
 script:
   - flake8 concept_formation
-  - pytest
   - coverage run --source concept_formation -m pytest
   - coverage report
 after_success:
