@@ -1,9 +1,10 @@
 language: python
 python:
-  - '3.9'
+  - 'nightly'
   - 'pypy3'
 install:
   - pip install coveralls
+  - pip install .
 script: pytest
 after_success:
   - coveralls
