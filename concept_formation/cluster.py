@@ -179,9 +179,9 @@ def CU(cluster, leaves):
     for c in set(cluster):
         temp_child = cluster[0].__class__()
         temp_child.tree = c.tree
-        for l in leaves:
-            if c.is_parent(l):
-                temp_child.update_counts_from_node(l)
+        for leaf in leaves:
+            if c.is_parent(leaf):
+                temp_child.update_counts_from_node(leaf)
         temp_root.update_counts_from_node(temp_child)
         temp_root.children.append(temp_child)
     return -temp_root.category_utility()
