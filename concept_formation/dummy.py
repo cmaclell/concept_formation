@@ -14,6 +14,7 @@ from concept_formation.structure_mapper import StructureMapper
 from concept_formation.preprocessor import SubComponentProcessor
 from concept_formation.preprocessor import Flattener
 from concept_formation.preprocessor import Pipeline
+from concept_formation.preprocessor import NameStandardizer
 
 
 class DummyTree(TrestleTree):
@@ -60,8 +61,9 @@ class DummyTree(TrestleTree):
         :rtype: Cobweb3Node
         """
         if do_mapping:
-            pipeline = Pipeline(SubComponentProcessor(), Flattener(),
-                                StructureMapper(self.root, gensym=self.gensym))
+            pipeline = Pipeline(NameStandardizer(self.gensym),
+                                Flattener(), SubComponentProcessor(),
+                                StructureMapper(self.root))
         else:
             pipeline = Pipeline(SubComponentProcessor(), Flattener())
         temp_instance = pipeline.transform(instance)
