@@ -9,10 +9,6 @@ from concept_formation import utils
 from concept_formation.cobweb3 import ContinuousValue
 
 
-def test_fail():
-    assert False
-
-
 def test_most_likely_choice():
     n = 100
     some_list = [('a', 0.99), ('b', 0.01)]
