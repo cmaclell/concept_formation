@@ -16,6 +16,8 @@ from concept_formation.continuous_value import ContinuousValue
 
 
 def apply_filter(img_dict, filter_size, stride):
+    # TODO update to use stride appropriately
+
     ret = {}
 
     size = int(np.sqrt(len(img_dict.keys())))
@@ -94,7 +96,7 @@ class ConvoCobwebNode(Cobweb3Node):
         return (child_ec - root_ec) / len(children)
 
 
-class ConvoCobwebTree(Cobweb3Tree):
+class ConvoCobwebTree:
     """
     A new version of cobweb specificaially for image data. It accepts images
     and decomposes them into convolutional trees, which are then passed to a
@@ -136,28 +138,19 @@ class ConvoCobwebTree(Cobweb3Tree):
     :type structure_map_internally: boolean
     """
 
-    def __init__(self, filter_size=3, stride=1, scaling=0.5,
-                 inner_attr_scaling=True):
+    def __init__(self, filter_size=3, stride=1):
         """
         The tree constructor.
         """
-        self.gensym_counter = 0
-        self.root = ConvoCobwebNode()
-        self.root.tree = self
-        self.scaling = scaling
-        self.inner_attr_scaling = inner_attr_scaling
-        self.attr_scales = {}
         self.filter_size = filter_size
         self.stride = stride
+        self.trees = {}
 
     def clear(self):
         """
         Clear the tree but keep initialization parameters
         """
-        self.gensym_counter = 0
-        self.root = ConvoCobwebNode()
-        self.root.tree = self
-        self.attr_scales = {}
+        self.trees = {}
 
     def ifit(self, instance):
         """
@@ -200,7 +193,7 @@ class ConvoCobwebTree(Cobweb3Tree):
 
         # return self.convo_cobweb(instance)
 
-    def convo_cobweb(self, instance):
+    def convo_cobweb(self, instance, level=0):
         """
         The main labyrinth algorithm.
         """
@@ -209,7 +202,7 @@ class ConvoCobwebTree(Cobweb3Tree):
         #        instance}
 
         new = {'sub-component for {}'.format(attr) if isinstance(instance[attr], dict) else
-               attr: self.convo_cobweb(instance[attr]) if
+               attr: 'Concept-{}'.format(self.convo_cobweb(instance[attr], level=level+1).concept_id) if
                isinstance(instance[attr], dict) else instance[attr] for attr in
                instance}
 
@@ -228,29 +221,20 @@ class ConvoCobwebTree(Cobweb3Tree):
 
         # return self.cobweb(new)
 
-        curr = self.cobweb(new)
-        best = curr
-        best_val = best.corter_and_gluck_category_utility()
+        if level not in self.trees:
+            self.trees[level] = Cobweb3Tree()
 
-        # best_val = float('-inf')
-
-        # if curr.parent:
-        #     best_val = curr.parent.category_utility()
-        # else:
-        #     best_val = float('-inf')
+        curr = self.trees[level].cobweb(new)
 
         # while curr.parent and curr.parent.parent:
         while curr.parent:
+            if curr.parent.parent is None:
+                break
             curr = curr.parent
-            score = curr.corter_and_gluck_category_utility()
-            # score = curr.parent.category_utility()
-            if score > best_val:
-                best = curr
-                best_val = score
 
-        return best
+        return curr
 
-    def _convo_cobweb_categorize(self, instance):
+    def _convo_cobweb_categorize(self, instance, level=0):
         """
         The structure maps the instance, categorizes the matched instance, and
         returns the resulting concept.
@@ -266,7 +250,7 @@ class ConvoCobwebTree(Cobweb3Tree):
 
         new = {'sub-component for {}'.format(attr) if
                isinstance(instance[attr], dict) else attr:
-               self._convo_cobweb_categorize(instance[attr]) if
+               'Concept-{}'.format(self._convo_cobweb_categorize(instance[attr], level=level+1).concept_id) if
                isinstance(instance[attr], dict) else instance[attr] for attr in
                instance}
 
@@ -282,26 +266,18 @@ class ConvoCobwebTree(Cobweb3Tree):
 
         # return self._cobweb_categorize(new)
 
-        curr = self._cobweb_categorize(new)
-        best = curr
-        best_val = best.corter_and_gluck_category_utility()
-        # best_val = float('-inf')
+        if level not in self.trees:
+            self.trees[level] = Cobweb3Tree()
 
-        # if curr.parent:
-        #     best_val = curr.parent.category_utility()
-        # else:
-        #     best_val = float('-inf')
+        curr = self.trees[level]._cobweb_categorize(new)
 
         # while curr.parent and curr.parent.parent:
         while curr.parent:
+            if curr.parent.parent is None:
+                break
             curr = curr.parent
-            score = curr.corter_and_gluck_category_utility()
-            # score = curr.parent.category_utility()
-            if score > best_val:
-                best = curr
-                best_val = score
 
-        return best
+        return curr
 
     def categorize(self, instance):
         """

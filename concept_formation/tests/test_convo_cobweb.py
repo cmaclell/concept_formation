@@ -1,3 +1,5 @@
+import time
+
 from matplotlib import pyplot as plt
 import numpy as np
 from sklearn.datasets import load_digits
@@ -81,4 +83,10 @@ errors = np.array(errors)
 # plt.plot(np.mean(errors, 0))
 # plt.show()
 
-visualize(tree)
+visualize(tree.trees[0])
+time.sleep(1)
+
+visualize(tree.trees[1])
+time.sleep(1)
+
+visualize(tree.trees[2])
