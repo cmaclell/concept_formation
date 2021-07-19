@@ -1,102 +1,13 @@
 """
-The Trestle module contains the :class:`TrestleTree` class, which extends
-Cobweb3 to support component and relational attributes.
+The ConvoCobweb module contains the :class:`ConvoCobwebTree` class, which
+extends Cobweb3 to support image attributes (2D ndarrays).
 """
 import numpy as np
-from pprint import pprint
-from math import sqrt
-from math import pi
-from collections import Counter
 
-from concept_formation.utils import isNumber
 from concept_formation.cobweb3 import Cobweb3Tree
-from concept_formation.cobweb3 import Cobweb3Node
-from concept_formation.cobweb3 import cv_key
-from concept_formation.continuous_value import ContinuousValue
 
 
-def apply_filter(img_dict, filter_size, stride):
-    # TODO update to use stride appropriately
-
-    ret = {}
-
-    size = int(np.sqrt(len(img_dict.keys())))
-
-    for row in range(size - filter_size + 1):
-        for col in range(size - filter_size + 1):
-            new = {}
-            for fr in range(filter_size):
-                for fc in range(filter_size):
-                    new["{},{}".format(fr, fc)] = img_dict["{},{}".format(row+fr, col+fc)]
-            ret["{},{}".format(row, col)] = new
-
-    return ret
-
-
-def convert_img_to_dict_tree(img, filter_size, stride):
-    ret = {}
-
-    for row in range(img.shape[0]):
-        for col in range(img.shape[1]):
-            # ret["{},{}".format(row, col)] = {'pixel_intensity': img[row, col]}
-            ret["{},{}".format(row, col)] = img[row, col]
-
-    while np.sqrt(len(ret.keys())) >= filter_size:
-        ret = apply_filter(ret, filter_size, stride)
-
-    return ret
-
-
-def find_common_parent(node1, node2):
-
-    node1_parents = set()
-    curr = node1
-    node1_parents.add(curr)
-    while curr.parent:
-        curr = curr.parent
-        node1_parents.add(curr)
-
-    curr = node2
-    while curr:
-        if curr in node1_parents:
-            return curr
-        curr = curr.parent
-
-    raise ValueError("No common parent, nodes not in same tree.")
-
-
-def is_parent(parent, child):
-    curr = child
-    while curr:
-        if curr == parent:
-            return True
-        curr = curr.parent
-    return False
-
-
-class ConvoCobwebNode(Cobweb3Node):
-
-    def __str__(self):
-        return "Concept" + str(self.concept_id)
-
-    def eval_av_merge(self, attr, m, root_ec):
-        child_ec = 0.0
-
-        children = Counter()
-        for val in self.av_counts[attr]:
-            if is_parent(m, val):
-                children[m] += self.av_counts[attr][val]
-            else:
-                children[val] += self.av_counts[attr][val]
-
-        for child in children:
-            p_of_child = children[child] / self.count
-            child_ec += (p_of_child * child.expected_correct_guesses())
-
-        return (child_ec - root_ec) / len(children)
-
-
-class ConvoCobwebTree:
+class ConvoCobwebTree(Cobweb3Tree):
     """
     A new version of cobweb specificaially for image data. It accepts images
     and decomposes them into convolutional trees, which are then passed to a
@@ -138,10 +49,13 @@ class ConvoCobwebTree:
     :type structure_map_internally: boolean
     """
 
-    def __init__(self, filter_size=3, stride=1):
+    def __init__(self, filter_size=3, stride=1, scaling=0.5,
+                 inner_attr_scaling=True):
         """
         The tree constructor.
         """
+        super().__init__(scaling=0.5, inner_attr_scaling=True)
+
         self.filter_size = filter_size
         self.stride = stride
         self.trees = {}
@@ -150,7 +64,62 @@ class ConvoCobwebTree:
         """
         Clear the tree but keep initialization parameters
         """
+        super().clear()
+
         self.trees = {}
+
+    def process_image(self, img, filter_size, stride, modifying):
+        ret = {}
+
+        for row in range(img.shape[0]):
+            for col in range(img.shape[1]):
+                ret["{},{}".format(row, col)] = img[row, col]
+
+        level = 0
+        while np.sqrt(len(ret.keys())) > filter_size:
+            ret = self.apply_filter(ret, filter_size, stride,
+                                    level=level, modifying=modifying)
+            level += 1
+
+        return ret
+
+    def apply_filter(self, img_dict, filter_size, stride, level, modifying):
+        # TODO update to use stride appropriately
+
+        ret = {}
+
+        size = int(np.sqrt(len(img_dict.keys())))
+        # print('applying filter to size {}'.format(size))
+        # print(img_dict.keys())
+
+        for row in range(0, size - filter_size + 1, stride):
+            for col in range(0, size - filter_size + 1, stride):
+                new = {}
+                for fr in range(filter_size):
+                    for fc in range(filter_size):
+                        new["{},{}".format(fr, fc)] = img_dict[
+                            "{},{}".format(row+fr, col+fc)]
+
+                if level not in self.trees:
+                    self.trees[level] = Cobweb3Tree(
+                        scaling=self.scaling,
+                        inner_attr_scaling=self.inner_attr_scaling)
+
+                if modifying:
+                    curr = self.trees[level].ifit(new)
+                else:
+                    curr = self.trees[level].categorize(new)
+
+                while curr.parent:
+                    if curr.parent.parent is None:
+                        break
+                    curr = curr.parent
+
+                ret["{},{}".format(
+                    row//stride, col//stride)] = "Concept-{}".format(
+                        curr.concept_id)
+
+        return ret
 
     def ifit(self, instance):
         """
@@ -174,110 +143,16 @@ class ConvoCobwebTree:
         """
         for attr in instance:
             if isinstance(instance[attr], np.ndarray):
-                temp = convert_img_to_dict_tree(instance[attr],
-                                                filter_size=self.filter_size,
-                                                stride=self.stride)
+                temp = self.process_image(instance[attr],
+                                          filter_size=self.filter_size,
+                                          stride=self.stride, modifying=True)
                 break
 
         for attr in instance:
             if not isinstance(instance[attr], np.ndarray):
                 temp[attr] = instance[attr]
 
-        return self.convo_cobweb(temp)
-
-        # instance = {attr: convert_img_to_dict_tree(
-        #     instance[attr], filter_size=self.filter_size, stride=self.stride)
-        #     if isinstance(instance[attr], np.ndarray) else instance[attr] for
-        #     attr in instance}
-        # # pprint(instance)
-
-        # return self.convo_cobweb(instance)
-
-    def convo_cobweb(self, instance, level=0):
-        """
-        The main labyrinth algorithm.
-        """
-        # new = {attr: self.convo_cobweb(instance[attr]) if
-        #        isinstance(instance[attr], dict) else instance[attr] for attr in
-        #        instance}
-
-        new = {'sub-component for {}'.format(attr) if isinstance(instance[attr], dict) else
-               attr: 'Concept-{}'.format(self.convo_cobweb(instance[attr], level=level+1).concept_id) if
-               isinstance(instance[attr], dict) else instance[attr] for attr in
-               instance}
-
-        # new = {}
-        # for attr in instance:
-        #     if isinstance(instance[attr], dict):
-        #         node = self.convo_cobweb(instance[attr])
-        #         count = 0
-        #         while node:
-        #             count += 1
-        #             new[(attr, "Concept" + str(node.concept_id))] = True
-        #             node = node.parent
-        #         print(count)
-        #     else:
-        #         new[attr] = instance[attr]
-
-        # return self.cobweb(new)
-
-        if level not in self.trees:
-            self.trees[level] = Cobweb3Tree()
-
-        curr = self.trees[level].cobweb(new)
-
-        # while curr.parent and curr.parent.parent:
-        while curr.parent:
-            if curr.parent.parent is None:
-                break
-            curr = curr.parent
-
-        return curr
-
-    def _convo_cobweb_categorize(self, instance, level=0):
-        """
-        The structure maps the instance, categorizes the matched instance, and
-        returns the resulting concept.
-
-        :param instance: an instance to be categorized into the tree.
-        :type instance: {a1:v1, a2:v2, ...}
-        :return: A concept describing the instance
-        :rtype: concept
-        """
-        # instance = {attr: self.convo_cobweb_categorize(instance[attr]) if
-        #             isinstance(instance[attr], dict) else instance[attr] for
-        #             attr in instance}
-
-        new = {'sub-component for {}'.format(attr) if
-               isinstance(instance[attr], dict) else attr:
-               'Concept-{}'.format(self._convo_cobweb_categorize(instance[attr], level=level+1).concept_id) if
-               isinstance(instance[attr], dict) else instance[attr] for attr in
-               instance}
-
-        # new = {}
-        # for attr in instance:
-        #     if isinstance(instance[attr], dict):
-        #         node = self.convo_cobweb_categorize(instance[attr])
-        #         while node:
-        #             new[(str(node), attr)] = True
-        #             node = node.parent
-        #     else:
-        #         new[attr] = instance[attr]
-
-        # return self._cobweb_categorize(new)
-
-        if level not in self.trees:
-            self.trees[level] = Cobweb3Tree()
-
-        curr = self.trees[level]._cobweb_categorize(new)
-
-        # while curr.parent and curr.parent.parent:
-        while curr.parent:
-            if curr.parent.parent is None:
-                break
-            curr = curr.parent
-
-        return curr
+        return super().ifit(temp)
 
     def categorize(self, instance):
         """
@@ -285,19 +160,13 @@ class ConvoCobwebTree:
         """
         for attr in instance:
             if isinstance(instance[attr], np.ndarray):
-                temp = convert_img_to_dict_tree(instance[attr],
-                                                filter_size=self.filter_size,
-                                                stride=self.stride)
+                temp = self.process_image(instance[attr],
+                                          filter_size=self.filter_size,
+                                          stride=self.stride, modifying=False)
                 break
 
         for attr in instance:
             if not isinstance(instance[attr], np.ndarray):
                 temp[attr] = instance[attr]
 
-        return self._convo_cobweb_categorize(temp)
-
-        # instance = {attr: convert_img_to_dict_tree(
-        #     instance[attr], filter_size=self.filter_size, stride=self.stride)
-        #     if isinstance(instance[attr], np.ndarray) else instance[attr] for
-        #     attr in instance}
-        # return self._convo_cobweb_categorize(instance)
+        return super().categorize(temp)

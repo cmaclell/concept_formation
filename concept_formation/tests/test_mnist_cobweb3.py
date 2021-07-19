@@ -1,16 +1,24 @@
 from matplotlib import pyplot as plt
 import numpy as np
-from sklearn.datasets import load_digits
+# from sklearn.datasets import load_digits
+from sklearn.datasets import fetch_openml
 from sklearn.model_selection import StratifiedShuffleSplit
 
 from concept_formation.cobweb3 import Cobweb3Tree
 
 from concept_formation.visualize import visualize
 
-digits = load_digits(n_class=5)
+# digits = load_digits(n_class=5)
+#
+# imgs = digits.images  # [:200, :, :]
+# labels = digits.target  # [:200]
 
-imgs = digits.images  # [:200, :, :]
-labels = digits.target  # [:200]
+imgs, labels = fetch_openml('mnist_784', version=1, return_X_y=True,
+                            as_frame=False)
+mask = np.isin(labels, ["0", "1", "2"])
+imgs = imgs[mask]
+labels = labels[mask]
+imgs = imgs.reshape(-1, 28, 28)
 
 # data = [(imgs[i, :, :], label) for i, label in enumerate(digits.target)]
 
@@ -42,7 +50,7 @@ for r in range(runs):
     for i, img in enumerate(X):
         print("loading {} of {}.".format(i, len(X)))
         inst = {"{},{}".format(rowi, coli): v for rowi, row in enumerate(img)
-                for coli, v in enumerate(row) }
+                for coli, v in enumerate(row)}
         # inst['image_data'] = img
         # inst['test'] = random()
         # inst['_label'] = "{}".format(labels[i])
@@ -54,11 +62,11 @@ for r in range(runs):
         if curr:
             p = curr.predict('label')
         else:
-            p = 0
+            p = 0 if isinstance(labels[0], int) else "0"
         if p is None:
-            p = 0
+            p = 0 if isinstance(labels[0], int) else "0"
         print("pred={}, actual={}".format(p, y[i]))
-        pred.append(int(p))
+        pred.append(p)
 
         inst['label'] = "{}".format(y[i])
 
