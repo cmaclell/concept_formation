@@ -594,9 +594,14 @@ class Cobweb3Node(CobwebNode):
             temp['_category utility']["#ContinuousValue#"] = {
                 'mean': self.category_utility(), 'std': 1, 'n': 1}
 
-        temp['_corter_and_gluck_category utility'] = {}
-        temp['_corter_and_gluck_category utility']["#ContinuousValue#"] = {
-            'mean': self.corter_and_gluck_category_utility(), 'std': 1, 'n': 1}
+            temp['_expected_correct_guesses'] = {}
+            temp['_expected_correct_guesses']["#ContinuousValue#"] = {
+                'mean': self.expected_correct_guesses(), 'std': 1, 'n': 1}
+
+        # temp['_corter_and_gluck_category utility'] = {}
+        # temp['_corter_and_gluck_category utility']["#ContinuousValue#"] = {
+        #     'mean': self.corter_and_gluck_category_utility(), 'std': 1, 'n':
+        #     1}
 
         # temp['_binary_category utility'] = {}
         # temp['_binary_category utility']["#ContinuousValue#"] = {

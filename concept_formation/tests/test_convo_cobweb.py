@@ -2,7 +2,7 @@ import time
 
 from matplotlib import pyplot as plt
 import numpy as np
-# from sklearn.datasets import load_digits
+from sklearn.datasets import load_digits
 from sklearn.datasets import fetch_openml
 from sklearn.model_selection import StratifiedShuffleSplit
 
@@ -13,6 +13,7 @@ from concept_formation.visualize import visualize
 # digits = load_digits(n_class=2)
 # imgs = digits.images  # [:200, :, :]
 # labels = digits.target  # [:200]
+# labels = np.array([str(label) for label in labels])
 
 imgs, labels = fetch_openml('mnist_784', version=1, return_X_y=True,
                             as_frame=False)
@@ -31,7 +32,7 @@ errors = []
 # run_length = 50
 
 runs = 1
-run_length = 10
+run_length = 20
 
 for r in range(runs):
     print()
@@ -46,7 +47,7 @@ for r in range(runs):
 
     print(y)
 
-    tree = ConvoCobwebTree(filter_size=6, stride=2)
+    tree = ConvoCobwebTree(filter_size=(6,), stride=(2,))
 
     pred = []
 

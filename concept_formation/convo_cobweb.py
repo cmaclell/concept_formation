@@ -2,9 +2,83 @@
 The ConvoCobweb module contains the :class:`ConvoCobwebTree` class, which
 extends Cobweb3 to support image attributes (2D ndarrays).
 """
+from math import sqrt
+from math import pi
 import numpy as np
 
 from concept_formation.cobweb3 import Cobweb3Tree
+from concept_formation.cobweb3 import Cobweb3Node
+from concept_formation.cobweb3 import cv_key
+
+
+class ConvoCobwebSubTreeNode(Cobweb3Node):
+    def get_root_sub(self):
+        curr = self
+        while curr.parent:
+            if curr.parent.parent is None:
+                break
+            curr = curr.parent
+        return 'Concept-{}'.format(curr.concept_id)
+
+    def expected_correct_guesses(self):
+        """
+        Modified to handle attribute values that are concepts.
+        """
+        correct_guesses = 0.0
+        attr_count = 0
+
+        for attr in self.attrs():
+            attr_count += 1
+
+            concept_vals = {}
+
+            for val in self.av_counts[attr]:
+                if val == cv_key:
+                    scale = 1.0
+                    if self.tree is not None and self.tree.scaling:
+                        inner_attr = self.tree.get_inner_attr(attr)
+                        if inner_attr in self.tree.attr_scales:
+                            inner = self.tree.attr_scales[inner_attr]
+                            scale = ((1/self.tree.scaling) *
+                                     inner.unbiased_std())
+
+                    # we basically add noise to the std and adjust the
+                    # normalizing constant to ensure the probability of a
+                    # particular value never exceeds 1.
+                    cv = self.av_counts[attr][cv_key]
+                    std = sqrt(cv.scaled_unbiased_std(scale) *
+                               cv.scaled_unbiased_std(scale) +
+                               (1 / (4 * pi)))
+                    prob_attr = cv.num / self.count
+                    correct_guesses += ((prob_attr * prob_attr) *
+                                        (1/(2 * sqrt(pi) * std)))
+                elif isinstance(val, ConvoCobwebSubTreeNode):
+                    root_sub = val.get_root_sub()
+                    if root_sub not in concept_vals:
+                        concept_vals[val.get_root_sub()] = 0
+                    concept_vals[val.get_root_sub()] += 1
+
+                else:
+                    prob = (self.av_counts[attr][val]) / self.count
+                    correct_guesses += (prob * prob)
+
+            for val in concept_vals:
+                prob = concept_vals[val] / self.count
+                correct_guesses += (prob * prob)
+
+        return correct_guesses / attr_count
+
+
+class ConvoCobwebSubTree(Cobweb3Tree):
+
+    def __init__(self, scaling=0.5, inner_attr_scaling=True):
+        super().__init__(scaling=scaling,
+                         inner_attr_scaling=inner_attr_scaling)
+        self.root = ConvoCobwebSubTreeNode()
+
+    def clear(self):
+        super().clear()
+        self.root = ConvoCobwebSubTreeNode()
 
 
 class ConvoCobwebTree(Cobweb3Tree):
@@ -49,16 +123,16 @@ class ConvoCobwebTree(Cobweb3Tree):
     :type structure_map_internally: boolean
     """
 
-    def __init__(self, filter_size=3, stride=1, scaling=0.5,
+    def __init__(self, filter_size=(3, 3), stride=(1, 2), scaling=0.5,
                  inner_attr_scaling=True):
         """
         The tree constructor.
         """
         super().__init__(scaling=0.5, inner_attr_scaling=True)
-
         self.filter_size = filter_size
         self.stride = stride
         self.trees = {}
+        self.tree_class = Cobweb3Tree
 
     def clear(self):
         """
@@ -70,17 +144,16 @@ class ConvoCobwebTree(Cobweb3Tree):
 
     def process_image(self, img, filter_size, stride, modifying):
         ret = {}
-
         for row in range(img.shape[0]):
             for col in range(img.shape[1]):
                 ret["{},{}".format(row, col)] = img[row, col]
-
         level = 0
-        while np.sqrt(len(ret.keys())) > filter_size:
-            ret = self.apply_filter(ret, filter_size, stride,
+
+        # while np.sqrt(len(ret.keys())) > i:
+        for i, j in zip(filter_size, stride):
+            ret = self.apply_filter(ret, filter_size=i, stride=j,
                                     level=level, modifying=modifying)
             level += 1
-
         return ret
 
     def apply_filter(self, img_dict, filter_size, stride, level, modifying):
@@ -101,7 +174,7 @@ class ConvoCobwebTree(Cobweb3Tree):
                             "{},{}".format(row+fr, col+fc)]
 
                 if level not in self.trees:
-                    self.trees[level] = Cobweb3Tree(
+                    self.trees[level] = self.tree_class(
                         scaling=self.scaling,
                         inner_attr_scaling=self.inner_attr_scaling)
 
