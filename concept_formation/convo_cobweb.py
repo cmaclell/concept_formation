@@ -56,7 +56,8 @@ class ConvoCobwebSubTreeNode(Cobweb3Node):
                     root_sub = val.get_root_sub()
                     if root_sub not in concept_vals:
                         concept_vals[val.get_root_sub()] = 0
-                    concept_vals[val.get_root_sub()] += 1
+                    concept_vals[
+                        val.get_root_sub()] += self.av_counts[attr][val]
 
                 else:
                     prob = (self.av_counts[attr][val]) / self.count
@@ -67,6 +68,73 @@ class ConvoCobwebSubTreeNode(Cobweb3Node):
                 correct_guesses += (prob * prob)
 
         return correct_guesses / attr_count
+
+    def output_json(self):
+        """
+        Outputs the categorization tree in JSON form.
+
+        This is a modification of the :meth:`CobwebNode.output_json
+        <concept_formation.cobweb.CobwebNode.output_json>` to handle numeric
+        values.
+
+        :return: an object that contains all of the structural information of
+            the node and its children
+        :rtype: obj
+        """
+        output = {}
+        if "_guid" in self.av_counts:
+            for guid in self.av_counts['_guid']:
+                output['guid'] = guid
+        output["name"] = "Concept" + str(self.concept_id)
+        output["size"] = self.count
+        output["children"] = []
+
+        temp = {}
+        for attr in self.attrs('all'):
+            temp[str(attr)] = {}
+
+            concept_vals = {}
+
+            for val in self.av_counts[attr]:
+                if val == cv_key:
+                    json_str = self.av_counts[attr][val].output_json()
+                    temp[str(attr)][cv_key] = json_str
+                elif isinstance(val, ConvoCobwebSubTreeNode):
+                    root_sub = val.get_root_sub()
+                    if root_sub not in concept_vals:
+                        concept_vals[val.get_root_sub()] = 0
+                    concept_vals[
+                        val.get_root_sub()] += self.av_counts[attr][val]
+                else:
+                    temp[str(attr)][str(val)] = self.av_counts[attr][val]
+
+            for val in concept_vals:
+                temp[str(attr)][val] = concept_vals[val]
+
+        if self.children:
+            temp['_category utility'] = {}
+            temp['_category utility']["#ContinuousValue#"] = {
+                'mean': self.category_utility(), 'std': 1, 'n': 1}
+
+            temp['_expected_correct_guesses'] = {}
+            temp['_expected_correct_guesses']["#ContinuousValue#"] = {
+                'mean': self.expected_correct_guesses(), 'std': 1, 'n': 1}
+
+        # temp['_corter_and_gluck_category utility'] = {}
+        # temp['_corter_and_gluck_category utility']["#ContinuousValue#"] = {
+        #     'mean': self.corter_and_gluck_category_utility(), 'std': 1, 'n':
+        #     1}
+
+        # temp['_binary_category utility'] = {}
+        # temp['_binary_category utility']["#ContinuousValue#"] = {
+        #     'mean': self.binary_category_utility(), 'std': 1, 'n': 1}
+
+        for child in self.children:
+            output["children"].append(child.output_json())
+
+        output["counts"] = temp
+
+        return output
 
 
 class ConvoCobwebSubTree(Cobweb3Tree):
@@ -81,7 +149,7 @@ class ConvoCobwebSubTree(Cobweb3Tree):
         self.root = ConvoCobwebSubTreeNode()
 
 
-class ConvoCobwebTree(Cobweb3Tree):
+class ConvoCobwebTree(ConvoCobwebSubTree):
     """
     A new version of cobweb specificaially for image data. It accepts images
     and decomposes them into convolutional trees, which are then passed to a
@@ -132,7 +200,8 @@ class ConvoCobwebTree(Cobweb3Tree):
         self.filter_size = filter_size
         self.stride = stride
         self.trees = {}
-        self.tree_class = Cobweb3Tree
+        # self.tree_class = Cobweb3Tree
+        self.tree_class = ConvoCobwebSubTree
 
     def clear(self):
         """
@@ -183,14 +252,18 @@ class ConvoCobwebTree(Cobweb3Tree):
                 else:
                     curr = self.trees[level].categorize(new)
 
-                while curr.parent:
-                    if curr.parent.parent is None:
-                        break
-                    curr = curr.parent
+                assert not curr.children
 
-                ret["{},{}".format(
-                    row//stride, col//stride)] = "Concept-{}".format(
-                        curr.concept_id)
+                # while curr.parent:
+                #     if curr.parent.parent is None:
+                #         break
+                #     curr = curr.parent
+
+                # ret["{},{}".format(
+                #     row//stride, col//stride)] = "Concept-{}".format(
+                #         curr.concept_id)
+
+                ret["{},{}".format(row//stride, col//stride)] = curr
 
         return ret
 

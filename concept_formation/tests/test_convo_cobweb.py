@@ -10,17 +10,17 @@ from concept_formation.convo_cobweb import ConvoCobwebTree
 
 from concept_formation.visualize import visualize
 
-# digits = load_digits(n_class=2)
-# imgs = digits.images  # [:200, :, :]
-# labels = digits.target  # [:200]
-# labels = np.array([str(label) for label in labels])
+digits = load_digits(n_class=2)
+imgs = digits.images  # [:200, :, :]
+labels = digits.target  # [:200]
+labels = np.array([str(label) for label in labels])
 
-imgs, labels = fetch_openml('mnist_784', version=1, return_X_y=True,
-                            as_frame=False)
-mask = np.isin(labels, ["0", "1", "2"])
-imgs = imgs[mask]
-labels = labels[mask]
-imgs = imgs.reshape(-1, 28, 28)
+# imgs, labels = fetch_openml('mnist_784', version=1, return_X_y=True,
+#                             as_frame=False)
+# mask = np.isin(labels, ["0", "1", "2"])
+# imgs = imgs[mask]
+# labels = labels[mask]
+# imgs = imgs.reshape(-1, 28, 28)
 
 print(imgs.shape)
 
@@ -32,7 +32,7 @@ errors = []
 # run_length = 50
 
 runs = 1
-run_length = 20
+run_length = 30
 
 for r in range(runs):
     print()
@@ -47,7 +47,7 @@ for r in range(runs):
 
     print(y)
 
-    tree = ConvoCobwebTree(filter_size=(6,), stride=(2,))
+    tree = ConvoCobwebTree(filter_size=(3,), stride=(1,))
 
     pred = []
 
