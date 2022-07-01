@@ -203,7 +203,7 @@ def random_tiebreaker(dsc_sorted_list, key=lambda x: x):
         i += 1
 
     if i == 1:
-        return maximum
+        return dsc_sorted_list[0]
     return choice(dsc_sorted_list[0:i])
 
 

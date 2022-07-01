@@ -566,7 +566,7 @@ class CobwebNode(object):
         children_relative_cu = [(self.relative_cu_for_insert(child, instance),
                                  child.count, child) for child in
                                 self.children]
-        children_relative_cu.sort(reverse=True)
+        children_relative_cu.sort(reverse=True, key=lambda x: x[:-1])
 
         best1_data, best2_data = tiebreak_top_2(
             children_relative_cu, key=lambda x: x[:-1])
