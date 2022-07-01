@@ -8,11 +8,12 @@ from __future__ import unicode_literals
 from __future__ import absolute_import
 from __future__ import division
 from random import shuffle
-from random import random
 from math import log
 
 from concept_formation.utils import weighted_choice
 from concept_formation.utils import most_likely_choice
+from concept_formation.utils import random_tiebreaker
+from concept_formation.utils import tiebreak_top_2
 
 
 class CobwebTree(object):
@@ -521,21 +522,18 @@ class CobwebNode(object):
         operations = []
 
         if "best" in possible_ops:
-            operations.append((best1_cu, random(), "best"))
+            operations.append((best1_cu, "best"))
         if "new" in possible_ops:
-            operations.append((self.cu_for_new_child(instance), random(),
-                               'new'))
+            operations.append((self.cu_for_new_child(instance), 'new'))
         if "merge" in possible_ops and len(self.children) > 2 and best2:
             operations.append((self.cu_for_merge(best1, best2, instance),
-                               random(), 'merge'))
+                               'merge'))
         if "split" in possible_ops and len(best1.children) > 0:
-            operations.append((self.cu_for_split(best1), random(), 'split'))
+            operations.append((self.cu_for_split(best1), 'split'))
 
         operations.sort(reverse=True)
-        # print(operations)
-        best_op = (operations[0][0], operations[0][2])
-        # print(best_op)
-        return best_op
+
+        return random_tiebreaker(operations, key=lambda x: x[0])
 
     def two_best_children(self, instance):
         """
@@ -553,23 +551,30 @@ class CobwebNode(object):
         if len(self.children) == 0:
             raise Exception("No children!")
 
-        children_relative_cu = [(self.relative_cu_for_insert(child, instance),
-                                 child.count, random(), child) for child in
-                                self.children]
-        children_relative_cu.sort(reverse=True)
-
         # Convert the relative CU's of the two best children into CU scores
         # that can be compared with the other operations.
         const = self.compute_relative_CU_const(instance)
 
-        best1 = children_relative_cu[0][3]
-        best1_relative_cu = children_relative_cu[0][0]
+        # If there's only one child, simply calculate the relevant utility
+        if len(self.children) == 1:
+            best1 = self.children[0]
+            best1_relative_cu = self.relative_cu_for_insert(best1, instance)
+            best1_cu = (best1_relative_cu / (self.count+1) / len(self.children)
+                        + const)
+            return best1_cu, best1, None
+
+        children_relative_cu = [(self.relative_cu_for_insert(child, instance),
+                                 child.count, child) for child in
+                                self.children]
+        children_relative_cu.sort(reverse=True)
+
+        best1_data, best2_data = tiebreak_top_2(
+            children_relative_cu, key=lambda x: x[:-1])
+
+        best1_relative_cu, _, best1 = best1_data
         best1_cu = (best1_relative_cu / (self.count+1) / len(self.children)
                     + const)
-
-        best2 = None
-        if len(children_relative_cu) > 1:
-            best2 = children_relative_cu[1][3]
+        best2 = best2_data[2]
 
         return best1_cu, best1, best2
 

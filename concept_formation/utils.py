@@ -8,7 +8,7 @@ from __future__ import absolute_import
 from __future__ import division
 from numbers import Number
 from random import uniform
-from random import random
+from random import choice, sample
 from math import sqrt
 from math import isnan
 
@@ -171,9 +171,69 @@ def most_likely_choice(choices):
     if len(choices) == 0:
         raise ValueError("Choices cannot be an empty list")
 
-    vals = [w for _, w in choices if w < 0]
-    if len(vals) > 0:
+    if any(map(lambda x: x < 0)):
         raise ValueError('All weights must be greater than or equal to 0')
 
-    updated_choices = [(prob, random(), val) for val, prob in choices]
-    return sorted(updated_choices, reverse=True)[0][2]
+    # Sorts based on the weights (lambda x: x[1]),
+    # then get the value associated with it ([0])
+    return random_tiebreaker(
+        sorted(choices, reverse=True, key=lambda x: x[1]),
+        key=lambda x: x[1])[0]
+
+
+def random_tiebreaker(dsc_sorted_list, key=lambda x: x):
+    """
+    Given a nonempty monotonically nonincreasing list, randomly chooses a value
+    with the maximum value. When looking for a maximum, use this method to
+    break ties. **Always make sure that the key trims irrelevant information
+    so tied elements' keys are equal under the '==' operator!**
+
+    :param dsc_sorted_list: A list of tuples
+    :type dsc_sorted_list: [any,...any]
+    :param key: A function applied before testing values for equality
+    :type key: function
+    :return: a value with the hightest value, chosen at random
+    :rtype: val
+    """
+    maximum = key(dsc_sorted_list[0])
+    # Check for ties
+    i = 1
+    # i counts the number of values with the same value
+    while i < len(dsc_sorted_list) and maximum == key(dsc_sorted_list[i]):
+        i += 1
+
+    if i == 1:
+        return maximum
+    return choice(dsc_sorted_list[0:i])
+
+
+def tiebreak_top_2(dsc_sorted_list, key=lambda x: x):
+    """
+    Given a nonempty monotonically nonincreasing list, randomly chooses two
+    values: either the maximum and one of the contenders for second highest,
+    or otherwise two values with the maximum value. **Always make sure that
+    the key trims irrelevant information so tied elements' keys are equal
+    under the '==' operator!**
+
+    :param dsc_sorted_list: A list of tuples
+    :type dsc_sorted_list: [any,...any]
+    :param key: A function applied before testing values for equality
+    :type key: function
+    :return: a value with the hightest value, chosen at random
+    :rtype: [val, val]
+    """
+    second = key(dsc_sorted_list[1])
+    # If the maximum is the strict best...
+    if key(dsc_sorted_list[0]) != second:
+        return (dsc_sorted_list[0],
+                random_tiebreaker(dsc_sorted_list[1:], key=key))
+
+    # Check for ties
+    i = 2
+    # i counts the number of values with the same value
+    while i < len(dsc_sorted_list) and second == key(dsc_sorted_list[i]):
+        i += 1
+
+    if i == 2:
+        return (dsc_sorted_list[0], dsc_sorted_list[1])
+    return sample(dsc_sorted_list[0:i], 2)

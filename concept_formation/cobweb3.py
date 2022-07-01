@@ -112,24 +112,6 @@ class Cobweb3Tree(CobwebTree):
         self.update_scales(instance)
         return super(Cobweb3Tree, self).cobweb(instance)
 
-    def ifit(self, instance):
-        """
-        Incrementally fit a new instance into the tree and return its resulting
-        concept.
-
-        The cobweb3 version of the :meth:`CobwebTree.ifit` function. This
-        version keeps track of all of the continuous
-
-        :param instance: An instance to be categorized into the tree.
-        :type instance:  :ref:`Instance<instance-rep>`
-        :return: A concept describing the instance
-        :rtype: Cobweb3Node
-
-        .. seealso:: :meth:`CobwebTree.cobweb`
-        """
-        self._sanity_check_instance(instance)
-        return self.cobweb(instance)
-
 
 class Cobweb3Node(CobwebNode):
     """
@@ -170,7 +152,7 @@ class Cobweb3Node(CobwebNode):
         self.count += 1
 
         for attr in instance:
-            self.av_counts[attr] = self.av_counts.setdefault(attr, {})
+            self.av_counts.setdefault(attr, {})
 
             if isNumber(instance[attr]):
                 if cv_key not in self.av_counts[attr]:
@@ -196,7 +178,7 @@ class Cobweb3Node(CobwebNode):
         """
         self.count += node.count
         for attr in node.attrs('all'):
-            self.av_counts[attr] = self.av_counts.setdefault(attr, {})
+            self.av_counts.setdefault(attr, {})
             for val in node.av_counts[attr]:
                 if val == cv_key:
                     self.av_counts[attr][val] = self.av_counts[attr].get(
