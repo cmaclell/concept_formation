@@ -14,6 +14,7 @@ concept_formation/output.js
 concept_formation/viz.html
 concept_formation/viz_logic.js
 concept_formation/viz_styling.css
+build/
 
 # ignore various kinds of temp files
 *.swp
