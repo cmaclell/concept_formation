@@ -8,26 +8,30 @@ class ContextInstance:
     """
     """
 
-    def __init__(self, tenative_path=None):
+    def __init__(self, tenative_path):
         """constructor
 
         :param tenative_path: The path its eventual instance is currently
             going to be added to.
-        :type tenative_path: Set<ContetxualCobwebNode>"""
-        self.instance = None
-        self.tenative_path = tenative_path
+        :type tenative_path: Sequence<ContetxualCobwebNode>"""
+        # Holds the final existant node in the tree on the path
+        self.instance = tenative_path[-1]
+        # Holds the tenative path or None if it has been finalized
+        self.tenative_path = set(tenative_path)
 
     def __hash__(self):
         return hash(self.instance)
 
     def __eq__(self, __o):
         return (type(__o) == ContextInstance
-                and (__o.instance == self.instance is not None
-                     or __o is self))
+                and (__o is self or
+                     (__o.instance == self.instance
+                      and self.tenative_path is None)))
 
     def set_instance(self, node):
-        assert self.instance is None, ("Cannot set ContextInstance "
-                                       "more than once")
+        assert self.tenative_path is not None, ("Cannot set Con"
+                                                "textInstance more than once")
+        self.tenative_path = None
         self.instance = node
         cur_node = node
         while cur_node:
@@ -39,8 +43,9 @@ class ContextInstance:
         """
         :param tenative_path: The path its eventual instance is currently
             going to be added to.
-        :type tenative_path: SetContetxualCobwebNode>
+        :type tenative_path: Sequence<ContetxualCobwebNode>
         """
+        self.instance = path[-1]
         self.tenative_path = path
 
     def desc_of(self, node):
@@ -49,11 +54,14 @@ class ContextInstance:
 
         :param node: node to check
         :type node: ContextualCobwebNode
+        :return: (whether is descendant, whether it is planned to be added
+            as a direct child of node but has not yet been added)
+        :rtype: (bool, bool)
         """
-        if self.instance is not None:
-            return self.instance in node.descendants
+        if self.tenative_path is None:
+            return (self.instance in node.descendants, False)
         else:
-            return node in self.tenative_path
+            return (node in self.tenative_path, node == self.instance)
 
     def output_json(self):
         raise NotImplementedError

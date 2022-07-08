@@ -8,22 +8,22 @@ from __future__ import print_function
 from __future__ import unicode_literals
 from __future__ import absolute_import
 from __future__ import division
-from random import normalvariate
+# from random import normalvariate
 from math import sqrt
 from math import pi
-from math import exp
-from math import log
+# from math import exp
+# from math import log
 from collections import Counter
-from token import AT
+# from token import AT
 
 from concept_formation.cobweb3 import Cobweb3Node
 from concept_formation.cobweb3 import Cobweb3Tree
 from concept_formation.cobweb3 import cv_key
 from concept_formation.continuous_value import ContinuousValue
-from concept_formation.context_instance import ContextInstance
+# from concept_formation.context_instance import ContextInstance
 from concept_formation.utils import isNumber
-from concept_formation.utils import weighted_choice
-from concept_formation.utils import most_likely_choice
+# from concept_formation.utils import weighted_choice
+# from concept_formation.utils import most_likely_choice
 
 ca_key = "#ContextualAttribute#"
 
@@ -144,7 +144,7 @@ class ContextualCobwebNode(Cobweb3Node):
         probability matching strategy. If each word has path C_0, C_1, ...
         C_{n-1} and this nodes context is ctxt, the formula is
 
-            1/||ctxt||·Σ_(word in ctxt)
+            1/||ctxt||·Σ_(word in ctxt [duplicates are treated as distinct])
                 (Σ_(i = 0 to n-1) P(C_i | w in ctxt)²)/n
 
         where P(C_i | w in ctxt) is the probability a context word w chosen at
@@ -164,7 +164,7 @@ class ContextualCobwebNode(Cobweb3Node):
             if attr == ca_key:
                 attr_count += self.tree.context_weight
                 correct_guesses += (self.__expected_contextual(
-                    self.tree.root, 0, 1, self.av_counts[attr])
+                    self.tree.root, 0, 0, self.av_counts[attr])
                                     * self.tree.context_weight)
                 continue
 
@@ -199,25 +199,69 @@ class ContextualCobwebNode(Cobweb3Node):
 
     def __expected_contextual(self, cur_node, partial_guesses,
                               partial_len, ctxt):
+        # TODO: does not handle context that is not in the tree!!
+        unadded_leaf_counts = []
+        # The count of some added leaf of cur_node. If cur_node is a leaf, this
+        # will be how many times cur_node appears as context.
+        added_leaf_count = None
+        extra_guesses = 0
+        for wd, count in ctxt.items():
+            desc, unadded_leaf = wd.desc_of(cur_node)
+            if desc:
+                extra_guesses += count * count
+                if unadded_leaf:
+                    unadded_leaf_counts.append(count)
+                else:
+                    added_leaf_count = count
 
-        extra_guesses = sum(count * count for wd, count in ctxt.items()
-                            if wd.desc_of(cur_node))
         # No category utility here because this path has no instances
         if extra_guesses == 0:
             return 0
 
+        new_partial_guesses = partial_guesses + extra_guesses
+        new_partial_len = partial_len + 1
+
         if cur_node.children == []:
             ctxt_len = ctxt.total()
-            # ctxt_len divided out twice for P(C_i | w in ctxt) and
-            # once for the outer division.
-            return partial_guesses / (partial_len * ctxt_len
-                                      * ctxt_len * ctxt_len)
+            # If unadded_leaves > 0, a fringe split would happen
+            if unadded_leaf_counts:
+                ctxt_len = ctxt.total()
+                # A fringe split is equivalent to adding cur_node as a new
+                # leaf node in addition to the unadded leaves.
+                unadded_leaf_counts.append(added_leaf_count)
+                # Calculate the cu of all leaf nodes
+                return self.__unadded_leaves_cu(
+                    unadded_leaf_counts, new_partial_guesses,
+                    new_partial_len, ctxt_len)
 
-        partial_category_utility = 0
+            # ctxt_len divided out twice for P(C_i | w in ctxt) and once for
+            # the outer weighted average. Because it's a weighted average, we
+            # multiply by added_leaf_count (count of cur_node in context).
+            return (added_leaf_count * new_partial_guesses /
+                    (new_partial_len * ctxt_len * ctxt_len * ctxt_len))
+
+        if unadded_leaf_counts:
+            ctxt_len = ctxt.total()
+            # Calculate the cu of the leaf nodes
+            partial_category_utility = self.__unadded_leaves_cu(
+                unadded_leaf_counts, new_partial_guesses,
+                new_partial_len, ctxt_len)
+        else:
+            partial_category_utility = 0
+
         for child in cur_node.children:
             partial_category_utility += self.__expected_contextual(
-                child, partial_guesses + extra_guesses, partial_len + 1, ctxt)
+                child, new_partial_guesses, new_partial_len, ctxt)
         return partial_category_utility
+
+    def __unadded_leaves_cu(self, unadded_leaf_counts, partial_guesses,
+                            partial_len, ctxt_len):
+        """partial_len depth of where the nodes will be added (0 indexed) """
+        return (
+            sum(count * (count * count + partial_guesses)
+                for count in unadded_leaf_counts)
+            / ((partial_len + 1) * ctxt_len * ctxt_len * ctxt_len)
+        )
 
     def pretty_print(self, depth=0):
         raise NotImplementedError
