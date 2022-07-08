@@ -14,7 +14,7 @@ from math import pi
 from math import exp
 from math import log
 from collections import Counter
-from itertools import chain
+from token import AT
 
 from concept_formation.cobweb3 import Cobweb3Node
 from concept_formation.cobweb3 import Cobweb3Tree
@@ -25,24 +25,24 @@ from concept_formation.utils import isNumber
 from concept_formation.utils import weighted_choice
 from concept_formation.utils import most_likely_choice
 
-ca_key = "#ContAttribute#"
+ca_key = "#ContextualAttribute#"
 
 
 class ContextualCobwebTree(Cobweb3Tree):
     """
     """
 
-    def __init__(self, ctxt_scaling=1, scaling=0.5, inner_attr_scaling=True):
+    def __init__(self, ctxt_weight=1, scaling=0.5, inner_attr_scaling=True):
         """
         The tree constructor.
 
-        :param ctxt_scaling: factor by which the context should be scaled
+        :param ctxt_weight: factor by which the context should be weighted
             when combining category utility with other attribute types
-        :type ctxt_scaling: float
+        :type ctxt_weight: float
         """
         self.root = ContextualCobwebNode()
         self.root.tree = self
-        self.context_scaling = ctxt_scaling
+        self.context_weight = ctxt_weight
         self.scaling = scaling
         self.inner_attr_scaling = inner_attr_scaling
         self.attr_scales = {}
@@ -65,13 +65,16 @@ class ContextualCobwebTree(Cobweb3Tree):
 class ContextualCobwebNode(Cobweb3Node):
 
     def __init__(self, other_node=None):
+        # Descendant registry should be updated every time a new node is added
+        # to the tree. This can be done by updating a ContextInstance with the
+        # final node or updating counts from other nodes.
         self.descendants = set()
         super().__init__(other_node)
 
     def increment_counts(self, instance):
         """
         Increment the counts at the current node according to the specified
-        instance.
+        instance. **Does not handle adding `instance` to descendants**.
 
         ContextualCobwebNode uses a modified version of
         :meth:`Cobweb3Node.increment_counts
@@ -110,6 +113,7 @@ class ContextualCobwebNode(Cobweb3Node):
         :type node: Cobweb3Node
         """
         self.count += node.count
+        self.descendants.update(node.descendants)
         for attr in node.attrs('all'):
             if attr == ca_key:
                 self.av_counts.setdefault(attr, Counter())
@@ -130,7 +134,90 @@ class ContextualCobwebNode(Cobweb3Node):
                                                  node.av_counts[attr][val])
 
     def expected_correct_guesses(self):
-        raise NotImplementedError
+        """
+        Returns the number of attribute values that would be correctly guessed
+        in the current concept. This extension supports both nominal, numeric,
+        and contextual attribute values.
+
+        The typical ContextualCobweb calculation for contextual guesses is the
+        expected proportion of a context instance's path one can guess with a
+        probability matching strategy. If each word has path C_0, C_1, ...
+        C_{n-1} and this nodes context is ctxt, the formula is
+
+            1/||ctxt||·Σ_(word in ctxt)
+                (Σ_(i = 0 to n-1) P(C_i | w in ctxt)²)/n
+
+        where P(C_i | w in ctxt) is the probability a context word w chosen at
+        random from ctxt (weighted by frequency) has a path through C_i. This
+        is then weighted by tree.context_weight since there will only be one
+        contextual attribute but it may be more important than the nominal or
+        numeric attributes.
+
+        :return: The number of attribute values that would be correctly guessed
+            in the current concept.
+        :rtype: float
+        """
+        correct_guesses = 0.0
+        attr_count = 0
+
+        for attr in self.attrs():
+            if attr == ca_key:
+                attr_count += self.tree.context_weight
+                correct_guesses += (self.__expected_contextual(
+                    self.tree.root, 0, 1, self.av_counts[attr])
+                                    * self.tree.context_weight)
+                continue
+
+            attr_count += 1
+
+            # TODO: Factor out in Cobweb3
+            for val in self.av_counts[attr]:
+                if val == cv_key:
+                    scale = 1.0
+                    if self.tree is not None and self.tree.scaling:
+                        inner_attr = self.tree.get_inner_attr(attr)
+                        if inner_attr in self.tree.attr_scales:
+                            inner = self.tree.attr_scales[inner_attr]
+                            scale = ((1/self.tree.scaling) *
+                                     inner.unbiased_std())
+
+                    # we basically add noise to the std and adjust the
+                    # normalizing constant to ensure the probability of a
+                    # particular value never exceeds 1.
+                    cv = self.av_counts[attr][cv_key]
+                    std = sqrt(cv.scaled_unbiased_std(scale) *
+                               cv.scaled_unbiased_std(scale) +
+                               (1 / (4 * pi)))
+                    prob_attr = cv.num / self.count
+                    correct_guesses += ((prob_attr * prob_attr) *
+                                        (1/(2 * sqrt(pi) * std)))
+                else:
+                    prob = (self.av_counts[attr][val]) / self.count
+                    correct_guesses += (prob * prob)
+
+        return correct_guesses / attr_count
+
+    def __expected_contextual(self, cur_node, partial_guesses,
+                              partial_len, ctxt):
+
+        extra_guesses = sum(count * count for wd, count in ctxt.items()
+                            if wd.desc_of(cur_node))
+        # No category utility here because this path has no instances
+        if extra_guesses == 0:
+            return 0
+
+        if cur_node.children == []:
+            ctxt_len = ctxt.total()
+            # ctxt_len divided out twice for P(C_i | w in ctxt) and
+            # once for the outer division.
+            return partial_guesses / (partial_len * ctxt_len
+                                      * ctxt_len * ctxt_len)
+
+        partial_category_utility = 0
+        for child in cur_node.children:
+            partial_category_utility += self.__expected_contextual(
+                child, partial_guesses + extra_guesses, partial_len + 1, ctxt)
+        return partial_category_utility
 
     def pretty_print(self, depth=0):
         raise NotImplementedError
@@ -146,6 +233,69 @@ class ContextualCobwebNode(Cobweb3Node):
 
     def log_likelihood(self, child_leaf):
         raise NotImplementedError
+
+    def create_new_child(self, instance, context_wrapper):
+        """
+        Create a new child (to the current node) with the counts initialized by
+        the *given instance*.
+
+        This is the operation used for creating a new child to a node and
+        adding the instance to it.
+
+        :param instance: The instance currently being categorized
+        :type instance: :ref:`Instance<instance-rep>`
+        :param context_wrapper: context_wrapper to insert the new instance into
+        :type context_wrapper: ContextInstance
+        :return: The new child
+        :rtype: ContextualCobwebNode
+        """
+        return context_wrapper.set_instance(super().create_new_child(instance))
+
+    def create_child_with_current_counts(self):
+        """Fringe splits cannot be done by adding nodes below."""
+        raise AttributeError("Context-aware leaf nodes must remain leaf nodes")
+
+    def insert_parent_with_current_counts(self):
+        if self.count > 0:
+            new = self.__class__()
+            new.update_counts_from_node(self)
+            new.tree = self.tree
+
+            # Replace self with new node in the parent's children
+            index_of_self_in_parent = self.parent.children.index(self)
+            self.parent.children[index_of_self_in_parent] = new
+
+            new.parent = self.parent
+            new.children.apennd(self)
+            self.parent = new
+            return new
+
+    def cu_for_fringe_split(self, instance):
+        """
+        Return the category utility of performing a fringe split (i.e.,
+        adding a leaf to a leaf).
+
+        A "fringe split" is essentially a new operation performed at a leaf. It
+        is necessary to have the distinction because unlike a normal split a
+        fringe split must also push the parent down to maintain a proper tree
+        structure. This is useful for identifying unnecessary fringe splits,
+        when the two leaves are essentially identical. It can be used to keep
+        the tree from growing and to increase the tree's predictive accuracy.
+
+        :param instance: The instance currently being categorized
+        :type instance: :ref:`Instance<instance-rep>`
+        :return: the category utility of fringe splitting at the current node.
+        :rtype: float
+
+        .. seealso:: :meth:`CobwebNode.get_best_operation`
+        """
+        leaf = self.shallow_copy()
+
+        parent = leaf.insert_parent_with_current_counts()
+        parent.increment_counts(instance)
+        parent.create_new_child(instance)
+
+        return parent.category_utility()
 
     def is_exact_match(self, instance):
         """

@@ -17,15 +17,6 @@ class ContextInstance:
         self.instance = None
         self.tenative_path = tenative_path
 
-    def copy(self):
-        """
-        Returns a copy of itself.
-
-        :return: a copy of the context
-        :rtype: ContextInstance
-        """
-        raise NotImplementedError
-
     def __hash__(self):
         return hash(self.instance)
 
@@ -38,6 +29,11 @@ class ContextInstance:
         assert self.instance is None, ("Cannot set ContextInstance "
                                        "more than once")
         self.instance = node
+        cur_node = node
+        while cur_node:
+            cur_node.descendants.add(self.instance)
+            cur_node = cur_node.parent
+        return self.instance
 
     def set_path(self, path):
         """
@@ -49,10 +45,10 @@ class ContextInstance:
 
     def desc_of(self, node):
         """
-        Returns an unbiased estimate of the mean.
+        Returns whether context is or planned to be descendant of node.
 
-        :return: the unbiased mean
-        :rtype: float
+        :param node: node to check
+        :type node: ContextualCobwebNode
         """
         if self.instance is not None:
             return self.instance in node.descendants
