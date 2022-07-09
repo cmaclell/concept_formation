@@ -1,0 +1,171 @@
+from __future__ import print_function, unicode_literals
+from __future__ import absolute_import, division
+# from ssl import CHANNEL_BINDING_TYPES
+import unittest
+# import random
+# from numbers import Number
+
+from concept_formation.contextual_cobweb import ca_key
+from concept_formation.contextual_cobweb import ContextualCobwebTree
+from concept_formation.contextual_cobweb import ContextualCobwebNode
+from concept_formation.context_instance import ContextInstance
+
+'''
+def verify_counts(node):
+    """
+    Checks the property that the counts of the children sum to the same
+    count as the parent. This is/was useful when debugging. This is modified
+    from the test_cobweb.verify_counts to handle continuous values properly.
+    """
+    if len(node.children) == 0:
+        return
+
+    temp = {}
+    temp_count = node.count
+    for attr in node.av_counts:
+        if attr not in temp:
+            temp[attr] = {}
+        for val in node.av_counts[attr]:
+            if val == cv_key:
+                temp[attr][val] = node.av_counts[attr][val].num
+            else:
+                temp[attr][val] = node.av_counts[attr][val]
+
+    for child in node.children:
+        temp_count -= child.count
+        for attr in child.av_counts:
+            assert attr in temp
+
+            for val in child.av_counts[attr]:
+                if val not in temp[attr]:
+                    print(val.concept_name)
+                    print(attr)
+                    print(node)
+                assert val in temp[attr]
+
+                if val == cv_key:
+                    temp[attr][val] -= child.av_counts[attr][val].num
+                else:
+                    temp[attr][val] -= child.av_counts[attr][val]
+
+    assert temp_count == 0
+
+    for attr in temp:
+        if isinstance(temp[attr], Number):
+            assert temp[attr] == 0.0
+        else:
+            for val in temp[attr]:
+                assert temp[attr][val] == 0.0
+
+    for child in node.children:
+        verify_counts(child)
+'''
+
+
+class TestCobwebNodes(unittest.TestCase):
+    def setUp(self):
+        self.node_0 = ContextualCobwebNode()
+        self.node_00 = ContextualCobwebNode()
+        self.node_01 = ContextualCobwebNode()
+        self.node_0.children.extend([self.node_00, self.node_01])
+        self.node_00.parent = self.node_0
+        self.node_01.parent = self.node_0
+
+    def test_increment_counts(self):
+        instance_context = ContextInstance((self.node_0, self.node_00))
+        other_ctxt = ContextInstance((self.node_0,))
+
+        pre_inc = self.node_00.count
+        self.node_00.increment_counts({ca_key: {instance_context, other_ctxt},
+                                      'normal_attr': 'norm', 'numer_attr': 1})
+        self.assertEqual(1, self.node_00.count - pre_inc)
+        self.node_00.increment_counts({ca_key: {instance_context},
+                                      'normal_attr': 'hi'})
+        self.assertEqual(2, self.node_00.count - pre_inc)
+        self.assertEqual(2, self.node_00.av_counts[ca_key][instance_context])
+        self.assertEqual(1, self.node_00.av_counts[ca_key][other_ctxt])
+        self.assertEqual(1, self.node_00.av_counts['normal_attr']['hi'])
+        # P_3 with all same context should have expectation 1
+
+    def test_context_membership(self):
+        context = ContextInstance((self.node_0, self.node_01))
+        self.assertTrue(context.desc_of(self.node_0)[0])
+        self.assertFalse(context.desc_of(self.node_0)[1])
+        self.assertTrue(context.desc_of(self.node_01)[0])
+        self.assertTrue(context.desc_of(self.node_01)[1])
+        self.assertFalse(context.desc_of(self.node_00)[0])
+
+        context.set_path((self.node_0, self.node_00))
+        self.assertTrue(context.desc_of(self.node_00)[0])
+        self.assertTrue(context.desc_of(self.node_00)[1])
+        self.assertFalse(context.desc_of(self.node_01)[0])
+
+        context.set_path((self.node_0,))
+        self.assertTrue(context.desc_of(self.node_0)[0])
+        self.assertTrue(context.desc_of(self.node_0)[1])
+        self.assertFalse(context.desc_of(self.node_00)[0])
+        self.assertFalse(context.desc_of(self.node_00)[1])
+
+        context.set_instance(self.node_00)
+        self.assertTrue(context.desc_of(self.node_00)[0])
+        self.assertFalse(context.desc_of(self.node_00)[1])
+        self.assertFalse(context.desc_of(self.node_01)[0])
+
+        self.assertRaises(AssertionError, context.set_instance, self.node_01)
+
+    def test_update_counts_node(self):
+        node = ContextualCobwebNode()
+        context = ContextInstance((self.node_0, self.node_01))
+        obj1 = {ca_key: {context}, 'normal_attr': 'norm'}
+        self.node_00.increment_counts(obj1)
+        node.update_counts_from_node(self.node_00)
+        self.assertEqual(node.av_counts, self.node_00.av_counts)
+
+    def test_is_exact_match(self):
+        node = ContextualCobwebNode()
+        context = ContextInstance((self.node_0, self.node_01))
+        context2 = ContextInstance((self.node_0,))
+        obj1 = {ca_key: {context, context2}, 'normal_attr': 'norm'}
+        obj2 = {ca_key: {context}, 'normal_attr': 'norm'}
+        node.increment_counts(obj1)
+        self.assertTrue(node.is_exact_match(obj1))
+        self.assertFalse(node.is_exact_match(obj2))
+
+        node.increment_counts(obj1)
+        self.assertTrue(node.is_exact_match(obj1))
+
+        node.increment_counts(obj2)
+        self.assertFalse(node.is_exact_match(obj1))
+
+    def test_expected_correct_guesses(self):
+        tree = ContextualCobwebTree(ctxt_weight=2)
+        root = ContextualCobwebNode()
+        tree.root = root
+        root.tree = tree
+
+        context = ContextInstance((root,))
+        obj = {ca_key: {context}}
+        root.increment_counts(obj)
+        child = ContextualCobwebNode(root)
+        child.parent = root
+        root.children.append(child)
+
+        self.assertEqual(1, child.expected_correct_guesses())
+        context.set_instance(child)
+        self.assertEqual(1, root.expected_correct_guesses())
+
+        child_2 = root.create_new_child({}, ContextInstance((root,)))
+
+        context_2 = ContextInstance((root, child_2))
+        obj_2 = {ca_key: {context_2}}
+        root.increment_counts(obj_2)
+        child_2.increment_counts(obj_2)
+
+        self.assertEqual(1, child.expected_correct_guesses())
+        self.assertEqual(1, child_2.expected_correct_guesses())
+        context_2.set_instance(child_2)
+        self.assertEqual(0.75, root.expected_correct_guesses())
+
+
+if __name__ == "__main__":
+    unittest.main()

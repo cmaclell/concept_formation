@@ -117,7 +117,7 @@ class ContextualCobwebNode(Cobweb3Node):
         for attr in node.attrs('all'):
             if attr == ca_key:
                 self.av_counts.setdefault(attr, Counter())
-                self.av_counts[attr].update(node[attr])
+                self.av_counts[attr].update(node.av_counts[attr])
                 continue
 
             self.av_counts.setdefault(attr, {})
@@ -142,10 +142,10 @@ class ContextualCobwebNode(Cobweb3Node):
         The typical ContextualCobweb calculation for contextual guesses is the
         expected proportion of a context instance's path one can guess with a
         probability matching strategy. If each word has path C_0, C_1, ...
-        C_{n-1} and this nodes context is ctxt, the formula is
+        C_{n-1} and this node's context is ctxt, the formula is
 
-            1/||ctxt||·Σ_(word in ctxt [duplicates are treated as distinct])
-                (Σ_(i = 0 to n-1) P(C_i | w in ctxt)²)/n
+            Σ_(word in ctxt)
+                (P(C_{n-1} | w in ctxt)·Σ_(i = 0 to n-1) P(C_i | w in ctxt))/n
 
         where P(C_i | w in ctxt) is the probability a context word w chosen at
         random from ctxt (weighted by frequency) has a path through C_i. This
@@ -199,11 +199,10 @@ class ContextualCobwebNode(Cobweb3Node):
 
     def __expected_contextual(self, cur_node, partial_guesses,
                               partial_len, ctxt):
-        # TODO: does not handle context that is not in the tree!!
         unadded_leaf_counts = []
         # The count of some added leaf of cur_node. If cur_node is a leaf, this
-        # will be how many times cur_node appears as context.
-        added_leaf_count = None
+        # will be how many times cur_node appears as context (possibly 0).
+        added_leaf_count = 0
         extra_guesses = 0
         for wd, count in ctxt.items():
             desc, unadded_leaf = wd.desc_of(cur_node)
@@ -222,10 +221,9 @@ class ContextualCobwebNode(Cobweb3Node):
         new_partial_len = partial_len + 1
 
         if cur_node.children == []:
-            ctxt_len = ctxt.total()
+            ctxt_len = sum(ctxt.values())
             # If unadded_leaves > 0, a fringe split would happen
             if unadded_leaf_counts:
-                ctxt_len = ctxt.total()
                 # A fringe split is equivalent to adding cur_node as a new
                 # leaf node in addition to the unadded leaves.
                 unadded_leaf_counts.append(added_leaf_count)
@@ -238,10 +236,10 @@ class ContextualCobwebNode(Cobweb3Node):
             # the outer weighted average. Because it's a weighted average, we
             # multiply by added_leaf_count (count of cur_node in context).
             return (added_leaf_count * new_partial_guesses /
-                    (new_partial_len * ctxt_len * ctxt_len * ctxt_len))
+                    (new_partial_len * ctxt_len * ctxt_len))
 
         if unadded_leaf_counts:
-            ctxt_len = ctxt.total()
+            ctxt_len = sum(ctxt.values())
             # Calculate the cu of the leaf nodes
             partial_category_utility = self.__unadded_leaves_cu(
                 unadded_leaf_counts, new_partial_guesses,
@@ -260,8 +258,7 @@ class ContextualCobwebNode(Cobweb3Node):
         return (
             sum(count * (count * count + partial_guesses)
                 for count in unadded_leaf_counts)
-            / ((partial_len + 1) * ctxt_len * ctxt_len * ctxt_len)
-        )
+            / ((partial_len + 1) * ctxt_len * ctxt_len))
 
     def pretty_print(self, depth=0):
         raise NotImplementedError
@@ -300,6 +297,7 @@ class ContextualCobwebNode(Cobweb3Node):
         raise AttributeError("Context-aware leaf nodes must remain leaf nodes")
 
     def insert_parent_with_current_counts(self):
+        # does not handle updating root in tree if necessary
         if self.count > 0:
             new = self.__class__()
             new.update_counts_from_node(self)
@@ -374,7 +372,7 @@ class ContextualCobwebNode(Cobweb3Node):
                         or attr_counts[cv_key].unbiased_mean() !=
                         instance[attr]):
                     return False
-            elif attr_counts.get(instance[attr], default=0) != self.count:
+            elif attr_counts.get(instance[attr], 0) != self.count:
                 return False
         return True
 
