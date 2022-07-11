@@ -28,6 +28,11 @@ class ContextInstance:
                      (__o.instance == self.instance
                       and self.tenative_path is None)))
 
+    def __str__(self):
+        if self.tenative_path is None:
+            return 'CobwebNode{}'.format(self.instance.concept_id)
+        return 'Unadded leaf of CobwebNode{}'.format(self.instance.concept_id)
+
     def set_instance(self, node):
         assert self.tenative_path is not None, ("Cannot set Con"
                                                 "textInstance more than once")

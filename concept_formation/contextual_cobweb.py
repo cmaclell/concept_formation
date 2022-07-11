@@ -9,6 +9,7 @@ from __future__ import unicode_literals
 from __future__ import absolute_import
 from __future__ import division
 # from random import normalvariate
+from itertools import cycle
 from math import sqrt
 from math import pi
 # from math import exp
@@ -20,7 +21,7 @@ from concept_formation.cobweb3 import Cobweb3Node
 from concept_formation.cobweb3 import Cobweb3Tree
 from concept_formation.cobweb3 import cv_key
 from concept_formation.continuous_value import ContinuousValue
-# from concept_formation.context_instance import ContextInstance
+from concept_formation.context_instance import ContextInstance
 from concept_formation.utils import isNumber
 # from concept_formation.utils import weighted_choice
 # from concept_formation.utils import most_likely_choice
@@ -50,16 +51,116 @@ class ContextualCobwebTree(Cobweb3Tree):
     def cobweb(self, instance):
         raise NotImplementedError
 
-    def contextual_ifit(self, instances, context_key=lambda x: x):
+    def initial_path(self, instance):
+        path = self.cobweb_path(instance)
+        if path[-1].children:
+            print('early termination')
+        return path
+
+    def cobweb_path(self, instance):
+        current = self.root
+        node_path = []
+
+        while current:
+            node_path.append(current)
+
+            if not current.children:
+                # print("leaf")
+                break
+
+            best1_cu, best1, best2 = current.two_best_children(instance)
+            _, best_action = current.get_best_operation(
+                instance, best1, best2, best1_cu, possible_ops=["best", "new"])
+
+            # print(best_action)
+            if best_action == 'best':
+                current = best1
+            elif best_action == 'new':
+                break
+            else:
+                raise Exception('Best action choice "{action}" not a '
+                                'recognized option. This should be'
+                                ' impossible...'.format(action=best_action))
+
+        return node_path
+
+    def add_by_path(self, instance, context):
+        """
+        Returns the leaf node
+        """
+        for node in context.tenative_path:
+            if context.instance != node:
+                # context.instance needs to be handled separately, since it
+                # sometimes doesn't increment node's counts.
+                node.increment_counts(instance)
+                continue
+
+        where_to_add = context.instance
+
+        if where_to_add.children:
+            node.increment_counts(instance)
+            return where_to_add.create_new_leaf(instance, context)
+
+        # Leaf match or...
+        # (the where_to_add.count == 0 here is for the initially empty tree)
+        if where_to_add.is_exact_match(instance) or where_to_add.count == 0:
+            node.increment_counts(instance)
+            return context.set_instance(where_to_add)
+
+        # ... fringe split
+        if where_to_add.parent:
+            new = where_to_add.insert_parent_with_current_counts()
+        else:
+            new = where_to_add.insert_parent_with_current_counts()
+            self.root = new
+
+        new.increment_counts(instance)
+        return new.create_new_leaf(instance, context)
+
+    def contextual_ifit(self, instances, context_func):
         """
         Adds multiple instances, creating the correct context attributes for
         each of them.
 
         :param instances: instances to be added
         :type instances: Sequence<Instance>
+        :param context_func: returns a subsequence of the context instances to
+            consider as context for the instance at the inputted index.
+        :type context_func: func: Sequence<ContextInstance>, int+ ->
+            Set<ContextInstance>
         """
-        raise NotImplementedError
-        # context must be {ca_key: set<ContextInstance>}
+        contexts = tuple(ContextInstance(self.initial_path(instance))
+                         for instance in instances)
+        for i, instance in enumerate(instances):
+            instance[ca_key] = context_func(contexts, i)
+
+        # The most recent index that was changed
+        changed_index = 0
+        for index, instance in cycle(enumerate(instances)):
+            new_path = self.cobweb_path(instance)
+            # If paths are not the same...
+            if (len(new_path) != len(contexts[index].tenative_path)
+                    or any(node not in contexts[index].tenative_path
+                           for node in new_path)):
+                changed_index = index
+                contexts[index].set_path(new_path)
+            # |NP| = |TP| and NP subset of TP => set(NP) = TP
+            elif index == changed_index:
+                break
+
+        # Adds all the nodes, updates the contexts, and makes the list of nodes
+        return [self.add_by_path(instance, context)
+                for instance, context in zip(instances, contexts)]
+
+    def contextual_cobweb(self, instances, context_size=4,
+                          context_key='symmetric_window'):
+        if context_key == 'symmetric_window':
+            def context_func(context, index):
+                return (*context[max(0, index-context_size): max(0, index)],
+                        *context[index+1: index+1+context_size])
+        else:
+            raise ValueError("Unknown context evaluator %s" % context_key)
+        self.contextual_ifit(instances, context_func)
 
 
 class ContextualCobwebNode(Cobweb3Node):
@@ -236,6 +337,7 @@ class ContextualCobwebNode(Cobweb3Node):
             # the outer weighted average. Because it's a weighted average, we
             # multiply by added_leaf_count (count of cur_node in context).
             return (added_leaf_count * new_partial_guesses /
+                    # TODO: Factor out / ctxt_len^2
                     (new_partial_len * ctxt_len * ctxt_len))
 
         if unadded_leaf_counts:
@@ -260,14 +362,17 @@ class ContextualCobwebNode(Cobweb3Node):
                 for count in unadded_leaf_counts)
             / ((partial_len + 1) * ctxt_len * ctxt_len))
 
-    def pretty_print(self, depth=0):
-        raise NotImplementedError
-
     def get_weighted_values(self, attr, allow_none=True):
-        raise NotImplementedError
+        if attr == ca_key:
+            raise NotImplementedError('Context prediction not implemented')
+        else:
+            super().predict(attr, attr, allow_none)
 
     def predict(self, attr, choice_fn="most likely", allow_none=True):
-        raise NotImplementedError
+        if attr == ca_key:
+            raise NotImplementedError('Context prediction not implemented')
+        else:
+            super().predict(attr, choice_fn, allow_none)
 
     def probability(self, attr, val):
         raise NotImplementedError
@@ -275,12 +380,12 @@ class ContextualCobwebNode(Cobweb3Node):
     def log_likelihood(self, child_leaf):
         raise NotImplementedError
 
-    def create_new_child(self, instance, context_wrapper):
+    def create_new_leaf(self, instance, context_wrapper):
         """
-        Create a new child (to the current node) with the counts initialized by
+        Create a new leaf (to the current node) with the counts initialized by
         the *given instance*.
 
-        This is the operation used for creating a new child to a node and
+        This is the operation used for creating a new leaf beneath a node and
         adding the instance to it.
 
         :param instance: The instance currently being categorized
@@ -290,7 +395,7 @@ class ContextualCobwebNode(Cobweb3Node):
         :return: The new child
         :rtype: ContextualCobwebNode
         """
-        return context_wrapper.set_instance(super().create_new_child(instance))
+        return context_wrapper.set_instance(self.create_new_child(instance))
 
     def create_child_with_current_counts(self):
         """Fringe splits cannot be done by adding nodes below."""
@@ -308,7 +413,7 @@ class ContextualCobwebNode(Cobweb3Node):
             self.parent.children[index_of_self_in_parent] = new
 
             new.parent = self.parent
-            new.children.apennd(self)
+            new.children.append(self)
             self.parent = new
             return new
 
