@@ -19,16 +19,10 @@ class ContextInstance:
         # Holds the tenative path or None if it has been finalized
         self.tenative_path = set(tenative_path)
 
-    def __hash__(self):
-        return hash(self.instance)
-
-    def __eq__(self, __o):
-        return (type(__o) == ContextInstance
-                and (__o is self or
-                     (__o.instance == self.instance
-                      and self.tenative_path is None)))
-
     def __str__(self):
+        return repr(self)
+
+    def __repr__(self):
         if self.tenative_path is None:
             return 'CobwebNode{}'.format(self.instance.concept_id)
         return 'Unadded leaf of CobwebNode{}'.format(self.instance.concept_id)

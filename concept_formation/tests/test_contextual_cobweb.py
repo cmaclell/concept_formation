@@ -3,19 +3,21 @@ from __future__ import absolute_import, division
 # from ssl import CHANNEL_BINDING_TYPES
 import unittest
 # import random
-# from numbers import Number
+from numbers import Number
+from collections import Counter
 
+from concept_formation.cobweb3 import cv_key
 from concept_formation.contextual_cobweb import ca_key
 from concept_formation.contextual_cobweb import ContextualCobwebTree
 from concept_formation.contextual_cobweb import ContextualCobwebNode
 from concept_formation.context_instance import ContextInstance
 
-'''
+
 def verify_counts(node):
     """
     Checks the property that the counts of the children sum to the same
     count as the parent. This is/was useful when debugging. This is modified
-    from the test_cobweb.verify_counts to handle continuous values properly.
+    from the test_cobweb3.verify_counts to handle contextual values properly.
     """
     if len(node.children) == 0:
         return
@@ -23,8 +25,10 @@ def verify_counts(node):
     temp = {}
     temp_count = node.count
     for attr in node.av_counts:
-        if attr not in temp:
-            temp[attr] = {}
+        if attr == ca_key:
+            temp[attr] = node.av_counts[attr]
+            continue
+        temp.setdefault(attr, {})
         for val in node.av_counts[attr]:
             if val == cv_key:
                 temp[attr][val] = node.av_counts[attr][val].num
@@ -36,9 +40,13 @@ def verify_counts(node):
         for attr in child.av_counts:
             assert attr in temp
 
+            if attr == ca_key:
+                temp[attr] -= child.av_counts[attr]
+                continue
+
             for val in child.av_counts[attr]:
                 if val not in temp[attr]:
-                    print(val.concept_name)
+                    print(val)
                     print(attr)
                     print(node)
                 assert val in temp[attr]
@@ -51,7 +59,10 @@ def verify_counts(node):
     assert temp_count == 0
 
     for attr in temp:
-        if isinstance(temp[attr], Number):
+        if isinstance(temp[attr], Counter):
+            # All values must be 0
+            assert not any(temp[attr].values())
+        elif isinstance(temp[attr], Number):
             assert temp[attr] == 0.0
         else:
             for val in temp[attr]:
@@ -59,17 +70,37 @@ def verify_counts(node):
 
     for child in node.children:
         verify_counts(child)
-'''
+
+
+def verify_descendants(node):
+    if node.children == []:
+        assert node.descendants == {node}
+        return
+
+    assert node.descendants == set().union(
+        *(child.descendants for child in node.children))
+
+    for child in node.children:
+        verify_descendants(child)
+
+
+def verify_tree_structure(node, parent=None):
+    """
+    Verifies that all children have the correct parents"""
+    assert node.parent == parent
+    for child in node.children:
+        verify_tree_structure(child, node)
 
 
 class TestCobwebNodes(unittest.TestCase):
-    def setUp(self):
-        self.node_0 = ContextualCobwebNode()
-        self.node_00 = ContextualCobwebNode()
-        self.node_01 = ContextualCobwebNode()
-        self.node_0.children.extend([self.node_00, self.node_01])
-        self.node_00.parent = self.node_0
-        self.node_01.parent = self.node_0
+    @classmethod
+    def setUp(cls):
+        cls.node_0 = ContextualCobwebNode()
+        cls.node_00 = ContextualCobwebNode()
+        cls.node_01 = ContextualCobwebNode()
+        cls.node_0.children.extend([cls.node_00, cls.node_01])
+        cls.node_00.parent = cls.node_0
+        cls.node_01.parent = cls.node_0
 
     def test_increment_counts(self):
         instance_context = ContextInstance((self.node_0, self.node_00))
@@ -154,7 +185,7 @@ class TestCobwebNodes(unittest.TestCase):
         context.set_instance(child)
         self.assertEqual(1, root.expected_correct_guesses())
 
-        child_2 = root.create_new_child({}, ContextInstance((root,)))
+        child_2 = root.create_new_leaf({}, ContextInstance((root,)))
 
         context_2 = ContextInstance((root, child_2))
         obj_2 = {ca_key: {context_2}}
@@ -165,6 +196,45 @@ class TestCobwebNodes(unittest.TestCase):
         self.assertEqual(1, child_2.expected_correct_guesses())
         context_2.set_instance(child_2)
         self.assertEqual(0.75, root.expected_correct_guesses())
+
+
+class TestCobwebTree(unittest.TestCase):
+    def setUp(self):
+        self.tree = ContextualCobwebTree()
+
+    def test_tree_initializer(self):
+        verify_counts(self.tree.root)
+        verify_descendants(self.tree.root)
+        verify_tree_structure(self.tree.root)
+
+    def test_add_1_node(self):
+        self.tree.contextual_cobweb([{'attr': 'val'}])
+        verify_counts(self.tree.root)
+        verify_descendants(self.tree.root)
+        verify_tree_structure(self.tree.root)
+
+    def test_add_2_nodes(self):
+        self.tree.contextual_cobweb([{'attr': 'val1'}, {'attr': 'val2'}])
+
+    def test_add_3_nodes(self):
+        self.tree.contextual_cobweb([{'attr': 'v%s' % i} for i in range(3)])
+        verify_counts(self.tree.root)
+        verify_descendants(self.tree.root)
+        verify_tree_structure(self.tree.root)
+
+    def test_add_9_nodes(self):
+        self.tree.contextual_cobweb([{'attr': 'v%s' % i} for i in range(9)])
+        verify_counts(self.tree.root)
+        verify_descendants(self.tree.root)
+        verify_tree_structure(self.tree.root)
+
+    def test_add_2_batches(self):
+        self.tree.contextual_cobweb([{'attr': 'v%s' % i} for i in range(9)])
+        self.tree.contextual_cobweb([{'attr': 'v%s' % i} for i in range(9)])
+        verify_counts(self.tree.root)
+        verify_descendants(self.tree.root)
+        verify_tree_structure(self.tree.root)
+        print(self.tree)
 
 
 if __name__ == "__main__":

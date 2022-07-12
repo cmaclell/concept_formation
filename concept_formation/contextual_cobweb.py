@@ -42,6 +42,8 @@ class ContextualCobwebTree(Cobweb3Tree):
         :type ctxt_weight: float
         """
         self.root = ContextualCobwebNode()
+        # Root will become a leaf node
+        self.root.descendants.add(self.root)
         self.root.tree = self
         self.context_weight = ctxt_weight
         self.scaling = scaling
@@ -52,10 +54,16 @@ class ContextualCobwebTree(Cobweb3Tree):
         raise NotImplementedError
 
     def initial_path(self, instance):
-        path = self.cobweb_path(instance)
-        if path[-1].children:
-            print('early termination')
-        return path
+        path = []
+        current = self.root
+        while current:
+            path.append(current)
+            if not current.children:
+                # print(path)
+                return path
+
+            _, best1, best2 = current.two_best_children(instance)
+            current = best1
 
     def cobweb_path(self, instance):
         current = self.root
@@ -84,27 +92,28 @@ class ContextualCobwebTree(Cobweb3Tree):
 
         return node_path
 
-    def add_by_path(self, instance, context):
+    def add_by_path(self, instance, context, splits):
         """
         Returns the leaf node
-        """
-        for node in context.tenative_path:
-            if context.instance != node:
-                # context.instance needs to be handled separately, since it
-                # sometimes doesn't increment node's counts.
-                node.increment_counts(instance)
-                continue
 
+        splits: a dictionary mapping deleted/moved nodes
+            to the node that replaced them
+
+        updates splits
+        """
         where_to_add = context.instance
 
+        while where_to_add in splits:
+            where_to_add = splits[where_to_add]
+
         if where_to_add.children:
-            node.increment_counts(instance)
+            where_to_add.increment_all_counts(instance)
             return where_to_add.create_new_leaf(instance, context)
 
         # Leaf match or...
         # (the where_to_add.count == 0 here is for the initially empty tree)
         if where_to_add.is_exact_match(instance) or where_to_add.count == 0:
-            node.increment_counts(instance)
+            where_to_add.increment_all_counts(instance)
             return context.set_instance(where_to_add)
 
         # ... fringe split
@@ -114,7 +123,8 @@ class ContextualCobwebTree(Cobweb3Tree):
             new = where_to_add.insert_parent_with_current_counts()
             self.root = new
 
-        new.increment_counts(instance)
+        splits[where_to_add] = new
+        new.increment_all_counts(instance)
         return new.create_new_leaf(instance, context)
 
     def contextual_ifit(self, instances, context_func):
@@ -149,7 +159,8 @@ class ContextualCobwebTree(Cobweb3Tree):
                 break
 
         # Adds all the nodes, updates the contexts, and makes the list of nodes
-        return [self.add_by_path(instance, context)
+        splits = {}
+        return [self.add_by_path(instance, context, splits)
                 for instance, context in zip(instances, contexts)]
 
     def contextual_cobweb(self, instances, context_size=4,
@@ -204,6 +215,12 @@ class ContextualCobwebNode(Cobweb3Node):
             else:
                 prior_count = self.av_counts[attr].get(instance[attr], 0)
                 self.av_counts[attr][instance[attr]] = prior_count + 1
+
+    def increment_all_counts(self, instance):
+        # Increments all counts up to the root
+        self.increment_counts(instance)
+        if self.parent:
+            self.parent.increment_all_counts(instance)
 
     def update_counts_from_node(self, node):
         """
@@ -366,7 +383,7 @@ class ContextualCobwebNode(Cobweb3Node):
         if attr == ca_key:
             raise NotImplementedError('Context prediction not implemented')
         else:
-            super().predict(attr, attr, allow_none)
+            super().get_weighted_values(attr, attr, allow_none)
 
     def predict(self, attr, choice_fn="most likely", allow_none=True):
         if attr == ca_key:
@@ -408,9 +425,10 @@ class ContextualCobwebNode(Cobweb3Node):
             new.update_counts_from_node(self)
             new.tree = self.tree
 
-            # Replace self with new node in the parent's children
-            index_of_self_in_parent = self.parent.children.index(self)
-            self.parent.children[index_of_self_in_parent] = new
+            if self.parent:
+                # Replace self with new node in the parent's children
+                index_of_self_in_parent = self.parent.children.index(self)
+                self.parent.children[index_of_self_in_parent] = new
 
             new.parent = self.parent
             new.children.append(self)
