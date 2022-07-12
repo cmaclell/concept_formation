@@ -53,6 +53,15 @@ class ContextualCobwebTree(Cobweb3Tree):
     def cobweb(self, instance):
         raise NotImplementedError
 
+    def clear(self):
+        """
+        Clears the concepts of the tree, but maintains the scaling parameter.
+        """
+        self.root = ContextualCobwebNode()
+        self.root.descendants.add(self.root)
+        self.root.tree = self
+        self.attr_scales = {}
+
     def initial_path(self, instance):
         path = []
         current = self.root
@@ -253,9 +262,9 @@ class ContextualCobwebNode(Cobweb3Node):
 
     def expected_correct_guesses(self):
         """
-        Returns the number of attribute values that would be correctly guessed
-        in the current concept. This extension supports both nominal, numeric,
-        and contextual attribute values.
+        Returns the expected proportion of attribute values that would be
+        correctly guessed in the current concept. This extension supports
+        nominal, numeric, and contextual attribute values.
 
         The typical ContextualCobweb calculation for contextual guesses is the
         expected proportion of a context instance's path one can guess with a
@@ -325,7 +334,7 @@ class ContextualCobwebNode(Cobweb3Node):
         for wd, count in ctxt.items():
             desc, unadded_leaf = wd.desc_of(cur_node)
             if desc:
-                extra_guesses += count * count
+                extra_guesses += count
                 if unadded_leaf:
                     unadded_leaf_counts.append(count)
                 else:
@@ -419,6 +428,16 @@ class ContextualCobwebNode(Cobweb3Node):
         raise AttributeError("Context-aware leaf nodes must remain leaf nodes")
 
     def insert_parent_with_current_counts(self):
+        """
+        Insert a parent above the current node with the counts initialized by
+        the current node's counts. *This does not update the root of the tree.*
+
+        This operation is used in the speical case of a fringe split when a new
+        node is created at a leaf.
+
+        :return: The new parent
+        :rtype: ContextualCobwebNode
+        """
         # does not handle updating root in tree if necessary
         if self.count > 0:
             new = self.__class__()
@@ -454,6 +473,7 @@ class ContextualCobwebNode(Cobweb3Node):
 
         .. seealso:: :meth:`CobwebNode.get_best_operation`
         """
+        raise NotImplementedError
         leaf = self.shallow_copy()
 
         parent = leaf.insert_parent_with_current_counts()

@@ -234,7 +234,6 @@ class TestCobwebTree(unittest.TestCase):
         verify_counts(self.tree.root)
         verify_descendants(self.tree.root)
         verify_tree_structure(self.tree.root)
-        print(self.tree)
 
 
 if __name__ == "__main__":

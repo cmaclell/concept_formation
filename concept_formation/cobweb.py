@@ -589,7 +589,7 @@ class CobwebNode(object):
 
             const = \\frac{1}{n} \\sum_{k=1}^{n} \\left[
             \\frac{C_k.count}{count + 1} \\sum_i \\sum_j P(A_i = V_{ij} |
-            C)^2 \\right] - \\sum_i \\sum_j P(A_i = V_{ij} | UpdatedRoot)^2
+            C_k)^2 \\right] - \\sum_i \\sum_j P(A_i = V_{ij} | UpdatedRoot)^2
 
         where :math:`n` is the number of children of the root, :math:`C_k` is
         child :math:`k`,  :math:`C_k.count` is the number of instances stored
