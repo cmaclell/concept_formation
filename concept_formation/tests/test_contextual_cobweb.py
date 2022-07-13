@@ -2,7 +2,7 @@ from __future__ import print_function, unicode_literals
 from __future__ import absolute_import, division
 # from ssl import CHANNEL_BINDING_TYPES
 import unittest
-# import random
+import random
 from numbers import Number
 from collections import Counter
 
@@ -73,6 +73,10 @@ def verify_counts(node):
 
 
 def verify_descendants(node):
+    """
+    Checks the property that each node's descendant list is the union of its
+    children's (or, if it's a leaf, contains itself and only itself).
+    """
     if node.children == []:
         assert node.descendants == {node}
         return
@@ -86,7 +90,8 @@ def verify_descendants(node):
 
 def verify_tree_structure(node, parent=None):
     """
-    Verifies that all children have the correct parents"""
+    Checks the property that the parent attributes of all the nodes in the tree
+    are correct."""
     assert node.parent == parent
     for child in node.children:
         verify_tree_structure(child, node)
@@ -208,32 +213,44 @@ class TestCobwebTree(unittest.TestCase):
         verify_tree_structure(self.tree.root)
 
     def test_add_1_node(self):
-        self.tree.contextual_cobweb([{'attr': 'val'}])
+        self.tree.contextual_ifit([{'attr': 'val'}])
         verify_counts(self.tree.root)
         verify_descendants(self.tree.root)
         verify_tree_structure(self.tree.root)
 
     def test_add_2_nodes(self):
-        self.tree.contextual_cobweb([{'attr': 'val1'}, {'attr': 'val2'}])
+        self.tree.contextual_ifit([{'attr': 'val1'}, {'attr': 'val2'}])
 
     def test_add_3_nodes(self):
-        self.tree.contextual_cobweb([{'attr': 'v%s' % i} for i in range(3)])
+        self.tree.contextual_ifit([{'attr': 'v%s' % i} for i in range(3)])
         verify_counts(self.tree.root)
         verify_descendants(self.tree.root)
         verify_tree_structure(self.tree.root)
 
     def test_add_9_nodes(self):
-        self.tree.contextual_cobweb([{'attr': 'v%s' % i} for i in range(9)])
+        self.tree.contextual_ifit([{'attr': 'v%s' % i} for i in range(9)])
         verify_counts(self.tree.root)
         verify_descendants(self.tree.root)
         verify_tree_structure(self.tree.root)
 
     def test_add_2_batches(self):
-        self.tree.contextual_cobweb([{'attr': 'v%s' % i} for i in range(9)])
-        self.tree.contextual_cobweb([{'attr': 'v%s' % i} for i in range(9)])
+        self.tree.contextual_ifit([{'attr': 'v%s' % i} for i in range(9)])
+        self.tree.contextual_ifit([{'attr': 'v%s' % i} for i in range(9)])
         verify_counts(self.tree.root)
         verify_descendants(self.tree.root)
         verify_tree_structure(self.tree.root)
+        self.assertLessEqual(self.tree.root.expected_correct_guesses(), 1)
+        self.assertLessEqual(
+            self.tree.root.children[0].expected_correct_guesses(), 1)
+
+    def test_add_many_batches(self):
+        # print()
+        for i in range(9):
+            # print(i)
+            self.tree.contextual_ifit([{'attr': 'v%s'
+                                        % (i+random.randint(-2, 2))}
+                                       for i in range(9)])
+        # print(self.tree)
 
 
 if __name__ == "__main__":

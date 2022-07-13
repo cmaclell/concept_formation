@@ -31,15 +31,26 @@ ca_key = "#ContextualAttribute#"
 
 class ContextualCobwebTree(Cobweb3Tree):
     """
+
+    :param ctxt_weight: factor by which the context should be weighted
+        when combining category utility with other attribute types
+    :type ctxt_weight: float
+    :param scaling: The number of standard deviations numeric attributes
+        are scaled to. By default this value is 0.5 (half a standard
+        deviation), which is the max std of nominal values. If disabiling
+        scaling is desirable, then it can be set to False or None.
+    :type scaling: a float greater than 0.0, None, or False
+    :param inner_attr_scaling: Whether to use the inner most attribute name
+        when scaling numeric attributes. For example, if `('attr', '?o1')` was
+        an attribute, then the inner most attribute would be 'attr'. When using
+        inner most attributes, some objects might have multiple attributes
+        (i.e., 'attr' for different objects) that contribute to the scaling.
+    :type inner_attr_scaling: boolean
     """
 
     def __init__(self, ctxt_weight=1, scaling=0.5, inner_attr_scaling=True):
         """
         The tree constructor.
-
-        :param ctxt_weight: factor by which the context should be weighted
-            when combining category utility with other attribute types
-        :type ctxt_weight: float
         """
         self.root = ContextualCobwebNode()
         # Root will become a leaf node
@@ -55,7 +66,7 @@ class ContextualCobwebTree(Cobweb3Tree):
 
     def clear(self):
         """
-        Clears the concepts of the tree, but maintains the scaling parameter.
+        Clears the concepts of the tree, but maintains the scaling parameters.
         """
         self.root = ContextualCobwebNode()
         self.root.descendants.add(self.root)
@@ -63,6 +74,14 @@ class ContextualCobwebTree(Cobweb3Tree):
         self.attr_scales = {}
 
     def initial_path(self, instance):
+        """
+        Returns the path of the best guess for where instance will go,
+        specifically for instances that do not yet have context.
+
+        :param instance: the instance to categorize
+        :type instance: :ref:`Instance<instance-rep>`
+        :return: the best guess for the instance's insertion into the tree
+        :rtype: Sequence<ContextualCobwebNode>"""
         path = []
         current = self.root
         while current:
@@ -75,6 +94,31 @@ class ContextualCobwebTree(Cobweb3Tree):
             current = best1
 
     def cobweb_path(self, instance):
+        """
+        Returns the path of the place where adding instance will maximize
+        :meth:`category utility <CobwebNode.category_utility>`. Handles
+        contextual attributes.
+
+        In the general case, the cobweb algorithm considers making a new leaf
+        for the instance or adding it to a child of the current node.
+
+        At each node the alogrithm first calculates the category utility of
+        inserting the instance at each of the node's children, keeping the best
+        two (see: :meth:`CobwebNode.two_best_children
+        <CobwebNode.two_best_children>`) and then calculates the
+        category_utility of making a new node using the best two
+        children (see: :meth:`CobwebNode.get_best_operation
+        <CobwebNode.get_best_operation>`), either continuing down the tree or
+        ending the path there  depending on which is better. Ties are randomly
+        broken.
+
+        In the base case, i.e. a leaf node, the algorithm returns the path it
+        followed to get there.
+
+        :param instance: the instance to categorize
+        :type instance: :ref:`Instance<instance-rep>`
+        :return: the best place for inserting instance
+        :rtype: Sequence<ContextualCobwebNode>"""
         current = self.root
         node_path = []
 
@@ -103,12 +147,21 @@ class ContextualCobwebTree(Cobweb3Tree):
 
     def add_by_path(self, instance, context, splits):
         """
-        Returns the leaf node
+        Inserts instance at the path specified by the context, updating all the
+        necessary counts. It also finalizes the context and logs any splits
+        that were performed in splits.
 
-        splits: a dictionary mapping deleted/moved nodes
-            to the node that replaced them
-
-        updates splits
+        :param instance: the instance to add
+        :type instance: :ref:`Instance<instance-rep>`
+        :param context: ContextInstance with the instance's path, which will be
+            updated to hold that instance.
+        :type context: ContextInstance
+        :param splits: a dictionary mapping deleted/moved nodes to the node
+            that replaced them, where all splits performed in adding the node
+            should be logged.
+        :type splits: dict<ContextualCobwebNode, ContextualCobwebNode>
+        :return: the newly created leaf node
+        :rtype: ContextualCobwebNode
         """
         where_to_add = context.instance
 
@@ -136,26 +189,43 @@ class ContextualCobwebTree(Cobweb3Tree):
         new.increment_all_counts(instance)
         return new.create_new_leaf(instance, context)
 
-    def contextual_ifit(self, instances, context_func):
+    def contextual_cobweb(self, instances, context_func):
         """
-        Adds multiple instances, creating the correct context attributes for
-        each of them.
+        The core context-aware algorithm. Adds multiple instances, creating
+        the correct context attributes for each of them.
+
+        Context is initialized, and then the instances repeatedly categorized
+        based on the most recent paths for their ConextInstances. This
+        iteration continues until the paths stop changing (which is not
+        guaranteed). Then the instances are added to the tree.
 
         :param instances: instances to be added
-        :type instances: Sequence<Instance>
+        :type instances: Sequence<:ref:`Instance<instance-rep>`>
         :param context_func: returns a subsequence of the context instances to
             consider as context for the instance at the inputted index.
         :type context_func: func: Sequence<ContextInstance>, int+ ->
             Set<ContextInstance>
+        :return: list of the nodes where the instances were added
+        :rtype: List<ContextualCobwebNode>
         """
         contexts = tuple(ContextInstance(self.initial_path(instance))
                          for instance in instances)
         for i, instance in enumerate(instances):
             instance[ca_key] = context_func(contexts, i)
 
+        # records = {*()}
+
         # The most recent index that was changed
         changed_index = 0
         for index, instance in cycle(enumerate(instances)):
+            '''
+            if index == 0:
+                new_record = tuple(ctxt.instance for ctxt in contexts)
+                if new_record in records:
+                    print(len(records))
+                    1/0
+                records.add(new_record)
+            '''
             new_path = self.cobweb_path(instance)
             # If paths are not the same...
             if (len(new_path) != len(contexts[index].tenative_path)
@@ -172,20 +242,56 @@ class ContextualCobwebTree(Cobweb3Tree):
         return [self.add_by_path(instance, context, splits)
                 for instance, context in zip(instances, contexts)]
 
-    def contextual_cobweb(self, instances, context_size=4,
-                          context_key='symmetric_window'):
+    def contextual_ifit(self, instances, context_size=4,
+                        context_key='symmetric_window'):
+        """
+        Incrementally fit new instances into the tree and return the resulting
+        concepts.
+
+        The instances are passed down the cobweb tree and update each node to
+        incorporate themselves. **This process modifies the tree's knowledge**
+
+        :param instances: instances to be added
+        :type instances: Sequence<:ref:`Instance<instance-rep>`>
+        :param context_size: hyperparameter used for constructing the context
+            function.
+        :type context_size: int
+        :param context_key: how context should be chosen. Should be one of
+            symmetric_window (size instances on either side of anchor)
+            past_window (size instances on the left of anchor)
+            future_window (size instances on the right of anchor)
+        :type context_key: 'symmetric_window', 'past_window', 'future_window'
+        :return: list of the nodes where the instances were added
+        :rtype: List<ContextualCobwebNode>
+        """
         if context_key == 'symmetric_window':
             def context_func(context, index):
                 return (*context[max(0, index-context_size): max(0, index)],
                         *context[index+1: index+1+context_size])
+        elif context_key == 'past_window' or context_key == 'future_window':
+            raise NotImplementedError
         else:
             raise ValueError("Unknown context evaluator %s" % context_key)
-        self.contextual_ifit(instances, context_func)
+        for instance in instances:
+            self._sanity_check_instance(instance)
+        return self.contextual_cobweb(instances, context_func)
 
 
 class ContextualCobwebNode(Cobweb3Node):
+    """
+    A ContextualCobwebNode represents a concept within the knowledge base of a
+    particular :class:`ContextualCobwebTree`. Each node contains a probability
+    table that can be used to calculate the probability of different attributes
+    given the concept that the node represents.
 
+    In general the :meth:`ContextualCobwebTree.contextual_ifit`,
+    :meth:`ContextualCobwebTree.categorize` functions should be used to
+    initially interface with the Contextual Cobweb knowledge base and then the
+    returned concept can be used to calculate probabilities of certain
+    attributes or determine concept labels.
+    """
     def __init__(self, other_node=None):
+        """Create a new ContextualCobwebNode"""
         # Descendant registry should be updated every time a new node is added
         # to the tree. This can be done by updating a ContextInstance with the
         # final node or updating counts from other nodes.
@@ -195,7 +301,7 @@ class ContextualCobwebNode(Cobweb3Node):
     def increment_counts(self, instance):
         """
         Increment the counts at the current node according to the specified
-        instance. **Does not handle adding `instance` to descendants**.
+        instance. **Does not alter descendants registry**
 
         ContextualCobwebNode uses a modified version of
         :meth:`Cobweb3Node.increment_counts
@@ -203,9 +309,8 @@ class ContextualCobwebNode(Cobweb3Node):
         contextual attributes properly. The attribute equalling ca_key will be
         treated as context.
 
-        :param instance: A new instances to incorporate into the node.
+        :param instance: A new instance to incorporate into the node.
         :type instance: :ref:`Instance<instance-rep>`
-
         """
         self.count += 1
 
@@ -226,6 +331,14 @@ class ContextualCobwebNode(Cobweb3Node):
                 self.av_counts[attr][instance[attr]] = prior_count + 1
 
     def increment_all_counts(self, instance):
+        """
+        Increment the counts at the current node *and all its ancestors
+        according to the specified instance*. **Does not alter descendants
+        registry**
+
+        :param instance: a new instance to incorporate into the nodes.
+        :type instance: :ref:`Instance<instance-rep>`
+        """
         # Increments all counts up to the root
         self.increment_counts(instance)
         if self.parent:
@@ -326,6 +439,19 @@ class ContextualCobwebNode(Cobweb3Node):
 
     def __expected_contextual(self, cur_node, partial_guesses,
                               partial_len, ctxt):
+        """
+        Recursive helper for expected_correct_guesses. Calculates the expected
+        proportion of the context's path guessed.
+
+        :param cur_node: current node being examined
+        :type cur_node: ContextualCobwebNode
+        :param partial_guesses: partial sum of how many guesses were correct
+        :type partial_guesses: int
+        :param partial_len: number of nodes already examined
+            alternatively, the depth of the cur_node (0-indexed)
+        :type partial_len: int
+        :param ctxt: context of node whose correct guesses are being evaluated
+        :type ctxt: Counter<ContextInstance>"""
         unadded_leaf_counts = []
         # The count of some added leaf of cur_node. If cur_node is a leaf, this
         # will be how many times cur_node appears as context (possibly 0).
@@ -382,19 +508,42 @@ class ContextualCobwebNode(Cobweb3Node):
 
     def __unadded_leaves_cu(self, unadded_leaf_counts, partial_guesses,
                             partial_len, ctxt_len):
-        """partial_len depth of where the nodes will be added (0 indexed) """
+        """
+        Helper for __expected_contextual. Calculates the category utility of
+        leaves which have not yet been added to the tree.
+
+        :param unadded_leaf_counts: how many times each unadded leaf appears in
+            the context.
+        :type unadded_leaf_counts: list<int>
+        :param partial_guesses: partial sum of how many guesses were correct
+        :type partial_guesses: int
+        :param partial_len: what depth of leaf nodes would be (0-indexed)
+        :type partial_len: int
+        :param ctxt_len: length of the context being evaluated
+        :type ctxt: int
+        """
         return (
             sum(count * (count * count + partial_guesses)
                 for count in unadded_leaf_counts)
             / ((partial_len + 1) * ctxt_len * ctxt_len))
 
     def get_weighted_values(self, attr, allow_none=True):
+        """
+        Return a list of weighted choices for an attribute based on the node's
+        probability table. Same as Cobweb3
+
+        See :meth:`Cobweb3Node.get_weighted_values"""
         if attr == ca_key:
             raise NotImplementedError('Context prediction not implemented')
         else:
             super().get_weighted_values(attr, attr, allow_none)
 
     def predict(self, attr, choice_fn="most likely", allow_none=True):
+        """
+        Predict the value of an attribute, using the provided strategy.
+        Same as Cobweb3
+
+        See :meth:`Cobweb3Node.predict"""
         if attr == ca_key:
             raise NotImplementedError('Context prediction not implemented')
         else:
@@ -414,7 +563,7 @@ class ContextualCobwebNode(Cobweb3Node):
         This is the operation used for creating a new leaf beneath a node and
         adding the instance to it.
 
-        :param instance: The instance currently being categorized
+        :param instance: the instance currently being categorized
         :type instance: :ref:`Instance<instance-rep>`
         :param context_wrapper: context_wrapper to insert the new instance into
         :type context_wrapper: ContextInstance
@@ -435,7 +584,7 @@ class ContextualCobwebNode(Cobweb3Node):
         This operation is used in the speical case of a fringe split when a new
         node is created at a leaf.
 
-        :return: The new parent
+        :return: the new parent
         :rtype: ContextualCobwebNode
         """
         # does not handle updating root in tree if necessary
@@ -473,6 +622,8 @@ class ContextualCobwebNode(Cobweb3Node):
 
         .. seealso:: :meth:`CobwebNode.get_best_operation`
         """
+        # TODO: call to insert_parent... has effects outside the shallow copy.
+        # Do not remove error until this is fixed.
         raise NotImplementedError
         leaf = self.shallow_copy()
 
@@ -486,7 +637,7 @@ class ContextualCobwebNode(Cobweb3Node):
         """
         Returns true if the concept exactly matches the instance.
 
-        :param instance: The instance currently being categorized
+        :param instance: the instance currently being categorized
         :type instance: :ref:`Instance<instance-rep>`
         :return: whether the instance perfectly matches the concept
         :rtype: boolean
@@ -518,6 +669,40 @@ class ContextualCobwebNode(Cobweb3Node):
             elif attr_counts.get(instance[attr], 0) != self.count:
                 return False
         return True
+
+    def pretty_print(self, depth=0):
+        """
+        Print the categorization tree
+
+        The string formatting inserts tab characters to align child nodes of
+        the same depth. Numerical values are printed with their means and
+        standard deviations.
+
+        :param depth: the current depth in the print, intended to be called
+            recursively
+        :type depth: int
+        :return: a formated string displaying the tree and its children
+        :rtype: str
+        """
+        ret = str(('\t' * depth) + "|-%s " % self.concept_id)
+
+        attributes = []
+
+        for attr in self.attrs('all'):
+            values = []
+            for val in self.av_counts[attr]:
+                values.append("'" + str(val) + "': " +
+                              str(self.av_counts[attr][val]))
+
+            attributes.append("'" + str(attr) + "': {" + ", ".join(values)
+                              + "}")
+
+        ret += "{" + ", ".join(attributes) + "}: " + str(self.count) + '\n'
+
+        for c in self.children:
+            ret += c.pretty_print(depth+1)
+
+        return ret
 
     def output_json(self):
         raise NotImplementedError
