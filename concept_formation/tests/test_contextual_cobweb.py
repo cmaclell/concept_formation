@@ -1,6 +1,7 @@
 from __future__ import print_function, unicode_literals
 from __future__ import absolute_import, division
 # from ssl import CHANNEL_BINDING_TYPES
+import cProfile
 import unittest
 import random
 from numbers import Number
@@ -128,27 +129,27 @@ class TestCobwebNodes(unittest.TestCase):
 
     def test_context_membership(self):
         context = ContextInstance((self.node_0, self.node_01))
-        self.assertTrue(context.desc_of(self.node_0)[0])
-        self.assertFalse(context.desc_of(self.node_0)[1])
-        self.assertTrue(context.desc_of(self.node_01)[0])
-        self.assertTrue(context.desc_of(self.node_01)[1])
-        self.assertFalse(context.desc_of(self.node_00)[0])
+        self.assertTrue(context.desc_of(self.node_0))
+        self.assertFalse(context.unadded_leaf(self.node_0))
+        self.assertTrue(context.desc_of(self.node_01))
+        self.assertTrue(context.unadded_leaf(self.node_01))
+        self.assertFalse(context.desc_of(self.node_00))
 
         context.set_path((self.node_0, self.node_00))
-        self.assertTrue(context.desc_of(self.node_00)[0])
-        self.assertTrue(context.desc_of(self.node_00)[1])
-        self.assertFalse(context.desc_of(self.node_01)[0])
+        self.assertTrue(context.desc_of(self.node_00))
+        self.assertTrue(context.unadded_leaf(self.node_00))
+        self.assertFalse(context.desc_of(self.node_01))
 
         context.set_path((self.node_0,))
-        self.assertTrue(context.desc_of(self.node_0)[0])
-        self.assertTrue(context.desc_of(self.node_0)[1])
-        self.assertFalse(context.desc_of(self.node_00)[0])
-        self.assertFalse(context.desc_of(self.node_00)[1])
+        self.assertTrue(context.desc_of(self.node_0))
+        self.assertTrue(context.unadded_leaf(self.node_0))
+        self.assertFalse(context.desc_of(self.node_00))
+        self.assertFalse(context.unadded_leaf(self.node_00))
 
         context.set_instance(self.node_00)
-        self.assertTrue(context.desc_of(self.node_00)[0])
-        self.assertFalse(context.desc_of(self.node_00)[1])
-        self.assertFalse(context.desc_of(self.node_01)[0])
+        self.assertTrue(context.desc_of(self.node_00))
+        self.assertFalse(context.unadded_leaf(self.node_00))
+        self.assertFalse(context.desc_of(self.node_01))
 
         self.assertRaises(AssertionError, context.set_instance, self.node_01)
 
@@ -254,3 +255,4 @@ class TestCobwebTree(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+    # cProfile.run("unittest.main()")

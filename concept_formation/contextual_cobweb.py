@@ -501,10 +501,10 @@ class ContextualCobwebNode(Cobweb3Node):
         added_leaf_count = 0
         extra_guesses = 0
         for wd, count in ctxt.items():
-            desc, unadded_leaf = wd.desc_of(cur_node)
+            desc = wd.desc_of(cur_node)
             if desc:
                 extra_guesses += count
-                if unadded_leaf:
+                if wd.unadded_leaf(cur_node):
                     unadded_leaf_counts.append(count)
                 else:
                     added_leaf_count = count
@@ -574,34 +574,6 @@ class ContextualCobwebNode(Cobweb3Node):
         return (
             sum(count * (count * count + partial_guesses)
                 for count in unadded_leaf_counts) / (partial_len + 1))
-
-    def get_weighted_values(self, attr, allow_none=True):
-        """
-        Return a list of weighted choices for an attribute based on the node's
-        probability table. Same as Cobweb3
-
-        See :meth:`Cobweb3Node.get_weighted_values"""
-        if attr == ca_key:
-            raise NotImplementedError('Context prediction not implemented')
-        else:
-            super().get_weighted_values(attr, attr, allow_none)
-
-    def predict(self, attr, choice_fn="most likely", allow_none=True):
-        """
-        Predict the value of an attribute, using the provided strategy.
-        Same as Cobweb3
-
-        See :meth:`Cobweb3Node.predict"""
-        if attr == ca_key:
-            raise NotImplementedError('Context prediction not implemented')
-        else:
-            super().predict(attr, choice_fn, allow_none)
-
-    def probability(self, attr, val):
-        raise NotImplementedError
-
-    def log_likelihood(self, child_leaf):
-        raise NotImplementedError
 
     def create_new_leaf(self, instance, context_wrapper):
         """
@@ -760,4 +732,32 @@ class ContextualCobwebNode(Cobweb3Node):
         return ret
 
     def output_json(self):
+        raise NotImplementedError
+
+    def get_weighted_values(self, attr, allow_none=True):
+        """
+        Return a list of weighted choices for an attribute based on the node's
+        probability table. Same as Cobweb3
+
+        See :meth:`Cobweb3Node.get_weighted_values"""
+        if attr == ca_key:
+            raise NotImplementedError('Context prediction not implemented')
+        else:
+            super().get_weighted_values(attr, attr, allow_none)
+
+    def predict(self, attr, choice_fn="most likely", allow_none=True):
+        """
+        Predict the value of an attribute, using the provided strategy.
+        Same as Cobweb3
+
+        See :meth:`Cobweb3Node.predict"""
+        if attr == ca_key:
+            raise NotImplementedError('Context prediction not implemented')
+        else:
+            super().predict(attr, choice_fn, allow_none)
+
+    def probability(self, attr, val):
+        raise NotImplementedError
+
+    def log_likelihood(self, child_leaf):
         raise NotImplementedError

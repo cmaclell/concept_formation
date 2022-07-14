@@ -940,13 +940,6 @@ class CobwebNode(object):
                     return False
         return True
 
-    def __hash__(self):
-        """
-        The basic hash function. This hashes the concept name, which is
-        generated to be unique across concepts.
-        """
-        return hash("CobwebNode" + str(self.concept_id))
-
     def gensym(self):
         """
         Generate a unique id and increment the class _counter.
@@ -1030,10 +1023,7 @@ class CobwebNode(object):
         :return: the number of concepts below this concept.
         :rtype: int
         """
-        children_count = 0
-        for c in self.children:
-            children_count += c.num_concepts()
-        return 1 + children_count
+        return 1 + sum(c.num_concepts() for c in self.children)
 
     def output_json(self):
         """

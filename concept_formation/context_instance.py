@@ -102,14 +102,25 @@ class ContextInstance:
 
         :param node: node to check
         :type node: ContextualCobwebNode
-        :return: (whether is descendant, whether it is planned to be added
-            as a direct child of node but has not yet been added)
-        :rtype: (bool, bool)
+        :return: whether it is a descendant of node
+        :rtype: bool
         """
         if self.tenative_path is None:
-            return (self.instance in node.descendants, False)
+            return self.instance in node.descendants
         else:
-            return (node in self.tenative_path, node == self.instance)
+            return node in self.tenative_path
+
+    def unadded_leaf(self, node):
+        """
+        Returns whether context is planned to be (but not yet) added as a
+        direct descendant of node.
+
+        :param node: node to check
+        :type node: ContextualCobwebNode
+        :return: whether it is an unadded leaf of node
+        :rtype: bool
+        """
+        return node == self.instance and self.tenative_path is not None
 
     def output_json(self):
         raise NotImplementedError
