@@ -517,11 +517,6 @@ class ContextualCobwebNode(Cobweb3Node):
         new_partial_len = partial_len + 1
 
         if cur_node.children == []:
-            # If unadded_leaves > 0, a fringe split would happen
-            if unadded_leaf_counts:
-                # A fringe split is equivalent to adding cur_node as a new
-                # leaf node in addition to the unadded leaves.
-                unadded_leaf_counts.append(added_leaf_count)
             # Note that this accounts for fringe splits when measuring unadded
             # leaves but not the leaf itself. This could easily changed by, if
             # there are unadded leaves, using the following code:
@@ -543,13 +538,10 @@ class ContextualCobwebNode(Cobweb3Node):
             # (count of cur_node in context).
             return pcu + added_leaf_count * new_partial_guesses/new_partial_len
 
-        if unadded_leaf_counts:
-            # Calculate the cu of the leaf nodes
-            partial_category_utility = self.__unadded_leaves_cu(
-                unadded_leaf_counts, new_partial_guesses,
-                new_partial_len)
-        else:
-            partial_category_utility = 0
+        # Calculate the cu of the leaf nodes
+        partial_category_utility = self.__unadded_leaves_cu(
+            unadded_leaf_counts, new_partial_guesses,
+            new_partial_len)
 
         for child in cur_node.children:
             partial_category_utility += self.__exp_ctxt_helper(
@@ -571,9 +563,10 @@ class ContextualCobwebNode(Cobweb3Node):
         :param partial_len: what depth of leaf nodes would be (0-indexed)
         :type partial_len: int
         """
-        return (
-            sum(count * (count * count + partial_guesses)
-                for count in unadded_leaf_counts) / (partial_len + 1))
+        if unadded_leaf_counts:
+            return (sum(count * (count * count + partial_guesses)
+                        for count in unadded_leaf_counts) / (partial_len + 1))
+        return 0
 
     def create_new_leaf(self, instance, context_wrapper):
         """
