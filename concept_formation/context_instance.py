@@ -4,6 +4,19 @@ from __future__ import absolute_import
 from __future__ import division
 
 
+def mutates(method):
+    """
+    Decorator to be used on ContextInstance methods which cannot be called
+    after the instance is set."""
+    def with_assertions(*args, **kwargs):
+        assert args[0].tenative_path is not None, ("Cannot alter the leaf of "
+                                                   "finalized ContextInstance")
+
+        return method(*args, **kwargs)
+
+    return with_assertions
+
+
 class ContextInstance:
     """
     The ContextInstance class provides a wrapper for paths in the tree to make
@@ -37,6 +50,7 @@ class ContextInstance:
             return 'Node{}'.format(self.instance.concept_id)
         return 'Unadded leaf of Node{}'.format(self.instance.concept_id)
 
+    @mutates
     def set_instance(self, leaf):
         """
         Finalize this ContextInstance by associating it with a leaf node.
@@ -48,8 +62,6 @@ class ContextInstance:
         :return: the inputted leaf node
         :rtype: ContextualCobwebNode
         """
-        assert self.tenative_path is not None, ("Cannot change the leaf of a "
-                                                "finalized ContextInstance")
         self.tenative_path = None
         self.instance = leaf
         cur_node = leaf
@@ -58,17 +70,30 @@ class ContextInstance:
             cur_node = cur_node.parent
         return self.instance
 
+    @mutates
     def set_path(self, path):
         """
         Change the current path of this ContextInstance.
 
-        :param tenative_path: The path its eventual instance is currently
+        :param path: The path its eventual instance is currently
             going to be added to.
-        :type tenative_path: Sequence<ContetxualCobwebNode>
+        :type path: Sequence<ContetxualCobwebNode>
         """
-        assert self.tenative_path is not None, ("Cannot change the leaf of a "
-                                                "finalized ContextInstance")
         self.instance = path[-1]
+        self.tenative_path = set(path)
+
+    @mutates
+    def set_path_from_set(self, path, inst):
+        """
+        Change the current path of this ContextInstance.
+
+        :param path: The path its eventual instance is currently
+            going to be added to.
+        :type path: Set<ContetxualCobwebNode>
+        :param inst: the final node in the path
+        :type inst: ContetxualCobwebNode
+        """
+        self.instance = inst
         self.tenative_path = path
 
     def desc_of(self, node):

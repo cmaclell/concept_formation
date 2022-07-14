@@ -13,6 +13,9 @@ from concept_formation.contextual_cobweb import ContextualCobwebNode
 from concept_formation.context_instance import ContextInstance
 
 
+random.seed(43)
+
+
 def verify_counts(node):
     """
     Checks the property that the counts of the children sum to the same
@@ -244,13 +247,9 @@ class TestCobwebTree(unittest.TestCase):
             self.tree.root.children[0].expected_correct_guesses(), 1)
 
     def test_add_many_batches(self):
-        # print()
-        for i in range(9):
-            # print(i)
-            self.tree.contextual_ifit([{'attr': 'v%s'
-                                        % (i+random.randint(-2, 2))}
-                                       for i in range(9)])
-        # print(self.tree)
+        for i in range(4):
+            self.tree.contextual_ifit(
+                [{'a': 'v%s' % (i+random.randint(-2, 2))} for i in range(12)])
 
 
 if __name__ == "__main__":

@@ -82,16 +82,7 @@ class ContextualCobwebTree(Cobweb3Tree):
         :type instance: :ref:`Instance<instance-rep>`
         :return: the best guess for the instance's insertion into the tree
         :rtype: Sequence<ContextualCobwebNode>"""
-        path = []
-        current = self.root
-        while current:
-            path.append(current)
-            if not current.children:
-                # print(path)
-                return path
-
-            _, best1, best2 = current.two_best_children(instance)
-            current = best1
+        return self.cobweb_path(instance)
 
     def cobweb_path(self, instance):
         """
@@ -189,7 +180,7 @@ class ContextualCobwebTree(Cobweb3Tree):
         new.increment_all_counts(instance)
         return new.create_new_leaf(instance, context)
 
-    def contextual_cobweb(self, instances, context_func):
+    def contextual_cobweb(self, instances, context_fn, eval_fn):
         """
         The core context-aware algorithm. Adds multiple instances, creating
         the correct context attributes for each of them.
@@ -201,40 +192,61 @@ class ContextualCobwebTree(Cobweb3Tree):
 
         :param instances: instances to be added
         :type instances: Sequence<:ref:`Instance<instance-rep>`>
-        :param context_func: returns a subsequence of the context instances to
+        :param context_fn: returns a subsequence of the context instances to
             consider as context for the instance at the inputted index.
-        :type context_func: func: Sequence<ContextInstance>, int+ ->
-            Set<ContextInstance>
+        :type context_fn: func: Sequence<ContextInstance>, int+ ->
+            Sequence<ContextInstance>
+        :param eval_fn: returns a subsequence of the context instances to
+            consider when deciding if a path update is good for the instance at
+            the inputted index.
+        :type context_fn: func: Sequence<ContextInstance>, int+ ->
+            Sequence<ContextInstance>
         :return: list of the nodes where the instances were added
         :rtype: List<ContextualCobwebNode>
         """
         contexts = tuple(ContextInstance(self.initial_path(instance))
                          for instance in instances)
         for i, instance in enumerate(instances):
-            instance[ca_key] = context_func(contexts, i)
+            instance[ca_key] = context_fn(contexts, i)
 
-        # records = {*()}
+        records = {*()}
 
         # The most recent index that was changed
         changed_index = 0
         for index, instance in cycle(enumerate(instances)):
-            '''
+            # debug code to catch cycling behavior
             if index == 0:
                 new_record = tuple(ctxt.instance for ctxt in contexts)
                 if new_record in records:
                     print(len(records))
+                    print(records)
+                    print(new_record)
+                    quit()
                     1/0
                 records.add(new_record)
-            '''
+
+            old_path = contexts[index].tenative_path
+            old_inst = contexts[index].instance
             new_path = self.cobweb_path(instance)
+
             # If paths are not the same...
+            # Observe |NP| = |TP| and NP subset of TP => set(NP) = TP
             if (len(new_path) != len(contexts[index].tenative_path)
                     or any(node not in contexts[index].tenative_path
                            for node in new_path)):
-                changed_index = index
+
+                old_cu = self.__nearby_cu(instances, contexts, index, eval_fn)
                 contexts[index].set_path(new_path)
-            # |NP| = |TP| and NP subset of TP => set(NP) = TP
-            elif index == changed_index:
+                new_cu = self.__nearby_cu(instances, contexts, index, eval_fn)
+
+                if new_cu > old_cu:
+                    changed_index = index
+                    continue
+                else:
+                    contexts[index].set_path_from_set(old_path, old_inst)
+                # print(new_cu - old_cu)
+
+            if index == changed_index:
                 break
 
         # Adds all the nodes, updates the contexts, and makes the list of nodes
@@ -242,8 +254,13 @@ class ContextualCobwebTree(Cobweb3Tree):
         return [self.add_by_path(instance, context, splits)
                 for instance, context in zip(instances, contexts)]
 
+    def __nearby_cu(self, instances, contexts, index, eval_fn):
+        return sum(ctx.instance.cu_for_new_child(inst) for inst, ctx in
+                   eval_fn(list(zip(instances, contexts)), index))
+
     def contextual_ifit(self, instances, context_size=4,
-                        context_key='symmetric_window'):
+                        context_key='symmetric_window',
+                        eval_size=4, eval_key='symmetric_window'):
         """
         Incrementally fit new instances into the tree and return the resulting
         concepts.
@@ -261,9 +278,15 @@ class ContextualCobwebTree(Cobweb3Tree):
             past_window (size instances on the left of anchor)
             future_window (size instances on the right of anchor)
         :type context_key: 'symmetric_window', 'past_window', 'future_window'
+        :param eval_key: during evaluation changes to paths are evaluated based
+            on how the affect their CU and the surrounding CU. The available
+            window types for defining the "surrounding CU" are the same as for
+            context.
+        :type eval_key: 'symmetric_window', 'past_window', 'future_window'
         :return: list of the nodes where the instances were added
         :rtype: List<ContextualCobwebNode>
         """
+        # TODO: Should eventually be refactored
         if context_key == 'symmetric_window':
             def context_func(context, index):
                 return (*context[max(0, index-context_size): max(0, index)],
@@ -272,9 +295,16 @@ class ContextualCobwebTree(Cobweb3Tree):
             raise NotImplementedError
         else:
             raise ValueError("Unknown context evaluator %s" % context_key)
+        if eval_key == 'symmetric_window':
+            def eval_func(context, index):
+                return context[max(0, index-eval_size):index+1+context_size]
+        elif eval_key == 'past_window' or eval_key == 'future_window':
+            raise NotImplementedError
+        else:
+            raise ValueError("Unknown eval context evaluator %s" % eval_key)
         for instance in instances:
             self._sanity_check_instance(instance)
-        return self.contextual_cobweb(instances, context_func)
+        return self.contextual_cobweb(instances, context_func, eval_func)
 
 
 class ContextualCobwebNode(Cobweb3Node):
@@ -452,6 +482,19 @@ class ContextualCobwebNode(Cobweb3Node):
         :type partial_len: int
         :param ctxt: context of node whose correct guesses are being evaluated
         :type ctxt: Counter<ContextInstance>"""
+        ctxt_len = sum(ctxt.values())
+        if ctxt_len == 0:
+            return 0
+        # ctxt_len will divided out twice for P(C_i | w in ctxt) and once for
+        # the outer weighted average.
+        return self.__exp_ctxt_helper(cur_node, partial_guesses, partial_len,
+                                      ctxt) / (ctxt_len * ctxt_len)
+
+    def __exp_ctxt_helper(self, cur_node, partial_guesses, partial_len, ctxt):
+        """
+        Calculates the expected proportion of the context's path guessed times
+        the length of the context squared.
+        """
         unadded_leaf_counts = []
         # The count of some added leaf of cur_node. If cur_node is a leaf, this
         # will be how many times cur_node appears as context (possibly 0).
@@ -474,43 +517,51 @@ class ContextualCobwebNode(Cobweb3Node):
         new_partial_len = partial_len + 1
 
         if cur_node.children == []:
-            ctxt_len = sum(ctxt.values())
             # If unadded_leaves > 0, a fringe split would happen
             if unadded_leaf_counts:
                 # A fringe split is equivalent to adding cur_node as a new
                 # leaf node in addition to the unadded leaves.
                 unadded_leaf_counts.append(added_leaf_count)
-                # Calculate the cu of all leaf nodes
-                return self.__unadded_leaves_cu(
-                    unadded_leaf_counts, new_partial_guesses,
-                    new_partial_len, ctxt_len)
+            # Note that this accounts for fringe splits when measuring unadded
+            # leaves but not the leaf itself. This could easily changed by, if
+            # there are unadded leaves, using the following code:
+            # if unadded_leaf_counts:
+            #     unadded_leaf_counts.append(added_leaf_count)
+            #     return self.__unadded_lea...
+            # The reason we don't consider the main node as being fringe split
+            # is that it creates inconsistencies where some cu calculations
+            # account for the changing structure of the tree and others (those
+            # without the leaves as context) don't. Since the philosophy is,
+            # in general, to not update the tree until the very end, this is
+            # most consistent.
+            # Calculate the cu of all leaf nodes
+            pcu = self.__unadded_leaves_cu(
+                unadded_leaf_counts, new_partial_guesses,
+                new_partial_len)
 
-            # ctxt_len divided out twice for P(C_i | w in ctxt) and once for
-            # the outer weighted average. Because it's a weighted average, we
-            # multiply by added_leaf_count (count of cur_node in context).
-            return (added_leaf_count * new_partial_guesses /
-                    # TODO: Factor out / ctxt_len^2
-                    (new_partial_len * ctxt_len * ctxt_len))
+            # Because it's a weighted average, we multiply by added_leaf_count
+            # (count of cur_node in context).
+            return pcu + added_leaf_count * new_partial_guesses/new_partial_len
 
         if unadded_leaf_counts:
-            ctxt_len = sum(ctxt.values())
             # Calculate the cu of the leaf nodes
             partial_category_utility = self.__unadded_leaves_cu(
                 unadded_leaf_counts, new_partial_guesses,
-                new_partial_len, ctxt_len)
+                new_partial_len)
         else:
             partial_category_utility = 0
 
         for child in cur_node.children:
-            partial_category_utility += self.__expected_contextual(
+            partial_category_utility += self.__exp_ctxt_helper(
                 child, new_partial_guesses, new_partial_len, ctxt)
         return partial_category_utility
 
     def __unadded_leaves_cu(self, unadded_leaf_counts, partial_guesses,
-                            partial_len, ctxt_len):
+                            partial_len):
         """
-        Helper for __expected_contextual. Calculates the category utility of
-        leaves which have not yet been added to the tree.
+        Helper for __exp_ctxt_helper. Calculates the category utility of
+        leaves which have not yet been added to the tree times the length
+        of the context squared.
 
         :param unadded_leaf_counts: how many times each unadded leaf appears in
             the context.
@@ -519,13 +570,10 @@ class ContextualCobwebNode(Cobweb3Node):
         :type partial_guesses: int
         :param partial_len: what depth of leaf nodes would be (0-indexed)
         :type partial_len: int
-        :param ctxt_len: length of the context being evaluated
-        :type ctxt: int
         """
         return (
             sum(count * (count * count + partial_guesses)
-                for count in unadded_leaf_counts)
-            / ((partial_len + 1) * ctxt_len * ctxt_len))
+                for count in unadded_leaf_counts) / (partial_len + 1))
 
     def get_weighted_values(self, attr, allow_none=True):
         """
@@ -670,7 +718,10 @@ class ContextualCobwebNode(Cobweb3Node):
                 return False
         return True
 
-    def pretty_print(self, depth=0):
+    def __repr__(self):
+        return 'N%s' % self.concept_id
+
+    def pretty_print(self, depth=0, include_cu=False):
         """
         Print the categorization tree
 
@@ -681,6 +732,8 @@ class ContextualCobwebNode(Cobweb3Node):
         :param depth: the current depth in the print, intended to be called
             recursively
         :type depth: int
+        :param include_cu: include category utilities in printout
+        :type include_cu: bool
         :return: a formated string displaying the tree and its children
         :rtype: str
         """
@@ -697,7 +750,9 @@ class ContextualCobwebNode(Cobweb3Node):
             attributes.append("'" + str(attr) + "': {" + ", ".join(values)
                               + "}")
 
-        ret += "{" + ", ".join(attributes) + "}: " + str(self.count) + '\n'
+        ret += "{" + ", ".join(attributes) + "}: " + str(self.count)
+        ret += (' (cu: %s)' % round(self.category_utility(), 5) if include_cu
+                else '') + '\n'
 
         for c in self.children:
             ret += c.pretty_print(depth+1)
