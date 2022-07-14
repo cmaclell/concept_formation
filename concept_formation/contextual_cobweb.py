@@ -488,19 +488,21 @@ class ContextualCobwebNode(Cobweb3Node):
         # ctxt_len will divided out twice for P(C_i | w in ctxt) and once for
         # the outer weighted average.
         return self.__exp_ctxt_helper(cur_node, partial_guesses, partial_len,
-                                      ctxt) / (ctxt_len * ctxt_len)
+                                      ctxt.items()) / (ctxt_len * ctxt_len)
 
     def __exp_ctxt_helper(self, cur_node, partial_guesses, partial_len, ctxt):
         """
         Calculates the expected proportion of the context's path guessed times
         the length of the context squared.
         """
+        # TODO: Creating this list takes too long. Remove __unadded_leaves_cu
+        # and maintain count here instead.
         unadded_leaf_counts = []
         # The count of some added leaf of cur_node. If cur_node is a leaf, this
         # will be how many times cur_node appears as context (possibly 0).
         added_leaf_count = 0
         extra_guesses = 0
-        for wd, count in ctxt.items():
+        for wd, count in ctxt:
             desc = wd.desc_of(cur_node)
             if desc:
                 extra_guesses += count
@@ -516,32 +518,27 @@ class ContextualCobwebNode(Cobweb3Node):
         new_partial_guesses = partial_guesses + extra_guesses
         new_partial_len = partial_len + 1
 
-        if cur_node.children == []:
-            # Note that this accounts for fringe splits when measuring unadded
-            # leaves but not the leaf itself. This could easily changed by, if
-            # there are unadded leaves, using the following code:
-            # if unadded_leaf_counts:
-            #     unadded_leaf_counts.append(added_leaf_count)
-            #     return self.__unadded_lea...
-            # The reason we don't consider the main node as being fringe split
-            # is that it creates inconsistencies where some cu calculations
-            # account for the changing structure of the tree and others (those
-            # without the leaves as context) don't. Since the philosophy is,
-            # in general, to not update the tree until the very end, this is
-            # most consistent.
-            # Calculate the cu of all leaf nodes
-            pcu = self.__unadded_leaves_cu(
-                unadded_leaf_counts, new_partial_guesses,
-                new_partial_len)
-
-            # Because it's a weighted average, we multiply by added_leaf_count
-            # (count of cur_node in context).
-            return pcu + added_leaf_count * new_partial_guesses/new_partial_len
-
         # Calculate the cu of the leaf nodes
         partial_category_utility = self.__unadded_leaves_cu(
-            unadded_leaf_counts, new_partial_guesses,
-            new_partial_len)
+            unadded_leaf_counts, new_partial_guesses, new_partial_len)
+        # Note that this will account for fringe splits when measuring unadded
+        # leaves but not the leaf itself. This could easily changed by, if
+        # there are unadded leaves, using the following code:
+        # if cur_node.children == [] and unadded_leaf_counts:
+        #     unadded_leaf_counts.append(added_leaf_count)
+        #     return self.__unadded_lea...
+        # The reason we don't consider the main node as being fringe split
+        # is that it creates inconsistencies where some cu calculations
+        # account for the changing structure of the tree and others (those
+        # without the leaves as context) don't. Since the philosophy is,
+        # in general, to not update the tree until the very end, this is
+        # most consistent.
+
+        if cur_node.children == []:
+            # Because it's a weighted average, we multiply by added_leaf_count
+            # (count of cur_node in context).
+            return (added_leaf_count * new_partial_guesses / new_partial_len
+                    + partial_category_utility)
 
         for child in cur_node.children:
             partial_category_utility += self.__exp_ctxt_helper(
