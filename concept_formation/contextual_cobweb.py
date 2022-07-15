@@ -212,7 +212,7 @@ class ContextualCobwebTree(Cobweb3Tree):
         records = {*()}
 
         # The most recent index that was changed
-        changed_index = 0
+        changed_index = len(instances) - 1
         for index, instance in cycle(enumerate(instances)):
             # debug code to catch cycling behavior
             if index == 0:
@@ -539,7 +539,7 @@ class ContextualCobwebNode(Cobweb3Node):
         # philosophy is, in general, to not update the tree until the very end,
         # this is most consistent.
 
-        if cur_node.children == []:
+        if not cur_node.children:
             # Because it's a weighted average, we multiply by added_leaf_count
             # (count of cur_node in context).
             return (added_leaf_count * new_partial_guesses / new_partial_len

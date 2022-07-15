@@ -214,7 +214,7 @@ class TestCobwebNodes(unittest.TestCase):
 
 class TestCobwebTree(unittest.TestCase):
     def setUp(self):
-        self.tree = ContextualCobwebTree(ctxt_weight=4)
+        self.tree = ContextualCobwebTree(ctxt_weight=6)
 
     def test_tree_initializer(self):
         verify_counts(self.tree.root)
@@ -256,19 +256,6 @@ class TestCobwebTree(unittest.TestCase):
         for i in range(4):
             self.tree.contextual_ifit(
                 [{'a': 'v%s' % (i+random.randint(-2, 2))} for i in range(12)])
-
-    def test_words(self):
-        sens = ('horse eats grass in pasture',
-                'deer ingests bark in woods',
-                'cow nibbles hay in barn',
-                'horse ingests hay in pasture',
-                'cow ingests bark in barn',
-                'animal ingests food using mouth')
-
-        for sent in sens:
-            self.tree.contextual_ifit(
-                tuple(map(word_to_obj, sent.split(' '))), 2)
-        print(self.tree)
 
 
 if __name__ == "__main__":
