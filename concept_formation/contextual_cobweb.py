@@ -26,7 +26,7 @@ from concept_formation.utils import isNumber
 # from concept_formation.utils import weighted_choice
 # from concept_formation.utils import most_likely_choice
 
-ca_key = "#ContextualAttribute#"
+ca_key = "#Ctxt#"  # TODO: Change to something longer
 
 
 class ContextualCobwebTree(Cobweb3Tree):
@@ -482,32 +482,39 @@ class ContextualCobwebNode(Cobweb3Node):
         :type partial_len: int
         :param ctxt: context of node whose correct guesses are being evaluated
         :type ctxt: Counter<ContextInstance>"""
-        ctxt_len = sum(ctxt.values())
-        if ctxt_len == 0:
+        ctx_len = sum(ctxt.values())
+        if ctx_len == 0:
             return 0
         # ctxt_len will divided out twice for P(C_i | w in ctxt) and once for
         # the outer weighted average.
         return self.__exp_ctxt_helper(cur_node, partial_guesses, partial_len,
-                                      ctxt.items()) / (ctxt_len * ctxt_len)
+                                      tuple(ctxt.items())) / (ctx_len*ctx_len)
 
     def __exp_ctxt_helper(self, cur_node, partial_guesses, partial_len, ctxt):
         """
         Calculates the expected proportion of the context's path guessed times
         the length of the context squared.
         """
-        # TODO: Creating this list takes too long. Remove __unadded_leaves_cu
-        # and maintain count here instead.
-        unadded_leaf_counts = []
+        # The full formula for unadded leaves is this:
+        #   sum(count * (count * count + new_partial_guesses)
+        #       for count in unadded_leaf_counts) / (new_partial_len + 1)
+        # where unadded_leaf_counts is how many times each of the unadded
+        # leaves appears as context. This is equivalent to
+        #   (sum(count for count in unadded_leaf_counts) * new_partial_guesses
+        #   + sum(count * count * count for count in unadded_leaf_counts))
+        #   / (new_partial_len + 1)
+        cubed_ualeaf_count = 0
+        cum_ualeaf_count = 0
         # The count of some added leaf of cur_node. If cur_node is a leaf, this
         # will be how many times cur_node appears as context (possibly 0).
         added_leaf_count = 0
         extra_guesses = 0
         for wd, count in ctxt:
-            desc = wd.desc_of(cur_node)
-            if desc:
+            if wd.desc_of(cur_node):
                 extra_guesses += count
                 if wd.unadded_leaf(cur_node):
-                    unadded_leaf_counts.append(count)
+                    cubed_ualeaf_count += count * count * count
+                    cum_ualeaf_count += count
                 else:
                     added_leaf_count = count
 
@@ -519,51 +526,29 @@ class ContextualCobwebNode(Cobweb3Node):
         new_partial_len = partial_len + 1
 
         # Calculate the cu of the leaf nodes
-        partial_category_utility = self.__unadded_leaves_cu(
-            unadded_leaf_counts, new_partial_guesses, new_partial_len)
+        if cum_ualeaf_count:
+            partial_cu = ((cum_ualeaf_count * new_partial_guesses
+                           + cubed_ualeaf_count) / (new_partial_len + 1))
+        else:
+            partial_cu = 0
         # Note that this will account for fringe splits when measuring unadded
-        # leaves but not the leaf itself. This could easily changed by, if
-        # there are unadded leaves, using the following code:
-        # if cur_node.children == [] and unadded_leaf_counts:
-        #     unadded_leaf_counts.append(added_leaf_count)
-        #     return self.__unadded_lea...
-        # The reason we don't consider the main node as being fringe split
-        # is that it creates inconsistencies where some cu calculations
-        # account for the changing structure of the tree and others (those
-        # without the leaves as context) don't. Since the philosophy is,
-        # in general, to not update the tree until the very end, this is
-        # most consistent.
+        # leaves but not the leaf itself. The reason we don't consider the main
+        # node as being fringe split is that it creates inconsistencies where
+        # some cu calculations account for the changing structure of the tree
+        # while others (those without the leaves as context) don't. Since the
+        # philosophy is, in general, to not update the tree until the very end,
+        # this is most consistent.
 
         if cur_node.children == []:
             # Because it's a weighted average, we multiply by added_leaf_count
             # (count of cur_node in context).
             return (added_leaf_count * new_partial_guesses / new_partial_len
-                    + partial_category_utility)
+                    + partial_cu)
 
         for child in cur_node.children:
-            partial_category_utility += self.__exp_ctxt_helper(
+            partial_cu += self.__exp_ctxt_helper(
                 child, new_partial_guesses, new_partial_len, ctxt)
-        return partial_category_utility
-
-    def __unadded_leaves_cu(self, unadded_leaf_counts, partial_guesses,
-                            partial_len):
-        """
-        Helper for __exp_ctxt_helper. Calculates the category utility of
-        leaves which have not yet been added to the tree times the length
-        of the context squared.
-
-        :param unadded_leaf_counts: how many times each unadded leaf appears in
-            the context.
-        :type unadded_leaf_counts: list<int>
-        :param partial_guesses: partial sum of how many guesses were correct
-        :type partial_guesses: int
-        :param partial_len: what depth of leaf nodes would be (0-indexed)
-        :type partial_len: int
-        """
-        if unadded_leaf_counts:
-            return (sum(count * (count * count + partial_guesses)
-                        for count in unadded_leaf_counts) / (partial_len + 1))
-        return 0
+        return partial_cu
 
     def create_new_leaf(self, instance, context_wrapper):
         """
