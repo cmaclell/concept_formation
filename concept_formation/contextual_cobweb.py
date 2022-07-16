@@ -210,6 +210,8 @@ class ContextualCobwebTree(Cobweb3Tree):
             instance[ca_key] = context_fn(contexts, i)
 
         records = {*()}
+        # Whether the iteration has returned to a seen state
+        looped = False
 
         # The most recent index that was changed
         changed_index = len(instances) - 1
@@ -218,11 +220,11 @@ class ContextualCobwebTree(Cobweb3Tree):
             if index == 0:
                 new_record = tuple(ctxt.instance for ctxt in contexts)
                 if new_record in records:
+                    looped = True
                     print(len(records))
                     print(records)
                     print(new_record)
-                    quit()
-                    1/0
+                    # quit()
                 records.add(new_record)
 
             old_path = contexts[index].tenative_path
@@ -234,6 +236,11 @@ class ContextualCobwebTree(Cobweb3Tree):
             if (len(new_path) != len(contexts[index].tenative_path)
                     or any(node not in contexts[index].tenative_path
                            for node in new_path)):
+
+                if not looped:
+                    contexts[index].set_path(new_path)
+                    changed_index = index
+                    continue
 
                 old_cu = self.__nearby_cu(instances, contexts, index, eval_fn)
                 contexts[index].set_path(new_path)
