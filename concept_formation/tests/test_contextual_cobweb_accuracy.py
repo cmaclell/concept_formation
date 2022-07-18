@@ -11,6 +11,10 @@ def word_to_obj(word):
     return {'Anchor': word}
 
 
+def print_tree(tree):
+    print(str(tree).replace('Node', 'N'))
+
+
 def test_words(data, ctxt_size=2, ctxt_weight=4, show_intermediates=True):
     tree = ContextualCobwebTree(ctxt_weight=ctxt_weight)
 
@@ -20,9 +24,9 @@ def test_words(data, ctxt_size=2, ctxt_weight=4, show_intermediates=True):
         print([node.concept_id for node in nodes])
         if show_intermediates:
             print('-'*40+' (Iteration %s, sentence: "%s")' % (i, sent))
-            print(str(tree).replace('Node', 'N'))
+            print_tree(tree)
     print('-'*40+' (Final)')
-    print(str(tree).replace('Node', 'N'))
+    print_tree(tree)
 
 
 def test_words_1():
