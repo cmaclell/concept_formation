@@ -160,25 +160,52 @@ class ContextualCobwebTree(Cobweb3Tree):
             where_to_add = splits[where_to_add]
 
         if where_to_add.children:
-            where_to_add.increment_all_counts(instance)
+            self.increment_and_restructure(instance, where_to_add, splits)
             return where_to_add.create_new_leaf(instance, context)
 
         # Leaf match or...
         # (the where_to_add.count == 0 here is for the initially empty tree)
         if where_to_add.is_exact_match(instance) or where_to_add.count == 0:
-            where_to_add.increment_all_counts(instance)
+            self.increment_and_restructure(instance, where_to_add, splits)
             return context.set_instance(where_to_add)
 
         # ... fringe split
-        if where_to_add.parent:
-            new = where_to_add.insert_parent_with_current_counts()
-        else:
-            new = where_to_add.insert_parent_with_current_counts()
-            self.root = new
+        new = where_to_add.insert_parent_with_current_counts()
 
         splits[where_to_add] = new
-        new.increment_all_counts(instance)
+        self.increment_and_restructure(instance, new, splits)
         return new.create_new_leaf(instance, context)
+
+    def increment_and_restructure(self, instance, where_to_add, splits):
+        where_to_add.increment_all_counts(instance)
+        current = where_to_add.parent
+
+        # print(best_action)
+        while current:
+            best1_cu, best1, best2 = current.two_best_children(instance)
+            # Note that comparing 'merges' and 'splits' don't consider how
+            # the context attributes would change given the operation. This
+            # is good because it prevents "cheating," where cobweb flattens
+            # the hierarchy to make context proportionally easier to guess.
+            # TODO replace best1 and best2 with the branch it's actually
+            # being added to.
+            _, best_action = current.get_best_operation(instance, best1,
+                                                        best2, best1_cu)
+
+            if best_action == 'merge':
+                current.merge(best1, best2)
+            elif best_action == 'split':
+                assert best1.children
+                current.split(best1)
+                splits[best1] = current
+            elif best_action == 'new' or best_action == 'best':
+                pass
+            else:
+                raise Exception('Best action choice "' + best_action +
+                                '" not a recognized option. This should be'
+                                ' impossible...')
+
+            current = current.parent
 
     def contextual_cobweb(self, instances, context_fn, eval_fn):
         """
@@ -578,10 +605,10 @@ class ContextualCobwebNode(Cobweb3Node):
         """Fringe splits cannot be done by adding nodes below."""
         raise AttributeError("Context-aware leaf nodes must remain leaf nodes")
 
-    def insert_parent_with_current_counts(self):
+    def insert_parent_with_current_counts(self, update_root=True):
         """
         Insert a parent above the current node with the counts initialized by
-        the current node's counts. *This does not update the root of the tree.*
+        the current node's counts. *By default this updates the root if needed*
 
         This operation is used in the speical case of a fringe split when a new
         node is created at a leaf.
@@ -599,6 +626,8 @@ class ContextualCobwebNode(Cobweb3Node):
                 # Replace self with new node in the parent's children
                 index_of_self_in_parent = self.parent.children.index(self)
                 self.parent.children[index_of_self_in_parent] = new
+            elif update_root:
+                self.tree.root = new
 
             new.parent = self.parent
             new.children.append(self)

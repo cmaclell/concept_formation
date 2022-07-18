@@ -253,9 +253,10 @@ class TestCobwebTree(unittest.TestCase):
             self.tree.root.children[0].expected_correct_guesses(), 1)
 
     def test_add_many_batches(self):
-        for i in range(4):
+        for i in range(2):
             self.tree.contextual_ifit(
                 [{'a': 'v%s' % (i+random.randint(-2, 2))} for i in range(12)])
+        print(self.tree)
 
 
 if __name__ == "__main__":
