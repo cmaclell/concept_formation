@@ -142,7 +142,7 @@ def test_words_homonym():
             "carpenter saw saw")
 
     tree = test_words(sens, ctxt_size=1, ctxt_weight=5)
-    tree.context_weight = 3  # 3 leads to good categorization, 4 to bad
+    tree.context_weight = 4  # 3 leads to good categorization, 4 to bad
     print()
     print(tree.infer_from_context(
         [word_to_obj("wood"), word_to_obj("buys"), None],

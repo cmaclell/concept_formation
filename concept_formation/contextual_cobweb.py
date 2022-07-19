@@ -216,7 +216,45 @@ class ContextualCobwebTree(Cobweb3Tree):
         :type instance: :ref:`Instance<instance-rep>`
         :return: the best guess for the instance's insertion into the tree
         :rtype: Sequence<ContextualCobwebNode>"""
-        return self.cobweb_path(instance)
+        current = self.root
+        node_path = []
+
+        while current:
+            node_path.append(current)
+
+            if not current.children:
+                # print("leaf")
+                break
+
+            # TODO: Generalize hack
+            tie = False
+            best_child = None
+            best_count = float('-inf')
+            for child in current.children:
+                count = child.av_counts['Anchor'].get(instance['Anchor'], 0)
+                if best_count <= count:
+                    tie = best_count == count
+                    best_count = count
+                    best_child = child
+            if not tie:
+                current = best_child
+                continue
+
+            best1_cu, best1, best2 = current.two_best_children(instance)
+            _, best_action = current.get_best_operation(
+                instance, best1, best2, best1_cu, possible_ops=["best", "new"])
+
+            # print(best_action)
+            if best_action == 'best':
+                current = best1
+            elif best_action == 'new':
+                break
+            else:
+                raise Exception('Best action choice "{action}" not a '
+                                'recognized option. This should be'
+                                ' impossible...'.format(action=best_action))
+
+        return node_path
 
     def cobweb_path(self, instance):
         """
