@@ -20,13 +20,15 @@ def test_words(data, ctxt_size=2, ctxt_weight=4, show_intermediates=True):
 
     for i, sent in enumerate(data):
         nodes = tree.contextual_ifit(
-            tuple(map(word_to_obj, sent.split(' '))), ctxt_size)
+            tuple(map(word_to_obj, sent.split(' '))), context_size=ctxt_size,
+            eval_size=ctxt_size)
         print([node.concept_id for node in nodes])
         if show_intermediates:
             print('-'*40+' (Iteration %s, sentence: "%s")' % (i, sent))
             print_tree(tree)
     print('-'*40+' (Final)')
     print_tree(tree)
+    return tree
 
 
 def test_words_1():
@@ -139,7 +141,16 @@ def test_words_homonym():
             "cat and dog",
             "carpenter saw saw")
 
-    test_words(sens, ctxt_size=1, ctxt_weight=4)
+    tree = test_words(sens, ctxt_size=1, ctxt_weight=5)
+    tree.context_weight = 3  # 3 leads to good categorization, 4 to bad
+    print()
+    print(tree.infer_from_context(
+        [word_to_obj("wood"), word_to_obj("buys"), None],
+        context_size=1, eval_size=1))
+    print()
+    tree.contextual_ifit([word_to_obj("wood"), word_to_obj("buys")],
+                         context_size=1, eval_size=1)
+    print(tree)
 
 
 if __name__ == "__main__":
