@@ -70,8 +70,7 @@ class ContextualCobwebTree(Cobweb3Tree):
         self.attr_scales = {}
 
     def contextual_ifit(self, instances, context_size=4,
-                        context_key='symmetric_window',
-                        eval_size=4, eval_key='symmetric_window'):
+                        context_key='symmetric_window'):
         """
         Incrementally fit new instances into the tree and return the resulting
         concepts.
@@ -89,11 +88,6 @@ class ContextualCobwebTree(Cobweb3Tree):
             past_window (size instances on the left of anchor)
             future_window (size instances on the right of anchor)
         :type context_key: 'symmetric_window', 'past_window', 'future_window'
-        :param eval_key: during evaluation changes to paths are evaluated based
-            on how the affect their CU and the surrounding CU. The available
-            window types for defining the "surrounding CU" are the same as for
-            context.
-        :type eval_key: 'symmetric_window', 'past_window', 'future_window'
         :return: list of the nodes where the instances were added
         :rtype: List<ContextualCobwebNode>
         """
@@ -106,13 +100,14 @@ class ContextualCobwebTree(Cobweb3Tree):
             raise NotImplementedError
         else:
             raise ValueError("Unknown context evaluator %s" % context_key)
-        if eval_key == 'symmetric_window':
+        if context_key == 'symmetric_window':
             def eval_func(context, index):
-                return context[max(0, index-eval_size):index+1+context_size]
-        elif eval_key == 'past_window' or eval_key == 'future_window':
+                return context[max(0, index-context_size):index+1+context_size]
+        elif context_key == 'past_window' or context_key == 'future_window':
+            # Should be inverse of context window
             raise NotImplementedError
         else:
-            raise ValueError("Unknown eval context evaluator %s" % eval_key)
+            raise ValueError("Unknown eval context evaluator %s" % context_key)
         for instance in instances:
             self._sanity_check_instance(instance)
         return self.contextual_cobweb(instances, context_func, eval_func)
@@ -216,6 +211,10 @@ class ContextualCobwebTree(Cobweb3Tree):
         :type instance: :ref:`Instance<instance-rep>`
         :return: the best guess for the instance's insertion into the tree
         :rtype: Sequence<ContextualCobwebNode>"""
+        '''path = self.cobweb_path(instance)
+        print('word "%s" has been initially categorized to %s'
+              % (instance['Anchor'], path))
+        return path'''
         current = self.root
         node_path = []
 
@@ -226,7 +225,7 @@ class ContextualCobwebTree(Cobweb3Tree):
                 # print("leaf")
                 break
 
-            # TODO: Generalize hack
+            # TODO: Generalize hack beyond "Anchor" atrribute
             tie = False
             best_child = None
             best_count = float('-inf')
@@ -387,8 +386,7 @@ class ContextualCobwebTree(Cobweb3Tree):
         raise NotImplementedError
 
     def infer_from_context(self, instances, context_size=4,
-                           context_key='symmetric_window',
-                           eval_size=4, eval_key='symmetric_window'):
+                           context_key='symmetric_window'):
         """
         Categorize instances and use this to predict the attributes of the
         unknown instance, entered as None.
@@ -403,11 +401,6 @@ class ContextualCobwebTree(Cobweb3Tree):
             past_window (size instances on the left of anchor)
             future_window (size instances on the right of anchor)
         :type context_key: 'symmetric_window', 'past_window', 'future_window'
-        :param eval_key: during evaluation changes to paths are evaluated based
-            on how the affect their CU and the surrounding CU. The available
-            window types for defining the "surrounding CU" are the same as for
-            context.
-        :type eval_key: 'symmetric_window', 'past_window', 'future_window'
         :return: list of the nodes where the instances were added
         :rtype: List<ContextualCobwebNode>
         """
@@ -426,16 +419,16 @@ class ContextualCobwebTree(Cobweb3Tree):
             raise NotImplementedError
         else:
             raise ValueError("Unknown context evaluator %s" % context_key)
-        if eval_key == 'symmetric_window':
+        if context_key == 'symmetric_window':
             def eval_func(context, index):
-                low = max(0, index-eval_size)
+                low = max(0, index-context_size)
                 hi = index + 1 + context_size
                 return context[low + (low < pred_ind <= index):
                                hi - (index < pred_ind < hi)]
-        elif eval_key == 'past_window' or eval_key == 'future_window':
+        elif context_key == 'past_window' or context_key == 'future_window':
             raise NotImplementedError
         else:
-            raise ValueError("Unknown eval context evaluator %s" % eval_key)
+            raise ValueError("Unknown eval context evaluator %s" % context_key)
 
         del instances[pred_ind]
         for instance in instances:

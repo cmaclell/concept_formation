@@ -2,20 +2,33 @@ from __future__ import print_function, unicode_literals
 from __future__ import absolute_import, division
 
 from concept_formation.contextual_cobweb import ContextualCobwebTree
+from concept_formation.contextual_cobweb import ca_key
 # from cProfile import run
+import re
 # import random
 from time import time
+
+
+find_context = re.compile(r"'%s': {.*?}" % ca_key)
+
+
+def ellide_context(string):
+    return re.sub(find_context, "'%s': {...}" % ca_key, string)
 
 
 def word_to_obj(word):
     return {'Anchor': word}
 
 
-def print_tree(tree):
-    print(str(tree).replace('Node', 'N'))
+def print_tree(tree, ctxt=True):
+    if ctxt:
+        print(str(tree).replace('Node', 'N'))
+    else:
+        print(ellide_context(str(tree)))
 
 
-def test_words(data, ctxt_size=2, ctxt_weight=4, show_intermediates=True):
+def test_words(data, ctxt_size=2, ctxt_weight=4, show_intermediates=True,
+               show_context=False):
     tree = ContextualCobwebTree(ctxt_weight=ctxt_weight)
 
     for i, sent in enumerate(data):
@@ -25,9 +38,9 @@ def test_words(data, ctxt_size=2, ctxt_weight=4, show_intermediates=True):
         print([node.concept_id for node in nodes])
         if show_intermediates:
             print('-'*40+' (Iteration %s, sentence: "%s")' % (i, sent))
-            print_tree(tree)
+            print_tree(tree, show_context)
     print('-'*40+' (Final)')
-    print_tree(tree)
+    print_tree(tree, show_context)
     return tree
 
 
@@ -150,11 +163,12 @@ def test_words_homonym():
     print()
     tree.contextual_ifit([word_to_obj("wood"), word_to_obj("buys")],
                          context_size=1, eval_size=1)
-    print(tree)
+    print_tree(tree)
 
 
 if __name__ == "__main__":
     start = time()
     test_words_homonym()
+    # test_words_3()
     print('-'*70)
     print('Finished in %ss' % round(time() - start, 3))
