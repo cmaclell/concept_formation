@@ -9,7 +9,7 @@ from __future__ import unicode_literals
 from __future__ import absolute_import
 from __future__ import division
 # from random import normalvariate
-from itertools import cycle
+from itertools import cycle, chain
 from math import sqrt
 from math import pi
 # from math import exp
@@ -27,6 +27,13 @@ from concept_formation.utils import isNumber
 # from concept_formation.utils import most_likely_choice
 
 ca_key = "#Ctxt#"  # TODO: Change to something longer
+
+
+def enumerate_from_back(iter):
+    index = -1
+    for item in reversed(iter):
+        yield (index, item)
+        index -= 1
 
 
 class ContextualCobwebTree(Cobweb3Tree):
@@ -158,9 +165,14 @@ class ContextualCobwebTree(Cobweb3Tree):
 
         # The most recent index that was changed
         changed_index = len(instances) - 1
-        for index, instance in cycle(enumerate(instances)):
+        iterations = 1
+        for index, instance in cycle(chain(
+                enumerate(instances)),
+                # backwards so that iteration bounces back and forth
+                tuple(enumerate_from_back(instances))[1:-1]):
             # debug code to catch cycling behavior
             if index == 0:
+                iterations += 2
                 new_record = tuple(ctxt.instance for ctxt in contexts)
                 # print(new_record)
                 if new_record in records:
@@ -200,6 +212,7 @@ class ContextualCobwebTree(Cobweb3Tree):
             if index == changed_index:
                 break
 
+        print('took %s iterations' % iterations)
         return (instances, contexts)
 
     def initial_path(self, instance):
@@ -211,10 +224,6 @@ class ContextualCobwebTree(Cobweb3Tree):
         :type instance: :ref:`Instance<instance-rep>`
         :return: the best guess for the instance's insertion into the tree
         :rtype: Sequence<ContextualCobwebNode>"""
-        '''path = self.cobweb_path(instance)
-        print('word "%s" has been initially categorized to %s'
-              % (instance['Anchor'], path))
-        return path'''
         current = self.root
         node_path = []
 
@@ -384,6 +393,34 @@ class ContextualCobwebTree(Cobweb3Tree):
 
     def cobweb(self, instance):
         raise NotImplementedError
+
+    def _cobweb_categorize(self, instance):
+        """
+        A cobweb specific version of categorize, not intended to be
+        externally called.
+        """
+        current = self.root
+
+        while current:
+            if not current.children:
+                # print("leaf")
+                break
+
+            best1_cu, best1, best2 = current.two_best_children(instance)
+            _, best_action = current.get_best_operation(
+                instance, best1, best2, best1_cu, possible_ops=["best", "new"])
+
+            # print(best_action)
+            if best_action == 'best':
+                current = best1
+            elif best_action == 'new':
+                break
+            else:
+                raise Exception('Best action choice "{action}" not a '
+                                'recognized option. This should be'
+                                ' impossible...'.format(action=best_action))
+
+        return current
 
     def infer_from_context(self, instances, context_size=4,
                            context_key='symmetric_window'):
@@ -812,7 +849,7 @@ class ContextualCobwebNode(Cobweb3Node):
     def __repr__(self):
         return 'N%s' % self.concept_id
 
-    def pretty_print(self, depth=0, include_cu=False):
+    def pretty_print(self, depth=0, include_cu=False, max_depth=7):
         """
         Print the categorization tree
 
@@ -829,6 +866,8 @@ class ContextualCobwebNode(Cobweb3Node):
         :rtype: str
         """
         ret = str(('\t' * depth) + "|-%s " % self.concept_id)
+        if depth >= max_depth:
+            return ret + " {...}"
 
         attributes = []
 

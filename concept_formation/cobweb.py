@@ -9,6 +9,7 @@ from __future__ import absolute_import
 from __future__ import division
 from random import shuffle
 from math import log
+from itertools import chain
 
 from concept_formation.utils import weighted_choice
 from concept_formation.utils import most_likely_choice
@@ -907,7 +908,7 @@ class CobwebNode(object):
         """
         temp = self.shallow_copy()
 
-        for c in self.children + best.children:
+        for c in chain(self.children, best.children):
             if c == best:
                 continue
             temp_child = c.shallow_copy()

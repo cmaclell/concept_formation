@@ -191,15 +191,18 @@ class TestCobwebNodes(unittest.TestCase):
         context = ContextInstance((root,))
         obj = {ca_key: {context}}
         root.increment_counts(obj)
+        tree.edit_no += 1
         child = ContextualCobwebNode(root)
         child.parent = root
         root.children.append(child)
 
         self.assertEqual(1, child.expected_correct_guesses())
         context.set_instance(child)
+        tree.edit_no += 1
         self.assertEqual(1, root.expected_correct_guesses())
 
         child_2 = root.create_new_leaf({}, ContextInstance((root,)))
+        tree.edit_no += 1
 
         context_2 = ContextInstance((root, child_2))
         obj_2 = {ca_key: {context_2}}
@@ -209,6 +212,7 @@ class TestCobwebNodes(unittest.TestCase):
         self.assertEqual(1, child.expected_correct_guesses())
         self.assertEqual(1, child_2.expected_correct_guesses())
         context_2.set_instance(child_2)
+        tree.edit_no += 1
         self.assertEqual(0.75, root.expected_correct_guesses())
 
 
