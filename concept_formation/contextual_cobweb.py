@@ -105,24 +105,21 @@ class ContextualCobwebTree(Cobweb3Tree):
 
     def contextual_cobweb(self, instances, context_size, context_key):
         """
-        The core context-aware algorithm. Categorizes *and then adds* instances.
+        The core context-aware algorithm. Categorizes *and then adds* instances
 
         :param instances: instances to be added
         :type instances: Sequence<:ref:`Instance<instance-rep>`>
-        :param context_fn: returns a subsequence of the context instances to
-            consider as context for the instance at the inputted index.
-        :type context_fn: func: Sequence<ContextInstance>, int+ ->
-            Sequence<ContextInstance>
-        :param eval_fn: returns a subsequence of the context instances to
-            consider when deciding if a path update is good for the instance at
-            the inputted index.
-        :type context_fn: func: Sequence<ContextInstance>, int+ ->
-            Sequence<ContextInstance>
-        :return: list of the nodes where the instances were added
+        :param context_key: how context should be chosen. Should be one of
+            symmetric_window (size instances on either side of anchor)
+            past_window (size instances on the left of anchor)
+            future_window (size instances on the right of anchor)
+        :type context_key: 'symmetric_window', 'past_window', 'future_window'
+        :return: list of the created leaf nodes
         :rtype: List<ContextualCobwebNode>
         """
         assert context_key == 'symmetric_window'
-        initial_contexts = [ContextInstance(self.initial_path(instance)) for instance in instances[:context_size + 1]]
+        initial_contexts = [ContextInstance(self.initial_path(instance))
+                            for instance in instances[:context_size + 1]]
         # [-context_size:]
         fixed = []
         window = deque(zip(instances[:context_size + 1], initial_contexts))
@@ -174,9 +171,11 @@ class ContextualCobwebTree(Cobweb3Tree):
                         continue
 
                     # TODO expand window to include relevant fixed nodes
-                    old_cu = sum(ctx.instance.cu_for_new_child(inst) for inst, ctx in window)
+                    old_cu = sum(ctx.instance.cu_for_new_child(inst)
+                                 for inst, ctx in window)
                     ctxt.set_path(new_path)
-                    new_cu = sum(ctx.instance.cu_for_new_child(inst) for inst, ctx in window)
+                    new_cu = sum(ctx.instance.cu_for_new_child(inst)
+                                 for inst, ctx in window)
 
                     if new_cu > old_cu:
                         changed = True
@@ -322,14 +321,16 @@ class ContextualCobwebTree(Cobweb3Tree):
         where_to_add = context.instance
 
         if where_to_add.children:
-            self.increment_and_restructure(instance, where_to_add, unadded_window)
+            self.increment_and_restructure(
+                instance, where_to_add, unadded_window)
             return where_to_add.create_new_leaf(instance, context)
 
         # Leaf match or...
         # (the where_to_add.count == 0 here is for the initially empty tree)
         if where_to_add.is_exact_match(instance) or where_to_add.count == 0:
             leaf = context.set_instance(where_to_add)
-            self.increment_and_restructure(instance, where_to_add, unadded_window)
+            self.increment_and_restructure(
+                instance, where_to_add, unadded_window)
             return leaf
 
         # ... fringe split
@@ -340,7 +341,8 @@ class ContextualCobwebTree(Cobweb3Tree):
         self.increment_and_restructure(instance, new, unadded_window)
         return leaf
 
-    def increment_and_restructure(self, instance, where_to_add, unadded_window):
+    def increment_and_restructure(self, instance, where_to_add,
+                                  unadded_window):
         where_to_add.increment_all_counts(instance)
         current = where_to_add.parent
 
