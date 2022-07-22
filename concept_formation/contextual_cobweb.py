@@ -9,11 +9,12 @@ from __future__ import unicode_literals
 from __future__ import absolute_import
 from __future__ import division
 # from random import normalvariate
-from itertools import cycle, chain
+from itertools import cycle
 from math import sqrt
 from math import pi
 # from math import exp
 # from math import log
+from time import time
 from collections import Counter, deque
 # from token import AT
 
@@ -120,70 +121,56 @@ class ContextualCobwebTree(Cobweb3Tree):
         assert context_key == 'symmetric_window'
         initial_contexts = [ContextInstance(self.initial_path(instance))
                             for instance in instances[:context_size + 1]]
-        # [-context_size:]
-        fixed = []
+        fixed = []  # [-context_size:]
         window = deque(zip(instances[:context_size + 1], initial_contexts))
         for inst, _ in window:
             inst[ca_key] = Counter(initial_contexts)
-
         next_to_initialize = context_size + 1
+
         while window:
             # # # We will be fixing the first element of the deque # # #
-            # Whether the iteration has changed the paths
-            changed = False
-            # Whether the iteration has returned to a seen state
+            # Whether the current iteration has changed the paths
+            changed = True
+            # Whether the iterations have returned to a seen state
             looped = False
             records = {*()}
 
             iterations = 1
-            for inst, ctxt in cycle(chain(window, ((None, None),))):
-                if inst is None:
+            start = time()
+            for index, (inst, ctx) in cycle(enumerate(window)):
+                if index == 0:
+                    iterations += 1
                     # If we have now stabilized
                     if not changed:
                         break
-                    iterations += 1
                     changed = False
-                    new_record = tuple(ctx.instance for _, ctx in window)
 
+                    new_record = tuple(ctx.instance for _, ctx in window)
                     if new_record in records:
                         looped = True
                         print("Loop")
-
                     records.add(new_record)
-                    continue
-
-                old_path = ctxt.tenative_path
-                old_inst = ctxt.instance
-                new_path = self.cobweb_path(inst)
-
+                    # Actions is the splits and merges which should be done
+                    path, new_actns = self.cobweb_path_and_restructurings(inst)
+                else:
+                    path = self.cobweb_path(inst)
                 # If paths are not the same...
                 # Observe |NP| = |TP| and NP subset of TP => set(NP) = TP
-                if (len(new_path) != len(old_path)
-                        or any(node not in old_path
-                               for node in new_path)):
-
-                    if not looped:
-                        ctxt.set_path(new_path)
-                        changed = True
+                if not self.__path_eq(ctx.tenative_path, path):
+                    if looped:
+                        update = self.__update_if_better(window, path, ctx)
+                        if update:
+                            changed = True
+                            actions = new_actns
                         continue
 
-                    # TODO expand window to include relevant fixed nodes
-                    old_cu = sum(ctx.instance.cu_for_new_child(inst)
-                                 for inst, ctx in window)
-                    ctxt.set_path(new_path)
-                    new_cu = sum(ctx.instance.cu_for_new_child(inst)
-                                 for inst, ctx in window)
-
-                    if new_cu > old_cu:
-                        changed = True
-                        continue
-                    else:
-                        ctxt.set_path_from_set(old_path, old_inst)
+                    ctx.set_path(path)
+                    changed = True
+                actions = new_actns
 
             next_to_initialize += 1
-            to_fix = window.popleft()
             # Add the instance to fixed
-            fixed.append(self.add_by_path(*to_fix, window))
+            fixed.append(self.add_by_path(*window.popleft(), actions, window))
 
             if next_to_initialize < len(instances):
                 instance = instances[next_to_initialize]
@@ -193,8 +180,31 @@ class ContextualCobwebTree(Cobweb3Tree):
                 for inst, _ in window:
                     inst[ca_key][context] += 1
                 window.append((instance, context))
-
+            # print('word_num', next_to_initialize-context_size, 'time', time()-start, 'iterations', iterations, sep='*')
         return fixed
+
+    def __update_if_better(self, window, new_path, ctxt):
+        """returns True if path changed, false otherwise"""
+        old_path = ctxt.tenative_path
+        old_inst = ctxt.instance
+
+        old_cu = self.__cu_for_window(window)
+        ctxt.set_path(new_path)
+        new_cu = self.__cu_for_window(window)
+
+        if new_cu > old_cu:
+            return True
+
+        ctxt.set_path_from_set(old_path, old_inst)
+        return False
+
+    def __path_eq(self, set_path, tup_path):
+        """Checks if these are equal. Optimized for correct input types"""
+        return (len(tup_path) == len(set_path)
+                and all(node in set_path for node in tup_path))
+
+    def __cu_for_window(self, window):
+        return sum(ctx.instance.cu_for_new_child(inst) for inst, ctx in window)
 
     def initial_path(self, instance):
         """
@@ -216,7 +226,7 @@ class ContextualCobwebTree(Cobweb3Tree):
                 break
 
             # TODO: Generalize hack beyond "Anchor" atrribute
-            tie = False
+            '''tie = False
             best_child = None
             best_count = float('-inf')
             for child in current.children:
@@ -227,7 +237,7 @@ class ContextualCobwebTree(Cobweb3Tree):
                     best_child = child
             if not tie:
                 current = best_child
-                continue
+                continue'''
 
             best1_cu, best1, best2 = current.two_best_children(instance)
             _, best_action = current.get_best_operation(
@@ -297,7 +307,32 @@ class ContextualCobwebTree(Cobweb3Tree):
 
         return node_path
 
-    def add_by_path(self, instance, context, unadded_window):
+    def cobweb_path_and_restructurings(self, instance):
+        """GETS restructurings"""
+        current = self.root
+        node_path = []
+        actions = []
+
+        while current:
+            node_path.append(current)
+
+            if not current.children:
+                # print("leaf")
+                break
+
+            best1_cu, best1, best2 = current.two_best_children(instance)
+            action_cu, best_action = current.get_best_operation(
+                instance, best1, best2, best1_cu, possible_ops=['best', 'new'])
+
+            # print(best_action)
+            actions.append((best_action, current, action_cu, best1_cu, best1, best2))
+            current = best1
+            if best_action == 'new':
+                break
+
+        return (node_path, actions)
+
+    def add_by_path(self, instance, context, actions, unadded_window):
         """
         Inserts instance at the path specified by the context, updating all the
         necessary counts. It also finalizes the context and logs any splits
@@ -318,16 +353,17 @@ class ContextualCobwebTree(Cobweb3Tree):
         where_to_add = context.instance
 
         if where_to_add.children:
+            leaf = where_to_add.create_new_leaf(instance, context)
             self.increment_and_restructure(
-                instance, where_to_add, unadded_window)
-            return where_to_add.create_new_leaf(instance, context)
+                instance, where_to_add, actions, unadded_window)
+            return leaf
 
         # Leaf match or...
         # (the where_to_add.count == 0 here is for the initially empty tree)
         if where_to_add.is_exact_match(instance) or where_to_add.count == 0:
             leaf = context.set_instance(where_to_add)
             self.increment_and_restructure(
-                instance, where_to_add, unadded_window)
+                instance, where_to_add, actions, unadded_window)
             return leaf
 
         # ... fringe split
@@ -335,42 +371,43 @@ class ContextualCobwebTree(Cobweb3Tree):
 
         self.__split_update(where_to_add, unadded_window)
         leaf = new.create_new_leaf(instance, context)
-        self.increment_and_restructure(instance, new, unadded_window)
+
+        if actions:
+            actions[-1] = (*actions[-1][:1], new, *actions[-1][2:])
+        self.increment_and_restructure(instance, new, actions, unadded_window)
         return leaf
 
     def increment_and_restructure(self, instance, where_to_add,
-                                  unadded_window):
+                                  actions, unadded_window):
         where_to_add.increment_all_counts(instance)
-        current = where_to_add.parent
 
-        # print(best_action)
-        while current:
-            best1_cu, best1, best2 = current.two_best_children(instance)
+        # By going backwards, splits don't cause problems
+        for best_action, current, action_cu, best1_cu, best1, best2 in reversed(actions):
             # Note that comparing 'merges' and 'splits' don't consider how
             # the context attributes would change given the operation. This
             # is good because it prevents "cheating," where cobweb flattens
             # the hierarchy to make context proportionally easier to guess.
-            # TODO replace best1 and best2 with the branch it's actually
-            # being added to.
-            # TODO not double add to nodes
-            _, best_action = current.get_best_operation(instance, best1,
-                                                        best2, best1_cu)
+            # Empty object is inserted since all counts have been incremented.
+            if len(current.children) <= 2 and len(best1.children) == 0:
+                continue
 
-            if best_action == 'merge':
+            new_action_cu, new_best_action = current.get_best_operation(
+                {}, best1, best2, best1_cu, possible_ops=['split', 'merge'])
+
+            if new_action_cu <= action_cu:
+                continue
+
+            if new_best_action == 'merge':
                 node = current.merge(best1, best2)
                 self.__merge_update(node, unadded_window)
-            elif best_action == 'split':
+            elif new_best_action == 'split':
                 assert len(best1.children) > 1
                 current.split(best1)
                 self.__split_update(best1, unadded_window)
-            elif best_action == 'new' or best_action == 'best':
-                pass
             else:
-                raise Exception('Best action choice "' + best_action +
+                raise Exception('Best action choice "' + new_best_action +
                                 '" not a recognized option. This should be'
                                 ' impossible...')
-
-            current = current.parent
 
     def __merge_update(self, node, unadded_ctxts):
         for _, ctx in unadded_ctxts:
@@ -722,6 +759,138 @@ class ContextualCobwebNode(Cobweb3Node):
             partial_cu += self.__exp_ctxt_helper(
                 child, new_partial_guesses, new_partial_len, ctxt)
         return partial_cu
+
+    def get_best_operation(self, instance, best1, best2, best1_cu,
+                           possible_ops=["best", "new", "merge", "split"]):
+        """
+        Given an instance, the two best children based on category utility and
+        a set of possible operations, find the operation that produces the
+        highest category utility, and then return the category utility and name
+        for the best operation. In the case of ties, an operator is chosen with
+        the following priorities: best, new, split, merge.
+
+        Given the following starting tree the results of the 4 standard Cobweb
+        operations are shown below:
+
+        .. image:: images/Original.png
+            :width: 200px
+            :align: center
+
+        * **Best** - Categorize the instance to child with the best category
+          utility. This results in a recurisve call to :meth:`cobweb
+          <concept_formation.cobweb.CobwebTree.cobweb>`.
+
+            .. image:: images/Best.png
+                :width: 200px
+                :align: center
+
+        * **New** - Create a new child node to the current node and add the
+          instance there. See: :meth:`create_new_child
+          <concept_formation.cobweb.CobwebNode.create_new_child>`.
+
+            .. image:: images/New.png
+                :width: 200px
+                :align: center
+
+        * **Merge** - Take the two best children, create a new node as their
+          mutual parent and add the instance there. See: :meth:`merge
+          <concept_formation.cobweb.CobwebNode.merge>`.
+
+            .. image:: images/Merge.png
+                    :width: 200px
+                    :align: center
+
+        * **Split** - Take the best node and promote its children to be
+          children of the current node and recurse on the current node. See:
+          :meth:`split <concept_formation.cobweb.CobwebNode.split>`
+
+            .. image:: images/Split.png
+                :width: 200px
+                :align: center
+
+        Each operation is entertained and the resultant category utility is
+        used to pick which operation to perform. The list of operations to
+        entertain can be controlled with the possible_ops parameter. For
+        example, when performing categorization without modifying knoweldge
+        only the best and new operators are used.
+
+        :param instance: The instance currently being categorized
+        :type instance: :ref:`Instance<instance-rep>`
+        :param best1: A tuple containing the relative cu of the best child and
+            the child itself, as determined by
+            :meth:`CobwebNode.two_best_children`.
+        :type best1: (float, CobwebNode)
+        :param best2: A tuple containing the relative cu of the second best
+            child and the child itself, as determined by
+            :meth:`CobwebNode.two_best_children`.
+        :type best2: (float, CobwebNode)
+        :param possible_ops: A list of operations from ["best", "new", "merge",
+            "split"] to entertain.
+        :type possible_ops: ["best", "new", "merge", "split"]
+        :return: A tuple of the category utility of the best operation and the
+            name of the best operation.
+        :rtype: (cu_bestOp, name_bestOp)
+        """
+        if not best1:
+            raise ValueError("Need at least one best child.")
+
+        operations = []
+
+        if "best" in possible_ops:
+            operations.append((best1_cu, 3, "best"))
+        if "new" in possible_ops:
+            operations.append((self.cu_for_new_child(instance), 2, 'new'))
+        if "merge" in possible_ops and len(self.children) > 2 and best2:
+            operations.append((self.cu_for_merge(best1, best2, instance),
+                               0, 'merge'))
+        if "split" in possible_ops and len(best1.children) > 0:
+            operations.append((self.cu_for_split(best1), 1, 'split'))
+
+        operations.sort(reverse=True)
+
+        return (operations[0][0], operations[0][2])
+
+    def two_best_children(self, instance):
+        """
+        Calculates the category utility of inserting the instance into each of
+        this node's children and returns the best two. In the event of ties
+        children are sorted first by category utility, then by their size, then
+        by a random value.
+
+        :param instance: The instance currently being categorized
+        :type instance: :ref:`Instance<instance-rep>`
+        :return: the category utility and indices for the two best children
+            (the second tuple will be ``None`` if there is only 1 child).
+        :rtype: ((cu_best1,index_best1),(cu_best2,index_best2))
+        """
+        if len(self.children) == 0:
+            raise Exception("No children!")
+
+        # Convert the relative CU's of the two best children into CU scores
+        # that can be compared with the other operations.
+        const = self.compute_relative_CU_const(instance)
+
+        # If there's only one child, simply calculate the relevant utility
+        if len(self.children) == 1:
+            best1 = self.children[0]
+            best1_relative_cu = self.relative_cu_for_insert(best1, instance)
+            best1_cu = (best1_relative_cu / (self.count+1) / len(self.children)
+                        + const)
+            return best1_cu, best1, None
+
+        children_relative_cu = [(self.relative_cu_for_insert(child, instance),
+                                 child.count, child) for child in
+                                self.children]
+        children_relative_cu.sort(reverse=True, key=lambda x: x[:-1])
+
+        best1_data, best2_data = children_relative_cu[:2]
+
+        best1_relative_cu, _, best1 = best1_data
+        best1_cu = (best1_relative_cu / (self.count+1) / len(self.children)
+                    + const)
+        best2 = best2_data[2]
+
+        return best1_cu, best1, best2
 
     def create_new_leaf(self, instance, context_wrapper):
         """

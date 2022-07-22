@@ -3,7 +3,7 @@ from __future__ import absolute_import, division
 
 from concept_formation.contextual_cobweb import ContextualCobwebTree
 from concept_formation.contextual_cobweb import ca_key
-# from cProfile import run
+from cProfile import run
 import re
 # import random
 from time import time
@@ -158,7 +158,7 @@ def test_words_homonym():
 
 if __name__ == "__main__":
     start = time()
-    test_small()
-    # test_words_2()
+    #test_small()
+    run('test_words_2()')
     print('-'*70)
     print('Finished in %ss' % round(time() - start, 3))
