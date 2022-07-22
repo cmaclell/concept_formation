@@ -123,7 +123,6 @@ class ContextualCobwebTree(Cobweb3Tree):
         # [-context_size:]
         fixed = []
         window = deque(zip(instances[:context_size + 1], initial_contexts))
-        print(instances)
         for inst, _ in window:
             inst[ca_key] = Counter(initial_contexts)
 
@@ -137,9 +136,7 @@ class ContextualCobwebTree(Cobweb3Tree):
             records = {*()}
 
             iterations = 1
-            for inst, ctxt in cycle(chain(
-                    window,
-                    ((None, None),))):
+            for inst, ctxt in cycle(chain(window, ((None, None),))):
                 if inst is None:
                     # If we have now stabilized
                     if not changed:
