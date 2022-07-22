@@ -156,9 +156,6 @@ def test_words_homonym():
     tree = test_words(sens, ctxt_size=1, ctxt_weight=5)
     tree.context_weight = 3  # 3 leads to good categorization, 4 to bad
     print()
-    print(tree.infer_from_context(
-        [word_to_obj("wood"), word_to_obj("buys"), None], context_size=1))
-    print()
     tree.contextual_ifit([word_to_obj("wood"), word_to_obj("buys")],
                          context_size=1)
     print_tree(tree)
@@ -166,7 +163,7 @@ def test_words_homonym():
 
 if __name__ == "__main__":
     start = time()
-    # test_words_homonym()
-    test_words_2()
+    test_words_homonym()
+    # test_words_2()
     print('-'*70)
     print('Finished in %ss' % round(time() - start, 3))

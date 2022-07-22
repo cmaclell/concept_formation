@@ -96,6 +96,10 @@ class ContextInstance:
         self.instance = inst
         self.tenative_path = path
 
+    @mutates
+    def insert_into_path(self, node):
+        self.tenative_path.add(node)
+
     def desc_of(self, node):
         """
         Returns whether context is or planned to be descendant of node.
@@ -121,6 +125,9 @@ class ContextInstance:
         :rtype: bool
         """
         return node == self.instance and self.tenative_path is not None
+
+    def unadded(self):
+        return self.tenative_path is not None
 
     def output_json(self):
         raise NotImplementedError

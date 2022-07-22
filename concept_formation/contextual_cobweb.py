@@ -14,7 +14,7 @@ from math import sqrt
 from math import pi
 # from math import exp
 # from math import log
-from collections import Counter
+from collections import Counter, deque
 # from token import AT
 
 from concept_formation.cobweb3 import Cobweb3Node
@@ -98,30 +98,14 @@ class ContextualCobwebTree(Cobweb3Tree):
         :return: list of the nodes where the instances were added
         :rtype: List<ContextualCobwebNode>
         """
-        # TODO: Should eventually be refactored
-        if context_key == 'symmetric_window':
-            def context_func(context, index):
-                return (*context[max(0, index-context_size): index],
-                        *context[index+1: index+1+context_size])
-        elif context_key == 'past_window' or context_key == 'future_window':
-            raise NotImplementedError
-        else:
-            raise ValueError("Unknown context evaluator %s" % context_key)
-        if context_key == 'symmetric_window':
-            def eval_func(context, index):
-                return context[max(0, index-context_size):index+1+context_size]
-        elif context_key == 'past_window' or context_key == 'future_window':
-            # Should be inverse of context window
-            raise NotImplementedError
-        else:
-            raise ValueError("Unknown eval context evaluator %s" % context_key)
+        assert context_key != 'past_window' or context_key != 'future_window'
         for instance in instances:
             self._sanity_check_instance(instance)
-        return self.contextual_cobweb(instances, context_func, eval_func)
+        return self.contextual_cobweb(instances, context_size, context_key)
 
-    def contextual_cobweb(self, instances, context_fn, eval_fn):
+    def contextual_cobweb(self, instances, context_size, context_key):
         """
-        Categorizes *and then adds* instances.
+        The core context-aware algorithm. Categorizes *and then adds* instances.
 
         :param instances: instances to be added
         :type instances: Sequence<:ref:`Instance<instance-rep>`>
@@ -137,83 +121,84 @@ class ContextualCobwebTree(Cobweb3Tree):
         :return: list of the nodes where the instances were added
         :rtype: List<ContextualCobwebNode>
         """
-        # Adds all the nodes, updates the contexts, and makes the list of nodes
-        splits = {}
-        return [self.add_by_path(instance, context, splits)
-                for instance, context in zip(
-                *self._contextual_categorize(instances, context_fn, eval_fn))]
+        assert context_key == 'symmetric_window'
+        initial_contexts = [ContextInstance(self.initial_path(instance)) for instance in instances[:context_size + 1]]
+        # [-context_size:]
+        fixed = []
+        window = deque(zip(instances[:context_size + 1], initial_contexts))
+        print(instances)
+        for inst, _ in window:
+            inst[ca_key] = Counter(initial_contexts)
 
-    def _contextual_categorize(self, instances, context_fn, eval_fn):
-        """
-        The core context-aware algorithm. Adds multiple instances, creating
-        the correct context attributes for each of them.
+        next_to_initialize = context_size + 1
+        while window:
+            # # # We will be fixing the first element of the deque # # #
+            # Whether the iteration has changed the paths
+            changed = False
+            # Whether the iteration has returned to a seen state
+            looped = False
+            records = {*()}
 
-        Context is initialized, and then the instances repeatedly categorized
-        based on the most recent paths for their ConextInstances. This
-        iteration continues until the paths stop changing (which is not
-        guaranteed).
+            iterations = 1
+            for inst, ctxt in cycle(chain(
+                    window,
+                    ((None, None),))):
+                if inst is None:
+                    # If we have now stabilized
+                    if not changed:
+                        break
+                    iterations += 1
+                    changed = False
+                    new_record = tuple(ctx.instance for _, ctx in window)
 
-        returns (instance[], contexts[])"""
-        contexts = tuple(ContextInstance(self.initial_path(instance))
-                         for instance in instances)
-        for i, instance in enumerate(instances):
-            instance[ca_key] = context_fn(contexts, i)
+                    if new_record in records:
+                        looped = True
+                        print("Loop")
 
-        records = {*()}
-        # Whether the iteration has returned to a seen state
-        looped = False
-
-        # The most recent index that was changed
-        changed_index = len(instances) - 1
-        iterations = 1
-        for index, instance in cycle(chain(
-                enumerate(instances)),
-                # backwards so that iteration bounces back and forth
-                tuple(enumerate_from_back(instances))[1:-1]):
-            # debug code to catch cycling behavior
-            if index == 0:
-                iterations += 2
-                new_record = tuple(ctxt.instance for ctxt in contexts)
-                # print(new_record)
-                if new_record in records:
-                    looped = True
-                    print("Loop")
-                    # print(records)
-                    # print(new_record)
-                    # quit()
-                records.add(new_record)
-
-            old_path = contexts[index].tenative_path
-            old_inst = contexts[index].instance
-            new_path = self.cobweb_path(instance)
-
-            # If paths are not the same...
-            # Observe |NP| = |TP| and NP subset of TP => set(NP) = TP
-            if (len(new_path) != len(contexts[index].tenative_path)
-                    or any(node not in contexts[index].tenative_path
-                           for node in new_path)):
-
-                if not looped:
-                    contexts[index].set_path(new_path)
-                    changed_index = index
+                    records.add(new_record)
                     continue
 
-                old_cu = self.__nearby_cu(instances, contexts, index, eval_fn)
-                contexts[index].set_path(new_path)
-                new_cu = self.__nearby_cu(instances, contexts, index, eval_fn)
+                old_path = ctxt.tenative_path
+                old_inst = ctxt.instance
+                new_path = self.cobweb_path(inst)
 
-                if new_cu > old_cu:
-                    changed_index = index
-                    continue
-                else:
-                    contexts[index].set_path_from_set(old_path, old_inst)
-                # print(new_cu - old_cu)
+                # If paths are not the same...
+                # Observe |NP| = |TP| and NP subset of TP => set(NP) = TP
+                if (len(new_path) != len(old_path)
+                        or any(node not in old_path
+                               for node in new_path)):
 
-            if index == changed_index:
-                break
+                    if not looped:
+                        ctxt.set_path(new_path)
+                        changed = True
+                        continue
 
-        print('took %s iterations' % iterations)
-        return (instances, contexts)
+                    # TODO expand window to include relevant fixed nodes
+                    old_cu = sum(ctx.instance.cu_for_new_child(inst) for inst, ctx in window)
+                    ctxt.set_path(new_path)
+                    new_cu = sum(ctx.instance.cu_for_new_child(inst) for inst, ctx in window)
+
+                    if new_cu > old_cu:
+                        changed = True
+                        continue
+                    else:
+                        ctxt.set_path_from_set(old_path, old_inst)
+
+            next_to_initialize += 1
+            to_fix = window.popleft()
+            # Add the instance to fixed
+            fixed.append(self.add_by_path(*to_fix, window))
+
+            if next_to_initialize < len(instances):
+                instance = instances[next_to_initialize]
+                instance[ca_key] = Counter(ctx for _, ctx in window)
+                context = ContextInstance(self.cobweb_path(instance))
+
+                for inst, _ in window:
+                    inst[ca_key][context] += 1
+                window.append((instance, context))
+
+        return fixed
 
     def initial_path(self, instance):
         """
@@ -316,7 +301,7 @@ class ContextualCobwebTree(Cobweb3Tree):
 
         return node_path
 
-    def add_by_path(self, instance, context, splits):
+    def add_by_path(self, instance, context, unadded_window):
         """
         Inserts instance at the path specified by the context, updating all the
         necessary counts. It also finalizes the context and logs any splits
@@ -336,27 +321,26 @@ class ContextualCobwebTree(Cobweb3Tree):
         """
         where_to_add = context.instance
 
-        while where_to_add in splits:
-            where_to_add = splits[where_to_add]
-
         if where_to_add.children:
-            self.increment_and_restructure(instance, where_to_add, splits)
+            self.increment_and_restructure(instance, where_to_add, unadded_window)
             return where_to_add.create_new_leaf(instance, context)
 
         # Leaf match or...
         # (the where_to_add.count == 0 here is for the initially empty tree)
         if where_to_add.is_exact_match(instance) or where_to_add.count == 0:
-            self.increment_and_restructure(instance, where_to_add, splits)
-            return context.set_instance(where_to_add)
+            leaf = context.set_instance(where_to_add)
+            self.increment_and_restructure(instance, where_to_add, unadded_window)
+            return leaf
 
         # ... fringe split
         new = where_to_add.insert_parent_with_current_counts()
 
-        splits[where_to_add] = new
-        self.increment_and_restructure(instance, new, splits)
-        return new.create_new_leaf(instance, context)
+        self.__split_update(where_to_add, unadded_window)
+        leaf = new.create_new_leaf(instance, context)
+        self.increment_and_restructure(instance, new, unadded_window)
+        return leaf
 
-    def increment_and_restructure(self, instance, where_to_add, splits):
+    def increment_and_restructure(self, instance, where_to_add, unadded_window):
         where_to_add.increment_all_counts(instance)
         current = where_to_add.parent
 
@@ -369,15 +353,17 @@ class ContextualCobwebTree(Cobweb3Tree):
             # the hierarchy to make context proportionally easier to guess.
             # TODO replace best1 and best2 with the branch it's actually
             # being added to.
+            # TODO not double add to nodes
             _, best_action = current.get_best_operation(instance, best1,
                                                         best2, best1_cu)
 
             if best_action == 'merge':
-                current.merge(best1, best2)
+                node = current.merge(best1, best2)
+                self.__merge_update(node, unadded_window)
             elif best_action == 'split':
-                assert best1.children
+                assert len(best1.children) > 1
                 current.split(best1)
-                splits[best1] = current
+                self.__split_update(best1, unadded_window)
             elif best_action == 'new' or best_action == 'best':
                 pass
             else:
@@ -387,9 +373,17 @@ class ContextualCobwebTree(Cobweb3Tree):
 
             current = current.parent
 
-    def __nearby_cu(self, instances, contexts, index, eval_fn):
-        return sum(ctx.instance.cu_for_new_child(inst) for inst, ctx in
-                   eval_fn(list(zip(instances, contexts)), index))
+    def __merge_update(self, node, unadded_ctxts):
+        for _, ctx in unadded_ctxts:
+            assert ctx.unadded()
+            if ctx.desc_of(node.parent):
+                ctx.insert_into_path(node)
+
+    def __split_update(self, dead_node, unadded_ctxts):
+        for _, ctx in unadded_ctxts:
+            assert ctx.unadded()
+            if ctx.instance == dead_node:
+                ctx.instance = dead_node.parent
 
     def cobweb(self, instance):
         raise NotImplementedError
@@ -441,6 +435,7 @@ class ContextualCobwebTree(Cobweb3Tree):
         :return: list of the nodes where the instances were added
         :rtype: List<ContextualCobwebNode>
         """
+        raise NotImplementedError
         instances = list(instances)
         assert len(instances) > 1, "Not enough context to make prediction"
         pred_ind = instances.index(None)
