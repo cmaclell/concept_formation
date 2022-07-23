@@ -129,21 +129,18 @@ class ContextualCobwebTree(Cobweb3Tree):
 
         while window:
             # # # We will be fixing the first element of the deque # # #
-            # Whether the current iteration has changed the paths
-            changed = True
+            # The index in the window of the node which most
+            # recently had its path altered
+            last_changed = len(window)-1
             # Whether the iterations have returned to a seen state
             looped = False
             records = {*()}
 
-            iterations = 1
+            iterations = 0
             start = time()
             for index, (inst, ctx) in cycle(enumerate(window)):
                 if index == 0:
                     iterations += 1
-                    # If we have now stabilized
-                    if not changed:
-                        break
-                    changed = False
 
                     new_record = tuple(ctx.instance for _, ctx in window)
                     if new_record in records:
@@ -160,13 +157,21 @@ class ContextualCobwebTree(Cobweb3Tree):
                     if looped:
                         update = self.__update_if_better(window, path, ctx)
                         if update:
-                            changed = True
+                            last_changed = index
                             actions = new_actns
+                        # If we have stabilized
+                        elif last_changed == index:
+                            break
                         continue
 
                     ctx.set_path(path)
-                    changed = True
-                actions = new_actns
+                    print('node %s changed in iter %s' % (index, iterations))
+                    last_changed = index
+                    actions = new_actns
+                # If we have stabilized
+                elif last_changed == index:
+                    actions = new_actns
+                    break
 
             next_to_initialize += 1
             # Add the instance to fixed
@@ -180,7 +185,8 @@ class ContextualCobwebTree(Cobweb3Tree):
                 for inst, _ in window:
                     inst[ca_key][context] += 1
                 window.append((instance, context))
-            # print('word_num', next_to_initialize-context_size, 'time', time()-start, 'iterations', iterations, sep='*')
+            print('word_num', next_to_initialize-context_size, 'time',
+                  time()-start, 'iterations', iterations, sep='\\t')
         return fixed
 
     def __update_if_better(self, window, new_path, ctxt):
@@ -324,8 +330,7 @@ class ContextualCobwebTree(Cobweb3Tree):
             action_cu, best_action = current.get_best_operation(
                 instance, best1, best2, best1_cu, possible_ops=['best', 'new'])
 
-            # print(best_action)
-            actions.append((best_action, current, action_cu, best1_cu, best1, best2))
+            actions.append((current, action_cu, best1_cu, best1, best2))
             current = best1
             if best_action == 'new':
                 break
@@ -373,7 +378,7 @@ class ContextualCobwebTree(Cobweb3Tree):
         leaf = new.create_new_leaf(instance, context)
 
         if actions:
-            actions[-1] = (*actions[-1][:1], new, *actions[-1][2:])
+            actions[-1] = (new, *actions[-1][1:])
         self.increment_and_restructure(instance, new, actions, unadded_window)
         return leaf
 
@@ -382,7 +387,7 @@ class ContextualCobwebTree(Cobweb3Tree):
         where_to_add.increment_all_counts(instance)
 
         # By going backwards, splits don't cause problems
-        for best_action, current, action_cu, best1_cu, best1, best2 in reversed(actions):
+        for current, action_cu, best1_cu, best1, best2 in reversed(actions):
             # Note that comparing 'merges' and 'splits' don't consider how
             # the context attributes would change given the operation. This
             # is good because it prevents "cheating," where cobweb flattens
