@@ -447,7 +447,7 @@ class CobwebNode(object):
                 len(self.children))
 
     def get_best_operation(self, instance, best1, best2, best1_cu,
-                           possible_ops=["best", "new", "merge", "split"]):
+                           possible_ops=("best", "new", "merge", "split")):
         """
         Given an instance, the two best children based on category utility and
         a set of possible operations, find the operation that produces the

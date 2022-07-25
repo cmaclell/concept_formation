@@ -247,7 +247,7 @@ class ContextualCobwebTree(Cobweb3Tree):
 
             best1_cu, best1, best2 = current.two_best_children(instance)
             _, best_action = current.get_best_operation(
-                instance, best1, best2, best1_cu, possible_ops=["best", "new"])
+                instance, best1, best2, best1_cu, possible_ops=("best", "new"))
 
             # print(best_action)
             if best_action == 'best':
@@ -328,7 +328,7 @@ class ContextualCobwebTree(Cobweb3Tree):
 
             best1_cu, best1, best2 = current.two_best_children(instance)
             action_cu, best_action = current.get_best_operation(
-                instance, best1, best2, best1_cu, possible_ops=['best', 'new'])
+                instance, best1, best2, best1_cu, possible_ops=('best', 'new'))
 
             actions.append((current, action_cu, best1_cu, best1, best2))
             current = best1
@@ -397,7 +397,7 @@ class ContextualCobwebTree(Cobweb3Tree):
                 continue
 
             new_action_cu, new_best_action = current.get_best_operation(
-                {}, best1, best2, best1_cu, possible_ops=['split', 'merge'])
+                {}, best1, best2, best1_cu, possible_ops=('split', 'merge'))
 
             if new_action_cu <= action_cu:
                 continue
@@ -415,12 +415,14 @@ class ContextualCobwebTree(Cobweb3Tree):
                                 ' impossible...')
 
     def __merge_update(self, node, unadded_ctxts):
+        print('merge')
         for _, ctx in unadded_ctxts:
             assert ctx.unadded()
             if ctx.desc_of(node.parent):
                 ctx.insert_into_path(node)
 
     def __split_update(self, dead_node, unadded_ctxts):
+        print('split')
         for _, ctx in unadded_ctxts:
             assert ctx.unadded()
             if ctx.instance == dead_node:
@@ -443,7 +445,7 @@ class ContextualCobwebTree(Cobweb3Tree):
 
             best1_cu, best1, best2 = current.two_best_children(instance)
             _, best_action = current.get_best_operation(
-                instance, best1, best2, best1_cu, possible_ops=["best", "new"])
+                instance, best1, best2, best1_cu, possible_ops=("best", "new"))
 
             # print(best_action)
             if best_action == 'best':
@@ -724,8 +726,10 @@ class ContextualCobwebNode(Cobweb3Node):
         # will be how many times cur_node appears as context (possibly 0).
         added_leaf_count = 0
         extra_guesses = 0
+        descendents = []
         for wd, count in ctxt:
             if wd.desc_of(cur_node):
+                descendents.append((wd, count))
                 extra_guesses += count
                 if wd.unadded_leaf(cur_node):
                     cubed_ualeaf_count += count * count * count
@@ -762,11 +766,11 @@ class ContextualCobwebNode(Cobweb3Node):
 
         for child in cur_node.children:
             partial_cu += self.__exp_ctxt_helper(
-                child, new_partial_guesses, new_partial_len, ctxt)
+                child, new_partial_guesses, new_partial_len, descendents)
         return partial_cu
 
     def get_best_operation(self, instance, best1, best2, best1_cu,
-                           possible_ops=["best", "new", "merge", "split"]):
+                           possible_ops=("best", "new", "merge", "split")):
         """
         Given an instance, the two best children based on category utility and
         a set of possible operations, find the operation that produces the
