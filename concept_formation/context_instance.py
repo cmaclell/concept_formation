@@ -124,7 +124,7 @@ class ContextInstance:
         :return: whether it is an unadded leaf of node
         :rtype: bool
         """
-        return node == self.instance and self.tenative_path is not None
+        return self.tenative_path is not None and node == self.instance
 
     def unadded(self):
         return self.tenative_path is not None

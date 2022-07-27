@@ -145,7 +145,7 @@ class ContextualCobwebTree(Cobweb3Tree):
                     new_record = tuple(ctx.instance for _, ctx in window)
                     if new_record in records:
                         looped = True
-                        print("Loop")
+                        # print("Loop")
                     records.add(new_record)
                     # Actions is the splits and merges which should be done
                     path, new_actns = self.cobweb_path_and_restructurings(inst)
@@ -165,7 +165,7 @@ class ContextualCobwebTree(Cobweb3Tree):
                         continue
 
                     ctx.set_path(path)
-                    print('node %s changed in iter %s' % (index, iterations))
+                    # print('node %s changed in iter %s' % (index, iterations))
                     last_changed = index
                     actions = new_actns
                 # If we have stabilized
@@ -185,8 +185,10 @@ class ContextualCobwebTree(Cobweb3Tree):
                 for inst, _ in window:
                     inst[ca_key][context] += 1
                 window.append((instance, context))
-            print('word_num', next_to_initialize-context_size, 'time',
-                  time()-start, 'iterations', iterations, sep='\\t')
+            print(next_to_initialize-context_size,
+                  time()-start, iterations, sep='\\t')
+            # print('word_num', next_to_initialize-context_size, 'time',
+            #       time()-start, 'iterations', iterations, sep='\\t')
         return fixed
 
     def __update_if_better(self, window, new_path, ctxt):
@@ -314,7 +316,8 @@ class ContextualCobwebTree(Cobweb3Tree):
         return node_path
 
     def cobweb_path_and_restructurings(self, instance):
-        """GETS restructurings"""
+        """GETS restructurings (only contains places where
+        an action could actually take place"""
         current = self.root
         node_path = []
         actions = []
@@ -323,14 +326,13 @@ class ContextualCobwebTree(Cobweb3Tree):
             node_path.append(current)
 
             if not current.children:
-                # print("leaf")
                 break
 
             best1_cu, best1, best2 = current.two_best_children(instance)
             action_cu, best_action = current.get_best_operation(
                 instance, best1, best2, best1_cu, possible_ops=('best', 'new'))
 
-            actions.append((current, action_cu, best1_cu, best1, best2))
+            actions.append((current, action_cu, best1_cu, best2, best1))
             current = best1
             if best_action == 'new':
                 break
@@ -358,6 +360,7 @@ class ContextualCobwebTree(Cobweb3Tree):
         where_to_add = context.instance
 
         if where_to_add.children:
+            # print('leaf')
             leaf = where_to_add.create_new_leaf(instance, context)
             self.increment_and_restructure(
                 instance, where_to_add, actions, unadded_window)
@@ -366,19 +369,23 @@ class ContextualCobwebTree(Cobweb3Tree):
         # Leaf match or...
         # (the where_to_add.count == 0 here is for the initially empty tree)
         if where_to_add.is_exact_match(instance) or where_to_add.count == 0:
+            # print('leaf match')
             leaf = context.set_instance(where_to_add)
             self.increment_and_restructure(
                 instance, where_to_add, actions, unadded_window)
             return leaf
 
         # ... fringe split
+        # print('fringe split')
         new = where_to_add.insert_parent_with_current_counts()
 
         self.__split_update(where_to_add, unadded_window)
         leaf = new.create_new_leaf(instance, context)
 
         if actions:
-            actions[-1] = (new, *actions[-1][1:])
+            # Replace best1 with the new node
+            actions[-1] = (*actions[-1][:-1], new)
+
         self.increment_and_restructure(instance, new, actions, unadded_window)
         return leaf
 
@@ -387,7 +394,7 @@ class ContextualCobwebTree(Cobweb3Tree):
         where_to_add.increment_all_counts(instance)
 
         # By going backwards, splits don't cause problems
-        for current, action_cu, best1_cu, best1, best2 in reversed(actions):
+        for current, action_cu, best1_cu, best2, best1 in reversed(actions):
             # Note that comparing 'merges' and 'splits' don't consider how
             # the context attributes would change given the operation. This
             # is good because it prevents "cheating," where cobweb flattens
@@ -403,6 +410,7 @@ class ContextualCobwebTree(Cobweb3Tree):
                 continue
 
             if new_best_action == 'merge':
+                assert len(current.children) > 2
                 node = current.merge(best1, best2)
                 self.__merge_update(node, unadded_window)
             elif new_best_action == 'split':
@@ -415,14 +423,14 @@ class ContextualCobwebTree(Cobweb3Tree):
                                 ' impossible...')
 
     def __merge_update(self, node, unadded_ctxts):
-        print('merge')
+        # print('merge')
         for _, ctx in unadded_ctxts:
             assert ctx.unadded()
             if ctx.desc_of(node.parent):
                 ctx.insert_into_path(node)
 
     def __split_update(self, dead_node, unadded_ctxts):
-        print('split')
+        # print('split')
         for _, ctx in unadded_ctxts:
             assert ctx.unadded()
             if ctx.instance == dead_node:
@@ -705,7 +713,7 @@ class ContextualCobwebNode(Cobweb3Node):
         # ctxt_len will divided out twice for P(C_i | w in ctxt) and once for
         # the outer weighted average.
         return self.__exp_ctxt_helper(cur_node, partial_guesses, partial_len,
-                                      tuple(ctxt.items())) / (ctx_len*ctx_len)
+                                      ctxt.items()) / (ctx_len*ctx_len)
 
     def __exp_ctxt_helper(self, cur_node, partial_guesses, partial_len, ctxt):
         """

@@ -14,7 +14,7 @@ from concept_formation.contextual_cobweb import ContextualCobwebNode
 from concept_formation.context_instance import ContextInstance
 
 
-random.seed(42)
+random.seed(5)
 cProfile  # Silence linter
 
 
@@ -253,12 +253,14 @@ class TestCobwebTree(unittest.TestCase):
             self.tree.root.children[0].expected_correct_guesses(), 1)
 
     def test_add_many_batches(self):
-        for i in range(2):
-            self.tree.contextual_ifit(
-                [{'a': 'v%s' % (i+random.randint(-2, 2))} for i in range(12)])
+        self.tree.contextual_ifit(
+            [{'a': 'v%s' % (random.randint(-450, 450))} for i in range(140)])
+        verify_counts(self.tree.root)
+        verify_descendants(self.tree.root)
+        verify_tree_structure(self.tree.root)
         print(self.tree)
 
 
 if __name__ == "__main__":
-    unittest.main()
-    # cProfile.run("unittest.main()")
+    # unittest.main()
+    cProfile.run("unittest.main()")

@@ -159,6 +159,6 @@ def test_words_homonym():
 if __name__ == "__main__":
     start = time()
     # test_small()
-    run('test_words_2()')
+    run('test_words_1()')
     print('-'*70)
     print('Finished in %ss' % round(time() - start, 3))
