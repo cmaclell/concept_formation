@@ -721,14 +721,14 @@ class ContextualCobwebNode(Cobweb3Node):
         the length of the context squared.
         """
         # The full formula for unadded leaves is this:
-        #   sum(count * (count * count + new_partial_guesses)
+        #   sum(count * (count + new_partial_guesses)
         #       for count in unadded_leaf_counts) / (new_partial_len + 1)
         # where unadded_leaf_counts is how many times each of the unadded
         # leaves appears as context. This is equivalent to
         #   (sum(count for count in unadded_leaf_counts) * new_partial_guesses
-        #   + sum(count * count * count for count in unadded_leaf_counts))
+        #   + sum(count * count for count in unadded_leaf_counts))
         #   / (new_partial_len + 1)
-        cubed_ualeaf_count = 0
+        squared_ualeaf_count = 0
         cum_ualeaf_count = 0
         # The count of some added leaf of cur_node. If cur_node is a leaf, this
         # will be how many times cur_node appears as context (possibly 0).
@@ -740,7 +740,7 @@ class ContextualCobwebNode(Cobweb3Node):
                 descendents.append((wd, count))
                 extra_guesses += count
                 if wd.unadded_leaf(cur_node):
-                    cubed_ualeaf_count += count * count * count
+                    squared_ualeaf_count += count * count
                     cum_ualeaf_count += count
                 else:
                     added_leaf_count = count
@@ -755,7 +755,7 @@ class ContextualCobwebNode(Cobweb3Node):
         # Calculate the cu of the leaf nodes
         if cum_ualeaf_count:
             partial_cu = ((cum_ualeaf_count * new_partial_guesses
-                           + cubed_ualeaf_count) / (new_partial_len + 1))
+                           + squared_ualeaf_count) / (new_partial_len + 1))
         else:
             partial_cu = 0
         # Note that this will account for fringe splits when measuring unadded
