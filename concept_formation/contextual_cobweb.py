@@ -151,26 +151,24 @@ class ContextualCobwebTree(Cobweb3Tree):
                     path, new_actns = self.cobweb_path_and_restructurings(inst)
                 else:
                     path = self.cobweb_path(inst)
-                # If paths are not the same...
-                # Observe |NP| = |TP| and NP subset of TP => set(NP) = TP
-                if not self.__path_eq(ctx.tenative_path, path):
-                    if looped:
-                        update = self.__update_if_better(window, path, ctx)
-                        if update:
-                            last_changed = index
-                            actions = new_actns
-                        # If we have stabilized
-                        elif last_changed == index:
-                            break
-                        continue
 
+                if looped:
+                    if (not self.__path_eq(ctx.tenative_path, path)
+                            and self.__update_if_better(window, path, ctx)):
+                        last_changed = index
+                        if index == 0:
+                            actions = new_actns
+                    # If we have stabilized
+                    elif last_changed == index:
+                        break
+                    continue
+
+                actions = new_actns
+                if not self.__path_eq(ctx.tenative_path, path):
                     ctx.set_path(path)
                     # print('node %s changed in iter %s' % (index, iterations))
                     last_changed = index
-                    actions = new_actns
-                # If we have stabilized
                 elif last_changed == index:
-                    actions = new_actns
                     break
 
             next_to_initialize += 1
@@ -208,6 +206,8 @@ class ContextualCobwebTree(Cobweb3Tree):
 
     def __path_eq(self, set_path, tup_path):
         """Checks if these are equal. Optimized for correct input types"""
+        # If paths are not the same...
+        # Observe |NP| = |TP| and NP subset of TP => set(NP) = TP
         return (len(tup_path) == len(set_path)
                 and all(node in set_path for node in tup_path))
 
@@ -301,7 +301,7 @@ class ContextualCobwebTree(Cobweb3Tree):
 
             best1_cu, best1, best2 = current.two_best_children(instance)
             _, best_action = current.get_best_operation(
-                instance, best1, best2, best1_cu, possible_ops=["best", "new"])
+                instance, best1, best2, best1_cu, possible_ops=("best", "new"))
 
             # print(best_action)
             if best_action == 'best':
@@ -368,7 +368,7 @@ class ContextualCobwebTree(Cobweb3Tree):
 
         # Leaf match or...
         # (the where_to_add.count == 0 here is for the initially empty tree)
-        if where_to_add.is_exact_match(instance) or where_to_add.count == 0:
+        if where_to_add.count == 0 or where_to_add.is_exact_match(instance):
             # print('leaf match')
             leaf = context.set_instance(where_to_add)
             self.increment_and_restructure(
@@ -379,8 +379,8 @@ class ContextualCobwebTree(Cobweb3Tree):
         # print('fringe split')
         new = where_to_add.insert_parent_with_current_counts()
 
-        self.__split_update(where_to_add, unadded_window)
         leaf = new.create_new_leaf(instance, context)
+        self.__split_update(where_to_add, unadded_window)
 
         if actions:
             # Replace best1 with the new node
