@@ -41,6 +41,8 @@ class ContextInstance:
         self.instance = tenative_path[-1]
         # Holds the tenative path or None if it has been finalized
         self.tenative_path = set(tenative_path)
+        # Holds the nodes who have this as context
+        self.to_notify = []
 
     def __str__(self):
         return repr(self)
@@ -68,6 +70,8 @@ class ContextInstance:
         while cur_node:
             cur_node.descendants.add(self.instance)
             cur_node = cur_node.parent
+        # for node in self.to_notify:
+        #     node.notify_of_path_finalization...
         return self.instance
 
     @mutates
@@ -79,8 +83,11 @@ class ContextInstance:
             going to be added to.
         :type path: Sequence<ContetxualCobwebNode>
         """
+        temp = self.instance
         self.instance = path[-1]
         self.tenative_path = set(path)
+        for node in self.to_notify:
+            node.notify_of_path_change(temp, self)
 
     @mutates
     def set_path_from_set(self, path, inst):
@@ -93,8 +100,11 @@ class ContextInstance:
         :param inst: the final node in the path
         :type inst: ContetxualCobwebNode
         """
+        temp = self.instance
         self.instance = inst
         self.tenative_path = path
+        for node in self.to_notify:
+            node.notify_of_path_change(temp, self)
 
     @mutates
     def insert_into_path(self, node):
@@ -128,6 +138,9 @@ class ContextInstance:
 
     def unadded(self):
         return self.tenative_path is not None
+
+    def depth(self):
+        return (self.tenative_path is not None) + self.instance.depth() + 1
 
     def output_json(self):
         raise NotImplementedError
