@@ -42,7 +42,7 @@ class ContextInstance:
         # Holds the tenative path or None if it has been finalized
         self.tenative_path = set(tenative_path)
         # Holds the nodes who have this as context
-        self.to_notify = {*()}
+        # self.to_notify = {*()} CACHING
 
     def __str__(self):
         return repr(self)
@@ -83,11 +83,11 @@ class ContextInstance:
             going to be added to.
         :type path: Sequence<ContetxualCobwebNode>
         """
-        temp = self.instance
+        # temp = self.instance CACHING
         self.instance = path[-1]
         self.tenative_path = set(path)
-        for node in self.to_notify:
-            node.notify_of_path_change(temp, self)
+        # for node in self.to_notify:
+        #     node.notify_of_path_change(temp, self)
 
     @mutates
     def set_path_from_set(self, path, inst):
@@ -100,11 +100,11 @@ class ContextInstance:
         :param inst: the final node in the path
         :type inst: ContetxualCobwebNode
         """
-        temp = self.instance
+        # temp = self.instance
         self.instance = inst
         self.tenative_path = path
-        for node in self.to_notify:
-            node.notify_of_path_change(temp, self)
+        # for node in self.to_notify: CACHING
+        #     node.notify_of_path_change(temp, self)
 
     @mutates
     def insert_into_path(self, node):

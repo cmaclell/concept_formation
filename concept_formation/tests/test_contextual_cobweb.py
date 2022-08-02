@@ -203,7 +203,7 @@ class TestCobwebNodes(unittest.TestCase):
 
         self.assertEqual(1, child.expected_correct_guesses())
         # Clear cache because we're adjusting things manually
-        child.cache.clear()
+        # child.cache.clear()
         context.set_instance(child)
         self.assertEqual(1, root.expected_correct_guesses())
 
@@ -217,7 +217,7 @@ class TestCobwebNodes(unittest.TestCase):
         self.assertEqual(1, child.expected_correct_guesses())
         self.assertEqual(1, child_2.expected_correct_guesses())
         context_2.set_instance(child_2)
-        child_2.cache.clear()
+        # child_2.cache.clear()
         self.assertEqual(0.75, root.expected_correct_guesses())
 
 
@@ -271,5 +271,5 @@ class TestCobwebTree(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
-    # cProfile.run("unittest.main()")
+    # unittest.main()
+    cProfile.run("unittest.main()")

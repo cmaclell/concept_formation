@@ -9,7 +9,7 @@ from __future__ import unicode_literals
 from __future__ import absolute_import
 from __future__ import division
 # from random import normalvariate
-from itertools import cycle
+from itertools import cycle  # , repeat, chain
 from math import sqrt
 from math import pi
 # from math import exp
@@ -30,10 +30,10 @@ from concept_formation.utils import isNumber
 ca_key = "#Ctxt#"  # TODO: Change to something longer
 
 
+'''
 def modifies_structure(func):
 
     def new_func(self, *args, **kwargs):
-        self.tree.state_num += 1
         cur = self
         # Clear caches
         while cur:
@@ -42,7 +42,7 @@ def modifies_structure(func):
 
         return func(self, *args, **kwargs)
 
-    return new_func
+    return new_func'''
 
 
 class ContextualCobwebTree(Cobweb3Tree):
@@ -75,7 +75,6 @@ class ContextualCobwebTree(Cobweb3Tree):
         self.scaling = scaling
         self.inner_attr_scaling = inner_attr_scaling
         self.attr_scales = {}
-        self.state_num = 0
 
     def clear(self):
         """
@@ -85,7 +84,6 @@ class ContextualCobwebTree(Cobweb3Tree):
         self.root.descendants.add(self.root)
         self.root.tree = self
         self.attr_scales = {}
-        self.state_num += 1
 
     def contextual_ifit(self, instances, context_size=4,
                         context_key='symmetric_window'):
@@ -375,16 +373,11 @@ class ContextualCobwebTree(Cobweb3Tree):
         # print('fringe split')
         new = where_to_add.insert_parent_with_current_counts()
 
-        # Updates caches
-        context.tenative_path.add(new)
-        context.tenative_path.remove(where_to_add)
-        context.set_path_from_set(context.tenative_path, new)
+        # Updates caches CACHING
+        # context.tenative_path.add(new)
+        # context.tenative_path.remove(where_to_add)
+        # context.set_path_from_set(context.tenative_path, new)
         leaf = new.create_new_leaf(instance, context)
-        # TODO even doing anything?
-        cur = where_to_add
-        while cur:
-            cur.cache.clear()
-            cur = cur.parent
         self.__fringe_split_update(where_to_add, unadded_window)
 
         if actions:
@@ -449,8 +442,9 @@ class ContextualCobwebTree(Cobweb3Tree):
                 assert ctx.unadded_leaf(fringe_leaf)
             if ctx.unadded_leaf(fringe_leaf):
                 ctx.insert_into_path(fringe_leaf.parent)
-                ctx.tenative_path.remove(fringe_leaf)
-                ctx.set_path_from_set(ctx.tenative_path, fringe_leaf.parent)
+                # ctx.tenative_path.remove(fringe_leaf) CACHING
+                # ctx.set_path_from_set(ctx.tenative_path, fringe_leaf.parent)
+                ctx.instance = ctx.instance.parent
 
     def cobweb(self, instance):
         raise NotImplementedError
@@ -570,7 +564,7 @@ class ContextualCobwebNode(Cobweb3Node):
         # Stores other_node: [number of leaves through here,
         #     counter(leaf in other_node ctxt: partial sums at this node).
         #     *unadded leaves]
-        self.cache = {}
+        # self.cache = {} CACHING
         super().__init__(other_node)
 
     def increment_counts(self, instance):
@@ -592,10 +586,11 @@ class ContextualCobwebNode(Cobweb3Node):
         for attr in instance:
             if attr == ca_key:
                 self.av_counts.setdefault(attr, Counter())
-                for leaf in instance[attr]:
-                    self.av_counts[attr][leaf] += 1
-                    leaf.to_notify.add(self)
-                    self.update_caches(leaf)
+                self.av_counts[attr].update(instance[attr])
+                # for leaf in instance[attr]: CACHING
+                #     self.av_counts[attr][leaf] += 1
+                #     leaf.to_notify.add(self)
+                #     self.update_caches(leaf)
                 continue
 
             self.av_counts.setdefault(attr, {})
@@ -608,19 +603,48 @@ class ContextualCobwebNode(Cobweb3Node):
                 prior_count = self.av_counts[attr].get(instance[attr], 0)
                 self.av_counts[attr][instance[attr]] = prior_count + 1
 
+    '''
+    def shallow_copy(self):
+        """
+        Create a shallow copy of the current node (and not its children)
+
+        This can be used to copy only the information relevant to the node's
+        probability table without maintaining reference to other elements of
+        the tree, except for the root which is necessary to calculate category
+        utility.
+        """
+        temp = self.__class__()
+        temp.tree = self.tree
+        temp.parent = self.parent
+        temp.update_counts_from_node(self, caching=False)
+        self.copy_cache(temp, self.tree.root)
+        return temp
+
+    def copy_cache(self, destination, node):
+        entry = node.cache.get(self, None)
+        if entry is not None:
+            node.cache[destination] = [entry[0], Counter(entry[1])]
+            if entry[0]:
+                for child in node.children:
+                    self.copy_cache(destination, child)
+        else:
+            for child in node.children:
+                self.copy_cache(destination, child)
+
     def update_caches(self, ctxt_word, weight=1, create_caches=True):
+        return
         """Increments the counts in the caches based on leaf"""
         cur = ctxt_word.instance
         psum = ctxt_word.unadded() * self.av_counts[ca_key][ctxt_word]
         leaves_seen = Counter()
         while cur:
-            if self in cur.cache:
-                cur.cache[self][0] += weight
-                psum += cur.cache[self][0]
-                leaves_seen.update(cur.cache[self][1].keys())
-                for _ in range(weight):
-                    cur.cache[self][1] += leaves_seen
-                cur.cache[self][1][ctxt_word] = psum
+            entry = cur.cache.get(self, None)
+            if entry is not None:
+                entry[0] += weight
+                psum += entry[0]
+                leaves_seen.update(chain.from_iterable(repeat(entry[1], weight)))
+                entry[1] += leaves_seen
+                entry[1][ctxt_word] = psum
             else:
                 if not create_caches:
                     while cur:
@@ -628,38 +652,43 @@ class ContextualCobwebNode(Cobweb3Node):
                         cur.cache.clear()
                 self.create_cache_at(cur)
                 psum = cur.cache[self][1][ctxt_word]
-                leaves_seen.update(cur.cache[self][1].keys())
+                leaves_seen.update(chain.from_iterable(repeat(cur.cache[self][1], weight)))
 
             cur = cur.parent
 
     def create_cache_at(self, node):
+        return
         # # # WARNING: This creates fully correct caches. If there are
         # outstanding updates when this is created, the counts will be
         # incorrect # # #
         if self in node.cache:
             return
+        node_count = 0
+        psums = Counter()
         if not node.children:
-            psums = Counter()
-            node_count = 0
             for ctxt_word, count in self.av_counts[ca_key].items():
-                if not ctxt_word.unadded() and ctxt_word.instance == node:
-                    node_count = count
+                if ctxt_word.unadded_leaf(node):
+                    node_count += count
+                    psums[ctxt_word] = count
+                elif not ctxt_word.unadded() and ctxt_word.instance == node:
+                    node_count += count
                     # 0 because it will be added later
-                    psums = Counter({ctxt_word: 0})
-        else:
-            node_count = 0
-            psums = Counter()
-            # union bottom things
-            for child in node.children:
-                if self not in child.cache:
-                    self.create_cache_at(child)
-                node_count += child.cache[self][0]
-                # print('cache at %s' % child.concept_id, child.cache[self][1])
-                psums += child.cache[self][1]
+                    psums[ctxt_word] = 0
+            for ctxt_word in psums:
+                psums[ctxt_word] += node_count
+            node.cache[self] = [node_count, psums]
+            return
+
+        # union bottom things
+        for child in node.children:
+            self.create_cache_at(child)
+            node_count += child.cache[self][0]
+            # print('cache at %s' % child.concept_id, child.cache[self][1])
+            psums += child.cache[self][1]
         # add on unadded leaves
         for ctxt_word, count in self.av_counts[ca_key].items():
             if ctxt_word.unadded_leaf(node):
-                assert ctxt_word not in psums
+                # assert ctxt_word not in psums
                 node_count += count
                 psums[ctxt_word] = count
         for ctxt_word in psums:
@@ -671,13 +700,13 @@ class ContextualCobwebNode(Cobweb3Node):
         leaves_seen = Counter()
         freq = self.av_counts[ca_key][ctxt_word]
         while cur:
-            if self in cur.cache:
-                cur.cache[self][0] -= freq
-                assert cur.cache[self][0] >= 0
-                leaves_seen.update(cur.cache[self][1].keys())
-                for _ in range(freq):
-                    cur.cache[self][1] -= leaves_seen
-                del cur.cache[self][1][ctxt_word]
+            entry = cur.cache.get(self, None)
+            if entry is not None:
+                entry[0] -= freq
+                # assert cur.cache[self][0] >= 0
+                leaves_seen.update(chain.from_iterable(repeat(entry[1], freq)))
+                entry[1] -= leaves_seen
+                del entry[1][ctxt_word]
 
             cur = cur.parent
 
@@ -685,6 +714,7 @@ class ContextualCobwebNode(Cobweb3Node):
 
     def notify_of_path_finalization(self, old_path, new_path):
         ...
+    '''
 
     def increment_all_counts(self, instance):
         """
@@ -700,7 +730,7 @@ class ContextualCobwebNode(Cobweb3Node):
         if self.parent:
             self.parent.increment_all_counts(instance)
 
-    def update_counts_from_node(self, node):
+    def update_counts_from_node(self, node, caching=True):
         """
         Increments the counts of the current node by the amount in the
         specified node, modified to handle context.
@@ -713,11 +743,13 @@ class ContextualCobwebNode(Cobweb3Node):
         for attr in node.attrs('all'):
             if attr == ca_key:
                 self.av_counts.setdefault(attr, Counter())
-                for leaf, count in node.av_counts[attr].items():
-                    self.av_counts[attr][leaf] += count
-                    leaf.to_notify.add(self)
-                    self.update_caches(leaf, weight=count)
-                    # self.av_counts[attr].update(node.av_counts[attr])
+                self.av_counts[attr].update(node.av_counts[attr])
+                # for leaf, count in node.av_counts[attr].items(): CACHING
+                #     self.av_counts[attr][leaf] += count
+                #     leaf.to_notify.add(self)
+                #     if caching:
+                #         self.update_caches(leaf, weight=count)
+                #         self.av_counts[attr].update(node.av_counts[attr])
                 continue
 
             self.av_counts.setdefault(attr, {})
@@ -797,6 +829,7 @@ class ContextualCobwebNode(Cobweb3Node):
 
         return correct_guesses / attr_count
 
+    '''
     def expect_contextual_from_cache(self, ctxt):
         self.create_cache_at(self.tree.root)
         cache = self.tree.root.cache[self]
@@ -804,7 +837,7 @@ class ContextualCobwebNode(Cobweb3Node):
         for ctxt_wd, count in ctxt.items():
             cu += count * cache[1][ctxt_wd] / ctxt_wd.depth()
         cu /= sum(ctxt.values()) ** 2
-        return cu
+        return cu'''
 
     def __expected_contextual(self, cur_node, partial_guesses,
                               partial_len, ctxt):
@@ -826,10 +859,10 @@ class ContextualCobwebNode(Cobweb3Node):
             return 0
         # ctxt_len will divided out twice for P(C_i | w in ctxt) and once for
         # the outer weighted average.
-        temp = self.__exp_ctxt_helper(cur_node, partial_guesses, partial_len,
+        return self.__exp_ctxt_helper(cur_node, partial_guesses, partial_len,
                                       ctxt.items()) / (ctx_len*ctx_len)
 
-        if temp - self.expect_contextual_from_cache(ctxt) > 0.0000001:
+        """if temp - self.expect_contextual_from_cache(ctxt) > 0.0000001:
             print(self.concept_id, '<- id, counts ->', self.av_counts)
             print('cu', self.expect_contextual_from_cache(ctxt))
             print('temp', temp)
@@ -837,7 +870,7 @@ class ContextualCobwebNode(Cobweb3Node):
             print(cache)
             print(self.tree.root)
             assert False
-        return temp
+        return temp"""
 
     def __exp_ctxt_helper(self, cur_node, partial_guesses, partial_len, ctxt):
         """
@@ -890,7 +923,7 @@ class ContextualCobwebNode(Cobweb3Node):
         # philosophy is, in general, to not update the tree until the very end,
         # this is most consistent.
 
-        if not cur_node.children: # or partial_len > 5:
+        if not cur_node.children or partial_len > 5:
             # Because it's a weighted average, we multiply by added_leaf_count
             # (count of cur_node in context).
             return (added_leaf_count * new_partial_guesses / new_partial_len
@@ -1054,7 +1087,7 @@ class ContextualCobwebNode(Cobweb3Node):
         """Fringe splits cannot be done by adding nodes below."""
         raise AttributeError("Context-aware leaf nodes must remain leaf nodes")
 
-    @modifies_structure
+    # @modifies_structure CACHING
     def insert_parent_with_current_counts(self, update_root=True):
         """
         Insert a parent above the current node with the counts initialized by
@@ -1083,9 +1116,9 @@ class ContextualCobwebNode(Cobweb3Node):
             self.parent = new
             return new
 
-    @modifies_structure
+    '''@modifies_structure
     def merge(self, best1, best2):
-        return super().merge(best1, best2)
+        return super().merge(best1, best2)'''
 
     def cu_for_fringe_split(self, instance):
         """
@@ -1117,9 +1150,9 @@ class ContextualCobwebNode(Cobweb3Node):
 
         return parent.category_utility()
 
-    @modifies_structure
+    '''@modifies_structure
     def split(self, best):
-        return super().split(best)
+        return super().split(best)'''
 
     def is_exact_match(self, instance):
         """
