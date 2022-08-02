@@ -42,7 +42,7 @@ class ContextInstance:
         # Holds the tenative path or None if it has been finalized
         self.tenative_path = set(tenative_path)
         # Holds the nodes who have this as context
-        self.to_notify = []
+        self.to_notify = {*()}
 
     def __str__(self):
         return repr(self)

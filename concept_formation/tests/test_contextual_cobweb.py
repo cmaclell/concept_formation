@@ -102,11 +102,17 @@ def verify_tree_structure(node, parent=None):
         verify_tree_structure(child, node)
 
 
+def verify_no_self_context(root):
+    for leaf in root.descendants:
+        assert all(leaf != ctxt.instance or ctxt.unadded()
+                   for ctxt in leaf.av_counts[ca_key])
+
+
 def word_to_obj(word):
     return {'Anchor': word}
 
 
-class TestCobwebNodes():
+class TestCobwebNodes(unittest.TestCase):
     @classmethod
     def setUp(cls):
         cls.node_0 = ContextualCobwebNode()
@@ -224,13 +230,13 @@ class TestCobwebTree(unittest.TestCase):
         verify_descendants(self.tree.root)
         verify_tree_structure(self.tree.root)
 
-    def tst_add_1_node(self):
+    def test_add_1_node(self):
         self.tree.contextual_ifit([{'attr': 'val'}])
         verify_counts(self.tree.root)
         verify_descendants(self.tree.root)
         verify_tree_structure(self.tree.root)
 
-    def tst_add_2_nodes(self):
+    def test_add_2_nodes(self):
         self.tree.contextual_ifit([{'attr': 'val1'}, {'attr': 'val2'}])
 
     def test_add_3_nodes(self):
@@ -239,13 +245,14 @@ class TestCobwebTree(unittest.TestCase):
         verify_descendants(self.tree.root)
         verify_tree_structure(self.tree.root)
 
-    def tst_add_9_nodes(self):
+    def test_add_9_nodes(self):
         self.tree.contextual_ifit([{'attr': 'v%s' % i} for i in range(9)])
         verify_counts(self.tree.root)
         verify_descendants(self.tree.root)
         verify_tree_structure(self.tree.root)
+        verify_no_self_context(self.tree.root)
 
-    def tst_add_2_batches(self):
+    def test_add_2_batches(self):
         self.tree.contextual_ifit([{'attr': 'v%s' % i} for i in range(9)])
         self.tree.contextual_ifit([{'attr': 'v%s' % i} for i in range(9)])
         verify_counts(self.tree.root)
@@ -255,9 +262,9 @@ class TestCobwebTree(unittest.TestCase):
         self.assertLessEqual(
             self.tree.root.children[0].expected_correct_guesses(), 1)
 
-    def tst_add_many_nodes(self):
+    def test_add_many_nodes(self):
         self.tree.contextual_ifit(
-            [{'a': 'v%s' % (random.randint(-450, 450))} for i in range(100)])
+            [{'a': 'v%s' % (random.randint(0, 900))} for i in range(120)], 4)
         verify_counts(self.tree.root)
         verify_descendants(self.tree.root)
         verify_tree_structure(self.tree.root)

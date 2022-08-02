@@ -788,8 +788,6 @@ class CobwebNode(object):
         new_child.parent = self
         new_child.tree = self.tree
 
-        new_child.update_counts_from_node(best1)
-        new_child.update_counts_from_node(best2)
         best1.parent = new_child
         # best1.tree = new_child.tree
         best2.parent = new_child
@@ -799,6 +797,8 @@ class CobwebNode(object):
         self.children.remove(best1)
         self.children.remove(best2)
         self.children.append(new_child)
+        new_child.update_counts_from_node(best1)
+        new_child.update_counts_from_node(best2)
 
         return new_child
 
