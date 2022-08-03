@@ -609,9 +609,9 @@ class CobwebNode(object):
 
         const = 0
         for c in self.children:
-            const += ((c.count / (self.count + 1)) *
-                      c.expected_correct_guesses())
+            const += c.count * c.expected_correct_guesses()
 
+        const /= self.count + 1  # Turns counts into probabilities
         const -= ec_root_u
         const /= len(self.children)
         return const

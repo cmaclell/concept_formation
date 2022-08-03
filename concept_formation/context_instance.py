@@ -45,7 +45,9 @@ class ContextInstance:
         # self.to_notify = {*()} CACHING
 
     def __str__(self):
-        return repr(self)
+        # For json output
+        return 'Concept{}'.format(self.instance.concept_id)
+        # return repr(self)
 
     def __repr__(self):
         if self.tenative_path is None:

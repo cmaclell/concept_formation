@@ -9,7 +9,7 @@ from __future__ import unicode_literals
 from __future__ import absolute_import
 from __future__ import division
 # from random import normalvariate
-from itertools import cycle  # , repeat, chain
+from itertools import cycle
 from math import sqrt
 from math import pi
 # from math import exp
@@ -28,7 +28,7 @@ from concept_formation.utils import isNumber
 # from concept_formation.utils import most_likely_choice
 
 ca_key = "#Ctxt#"  # TODO: Change to something longer
-
+depth_cap = 6
 
 '''
 def modifies_structure(func):
@@ -112,7 +112,8 @@ class ContextualCobwebTree(Cobweb3Tree):
             self._sanity_check_instance(instance)
         return self.contextual_cobweb(instances, context_size, context_key)
 
-    def contextual_cobweb(self, instances, context_size, context_key):
+    def contextual_cobweb(self, instances, context_size, context_key,
+                          learning=True):
         """
         The core context-aware algorithm. Categorizes *and then adds* instances
 
@@ -123,9 +124,13 @@ class ContextualCobwebTree(Cobweb3Tree):
             past_window (size instances on the left of anchor)
             future_window (size instances on the right of anchor)
         :type context_key: 'symmetric_window', 'past_window', 'future_window'
+        :param learning: Whether learning is turned on
+        :type learning: bool
         :return: list of the created leaf nodes
         :rtype: List<ContextualCobwebNode>
         """
+        # Global is used here for performance!
+        global depth_cap
         assert context_key == 'symmetric_window'
         initial_contexts = [ContextInstance(self.initial_path(instance))
                             for instance in instances[:context_size + 1]]
@@ -180,25 +185,34 @@ class ContextualCobwebTree(Cobweb3Tree):
                     break
 
             next_to_initialize += 1
-            # Add the instance to fixed
-            fixed.append(self.add_by_path(*window.popleft(), actions, window))
+            if learning:
+                # Add the instance to fixed
+                fixed.append(
+                    self.add_by_path(*window.popleft(), actions, window))
+            else:
+                fixed.append(window.popleft()[1])
 
             if next_to_initialize < len(instances):
-                instance = instances[next_to_initialize]
-                instance[ca_key] = [ctx for _, ctx in window]
-                context = ContextInstance(self.cobweb_path(instance))
+                self.__create_instance(instances[next_to_initialize], window)
 
-                for inst, _ in window:
-                    inst[ca_key].append(context)
-                window.append((instance, context))
             print(next_to_initialize-context_size,
                   time()-start, iterations, sep='\\t')
-            # print('word_num', next_to_initialize-context_size, 'time',
-            #       time()-start, 'iterations', iterations, sep='\\t')
+            if iterations > 2 * (depth_cap-2):
+                depth_cap += 1
         return fixed
 
+    def __create_instance(self, instance, window):
+        """Creates and adds an instance to the window, initializing context"""
+        instance[ca_key] = [ctx for _, ctx in window]
+        context = ContextInstance(self.cobweb_path(instance))
+
+        for inst, _ in window:
+            inst[ca_key].append(context)
+        window.append((instance, context))
+
     def __update_if_better(self, window, new_path, ctxt):
-        """returns True if path changed, false otherwise"""
+        """Updates ctxt's path to new_path if it increases the cu
+        returns True if path changed, False otherwise"""
         old_path = ctxt.tenative_path
         old_inst = ctxt.instance
 
@@ -213,13 +227,15 @@ class ContextualCobwebTree(Cobweb3Tree):
         return False
 
     def __path_eq(self, set_path, tup_path):
-        """Checks if these are equal. Optimized for correct input types"""
+        """Checks if paths are equal.
+        Optimized for correct input types (set & tuple)"""
         # If paths are not the same...
         # Observe |NP| = |TP| and NP subset of TP => set(NP) = TP
         return (len(tup_path) == len(set_path)
                 and all(node in set_path for node in tup_path))
 
     def __cu_for_window(self, window):
+        """Returns the total cu for adding instances as window dictates"""
         return sum(ctx.instance.cu_for_new_child(inst) for inst, ctx in window)
 
     def initial_path(self, instance):
@@ -231,31 +247,7 @@ class ContextualCobwebTree(Cobweb3Tree):
         :type instance: :ref:`Instance<instance-rep>`
         :return: the best guess for the instance's insertion into the tree
         :rtype: Sequence<ContextualCobwebNode>"""
-        current = self.root
-        node_path = []
-
-        while current:
-            node_path.append(current)
-
-            if not current.children:
-                # print("leaf")
-                break
-
-            best1_cu, best1, best2 = current.two_best_children(instance)
-            _, best_action = current.get_best_operation(
-                instance, best1, best2, best1_cu, possible_ops=("best", "new"))
-
-            # print(best_action)
-            if best_action == 'best':
-                current = best1
-            elif best_action == 'new':
-                break
-            else:
-                raise Exception('Best action choice "{action}" not a '
-                                'recognized option. This should be'
-                                ' impossible...'.format(action=best_action))
-
-        return node_path
+        return self.cobweb_path(instance)
 
     def cobweb_path(self, instance):
         """
@@ -310,8 +302,9 @@ class ContextualCobwebTree(Cobweb3Tree):
         return node_path
 
     def cobweb_path_and_restructurings(self, instance):
-        """GETS restructurings (only contains places where
-        an action could actually take place"""
+        """Catagorizes instance, and returns the path along with (the action,
+        its cu, the children cu, the second-best child, the best child). It
+        omits actions for some places where a merge or split couldn't happen"""
         current = self.root
         node_path = []
         actions = []
@@ -389,6 +382,9 @@ class ContextualCobwebTree(Cobweb3Tree):
 
     def increment_and_restructure(self, instance, where_to_add,
                                   actions, unadded_window):
+        """Increment the counts for the tree when adding instance as a child of
+        where_to_add, then performs merges + splits based on actions, updating
+        the window's paths to reflect the new tree structure."""
         where_to_add.increment_all_counts(instance)
 
         # By going backwards, splits don't cause problems
@@ -421,6 +417,7 @@ class ContextualCobwebTree(Cobweb3Tree):
                                 ' impossible...')
 
     def __merge_update(self, node1, node2, unadded_ctxts):
+        """Updates paths in unadded_ctxts to reflect merging node1 and node2"""
         # print('merge')
         for _, ctx in unadded_ctxts:
             assert ctx.unadded()
@@ -429,6 +426,7 @@ class ContextualCobwebTree(Cobweb3Tree):
                 ctx.insert_into_path(node1.parent)
 
     def __split_update(self, dead_node, unadded_ctxts):
+        """Updates paths in unadded_ctxts to reflect splitting dead_node"""
         # print('split')
         for _, ctx in unadded_ctxts:
             assert ctx.unadded()
@@ -436,6 +434,8 @@ class ContextualCobwebTree(Cobweb3Tree):
                 ctx.instance = dead_node.parent
 
     def __fringe_split_update(self, fringe_leaf, unadded_ctxts):
+        """Updates paths in unadded_ctxts to reflect fringe splitting
+        fringe_leaf (i.e. adding a child to fringeleaf and pushing it down)"""
         for _, ctx in unadded_ctxts:
             assert ctx.unadded()
             if fringe_leaf in ctx.tenative_path:
@@ -448,34 +448,6 @@ class ContextualCobwebTree(Cobweb3Tree):
 
     def cobweb(self, instance):
         raise NotImplementedError
-
-    def _cobweb_categorize(self, instance):
-        """
-        A cobweb specific version of categorize, not intended to be
-        externally called.
-        """
-        current = self.root
-
-        while current:
-            if not current.children:
-                # print("leaf")
-                break
-
-            best1_cu, best1, best2 = current.two_best_children(instance)
-            _, best_action = current.get_best_operation(
-                instance, best1, best2, best1_cu, possible_ops=("best", "new"))
-
-            # print(best_action)
-            if best_action == 'best':
-                current = best1
-            elif best_action == 'new':
-                break
-            else:
-                raise Exception('Best action choice "{action}" not a '
-                                'recognized option. This should be'
-                                ' impossible...'.format(action=best_action))
-
-        return current
 
     def infer_from_context(self, instances, context_size=4,
                            context_key='symmetric_window'):
@@ -496,50 +468,20 @@ class ContextualCobwebTree(Cobweb3Tree):
         :return: list of the nodes where the instances were added
         :rtype: List<ContextualCobwebNode>
         """
-        raise NotImplementedError
         instances = list(instances)
         assert len(instances) > 1, "Not enough context to make prediction"
         pred_ind = instances.index(None)
-
-        # TODO: Should eventually be refactored
-        if context_key == 'symmetric_window':
-            def context_func(context, index):
-                low = max(0, index-context_size)
-                hi = index + 1 + context_size
-                return (*context[low+(low < pred_ind <= index): index],
-                        *context[index+1: hi-(index < pred_ind < hi)])
-        elif context_key == 'past_window' or context_key == 'future_window':
-            raise NotImplementedError
-        else:
-            raise ValueError("Unknown context evaluator %s" % context_key)
-        if context_key == 'symmetric_window':
-            def eval_func(context, index):
-                low = max(0, index-context_size)
-                hi = index + 1 + context_size
-                return context[low + (low < pred_ind <= index):
-                               hi - (index < pred_ind < hi)]
-        elif context_key == 'past_window' or context_key == 'future_window':
-            raise NotImplementedError
-        else:
-            raise ValueError("Unknown eval context evaluator %s" % context_key)
-
         del instances[pred_ind]
+
         for instance in instances:
             self._sanity_check_instance(instance)
 
-        paths = list(
-            self._contextual_categorize(instances, context_func, eval_func)[1])
-
-        paths.insert(pred_ind, None)
-        ind_copy = pred_ind
-
-        # Revert context functions to become normal context functions
-        pred_ind = -1
-
-        node = self._cobweb_categorize({ca_key: context_func(paths, ind_copy)})
-        result = dict(node.av_counts)
-        del result[ca_key]
-        return result
+        contexts = self.contextual_cobweb(
+            instances, context_size, context_key, False)
+        new_inst = {ca_key: contexts[max(0, pred_ind-context_size):
+                                     pred_ind+context_size]}
+        category = self.cobweb_path(new_inst)[-1]
+        return category.predict('Anchor')
 
 
 class ContextualCobwebNode(Cobweb3Node):
@@ -565,6 +507,7 @@ class ContextualCobwebNode(Cobweb3Node):
         #     counter(leaf in other_node ctxt: partial sums at this node).
         #     *unadded leaves]
         # self.cache = {} CACHING
+        self.context_size = 0
         super().__init__(other_node)
 
     def increment_counts(self, instance):
@@ -591,6 +534,7 @@ class ContextualCobwebNode(Cobweb3Node):
                 #     self.av_counts[attr][leaf] += 1
                 #     leaf.to_notify.add(self)
                 #     self.update_caches(leaf)
+                self.context_size += len(instance[attr])
                 continue
 
             self.av_counts.setdefault(attr, {})
@@ -642,7 +586,8 @@ class ContextualCobwebNode(Cobweb3Node):
             if entry is not None:
                 entry[0] += weight
                 psum += entry[0]
-                leaves_seen.update(chain.from_iterable(repeat(entry[1], weight)))
+                leaves_seen.update(
+                    chain.from_iterable(repeat(entry[1], weight)))
                 entry[1] += leaves_seen
                 entry[1][ctxt_word] = psum
             else:
@@ -652,7 +597,8 @@ class ContextualCobwebNode(Cobweb3Node):
                         cur.cache.clear()
                 self.create_cache_at(cur)
                 psum = cur.cache[self][1][ctxt_word]
-                leaves_seen.update(chain.from_iterable(repeat(cur.cache[self][1], weight)))
+                leaves_seen.update(chain.from_iterable(
+                    repeat(cur.cache[self][1], weight)))
 
             cur = cur.parent
 
@@ -744,6 +690,7 @@ class ContextualCobwebNode(Cobweb3Node):
             if attr == ca_key:
                 self.av_counts.setdefault(attr, Counter())
                 self.av_counts[attr].update(node.av_counts[attr])
+                self.context_size += node.context_size
                 # for leaf, count in node.av_counts[attr].items(): CACHING
                 #     self.av_counts[attr][leaf] += count
                 #     leaf.to_notify.add(self)
@@ -854,13 +801,14 @@ class ContextualCobwebNode(Cobweb3Node):
         :type partial_len: int
         :param ctxt: context of node whose correct guesses are being evaluated
         :type ctxt: Counter<ContextInstance>"""
-        ctx_len = sum(ctxt.values())
-        if ctx_len == 0:
+        # ctx_len = sum(ctxt.values())
+        if self.context_size == 0:
             return 0
         # ctxt_len will divided out twice for P(C_i | w in ctxt) and once for
         # the outer weighted average.
         return self.__exp_ctxt_helper(cur_node, partial_guesses, partial_len,
-                                      ctxt.items()) / (ctx_len*ctx_len)
+                                      ctxt.items()) / (self.context_size
+                                                       * self.context_size)
 
         """if temp - self.expect_contextual_from_cache(ctxt) > 0.0000001:
             print(self.concept_id, '<- id, counts ->', self.av_counts)
@@ -892,9 +840,10 @@ class ContextualCobwebNode(Cobweb3Node):
         added_leaf_count = 0
         extra_guesses = 0
         descendants = []
-        for wd, count in ctxt:
+        for wd_count_pair in ctxt:
+            wd, count = wd_count_pair
             if wd.desc_of(cur_node):
-                descendants.append((wd, count))
+                descendants.append(wd_count_pair)
                 extra_guesses += count
                 if wd.unadded_leaf(cur_node):
                     squared_ualeaf_count += count * count
@@ -923,7 +872,7 @@ class ContextualCobwebNode(Cobweb3Node):
         # philosophy is, in general, to not update the tree until the very end,
         # this is most consistent.
 
-        if not cur_node.children or partial_len > 5:
+        if partial_len >= depth_cap or not cur_node.children:
             # Because it's a weighted average, we multiply by added_leaf_count
             # (count of cur_node in context).
             return (added_leaf_count * new_partial_guesses / new_partial_len
@@ -1235,7 +1184,30 @@ class ContextualCobwebNode(Cobweb3Node):
         return ret
 
     def output_json(self):
-        raise NotImplementedError
+        """
+        Outputs the categorization tree in JSON form
+
+        :return: an object that contains all of the structural information of
+                 the node and its children
+        :rtype: obj
+        """
+        output = {}
+        output['name'] = "Concept" + str(self.concept_id)
+        output['size'] = self.count
+        output['children'] = []
+
+        temp = {}
+        for attr in self.attrs('all'):
+            temp[str(attr)] = {str(value): self.av_counts[attr][value] for
+                               value in self.av_counts[attr]}
+            # temp[attr + " = " + str(value)] = self.av_counts[attr][value]
+
+        for child in self.children:
+            output["children"].append(child.output_json())
+
+        output['counts'] = temp
+
+        return output
 
     def get_weighted_values(self, attr, allow_none=True):
         """
