@@ -57,8 +57,8 @@ def _preprocess(text):
             yield match.group(1).lower()
 
 
-window_size = 1  # 4
-context_weight = 1  # 2.5
+window_size = 4
+context_weight = 2.5
 stop_words = {*"i me my myself we our ours ourselves you your yours yourself "
                "yourselves he him his himself she her hers herself it its "
                "itself they them their theirs themselves what which who whom "
