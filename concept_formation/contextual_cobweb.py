@@ -9,7 +9,7 @@ from __future__ import unicode_literals
 from __future__ import absolute_import
 from __future__ import division
 # from random import normalvariate
-from itertools import cycle
+from itertools import cycle, chain
 from math import sqrt
 from math import pi
 # from math import exp
@@ -28,7 +28,8 @@ from concept_formation.utils import isNumber
 # from concept_formation.utils import most_likely_choice
 
 ca_key = "#Ctxt#"  # TODO: Change to something longer
-depth_cap = 6
+depth_cap = 5
+merge_depth = depth_cap + 2
 
 '''
 def modifies_structure(func):
@@ -43,6 +44,14 @@ def modifies_structure(func):
         return func(self, *args, **kwargs)
 
     return new_func'''
+
+
+def tree_iterator(node):
+    """Iterates over every node below the input"""
+    yield node
+    for child in node.children:
+        for node in tree_iterator(child):
+            yield node
 
 
 class ContextualCobwebTree(Cobweb3Tree):
@@ -129,8 +138,6 @@ class ContextualCobwebTree(Cobweb3Tree):
         :return: list of the created leaf nodes
         :rtype: List<ContextualCobwebNode>
         """
-        # Global is used here for performance!
-        global depth_cap
         assert context_key == 'symmetric_window'
         initial_contexts = [ContextInstance(self.initial_path(instance))
                             for instance in instances[:context_size + 1]]
@@ -141,6 +148,8 @@ class ContextualCobwebTree(Cobweb3Tree):
         next_to_initialize = context_size + 1
 
         while window:
+            if next_to_initialize % 100 == 0:
+                self.root.merge_contexts()
             # # # We will be fixing the first element of the deque # # #
             # The index in the window of the node which most
             # recently had its path altered
@@ -197,8 +206,6 @@ class ContextualCobwebTree(Cobweb3Tree):
 
             print(next_to_initialize-context_size,
                   time()-start, iterations, sep='\\t')
-            if iterations > 2 * (depth_cap-2):
-                depth_cap += 1
         return fixed
 
     def __create_instance(self, instance, window):
@@ -883,6 +890,35 @@ class ContextualCobwebNode(Cobweb3Node):
                 child, new_partial_guesses, new_partial_len, descendants)
         return partial_cu
 
+    def merge_contexts(self, depth_left=merge_depth):
+        assert self == self.tree.root
+        # Maps a context instance to its replacement
+        update_mapping = {}
+        for d in self.__merge_context_helper(depth_left, self):
+            update_mapping.update(d)
+        for node in tree_iterator(self):
+            print(update_mapping)
+            for old_ctxt, new_ctxt in update_mapping.items():
+                print('merge')
+                node.av_counts[ca_key][new_ctxt] += node.av_counts[
+                    ca_key][old_ctxt]
+                del node.av_counts[ca_key][old_ctxt]
+
+    def __merge_context_helper(self, depth_left, node):
+        """Returns iterable of update dicts"""
+        if depth_left:
+            return chain.from_iterable([self.__merge_context_helper(
+                depth_left-1, child) for child in node.children])
+        # Actual merging updates
+        if not node.descendants:
+            return {}
+        descs = iter(node.descendants)
+        representative = descs.__next__().context
+        result = {}
+        for leaf in descs:
+            result[leaf.context] = representative
+        return (result,)
+
     def get_best_operation(self, instance, best1, best2, best1_cu,
                            possible_ops=("best", "new", "merge", "split")):
         """
@@ -1116,8 +1152,8 @@ class ContextualCobwebNode(Cobweb3Node):
         """
         instance_attrs = set(filter(lambda x: x[0] != "_", instance))
         self_attrs = set(self.attrs())
-        # Test if they have the same attributes using set xor (^)
-        if self_attrs ^ instance_attrs:
+
+        if self_attrs != instance_attrs:
             return False
 
         for attr in self_attrs:

@@ -68,6 +68,7 @@ class ContextInstance:
         """
         self.tenative_path = None
         self.instance = leaf
+        leaf.context = self
         cur_node = leaf
         while cur_node:
             cur_node.descendants.add(self.instance)
