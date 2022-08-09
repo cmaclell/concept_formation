@@ -28,6 +28,8 @@ class ContextualCobwebTree(CobwebTree):
         self.root = ContextualCobwebNode()
         self.root.tree = self
 
+        self.n_concepts = 1
+
         self.window = window
 
     def fit_to_text(self, text):
@@ -47,7 +49,7 @@ class ContextualCobwebTree(CobwebTree):
                     context_nodes[idx] = self.categorize(instance)
 
             instance = self.create_instance(anchor_idx, self.window, text, context_nodes)
-            instance['_idx'] = str(anchor_idx)
+            # instance['_idx'] = str(anchor_idx)
 
             context_nodes[anchor_idx] = self.ifit(instance)
 
@@ -61,6 +63,65 @@ class ContextualCobwebTree(CobwebTree):
 
         instance['anchor'] = text[anchor_idx]
         return instance
+
+    def cobweb(self, instance):
+        """
+        counts nodes 
+        """
+        current = self.root
+
+        while current:
+            # the current.count == 0 here is for the initially empty tree.
+            if not current.children and (current.is_exact_match(instance) or
+                                         current.count == 0):
+                # print("leaf match")
+                current.increment_counts(instance)
+                break
+
+            elif not current.children:
+                # print("fringe split")
+                new = current.__class__(current)
+                current.parent = new
+                new.children.append(current)
+
+                if new.parent:
+                    new.parent.children.remove(current)
+                    new.parent.children.append(new)
+                else:
+                    self.root = new
+
+                new.increment_counts(instance)
+                current = new.create_new_child(instance)
+                self.n_concepts += 2
+                break
+
+            else:
+                best1_cu, best1, best2 = current.two_best_children(instance)
+                _, best_action = current.get_best_operation(instance, best1,
+                                                            best2, best1_cu)
+
+                # print(best_action)
+                if best_action == 'best':
+                    current.increment_counts(instance)
+                    current = best1
+                elif best_action == 'new':
+                    current.increment_counts(instance)
+                    current = current.create_new_child(instance)
+                    self.n_concepts += 1
+                    break
+                elif best_action == 'merge':
+                    current.increment_counts(instance)
+                    new_child = current.merge(best1, best2)
+                    current = new_child
+                    self.n_concepts += 1
+                elif best_action == 'split':
+                    current.split(best1)
+                    self.n_concepts -= 1
+                else:
+                    raise Exception('Best action choice "' + best_action +
+                                    '" not a recognized option. This should be'
+                                    ' impossible...')
+        return current
 
 class ContextualCobwebNode(CobwebNode):
 
@@ -82,10 +143,14 @@ class ContextualCobwebNode(CobwebNode):
             c.test_valid(valid_concepts)
 
     def __hash__(self):
-        return hash(self.concept_id)
+        try:
+            return self.h
+        except Exception:
+            self.h = hash(self.concept_id)
+            return self.h
 
     def __str__(self):
-        return "Concept-{}".format(self.concept_id)
+        return "Concept-{}x".format(self.concept_id)
 
     def __getitem__(self, indices):
         return True
@@ -133,10 +198,10 @@ class ContextualCobwebNode(CobwebNode):
         correct_guesses = 0.0
         attr_count = 0
         concept_counts = {}
-        n_concepts = len(self.tree.root.get_concepts())
+        n_concepts = self.tree.n_concepts # len(self.tree.root.get_concepts())
+        # assert n_concepts == self.tree.n_concepts
         
         for attr in self.attrs():
-            attr_count += 1
 
             if isinstance(attr, ContextualCobwebNode):
                 curr = attr
@@ -148,18 +213,20 @@ class ContextualCobwebNode(CobwebNode):
                             self.av_counts[attr]['count'])
 
             else:
+                attr_count += 1
                 for val in self.av_counts[attr]:
                     prob = (self.av_counts[attr][val]) / self.count
                     correct_guesses += (prob * prob)
 
+        # count the concept nodes as a single attr
+        # this is basically the weighting factor between anchor and context
+        attr_count += 1
         for c in concept_counts:
             prob = concept_counts[c] / self.n_context_elements 
             correct_guesses += (prob * prob) / n_concepts
             correct_guesses += ((1-prob) * (1-prob)) / n_concepts
 
         correct_guesses += (n_concepts - len(concept_counts)) / n_concepts
-
-        attr_count += 1
 
         return correct_guesses / attr_count
 
@@ -232,7 +299,7 @@ if __name__ == "__main__":
     for text_num in range(1):
         text = [word for word in _load_text(text_num)
                 if word not in stop_words
-                ][:1000]
+                ][:100]
 
         print('iterations needed', len(text))
         start = time()
