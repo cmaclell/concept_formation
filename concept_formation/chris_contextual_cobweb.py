@@ -30,6 +30,7 @@ class ContextualCobwebTree(CobwebTree):
         self.n_concepts = 1
         self.window = window
         self.instance = None
+        self.prune_threshold = 0.01
 
     def ifit(self, instance):
         self.instance = instance
@@ -184,6 +185,36 @@ class ContextualCobwebNode(CobwebNode):
                 prior_count = self.av_counts[attr].get(instance[attr], 0)
                 self.av_counts[attr][instance[attr]] = prior_count + 1
 
+        # self.prune_low_probability()
+
+    def prune_low_probability(self):
+        del_nodes = []
+        del_av = []
+
+        for attr in self.attrs():
+            if isinstance(attr, ContextualCobwebNode):
+                if (self.av_counts[attr]['count'] / self.n_context_elements) < self.tree.prune_threshold:
+                    del_nodes.append(attr)
+            else:
+                for val in self.av_counts[attr]:
+                    if (self.av_counts[attr][val] / self.count) < self.tree.prune_threshold:
+                        del_av.append((attr, val))
+            
+        # del_nodes = [attr for attr in self.attrs(lambda x: isinstance(x, ContextualCobweb))
+        #         if (self.av_counts[attr]['count'] / self.n_context_elements <
+        #             self.tree.prune_threshold))]
+
+        for n in del_nodes:
+            n.unregister(self)
+            del self.av_counts[n]
+
+        for a,v in del_av:
+            del self.av_counts[a][v]
+            if len(self.av_counts[a]) == 0:
+                del self.av_counts[a]
+
+        # del_av = [attr, val for attr in self.attrs(lambda x: not isinstance(x,  for val in self.av_counts[attr] if isinstance
+
     def update_counts_from_node(self, node):
         """
         Adds binomial distribution for estimating concept counts
@@ -197,10 +228,13 @@ class ContextualCobwebNode(CobwebNode):
                 self.av_counts[attr]['count'] = (self.av_counts[attr].get('count', 0) +
                         node.av_counts[attr]['count'])
                 attr.register(self)
+
             else:
                 for val in node.av_counts[attr]:
                     self.av_counts[attr][val] = (self.av_counts[attr].get(val,
                         0) + node.av_counts[attr][val])
+
+        # self.prune_low_probability()
 
     def register_delete(self):
         for attr in self.av_counts:
@@ -240,7 +274,8 @@ class ContextualCobwebNode(CobwebNode):
         self.registered.add(other)
 
     def unregister(self, other):
-        self.registered.remove(other)
+        if other in self.registered:
+            self.registered.remove(other)
 
     def expected_correct_guesses(self):
         """
@@ -254,6 +289,10 @@ class ContextualCobwebNode(CobwebNode):
         n_concepts = self.tree.n_concepts # len(self.tree.root.get_concepts())
         eval_concepts = 0
 
+        # # TEST
+        # concept_counts = {}
+        # new_concept_counts = {}
+        
         for attr in self.attrs():
 
             if isinstance(attr, ContextualCobwebNode):
@@ -261,6 +300,19 @@ class ContextualCobwebNode(CobwebNode):
                 prob = self.av_counts[attr]['count'] / self.n_context_elements
                 correct_guesses += (prob * prob) / n_concepts
                 correct_guesses += ((1-prob) * (1-prob)) / n_concepts
+                
+                # # TEST
+                # new_concept_counts[attr] = (new_concept_counts.get(attr, 0) + 
+                #         self.av_counts[attr]['count'])
+                # if not attr.children:
+                #     curr = attr
+                #     concept_counts[attr] = (concept_counts.get(attr, 0) +
+                #             self.av_counts[attr]['count'])
+                #     
+                #     while curr.parent:
+                #         curr = curr.parent
+                #         concept_counts[curr] = (concept_counts.get(curr, 0) +
+                #                 self.av_counts[attr]['count'])
 
             else:
                 attr_count += 1
@@ -268,13 +320,17 @@ class ContextualCobwebNode(CobwebNode):
                     prob = (self.av_counts[attr][val]) / self.count
                     correct_guesses += (prob * prob)
 
+        # # TEST
+        # for attr in set(concept_counts).union(set(new_concept_counts)):
+        #     assert attr in concept_counts
+        #     assert attr in new_concept_counts
+        #     assert new_concept_counts[attr] == concept_counts[attr]
+
         correct_guesses += (n_concepts - eval_concepts) / n_concepts
 
+        # count the concept nodes as a single attr
+        # this is basically the weighting factor between anchor and context
         attr_count += 1
-        # for c in concept_vals:
-        #     prob = concept_vals[c] #  / concept_attr_count
-        #     correct_guesses += (prob * prob)
-        #     correct_guesses += ((1-prob) * (1-prob))
 
         return correct_guesses / attr_count
     
@@ -333,7 +389,7 @@ if __name__ == "__main__":
 
     for text_num in range(1):
         text = [word for word in _load_text(text_num) if word not in
-                stop_words][:200]
+                stop_words][:100]
 
         print('iterations needed', len(text))
         start = time()
