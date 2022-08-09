@@ -6,7 +6,7 @@ from tqdm import tqdm
 from concept_formation.cobweb import CobwebNode
 from concept_formation.cobweb import CobwebTree
 from visualize import visualize
-from train_contextual_cobweb import _load_text
+from preprocess_text import _load_text
 
 def get_path(node):
     path = [node]
