@@ -1,7 +1,5 @@
-import math
-from time import time
-
 from tqdm import tqdm
+import timeit
 
 from concept_formation.cobweb import CobwebNode
 from concept_formation.cobweb import CobwebTree
@@ -31,19 +29,24 @@ class ContextualCobwebTree(CobwebTree):
         self.n_concepts = 1
 
         self.window = window
+        self.anchor_weight = 1 
+        self.context_weight = 2
+        self.log_times = False
 
     def fit_to_text(self, text):
         context_nodes = []
 
         for anchor_idx in tqdm(range(len(text))):
+            if self.log_times:
+                start = timeit.default_timer()
             while ((len(context_nodes) < anchor_idx + self.window + 1) and
                     len(context_nodes) < len(text)):
                 context_nodes.append(self.categorize({'anchor': text[len(context_nodes)]}))
 
             for _ in range(2):
-                for i in range(2*self.window + 1):
-                    idx = anchor_idx - self.window + i
-                    if idx < 0 or idx >= len(text):
+                for i in range(self.window + 1):
+                    idx = anchor_idx + i
+                    if idx < 0 or idx >= len(text): 
                         continue
                     instance = self.create_instance(idx, self.window, text, context_nodes)
                     context_nodes[idx] = self.categorize(instance)
@@ -52,6 +55,11 @@ class ContextualCobwebTree(CobwebTree):
             # instance['_idx'] = str(anchor_idx)
 
             context_nodes[anchor_idx] = self.ifit(instance)
+
+            if self.log_times:
+                stop = timeit.default_timer()
+                with open('out.csv', 'a') as fout:
+                    fout.write("{},{:.8f}\n".format(anchor_idx, stop - start))
 
     def create_instance(self, anchor_idx, window, text, context_nodes):
         context = context_nodes[max(0, anchor_idx-self.window): anchor_idx]
@@ -150,7 +158,7 @@ class ContextualCobwebNode(CobwebNode):
             return self.h
 
     def __str__(self):
-        return "Concept-{}x".format(self.concept_id)
+        return "Concept-{}".format(self.concept_id)
 
     def __getitem__(self, indices):
         return True
@@ -213,22 +221,20 @@ class ContextualCobwebNode(CobwebNode):
                             self.av_counts[attr]['count'])
 
             else:
-                attr_count += 1
                 for val in self.av_counts[attr]:
                     prob = (self.av_counts[attr][val]) / self.count
-                    correct_guesses += (prob * prob)
+                    correct_guesses += (prob * prob) * self.tree.anchor_weight
 
         # count the concept nodes as a single attr
         # this is basically the weighting factor between anchor and context
-        attr_count += 1
         for c in concept_counts:
             prob = concept_counts[c] / self.n_context_elements 
-            correct_guesses += (prob * prob) / n_concepts
-            correct_guesses += ((1-prob) * (1-prob)) / n_concepts
+            correct_guesses += (prob * prob) / n_concepts * self.tree.context_weight
+            correct_guesses += ((1-prob) * (1-prob)) / n_concepts * self.tree.context_weight
 
-        correct_guesses += (n_concepts - len(concept_counts)) / n_concepts
+        correct_guesses += (n_concepts - len(concept_counts)) / n_concepts * self.tree.context_weight
 
-        return correct_guesses / attr_count
+        return correct_guesses 
 
     def output_json(self):
         """
@@ -246,6 +252,7 @@ class ContextualCobwebNode(CobwebNode):
         output["children"] = []
 
         temp = {}
+        temp['aa-context-aa'] = {}
         concept_counts = {}
 
         for attr in self.attrs('all'):
@@ -265,12 +272,15 @@ class ContextualCobwebNode(CobwebNode):
                     temp[str(attr)][str(val)] = self.av_counts[attr][val]
 
         for c in concept_counts:
-            # temp[str(c)] = {True: concept_vals[c] * self.count / concept_attr_count}
-            temp[str(c)] = {
-                    'count': concept_counts[c],
-                    'n': self.n_context_elements,
-                    'p': concept_counts[c] / self.n_context_elements,
-                    }
+
+            temp['aa-context-aa'][str(c)] = (concept_counts[c] /
+                self.n_context_elements * self.count)
+            
+            # temp[str(c)] = {
+            #         'count': concept_counts[c],
+            #         'n': self.n_context_elements,
+            #         'p': concept_counts[c] / self.n_context_elements,
+            #         }
 
         for child in self.children:
             output["children"].append(child.output_json())
@@ -299,17 +309,13 @@ if __name__ == "__main__":
     for text_num in range(1):
         text = [word for word in _load_text(text_num)
                 if word not in stop_words
-                ][:100]
+                ][:1500]
 
-        print('iterations needed', len(text))
-        start = time()
         tree.fit_to_text(text)
-        print(time()-start)
-        print(text_num)
     visualize(tree)
 
-    valid_concepts = tree.root.get_concepts()
-    tree.root.test_valid(valid_concepts)
+    # valid_concepts = tree.root.get_concepts()
+    # tree.root.test_valid(valid_concepts)
 
 
 
