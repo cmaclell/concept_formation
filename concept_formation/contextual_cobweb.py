@@ -28,7 +28,7 @@ from concept_formation.utils import isNumber
 # from concept_formation.utils import most_likely_choice
 
 ca_key = "#Ctxt#"  # TODO: Change to something longer
-depth_cap = 5
+depth_cap = 6
 merge_depth = depth_cap + 2
 
 '''
@@ -148,7 +148,7 @@ class ContextualCobwebTree(Cobweb3Tree):
         next_to_initialize = context_size + 1
 
         while window:
-            if next_to_initialize % 100 == 0:
+            if next_to_initialize % 200 == 0:
                 self.root.merge_contexts()
             # # # We will be fixing the first element of the deque # # #
             # The index in the window of the node which most
@@ -891,18 +891,18 @@ class ContextualCobwebNode(Cobweb3Node):
         return partial_cu
 
     def merge_contexts(self, depth_left=merge_depth):
+        print('merging')
         assert self == self.tree.root
         # Maps a context instance to its replacement
         update_mapping = {}
         for d in self.__merge_context_helper(depth_left, self):
             update_mapping.update(d)
-        for node in tree_iterator(self):
-            print(update_mapping)
-            for old_ctxt, new_ctxt in update_mapping.items():
-                print('merge')
-                node.av_counts[ca_key][new_ctxt] += node.av_counts[
-                    ca_key][old_ctxt]
-                del node.av_counts[ca_key][old_ctxt]
+        if update_mapping:
+            for node in tree_iterator(self):
+                for old_ctxt, new_ctxt in update_mapping.items():
+                    node.av_counts[ca_key][new_ctxt] += node.av_counts[
+                        ca_key][old_ctxt]
+                    del node.av_counts[ca_key][old_ctxt]
 
     def __merge_context_helper(self, depth_left, node):
         """Returns iterable of update dicts"""
@@ -912,11 +912,15 @@ class ContextualCobwebNode(Cobweb3Node):
         # Actual merging updates
         if not node.descendants:
             return {}
-        descs = iter(node.descendants)
-        representative = descs.__next__().context
+        descs = filter(lambda x: x.context, node.descendants)
+        try:
+            representative = descs.__next__().context
+        except StopIteration:
+            return {}
         result = {}
         for leaf in descs:
             result[leaf.context] = representative
+            leaf.context = None
         return (result,)
 
     def get_best_operation(self, instance, best1, best2, best1_cu,
