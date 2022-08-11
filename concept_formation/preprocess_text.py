@@ -9,8 +9,6 @@ from __future__ import division
 from os.path import dirname
 from os.path import join
 import re
-from time import time
-from visualize import visualize
 from csv import reader
 
 
@@ -18,14 +16,17 @@ module_path = dirname(__file__)
 
 
 def load_microsoft_qa():
-    let_to_num = {'a': 0, 'b': 1, 'c': 2, 'd': 3, 'e': 4} 
-    with open(join(module_path, 'data_files', 'MSC_testing_data.csv'), newline='') as questions:
-        with open(join(module_path, 'data_files', 'MSC_test_answer.csv'), newline='') as answers:
+    let_to_num = {'a': 0, 'b': 1, 'c': 2, 'd': 3, 'e': 4}
+    with open(join(module_path, 'data_files',
+                   'MSC_testing_data.csv'), newline='') as questions:
+        with open(join(module_path, 'data_files',
+                       'MSC_test_answer.csv'), newline='') as answers:
             data = zip(reader(questions), reader(answers))
             # Remove top row
             data.__next__()
             for quest, ans in data:
-                yield (list(_preprocess(quest[1], True)), quest[2:], let_to_num[ans[1]])
+                yield (list(_preprocess(quest[1], True)), quest[2:],
+                       let_to_num[ans[1]])
 
 
 def load_text(file_num):

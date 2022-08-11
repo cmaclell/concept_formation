@@ -4,7 +4,6 @@ from collections import Counter
 # from multiprocess import Pool
 from tqdm import tqdm
 import timeit
-from cProfile import run
 import pickle
 from os.path import dirname, join
 from sys import setrecursionlimit
@@ -20,6 +19,7 @@ MODEL_SAVE_PATH = join(dirname(__file__), 'saved_model')
 SAVE = True
 LOAD = False
 TREE_RECURSION = 9000
+ca_key = '#Ctxt#'
 
 
 def get_path(node):
@@ -57,29 +57,27 @@ class ContextualCobwebTree(CobwebTree):
         return super().ifit(instance)
 
     def fit_to_text(self, text):
-        context_nodes = []
+        ctxt_nodes = []
 
         for anchor_idx, anchor_wd in tqdm(enumerate(text)):
             if self.log_times:
                 start = timeit.default_timer()
-            while ((len(context_nodes) < anchor_idx + self.window + 1) and
-                   len(context_nodes) < len(text)):
-                context_nodes.append(self.categorize({'anchor': text[len(context_nodes)]}))
+            while ((len(ctxt_nodes) < anchor_idx + self.window + 1) and
+                   len(ctxt_nodes) < len(text)):
+                ctxt_nodes.append(
+                    self.categorize({'anchor': text[len(ctxt_nodes)]}))
 
             for _ in range(2):
-                # for i in range(2*self.window + 1):
-                #     idx = anchor_idx - self.window + i
                 for i in range(self.window + 1):
                     idx = anchor_idx + i
                     if idx < 0 or idx >= len(text):
                         continue
-                    instance = self.create_instance(idx, anchor_wd, context_nodes)
-                    context_nodes[idx] = self.categorize(instance)
-                # print([str(c) for c in context_nodes[anchor_idx - self.window: anchor_idx + self.window + 1]])
+                    instance = self.create_instance(idx, anchor_wd, ctxt_nodes)
+                    ctxt_nodes[idx] = self.categorize(instance)
 
-            instance = self.create_instance(anchor_idx, anchor_wd, context_nodes)
+            instance = self.create_instance(anchor_idx, anchor_wd, ctxt_nodes)
 
-            context_nodes[anchor_idx] = self.ifit(instance)
+            ctxt_nodes[anchor_idx] = self.ifit(instance)
 
             if self.log_times:
                 stop = timeit.default_timer()
@@ -100,7 +98,8 @@ class ContextualCobwebTree(CobwebTree):
 
     def cobweb(self, instance):
         """
-        Updated version of cobweb algorithm that updates cross-concept references
+        Updated version of cobweb algorithm that updates
+        cross-concept references
         """
         current = self.root
 
@@ -232,7 +231,7 @@ class ContextualCobwebTree(CobwebTree):
 
 
 class ContextualCobwebNode(CobwebNode):
-    def __init__(self, otherNode=None, track=False):
+    def __init__(self, other_node=None, track=False):
         self.n_context_elements = 0
         self.registered = set()
 
@@ -243,13 +242,13 @@ class ContextualCobwebNode(CobwebNode):
         self.parent = None
         self.tree = None
 
-        if otherNode:
-            self.tree = otherNode.tree
-            self.parent = otherNode.parent
-            self.update_counts_from_node(otherNode, track)
+        if other_node:
+            self.tree = other_node.tree
+            self.parent = other_node.parent
+            self.update_counts_from_node(other_node, track)
 
             self.children.extend(
-                [self.__class__(child) for child in otherNode.children])
+                [self.__class__(child) for child in other_node.children])
 
     def create_new_child(self, instance, track=False):
         """
@@ -329,8 +328,8 @@ class ContextualCobwebNode(CobwebNode):
             self.av_counts.setdefault(attr, {})
 
             if isinstance(attr, ContextualCobwebNode):
-                self.av_counts[attr]['count'] = (self.av_counts[attr].get('count', 0) +
-                        instance[attr])
+                self.av_counts[attr]['count'] = (self.av_counts[attr].get('count', 0)
+                                                 + instance[attr])
 
                 # only count if it is a terminal, don't count nonterminals
                 if not attr.children:
@@ -353,8 +352,8 @@ class ContextualCobwebNode(CobwebNode):
         for attr in node.attrs('all'):
             counts = self.av_counts.setdefault(attr, {})
             if isinstance(attr, ContextualCobwebNode):
-                counts['count'] = (counts.get('count', 0) +
-                        node.av_counts[attr]['count'])
+                counts['count'] = (counts.get('count', 0)
+                                   + node.av_counts[attr]['count'])
 
                 if track:
                     attr.register(self)
@@ -410,12 +409,13 @@ class ContextualCobwebNode(CobwebNode):
             if parent not in c.av_counts:
                 c.av_counts[parent] = {}
             for val in c.av_counts[self]:
-                c.av_counts[parent]['count'] = (c.av_counts[parent].get('count', 0) +
-                        c.av_counts[self]['count'])
+                c.av_counts[parent]['count'] = (
+                    c.av_counts[parent].get('count', 0)
+                    + c.av_counts[self]['count'])
 
         if (self.tree.instance is not None and self in self.tree.instance):
-            self.tree.instance[parent] = (self.tree.instance.get(parent, 0) +
-                    self.tree.instance[self])
+            self.tree.instance[parent] = (self.tree.instance.get(parent, 0)
+                                          + self.tree.instance[self])
 
     def __str__(self):
         return "Concept-{}".format(self.concept_id)
@@ -445,9 +445,10 @@ class ContextualCobwebNode(CobwebNode):
                 # context_guesses += (prob * prob)
                 # context_guesses += ((1-prob) * (1-prob))
                 context_guesses -= 2 * prob * (1-prob)
-                # Should add 1 after this, but it's accounted for in the final processing
+                # Should add 1, but it's accounted for in the final processing
             else:
-                correct_guesses += sum([(prob * prob) for prob in self.av_counts[attr].values()])
+                correct_guesses += sum(
+                    [(prob * prob) for prob in self.av_counts[attr].values()])
 
         # Weight and convert counts to probabilities
         correct_guesses *= self.tree.anchor_weight / (self.count * self.count)
@@ -479,12 +480,9 @@ class ContextualCobwebNode(CobwebNode):
         for attr in self.attrs('all'):
 
             if isinstance(attr, ContextualCobwebNode):
-                temp['aa-context-aa'][str(attr)] = (self.av_counts[attr]['count'] /
-                        self.n_context_elements * self.count)
-                # temp[str(attr)] = {'count': self.av_counts[attr]['count'],
-                #         'n': self.n_context_elements,
-                #         'p': self.av_counts[attr]['count'] / self.n_context_elements}
-
+                temp['aa-context-aa'][
+                    str(attr)] = (self.av_counts[attr]['count'] /
+                                  self.n_context_elements * self.count)
             else:
                 temp[str(attr)] = {}
                 for val in self.av_counts[attr]:
