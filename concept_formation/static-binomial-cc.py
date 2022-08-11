@@ -191,15 +191,16 @@ class ContextualCobwebTree(CobwebTree):
         """
         assert len(options) >= options_needed
         missing_idx = text.index(None)
-        context_nodes = []
+        ctxt_nodes = []
 
         for anchor_idx, anchor_wd in tqdm(enumerate(text)):
-            while ((len(context_nodes) < anchor_idx + self.window + 1) and
-                    len(context_nodes) < len(text)):
-                if len(context_nodes) == missing_idx:
-                    context_nodes.append(None)
+            while ((len(ctxt_nodes) < anchor_idx + self.window + 1) and
+                    len(ctxt_nodes) < len(text)):
+                if len(ctxt_nodes) == missing_idx:
+                    ctxt_nodes.append(None)
                     continue
-                context_nodes.append(self.categorize({'anchor': text[len(context_nodes)]}))
+                ctxt_nodes.append(
+                    self.categorize({'anchor': text[len(ctxt_nodes)]}))
 
             if anchor_idx == missing_idx:
                 continue
@@ -209,25 +210,31 @@ class ContextualCobwebTree(CobwebTree):
                     idx = anchor_idx + i
                     if idx < 0 or idx >= len(text) or idx == missing_idx:
                         continue
-                    instance = self.create_categorization_instance(idx, anchor_wd, context_nodes)
-                    context_nodes[idx] = self.categorize(instance)
+                    instance = self.create_categorization_instance(
+                        idx, anchor_wd, ctxt_nodes)
+                    ctxt_nodes[idx] = self.categorize(instance)
 
-            instance = self.create_categorization_instance(anchor_idx, anchor_wd, context_nodes)
-            context_nodes[anchor_idx] = self.categorize(instance)
+            instance = self.create_categorization_instance(
+                anchor_idx, anchor_wd, ctxt_nodes)
+            ctxt_nodes[anchor_idx] = self.categorize(instance)
 
-        missing_instance = self.create_instance(missing_idx, anchor_wd, context_nodes)
+        missing_instance = self.create_instance(
+            missing_idx, anchor_wd, ctxt_nodes)
         del missing_instance['anchor']
 
         concept = self.categorize(missing_instance)
-        while sum([(option in self.__get_anchor_counts(concept)) for option in options]) < options_needed:
+        while sum([(option in self.__get_anchor_counts(concept))
+                   for option in options]) < options_needed:
             concept = concept.parent
 
-        return max(options, key=lambda opt: self.__get_anchor_counts(concept)[opt])
+        return max(options,
+                   key=lambda opt: self.__get_anchor_counts(concept)[opt])
 
     def __get_anchor_counts(self, node):
         if not node.children:
             return Counter(node.av_counts['anchor'])
-        return sum([self.__get_anchor_counts(child) for child in node.children], start=Counter())
+        return sum([self.__get_anchor_counts(child)
+                    for child in node.children], start=Counter())
 
 
 class ContextualCobwebNode(CobwebNode):
@@ -328,8 +335,8 @@ class ContextualCobwebNode(CobwebNode):
             self.av_counts.setdefault(attr, {})
 
             if isinstance(attr, ContextualCobwebNode):
-                self.av_counts[attr]['count'] = (self.av_counts[attr].get('count', 0)
-                                                 + instance[attr])
+                self.av_counts[attr]['count'] = (
+                    self.av_counts[attr].get('count', 0) + instance[attr])
 
                 # only count if it is a terminal, don't count nonterminals
                 if not attr.children:
@@ -360,7 +367,7 @@ class ContextualCobwebNode(CobwebNode):
 
             else:
                 for val in node.av_counts[attr]:
-                    counts[val] = (counts.get(val, 0) + node.av_counts[attr][val])
+                    counts[val] = counts.get(val, 0)+node.av_counts[attr][val]
 
         # self.prune_low_probability()
 
@@ -370,16 +377,14 @@ class ContextualCobwebNode(CobwebNode):
 
         for attr in self.attrs('all'):
             if isinstance(attr, ContextualCobwebNode):
-                if (self.av_counts[attr]['count'] / self.n_context_elements) < self.tree.prune_threshold:
+                if ((self.av_counts[attr]['count'] / self.n_context_elements)
+                        < self.tree.prune_threshold):
                     del_nodes.append(attr)
             else:
                 for val in self.av_counts[attr]:
-                    if (self.av_counts[attr][val] / self.count) < self.tree.prune_threshold:
+                    if ((self.av_counts[attr][val] / self.count)
+                            < self.tree.prune_threshold):
                         del_av.append((attr, val))
-
-        # del_nodes = [attr for attr in self.attrs(lambda x: isinstance(x, ContextualCobweb))
-        #         if (self.av_counts[attr]['count'] / self.n_context_elements <
-        #             self.tree.prune_threshold))]
 
         for n in del_nodes:
             n.unregister(self)
@@ -389,8 +394,6 @@ class ContextualCobwebNode(CobwebNode):
             del self.av_counts[a][v]
             # if len(self.av_counts[a]) == 0:
             #     del self.av_counts[a]
-
-        # del_av = [attr, val for attr in self.attrs(lambda x: not isinstance(x,  for val in self.av_counts[attr] if isinstance
 
     def register_delete(self):
         for attr in self.av_counts:
@@ -515,7 +518,9 @@ if __name__ == "__main__":
     # valid_concepts = tree.root.get_concepts()
     # tree.root.test_valid(valid_concepts)
 
-    # print(tree.guess_missing(['correct', 'view', 'probably', None, 'two', 'extremes'], ['lies', 'admittedly', 'religious', 'opinions', 'worship'], 1))
+    # print(tree.guess_missing(
+    # ['correct', 'view', 'probably', None, 'two', 'extremes'],
+    # ['lies', 'admittedly', 'religious', 'opinions', 'worship'], 1))
 
     if SAVE:
         setrecursionlimit(TREE_RECURSION)
