@@ -47,7 +47,7 @@ class ContextualCobwebTree(CobwebTree):
     def fit_to_text(self, text):
         context_nodes = []
 
-        for anchor_idx in tqdm(range(len(text))):
+        for anchor_idx, anchor_wd in tqdm(enumerate(text)):
             if self.log_times:
                 start = timeit.default_timer()
             while ((len(context_nodes) < anchor_idx + self.window + 1) and
@@ -61,11 +61,11 @@ class ContextualCobwebTree(CobwebTree):
                     idx = anchor_idx + i
                     if idx < 0 or idx >= len(text):
                         continue
-                    instance = self.create_instance(idx, self.window, text, context_nodes)
+                    instance = self.create_instance(idx, anchor_wd, context_nodes)
                     context_nodes[idx] = self.categorize(instance)
                 # print([str(c) for c in context_nodes[anchor_idx - self.window: anchor_idx + self.window + 1]])
 
-            instance = self.create_instance(anchor_idx, self.window, text, context_nodes)
+            instance = self.create_instance(anchor_idx, anchor_wd, context_nodes)
 
             context_nodes[anchor_idx] = self.ifit(instance)
 
@@ -74,7 +74,7 @@ class ContextualCobwebTree(CobwebTree):
                 with open('out.csv', 'a') as fout:
                     fout.write("{},{:.8f}\n".format(anchor_idx, stop - start))
 
-    def create_instance(self, anchor_idx, window, text, context_nodes):
+    def create_instance(self, anchor_idx, word, context_nodes):
         context = context_nodes[max(0, anchor_idx-self.window): anchor_idx]
         context += context_nodes[anchor_idx+1:anchor_idx+self.window+1]
 
@@ -83,19 +83,7 @@ class ContextualCobwebTree(CobwebTree):
             for c in get_path(n):
                 instance[c] = instance.get(c, 0) + 1
 
-        instance['anchor'] = text[anchor_idx]
-        return instance
-
-    def create_categorization_instance(self, anchor_idx, window, text, context_nodes):
-        context = context_nodes[max(0, anchor_idx-self.window): anchor_idx]
-        context += context_nodes[anchor_idx+1:anchor_idx+self.window+1]
-
-        instance = {}
-        for n in filter(None, context):
-            for c in get_path(n):
-                instance[c] = instance.get(c, 0) + 1
-
-        instance['anchor'] = text[anchor_idx]
+        instance['anchor'] = word
         return instance
 
     def cobweb(self, instance):
@@ -174,6 +162,18 @@ class ContextualCobwebTree(CobwebTree):
 
         return current
 
+    def create_categorization_instance(self, anchor_idx, word, context_nodes):
+        context = context_nodes[max(0, anchor_idx-self.window): anchor_idx]
+        context += context_nodes[anchor_idx+1:anchor_idx+self.window+1]
+
+        instance = {}
+        for n in filter(None, context):
+            for c in get_path(n):
+                instance[c] = instance.get(c, 0) + 1
+
+        instance['anchor'] = word
+        return instance
+
     def guess_missing(self, text, options, options_needed):
         """
         None used to represent missing words
@@ -182,7 +182,7 @@ class ContextualCobwebTree(CobwebTree):
         missing_idx = text.index(None)
         context_nodes = []
 
-        for anchor_idx in tqdm(range(len(text))):
+        for anchor_idx, anchor_wd in tqdm(enumerate(text)):
             while ((len(context_nodes) < anchor_idx + self.window + 1) and
                     len(context_nodes) < len(text)):
                 if len(context_nodes) == missing_idx:
@@ -198,13 +198,13 @@ class ContextualCobwebTree(CobwebTree):
                     idx = anchor_idx + i
                     if idx < 0 or idx >= len(text) or idx == missing_idx:
                         continue
-                    instance = self.create_categorization_instance(idx, self.window, text, context_nodes)
+                    instance = self.create_categorization_instance(idx, anchor_wd, context_nodes)
                     context_nodes[idx] = self.categorize(instance)
 
-            instance = self.create_categorization_instance(anchor_idx, self.window, text, context_nodes)
+            instance = self.create_categorization_instance(anchor_idx, anchor_wd, context_nodes)
             context_nodes[anchor_idx] = self.categorize(instance)
 
-        missing_instance = self.create_instance(missing_idx, self.window, text, context_nodes)
+        missing_instance = self.create_instance(missing_idx, anchor_wd, context_nodes)
         del missing_instance['anchor']
 
         concept = self.categorize(missing_instance)
@@ -218,8 +218,8 @@ class ContextualCobwebTree(CobwebTree):
             return Counter(node.av_counts['anchor'])
         return sum([self.__get_anchor_counts(child) for child in node.children], start=Counter())
 
-class ContextualCobwebNode(CobwebNode):
 
+class ContextualCobwebNode(CobwebNode):
     def __init__(self, otherNode=None, track=False):
         self.n_context_elements = 0
         self.registered = set()
@@ -314,7 +314,7 @@ class ContextualCobwebNode(CobwebNode):
         self.count += 1
 
         for attr in instance:
-            self.av_counts[attr] = self.av_counts.setdefault(attr, {})
+            self.av_counts.setdefault(attr, {})
 
             if isinstance(attr, ContextualCobwebNode):
                 self.av_counts[attr]['count'] = (self.av_counts[attr].get('count', 0) +
@@ -425,26 +425,27 @@ class ContextualCobwebNode(CobwebNode):
         correct guesses over all concepts in path.
         """
         correct_guesses = 0.0
-        concept_vals = {}
+        context_guesses = 0.0
         n_concepts = self.tree.n_concepts
-        eval_concepts = 0
 
         for attr in self.attrs():
 
             if isinstance(attr, ContextualCobwebNode):
-                eval_concepts += 1
                 prob = self.av_counts[attr]['count'] / self.n_context_elements
-                correct_guesses += (prob * prob) / n_concepts * self.tree.context_weight
-                correct_guesses += ((1-prob) * (1-prob)) / n_concepts * self.tree.context_weight
+                # context_guesses += (prob * prob)
+                # context_guesses += ((1-prob) * (1-prob))
+                context_guesses -= 2 * prob * (1-prob)
+                # Should add 1 after this, but it's wrapped up into the end processing
 
             else:
                 for val in self.av_counts[attr]:
                     prob = (self.av_counts[attr][val]) / self.count
                     correct_guesses += (prob * prob) * self.tree.anchor_weight
 
-        correct_guesses += (n_concepts - eval_concepts) / n_concepts * self.tree.context_weight
+        context_guesses += n_concepts
+        context_guesses *= self.tree.context_weight / n_concepts
 
-        return correct_guesses
+        return correct_guesses + context_guesses
 
     def output_json(self):
         """
@@ -502,6 +503,5 @@ if __name__ == "__main__":
 
     # valid_concepts = tree.root.get_concepts()
     # tree.root.test_valid(valid_concepts)
-    print(tree.root.pretty_print())
 
-    print(tree.guess_missing(['correct', 'view', 'probably', None, 'two', 'extremes'], ['lies', 'admittedly', 'religious'], 1))
+    # print(tree.guess_missing(['correct', 'view', 'probably', None, 'two', 'extremes'], ['lies', 'admittedly', 'religious', 'opinions', 'worship'], 1))

@@ -8,7 +8,7 @@ from __future__ import absolute_import
 from __future__ import division
 from numbers import Number
 from random import uniform
-from random import random
+from random import choice, sample
 from math import sqrt
 from math import isnan
 
@@ -50,7 +50,6 @@ def c4(n):
     Returns the correction factor to apply to unbias estimates of standard
     deviation in low sample sizes. This implementation is based on a lookup
     table for n in [2-29] and returns 1.0 for values >= 30.
-
     >>> c4(3)
     0.886226925452758
     """
@@ -71,15 +70,12 @@ def isNumber(n):
 def mean(values):
     """
     Computes the mean of a list of values.
-
     This is primarily included to reduce dependency on external math libraries
     like numpy in the core algorithm.
-
     :param values: a list of numbers
     :type values: list
     :return: the mean of the list of values
     :rtype: float
-
     >>> mean([600, 470, 170, 430, 300])
     394.0
     """
@@ -92,15 +88,12 @@ def mean(values):
 def std(values):
     """
     Computes the standard deviation of a list of values.
-
     This is primarily included to reduce dependency on external math libraries
     like numpy in the core algorithm.
-
     :param values: a list of numbers
     :type values: list
     :return: the standard deviation of the list of values
     :rtype: float
-
     >>> std([600, 470, 170, 430, 300])
     147.32277488562318
     """
@@ -119,12 +112,10 @@ def weighted_choice(choices):
     chosen value where the choice frequency is proportional to the choice
     weight divided by the sum of all weights. Note, weights must be greater
     than or equal to 0.
-
     :param choices: A list of tuples
     :type choices: [(val, weight),...(val, weight)]
     :return: A choice sampled from the list according to the weightings
     :rtype: val
-
     >>> from random import seed
     >>> seed(1234)
     >>> options = [('a',.25),('b',.12),('c',.46),('d',.07)]
@@ -134,7 +125,6 @@ def weighted_choice(choices):
     'c'
     >>> weighted_choice(options)
     'a'
-
     .. seealso::
         :meth:`CobwebNode.sample <concept_formation.cobweb.CobwebNode.sample>`
     """
@@ -154,7 +144,6 @@ def most_likely_choice(choices):
     """
     Given a list of tuples [(val, weight),...(val, weight)], returns the value
     with the highest weight. Ties are randomly broken.
-
     >>> options = [('a',.25),('b',.12),('c',.46),('d',.07)]
     >>> most_likely_choice(options)
     'c'
@@ -162,7 +151,6 @@ def most_likely_choice(choices):
     'c'
     >>> most_likely_choice(options)
     'c'
-
     :param choices: A list of tuples
     :type choices: [(val, weight),...(val, weight)]
     :return: the val with the hightest weight
@@ -171,9 +159,67 @@ def most_likely_choice(choices):
     if len(choices) == 0:
         raise ValueError("Choices cannot be an empty list")
 
-    vals = [w for _, w in choices if w < 0]
-    if len(vals) > 0:
+    if any(map(lambda x: x < 0)):
         raise ValueError('All weights must be greater than or equal to 0')
 
-    updated_choices = [(prob, random(), val) for val, prob in choices]
-    return sorted(updated_choices, reverse=True)[0][2]
+    # Sorts based on the weights (lambda x: x[1]),
+    # then get the value associated with it ([0])
+    return random_tiebreaker(
+        sorted(choices, reverse=True, key=lambda x: x[1]),
+        key=lambda x: x[1])[0]
+
+
+def random_tiebreaker(dsc_sorted_list, key=lambda x: x):
+    """
+    Given a nonempty monotonically nonincreasing list, randomly chooses a value
+    with the maximum value. When looking for a maximum, use this method to
+    break ties. **Always make sure that the key trims irrelevant information
+    so tied elements' keys are equal under the '==' operator!**
+    :param dsc_sorted_list: A list of tuples
+    :type dsc_sorted_list: [any,...any]
+    :param key: A function applied before testing values for equality
+    :type key: function
+    :return: a value with the hightest value, chosen at random
+    :rtype: val
+    """
+    maximum = key(dsc_sorted_list[0])
+    # Check for ties
+    i = 1
+    # i counts the number of values with the same value
+    while i < len(dsc_sorted_list) and maximum == key(dsc_sorted_list[i]):
+        i += 1
+
+    if i == 1:
+        return dsc_sorted_list[0]
+    return choice(dsc_sorted_list[0:i])
+
+
+def tiebreak_top_2(dsc_sorted_list, key=lambda x: x):
+    """
+    Given a nonempty monotonically nonincreasing list, randomly chooses two
+    values: either the maximum and one of the contenders for second highest,
+    or otherwise two values with the maximum value. **Always make sure that
+    the key trims irrelevant information so tied elements' keys are equal
+    under the '==' operator!**
+    :param dsc_sorted_list: A list of tuples
+    :type dsc_sorted_list: [any,...any]
+    :param key: A function applied before testing values for equality
+    :type key: function
+    :return: a value with the hightest value, chosen at random
+    :rtype: [val, val]
+    """
+    second = key(dsc_sorted_list[1])
+    # If the maximum is the strict best...
+    if key(dsc_sorted_list[0]) != second:
+        return (dsc_sorted_list[0],
+                random_tiebreaker(dsc_sorted_list[1:], key=key))
+
+    # Check for ties
+    i = 2
+    # i counts the number of values with the same value
+    while i < len(dsc_sorted_list) and second == key(dsc_sorted_list[i]):
+        i += 1
+
+    if i == 2:
+        return (dsc_sorted_list[0], dsc_sorted_list[1])
+    return sample(dsc_sorted_list[0:i], 2)

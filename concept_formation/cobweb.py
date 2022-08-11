@@ -8,11 +8,13 @@ from __future__ import unicode_literals
 from __future__ import absolute_import
 from __future__ import division
 from random import shuffle
-from random import random
 from math import log
+from itertools import chain
 
 from concept_formation.utils import weighted_choice
 from concept_formation.utils import most_likely_choice
+from concept_formation.utils import random_tiebreaker
+from concept_formation.utils import tiebreak_top_2
 
 
 class CobwebTree(object):
@@ -67,17 +69,14 @@ class CobwebTree(object):
         """
         Incrementally fit a new instance into the tree and return its resulting
         concept.
-
         The instance is passed down the cobweb tree and updates each node to
         incorporate the instance. **This process modifies the tree's
         knowledge** for a non-modifying version of labeling use the
         :meth:`CobwebTree.categorize` function.
-
         :param instance: An instance to be categorized into the tree.
         :type instance:  :ref:`Instance<instance-rep>`
         :return: A concept describing the instance
         :rtype: CobwebNode
-
         .. seealso:: :meth:`CobwebTree.cobweb`
         """
         self._sanity_check_instance(instance)
@@ -86,14 +85,12 @@ class CobwebTree(object):
     def fit(self, instances, iterations=1, randomize_first=True):
         """
         Fit a collection of instances into the tree.
-
         This is a batch version of the ifit function that takes a collection of
         instances and categorizes all of them. The instances can be
         incorporated multiple times to burn in the tree with prior knowledge.
         Each iteration of fitting uses a randomized order but the first pass
         can be done in the original order of the list if desired, this is
         useful for initializing the tree with specific prior experience.
-
         :param instances: a collection of instances
         :type instances:  [:ref:`Instance<instance-rep>`,
             :ref:`Instance<instance-rep>`, ...]
@@ -115,13 +112,11 @@ class CobwebTree(object):
     def cobweb(self, instance):
         """
         The core cobweb algorithm used in fitting and categorization.
-
         In the general case, the cobweb algorithm entertains a number of
         sorting operations for the instance and then commits to the operation
         that maximizes the :meth:`category utility
         <CobwebNode.category_utility>` of the tree at the current node and then
         recurses.
-
         At each node the alogrithm first calculates the category utility of
         inserting the instance at each of the node's children, keeping the best
         two (see: :meth:`CobwebNode.two_best_children
@@ -131,22 +126,18 @@ class CobwebTree(object):
         <CobwebNode.get_best_operation>`), commiting to whichever operation
         results in the highest category utility. In the case of ties an
         operation is chosen at random.
-
         In the base case, i.e. a leaf node, the algorithm checks to see if
         the current leaf is an exact match to the current node. If it is, then
         the instance is inserted and the leaf is returned. Otherwise, a new
         leaf is created.
-
         .. note:: This function is equivalent to calling
             :meth:`CobwebTree.ifit` but its better to call ifit because it is
             the polymorphic method siganture between the different cobweb
             family algorithms.
-
         :param instance: an instance to incorporate into the tree
         :type instance: :ref:`Instance<instance-rep>`
         :return: a concept describing the instance
         :rtype: CobwebNode
-
         .. seealso:: :meth:`CobwebTree.ifit`, :meth:`CobwebTree.categorize`
         """
         current = self.root
@@ -205,7 +196,6 @@ class CobwebTree(object):
         """
         A cobweb specific version of categorize, not intended to be
         externally called.
-
         .. seealso:: :meth:`CobwebTree.categorize`
         """
         current = self.root
@@ -222,9 +212,7 @@ class CobwebTree(object):
         Given a tree and an instance, returns a new instance with attribute
         values picked using the specified choice function (either "most likely"
         or "sampled").
-
         .. todo:: write some kind of test for this.
-
         :param instance: an instance to be completed.
         :type instance: :ref:`Instance<instance-rep>`
         :param choice_fn: a string specifying the choice function to use,
@@ -254,18 +242,15 @@ class CobwebTree(object):
         """
         Sort an instance in the categorization tree and return its resulting
         concept.
-
         The instance is passed down the categorization tree according to the
         normal cobweb algorithm except using only the best operator and without
         modifying nodes' probability tables. **This process does not modify the
         tree's knowledge** for a modifying version of labeling use the
         :meth:`CobwebTree.ifit` function
-
         :param instance: an instance to be categorized into the tree.
         :type instance: :ref:`Instance<instance-rep>`
         :return: A concept describing the instance
         :rtype: CobwebNode
-
         .. seealso:: :meth:`CobwebTree.cobweb`
         """
         self._sanity_check_instance(instance)
@@ -278,16 +263,13 @@ class CobwebNode(object):
     :class:`CobwebTree`. Each node contains a probability table that can be
     used to calculate the probability of different attributes given the concept
     that the node represents.
-
     In general the :meth:`CobwebTree.ifit`, :meth:`CobwebTree.categorize`
     functions should be used to initially interface with the Cobweb knowledge
     base and then the returned concept can be used to calculate probabilities
     of certain attributes or determine concept labels.
-
     This constructor creates a CobwebNode with default values. It can also be
     used as a copy constructor to "deepcopy" a node, including all references
     to other parts of the original node's CobwebTree.
-
     :param otherNode: Another concept node to deepcopy.
     :type otherNode: CobwebNode
     """
@@ -314,7 +296,6 @@ class CobwebNode(object):
     def shallow_copy(self):
         """
         Create a shallow copy of the current node (and not its children)
-
         This can be used to copy only the information relevant to the node's
         probability table without maintaining reference to other elements of
         the tree, except for the root which is necessary to calculate category
@@ -346,7 +327,6 @@ class CobwebNode(object):
         """
         Increment the counts at the current node according to the specified
         instance.
-
         :param instance: A new instances to incorporate into the node.
         :type instance: :ref:`Instance<instance-rep>`
         """
@@ -362,9 +342,7 @@ class CobwebNode(object):
         """
         Increments the counts of the current node by the amount in the
         specified node.
-
         This function is used as part of copying nodes and in merging nodes.
-
         :param node: Another node from the same CobwebTree
         :type node: CobwebNode
         """
@@ -381,10 +359,8 @@ class CobwebNode(object):
         """
         Returns the number of correct guesses that are expected from the given
         concept.
-
         This is the sum of the probability of each attribute value squared.
         This function is used in calculating category utility.
-
         :return: the number of correct guesses that are expected from the given
                  concept.
         :rtype: float
@@ -405,28 +381,22 @@ class CobwebNode(object):
         """
         Return the category utility of a particular division of a concept into
         its children.
-
         Category utility is always calculated in reference to a parent node and
         its own children. This is used as the heuristic to guide the concept
         formation process. Category Utility is calculated as:
-
         .. math::
-
             CU(\\{C_1, C_2, \\cdots, C_n\\}) = \\frac{1}{n} \\sum_{k=1}^n
             P(C_k) \\left[ \\sum_i \\sum_j P(A_i = V_{ij} | C_k)^2 \\right] -
             \\sum_i \\sum_j P(A_i = V_{ij})^2
-
         where :math:`n` is the numer of children concepts to the current node,
         :math:`P(C_k)` is the probability of a concept given the current node,
         :math:`P(A_i = V_{ij} | C_k)` is the probability of a particular
         attribute value given the concept :math:`C_k`, and :math:`P(A_i =
         V_{ij})` is the probability of a particular attribute value given the
         current node.
-
         In general this is used as an internal function of the cobweb algorithm
         but there may be times when it would be useful to call outside of the
         algorithm itself.
-
         :return: The category utility of the current node with respect to its
                  children.
         :rtype: float
@@ -445,59 +415,47 @@ class CobwebNode(object):
                 len(self.children))
 
     def get_best_operation(self, instance, best1, best2, best1_cu,
-                           possible_ops=["best", "new", "merge", "split"]):
+                           possible_ops=("best", "new", "merge", "split")):
         """
         Given an instance, the two best children based on category utility and
         a set of possible operations, find the operation that produces the
         highest category utility, and then return the category utility and name
         for the best operation. In the case of ties, an operator is randomly
         chosen.
-
         Given the following starting tree the results of the 4 standard Cobweb
         operations are shown below:
-
         .. image:: images/Original.png
             :width: 200px
             :align: center
-
         * **Best** - Categorize the instance to child with the best category
           utility. This results in a recurisve call to :meth:`cobweb
           <concept_formation.cobweb.CobwebTree.cobweb>`.
-
             .. image:: images/Best.png
                 :width: 200px
                 :align: center
-
         * **New** - Create a new child node to the current node and add the
           instance there. See: :meth:`create_new_child
           <concept_formation.cobweb.CobwebNode.create_new_child>`.
-
             .. image:: images/New.png
                 :width: 200px
                 :align: center
-
         * **Merge** - Take the two best children, create a new node as their
           mutual parent and add the instance there. See: :meth:`merge
           <concept_formation.cobweb.CobwebNode.merge>`.
-
             .. image:: images/Merge.png
                     :width: 200px
                     :align: center
-
         * **Split** - Take the best node and promote its children to be
           children of the current node and recurse on the current node. See:
           :meth:`split <concept_formation.cobweb.CobwebNode.split>`
-
             .. image:: images/Split.png
                 :width: 200px
                 :align: center
-
         Each operation is entertained and the resultant category utility is
         used to pick which operation to perform. The list of operations to
         entertain can be controlled with the possible_ops parameter. For
         example, when performing categorization without modifying knoweldge
         only the best and new operators are used.
-
         :param instance: The instance currently being categorized
         :type instance: :ref:`Instance<instance-rep>`
         :param best1: A tuple containing the relative cu of the best child and
@@ -521,21 +479,18 @@ class CobwebNode(object):
         operations = []
 
         if "best" in possible_ops:
-            operations.append((best1_cu, random(), "best"))
+            operations.append((best1_cu, "best"))
         if "new" in possible_ops:
-            operations.append((self.cu_for_new_child(instance), random(),
-                               'new'))
+            operations.append((self.cu_for_new_child(instance), 'new'))
         if "merge" in possible_ops and len(self.children) > 2 and best2:
             operations.append((self.cu_for_merge(best1, best2, instance),
-                               random(), 'merge'))
+                               'merge'))
         if "split" in possible_ops and len(best1.children) > 0:
-            operations.append((self.cu_for_split(best1), random(), 'split'))
+            operations.append((self.cu_for_split(best1), 'split'))
 
         operations.sort(reverse=True)
-        # print(operations)
-        best_op = (operations[0][0], operations[0][2])
-        # print(best_op)
-        return best_op
+
+        return random_tiebreaker(operations, key=lambda x: x[0])
 
     def two_best_children(self, instance):
         """
@@ -543,7 +498,6 @@ class CobwebNode(object):
         this node's children and returns the best two. In the event of ties
         children are sorted first by category utility, then by their size, then
         by a random value.
-
         :param instance: The instance currently being categorized
         :type instance: :ref:`Instance<instance-rep>`
         :return: the category utility and indices for the two best children
@@ -553,23 +507,30 @@ class CobwebNode(object):
         if len(self.children) == 0:
             raise Exception("No children!")
 
-        children_relative_cu = [(self.relative_cu_for_insert(child, instance),
-                                 child.count, random(), child) for child in
-                                self.children]
-        children_relative_cu.sort(reverse=True)
-
         # Convert the relative CU's of the two best children into CU scores
         # that can be compared with the other operations.
         const = self.compute_relative_CU_const(instance)
 
-        best1 = children_relative_cu[0][3]
-        best1_relative_cu = children_relative_cu[0][0]
+        # If there's only one child, simply calculate the relevant utility
+        if len(self.children) == 1:
+            best1 = self.children[0]
+            best1_relative_cu = self.relative_cu_for_insert(best1, instance)
+            best1_cu = (best1_relative_cu / (self.count+1) / len(self.children)
+                        + const)
+            return best1_cu, best1, None
+
+        children_relative_cu = [(self.relative_cu_for_insert(child, instance),
+                                 child.count, child) for child in
+                                self.children]
+        children_relative_cu.sort(reverse=True, key=lambda x: x[:-1])
+
+        best1_data, best2_data = tiebreak_top_2(
+            children_relative_cu, key=lambda x: x[:-1])
+
+        best1_relative_cu, _, best1 = best1_data
         best1_cu = (best1_relative_cu / (self.count+1) / len(self.children)
                     + const)
-
-        best2 = None
-        if len(children_relative_cu) > 1:
-            best2 = children_relative_cu[1][3]
+        best2 = best2_data[2]
 
         return best1_cu, best1, best2
 
@@ -579,19 +540,15 @@ class CobwebNode(object):
         relative CU scores. The constant value is basically the category
         utility that results from adding the instance to the root, but none of
         the children. It can be computed directly as:
-
         .. math::
-
             const = \\frac{1}{n} \\sum_{k=1}^{n} \\left[
             \\frac{C_k.count}{count + 1} \\sum_i \\sum_j P(A_i = V_{ij} |
-            C)^2 \\right] - \\sum_i \\sum_j P(A_i = V_{ij} | UpdatedRoot)^2
-
+            C_k)^2 \\right] - \\sum_i \\sum_j P(A_i = V_{ij} | UpdatedRoot)^2
         where :math:`n` is the number of children of the root, :math:`C_k` is
         child :math:`k`,  :math:`C_k.count` is the number of instances stored
         in child :math:`C_k`, :math:`count` is the number of instances stored
         in the root. Finally, :math:`UpdatedRoot` is a copy of the root that
         has been updated with the counts of the instance.
-
         :param instance: The instance currently being categorized
         :type instance: :ref:`Instance<instance-rep>`
         :return: The value of the constant used to relativize the CU.
@@ -603,9 +560,9 @@ class CobwebNode(object):
 
         const = 0
         for c in self.children:
-            const += ((c.count / (self.count + 1)) *
-                      c.expected_correct_guesses())
+            const += c.count * c.expected_correct_guesses()
 
+        const /= self.count + 1  # Turns counts into probabilities
         const -= ec_root_u
         const /= len(self.children)
         return const
@@ -617,16 +574,12 @@ class CobwebNode(object):
         guranteed to have the same rank ordering as the CU score so it can be
         used to determine which insert operation is best. The relative CU can
         be computed from the CU using the following transformation.
-
         .. math::
-
             relative\\_cu(cu) = (cu - const) * n * (count + 1)
-
         where :math:`const` is the one returned by
         :meth:`CobwebNode.compute_relative_CU_const`, :math:`n` is the number
         of children of the current node, and :math:`count` is the number of
         instances stored in the current node (the root).
-
         The particular :math:`const` value was chosen to make the calculation
         of the relative cu scores for each insert operation efficient. When
         computing the CU for inserting the instance into a particular child,
@@ -634,16 +587,12 @@ class CobwebNode(object):
         intermediate calculations cancel out. After these cancelations,
         computing the relative CU for inserting into a particular child
         :math:`C_i` reduces to:
-
         .. math::
-
             relative\\_cu\\_for\\_insert(C_i) = (C_i.count + 1) * \\sum_i
             \\sum_j P(A_i = V_{ij}| UpdatedC_i)^2 - (C_i.count) * \\sum_i
             \\sum_j P(A_i = V_{ij}| C_i)^2
-
         where :math:`UpdatedC_i` is a copy of :math:`C_i` that has been updated
         with the counts from the given instance.
-
         By computing relative_CU scores instead of CU scores for each insert
         operation, the time complexity of the underlying Cobweb algorithm is
         reduced from :math:`O(B^2 \\times log_B(n) \\times AV)` to
@@ -651,7 +600,6 @@ class CobwebNode(object):
         branching factor of the tree, :math:`n` is the number of instances
         being categorized, :math:`A` is the average number of attributes per
         instance, and :math:`V` is the average number of values per attribute.
-
         :param child: a child of the current node
         :type child: CobwebNode
         :param instance: The instance currently being categorized
@@ -668,23 +616,19 @@ class CobwebNode(object):
         """
         Compute the category utility of adding the instance to the specified
         child.
-
         This operation does not actually insert the instance into the child it
         only calculates what the result of the insertion would be. For the
         actual insertion function see: :meth:`CobwebNode.increment_counts` This
         is the function used to determine the best children for each of the
         other operations.
-
         :param child: a child of the current node
         :type child: CobwebNode
         :param instance: The instance currently being categorized
         :type instance: :ref:`Instance<instance-rep>`
         :return: the category utility of adding the instance to the given node
         :rtype: float
-
         .. seealso:: :meth:`CobwebNode.two_best_children` and
             :meth:`CobwebNode.get_best_operation`
-
         """
         temp = self.shallow_copy()
         temp.increment_counts(instance)
@@ -701,10 +645,8 @@ class CobwebNode(object):
         """
         Create a new child (to the current node) with the counts initialized by
         the *given instance*.
-
         This is the operation used for creating a new child to a node and
         adding the instance to it.
-
         :param instance: The instance currently being categorized
         :type instance: :ref:`Instance<instance-rep>`
         :return: The new child
@@ -721,10 +663,8 @@ class CobwebNode(object):
         """
         Create a new child (to the current node) with the counts initialized by
         the *current node's counts*.
-
         This operation is used in the speical case of a fringe split when a new
         node is created at a leaf.
-
         :return: The new child
         :rtype: CobwebNode
         """
@@ -739,16 +679,13 @@ class CobwebNode(object):
         """
         Return the category utility for creating a new child using the
         particular instance.
-
         This operation does not actually create the child it only calculates
         what the result of creating it would be. For the actual new function
         see: :meth:`CobwebNode.create_new_child`.
-
         :param instance: The instance currently being categorized
         :type instance: :ref:`Instance<instance-rep>`
         :return: the category utility of adding the instance to a new child.
         :rtype: float
-
         .. seealso:: :meth:`CobwebNode.get_best_operation`
         """
         temp = self.shallow_copy()
@@ -764,11 +701,9 @@ class CobwebNode(object):
     def merge(self, best1, best2):
         """
         Merge the two specified nodes.
-
         A merge operation introduces a new node to be the merger of the the two
         given nodes. This new node becomes a child of the current node and the
         two given nodes become children of the new node.
-
         :param best1: The child of the current node with the best category
             utility
         :type best1: CobwebNode
@@ -782,8 +717,6 @@ class CobwebNode(object):
         new_child.parent = self
         new_child.tree = self.tree
 
-        new_child.update_counts_from_node(best1)
-        new_child.update_counts_from_node(best2)
         best1.parent = new_child
         # best1.tree = new_child.tree
         best2.parent = new_child
@@ -793,17 +726,17 @@ class CobwebNode(object):
         self.children.remove(best1)
         self.children.remove(best2)
         self.children.append(new_child)
+        new_child.update_counts_from_node(best1)
+        new_child.update_counts_from_node(best2)
 
         return new_child
 
     def cu_for_merge(self, best1, best2, instance):
         """
         Return the category utility for merging the two best children.
-
         This does not actually merge the two children it only calculates what
         the result of the merge would be. For the actual merge operation see:
         :meth:`CobwebNode.merge`
-
         :param best1: The child of the current node with the best category
             utility
         :type best1: CobwebNode
@@ -815,7 +748,6 @@ class CobwebNode(object):
         :return: The category utility that would result from merging best1 and
             best2.
         :rtype: float
-
         .. seealso:: :meth:`CobwebNode.get_best_operation`
         """
         temp = self.shallow_copy()
@@ -840,12 +772,10 @@ class CobwebNode(object):
     def split(self, best):
         """
         Split the best node and promote its children
-
         A split operation removes a child node and promotes its children to be
         children of the current node. Split operations result in a recursive
         call of cobweb on the current node so this function does not return
         anything.
-
         :param best: The child node to be split
         :type best: CobwebNode
         """
@@ -859,19 +789,16 @@ class CobwebNode(object):
         """
         Return the category utility of performing a fringe split (i.e.,
         adding a leaf to a leaf).
-
         A "fringe split" is essentially a new operation performed at a leaf. It
         is necessary to have the distinction because unlike a normal split a
         fringe split must also push the parent down to maintain a proper tree
         structure. This is useful for identifying unnecessary fringe splits,
         when the two leaves are essentially identical. It can be used to keep
         the tree from growing and to increase the tree's predictive accuracy.
-
         :param instance: The instance currently being categorized
         :type instance: :ref:`Instance<instance-rep>`
         :return: the category utility of fringe splitting at the current node.
         :rtype: float
-
         .. seealso:: :meth:`CobwebNode.get_best_operation`
         """
         temp = self.shallow_copy()
@@ -885,24 +812,21 @@ class CobwebNode(object):
     def cu_for_split(self, best):
         """
         Return the category utility for splitting the best child.
-
         This does not actually split the child it only calculates what the
         result of the split would be. For the actual split operation see:
         :meth:`CobwebNode.split`. Unlike the category utility calculations for
         the other operations split does not need the instance because splits
         trigger a recursive call on the current node.
-
         :param best: The child of the current node with the best category
             utility
         :type best: CobwebNode
         :return: The category utility that would result from splitting best
         :rtype: float
-
         .. seealso:: :meth:`CobwebNode.get_best_operation`
         """
         temp = self.shallow_copy()
 
-        for c in self.children + best.children:
+        for c in chain(self.children, best.children):
             if c == best:
                 continue
             temp_child = c.shallow_copy()
@@ -913,12 +837,10 @@ class CobwebNode(object):
     def is_exact_match(self, instance):
         """
         Returns true if the concept exactly matches the instance.
-
         :param instance: The instance currently being categorized
         :type instance: :ref:`Instance<instance-rep>`
         :return: whether the instance perfectly matches the concept
         :rtype: boolean
-
         .. seealso:: :meth:`CobwebNode.get_best_operation`
         """
         for attr in set(instance).union(set(self.attrs())):
@@ -935,21 +857,12 @@ class CobwebNode(object):
                     return False
         return True
 
-    def __hash__(self):
-        """
-        The basic hash function. This hashes the concept name, which is
-        generated to be unique across concepts.
-        """
-        return hash("CobwebNode" + str(self.concept_id))
-
     def gensym(self):
         """
         Generate a unique id and increment the class _counter.
-
         This is used to create a unique name for every concept. As long as the
         class _counter variable is never externally altered these keys will
         remain unique.
-
         """
         self.__class__._counter += 1
         return self.__class__._counter
@@ -964,10 +877,8 @@ class CobwebNode(object):
     def pretty_print(self, depth=0):
         """
         Print the categorization tree
-
         The string formatting inserts tab characters to align child nodes of
         the same depth.
-
         :param depth: The current depth in the print, intended to be called
                       recursively
         :type depth: int
@@ -986,7 +897,6 @@ class CobwebNode(object):
     def depth(self):
         """
         Returns the depth of the current node in its tree
-
         :return: the depth of the current node in its tree
         :rtype: int
         """
@@ -998,7 +908,6 @@ class CobwebNode(object):
     def is_parent(self, other_concept):
         """
         Return True if this concept is a parent of other_concept
-
         :return: ``True`` if this concept is a parent of other_concept else
                  ``False``
         :rtype: bool
@@ -1018,22 +927,16 @@ class CobwebNode(object):
         """
         Return the number of concepts contained below the current node in the
         tree.
-
         When called on the :attr:`CobwebTree.root` this is the number of nodes
         in the whole tree.
-
         :return: the number of concepts below this concept.
         :rtype: int
         """
-        children_count = 0
-        for c in self.children:
-            children_count += c.num_concepts()
-        return 1 + children_count
+        return 1 + sum(c.num_concepts() for c in self.children)
 
     def output_json(self):
         """
         Outputs the categorization tree in JSON form
-
         :return: an object that contains all of the structural information of
                  the node and its children
         :rtype: obj
@@ -1061,12 +964,10 @@ class CobwebNode(object):
         """
         Return a list of weighted choices for an attribute based on the node's
         probability table.
-
         This calculation will include an option for the change that an
         attribute is missing from an instance all together. This is useful for
         probability and sampling calculations. If the attribute has never
         appeared in the tree then it will return a 100% chance of None.
-
         :param attr: an attribute of an instance
         :type attr: :ref:`Attribute<attributes>`
         :param allow_none: whether attributes in the nodes probability table
@@ -1097,7 +998,6 @@ class CobwebNode(object):
         """
         Predict the value of an attribute, using the specified choice function
         (either the "most likely" value or a "sampled" value).
-
         :param attr: an attribute of an instance.
         :type attr: :ref:`Attribute<attributes>`
         :param choice_fn: a string specifying the choice function to use,
@@ -1130,10 +1030,8 @@ class CobwebNode(object):
         Returns the probability of a particular attribute value at the current
         concept. This takes into account the possibilities that an attribute
         can take any of the values available at the root, or be missing.
-
         If you you want to check if the probability that an attribute is
         missing, then check for the probability that the val is ``None``.
-
         :param attr: an attribute of an instance
         :type attr: :ref:`Attribute<attributes>`
         :param val: a value for the given attribute or None
