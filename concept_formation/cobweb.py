@@ -317,7 +317,7 @@ class CobwebNode(object):
         an attribute should be yielded and false otherwise.
         """
         if attr_filter is None:
-            return filter(lambda x: x[0] != "_", self.av_counts)
+            return (x for x in self.av_counts if x[0] != '_')
         elif attr_filter == 'all':
             return self.av_counts
         else:

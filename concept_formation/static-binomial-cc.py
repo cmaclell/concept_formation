@@ -1,13 +1,25 @@
+from cProfile import run
 from functools import partial
 from collections import Counter
 # from multiprocess import Pool
 from tqdm import tqdm
 import timeit
+from cProfile import run
+import pickle
+from os.path import dirname, join
+from sys import setrecursionlimit
+from copy import deepcopy
 
 from concept_formation.cobweb import CobwebNode
 from concept_formation.cobweb import CobwebTree
 from visualize import visualize
 from preprocess_text import load_text, stop_words
+
+
+MODEL_SAVE_PATH = join(dirname(__file__), 'saved_model')
+SAVE = True
+LOAD = False
+TREE_RECURSION = 9000
 
 
 def get_path(node):
@@ -236,8 +248,8 @@ class ContextualCobwebNode(CobwebNode):
             self.parent = otherNode.parent
             self.update_counts_from_node(otherNode, track)
 
-            for child in otherNode.children:
-                self.children.append(self.__class__(child))
+            self.children.extend(
+                [self.__class__(child) for child in otherNode.children])
 
     def create_new_child(self, instance, track=False):
         """
@@ -295,7 +307,7 @@ class ContextualCobwebNode(CobwebNode):
         return new_child
 
     def get_concepts(self):
-        s = set([self])
+        s = {self}
         for c in self.children:
             s.update(c.get_concepts())
         return s
@@ -339,9 +351,9 @@ class ContextualCobwebNode(CobwebNode):
         self.n_context_elements += node.n_context_elements
 
         for attr in node.attrs('all'):
-            self.av_counts[attr] = self.av_counts.setdefault(attr, {})
+            counts = self.av_counts.setdefault(attr, {})
             if isinstance(attr, ContextualCobwebNode):
-                self.av_counts[attr]['count'] = (self.av_counts[attr].get('count', 0) +
+                counts['count'] = (counts.get('count', 0) +
                         node.av_counts[attr]['count'])
 
                 if track:
@@ -349,8 +361,7 @@ class ContextualCobwebNode(CobwebNode):
 
             else:
                 for val in node.av_counts[attr]:
-                    self.av_counts[attr][val] = (self.av_counts[attr].get(val,
-                        0) + node.av_counts[attr][val])
+                    counts[val] = (counts.get(val, 0) + node.av_counts[attr][val])
 
         # self.prune_low_probability()
 
@@ -375,7 +386,7 @@ class ContextualCobwebNode(CobwebNode):
             n.unregister(self)
             del self.av_counts[n]
 
-        for a,v in del_av:
+        for a, v in del_av:
             del self.av_counts[a][v]
             # if len(self.av_counts[a]) == 0:
             #     del self.av_counts[a]
@@ -429,18 +440,17 @@ class ContextualCobwebNode(CobwebNode):
         n_concepts = self.tree.n_concepts
 
         for attr in self.attrs():
-
             if isinstance(attr, ContextualCobwebNode):
                 prob = self.av_counts[attr]['count'] / self.n_context_elements
                 # context_guesses += (prob * prob)
                 # context_guesses += ((1-prob) * (1-prob))
                 context_guesses -= 2 * prob * (1-prob)
-                # Should add 1 after this, but it's wrapped up into the end processing
-
+                # Should add 1 after this, but it's accounted for in the final processing
             else:
-                for val in self.av_counts[attr]:
-                    prob = (self.av_counts[attr][val]) / self.count
-                    correct_guesses += (prob * prob) * self.tree.anchor_weight
+                correct_guesses += sum([(prob * prob) for prob in self.av_counts[attr].values()])
+
+        # Weight and convert counts to probabilities
+        correct_guesses *= self.tree.anchor_weight / (self.count * self.count)
 
         context_guesses += n_concepts
         context_guesses *= self.tree.context_weight / n_concepts
@@ -493,15 +503,22 @@ class ContextualCobwebNode(CobwebNode):
 
 if __name__ == "__main__":
 
-    tree = ContextualCobwebTree(window=2)
+    if LOAD:
+        tree = pickle.load(open(MODEL_SAVE_PATH, mode='rb'))
+    else:
+        tree = ContextualCobwebTree(window=2)
 
     for text_num in range(1):
         text = [word for word in load_text(text_num) if word not in
                 stop_words][:500]
-        tree.fit_to_text(text)
+        run("tree.fit_to_text(text)", sort='tottime')
     visualize(tree)
 
     # valid_concepts = tree.root.get_concepts()
     # tree.root.test_valid(valid_concepts)
 
     # print(tree.guess_missing(['correct', 'view', 'probably', None, 'two', 'extremes'], ['lies', 'admittedly', 'religious', 'opinions', 'worship'], 1))
+
+    if SAVE:
+        setrecursionlimit(TREE_RECURSION)
+        pickle.dump(tree, open(MODEL_SAVE_PATH, mode='wb'))
