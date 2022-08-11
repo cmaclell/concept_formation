@@ -1,0 +1,3285 @@
+The Project Gutenberg Etext of American Notes by Rudyard Kipling
+#5 in our series by Rudyard Kipling
+
+
+Copyright laws are changing all over the world, be sure to check
+the copyright laws for your country before posting these files!
+
+Please take a look at the important information in this header.
+We encourage you to keep this file on your own disk, keeping an
+electronic path open for the next readers.  Do not remove this.
+
+
+**Welcome To The World of Free Plain Vanilla Electronic Texts**
+
+**Etexts Readable By Both Humans and By Computers, Since 1971**
+
+*These Etexts Prepared By Hundreds of Volunteers and Donations*
+
+Information on contacting Project Gutenberg to get Etexts, and
+further information is included below.  We need your donations.
+
+
+American Notes
+
+by Rudyard Kipling
+
+July, 1997 [Etext #977]
+
+
+The Project Gutenberg Etext of American Notes by Rudyard Kipling
+*****This file should be named amrnt10.txt or amrnt10.zip******
+
+Corrected EDITIONS of our etexts get a new NUMBER, amrnt11.txt.
+VERSIONS based on separate sources get new LETTER, amrnt10a.txt.
+
+
+This etext was created by Judith Boss, Omaha, Nebraska.
+
+
+We are now trying to release all our books one month in advance
+of the official release dates, for time for better editing.
+
+Please note:  neither this list nor its contents are final till
+midnight of the last day of the month of any such announcement.
+The official release date of all Project Gutenberg Etexts is at
+Midnight, Central Time, of the last day of the stated month.  A
+preliminary version may often be posted for suggestion, comment
+and editing by those who wish to do so.  To be sure you have an
+up to date first edition [xxxxx10x.xxx] please check file sizes
+in the first week of the next month.  Since our ftp program has
+a bug in it that scrambles the date [tried to fix and failed] a
+look at the file size will have to do, but we will try to see a
+new copy has at least one byte more or less.
+
+
+Information about Project Gutenberg (one page)
+
+We produce about two million dollars for each hour we work.  The
+fifty hours is one conservative estimate for how long it we take
+to get any etext selected, entered, proofread, edited, copyright
+searched and analyzed, the copyright letters written, etc.  This
+projected audience is one hundred million readers.  If our value
+per text is nominally estimated at one dollar then we produce $2
+million dollars per hour this year as we release thirty-two text
+files per month:  or 400 more Etexts in 1996 for a total of 800.
+If these reach just 10% of the computerized population, then the
+total should reach 80 billion Etexts.
+
+The Goal of Project Gutenberg is to Give Away One Trillion Etext
+Files by the December 31, 2001.  [10,000 x 100,000,000=Trillion]
+This is ten thousand titles each to one hundred million readers,
+which is only 10% of the present number of computer users.  2001
+should have at least twice as many computer users as that, so it
+will require us reaching less than 5% of the users in 2001.
+
+
+We need your donations more than ever!
+
+
+All donations should be made to "Project Gutenberg/CMU": and are
+tax deductible to the extent allowable by law.  (CMU = Carnegie-
+Mellon University).
+
+For these and other matters, please mail to:
+
+Project Gutenberg
+P. O. Box  2782
+Champaign, IL 61825
+
+When all other email fails try our Executive Director:
+Michael S. Hart <hart@pobox.com>
+
+We would prefer to send you this information by email
+(Internet, Bitnet, Compuserve, ATTMAIL or MCImail).
+
+******
+If you have an FTP program (or emulator), please
+FTP directly to the Project Gutenberg archives:
+[Mac users, do NOT point and click. . .type]
+
+ftp uiarchive.cso.uiuc.edu
+login:  anonymous
+password:  your@login
+cd etext/etext90 through /etext96
+or cd etext/articles [get suggest gut for more information]
+dir [to see files]
+get or mget [to get files. . .set bin for zip files]
+GET INDEX?00.GUT
+for a list of books
+and
+GET NEW GUT for general information
+and
+MGET GUT* for newsletters.
+
+**Information prepared by the Project Gutenberg legal advisor**
+(Three Pages)
+
+
+***START**THE SMALL PRINT!**FOR PUBLIC DOMAIN ETEXTS**START***
+Why is this "Small Print!" statement here?  You know: lawyers.
+They tell us you might sue us if there is something wrong with
+your copy of this etext, even if you got it for free from
+someone other than us, and even if what's wrong is not our
+fault.  So, among other things, this "Small Print!" statement
+disclaims most of our liability to you.  It also tells you how
+you can distribute copies of this etext if you want to.
+
+*BEFORE!* YOU USE OR READ THIS ETEXT
+By using or reading any part of this PROJECT GUTENBERG-tm
+etext, you indicate that you understand, agree to and accept
+this "Small Print!" statement.  If you do not, you can receive
+a refund of the money (if any) you paid for this etext by
+sending a request within 30 days of receiving it to the person
+you got it from.  If you received this etext on a physical
+medium (such as a disk), you must return it with your request.
+
+ABOUT PROJECT GUTENBERG-TM ETEXTS
+This PROJECT GUTENBERG-tm etext, like most PROJECT GUTENBERG-
+tm etexts, is a "public domain" work distributed by Professor
+Michael S. Hart through the Project Gutenberg Association at
+Carnegie-Mellon University (the "Project").  Among other
+things, this means that no one owns a United States copyright
+on or for this work, so the Project (and you!) can copy and
+distribute it in the United States without permission and
+without paying copyright royalties.  Special rules, set forth
+below, apply if you wish to copy and distribute this etext
+under the Project's "PROJECT GUTENBERG" trademark.
+
+To create these etexts, the Project expends considerable
+efforts to identify, transcribe and proofread public domain
+works.  Despite these efforts, the Project's etexts and any
+medium they may be on may contain "Defects".  Among other
+things, Defects may take the form of incomplete, inaccurate or
+corrupt data, transcription errors, a copyright or other
+intellectual property infringement, a defective or damaged
+disk or other etext medium, a computer virus, or computer
+codes that damage or cannot be read by your equipment.
+
+LIMITED WARRANTY; DISCLAIMER OF DAMAGES
+But for the "Right of Replacement or Refund" described below,
+[1] the Project (and any other party you may receive this
+etext from as a PROJECT GUTENBERG-tm etext) disclaims all
+liability to you for damages, costs and expenses, including
+legal fees, and [2] YOU HAVE NO REMEDIES FOR NEGLIGENCE OR
+UNDER STRICT LIABILITY, OR FOR BREACH OF WARRANTY OR CONTRACT,
+INCLUDING BUT NOT LIMITED TO INDIRECT, CONSEQUENTIAL, PUNITIVE
+OR INCIDENTAL DAMAGES, EVEN IF YOU GIVE NOTICE OF THE
+POSSIBILITY OF SUCH DAMAGES.
+
+If you discover a Defect in this etext within 90 days of
+receiving it, you can receive a refund of the money (if any)
+you paid for it by sending an explanatory note within that
+time to the person you received it from.  If you received it
+on a physical medium, you must return it with your note, and
+such person may choose to alternatively give you a replacement
+copy.  If you received it electronically, such person may
+choose to alternatively give you a second opportunity to
+receive it electronically.
+
+THIS ETEXT IS OTHERWISE PROVIDED TO YOU "AS-IS".  NO OTHER
+WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED, ARE MADE TO YOU AS
+TO THE ETEXT OR ANY MEDIUM IT MAY BE ON, INCLUDING BUT NOT
+LIMITED TO WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A
+PARTICULAR PURPOSE.
+
+Some states do not allow disclaimers of implied warranties or
+the exclusion or limitation of consequential damages, so the
+above disclaimers and exclusions may not apply to you, and you
+may have other legal rights.
+
+INDEMNITY
+You will indemnify and hold the Project, its directors,
+officers, members and agents harmless from all liability, cost
+and expense, including legal fees, that arise directly or
+indirectly from any of the following that you do or cause:
+[1] distribution of this etext, [2] alteration, modification,
+or addition to the etext, or [3] any Defect.
+
+DISTRIBUTION UNDER "PROJECT GUTENBERG-tm"
+You may distribute copies of this etext electronically, or by
+disk, book or any other medium if you either delete this
+"Small Print!" and all other references to Project Gutenberg,
+or:
+
+[1]  Only give exact copies of it.  Among other things, this
+     requires that you do not remove, alter or modify the
+     etext or this "small print!" statement.  You may however,
+     if you wish, distribute this etext in machine readable
+     binary, compressed, mark-up, or proprietary form,
+     including any form resulting from conversion by word pro-
+     cessing or hypertext software, but only so long as
+     *EITHER*:
+
+     [*]  The etext, when displayed, is clearly readable, and
+          does *not* contain characters other than those
+          intended by the author of the work, although tilde
+          (~), asterisk (*) and underline (_) characters may
+          be used to convey punctuation intended by the
+          author, and additional characters may be used to
+          indicate hypertext links; OR
+
+     [*]  The etext may be readily converted by the reader at
+          no expense into plain ASCII, EBCDIC or equivalent
+          form by the program that displays the etext (as is
+          the case, for instance, with most word processors);
+          OR
+
+     [*]  You provide, or agree to also provide on request at
+          no additional cost, fee or expense, a copy of the
+          etext in its original plain ASCII form (or in EBCDIC
+          or other equivalent proprietary form).
+
+[2]  Honor the etext refund and replacement provisions of this
+     "Small Print!" statement.
+
+[3]  Pay a trademark license fee to the Project of 20% of the
+     net profits you derive calculated using the method you
+     already use to calculate your applicable taxes.  If you
+     don't derive profits, no royalty is due.  Royalties are
+     payable to "Project Gutenberg Association/Carnegie-Mellon
+     University" within the 60 days following each
+     date you prepare (or were legally required to prepare)
+     your annual (or equivalent periodic) tax return.
+
+WHAT IF YOU *WANT* TO SEND MONEY EVEN IF YOU DON'T HAVE TO?
+The Project gratefully accepts contributions in money, time,
+scanning machines, OCR software, public domain etexts, royalty
+free copyright licenses, and every other sort of contribution
+you can think of.  Money should be paid to "Project Gutenberg
+Association / Carnegie-Mellon University".
+
+*END*THE SMALL PRINT! FOR PUBLIC DOMAIN ETEXTS*Ver.04.29.93*END*
+
+
+
+
+
+This etext was created by Judith Boss, Omaha, Nebraska.
+
+
+
+
+
+American Notes
+
+by
+
+Rudyard Kipling
+
+
+
+With Introduction
+
+
+
+
+Introduction
+
+In an issue of the London World in April, 1890, there appeared
+the following paragraph: "Two small rooms connected by a tiny
+hall afford sufficient space to contain Mr. Rudyard Kipling, the
+literary hero of the present hour, 'the man who came from
+nowhere,' as he says himself, and who a year ago was consciously
+nothing in the literary world."
+
+Six months previous to this Mr. Kipling, then but twenty-four
+years old, had arrived in England from India to find that fame
+had preceded him. He had already gained fame in India, where
+scores of cultured and critical people, after reading
+"Departmental Ditties," "Plain Tales from the Hills," and various
+other stories and verses, had stamped him for a genius.
+
+Fortunately for everybody who reads, London interested and
+stimulated Mr. Kipling, and he settled down to writing.  "The
+Record of Badalia Herodsfoot," and his first novel, "The Light
+that Failed," appeared in 1890 and 1891; then a collection of
+verse, "Life's Handicap, being stories of Mine Own People," was
+published simultaneously in London and New York City; then
+followed more verse, and so on through an unending series.
+
+In 1891 Mr. Kipling met the young author Wolcott Balestier, at
+that time connected with a London publishing house.  A strong
+attachment grew between the two, and several months after their
+first meeting they came to Mr. Balestier's Vermont home, where
+they collaborated on "The Naulahka: A Story of West and East,"
+for which The Century paid the largest price ever given by an
+American magazine for a story.  The following year Mr. Kipling
+married Mr. Balestier's sister in London and brought her to
+America.
+
+The Balestiers were of an aristocratic New York family; the
+grandfather of Mrs. Kipling was J. M. Balestier, a prominent
+lawyer in New York City and Chicago, who died in 1888, leaving a
+fortune of about a million.  Her maternal grand-father was E.
+Peshine Smith of Rochester, N. Y., a noted author and jurist, who
+was selected in 1871 by Secretary Hamilton Fish to go to Japan as
+the Mikado's adviser in international law.  The ancestral home of
+the Balestiers was near Brattleboro', Vt., and here Mr. Kipling
+brought his bride. The young Englishman was so impressed by the
+Vermont scenery that he rented for a time the cottage on the
+"Bliss Farm," in which Steele Mackaye the playwright wrote the
+well known drama "Hazel Kirke."
+
+The next spring Mr. Kipling purchased from his brother-in-law,
+Beatty Balestier, a tract of land about three miles north of
+Brattleboro', Vt., and on this erected a house at a cost of
+nearly $50,000, which he named "The Naulahka."  This was his home
+during his sojourn in America.  Here he wrote when in the mood,
+and for recreation tramped abroad over the hills.  His social
+duties at this period were not arduous, for to his home he
+refused admittance to all but tried friends.  He made a study of
+the Yankee country dialect and character for "The Walking
+Delegate," and while "Captains Courageous," the story of New
+England fisher life, was before him he spent some time among the
+Gloucester fishermen with an acquaint-ance who had access to the
+household gods of these people.
+
+He returned to England in August, 1896, and did not visit America
+again till 1899, when he came with his wife and three children
+for a limited time.
+
+It is hardly fair to Mr. Kipling to call "American Notes" first
+impressions, for one reading them will readily see that the
+impressions are superficial, little thought being put upon the
+writing.  They seem super-sarcastic, and would lead one to
+believe that Mr. Kipling is antagonistic to America in every
+respect.  This, however, is not true.  These "Notes" aroused much
+protest and severe criticism when they appeared in 1891, and are
+considered so far beneath Mr. Kipling's real work that they have
+been nearly suppressed and are rarely found in a list of his
+writings.  Their very caustic style is of interest to a student
+and lover of Kipling, and for this reason the publishers believe
+them worthy of a good binding.
+
+G. P. T.
+
+
+
+Contents
+
+AT THE GOLDEN GATE
+
+AMERICAN POLITICS
+
+AMERICAN SALMON
+
+THE YELLOWSTONE
+
+CHICAGO
+
+THE AMERICAN ARMY
+
+AMERICA'S DEFENCELESS COASTS
+
+
+
+I
+
+At the Golden Gate
+
+"Serene, indifferent to fate,  Thou sittest at the Western Gate; 
+Thou seest the white seas fold their tents,  Oh, warder of two
+continents;  Thou drawest all things, small and great,  To thee,
+beside the Western Gate."
+
+THIS is what Bret Harte has written of the great city of San
+Francisco, and for the past fortnight I have been wondering what
+made him do it.
+
+There is neither serenity nor indifference to be found in these
+parts; and evil would it be for the continents whose wardship
+were intrusted to so reckless a guardian.
+
+Behold me pitched neck-and-crop from twenty days of the high seas
+into the whirl of California, deprived of any guidance, and left
+to draw my own conclusions.  Protect me from the wrath of an
+outraged community if these letters be ever read by American
+eyes!  San Francisco is a mad city--inhabited for the most part
+by perfectly insane people, whose women are of a remarkable
+beauty.
+
+When the "City of Pekin" steamed through the Golden Gate, I saw
+with great joy that the block-house which guarded the mouth of
+the "finest harbor in the world, sir," could be silenced by two
+gunboats from Hong Kong with safety, comfort, and despatch. 
+Also, there was not a single American vessel of war in the
+harbor.
+
+This may sound bloodthirsty; but remember, I had come with a
+grievance upon me--the grievance of the pirated English books.
+
+Then a reporter leaped aboard, and ere I could gasp held me in
+his toils.  He pumped me exhaustively while I was getting ashore,
+demanding of all things in the world news about Indian
+journalism.  It is an awful thing to enter a new land with a new
+lie on your lips.  I spoke the truth to the evil-minded Custom
+House man who turned my most sacred raiment on a floor com-posed
+of stable refuse and pine splinters; but the reporter overwhelmed
+me not so much by his poignant audacity as his beautiful
+ignorance.  I am sorry now that I did not tell him more lies as
+I passed into a city of three hundred thousand white men.  Think
+of it!  Three hundred thou-sand white men and women gathered in
+one spot, walking upon real pavements in front of
+plate-glass-windowed shops, and talking something that at first
+hearing was not very different from English.  It was only when I
+had tangled myself up in a hopeless maze of small wooden houses,
+dust, street refuse, and children who played with empty kerosene
+tins, that I discovered the difference of speech.
+
+"You want to go to the Palace Hotel?" said an affable youth on a
+dray.  "What in hell are you doing here, then?  This is about the
+lowest ward in the city.  Go six blocks north to corner of Geary
+and Markey, then walk around till you strike corner of Gutter and
+Sixteenth, and that brings you there."
+
+I do not vouch for the literal accuracy of these directions,
+quoting but from a disordered memory.
+
+"Amen," I said.  "But who am I that I should strike the corners
+of such as you name? Peradventure they be gentlemen of repute,
+and might hit back.  Bring it down to dots, my son."
+
+I thought he would have smitten me, but he didn't.  He explained
+that no one ever used the word "street," and that every one was
+supposed to know how the streets ran, for sometimes the names
+were upon the lamps and sometimes they weren't. Fortified with
+these directions, I proceeded till I found a mighty street, full
+of sumptuous buildings four and five stories high, but paved with
+rude cobblestones, after the fashion of the year 1.
+
+Here a tram-car, without any visible means of support, slid
+stealthily behind me and nearly struck me in the back.  This was
+the famous cable car of San Francisco, which runs by gripping an
+endless wire rope sunk in the ground, and of which I will tell
+you more anon.  A hundred yards further there was a slight
+commotion in the street, a gathering together of three or four,
+something that glittered as it moved very swiftly.  A ponderous
+Irish gentleman, with priest's cords in his hat and a small
+nickel-plated badge on his fat bosom, emerged from the knot
+supporting a Chinaman who had been stabbed in the eye and was
+bleeding like a pig.  The by-standers went their ways, and the
+Chinaman, assisted by the policeman, his own. Of course this was
+none of my business, but I rather wanted to know what had
+happened to the gentleman who had dealt the stab.  It said a
+great deal for the excellence of the municipal arrangement of the
+town that a surging crowd did not at once block the street to see
+what was going for-ward.  I was the sixth man and the last who
+assisted at the performance, and my curiosity was six times the
+greatest.  Indeed, I felt ashamed of showing it.
+
+There were no more incidents till I reached the Palace Hotel, a
+seven-storied warren of humanity with a thousand rooms in it. 
+All the travel books will tell you about hotel arrangements in
+this country.  They should be seen to be appreciated. Understand
+clearly--and this letter is written after a thousand miles of
+experiences--that money will not buy you service in the West.
+When the hotel clerk--the man who awards your room to you and who
+is supposed to give you information--when that resplendent
+individual stoops to attend to your wants he does so whistling or
+hum-ming or picking his teeth, or pauses to converse with some
+one he knows.  These performances, I gather, are to impress upon
+you that he is a free man and your equal.  From his general
+appearance and the size of his diamonds he ought to be your
+superior.  There is no necessity for this swaggering
+self-consciousness of freedom.  Business is business, and the man
+who is paid to attend to a man might reasonably devote his whole
+attention to the job.  Out of office hours he can take his coach
+and four and pervade society if he pleases.
+
+In a vast marble-paved hall, under the glare of an electric
+light, sat forty or fifty men, and for their use and amusement
+were provided spittoons of infinite capacity and generous gape. 
+Most of the men wore frock-coats and top-hats--the things that we
+in India put on at a wedding-break-fast, if we possess them--but
+they all spat.  They spat on principle.  The spittoons were on
+the staircases, in each bedroom--yea, and in chambers even more
+sacred than these.  They chased one into retirement, but they
+blossomed in chiefest splendor round the bar, and they were all
+used, every reeking one of them.
+
+Just before I began to feel deathly sick another reporter
+grappled me.  What he wanted to know was the precise area of
+India in square miles.  I referred him to Whittaker.  He had
+never heard of Whittaker.  He wanted it from my own mouth, and I
+would not tell him.  Then he swerved off, just like the other
+man, to details of journalism in our own country.  I ventured to
+suggest that the interior economy of a paper most concerned the
+people who worked it.
+
+"That's the very thing that interests us," he said.  "Have you
+got reporters anything like our reporters on Indian newspapers?"
+
+"We have not," I said, and suppressed the "thank God" rising to
+my lips.
+
+"Why haven't you?" said he.
+
+"Because they would die," I said.
+
+It was exactly like talking to a child--a very rude little child. 
+He would begin almost every sentence with, "Now tell me something
+about India," and would turn aimlessly from one question to the
+other without the least continuity.  I was not angry, but keenly
+interested.  The man was a revelation to me.  To his questions I
+re-turned answers mendacious and evasive.  After all, it really
+did not matter what I said.  He could not understand.  I can only
+hope and pray that none of the readers of the "Pioneer" will ever
+see that portentous interview.  The man made me out to be an
+idiot several sizes more drivelling than my destiny intended, and
+the rankness of his ignorance managed to distort the few poor
+facts with which I supplied him into large and elaborate lies. 
+Then, thought I, "the matter of American journalism shall be
+looked into later on.  At present I will enjoy myself."
+
+No man rose to tell me what were the lions of the place.  No one
+volunteered any sort of conveyance.  I was absolutely alone in
+this big city of white folk.  By instinct I sought refreshment,
+and came upon a bar-room full of bad Salon pictures in which men
+with hats on the backs of their heads were wolfing food from a
+counter. It was the institution of the "free lunch" I had struck. 
+You paid for a drink and got as much as you wanted to eat.  For
+something less than a rupee a day a man can feed himself
+sumptuously in San Francisco, even though he be a bankrupt.
+Remember this if ever you are stranded in these parts.
+
+Later I began a vast but unsystematic exploration of the streets. 
+I asked for no names.  It was enough that the pavements were full
+of white men and women, the streets clanging with traffic, and
+that the restful roar of a great city rang in my ears.  The cable
+cars glided to all points of the compass at once.  I took them
+one by one till I could go no further.  San Francisco has been
+pitched down on the sand bunkers of the Bikaneer desert.  About
+one fourth of it is ground reclaimed from the sea--any old-timers
+will tell you all about that.  The remainder is just ragged,
+unthrifty sand hills, to-day pegged down by houses.
+
+From an English point of view there has not been the least
+attempt at grading those hills, and indeed you might as well try
+to grade the hillocks of Sind.  The cable cars have for all
+practical purposes made San Francisco a dead level.  They take no
+count of rise or fall, but slide equably on their appointed
+courses from one end to the other of a six-mile street.  They
+turn corners almost at right angles, cross other lines, and for
+aught I know may run up the sides of houses.  There is no visible
+agency of their flight, but once in awhile you shall pass a
+five-storied building humming with machinery that winds up an
+everlasting wire cable, and the initiated will tell you that here
+is the mechanism.  I gave up asking questions. If it pleases
+Providence to make a car run up and down a slit in the ground for
+many miles, and if for twopence halfpenny I can ride in that car,
+why shall I seek the reasons of the miracle? Rather let me look
+out of the windows till the shops give place to thousands and
+thousands of little houses made of wood (to imitate stone), each
+house just big enough for a man and his family. Let me watch the
+people in the cars and try to find out in what manner they differ
+from us, their ancestors.
+
+It grieves me now that I cursed them (in the matter of book
+piracy), because I perceived that my curse is working and that
+their speech is be-coming a horror already.  They delude
+them-selves into the belief that they talk English--the
+English--and I have already been pitied for speaking with "an
+English accent."  The man who pitied me spoke, so far as I was
+concerned, the language of thieves.  And they all do. Where we
+put the accent forward they throw it back, and vice versa where
+we give the long "a" they use the short, and words so simple as
+to be past mistaking they pronounce somewhere up in the dome of
+their heads.  How do these things happen?
+
+Oliver Wendell Holmes says that the Yankee school-marm, the cider
+and the salt codfish of the Eastern States, are responsible for
+what he calls a nasal accent.  I know better.  They stole books
+from across the water without paying for 'em, and the snort of
+delight was fixed in their nostrils forever by a just Providence. 
+That is why they talk a foreign tongue to-day.
+
+"Cats is dogs, and rabbits is dogs, and so's parrots.  But this
+'ere tortoise is an insect, so there ain't no charge," as the old
+porter said.
+
+A Hindoo is a Hindoo and a brother to the man who knows his
+vernacular.  And a French-man is French because he speaks his own
+language.  But the American has no language.  He is dialect,
+slang, provincialism, accent, and so forth.  Now that I have
+heard their voices, all the beauty of Bret Harte is being ruined
+for me, because I find myself catching through the roll of his
+rhythmical prose the cadence of his peculiar fatherland.  Get an
+American lady to read to you "How Santa Claus Came to Simpson's
+Bar," and see how much is, under her tongue, left of the beauty
+of the original.
+
+But I am sorry for Bret Harte.  It happened this way.  A reporter
+asked me what I thought of the city, and I made answer suavely
+that it was hallowed ground to me, because of Bret Harte. That
+was true.
+
+"Well," said the reporter, "Bret Harte claims California, but
+California don't claim Bret Harte. He's been so long in England
+that he's quite English.  Have you seen our cracker factories or
+the new offices of the 'Examiner'?"
+
+He could not understand that to the outside world the city was
+worth a great deal less than the man.  I never intended to curse
+the people with a provincialism so vast as this.
+
+But let us return to our sheep--which means the sea-lions of the
+Cliff House.  They are the great show of San Francisco.  You take
+a train which pulls up the middle of the street (it killed two
+people the day before yesterday, being un-braked and driven
+absolutely regardless of consequences), and you pull up somewhere
+at the back of the city on the Pacific beach.  Originally the
+cliffs and their approaches must have been pretty, but they have
+been so carefully defiled with advertisements that they are now
+one big blistered abomination.  A hundred yards from the shore
+stood a big rock covered with the carcasses of the sleek
+sea-beasts, who roared and rolled and walloped in the spouting
+surges.  No bold man had painted the creatures sky-blue or
+advertised news-papers on their backs, wherefore they did not
+match the landscape, which was chiefly hoarding. Some day,
+perhaps, whatever sort of government may obtain in this country
+will make a restoration of the place and keep it clean and neat. 
+At present the sovereign people, of whom I have heard so much
+already, are vending cherries and painting the virtues of "Little
+Bile Beans" all over it.
+
+Night fell over the Pacific, and the white sea-fog whipped
+through the streets, dimming the splendors of the electric
+lights.  It is the use of this city, her men and women folk, to
+parade between the hours of eight and ten a certain street called
+Cairn Street, where the finest shops are situated.  Here the
+click of high heels on the pavement is loudest, here the lights
+are brightest, and here the thunder of the traffic is most
+overwhelming.  I watched Young California, and saw that it was,
+at least, expensively dressed, cheerful in manner, and
+self-asserting in conversation. Also the women were very fair. 
+Perhaps eighteen days aboard ship had something to do with my
+unreserved admiration.  The maidens were of generous build,
+large, well groomed, and attired in raiment that even to my
+inexperienced eyes must have cost much.  Cairn Street at nine
+o'clock levels all distinctions of rank as impartially as the
+grave.  Again and again I loitered at the heels of a couple of
+resplendent beings, only to overhear, when I expected the level
+voice of culture, the staccato "Sez he," "Sez I" that is the mark
+of the white servant-girl all the world over.
+
+This was depressing because, in spite of all that goes to the
+contrary, fine feathers ought to make fine birds.  There was
+wealth--unlimited wealth--in the streets, but not an accent that
+would not have been dear at fifty cents.  Where-fore, revolving
+in my mind that these folk were barbarians, I was presently
+enlightened and made aware that they also were the heirs of all
+the ages, and civilized after all.  There appeared before me an
+affable stranger of prepossessing appearance, with a blue and an
+innocent eye.  Addressing me by name, he claimed to have met me
+in New York, at the Windsor, and to this claim I gave a qualified
+assent. I did not remember the fact, but since he was so certain
+of it, why, then--I waited developments.
+
+"And what did you think of Indiana when you came through?" was
+the next question.
+
+It revealed the mystery of previous acquaintance and one or two
+other things.  With reprehensible carelessness my friend of the
+light-blue eye had looked up the name of his victim in the hotel
+register, and read "Indiana" for India.
+
+The provincialism with which I had cursed his people extended to
+himself.  He could not imagine an Englishman coming through the
+States from west to east instead of by the regularly ordained
+route.  My fear was that in his delight in finding me so
+responsive he would make remarks about New York and the Windsor
+which I could not understand.  And, indeed, he adventured in this
+direction once or twice, asking me what I thought of such and
+such streets, which from his tone I gathered to be anything but
+respectable.  It is trying to talk unknown New York in almost
+unknown San Francisco.  But my friend was merciful.  He protested
+that I was one after his own heart, and pressed upon me rare and
+curious drinks at more than one bar.  These drinks I accepted
+with gratitude, as also the cigars with which his pockets were
+stored.  He would show me the life of the city.  Having no desire
+to watch a weary old play again, I evaded the offer and received
+in lieu of the devil's instruction much coarse flattery.
+Curiously constituted is the soul of man.  Knowing how and where
+this man lied, waiting idly for the finale, I was distinctly
+conscious, as he bubbled compliments in my ear, of soft thrills
+of gratified pride stealing from hat-rim to boot-heels.  I was
+wise, quoth he--anybody could see that with half an eye;
+sagacious, versed in the ways of the world, an acquaintance to be
+desired; one who had tasted the cup of life with discretion.
+
+All this pleased me, and in a measure numbed the suspicion that
+was thoroughly aroused.  Eventually the blue-eyed one discovered,
+nay, insisted, that I had a taste for cards (this was clumsily
+worked in, but it was my fault, for in that I met him half-way
+and allowed him no chance of good acting).  Hereupon I laid my
+head upon one side and simulated unholy wisdom, quoting odds and
+ends of poker talk, all ludicrously misapplied. My friend kept
+his countenance admirably, and well he might, for five minutes
+later we arrived, always by the purest of chance, at a place
+where we could play cards and also frivol with Louisiana State
+Lottery tickets.  Would I play?
+
+"Nay," said I, "for to me cards have neither meaning nor
+continuity; but let us assume that I am going to play.  How would
+you and your friends get to work?  Would you play a straight
+game, or make me drunk, or--well, the fact is, I'm a newspaper
+man, and I'd be much obliged if you'd let me know something about
+bunco steering."
+
+My blue-eyed friend erected himself into an obelisk of profanity. 
+He cursed me by his gods--the right and left bower; he even
+cursed the very good cigars he had given me.  But, the storm
+over, he quieted down and explained.  I apologized for causing
+him to waste an evening, and we spent a very pleasant time
+together.
+
+Inaccuracy, provincialism, and a too hasty rushing to
+conclusions, were the rocks that he had split on, but he got his
+revenge when he said:--"How would I play with you?  From all the
+poppy-cock Anglice bosh you talked about poker, I'd ha' played a
+straight game, and skinned you. I wouldn't have taken the trouble
+to make you drunk.  You never knew anything of the game, but how
+I was mistaken in going to work on you, makes me sick."
+
+He glared at me as though I had done him an injury.  To-day I
+know how it is that year after year, week after week, the bunco
+steerer, who is the confidence trick and the card-sharper man of
+other climes, secures his prey.  He clavers them over with
+flattery as the snake clavers the rabbit. The incident depressed
+me because it showed I had left the innocent East far behind and
+was come to a country where a man must look out for himself.  The
+very hotels bristled with notices about keeping my door locked
+and depositing my valuables in a safe.  The white man in a lump
+is bad.  Weeping softly for O-Toyo (little I knew then that my
+heart was to be torn afresh from my bosom) I fell asleep in the
+clanging hotel.
+
+Next morning I had entered upon the deferred inheritance.  There
+are no princes in America--at least with crowns on their
+heads--but a generous-minded member of some royal family received
+my letter of introduction.  Ere the day closed I was a member of
+the two clubs, and booked for many engagements to dinner and
+party.  Now, this prince, upon whose financial operations be
+continual increase, had no reason, nor had the others, his
+friends, to put himself out for the sake of one Briton more or
+less, but he rested not till he had accomplished all in my behalf
+that a mother could think of for her debutante daughter.
+
+Do you know the Bohemian Club of San Francisco?  They say its
+fame extends over the world.  It was created, somewhat on the
+lines of the Savage, by men who wrote or drew things, and has
+blossomed into most unrepublican luxury. The ruler of the place
+is an owl--an owl standing upon a skull and cross-bones, showing
+forth grimly the wisdom of the man of letters and the end of his
+hopes for immortality.  The owl stands on the staircase, a statue
+four feet high; is carved in the wood-work, flutters on the
+frescoed ceiling, is stamped on the note-paper, and hangs on the
+walls.  He is an ancient and honorable bird. Under his wing 'twas
+my privilege to meet with white men whose lives were not chained
+down to routine of toil, who wrote magazine articles instead of
+reading them hurriedly in the pauses of office-work, who painted
+pictures instead of contenting themselves with cheap etchings
+picked up at another man's sale of effects.  Mine were all the
+rights of social intercourse, craft by craft, that India,
+stony-hearted step-mother of collectors, has swindled us out of. 
+Treading soft carpets and breathing the incense of superior
+cigars, I wandered from room to room studying the paintings in
+which the members of the club had caricatured themselves, their
+associates, and their aims. There was a slick French audacity
+about the workmanship of these men of toil unbending that went
+straight to the heart of the beholder.  And yet it was not
+altogether French.  A dry grimness of treatment, almost Dutch,
+marked the difference. The men painted as they spoke--with
+certainty. The club indulges in revelries which it calls
+"jinks"--high and low, at intervals--and each of these gatherings
+is faithfully portrayed in oils by hands that know their
+business.  In this club were no amateurs spoiling canvas, because
+they fancied they could handle oils without knowledge of shadows
+or anatomy--no gentleman of leisure ruining the temper of
+publishers and an already ruined market with attempts to write
+"because everybody writes something these days."
+
+My hosts were working, or had worked for their daily bread with
+pen or paint, and their talk for the most part was of the
+shop--shoppy--that is to say, delightful.  They extended a large
+hand of welcome, and were as brethren, and I did homage to the
+owl and listened to their talk.  An Indian club about
+Christmas-time will yield, if properly worked, an abundant
+harvest of queer tales; but at a gathering of Americans from the
+uttermost ends of their own continent, the tales are larger,
+thicker, more spinous, and even more azure than any Indian
+variety.  Tales of the war I heard told by an ex-officer of the
+South over his evening drink to a colonel of the Northern army,
+my introducer, who had served as a trooper in the Northern Horse,
+throwing in emendations from time to time.  "Tales of the Law,"
+which in this country is an amazingly elastic affair, followed
+from the lips of a judge.  Forgive me for recording one tale that
+struck me as new.  It may interest the up-country Bar in India.
+
+Once upon a time there was Samuelson, a young lawyer, who feared
+not God, neither regarded the Bench.  (Name, age, and town of the
+man were given at great length.)  To him no case had ever come as
+a client, partly because he lived in a district where lynch law
+prevailed, and partly because the most desperate prisoner shrunk
+from intrusting himself to the mercies of a phenomenal stammerer.
+But in time there happened an aggravated murder--so bad, indeed,
+that by common consent the citizens decided, as a prelude to
+lynching, to give the real law a chance.  They could, in fact,
+gambol round that murder.  They met--the court in its
+shirt-sleeves--and against the raw square of the Court House
+window a temptingly suggestive branch of a tree fretted the sky. 
+No one appeared for the prisoner, and, partly in jest, the court
+advised young Samuelson to take up the case.
+
+"The prisoner is undefended, Sam," said the court.  "The square
+thing to do would be for you to take him aside and do the best
+you can for him."
+
+Court, jury, and witness then adjourned to the veranda, while
+Samuelson led his client aside to the Court House cells.  An hour
+passed ere the lawyer returned alone.  Mutely the audience
+questioned.
+
+"May it p-p-please the c-court," said Samuel-son, "my client's
+case is a b-b-b-bad one--a d-d-amn bad one.  You told me to do
+the b-b-best I c-could for him, judge, so I've jest given him
+y-your b-b-bay gelding, an' told him to light out for healthier
+c-climes, my p-p-professional opinion being he'd be hanged
+quicker'n h-h-hades if he dallied here.  B-by this time my
+client's 'bout fifteen mile out yonder somewheres.  That was the
+b-b-best I could do for him, may it p-p-please the court."
+
+The young man, escaping punishment in lieu of the prisoner, made
+his fortune ere five years.
+
+Other voices followed, with equally wondrous tales of
+riata-throwing in Mexico and Arizona, of gambling at army posts
+in Texas, of newspaper wars waged in godless Chicago (I could not
+help being interested, but they were not pretty tricks), of
+deaths sudden and violent in Montana and Dakota, of the loves of
+half-breed maidens in the South, and fantastic huntings for gold
+in mysterious Alaska.  Above all, they told the story of the
+building of old San Francisco, when the "finest collection of
+humanity on God's earth, sir, started this town, and the water
+came up to the foot of Market Street."  Very terrible were some
+of the tales, grimly humorous the others, and the men in
+broadcloth and fine linen who told them had played their parts in
+them.
+
+"And now and again when things got too bad they would toll the
+city bell, and the Vigilance Committee turned out and hanged the
+suspicious characters.  A man didn't begin to be suspected in
+those days till he had committed at least one unprovoked murder,"
+said a calm-eyed, portly old gentleman.
+
+I looked at the pictures around me, the noiseless, neat-uniformed
+waiter behind me, the oak-ribbed ceiling above, the velvet carpet
+beneath.  It was hard to realize that even twenty years ago you
+could see a man hanged with great pomp. Later on I found reason
+to change my opinion. The tales gave me a headache and set me
+thinking.  How in the world was it possible to take in even one
+thousandth of this huge, roaring, many-sided continent?  In the
+tobacco-scented silence of the sumptuous library lay Professor
+Bryce's book on the American Republic.
+
+"It is an omen," said I.  "He has done all things in all
+seriousness, and he may be purchased for half a guinea.  Those
+who desire information of the most undoubted, must refer to his
+pages. For me is the daily round of vagabondage, the recording of
+the incidents of the hour and inter-course with the
+travelling-companion of the day. I will not 'do' this country at
+all."
+
+And I forgot all about India for ten days while I went out to
+dinners and watched the social customs of the people, which are
+entirely different from our customs, and was introduced to men of
+many millions.  These persons are harmless in their earlier
+stages--that is to say, a man worth three or four million dollars
+may be a good talker, clever, amusing, and of the world; a man
+with twice that amount is to be avoided, and a twenty million man
+is--just twenty millions.  Take an instance.  I was speaking to a
+newspaper man about seeing the proprietor of his journal, as in
+my innocence I supposed newspaper men occasionally did.  My
+friend snorted indignantly:--"See him!  Great Scott!  No.  If he
+happens to appear in the office, I have to associate with him;
+but, thank Heaven! outside of that I move in circles where he
+cannot come."
+
+And yet the first thing I have been taught to believe is that
+money was everything in America!
+
+
+
+II
+
+American Politics
+
+I HAVE been watching machinery in repose after reading about
+machinery in action.
+
+An excellent gentleman, who bears a name honored in the magazine,
+writes, much as Disraeli orated, of "the sublime instincts of an
+ancient people," the certainty with which they can be trusted to
+manage their own affairs in their own way, and the speed with
+which they are making for all sorts of desirable goals.  This he
+called a statement or purview of American politics.
+
+I went almost directly afterward to a saloon where gentlemen
+interested in ward politics nightly congregate.  They were not
+pretty persons. Some of them were bloated, and they all swore
+cheerfully till the heavy gold watch-chains on their fat stomachs
+rose and fell again; but they talked over their liquor as men who
+had power and unquestioned access to places of trust and profit.
+
+The magazine writer discussed theories of government; these men
+the practice.  They had been there.  They knew all about it. 
+They banged their fists on the table and spoke of political
+"pulls," the vending of votes, and so forth. Theirs was not the
+talk of village babblers reconstructing the affairs of the
+nation, but of strong, coarse, lustful men fighting for spoil,
+and thoroughly understanding the best methods of reaching it.
+
+I listened long and intently to speech I could not understand--or
+but in spots.
+
+It was the speech of business, however.  I had sense enough to
+know that, and to do my laughing outside the door.
+
+Then I began to understand why my pleasant and well-educated
+hosts in San Francisco spoke with a bitter scorn of such duties
+of citizenship as voting and taking an interest in the
+distribution of offices.  Scores of men have told me, without
+false pride, that they would as soon concern themselves with the
+public affairs of the city or state as rake muck with a
+steam-shovel.  It may be that their lofty disdain covers
+selfishness, but I should be very sorry habitually to meet the
+fat gentlemen with shiny top-hats and plump cigars in whose
+society I have been spending the evening.
+
+Read about politics as the cultured writer of the magazine
+regards 'em, and then, and not till then, pay your respects to
+the gentlemen who run the grimy reality.
+
+I'm sick of interviewing night editors who lean their chair
+against the wall, and, in response to my demand for the record of
+a prominent citizen, answer: "Well, you see, he began by keeping
+a saloon," etc.  I prefer to believe that my informants are
+treating me as in the old sinful days in India I was used to
+treat the wandering globe-trotter.  They declare that they speak
+the truth, and the news of dog politics lately vouchsafed to me
+in groggeries inclines me to believe, but I won't.  The people
+are much too nice to slangander as recklessly as I have been
+doing.
+
+Besides, I am hopelessly in love with about eight American
+maidens--all perfectly delightful till the next one comes into
+the room.
+
+O-Toyo was a darling, but she lacked several things--conversation
+for one.  You cannot live on giggles.  She shall remain unmarried
+at Nagasaki, while I roast a battered heart before the shrine of
+a big Kentucky blonde, who had for a nurse when she was little a
+negro "mammy."
+
+By consequence she has welded on California beauty, Paris
+dresses, Eastern culture, Europe trips, and wild Western
+originality, the queer, dreamy superstitions of the quarters, and
+the result is soul-shattering.  And she is but one of many stars.
+
+Item, a maiden who believes in education and possesses it, with a
+few hundred thousand dollars to boot and a taste for slumming.
+
+Item, the leader of a sort of informal salon where girls
+congregate, read papers, and daringly discuss metaphysical
+problems and candy--a sloe-eyed, black-browed, imperious maiden
+she.
+
+Item, a very small maiden, absolutely without reverence, who can
+in one swift sentence trample upon and leave gasping half a dozen
+young men.
+
+Item, a millionairess, burdened with her money, lonely, caustic,
+with a tongue keen as a sword, yearning for a sphere, but chained
+up to the rock of her vast possessions.
+
+Item, a typewriter maiden earning her own bread in this big city,
+because she doesn't think a girl ought to be a burden on her
+parents, who quotes Theophile Gautier and moves through the world
+manfully, much respected for all her twenty inexperienced
+summers.
+
+Item, a woman from cloud-land who has no history in the past or
+future, but is discreetly of the present, and strives for the
+confidences of male humanity on the grounds of "sympathy"
+(methinks this is not altogether a new type).
+
+Item, a girl in a "dive," blessed with a Greek head and eyes,
+that seem to speak all that is best and sweetest in the world. 
+But woe is me!  She has no ideas in this world or the next beyond
+the consumption of beer (a commission on each bottle), and
+protests that she sings the songs allotted to her nightly without
+more than the vaguest notion of their meaning.
+
+Sweet and comely are the maidens of Devonshire; delicate and of
+gracious seeming those who live in the pleasant places of London;
+fascinating for all their demureness the damsels of France,
+clinging closely to their mothers, with large eyes wondering at
+the wicked world; excellent in her own place and to those who
+understand her is the Anglo-Indian "spin" in her second season;
+but the girls of America are above and beyond them all.  They are
+clever, they can talk--yea, it is said that they think. 
+Certainly they have an appearance of so doing which is
+delightfully deceptive.
+
+They are original, and regard you between the brows with
+unabashed eyes as a sister might look at her brother.  They are
+instructed, too, in the folly and vanity of the male mind, for
+they have associated with "the boys" from babyhood, and can
+discerningly minister to both vices or pleasantly snub the
+possessor.  They possess, moreover, a life among themselves,
+independent of any masculine associations.  They have societies
+and clubs and unlimited tea-fights where all the guests are
+girls.  They are self-possessed, without parting with any
+tenderness that is their sex-right; they understand; they can
+take care of themselves; they are superbly independent.  When you
+ask them what makes them so charming, they say:--"It is because
+we are better educated than your girls, and--and we are more
+sensible in regard to men.  We have good times all round, but we
+aren't taught to regard every man as a possible husband.  Nor is
+he expected to marry the first girl he calls on regularly."
+
+Yes, they have good times, their freedom is large, and they do
+not abuse it.  They can go driving with young men and receive
+visits from young men to an extent that would make an English
+mother wink with horror, and neither driver nor drivee has a
+thought beyond the enjoyment of a good time.  As certain, also,
+of their own poets have said:--
+
+"Man is fire and woman is tow,
+
+And the devil he comes and begins to blow."
+
+In America the tow is soaked in a solution that makes it
+fire-proof, in absolute liberty and large knowledge;
+consequently, accidents do not exceed the regular percentage
+arranged by the devil for each class and climate under the skies.
+
+But the freedom of the young girl has its draw-backs.  She is--I
+say it with all reluctance--irreverent, from her forty-dollar
+bonnet to the buckles in her eighteen-dollar shoes.  She talks
+flippantly to her parents and men old enough to be her
+grandfather.  She has a prescriptive right to the society of the
+man who arrives.  The parents admit it.
+
+This is sometimes embarrassing, especially when you call on a man
+and his wife for the sake of information--the one being a
+merchant of varied knowledge, the other a woman of the world.  In
+five minutes your host has vanished.  In another five his wife
+has followed him, and you are left alone with a very charming
+maiden, doubtless, but certainly not the person you came to see. 
+She chatters, and you grin, but you leave with the very strong
+impression of a wasted morning.  This has been my experience once
+or twice.  I have even said as pointedly as I dared to a man:--"I
+came to see you."
+
+"You'd better see me in my office, then.  The house belongs to my
+women folk--to my daughter, that is to say."
+
+He spoke the truth.  The American of wealth is owned by his
+family.  They exploit him for bullion.  The women get the
+ha'pence, the kicks are all his own.  Nothing is too good for an
+American's daughter (I speak here of the moneyed classes).
+
+The girls take every gift as a matter of course, and yet they
+develop greatly when a catastrophe arrives and the man of many
+millions goes up or goes down, and his daughters take to
+stenography or typewriting.  I have heard many tales of heroism
+from the lips of girls who counted the principals among their
+friends.  The crash came, Mamie, or Hattie, or Sadie, gave up
+their maid, their carriages and candy, and with a No. 2 Remington
+and a stout heart set about earning their daily bread.
+
+"And did I drop her from the list of my friends?  No, sir," said
+a scarlet-lipped vision in white lace; "that might happen to us
+any day."
+
+It may be this sense of possible disaster in the air that makes
+San Francisco society go with so captivating a rush and whirl. 
+Recklessness is in the air.  I can't explain where it comes from,
+but there it is.  The roaring winds of the Pacific make you drunk
+to begin with.  The aggressive luxury on all sides helps out the
+intoxication, and you spin forever "down the ringing grooves of
+change" (there is no small change, by the way, west of the
+Rockies) as long as money lasts. They make greatly and they spend
+lavishly; not only the rich, but the artisans, who pay nearly
+five pounds for a suit of clothes, and for other luxuries in
+proportion.
+
+The young men rejoice in the days of their youth.  They gamble,
+yacht, race, enjoy prize-fights and cock-fights, the one openly,
+the other in secret; they establish luxurious clubs; they break
+themselves over horse-flesh and other things, and they are
+instant in a quarrel.  At twenty they are experienced in
+business, embark in vast enterprises, take partners as
+experienced as themselves, and go to pieces with as much splendor
+as their neighbors. Remember that the men who stocked California
+in the fifties were physically, and, as far as regards certain
+tough virtues, the pick of the earth.  The inept and the weakly
+died en route, or went under in the days of construction.  To
+this nucleus were added all the races of the Continent--French,
+Italian, German, and, of course, the Jew.
+
+The result you can see in the large-boned, deep-chested,
+delicate-handed women, and long, elastic, well-built boys.  It
+needs no little golden badge swinging from the watch-chain to
+mark the native son of the golden West, the country-bred of
+California.
+
+Him I love because he is devoid of fear, carries himself like a
+man, and has a heart as big as his books.  I fancy, too, he knows
+how to enjoy the blessings of life that his province so
+abundantly bestows upon him.  At least, I heard a little rat of a
+creature with hock-bottle shoulders explaining that a man from
+Chicago could pull the eye-teeth of a Californian in business.
+
+Well, if I lived in fairy-land, where cherries were as big as
+plums, plums as big as apples, and strawberries of no account,
+where the procession of the fruits of the seasons was like a
+pageant in a Drury Lane pantomime and the dry air was wine, I
+should let business slide once in a way and kick up my heels with
+my fellows.  The tale of the resources of California--vegetable
+and mineral--is a fairy-tale.  You can read it in books. You
+would never believe me.
+
+All manner of nourishing food, from sea-fish to beef, may be
+bought at the lowest prices, and the people are consequently
+well-developed and of a high stomach.  They demand ten shillings
+for tinkering a jammed lock of a trunk; they receive sixteen
+shillings a day for working as carpenters; they spend many
+sixpences on very bad cigars, which the poorest of them smoke,
+and they go mad over a prize-fight.  When they disagree they do
+so fatally, with fire-arms in their hands, and on the public
+streets.  I was just clear of Mission Street when the trouble
+began between two gentlemen, one of whom perforated the other.
+
+When a policeman, whose name I do not recollect, "fatally shot Ed
+Hearney" for attempting to escape arrest, I was in the next
+street.  For these things I am thankful.  It is enough to travel
+with a policeman in a tram-car, and, while he arranges his
+coat-tails as he sits down, to catch sight of a loaded revolver. 
+It is enough to know that fifty per cent of the men in the public
+saloons carry pistols about them.
+
+The Chinaman waylays his adversary, and methodically chops him to
+pieces with his hatchet. Then the press roars about the brutal
+ferocity of the pagan.
+
+The Italian reconstructs his friend with a long knife.  The press
+complains of the waywardness of the alien.
+
+The Irishman and the native Californian in their hours of
+discontent use the revolver, not once, but six times.  The press
+records the fact, and asks in the next column whether the world
+can parallel the progress of San Francisco.  The American who
+loves his country will tell you that this sort of thing is
+confined to the lower classes. Just at present an ex-judge who
+was sent to jail by another judge (upon my word I cannot tell
+whether these titles mean anything) is breathing red-hot
+vengeance against his enemy.  The papers have interviewed both
+parties, and confidently expect a fatal issue.
+
+Now, let me draw breath and curse the negro waiter, and through
+him the negro in service generally.  He has been made a citizen
+with a vote, consequently both political parties play with him. 
+But that is neither here nor there.  He will commit in one meal
+every betise that a senllion fresh from the plow-tail is capable
+of, and he will continue to repeat those faults.  He is as
+complete a heavy-footed, uncomprehending, bungle-fisted fool as
+any mem-sahib in the East ever took into her establishment.  But
+he is according to law a free and independent
+citizen--consequently above reproof or criticism.  He, and he
+alone, in this insane city, will wait at table (the Chinaman
+doesn't count).
+
+He is untrained, inept, but he will fill the place and draw the
+pay.  Now, God and his father's fate made him intellectually
+inferior to the Oriental. He insists on pretending that he serves
+tables by accident--as a sort of amusement.  He wishes you to
+understand this little fact.  You wish to eat your meals, and, if
+possible, to have them properly served.  He is a big, black, vain
+baby and a man rolled into one.
+
+A colored gentleman who insisted on getting me pie when I wanted
+something else, demanded information about India.  I gave him
+some facts about wages.
+
+"Oh, hell!" said he, cheerfully, "that wouldn't keep me in cigars
+for a month."
+
+Then he fawned on me for a ten-cent piece. Later he took it upon
+himself to pity the natives of India.  "Heathens," he called
+them--this woolly one, whose race has been the butt of every
+comedy on the native stage since the beginning. And I turned and
+saw by the head upon his shoulders that he was a Yoruba man, if
+there be any truth in ethnological castes.  He did his thinking
+in English, but he was a Yoruba negro, and the race type had
+remained the same through-out his generations.  And the room was
+full of other races--some that looked exactly like Gallas (but
+the trade was never recruited from that side of Africa), some
+duplicates of Cameroon heads, and some Kroomen, if ever Kroomen
+wore evening dress.
+
+The American does not consider little matters of descent, though
+by this time he ought to know all about "damnable heredity."  As
+a general rule he keeps himself very far from the negro, and says
+things about him that are not pretty. There are six million
+negroes, more or less, in the States, and they are increasing. 
+The American, once having made them citizens, cannot unmake them. 
+He says, in his newspapers, they ought to be elevated by
+education.  He is trying this, but it is likely to be a long job,
+because black blood is much more adhesive than white, and throws
+back with annoying persistence. When the negro gets religion he
+returns directly as a hiving bee to the first instincts of his
+people. Just now a wave of religion is sweeping over some of the
+Southern States.
+
+Up to the present two Messiahs and a Daniel have appeared, and
+several human sacrifices have been offered up to these
+incarnations.  The Daniel managed to get three young men, who he
+insisted were Shadrach, Meshach, and Abednego, to walk into a
+blast furnace, guaranteeing non-combustion.  They did not return. 
+I have seen nothing of this kind, but I have attended a negro
+church.  They pray, or are caused to pray by themselves in this
+country.  The congregation were moved by the spirit to groans and
+tears, and one of them danced up the aisle to the mourners'
+bench.  The motive may have been genuine. The movements of the
+shaken body were those of a Zanzibar stick dance, such as you see
+at Aden on the coal-boats, and even as I watched the people, the
+links that bound them to the white man snapped one by one, and I
+saw before me the hubshi (woolly hair) praying to a God he did
+not understand.  Those neatly dressed folk on the benches, and
+the gray-headed elder by the window, were savages, neither more
+nor less.
+
+What will the American do with the negro? The South will not
+consort with him.  In some States miscegenation is a penal
+offence.  The North is every year less and less in need of his
+services.
+
+And he will not disappear.  He will continue as a problem.  His
+friends will urge that he is as good as the white man.  His
+enemies--well, you can guess what his enemies will do from a
+little incident that followed on a recent appointment by the
+President.  He made a negro an assistant in a post-office
+where--think of it!--he had to work at the next desk to a white
+girl, the daughter of a colonel, one of the first families of
+Georgia's modern chivalry, and all the weary, weary rest of it. 
+The Southern chivalry howled, and hanged or burned some one in
+effigy.  Perhaps it was the President, and perhaps it was the
+negro--but the principle remains the same.  They said it was an
+insult.  It is not good to be a negro in the land of the free and
+the home of the brave.
+
+But this is nothing to do with San Francisco and her merry
+maidens, her strong, swaggering men, and her wealth of gold and
+pride.  They bore me to a banquet in honor of a brave
+lieutenant--Carlin, of the "Vandalia"--who stuck by his ship in
+the great cyclone at Apia and comported himself as an officer
+should.  On that occasion--'twas at the Bohemian Club--I heard
+oratory with the roundest of o's, and devoured a dinner the
+memory of which will descend with me into the hungry grave.
+
+There were about forty speeches delivered, and not one of them
+was average or ordinary.  It was my first introduction to the
+American eagle screaming for all it was worth.  The lieutenant's
+heroism served as a peg from which the silver-tongued ones turned
+themselves loose and kicked.
+
+They ransacked the clouds of sunset, the thunderbolts of heaven,
+the deeps of hell, and the splendor of the resurrection for
+tropes and metaphors, and hurled the result at the head of the
+guest of the evening.
+
+Never since the morning stars sung together for joy, I learned,
+had an amazed creation witnessed such superhuman bravery as that
+displayed by the American navy in the Samoa cyclone.  Till earth
+rotted in the phosphorescent star-and-stripe slime of a decayed
+universe, that god-like gallantry would not be forgotten.  I
+grieve that I cannot give the exact words.  My attempt at
+reproducing their spirit is pale and inadequate.  I sat
+bewildered on a coruscating Niagara of blatherum-skite.  It was
+magnificent--it was stupendous--and I was conscious of a wicked
+desire to hide my face in a napkin and grin.  Then, according to
+rule, they produced their dead, and across the snowy table-cloths
+dragged the corpse of every man slain in the Civil War, and
+hurled defiance at "our natural enemy" (England, so please you),
+"with her chain of fortresses across the world." Thereafter they
+glorified their nation afresh from the beginning, in case any
+detail should have been overlooked, and that made me
+uncomfortable for their sakes.  How in the world can a white man,
+a sahib, of our blood, stand up and plaster praise on his own
+country?  He can think as highly as he likes, but this
+open-mouthed vehemence of adoration struck me almost as
+indelicate.  My hosts talked for rather more than three hours,
+and at the end seemed ready for three hours more.
+
+But when the lieutenant--such a big, brave, gentle giant--rose to
+his feet, he delivered what seemed to me as the speech of the
+evening.  I remember nearly the whole of it, and it ran
+some-thing in this way:--"Gentlemen--It's very good of you to
+give me this dinner and to tell me all these prettythings, but
+what I want you to understand--the fact is, what we want and what
+we ought to get at once, is a navy--more ships--lots of 'em--"
+
+Then we howled the top of the roof off, and I for one fell in
+love with Carlin on the spot. Wallah!  He was a man.
+
+The prince among merchants bid me take no heed to the warlike
+sentiments of some of the old generals.
+
+"The sky-rockets are thrown in for effect," quoth he, "and
+whenever we get on our hind legs we always express a desire to
+chaw up England. It's a sort of family affair."
+
+And, indeed, when you come to think of it, there is no other
+country for the American public speaker to trample upon.
+
+France has Germany; we have Russia; for Italy Austria is
+provided; and the humblest Pathan possesses an ancestral enemy.
+
+Only America stands out of the racket, and there-fore to be in
+fashion makes a sand-bag of the mother country, and hangs her
+when occasion requires.
+
+"The chain of fortresses" man, a fascinating talker, explained to
+me after the affair that he was compelled to blow off steam. 
+Everybody expected it.
+
+When we had chanted "The Star Spangled Banner" not more than
+eight times, we adjourned. America is a very great country, but
+it is not yet heaven, with electric lights and plush fittings, as
+the speakers professed to believe.  My listening mind went back
+to the politicians in the saloon, who wasted no time in talking
+about freedom, but quietly made arrangements to impose their will
+on the citizens.
+
+"The judge is a great man, but give thy presents to the clerk,"
+as the proverb saith.
+
+And what more remains to tell?  I cannot write connectedly,
+because I am in love with all those girls aforesaid, and some
+others who do not appear in the invoice.  The typewriter is an
+in-stitution of which the comic papers make much capital, but she
+is vastly convenient.  She and a companion rent a room in a
+business quarter, and, aided by a typewriting machine, copy MSS.
+at the rate of six annas a page.  Only a woman can operate a
+typewriting machine, because she has served apprenticeship to the
+sewing machine.  She can earn as much as one hundred dollars a
+month, and professes to regard this form of bread-winning as her
+natural destiny.  But, oh! how she hates it in her heart of
+hearts!  When I had got over the surprise of doing business with
+and trying to give orders to a young woman of coldly, clerkly
+aspect intrenched behind gold-rimmed spectacles, I made inquiries
+concerning the pleasures of this independence.  They liked
+it--indeed they did. 'Twas the natural fate of almost all
+girls--the recognized custom in America--and I was a barbarian
+not to see it in that light.
+
+"Well, and after?" said I.  "What happens?"
+
+"We work for our bread."
+
+"And then what do you expect?"
+
+"Then we shall work for our bread."
+
+"Till you die?"
+
+"Ye-es--unless--"
+
+"Unless what?  This is your business, you know.  A man works
+until he dies."
+
+"So shall we"--this without enthusiasm--"I suppose."
+
+Said the partner in the firm, audaciously:--"Sometimes we marry
+our employees--at least, that's what the newspapers say."
+
+The hand banged on half a dozen of the keys of the machine at
+once.  "Yet I don't care.  I hate it--I hate it--I hate it--and
+you needn't look so!"
+
+The senior partner was regarding the rebel with grave-eyed
+reproach.
+
+"I thought you did," said I.  "I don't suppose American girls are
+much different from English ones in instinct."
+
+"Isn't it Theophile Gautier who says that the only difference
+between country and country lie in the slang and the uniform of
+the police?"
+
+Now, in the name of all the gods at once, what is one to say to a
+young lady (who in England would be a person) who earns her own
+bread, and very naturally hates the employ, and slings
+out-of-the-way quotations at your head?  That one falls in love
+with her goes without saying, but that is not enough.
+
+A mission should be established.
+
+
+
+III
+
+American Salmon
+
+The race is neither to the swift nor the battle to the strong;
+but time and chance cometh to all.
+
+I HAVE lived!
+
+The American Continent may now sink under the sea, for I have
+taken the best that it yields, and the best was neither dollars,
+love, nor real estate.
+
+Hear now, gentlemen of the Punjab Fishing Club, who whip the
+reaches of the Tavi, and you who painfully import trout over to
+Octamund, and I will tell you how old man California and I went
+fishing, and you shall envy.
+
+We returned from The Dalles to Portland by the way we had come,
+the steamer stopping en route to pick up a night's catch of one
+of the salmon wheels on the river, and to deliver it at a cannery
+down-stream.
+
+When the proprietor of the wheel announced that his take was two
+thousand two hundred and thirty pounds weight of fish, "and not a
+heavy catch neither," I thought he lied.  But he sent the boxes
+aboard, and I counted the salmon by the hundred--huge
+fifty-pounders hardly dead, scores of twenty and thirty pounders,
+and a host of smaller fish.  They were all Chenook salmon, as
+distinguished from the "steel head" and the "silver side."  That
+is to say, they were royal salmon, and California and I dropped a
+tear over them, as monarchs who deserved a better fate; but the
+lust of slaughter entered into our souls, and we talked fish and
+forgot the mountain scenery that had so moved us a day before.
+
+The steamer halted at a rude wooden warehouse built on piles in a
+lonely reach of the river, and sent in the fish.  I followed them
+up a scale-strewn, fishy incline that led to the cannery.  The
+crazy building was quivering with the machinery on its floors,
+and a glittering bank of tin scraps twenty feet high showed where
+the waste was thrown after the cans had been punched.
+
+Only Chinamen were employed on the work, and they looked like
+blood-besmeared yellow devils as they crossed the rifts of
+sunlight that lay upon the floor.  When our consignment arrived,
+the rough wooden boxes broke of themselves as they were dumped
+down under a jet of water, and the salmon burst out in a stream
+of quicksilver.  A Chinaman jerked up a twenty-pounder, beheaded
+and detailed it with two swift strokes of a knife, flicked out
+its internal arrangements with a third, and case it into a
+blood-dyed tank.  The headless fish leaped from under his hands
+as though they were facing a rapid.  Other Chinamen pulled them
+from the vat and thrust them under a thing like a chaff-cutter,
+which, descending, hewed them into unseemly red gobbets fit for
+the can.
+
+More Chinamen, with yellow, crooked fingers, jammed the stuff
+into the cans, which slid down some marvellous machine forthwith,
+soldering their own tops as they passed.  Each can was hastily
+tested for flaws, and then sunk with a hundred companions into a
+vat of boiling water, there to be half cooked for a few minutes. 
+The cans bulged slightly after the operation, and were therefore
+slidden along by the trolleyful to men with needles and
+soldering-irons who vented them and soldered the aperture. 
+Except for the label, the "Finest Columbia Salmon" was ready for
+the market.  I was impressed not so much with the speed of the
+manufacture as the character of the factory.  Inside, on a floor
+ninety by forty, the most civilized and murderous of machinery.
+Outside, three footsteps, the thick-growing pines and the immense
+solitude of the hills.  Our steamer only stayed twenty minutes at
+that place, but I counted two hundred and forty finished cans
+made from the catch of the previous night ere I left the
+slippery, blood-stained, scale-spangled, oily floors and the
+offal-smeared Chinamen.
+
+We reached Portland, California and I crying for salmon, and a
+real-estate man, to whom we had been intrusted by an insurance
+man, met us in the street, saying that fifteen miles away, across
+country, we should come upon a place called Clackamas, where we
+might per-chance find what we desired.  And California, his
+coat-tails flying in the wind, ran to a livery-stable and
+chartered a wagon and team forthwith. I could push the wagon
+about with one hand, so light was its structure.  The team was
+purely American--that is to say, almost human in its intelligence
+and docility.  Some one said that the roads were not good on the
+way to Clackamas, and warned us against smashing the springs.
+"Portland," who had watched the preparations, finally reckoned
+"He'd come along, too;" and under heavenly skies we three
+companions of a day set forth, California carefully lashing our
+rods into the carriage, and the by-standers overwhelming us with
+directions as to the saw-mills we were to pass, the ferries we
+were to cross, and the sign-posts we were to seek signs from. 
+Half a mile from this city of fifty thousand souls we struck (and
+this must be taken literally) a plank road that would have been a
+disgrace to an Irish village.
+
+Then six miles of macadamized road showed us that the team could
+move.  A railway ran between us and the banks of the Willamette,
+and another above us through the mountains.  All the land was
+dotted with small townships, and the roads were full of farmers
+in their town wagons, bunches of tow-haired, boggle-eyed urchins
+sitting in the hay behind.  The men generally looked like
+loafers, but their women were all well dressed.
+
+Brown braiding on a tailor-made jacket does not, however, consort
+with hay-wagons.  Then we struck into the woods along what
+California called a camina reale--a good road--and Portland a
+"fair track."  It wound in and out among fire-blackened stumps
+under pine-trees, along the corners of log fences, through
+hollows, which must be hopeless marsh in the winter, and up
+absurd gradients.  But nowhere throughout its length did I see
+any evidence of road-making. There was a track--you couldn't well
+get off it, and it was all you could do to stay on it.  The dust
+lay a foot thick in the blind ruts, and under the dust we found
+bits of planking and bundles of brushwood that sent the wagon
+bounding into the air.  The journey in itself was a delight. 
+Sometimes we crashed through bracken; anon, where the
+blackberries grew rankest, we found a lonely little cemetery, the
+wooden rails all awry and the pitiful, stumpy head-stones nodding
+drunkenly at the soft green mullions.  Then, with oaths and the
+sound of rent underwood, a yoke of mighty bulls would swing down
+a "skid" road, hauling a forty-foot log along a rudely made
+slide.
+
+A valley full of wheat and cherry-trees succeeded, and halting at
+a house, we bought ten-pound weight of luscious black cherries
+for something less than a rupee, and got a drink of icy-cold
+water for nothing, while the untended team browsed sagaciously by
+the road-side.  Once we found a way-side camp of horse-dealers
+lounging by a pool, ready for a sale or a swap, and once two
+sun-tanned youngsters shot down a hill on Indian ponies, their
+full creels banging from the high-pommelled saddle.  They had
+been fishing, and were our brethren, therefore.  We shouted aloud
+in chorus to scare a wild cat; we squabbled over the reasons that
+had led a snake to cross a road; we heaved bits of bark at a
+venturesome chipmunk, who was really the little gray squirrel of
+India, and had come to call on me; we lost our way, and got the
+wagon so beautifully fixed on a khud-bound road that we had to
+tie the two hind wheels to get it down.
+
+Above all, California told tales of Nevada and Arizona, of lonely
+nights spent out prospecting, the slaughter of deer and the chase
+of men, of woman--lovely woman--who is a firebrand in a Western
+city and leads to the popping of pistols, and of the sudden
+changes and chances of Fortune, who delights in making the miner
+or the lumber-man a quadruplicate millionaire and in "busting"
+the railroad king.
+
+That was a day to be remembered, and it had only begun when we
+drew rein at a tiny farm-house on the banks of the Clackamas and
+sought horse feed and lodging, ere we hastened to the river that
+broke over a weir not a quarter of a mile away.  Imagine a stream
+seventy yards broad divided by a pebbly island, running over
+seductive "riffles" and swirling into deep, quiet pools, where
+the good salmon goes to smoke his pipe after meals.  Get such a
+stream amid fields of breast-high crops surrounded by hills of
+pines, throw in where you please quiet water, long-fenced
+meadows, and a hundred-foot bluff just to keep the scenery from
+growing too monotonous, and you will get some faint notion of the
+Clackamas.  The weir had been erected to pen the Chenook salmon
+from going further up-stream. We could see them, twenty or thirty
+pounds, by the score in the deep pools, or flying madly against
+the weir and foolishly skinning their noses.  They were not our
+prey, for they would not rise at a fly, and we knew it.  All the
+same, when one made his leap against the weir, and landed on the
+foot-plank with a jar that shook the board I was standing on, I
+would fain have claimed him for my own capture.
+
+Portland had no rod.  He held the gaff and the whiskey. 
+California sniffed up-stream and down-stream, across the racing
+water, chose his ground, and let the gaudy fly drop in the tail
+of a riffle.  I was getting my rod together, when I heard the
+joyous shriek of the reel and the yells of California, and three
+feet of living silver leaped into the air far across the water. 
+The forces were engaged.
+
+The salmon tore up-stream, the tense line cutting the water like
+a tide-rip behind him, and the light bamboo bowed to breaking. 
+What happened thereafter I cannot tell.  California swore and
+prayed, and Portland shouted advice, and I did all three for what
+appeared to be half a day, but was in reality a little over a
+quarter of an hour, and sullenly our fish came home with spurts
+of temper, dashes head on and sarabands in the air, but home to
+the bank came he, and the remorseless reel gathered up the thread
+of his life inch by inch.  We landed him in a little bay, and the
+spring weight in his gorgeous gills checked at eleven and one
+half pounds.  Eleven and one half pounds of fighting salmon!  We
+danced a war-dance on the pebbles, and California caught me round
+the waist in a hug that went near to breaking my ribs, while he
+shouted:--"Partner!  Partner!  This is glory!  Now you catch your
+fish!  Twenty-four years I've waited for this!"
+
+I went into that icy-cold river and made my cast just above the
+weir, and all but foul-hooked a blue-and-black water-snake with a
+coral mouth who coiled herself on a stone and hissed
+male-dictions.
+
+The next cast--ah, the pride of it, the regal splendor of it! the
+thrill that ran down from finger-tip to toe!  Then the water
+boiled.  He broke for the fly and got it.  There remained enough
+sense in me to give him all he wanted when he jumped not once,
+but twenty times, before the up-stream flight that ran my line
+out to the last half-dozen turns, and I saw the nickelled
+reel-bar glitter under the thinning green coils. My thumb was
+burned deep when I strove to stopper the line.
+
+I did not feel it till later, for my soul was out in the dancing
+weir, praying for him to turn ere he took my tackle away.  And
+the prayer was heard.  As I bowed back, the butt of the rod on my
+left hip-bone and the top joint dipping like unto a weeping
+willow, he turned and accepted each inch of slack that I could by
+any means get in as a favor from on high.  There lie several
+sorts of success in this world that taste well in the moment of
+enjoyment, but I question whether the stealthy theft of line from
+an able-bodied salmon who knows exactly what you are doing and
+why you are doing it is not sweeter than any other victory within
+human scope.  Like California's fish, he ran at me head on, and
+leaped against the line, but the Lord gave me two hundred and
+fifty pairs of fingers in that hour.  The banks and the
+pine-trees danced dizzily round me, but I only reeled--reeled as
+for life--reeled for hours, and at the end of the reeling
+continued to give him the butt while he sulked in a pool.
+California was further up the reach, and with the corner of my
+eye I could see him casting with long casts and much skill.  Then
+he struck, and my fish broke for the weir in the same instant,
+and down the reach we came, California and I, reel answering reel
+even as the morning stars sing together.
+
+The first wild enthusiasm of capture had died away.  We were both
+at work now in deadly earnest to prevent the lines fouling, to
+stall off a down-stream rush for shaggy water just above the
+weir, and at the same time to get the fish into the shallow bay
+down-stream that gave the best practicable landing.  Portland bid
+us both be of good heart, and volunteered to take the rod from my
+hands.
+
+I would rather have died among the pebbles than surrender my
+right to play and land a salmon, weight unknown, with an
+eight-ounce rod.  I heard California, at my ear, it seemed,
+gasping: "He's a fighter from Fightersville, sure!" as his fish
+made a fresh break across the stream.  I saw Portland fall off a
+log fence, break the overhanging bank, and clatter down to the
+pebbles, all sand and landing-net, and I dropped on a log to rest
+for a moment.  As I drew breath the weary hands slackened their
+hold, and I forgot to give him the butt.
+
+A wild scutter in the water, a plunge, and a break for the
+head-waters of the Clackamas was my reward, and the weary toil of
+reeling in with one eye under the water and the other on the top
+joint of the rod was renewed.  Worst of all, I was blocking
+California's path to the little landing bay aforesaid, and he had
+to halt and tire his prize where he was.
+
+"The father of all the salmon!" he shouted. "For the love of
+Heaven, get your trout to bank, Johnny Bull!"
+
+But I could do no more.  Even the insult failed to move me.  The
+rest of the game was with the salmon.  He suffered himself to be
+drawn, skip-ping with pretended delight at getting to the haven
+where I would fain bring him.  Yet no sooner did he feel shoal
+water under his ponderous belly than he backed like a
+torpedo-boat, and the snarl of the reel told me that my labor was
+in vain.  A dozen times, at least, this happened ere the line
+hinted he had given up the battle and would be towed in.  He was
+towed.  The landing-net was useless for one of his size, and I
+would not have him gaffed.  I stepped into the shallows and
+heaved him out with a respectful hand under the gill, for which
+kindness he battered me about the legs with his tail, and I felt
+the strength of him and was proud.  California had taken my place
+in the shallows, his fish hard held.  I was up the bank lying
+full length on the sweet-scented grass and gasping in company
+with my first salmon caught, played and landed on an eight-ounce
+rod. My hands were cut and bleeding, I was dripping with sweat,
+spangled like a harlequin with scales, water from my waist down,
+nose peeled by the sun, but utterly, supremely, and consummately
+happy.
+
+The beauty, the darling, the daisy, my Salmon Bahadur, weighed
+twelve pounds, and I had been seven-and-thirty minutes bringing
+him to bank! He had been lightly hooked on the angle of the right
+jaw, and the hook had not wearied him. That hour I sat among
+princes and crowned heads greater than them all.  Below the bank
+we heard California scuffling with his salmon and swearing
+Spanish oaths.  Portland and I assisted at the capture, and the
+fish dragged the spring balance out by the roots.  It was only
+constructed to weigh up to fifteen pounds.  We stretched the
+three fish on the grass--the eleven and a half, the twelve and
+fifteen pounder--and we gave an oath that all who came after
+should merely be weighed and put back again.
+
+How shall I tell the glories of that day so that you may be
+interested?  Again and again did California and I prance down
+that reach to the little bay, each with a salmon in tow, and land
+him in the shallows.  Then Portland took my rod and caught some
+ten-pounders, and my spoon was carried away by an unknown
+leviathan.  Each fish, for the merits of the three that had died
+so gamely, was hastily hooked on the balance and flung back. 
+Portland recorded the weight in a pocket-book, for he was a
+real-estate man.  Each fish fought for all he was worth, and none
+more savagely than the smallest, a game little six-pounder. At
+the end of six hours we added up the list.  Read it.  Total:
+Sixteen fish; aggregate weight, one hundred and forty pounds. 
+The score in detail runs something like this--it is only
+interesting to those concerned: fifteen, eleven and a half,
+twelve, ten, nine and three quarters, eight, and so forth; as I
+have said, nothing under six pounds, and three ten-pounders.
+
+Very solemnly and thankfully we put up our rods--it was glory
+enough for all time--and returned weeping in each other's arms,
+weeping tears of pure joy, to that simple, bare-legged family in
+the packing-case house by the water-side.
+
+The old farmer recollected days and nights of fierce warfare with
+the Indians "way back in the fifties," when every ripple of the
+Columbia River and her tributaries hid covert danger.  God had
+dowered him with a queer, crooked gift of expression and a fierce
+anxiety for the welfare of his two little sons--tanned and
+reserved children, who attended school daily and spoke good
+English in a strange tongue.
+
+His wife was an austere woman, who had once been kindly, and
+perhaps handsome.
+
+Very many years of toil had taken the elasticity out of step and
+voice.  She looked for nothing better than everlasting work--the
+chafing detail of housework--and then a grave somewhere up the
+hill among the blackberries and the pines.
+
+But in her grim way she sympathized with her eldest daughter, a
+small and silent maiden of eighteen, who had thoughts very far
+from the meals she tended and the pans she scoured.
+
+We stumbled into the household at a crisis, and there was a deal
+of downright humanity in that same.  A bad, wicked dress-maker
+had promised the maiden a dress in time for a to-morrow's
+rail-way journey, and though the barefooted Georgy, who stood in
+very wholesome awe of his sister, had scoured the woods on a pony
+in search, that dress never arrived.  So, with sorrow in her
+heart and a hundred Sister-Anne glances up the road, she waited
+upon the strangers and, I doubt not, cursed them for the wants
+that stood between her and her need for tears.  It was a genuine
+little tragedy.  The mother, in a heavy, passionless voice,
+rebuked her impatience, yet sat up far into the night, bowed over
+a heap of sewing for the daughter's benefit.
+
+These things I beheld in the long marigold-scented twilight and
+whispering night, loafing round the little house with California,
+who un-folded himself like a lotus to the moon, or in the little
+boarded bunk that was our bedroom, swap-ping tales with Portland
+and the old man.
+
+Most of the yarns began in this way:--"Red Larry was a
+bull-puncher back of Lone County, Montana," or "There was a man
+riding the trail met a jack-rabbit sitting in a cactus," or
+"'Bout the time of the San Diego land boom, a woman from
+Monterey," etc.
+
+You can try to piece out for yourselves what sort of stories they
+were.
+
+
+
+IV
+
+The Yellowstone
+
+ONCE upon a time there was a carter who brought his team and a
+friend into the Yellowstone Park without due thought.  Presently
+they came upon a few of the natural beauties of the place, and
+that carter turned his team into his friend's team,
+howling:--"Get out o' this, Jim.  All hell's alight under our
+noses!"
+
+And they called the place Hell's Half-Acre to this day to witness
+if the carter lied.
+
+We, too, the old lady from Chicago, her husband, Tom, and the
+good little mares, came to Hell's Half-Acre, which is about sixty
+acres in extent, and when Tom said:--"Would you like to drive
+over it?"
+
+We said:--"Certainly not, and if you do we shall report you to
+the park authorities."
+
+There was a plain, blistered, peeled, and abominable, and it was
+given over to the sportings and spoutings of devils who threw
+mud, and steam, and dirt at each other with whoops, and halloos,
+and bellowing curses.
+
+The places smelled of the refuse of the pit, and that odor mixed
+with the clean, wholesome aroma of the pines in our nostrils
+throughout the day.
+
+This Yellowstone Park is laid out like Ollendorf, in exercises of
+progressive difficulty.  Hell's Half-Acre was a prelude to ten or
+twelve miles of geyser formation.
+
+We passed hot streams boiling in the forest; saw whiffs of steam
+beyond these, and yet other whiffs breaking through the misty
+green hills in the far distance; we trampled on sulphur in
+crystals, and sniffed things much worse than any sulphur which is
+known to the upper world; and so journeying, bewildered with the
+novelty, came upon a really park-like place where Tom suggested
+we should get out and play with the geysers on foot.
+
+Imagine mighty green fields splattered with lime-beds, all the
+flowers of the summer growing up to the very edge of the lime. 
+That was our first glimpse of the geyser basins.
+
+The buggy had pulled up close to a rough, broken, blistered cone
+of spelter stuff between ten and twenty feet high.  There was
+trouble in that place--moaning, splashing, gurgling, and the
+clank of machinery.  A spurt of boiling water jumped into the
+air, and a wash of water followed.
+
+I removed swiftly.  The old lady from Chicago shrieked.  "What a
+wicked waste!" said her husband.
+
+I think they call it the Riverside Geyser.  Its spout was torn
+and ragged like the mouth of a gun when a shell has burst there. 
+It grumbled madly for a moment or two, and then was still. I
+crept over the steaming lime--it was the burning marl on which
+Satan lay--and looked fearfully down its mouth.  You should never
+look a gift geyser in the mouth.
+
+I beheld a horrible, slippery, slimy funnel with water rising and
+falling ten feet at a time.  Then the water rose to lip level
+with a rush, and an infernal bubbling troubled this Devil's
+Bethesda before the sullen heave of the crest of a wave lapped
+over the edge and made me run.
+
+Mark the nature of the human soul!  I had begun with awe, not to
+say terror, for this was my first experience of such things.  I
+stepped back from the banks of the Riverside Geyser,
+saying:--"Pooh!  Is that all it can do?"
+
+Yet for aught I knew, the whole thing might have blown up at a
+minute's notice, she, he, or it being an arrangement of uncertain
+temper.
+
+We drifted on, up that miraculous valley.  On either side of us
+were hills from a thousand or fifteen hundred feet high, wooded
+from crest to heel.  As far as the eye could range forward were
+columns of steam in the air, misshapen lumps of lime, mist-like
+preadamite monsters, still pools of turquoise-blue stretches of
+blue corn-flowers, a river that coiled on itself twenty times,
+pointed bowlders of strange colors, and ridges of glaring,
+staring white.
+
+A moon-faced trooper of German extraction--never was park so
+carefully patrolled--came up to inform us that as yet we had not
+seen any of the real geysers; that they were all a mile or so up
+the valley, and tastefully scattered round the hotel in which we
+would rest for the night.
+
+America is a free country, but the citizens look down on the
+soldier.  I had to entertain that trooper.  The old lady from
+Chicago would have none of him; so we loafed alone together, now
+across half-rotten pine logs sunk in swampy ground, anon over the
+ringing geyser formation, then pounding through river-sand or
+brushing knee-deep through long grass.
+
+"And why did you enlist?" said I.
+
+The moon-faced one's face began to work.  I thought he would have
+a fit, but he told me a story instead--such a nice tale of a
+naughty little girl who wrote pretty love letters to two men at
+once.  She was a simple village wife, but a wicked "family
+novelette" countess couldn't have accomplished her ends better. 
+She drove one man nearly wild with the pretty little treachery,
+and the other man abandoned her and came West to forget the
+trickery.
+
+Moon-face was that man.
+
+We rounded and limped over a low spur of hill, and came out upon
+a field of aching, snowy lime rolled in sheets, twisted into
+knots, riven with rents, and diamonds, and stars, stretching for
+more than half a mile in every direction.
+
+On this place of despair lay most of the big, bad geysers who
+know when there is trouble in Krakatoa, who tell the pines when
+there is a cyclone on the Atlantic seaboard, and who are
+exhibited to visitors under pretty and fanciful names.
+
+The first mound that I encountered belonged to a goblin who was
+splashing in his tub.
+
+I heard him kick, pull a shower-bath on his shoulders, gasp,
+crack his joints, and rub himself down with a towel; then he let
+the water out of the bath, as a thoughtful man should, and it all
+sunk down out of sight till another goblin arrived.
+
+So we looked and we wondered at the Beehive, whose mouth is built
+up exactly like a hive, at the Turban (which is not in the least
+like a turban), and at many, many other geysers, hot holes, and
+springs.  Some of them rumbled, some hissed, some went off
+spasmodically, and others lay dead still in sheets of sapphire
+and beryl.
+
+Would you believe that even these terrible creatures have to be
+guarded by the troopers to prevent the irreverent Americans from
+chipping the cones to pieces, or, worse still, making the geyser
+sick?  If you take a small barrel full of soft-soap and drop it
+down a geyser's mouth, that geyser will presently be forced to
+lay all before you, and for days afterward will be of an
+irritated and inconstant stomach.
+
+When they told me the tale I was filled with sympathy.  Now I
+wish that I had soft-soap and tried the experiment on some lonely
+little beast far away in the woods.  It sounds so probable and so
+human.
+
+Yet he would be a bold man who would administer emetics to the
+Giantess.  She is flat-lipped, having no mouth; she looks like a
+pool, fifty feet long and thirty wide, and there is no
+ornamentation about her.  At irregular intervals she speaks and
+sends up a volume of water over two hundred feet high to begin
+with, then she is angry for a day and a half--sometimes for two
+days.
+
+Owing to her peculiarity of going mad in the night, not many
+people have seen the Giantess at her finest; but the clamor of
+her unrest, men say, shakes the wooden hotel, and echoes like
+thunder among the hills.
+
+The congregation returned to the hotel to put down their
+impressions in diaries and note-books, which they wrote up
+ostentatiously in the verandas. It was a sweltering hot day,
+albeit we stood some-what higher than the level of Simla, and I
+left that raw pine creaking caravansary for the cool shade of a
+clump of pines between whose trunks glimmered tents.
+
+A batch of United States troopers came down the road and flung
+themselves across the country into their rough lines.  The
+Melican cavalryman can ride, though he keeps his accoutrements
+pig-fashion and his horse cow-fashion.
+
+I was free of that camp in five minutes--free to play with the
+heavy, lumpy carbines, have the saddles stripped, and punch the
+horses knowingly in the ribs.  One of the men had been in the
+fight with "Wrap-up-his-Tail," and he told me how that great
+chief, his horse's tail tied up in red calico, swaggered in front
+of the United States cavalry, challenging all to single combat. 
+But he was slain, and a few of his tribe with him.
+
+"There's no use in an Indian, anyway," concluded my friend.
+
+A couple of cow-boys--real cow-boys--jingled through the camp
+amid a shower of mild chaff.  They were on their way to Cook
+City, I fancy, and I know that they never washed.  But they were
+picturesque ruffians exceedingly, with long spurs, hooded
+stirrups, slouch hats, fur weather-cloth over their knees, and
+pistol-butts just easy to hand.
+
+"The cow-boy's goin' under before long," said my friend.  "Soon
+as the country's settled up he'll have to go.  But he's mighty
+useful now.  What would we do without the cow-boy?"
+
+"As how?" said I, and the camp laughed.
+
+"He has the money.  We have the skill.  He comes in winter to
+play poker at the military posts.  We play poker--a few.  When
+he's lost his money we make him drunk and let him go.  Sometimes
+we get the wrong man."
+
+And he told me a tale of an innocent cow-boy who turned up,
+cleaned out, at an army post, and played poker for thirty-six
+hours.  But it was the post that was cleaned out when that
+long-haired Caucasian removed himself, heavy with everybody's pay
+and declining the proffered liquor.
+
+"Noaw," said the historian, "I don't play with no cow-boy unless
+he's a little bit drunk first."
+
+Ere I departed I gathered from more than one man the significant
+fact that up to one hundred yards he felt absolutely secure
+behind his revolver.
+
+"In England, I understand," quoth the limber youth from the
+South,--"in England a man isn't allowed to play with no
+fire-arms.  He's got to be taught all that when he enlists.  I
+didn't want much teaching how to shoot straight 'fore I served
+Uncle Sam.  And that's just where it is.  But you was talking
+about your Horse Guards now?"
+
+I explained briefly some peculiarities of equipment connected
+with our crackest crack cavalry. I grieve to say the camp roared.
+
+"Take 'em over swampy ground.  Let 'em run around a bit an' work
+the starch out of 'em, an' then, Almighty, if we wouldn't plug
+'em at ease I'd eat their horses."
+
+There was a maiden--a very little maiden--who had just stepped
+out of one of James's novels. She owned a delightful mother and
+an equally delightful father--a heavy-eyed, slow-voiced man of
+finance.  The parents thought that their daughter wanted change.
+
+She lived in New Hampshire.  Accordingly, she had dragged them up
+to Alaska and to the Yosemite Valley, and was now returning
+leisurely, via the Yellowstone, just in time for the tail-end of
+the summer season at Saratoga.
+
+We had met once or twice before in the park, and I had been
+amazed and amused at her critical commendation of the wonders
+that she saw. From that very resolute little mouth I received a
+lecture on American literature, the nature and inwardness of
+Washington society, the precise value of Cable's works as
+compared with Uncle Remus Harris, and a few other things that had
+nothing whatever to do with geysers, but were altogether
+pleasant.
+
+Now, an English maiden who had stumbled on a dust-grimed,
+lime-washed, sun-peeled, collarless wanderer come from and going
+to goodness knows where, would, her mother inciting her and her
+father brandishing an umbrella, have regarded him as a dissolute
+adventurer--a person to be disregarded.
+
+Not so those delightful people from New Hampshire.  They were
+good enough to treat him--it sounds almost incredible--as a human
+being, possibly respectable, probably not in immediate need of
+financial assistance.
+
+Papa talked pleasantly and to the point.
+
+The little maiden strove valiantly with the accent of her birth
+and that of her rearing, and mamma smiled benignly in the
+background.
+
+Balance this with a story of a young English idiot I met mooning
+about inside his high collar, attended by a valet.  He
+condescended to tell me that "you can't be too careful who you
+talk to in these parts."  And stalked on, fearing, I suppose,
+every minute for his social chastity.
+
+That man was a barbarian (I took occasion to tell him so), for he
+comported himself after the manner of the head-hunters and hunted
+of Assam who are at perpetual feud one with another.
+
+You will understand that these foolish stories are introduced in
+order to cover the fact that this pen cannot describe the glories
+of the Upper Geyser Basin.  The evening I spent under the lee of
+the Castle Geyser, sitting on a log with some troopers and
+watching a baronial keep forty feet high spouting hot water.  If
+the Castle went off first, they said the Giantess would be quiet,
+and vice versa, and then they told tales till the moon got up and
+a party of campers in the woods gave us all something to eat.
+
+Then came soft, turfy forest that deadened the wheels, and two
+troopers on detachment duty stole noiselessly behind us.  One was
+the Wrap-up-his-Tail man, and they talked merrily while the
+half-broken horses bucked about among the trees. And so a cavalry
+escort was with us for a mile, till we got to a mighty hill
+strewn with moss agates, and everybody had to jump out and pant
+in that thin air.  But how intoxicating it was! The old lady from
+Chicago ducked like an emancipated hen as she scuttled about the
+road, cramming pieces of rock into her reticule.  She sent me
+fifty yards down to the hill-side to pick up a piece of broken
+bottle which she insisted was moss agate.
+
+"I've some o' that at home, an' they shine. Yes, you go get it,
+young man."
+
+As we climbed the long path the road grew viler and viler till it
+became, without disguise, the bed of a torrent; and just when
+things were at their rockiest we nearly fell into a little
+sapphire lake--but never sapphire was so blue--called Mary's
+Lake; and that between eight and nine thousand feet above the
+sea.
+
+Afterward, grass downs, all on a vehement slope, so that the
+buggy, following the new-made road, ran on the two off-wheels
+mostly till we dipped head-first into a ford, climbed up a cliff,
+raced along down, dipped again, and pulled up dishevelled at
+"Larry's" for lunch and an hour's rest.
+
+Then we lay on the grass and laughed with sheer bliss of being
+alive.  This have I known once in Japan, once on the banks of the
+Columbia, what time the salmon came in and California howled, and
+once again in the Yellowstone by the light of the eyes of the
+maiden from New Hampshire.  Four little pools lay at my elbow,
+one was of black water (tepid), one clear water (cold), one clear
+water (hot), one red water (boiling).  My newly washed
+handkerchief covered them all, and we two marvelled as children
+marvel.
+
+"This evening we shall do the Grand Canyon of the Yellowstone,"
+said the maiden.
+
+"Together?" said I; and she said, "Yes."
+
+The sun was beginning to sink when we heard the roar of falling
+waters and came to a broad river along whose banks we ran.  And
+then--I might at a pinch describe the infernal regions, but not
+the other place.  The Yellowstone River has occasion to run
+through a gorge about eight miles long.  To get to the bottom of
+the gorge it makes two leaps, one of about one hundred and twenty
+and the other of three hundred feet.  I investigated the upper or
+lesser fall, which is close to the hotel.
+
+Up to that time nothing particular happens to the
+Yellowstone--its banks being only rocky, rather steep, and
+plentifully adorned with pines.
+
+At the falls it comes round a corner, green, solid, ribbed with a
+little foam, and not more than thirty yards wide.  Then it goes
+over, still green, and rather more solid than before.  After a
+minute or two, you, sitting upon a rock directly above the drop,
+begin to understand that something has occurred; that the river
+has jumped between solid cliff walls, and that the gentle froth
+of water lapping the sides of the gorge below is really the
+outcome of great waves.
+
+And the river yells aloud; but the cliffs do not allow the yells
+to escape.
+
+That inspection began with curiosity and finished in terror, for
+it seemed that the whole world was sliding in chrysolite from
+under my feet.  I followed with the others round the corner to
+arrive at the brink of the canyon.  We had to climb up a nearly
+perpendicular ascent to begin with, for the ground rises more
+than the river drops.  Stately pine woods fringe either lip of
+the gorge, which is the gorge of the Yellowstone. You'll find all
+about it in the guide books.
+
+All that I can say is that without warning or preparation I
+looked into a gulf seventeen hundred feet deep, with eagles and
+fish-hawks circling far below.  And the sides of that gulf were
+one wild welter of color--crimson, emerald, cobalt, ochre, amber,
+honey splashed with port wine, snow white, vermilion, lemon, and
+silver gray in wide washes. The sides did not fall sheer, but
+were graven by time, and water, and air into monstrous heads of
+kings, dead chiefs--men and women of the old time.  So far below
+that no sound of its strife could reach us, the Yellowstone River
+ran a finger-wide strip of jade green.
+
+The sunlight took those wondrous walls and gave fresh hues to
+those that nature had already laid there.
+
+Evening crept through the pines that shadowed us, but the full
+glory of the day flamed in that canyon as we went out very
+cautiously to a jutting piece of rock--blood-red or pink it
+was--that overhung the deepest deeps of all.
+
+Now I know what it is to sit enthroned amid the clouds of sunset
+as the spirits sit in Blake's pictures. Giddiness took away all
+sensation of touch or form, but the sense of blinding color
+remained.
+
+When I reached the mainland again I had sworn that I had been
+floating.
+
+The maid from New Hampshire said no word for a very long time. 
+Then she quoted poetry, which was perhaps the best thing she
+could have done.
+
+"And to think that this show-place has been going on all these
+days an' none of we ever saw it," said the old lady from Chicago,
+with an acid glance at her husband.
+
+"No, only the Injians," said he, unmoved; and the maiden and I
+laughed.
+
+Inspiration is fleeting, beauty is vain, and the power of the
+mind for wonder limited.  Though the shining hosts themselves had
+risen choiring from the bottom of the gorge, they would not have
+prevented her papa and one baser than he from rolling stones down
+those stupendous rainbow-washed slides.  Seventeen hundred feet
+of steep-est pitch and rather more than seventeen hundred colors
+for log or bowlder to whirl through!
+
+So we heaved things and saw them gather way and bound from white
+rock to red or yellow, dragging behind them torrents of color,
+till the noise of their descent ceased and they bounded a hundred
+yards clear at the last into the Yellowstone.
+
+"I've been down there," said Tom, that evening.  "It's easy to
+get down if you're careful--just sit an' slide; but getting up is
+worse.  An' I found down below there two stones just marked with
+a picture of the canyon.  I wouldn't sell these rocks not for
+fifteen dollars."
+
+And papa and I crawled down to the Yellowstone--just above the
+first little fall--to wet a line for good luck.  The round moon
+came up and turned the cliffs and pines into silver; and a
+two-pound trout came up also, and we slew him among the rocks,
+nearly tumbling into that wild river.
+
+   .         .         .         .         .         .
+
+Then out and away to Livingstone once more. The maiden from New
+Hampshire disappeared, papa and mamma with her.  Disappeared,
+too, the old lady from Chicago, and the others.
+
+
+
+V
+
+Chicago
+
+"I know thy cunning and thy greed,
+
+Thy hard high lust and wilful deed,
+
+And all thy glory loves to tell
+
+Of specious gifts material."
+
+I HAVE struck a city--a real city--and they call it Chicago.
+
+The other places do not count.  San Francisco was a
+pleasure-resort as well as a city, and Salt Lake was a
+phenomenon.
+
+This place is the first American city I have encountered.  It
+holds rather more than a million of people with bodies, and
+stands on the same sort of soil as Calcutta.  Having seen it, I
+urgently desire never to see it again.  It is inhabited by
+savages.  Its water is the water of the Hooghly, and its air is
+dirt.  Also it says that it is the "boss" town of America.
+
+I do not believe that it has anything to do with this country. 
+They told me to go to the Palmer House, which is overmuch gilded
+and mirrored, and there I found a huge hall of tessellated marble
+crammed with people talking about money, and spitting about
+everywhere.  Other barbarians charged in and out of this inferno
+with letters and telegrams in their hands, and yet others shouted
+at each other.  A man who had drunk quite as much as was good for
+him told me that this was "the finest hotel in the finest city on
+God Almighty's earth."  By the way, when an American wishes to
+indicate the next country or state, he says, "God A'mighty's
+earth."  This prevents discussion and flatters his vanity.
+
+Then I went out into the streets, which are long and flat and
+without end.  And verily it is not a good thing to live in the
+East for any length of time.  Your ideas grow to clash with those
+held by every right-thinking man.  I looked down interminable
+vistas flanked with nine, ten, and fifteen-storied houses, and
+crowded with men and women, and the show impressed me with a
+great horror.
+
+Except in London--and I have forgotten what London was like--I
+had never seen so many white people together, and never such a
+collection of miserables.  There was no color in the street and
+no beauty--only a maze of wire ropes overhead and dirty stone
+flagging under foot.
+
+A cab-driver volunteered to show me the glory of the town for so
+much an hour, and with him I wandered far.  He conceived that all
+this turmoil and squash was a thing to be reverently admired,
+that it was good to huddle men together in fifteen layers, one
+atop of the other, and to dig holes in the ground for offices.
+
+He said that Chicago was a live town, and that all the creatures
+hurrying by me were engaged in business.  That is to say they
+were trying to make some money that they might not die through
+lack of food to put into their bellies.  He took me to canals as
+black as ink, and filled with un-told abominations, and bid me
+watch the stream of traffic across the bridges.
+
+He then took me into a saloon, and while I drank made me note
+that the floor was covered with coins sunk in cement.  A
+Hottentot would not have been guilty of this sort of barbarism.
+The coins made an effect pretty enough, but the man who put them
+there had no thought of beauty, and, therefore, he was a savage.
+
+"Then my cab-driver showed me business blocks gay with signs and
+studded with fantastic and absurd advertisements of goods, and
+looking down the long street so adorned, it was as though each
+vender stood at his door howling:--"For the sake of my money,
+employ or buy of me, and me only!"
+
+Have you ever seen a crowd at a famine-relief distribution?  You
+know then how the men leap into the air, stretching out their
+arms above the crowd in the hope of being seen, while the women
+dolorously slap the stomachs of their children and whimper.  I
+had sooner watch famine relief than the white man engaged in what
+he calls legitimate competition.  The one I understand.  The
+other makes me ill.
+
+And the cabman said that these things were the proof of progress,
+and by that I knew he had been reading his newspaper, as every
+intelligent American should.  The papers tell their clientele in
+language fitted to their comprehension that the snarling together
+of telegraph-wires, the heaving up of houses, and the making of
+money is progress.
+
+I spent ten hours in that huge wilderness, wandering through
+scores of miles of these terrible streets and jostling some few
+hundred thousand of these terrible people who talked paisa bat
+through their noses.
+
+The cabman left me; but after awhile I picked up another man, who
+was full of figures, and into my ears he poured them as occasion
+required or the big blank factories suggested.  Here they turned
+out so many hundred thousand dollars' worth of such and such an
+article; there so many million other things; this house was worth
+so many million dollars; that one so many million, more or less. 
+It was like listening to a child babbling of its hoard of shells. 
+It was like watching a fool playing with buttons.  But I was
+expected to do more than listen or watch.  He demanded that I
+should admire; and the utmost that I could say was:--"Are these
+things so?  Then I am very sorry for you."
+
+That made him angry, and he said that insular envy made me
+unresponsive.  So, you see, I could not make him understand.
+
+About four and a half hours after Adam was turned out of the
+Garden of Eden he felt hungry, and so, bidding Eve take care that
+her head was not broken by the descending fruit, shinned up a
+cocoanut-palm.  That hurt his legs, cut his breast, and made him
+breathe heavily, and Eve was tormented with fear lest her lord
+should miss his footing, and so bring the tragedy of this world
+to an end ere the curtain had fairly risen.  Had I met Adam then,
+I should have been sorry for him. To-day I find eleven hundred
+thousand of his sons just as far advanced as their father in the
+art of getting food, and immeasurably inferior to him in that
+they think that their palm-trees lead straight to the skies. 
+Consequently, I am sorry in rather more than a million different
+ways.
+
+In the East bread comes naturally, even to the poorest, by a
+little scratching or the gift of a friend not quite so poor.  In
+less favored countries one is apt to forget.  Then I went to bed. 
+And that was on a Saturday night.
+
+Sunday brought me the queerest experiences of all--a revelation
+of barbarism complete.  I found a place that was officially
+described as a church. It was a circus really, but that the
+worshippers did not know.  There were flowers all about the
+building, which was fitted up with plush and stained oak and much
+luxury, including twisted brass candlesticks of severest Gothic
+design.
+
+To these things and a congregation of savages entered suddenly a
+wonderful man, completely in the confidence of their God, whom he
+treated colloquially and exploited very much as a newspaper
+reporter would exploit a foreign potentate. But, unlike the
+newspaper reporter, he never allowed his listeners to forget that
+he, and not He, was the centre of attraction.  With a voice of
+silver and with imagery borrowed from the auction-room, he built
+up for his hearers a heaven on the lines of the Palmer House (but
+with all the gilding real gold, and all the plate-glass diamond),
+and set in the centre of it a loud-voiced, argumentative, very
+shrewd creation that he called God.  One sentence at this point
+caught my delighted ear.  It was apropos of some question of the
+Judgment, and ran:--"No!  I tell you God doesn't do business that
+way."
+
+He was giving them a deity whom they could comprehend, and a gold
+and jewelled heaven in which they could take a natural interest. 
+He interlarded his performance with the slang of the streets, the
+counter, and the exchange, and he said that religion ought to
+enter into daily life.  Consequently, I presume he introduced it
+as daily life--his own and the life of his friends.
+
+Then I escaped before the blessing, desiring no benediction at
+such hands.  But the persons who listened seemed to enjoy
+themselves, and I understood that I had met with a popular
+preacher.
+
+Later on, when I had perused the sermons of a gentleman called
+Talmage and some others, I perceived that I had been listening to
+a very mild specimen.  Yet that man, with his brutal gold and
+silver idols, his hands-in-pocket, cigar-in-mouth, and
+hat-on-the-back-of-the-head style of dealing with the sacred
+vessels, would count himself, spiritually, quite competent to
+send a mission to convert the Indians.
+
+All that Sunday I listened to people who said that the mere fact
+of spiking down strips of iron to wood, and getting a steam and
+iron thing to run along them was progress, that the telephone was
+progress, and the net-work of wires overhead was progress.  They
+repeated their statements again and again.
+
+One of them took me to their City Hall and Board of Trade works,
+and pointed it out with pride.  It was very ugly, but very big,
+and the streets in front of it were narrow and unclean. When I
+saw the faces of the men who did business in that building, I
+felt that there had been a mistake in their billeting.
+
+By the way, 'tis a consolation to feel that I am not writing to
+an English audience.  Then I should have to fall into feigned
+ecstasies over the marvellous progress of Chicago since the days
+of the great fire, to allude casually to the raising of the
+entire city so many feet above the level of the lake which it
+faces, and generally to grovel before the golden calf.  But you,
+who are desperately poor, and therefore by these standards of no
+ac-count, know things, will understand when I write that they
+have managed to get a million of men together on flat land, and
+that the bulk of these men together appear to be lower than
+Mahajans and not so companionable as a Punjabi Jat after harvest.
+
+But I don't think it was the blind hurry of the people, their
+argot, and their grand ignorance of things beyond their immediate
+interests that displeased me so much as a study of the daily
+papers of Chicago.
+
+Imprimis, there was some sort of a dispute between New York and
+Chicago as to which town should give an exhibition of products to
+be hereafter holden, and through the medium of their more
+dignified journals the two cities were yahooing and hi-yi-ing at
+each other like opposition newsboys.  They called it humor, but
+it sounded like something quite different.
+
+That was only the first trouble.  The second lay in the tone of
+the productions.  Leading articles which include gems such as
+"Back of such and such a place," or, "We noticed, Tuesday, such
+an event," or, "don't" for "does not," are things to be accepted
+with thankfulness.  All that made me want to cry was that in
+these papers were faithfully reproduced all the war-cries and
+"back-talk" of the Palmer House bar, the slang of the
+barber-shops, the mental elevation and integrity of the Pullman
+car porter, the dignity of the dime museum, and the accuracy of
+the excited fish-wife.  I am sternly forbidden to believe that
+the paper educates the public.  Then I am compelled to believe
+that the public educate the paper; yet suicides on the press are
+rare.
+
+Just when the sense of unreality and oppression was strongest
+upon me, and when I most wanted help, a man sat at my side and
+began to talk what he called politics.
+
+I had chanced to pay about six shillings for a travelling-cap
+worth eighteen-pence, and he made of the fact a text for a
+sermon.  He said that this was a rich country, and that the
+people liked to pay two hundred per cent, on the value of a
+thing. They could afford it.  He said that the government imposed
+a protective duty of from ten to seventy per cent on foreign-made
+articles, and that the American manufacturer consequently could
+sell his goods for a healthy sum.  Thus an imported hat would,
+with duty, cost two guineas. The American manufacturer would make
+a hat for seventeen shillings, and sell it for one pound fifteen. 
+In these things, he said, lay the greatness of America and the
+effeteness of England.  Competition between factory and factory
+kept the prices down to decent limits, but I was never to forget
+that this people were a rich people, not like the pauper
+Continentals, and that they enjoyed paying duties.
+
+To my weak intellect this seemed rather like juggling with
+counters.  Everything that I have yet purchased costs about twice
+as much as it would in England, and when native made is of
+inferior quality.
+
+Moreover, since these lines were first thought of, I have visited
+a gentleman who owned a factory which used to produce things.  He
+owned the factory still.  Not a man was in it, but he was drawing
+a handsome income from a syndicate of firms for keeping it
+closed, in order that it might not produce things.  This man said
+that if protection were abandoned, a tide of pauper labor would
+flood the country, and as I looked at his factory I thought how
+entirely better it was to have no labor of any kind whatever
+rather than face so horrible a future.
+
+Meantime, do you remember that this peculiar country enjoys
+paying money for value not received?  I am an alien, and for the
+life of me I cannot see why six shillings should be paid for
+eighteen-penny caps, or eight shillings for half-crown
+cigar-cases.  When the country fills up to a decently populated
+level a few million people who are not aliens will be smitten
+with the same sort of blindness.
+
+But my friend's assertion somehow thoroughly suited the grotesque
+ferocity of Chicago.
+
+See now and judge!  In the village of Isser Jang, on the road to
+Montgomery, there be four Changar women who winnow corn--some
+seventy bushels a year.  Beyond their hut lives Purun Dass, the
+money-lender, who on good security lends as much as five thousand
+rupees in a year. Jowala Singh, the smith, mends the village
+plows--some thirty, broken at the share, in three hundred and
+sixty-five days; and Hukm Chund, who is letter-writer and head of
+the little club under the travellers' tree, generally keeps the
+village posted in such gossip as the barber and the mid-wife have
+not yet made public property.
+
+Chicago husks and winnows her wheat by the million bushels, a
+hundred banks lend hundreds of millions of dollars in the year,
+and scores of factories turn out plow-gear and machinery by
+steam. Scores of daily papers do work which Hukm Chund and the
+barber and the midwife perform, with due regard for public
+opinion, in the village of Isser Jang.  So far as manufactories
+go, the difference between Chicago on the lake, and Isser Jang on
+the Montgomery road, is one of degree only, and not of kind.  As
+far as the understanding of the uses of life goes, Isser Jang,
+for all its seasonal cholers, has the advantage over Chicago.
+
+Jowala Singh knows and takes care to avoid the three or four
+ghoul-haunted fields on the outskirts of the village; but he is
+not urged by millions of devils to run about all day in the sun
+and swear that his plowshares are the best in the Punjab; nor
+does Purun Dass fly forth in an ekka more than once or twice a
+year, and he knows, on a pinch, how to use the railway and the
+telegraph as well as any son of Israel in Chicago.  But this is
+absurd.
+
+The East is not the West, and these men must continue to deal
+with the machinery of life, and to call it progress.  Their very
+preachers dare not rebuke them.  They gloss over the hunting for
+money and the thrice-sharpened bitterness of Adam's curse, by
+saying that such things dower a man with a larger range of
+thoughts and higher aspirations. They do not say, "Free
+yourselves from your own slavery," but rather, "If you can
+possibly manage it, do not set quite so much store on the things
+of this world."
+
+And they do not know what the things of this world are!
+
+I went off to see cattle killed, by way of clearing my head,
+which, as you will perceive, was getting muddled.  They say every
+Englishman goes to the Chicago stock-yards.  You shall find them
+about six miles from the city; and once having seen them, you
+will never forget the sight.
+
+As far as the eye can reach stretches a town-ship of cattle-pens,
+cunningly divided into blocks, so that the animals of any pen can
+be speedily driven out close to an inclined timber path which
+leads to an elevated covered way straddling high above the pens. 
+These viaducts are two-storied.  On the upper story tramp the
+doomed cattle, stolidly for the most part.  On the lower, with a
+scuffling of sharp hoofs and multitudinous yells, run the pigs,
+the same end being appointed for each.  Thus you will see the
+gangs of cattle waiting their turn--as they wait sometimes for
+days; and they need not be distressed by the sight of their
+fellows running about in the fear of death. All they know is that
+a man on horseback causes their next-door neighbors to move by
+means of a whip.  Certain bars and fences are unshipped, and
+behold! that crowd have gone up the mouth of a sloping tunnel and
+return no more.
+
+It is different with the pigs.  They shriek back the news of the
+exodus to their friends, and a hundred pens skirl responsive.
+
+It was to the pigs I first addressed myself. Selecting a viaduct
+which was full of them, as I could hear, though I could not see,
+I marked a sombre building whereto it ran, and went there, not
+unalarmed by stray cattle who had managed to escape from their
+proper quarters.  A pleasant smell of brine warned me of what was
+coming. I entered the factory and found it full of pork in
+barrels, and on another story more pork un-barrelled, and in a
+huge room the halves of swine, for whose behoof great lumps of
+ice were being pitched in at the window.  That room was the
+mortuary chamber where the pigs lay for a little while in state
+ere they began their progress through such passages as kings may
+sometimes travel.
+
+Turning a corner, and not noting an overhead arrangement of
+greased rail, wheel, and pulley, I ran into the arms of four
+eviscerated carcasses, all pure white and of a human aspect,
+pushed by a man clad in vehement red.  When I leaped aside, the
+floor was slippery under me.  Also there was a flavor of
+farm-yard in my nostrils and the shouting of a multitude in my
+ears.  But there was no joy in that shouting.  Twelve men stood
+in two lines six a side.  Between them and overhead ran the
+railway of death that had nearly shunted me through the window. 
+Each man carried a knife, the sleeves of his shirt were cut off
+at the elbows, and from bosom to heel he was blood-red.
+
+Beyond this perspective was a column of steam, and beyond that
+was where I worked my awe-struck way, unwilling to touch beam or
+wall. The atmosphere was stifling as a night in the rains by
+reason of the steam and the crowd.  I climbed to the beginning of
+things and, perched upon a narrow beam, overlooked very nearly
+all the pigs ever bred in Wisconsin.  They had just been shot out
+of the mouth of the viaduct and huddled together in a large pen. 
+Thence they were flicked persuasively, a few at a time, into a
+smaller chamber, and there a man fixed tackle on their hinder
+legs, so that they rose in the air, suspended from the railway of
+death.
+
+Oh! it was then they shrieked and called on their mothers, and
+made promises of amendment, till the tackle-man punted them in
+their backs and they slid head down into a brick-floored passage,
+very like a big kitchen sink, that was blood-red. There awaited
+them a red man with a knife, which he passed jauntily through
+their throats, and the full-voiced shriek became a splutter, and
+then a fall as of heavy tropical rain, and the red man, who was
+backed against the passage-wall, you will understand, stood clear
+of the wildly kicking hoofs and passed his hand over his eyes,
+not from any feeling of compassion, but because the spurted blood
+was in his eyes, and he had barely time to stick the next
+arrival.  Then that first stuck swine dropped, still kicking,
+into a great vat of boiling water, and spoke no more words, but
+wallowed in obedience to some unseen machinery, and presently
+came forth at the lower end of the vat, and was heaved on the
+blades of a blunt paddle-wheel, things which said "Hough, hough,
+hough!" and skelped all the hair off him, except what little a
+couple of men with knives could remove.
+
+Then he was again hitched by the heels to that said railway, and
+passed down the line of the twelve men, each man with a
+knife--losing with each man a certain amount of his
+individuality, which was taken away in a wheel-barrow, and when
+he reached the last man he was very beautiful to behold, but
+excessively unstuffed and limp. Preponderance of individuality
+was ever a bar to foreign travel.  That pig could have been in
+case to visit you in India had he not parted with some of his
+most cherished notions.
+
+The dissecting part impressed me not so much as the slaying. 
+They were so excessively alive, these pigs.  And then, they were
+so excessively dead, and the man in the dripping, clammy, not
+passage did not seem to care, and ere the blood of such a one had
+ceased to foam on the floor, such another and four friends with
+him had shrieked and died.  But a pig is only the unclean
+animal--the forbidden of the prophet.
+
+
+
+VI
+
+The American Army
+
+I SHOULD very much like to deliver a dissertation on the American
+army and the possibilities of its extension.  You see, it is such
+a beautiful little army, and the dear people don't quite
+understand what to do with it.  The theory is that it is an
+instructional nucleus round which the militia of the country will
+rally, and from which they will get a stiffening in time of
+danger. Yet other people consider that the army should be built,
+like a pair of lazy tongs--on the principle of elasticity and
+extension--so that in time of need it may fill up its skeleton
+battalions and empty saddle troops.  This is real wisdom,
+be-cause the American army, as at present constituted, is made up
+of:--Twenty-five regiments infantry, ten companies each.
+
+Ten regiments cavalry, twelve companies each.
+
+Five regiments artillery, twelve companies each.
+
+Now there is a notion in the air to reorganize the service on
+these lines:--Eighteen regiments infantry at four battalions,
+four companies each; third battalion, skeleton; fourth on paper.
+
+Eight regiments cavalry at four battalions, four troops each;
+third battalion, skeleton; fourth on paper.
+
+Five regiments artillery at four battalions, four companies each;
+third battalion, skeleton; fourth on paper.
+
+Observe the beauty of this business.  The third battalion will
+have its officers, but no men; the fourth will probably have a
+rendezvous and some equipment.
+
+It is not contemplated to give it anything more definite at
+present.  Assuming the regiments to be made up to full
+complement, we get an army of fifty thousand men, which after the
+need passes away must be cut down fifty per cent, to the huge
+delight of the officers.
+
+The military needs of the States be three: (a) Frontier warfare,
+an employment well within the grip of the present army of
+twenty-five thousand, and in the nature of things growing less
+arduous year by year; (b) internal riots and commotions which
+rise up like a dust devil, whirl furiously, and die out long
+before the authorities at Washington could begin to fill up even
+the third skeleton battalions, much less hunt about for material
+for the fourth; (c) civil war, in which, as the case in the
+affair of the North and South, the regular army would be swamped
+in the mass of militia and armed volunteers would turn the land
+into a hell.
+
+Yet the authorities persist in regarding an external war as a
+thing to be seriously considered.
+
+The Power that would disembark troops on American soil would be
+capable of heaving a shovelful of mud into the Atlantic in the
+hope of filling it up.  Consequently, the authorities are
+fascinated with the idea of the sliding scale or concertina army. 
+This is an hereditary instinct, for you know that when we English
+have got together two companies, one machine gun, a sick bullock,
+forty generals, and a mass of W. O. forms, we say we possess "an
+army corps capable of indefinite extension."
+
+The American army is a beautiful little army. Some day, when all
+the Indians are happily dead or drunk, it ought to make the
+finest scientific and survey corps that the world has ever seen;
+it does excellent work now, but there is this defect in its
+nature: It is officered, as you know, from West Point.
+
+The mischief of it is that West Point seems to be created for the
+purpose of spreading a general knowledge of military matters
+among the people.  A boy goes up to that institution, gets his
+pass, and returns to civil life, so they tell me, with a
+dangerous knowledge that he is a suckling Von Moltke, and may
+apply his learning when occasion offers.  Given trouble, that man
+will be a nuisance, because he is a hideously versatile American,
+to begin with, as cock-sure of himself as a man can be, and with
+all the racial disregard for human life to back him, through any
+demi-semi-professional generalship.
+
+In a country where, as the records of the daily papers show, men
+engaged in a conflict with police or jails are all too ready to
+adopt a military formation and get heavily shot in a sort of
+cheap, half-constructed warfare, instead of being decently scared
+by the appearance of the military, this sort of arrangement does
+not seem wise.
+
+The bond between the States is of an amazing tenuity.  So long as
+they do not absolutely march into the District of Columbia, sit
+on the Washington statues, and invent a flag of their own, they
+can legislate, lynch, hunt negroes through swamps, divorce,
+railroad, and rampage as much as ever they choose.  They do not
+need knowledge of their own military strength to back their
+genial lawlessness.
+
+That regular army, which is a dear little army, should be kept to
+itself, blooded on detachment duty, turned into the paths of
+science, and now and again assembled at feasts of Free Masons,
+and so forth.
+
+It is too tiny to be a political power.  The immortal wreck of
+the Grand Army of the Republic is a political power of the
+largest and most unblushing description.  It ought not to help to
+lay the foundations of an amateur military power that is blind
+and irresponsible.
+
+By great good luck the evil-minded train, already delayed twelve
+hours by a burned bridge, brought me to the city on a Saturday by
+way of that valley which the Mormons, over their efforts, had
+caused to blossom like the rose.  Twelve hours previously I had
+entered into a new world where, in conversation, every one was
+either a Mormon or a Gentile.  It is not seemly for a free and
+independent citizen to dub himself a Gentile, but the Mayor of
+Ogden--which is the Gentile city of the valley--told me that
+there must be some distinction between the two flocks.
+
+Long before the fruit orchards of Logan or the shining levels of
+the Salt Lake had been reached, that mayor--himself a Gentile,
+and one renowned for his dealings with the Mormons--told me that
+the great question of the existence of the power within the power
+was being gradually solved by the ballot and by education.
+
+All the beauty of the valley could not make me forget it.  And
+the valley is very fair.  Bench after bench of land, flat as a
+table against the flanks of the ringing hills, marks where the
+Salt Lake rested for awhile in its collapse from an inland sea to
+a lake fifty miles long and thirty broad.
+
+There are the makings of a very fine creed about Mormonism.  To
+begin with, the Church is rather more absolute than that of Rome. 
+Drop the polygamy plank in the platform, but on the other hand
+deal lightly with certain forms of excess; keep the quality of
+the recruit down to the low mental level, and see that the best
+of all the agricultural science available is in the hands of the
+elders, and there you have a first-class engine for pioneer work. 
+The tawdry mysticism and the borrowing from Freemasonry serve the
+low caste Swede and Dane, the Welshman and the Cornish cotter,
+just as well as a highly organized heaven.
+
+Then I went about the streets and peeped into people's front
+windows, and the decorations upon the tables were after the
+manner of the year 1850. Main Street was full of country folk
+from the desert, come in to trade with the Zion Mercantile
+Co-operative Institute.  The Church, I fancy, looks after the
+finances of this thing, and it consequently pays good dividends.
+
+The faces of the women were not lovely.  In-deed, but for the
+certainty that ugly persons are just as irrational in the matter
+of undivided love as the beautiful, it seems that polygamy was a
+blessed institution for the women, and that only the dread
+threats of the spiritual power could drive the hulking,
+board-faced men into it.  The women wore hideous garments, and
+the men appeared to be tied up with strings.
+
+They would market all that afternoon, and on Sunday go to the
+praying-place.  I tried to talk to a few of them, but they spoke
+strange tongues, and stared and behaved like cows.  Yet one
+woman, and not an altogether ugly one, confided to me that she
+hated the idea of Salt Lake City being turned into a show-place
+for the amusement of the Gentiles.
+
+"If we 'have our own institutions, that ain't no reason why
+people should come 'ere and stare at us, his it?"
+
+The dropped "h" betrayed her.
+
+"And when did you leave England?" I said.
+
+"Summer of '84.  I am Dorset," she said. "The Mormon agent was
+very good to us, and we was very poor.  Now we're better off--my
+father, an' mother, an' me."
+
+"Then you like the State?"
+
+She misunderstood at first.
+
+"Oh, I ain't livin' in the state of polygamy. Not me, yet.  I
+ain't married.  I like where I am.  I've got things o' my
+own--and some land."
+
+"But I suppose you will--"
+
+"Not me.  I ain't like them Swedes an' Danes.  I ain't got
+nothin' to say for or against polygamy.  It's the elders'
+business, an' between you an' me, I don't think it's going on
+much longer.  You'll 'ear them in the 'ouse to-morrer talkin' as
+if it was spreadin' all over America. The Swedes, they think it
+his.  I know it hisn't."
+
+"But you've got your land all right?"
+
+"Oh, yes; we've got our land, an' we never say aught against
+polygamy, o' course--father, an' mother, an' me."
+
+On a table-land overlooking all the city stands the United States
+garrison of infantry and artillery. The State of Utah can do
+nearly anything it pleases until that much-to-be-desired hour
+when the Gentile vote shall quietly swamp out Mormonism; but the
+garrison is kept there in case of accidents.  The big,
+shark-mouthed, pig-eared, heavy-boned farmers sometimes take to
+their creed with wildest fanaticism, and in past years have made
+life excessively unpleasant for the Gentile when he was few in
+the land.  But to-day, so far from killing openly or secretly, or
+burning Gentile farms, it is all the Mormon dare do to feebly try
+to boycott the interloper.  His journals preach defiance to the
+United States Government, and in the Tabernacle on a Sunday the
+preachers follow suit.
+
+When I went there, the place was full of people who would have
+been much better for a washing.
+
+A man rose up and told them that they were the chosen of God, the
+elect of Israel; that they were to obey their priests, and that
+there was a good time coming.  I fancy that they had heard all
+this before so many times it produced no impression whatever,
+even as the sublimest mysteries of another faith lose salt
+through constant iteration. They breathed heavily through their
+noses, and stared straight in front of them--impassive as flat
+fish.
+
+
+
+VII
+
+America's Defenceless Coasts
+
+JUST suppose that America were twenty days distant from England. 
+Then a man could study its customs with undivided soul; but being
+so very near next door, he goes about the land with one eye on
+the smoke of the flesh-pots of the old country across the seas,
+while with the other he squints biliously and prejudicially at
+the alien.
+
+I can lay my hand upon my sacred heart and affirm that up to
+to-day I have never taken three consecutive trips by rail without
+being delayed by an accident.  That it was an accident to another
+train makes no difference.  My own turn may come next.
+
+A few miles from peaceful, pleasure-loving Lakewood they had
+managed to upset an express goods train to the detriment of the
+flimsy permanent way; and thus the train which should have left
+at three departed at seven in the evening.  I was not angry.  I
+was scarcely even interested. When an American train starts on
+time I begin to anticipate disaster--a visitation for such good
+luck, you understand.
+
+Buffalo is a large village of a quarter of a million inhabitants,
+situated on the seashore, which is falsely called Lake Erie.  It
+is a peaceful place, and more like an English county town than
+most of its friends.
+
+Once clear of the main business streets, you launch upon miles
+and miles of asphalted roads running between cottages and
+cut-stone residences of those who have money and peace.  All the
+Eastern cities own this fringe of elegance, but except in Chicago
+nowhere is the fringe deeper or more heavily widened than in
+Buffalo.
+
+The American will go to a bad place because he cannot speak
+English, and is proud of it; but he knows how to make a home for
+himself and his mate, knows how to keep the grass green in front
+of his veranda, and how to fullest use the mechanism of life--hot
+water, gas, good bell-ropes, telephones, etc.  His shops sell him
+delightful household fitments at very moderate rates, and he is
+encompassed with all manner of labor-saving appliances.  This
+does not prevent his wife and his daughter working themselves to
+death over household drudgery; but the intention is good.
+
+When you have seen the outside of a few hundred thousand of these
+homes and the insides of a few score, you begin to understand why
+the American (the respectable one) does not take a deep interest
+in what they call "politics," and why he is so vaguely and
+generally proud of the country that enables him to be so
+comfortable. How can the owner of a dainty chalet, with
+smoked-oak furniture, imitation Venetian tapestry curtains, hot
+and cold water laid on, a bed of geraniums and hollyhocks, a baby
+crawling down the veranda, and a self-acting twirly-whirly hose
+gently hissing over the grass in the balmy dusk of an August
+evening--how can such a man despair of the Republic, or descend
+into the streets on voting days and mix cheerfully with "the
+boys"?
+
+No, it is the stranger--the homeless jackal of a stranger--whose
+interest in the country is limited to his hotel-bill and a
+railway-ticket, that can run from Dan to Beersheba, crying:--"All
+is barren!"
+
+Every good American wants a home--a pretty house and a little
+piece of land of his very own; and every other good American
+seems to get it.
+
+It was when my gigantic intellect was grappling with this
+question that I confirmed a discovery half made in the West.  The
+natives of most classes marry young--absurdly young.  One of my
+informants--not the twenty-two-year-old husband I met on Lake
+Chautauqua--said that from twenty to twenty-four was about the
+usual time for this folly.  And when I asked whether the practice
+was confined to the constitutionally improvident classes, he said
+"No" very quickly. He said it was a general custom, and nobody
+saw anything wrong with it.
+
+"I guess, perhaps, very early marriage may account for a good
+deal of the divorce," said he, reflectively.
+
+Whereat I was silent.  Their marriages and their divorces only
+concern these people; and neither I travelling, nor you, who may
+come after, have any right to make rude remarks about them.
+Only--only coming from a land where a man begins to lightly turn
+to thoughts of love not before he is thirty, I own that playing
+at house-keeping before that age rather surprised me.  Out in the
+West, though, they marry, boys and girls, from sixteen upward,
+and I have met more than one bride of fifteen--husband aged
+twenty.
+
+"When man and woman are agreed, what can the Kazi do?"
+
+From those peaceful homes, and the envy they inspire (two trunks
+and a walking-stick and a bit of pine forest in British Columbia
+are not satisfactory, any way you look at them), I turned me to
+the lake front of Buffalo, where the steamers bellow to the grain
+elevators, and the locomotives yell to the coal-shutes, and the
+canal barges jostle the lumber-raft half a mile long as it snakes
+across the water in tow of a launch, and earth, and sky, and sea
+alike are thick with smoke.
+
+In the old days, before the railway ran into the city, all the
+business quarters fringed the lake-shore where the traffic was
+largest.  To-day the business quarters have gone up-town to meet
+the railroad; the lake traffic still exists, but you shall find a
+narrow belt of red-brick desolation, broken windows, gap-toothed
+doors, and streets where the grass grows between the crowded
+wharves and the bustling city.  To the lake front comes wheat
+from Chicago, lumber, coal, and ore, and a large trade in cheap
+excursionists.
+
+It was my felicity to catch a grain steamer and an elevator
+emptying that same steamer.  The steamer might have been two
+thousand tons burden.  She was laden with wheat in bulk; from
+stem to stern, thirteen feet deep, lay the clean, red wheat. 
+There was no twenty-five per cent dirt admixture about it at all. 
+It was wheat, fit for the grindstones as it lay.  They manoeuvred
+the fore-hatch of that steamer directly under an elevator--a
+house of red tin a hundred and fifty feet high.  Then they let
+down into that fore-hatch a trunk as if it had been the trunk of
+an elephant, but stiff, because it was a pipe of iron-champed
+wood.  And the trunk had a steel-shod nose to it, and contained
+an endless chain of steel buckets.
+
+Then the captain swore, raising his eyes to heaven, and a gruff
+voice answered him from the place he swore at, and certain
+machinery, also in the firmament, began to clack, and the
+glittering, steel-shod nose of that trunk burrowed into the
+wheat, and the wheat quivered and sunk upon the instant as water
+sinks when the siphon sucks, because the steel buckets within the
+trunk were flying upon their endless round, carrying away each
+its appointed morsel of wheat.
+
+The elevator was a Persian well wheel--a wheel squashed out thin
+and cased in a pipe, a wheel driven not by bullocks, but by much
+horse-power, licking up the grain at the rate of thou-sands of
+bushels the hour.  And the wheat sunk into the fore-hatch while a
+man looked--sunk till the brown timbers of the bulkheads showed
+bare, and men leaped down through clouds of golden dust and
+shovelled the wheat furiously round the nose of the trunk, and
+got a steam-shovel of glittering steel and made that shovel also,
+till there remained of the grain not more than a horse leaves in
+the fold of his nose-bag.
+
+In this manner do they handle wheat at Buffalo. On one side of
+the elevator is the steamer, on the other the railway track; and
+the wheat is loaded into the cars in bulk.  Wah! wah!  God is
+great, and I do not think He ever intended Gar Sahai or Luckman
+Narain to supply England with her wheat.  India can cut in not
+without profit to herself when her harvest is good and the
+Ameri-can yield poor; but this very big country can, upon the
+average, supply the earth with all the beef and bread that is
+required.
+
+A man in the train said to me:--"We kin feed all the earth, jest
+as easily as we kin whip all the earth."
+
+Now the second statement is as false as the first is true.  One
+of these days the respectable Republic will find this out.
+
+Unfortunately we, the English, will never be the people to teach
+her; because she is a chartered libertine allowed to say and do
+anything she likes, from demanding the head of the empress in an
+editorial waste-basket, to chevying Canadian schooners up and
+down the Alaska Seas.  It is perfectly impossible to go to war
+with these people, whatever they may do.
+
+They are much too nice, in the first place, and in the second, it
+would throw out all the passenger traffic of the Atlantic, and
+upset the financial arrangements of the English syndicates who
+have invested their money in breweries, railways, and the like,
+and in the third, it's not to be done. Everybody knows that, and
+no one better than the American.
+
+Yet there are other powers who are not "ohai band" (of the
+brotherhood)--China, for instance. Try to believe an
+irresponsible writer when he assures you that China's fleet
+to-day, if properly manned, could waft the entire American navy
+out of the water and into the blue.  The big, fat Republic that
+is afraid of nothing, because nothing up to the present date has
+happened to make her afraid, is as unprotected as a jelly-fish. 
+Not internally, of course--it would be madness for any Power to
+throw men into America; they would die--but as far as regards
+coast defence.
+
+From five miles out at sea (I have seen a test of her "fortified"
+ports) a ship of the power of H. M. S. "Collingwood" (they
+haven't run her on a rock yet) would wipe out any or every town
+from San Francisco to Long Branch; and three first-class
+ironclads would account for New York, Bartholdi's Statue and all.
+
+Reflect on this.  'Twould be "Pay up or go up" round the entire
+coast of the United States.  To this furiously answers the
+patriotic American:--"We should not pay.  We should invent a
+Columbiad in Pittsburg or--or anywhere else, and blow any
+outsider into h--l."
+
+They might invent.  They might lay waste their cities and retire
+inland, for they can subsist entirely on their own produce. 
+Meantime, in a war waged the only way it could be waged by an
+unscrupulous Power, their coast cities and their dock-yards would
+be ashes.  They could construct their navy inland if they liked,
+but you could never bring a ship down to the water-ways, as they
+stand now.
+
+They could not, with an ordinary water patrol, despatch one
+regiment of men six miles across the seas.  There would be about
+five million excessively angry, armed men pent up within American
+limits.  These men would require ships to get themselves afloat. 
+The country has no such ships, and until the ships were built New
+York need not be allowed a single-wheeled carriage within her
+limits.
+
+Behold now the glorious condition of this Republic which has no
+fear.  There is ransom and loot past the counting of man on her
+seaboard alone--plunder that would enrich a nation--and she has
+neither a navy nor half a dozen first-class ports to guard the
+whole.  No man catches a snake by the tail, because the creature
+will sting; but you can build a fire around a snake that will
+make it squirm.
+
+The country is supposed to be building a navy now.  When the
+ships are completed her alliance will be worth having--if the
+alliance of any republic can be relied upon.  For the next three
+years she can be hurt, and badly hurt.  Pity it is that she is of
+our own blood, looking at the matter from a Pindarris point of
+view.  Dog cannot eat dog.
+
+These sinful reflections were prompted by the sight of the
+beautifully unprotected condition of Buffalo--a city that could
+be made to pay up five million dollars without feeling it.  There
+are her companies of infantry in a sort of port there. A gun-boat
+brought over in pieces from Niagara could get the money and get
+away before she could be caught, while an unarmored gun-boat
+guarding Toronto could ravage the towns on the lakes. When one
+hears so much of the nation that can whip the earth, it is, to
+say the least of it, surprising to find her so temptingly
+spankable.
+
+The average American citizen seems to have a notion that any
+Power engaged in strife with the Star Spangled Banner will
+disembark men from flat-bottomed boats on a convenient beach for
+the purpose of being shot down by local militia.  In his own
+simple phraseology:--"Not by a darned sight.  No, sir."
+
+Ransom at long range will be about the size of it--cash or crash.
+
+Let us revisit calmer scenes.
+
+In the heart of Buffalo there stands a magnificent building which
+the population do innocently style a music-hall.  Everybody comes
+here of evenings to sit around little tables and listen to a
+first-class orchestra.  The place is something like the Gaiety
+Theatre at Simla, enlarged twenty times.  The "Light Brigade" of
+Buffalo occupy the boxes and the stage, "as it was at Simla in
+the days of old," and the others sit in the parquet.  Here I went
+with a friend--poor or boor is the man who cannot pick up a
+friend for a season in America--and here was shown the really
+smart folk of the city.  I grieve to say I laughed, because when
+an American wishes to be correct he sets himself to imitate the
+Englishman.  This he does vilely, and earns not only the contempt
+of his brethren, but the amused scorn of the Briton.
+
+I saw one man who was pointed out to me as being the glass of
+fashion hereabouts.  He was aggressively English in his get-up. 
+From eye-glass to trouser-hem the illusion was perfect, but--he
+wore with evening-dress buttoned boots with brown cloth tops! 
+Not till I wandered about this land did I understand why the
+comic papers belabor the Anglomaniac.
+
+Certain young men of the more idiotic sort launch into dog-carts
+and raiment of English cut, and here in Buffalo they play polo at
+four in the afternoon.  I saw three youths come down to the
+polo-ground faultlessly attired for the game and mounted on their
+best ponies.  Expecting a game, I lingered; but I was mistaken. 
+These three shining ones with the very new yellow hide boots and
+the red silk sashes had assembled themselves for the purpose of
+knocking the ball about.  They smote with great solemnity up and
+down the grounds, while the little boys looked on.  When they
+trotted, which was not seldom, they rose and sunk in their
+stirrups with a conscientiousness that cried out "Riding-school!"
+from afar.
+
+Other young men in the park were riding after the English manner,
+in neatly cut riding-trousers and light saddles.  Fate in
+derision had made each youth bedizen his animal with a checkered
+enam-elled leather brow-band visible half a mile away--a
+black-and-white checkered brow-band!  They can't do it, any more
+than an Englishman, by taking cold, can add that indescribable
+nasal twang to his orchestra.
+
+The other sight of the evening was a horror. The little tragedy
+played itself out at a neighboring table where two very young men
+and two very young women were sitting.  It did not strike me till
+far into the evening that the pimply young reprobates were making
+the girls drunk.  They gave them red wine and then white, and the
+voices rose slightly with the maidens' cheek flushes.  I watched,
+wishing to stay, and the youths drank till their speech thickened
+and their eye-balls grew watery.  It was sickening to see,
+because I knew what was going to happen.  My friend eyed the
+group, and said:--"Maybe they're children of respectable people.
+I hardly think, though, they'd be allowed out without any better
+escort than these boys.  And yet the place is a place where every
+one comes, as you see.  They may be Little Immoralities--in which
+case they wouldn't be so hopelessly overcome with two glasses of
+wine.  They may be--"
+
+Whatever they were they got indubitably drunk--there in that
+lovely hall, surrounded by the best of Buffalo society.  One
+could do nothing except invoke the judgment of Heaven on the two
+boys, themselves half sick with liquor.  At the close of the
+performance the quieter maiden laughed vacantly and protested she
+couldn't keep her feet. The four linked arms, and staggering,
+flickered out into the street--drunk, gentlemen and ladies, as
+Davy's swine, drunk as lords!  They disappeared down a side
+avenue, but I could hear their laughter long after they were out
+of sight.
+
+And they were all four children of sixteen and seventeen.  Then,
+recanting previous opinions, I became a prohibitionist.  Better
+it is that a man should go without his beer in public places, and
+content himself with swearing at the narrow-mindedness of the
+majority; better it is to poison the inside with very vile
+temperance drinks, and to buy lager furtively at back-doors, than
+to bring temptation to the lips of young fools such as the four I
+had seen.  I understand now why the preachers rage against drink. 
+I have said: "There is no harm in it, taken moderately;" and yet
+my own demand for beer helped directly to send those two girls
+reeling down the dark street to--God alone knows what end.
+
+If liquor is worth drinking, it is worth taking a little trouble
+to come at--such trouble as a man will undergo to compass his own
+desires.  It is not good that we should let it lie before the
+eyes of children, and I have been a fool in writing to the
+contrary.  Very sorry for myself, I sought a hotel, and found in
+the hall a reporter who wished to know what I thought of the
+country.  Him I lured into conversation about his own profession,
+and from him gained much that confirmed me in my views of the
+grinding tyranny of that thing which they call the Press here. 
+Thus:--I--But you talk about interviewing people whether they
+like it or not.  Have you no bounds beyond which even your
+indecent curiosity must not go?
+
+HE--I haven't struck 'em yet.  What do you think of interviewing
+a widow two hours after her husband's death, to get her version
+of his life?
+
+I--I think that is the work of a ghoul.  Must the people have no
+privacy?
+
+HE--There is no domestic privacy in America. If there was, what
+the deuce would the papers do? See here.  Some time ago I had an
+assignment to write up the floral tributes when a prominent
+citizen had died.
+
+I--Translate, please; I do not understand your pagan rites and
+ceremonies.
+
+HE--I was ordered by the office to describe the flowers, and
+wreaths, and so on, that had been sent to a dead man's funeral. 
+Well, I went to the house.  There was no one there to stop me, so
+I yanked the tinkler--pulled the bell--and drifted into the room
+where the corpse lay all among the roses and smilax.  I whipped
+out my note-book and pawed around among the floral tributes,
+turn-ing up the tickets on the wreaths and seeing who had sent
+them.  In the middle of this I heard some one saying: "Please,
+oh, please!" behind me, and there stood the daughter of the
+house, just bathed in tears--I--You unmitigated brute!
+
+HE--Pretty much what I felt myself.  "I'm very sorry, miss," I
+said, "to intrude on the privacy of your grief.  Trust me, I
+shall make it as little painful as possible."
+
+I--But by what conceivable right did you outrage--HE--Hold your
+horses.  I'm telling you. Well, she didn't want me in the house
+at all, and between her sobs fairly waved me away.  I had half
+the tributes described, though, and the balance I did partly on
+the steps when the stiff 'un came out, and partly in the church. 
+The preacher gave the sermon.  That wasn't my assignment.  I
+skipped about among the floral tributes while he was talking.  I
+could have made no excuse if I had gone back to the office and
+said that a pretty girl's sobs had stopped me obeying orders.  I
+had to do it.  What do you think of it all?
+
+I (slowly)--Do you want to know?
+
+HE (with his note-book ready)--Of course. How do you regard it?
+
+I--It makes me regard your interesting nation with the same
+shuddering curiosity that I should bestow on a Pappan cannibal
+chewing the scalp off his mother's skull.  Does that convey any
+idea to your mind?  It makes me regard the whole pack of you as
+heathens--real heathens--not the sort you send missions
+to--creatures of another flesh and blood.  You ought to have been
+shot, not dead, but through the stomach, for your share in the
+scandalous business, and the thing you call your newspaper ought
+to have been sacked by the mob, and the managing proprietor
+hanged.
+
+HE--From which, I suppose you have nothing of that kind in your
+country?
+
+Oh!  "Pioneer," venerable "Pioneer," and you not less honest
+press of India, who are occasionally dull but never blackguardly,
+what could I say?  A mere "No," shouted never so loudly,
+would not have met the needs of the case.  I said no word.
+
+The reporter went away, and I took a train for Niagara Falls,
+which are twenty-two miles distant from this bad town, where
+girls get drunk of nights and reporters trample on corpses in the
+drawing-rooms of the brave and the free!
+
+
+
+
+
+End of The Project Gutenberg Etext of American Notes by Rudyard Kipling
+

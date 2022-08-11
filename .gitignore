@@ -1,6 +1,7 @@
 *.DS_Store
 *.prof
 .python-version
+build
 
 .coverage
 .tox/

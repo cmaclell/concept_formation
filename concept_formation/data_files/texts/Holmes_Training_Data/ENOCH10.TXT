@@ -1,0 +1,1523 @@
+**The Project Gutenberg Etext of Enoch Soames, by Max Beerbohm**
+#2 in our series by Max Beerbohm
+
+
+Copyright laws are changing all over the world, be sure to check
+the copyright laws for your country before posting these files!!
+
+Please take a look at the important information in this header.
+We encourage you to keep this file on your own disk, keeping an
+electronic path open for the next readers.  Do not remove this.
+
+
+**Welcome To The World of Free Plain Vanilla Electronic Texts**
+
+**Etexts Readable By Both Humans and By Computers, Since 1971**
+
+*These Etexts Prepared By Hundreds of Volunteers and Donations*
+
+Information on contacting Project Gutenberg to get Etexts, and
+further information is included below.  We need your donations.
+
+
+Enoch Soames
+
+by Max Beerbohm
+
+December, 1996 [Etext #760]
+
+
+**The Project Gutenberg Etext of Enoch Soames, by Max Beerbohm**
+*****This file should be named enoch10.txt or enoch10.zip******
+
+Corrected EDITIONS of our etexts get a new NUMBER, enoch11.txt.
+VERSIONS based on separate sources get new LETTER, enoch10a.txt.
+
+
+This etext was created by Judith Boss, Omaha, Nebraska.
+The equipment: an IBM-compatible 486/50, a Hewlett-Packard
+ScanJet IIc flatbed scanner, and Calera Recognition Systems'
+M/600 Series Professional OCR software and RISC accelerator board
+donated by Calera Recognition Systems.
+
+
+We are now trying to release all our books one month in advance
+of the official release dates, for time for better editing.
+
+Please note:  neither this list nor its contents are final till
+midnight of the last day of the month of any such announcement.
+The official release date of all Project Gutenberg Etexts is at
+Midnight, Central Time, of the last day of the stated month.  A
+preliminary version may often be posted for suggestion, comment
+and editing by those who wish to do so.  To be sure you have an
+up to date first edition [xxxxx10x.xxx] please check file sizes
+in the first week of the next month.  Since our ftp program has
+a bug in it that scrambles the date [tried to fix and failed] a
+look at the file size will have to do, but we will try to see a
+new copy has at least one byte more or less.
+
+
+Information about Project Gutenberg (one page)
+
+We produce about two million dollars for each hour we work.  The
+fifty hours is one conservative estimate for how long it we take
+to get any etext selected, entered, proofread, edited, copyright
+searched and analyzed, the copyright letters written, etc.  This
+projected audience is one hundred million readers.  If our value
+per text is nominally estimated at one dollar then we produce $2
+million dollars per hour this year as we release thirty-two text
+files per month:  or 400 more Etexts in 1996 for a total of 800.
+If these reach just 10% of the computerized population, then the
+total should reach 80 billion Etexts.
+
+The Goal of Project Gutenberg is to Give Away One Trillion Etext
+Files by the December 31, 2001.  [10,000 x 100,000,000=Trillion]
+This is ten thousand titles each to one hundred million readers,
+which is only 10% of the present number of computer users.  2001
+should have at least twice as many computer users as that, so it
+will require us reaching less than 5% of the users in 2001.
+
+
+We need your donations more than ever!
+
+
+All donations should be made to "Project Gutenberg/BU":  and are
+tax deductible to the extent allowable by law. (BU = Benedictine
+University).  (Subscriptions to our paper newsletter go to BU.)
+
+For these and other matters, please mail to:
+
+Project Gutenberg
+P. O. Box  2782
+Champaign, IL 61825
+
+When all other email fails try our Executive Director:
+Michael S. Hart <hart@pobox.com>
+
+We would prefer to send you this information by email
+(Internet, Bitnet, Compuserve, ATTMAIL or MCImail).
+
+******
+If you have an FTP program (or emulator), please
+FTP directly to the Project Gutenberg archives:
+[Mac users, do NOT point and click. . .type]
+
+ftp uiarchive.cso.uiuc.edu
+login:  anonymous
+password:  your@login
+cd etext/etext90 through /etext96
+or cd etext/articles [get suggest gut for more information]
+dir [to see files]
+get or mget [to get files. . .set bin for zip files]
+GET INDEX?00.GUT
+for a list of books
+and
+GET NEW GUT for general information
+and
+MGET GUT* for newsletters.
+
+**Information prepared by the Project Gutenberg legal advisor**
+(Three Pages)
+
+
+***START**THE SMALL PRINT!**FOR PUBLIC DOMAIN ETEXTS**START***
+Why is this "Small Print!" statement here?  You know: lawyers.
+They tell us you might sue us if there is something wrong with
+your copy of this etext, even if you got it for free from
+someone other than us, and even if what's wrong is not our
+fault.  So, among other things, this "Small Print!" statement
+disclaims most of our liability to you.  It also tells you how
+you can distribute copies of this etext if you want to.
+
+*BEFORE!* YOU USE OR READ THIS ETEXT
+By using or reading any part of this PROJECT GUTENBERG-tm
+etext, you indicate that you understand, agree to and accept
+this "Small Print!" statement.  If you do not, you can receive
+a refund of the money (if any) you paid for this etext by
+sending a request within 30 days of receiving it to the person
+you got it from.  If you received this etext on a physical
+medium (such as a disk), you must return it with your request.
+
+ABOUT PROJECT GUTENBERG-TM ETEXTS
+This PROJECT GUTENBERG-tm etext, like most PROJECT GUTENBERG-
+tm etexts, is a "public domain" work distributed by Professor
+Michael S. Hart through the Project Gutenberg Association at
+Benedictine University (the "Project").  Among other
+things, this means that no one owns a United States copyright
+on or for this work, so the Project (and you!) can copy and
+distribute it in the United States without permission and
+without paying copyright royalties.  Special rules, set forth
+below, apply if you wish to copy and distribute this etext
+under the Project's "PROJECT GUTENBERG" trademark.
+
+To create these etexts, the Project expends considerable
+efforts to identify, transcribe and proofread public domain
+works.  Despite these efforts, the Project's etexts and any
+medium they may be on may contain "Defects".  Among other
+things, Defects may take the form of incomplete, inaccurate or
+corrupt data, transcription errors, a copyright or other
+intellectual property infringement, a defective or damaged
+disk or other etext medium, a computer virus, or computer
+codes that damage or cannot be read by your equipment.
+
+LIMITED WARRANTY; DISCLAIMER OF DAMAGES
+But for the "Right of Replacement or Refund" described below,
+[1] the Project (and any other party you may receive this
+etext from as a PROJECT GUTENBERG-tm etext) disclaims all
+liability to you for damages, costs and expenses, including
+legal fees, and [2] YOU HAVE NO REMEDIES FOR NEGLIGENCE OR
+UNDER STRICT LIABILITY, OR FOR BREACH OF WARRANTY OR CONTRACT,
+INCLUDING BUT NOT LIMITED TO INDIRECT, CONSEQUENTIAL, PUNITIVE
+OR INCIDENTAL DAMAGES, EVEN IF YOU GIVE NOTICE OF THE
+POSSIBILITY OF SUCH DAMAGES.
+
+If you discover a Defect in this etext within 90 days of
+receiving it, you can receive a refund of the money (if any)
+you paid for it by sending an explanatory note within that
+time to the person you received it from.  If you received it
+on a physical medium, you must return it with your note, and
+such person may choose to alternatively give you a replacement
+copy.  If you received it electronically, such person may
+choose to alternatively give you a second opportunity to
+receive it electronically.
+
+THIS ETEXT IS OTHERWISE PROVIDED TO YOU "AS-IS".  NO OTHER
+WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED, ARE MADE TO YOU AS
+TO THE ETEXT OR ANY MEDIUM IT MAY BE ON, INCLUDING BUT NOT
+LIMITED TO WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A
+PARTICULAR PURPOSE.
+
+Some states do not allow disclaimers of implied warranties or
+the exclusion or limitation of consequential damages, so the
+above disclaimers and exclusions may not apply to you, and you
+may have other legal rights.
+
+INDEMNITY
+You will indemnify and hold the Project, its directors,
+officers, members and agents harmless from all liability, cost
+and expense, including legal fees, that arise directly or
+indirectly from any of the following that you do or cause:
+[1] distribution of this etext, [2] alteration, modification,
+or addition to the etext, or [3] any Defect.
+
+DISTRIBUTION UNDER "PROJECT GUTENBERG-tm"
+You may distribute copies of this etext electronically, or by
+disk, book or any other medium if you either delete this
+"Small Print!" and all other references to Project Gutenberg,
+or:
+
+[1]  Only give exact copies of it.  Among other things, this
+     requires that you do not remove, alter or modify the
+     etext or this "small print!" statement.  You may however,
+     if you wish, distribute this etext in machine readable
+     binary, compressed, mark-up, or proprietary form,
+     including any form resulting from conversion by word pro-
+     cessing or hypertext software, but only so long as
+     *EITHER*:
+
+     [*]  The etext, when displayed, is clearly readable, and
+          does *not* contain characters other than those
+          intended by the author of the work, although tilde
+          (~), asterisk (*) and underline (_) characters may
+          be used to convey punctuation intended by the
+          author, and additional characters may be used to
+          indicate hypertext links; OR
+
+     [*]  The etext may be readily converted by the reader at
+          no expense into plain ASCII, EBCDIC or equivalent
+          form by the program that displays the etext (as is
+          the case, for instance, with most word processors);
+          OR
+
+     [*]  You provide, or agree to also provide on request at
+          no additional cost, fee or expense, a copy of the
+          etext in its original plain ASCII form (or in EBCDIC
+          or other equivalent proprietary form).
+
+[2]  Honor the etext refund and replacement provisions of this
+     "Small Print!" statement.
+
+[3]  Pay a trademark license fee to the Project of 20% of the
+     net profits you derive calculated using the method you
+     already use to calculate your applicable taxes.  If you
+     don't derive profits, no royalty is due.  Royalties are
+     payable to "Project Gutenberg Association / Benedictine
+     University" within the 60 days following each
+     date you prepare (or were legally required to prepare)
+     your annual (or equivalent periodic) tax return.
+
+WHAT IF YOU *WANT* TO SEND MONEY EVEN IF YOU DON'T HAVE TO?
+The Project gratefully accepts contributions in money, time,
+scanning machines, OCR software, public domain etexts, royalty
+free copyright licenses, and every other sort of contribution
+you can think of.  Money should be paid to "Project Gutenberg
+Association / Benedictine University".
+
+*END*THE SMALL PRINT! FOR PUBLIC DOMAIN ETEXTS*Ver.04.29.93*END*
+
+
+
+
+
+Enoch Soames
+
+
+A Memory of the Eighteen-nineties
+
+
+By MAX BEERBOHM
+
+
+
+
+
+WHEN a book about the literature of the eighteen-nineties was given by
+Mr. Holbrook Jackson to the world, I looked eagerly in the index for
+Soames, Enoch.  It was as I feared: he was not there.  But everybody else
+was.  Many writers whom I had quite forgotten, or remembered but
+faintly, lived again for me, they and their work, in Mr. Holbrook
+Jackson's pages.  The book was as thorough as it was brilliantly written.
+And thus the omission found by me was an all the deadlier record of poor
+Soames's failure to impress himself on his decade.
+
+I dare say I am the only person who noticed the omission.  Soames
+had failed so piteously as all that!  Nor is there a counterpoise in the
+thought that if he had had some measure of success he might have
+passed, like those others, out of my mind, to return only at the historian's
+beck.  It is true that had his gifts, such as they were, been acknowledged
+in his lifetime, he would never have made the bargain I saw him
+make--that strange bargain whose results have kept him always in the 
+foreground of my memory.  But it is from those very results that the full
+piteousness of him glares out.
+
+Not my compassion, however, impels me to write of him.  For his
+sake, poor fellow, I should be inclined to keep my pen out of the ink.  It
+is ill to deride the dead.  And how can I write about Enoch Soames
+without making him ridiculous?  Or, rather, how am I to hush up the
+horrid fact that he WAS ridiculous?  I shall not be able to do that. 
+Yet, sooner or later, write about him I must.  You will see in due course
+that I have no option.  And I may as well get the thing done now.
+
+IN the summer term of '93 a bolt from the blue flashed down on Oxford.
+It drove deep; it hurtlingly embedded itself in the soil.  Dons and
+undergraduates stood around, rather pale, discussing nothing but it.
+Whence came it, this meteorite?  From Paris.  Its name?  Will
+Rothenstein. Its aim?  To do a series of twenty-four portraits in
+lithograph.  These were to be published from the Bodley Head, London. 
+The matter was urgent. Already the warden of A, and the master of B,
+and the Regius Professor of C had meekly "sat."  Dignified and
+doddering old men who had never consented to sit to any one could not
+withstand this dynamic
+
+Copyright, 1916, by THE CENTURY CO.  All rights reserved.
+little stranger.  He did not sue; he invited: he did not invite; he
+commanded.  He was twenty-one years old.  He wore spectacles that
+flashed more than any other pair ever seen.  He was a wit.  He was
+brimful of ideas.  He knew Whistler.  He knew Daudet and the
+Goncourts.  He knew every one in Paris.  He knew them all by heart.  He
+was Paris in Oxford.  It was whispered that, so soon as he had polished
+off his selection of dons, he was going to include a few undergraduates. 
+It was a proud day for me when I--I was included.  I liked Rothenstein
+not less than I feared him; and there arose between us a friendship that
+has grown ever warmer, and been more and more valued by me, with
+every passing year.
+
+At the end of term he settled in, or, rather, meteoritically into,
+London.  It was to him I owed my first knowledge of that
+forever-enchanting little world-in-itself, Chelsea, and my first
+acquaintance with Walter Sickert and other August elders who dwelt
+there.  It was Rothenstein that took me to see, in Cambridge Street,
+Pimlico, a young man whose drawings were already famous among the
+few--Aubrey Beardsley by name.  With Rothenstein I paid my first visit
+to the Bodley Head.  By him I was inducted into another haunt of
+intellect and daring, the domino-room of the Cafe Royal.
+
+There, on that October evening--there, in that exuberant vista of
+gilding and crimson velvet set amidst all those opposing mirrors and
+upholding caryatids, with fumes of tobacco ever rising to the painted and
+pagan ceiling, and with the hum of presumably cynical conversation
+broken into so sharply now and again by the clatter of dominoes shuffled
+on marble tables, I drew a deep breath and, "This indeed," said I to
+myself, "is life!"  (Forgive me that theory.  Remember the waging of even
+the South African War was not yet.)
+
+It was the hour before dinner.  We drank vermuth.  Those who
+knew Rothenstein were pointing him out to those who knew him only by
+name.  Men were constantly coming in through the swing-doors and
+wandering slowly up and down in search of vacant tables or of tables
+occupied by friends.  One of these rovers interested me because I was
+sure he wanted to catch Rothenstein's eye.  He had twice passed our
+table, with a hesitating look; but Rothenstein, in the thick of a
+disquisition on Puvis de Chavannes, had not seen him.  He was a
+stooping, shambling person, rather tall, very pale, with longish and
+brownish hair.  He had a thin, vague beard, or, rather, he had a chin on
+which a large number of hairs weakly curled and clustered to cover its
+retreat.  He was an odd-looking person; but in the nineties odd
+apparitions were more frequent, I think, than they are now.  The young
+writers of that era--and I was sure this man was a writer--strove earnestly
+to be distinct in aspect.  This man had striven unsuccessfully.  He wore a
+soft black hat of clerical kind, but of Bohemian intention, and a gray
+waterproof cape which, perhaps because it was waterproof, failed to be
+romantic.  I decided that "dim" was the mot juste for him.  I had
+already essayed to write, and was immensely keen on the mot
+juste , that Holy Grail of the period.
+
+The dim man was now again approaching our table, and this time
+he made up his mind to pause in front of it.
+
+"You don't remember me," he said in a toneless voice.
+
+Rothenstein brightly focused him.
+
+"Yes, I do," he replied after a moment, with pride rather than
+effusion--pride in a retentive memory.  "Edwin Soames."
+
+"Enoch Soames," said Enoch.
+
+"Enoch Soames," repeated Rothenstein in a tone implying that it
+was enough to have hit on the surname.  "We met in Paris a few times
+when you were living there.  We met at the Cafe Groche."
+
+"And I came to your studio once."
+
+"Oh, yes; I was sorry I was out."
+
+"But you were in.  You showed me some of your paintings, you
+know.  I hear you're in Chelsea now."
+
+"Yes."
+
+I almost wondered that Mr. Soames did not, after this monosyllable,
+pass along.  He stood patiently there, rather like a dumb animal,
+rather like a donkey looking over a gate.  A sad figure, his.  It occurred to
+me that "hungry" was perhaps the mot juste for him; but--hungry 
+for what?  He looked as if he had little appetite for anything.  I was sorry
+for him; and Rothenstein, though he had not invited him to Chelsea, did
+ask him to sit down and have something to drink.
+
+Seated, he was more self-assertive.  He flung back the wings of his
+cape with a gesture which, had not those wings been waterproof, might
+have seemed to hurl defiance at things in general.  And he ordered an
+absinthe.  "Je me tiens toujours fidele," he told
+Rothenstein, "a la sorcieere glauque."
+
+"It is bad for you," said Rothenstein, dryly.
+
+"Nothing is bad for one," answered Soames.  "Dans ce monde il n'y
+a ni bien ni mal."
+
+"Nothing good and nothing bad?  How do you mean?"
+
+"I explained it all in the preface to 'Negations.'"
+
+"'Negations'?"
+
+"Yes, I gave you a copy of it."
+
+"Oh, yes, of course.  But, did you explain, for instance, that there
+was no such thing as bad or good grammar?"
+
+"N-no," said Soames.  "Of course in art there is the good and the
+evil.  But in life--no."  He was rolling a cigarette.  He had weak, white
+hands, not well washed, and with finger-tips much stained with nicotine. 
+"In life there are illusions of good and evil, but"--his voice trailed away
+to a murmur in which the words "vieux jeu" and "rococo" were
+faintly audible.  I think he felt he was not doing himself justice, and
+feared that Rothenstein was going to point out fallacies.  Anyhow, he
+cleared his throat and said, "Parlons d'autre chose."
+
+It occurs to you that he was a fool?  It didn't to me.  I was young,
+and had not the clarity of judgment that Rothenstein already had. 
+Soames was quite five or six years older than either of us.  Also--he had
+written a book.  It was wonderful to have written a book.
+
+If Rothenstein had not been there, I should have revered Soames.
+Even as it was, I respected him.  And I was very near indeed to reverence
+when he said he had another book coming out soon.  I asked if I might
+ask what kind of book it was to be.
+
+"My poems," he answered.  Rothenstein asked if this was to be the
+title of the book.  The poet meditated on this suggestion, but said he
+rather thought of giving the book no title at all.  "If a book is good in
+itself--" he murmured, and waved his cigarette.
+
+Rothenstein objected that absence of title might be bad for the sale
+of a book.
+
+"If," he urged, "I went into a bookseller's and said simply, 'Have
+you got?' or, 'Have you a copy of?' how would they know what I
+wanted?"
+
+"Oh, of course I should have my name on the cover," Soames
+answered earnestly.  "And I rather want," he added, looking hard at
+Rothenstein, "to have a drawing of myself as frontispiece."  Rothenstein 
+admitted that this was a capital idea, and mentioned that he was going
+into the country and would be there for some time.  He then looked at his
+watch, exclaimed at the hour, paid the waiter, and went away with me to
+dinner.  Soames remained at his post of fidelity to the glaucous witch.
+
+"Why were you so determined not to draw him?" I asked.
+
+"Draw him?  Him?  How can one draw a man who doesn't exist?"
+
+"He is dim," I admitted.  But my mot juste fell flat.
+Rothenstein repeated that Soames was non-existent.
+
+Still, Soames had written a book.  I asked if Rothenstein had read
+"Negations."  He said he had looked into it, "but," he added crisply, "I
+don't profess to know anything about writing."  A reservation very
+characteristic of the period!  Painters would not then allow that any one
+outside their own order had a right to any opinion about painting.  This
+law (graven on the tablets brought down by Whistler from the summit 
+of Fuji-yama) imposed certain limitations.  If other arts than painting
+were not utterly unintelligible to all but the men who practiced
+them, the law tottered--the Monroe Doctrine, as it were, did not hold
+good.  Therefore no painter would offer an opinion of a book without
+warning you at any rate that his opinion was worthless.  No one is a
+better judge of literature than Rothenstein; but it wouldn't have done to
+tell him so in those days, and I knew that I must form an unaided
+judgment of "Negations."
+
+Not to buy a book of which I had met the author face to face would
+have been for me in those days an impossible act of self-denial.  When I
+returned to Oxford for the Christmas term I had duly secured
+"Negations."  I used to keep it lying carelessly on the table in my room,
+and whenever a friend took it up and asked what it was about, I would
+say: "Oh, it's rather a remarkable book.  It's by a man whom I know." 
+Just "what it was about" I never was able to say.  Head or tail was just
+what I hadn't made of that slim, green volume.  I found in the preface no
+clue to the labyrinth of contents, and in that labyrinth nothing to explain
+the preface.
+
+
+Lean near to life.  Lean very near--
+nearer.
+
+Life is web and therein nor warp nor
+woof is, but web only.
+
+It is for this I am Catholick in church
+and in thought, yet do let swift Mood weave
+there what the shuttle of Mood wills.
+
+
+These were the opening phrases of the preface, but those which
+followed were less easy to understand.  Then came "Stark: A
+Conte," about a midinette who, so far as I could gather,
+murdered, or was about to murder, a mannequin.  It was rather
+like a story by Catulle Mendes in which the translator had either
+skipped or cut out every alternate sentence.  Next, a dialogue between
+Pan and St. Ursula, lacking, I rather thought, in "snap."  Next, some
+aphorisms (entitled [Greek omitted]).  Throughout, in fact, there was a
+great variety of form, and the forms had evidently been wrought with
+much care.  It was rather the substance that eluded me.  Was there, I
+wondered, any substance at all?  It did not occur to me: suppose Enoch
+Soames was a fool!  Up cropped a rival hypothesis: suppose _I_
+was!  I inclined to give Soames the benefit of the doubt.  I had read
+"L'Apres-midi d'un faune" without extracting a glimmer of
+meaning; yet Mallarme, of course, was a master.  How was I to
+know that Soames wasn't another?  There was a sort of music in his
+prose, not indeed, arresting, but perhaps, I thought, haunting, and laden,
+perhaps, with meanings as deep as Mallarme's own.  I awaited his
+poems with an open mind.
+
+And I looked forward to them with positive impatience after I had
+had a second meeting with him.  This was on an evening in January.
+Going into the aforesaid domino-room, I had passed a table at which sat
+a pale man with an open book before him.  He had looked from his book
+to me, and I looked back over my shoulder with a vague sense that I
+ought to have recognized him.  I returned to pay my respects.  After
+exchanging a few words, I said with a glance to the open book, "I see I
+am interrupting you," and was about to pass on, but, "I prefer,' Soames
+replied in his toneless voice, "to be interrupted," and I obeyed his gesture
+that I should sit down.
+
+I asked him if he often read here.
+
+"Yes; things of this kind I read here," he answered, indicating the
+title of his book--"The Poems of Shelley."
+
+"Anything that you really"--and I was going to say "admire?"  But I
+cautiously left my sentence unfinished, and was glad that I had done so,
+for he said with unwonted emphasis, "Anything second-rate."
+
+I had read little of Shelley, but, "Of course," I murmured, "he's very
+uneven."
+
+"I should have thought evenness was just what was wrong with
+him.  A deadly evenness.  That's why I read him here.  The noise of this
+place breaks the rhythm.  He's tolerable here."  Soames took up the book 
+and glanced through the pages.  He laughed.  Soames's laugh was a short, 
+single, and mirthless sound from the throat, unaccompanied by any
+movement of the face or brightening of the eyes.  "What a period!"
+he uttered, laying the book down.  And, "What a country!" he added.
+
+I asked rather nervously if he didn't think Keats had more or less
+held his own against the drawbacks of time and place.  He admitted that
+there were "passages in Keats," but did not specify them.  Of "the older
+men," as he called them, he seemed to like only Milton.  "Milton," he
+said, "wasn't sentimental."  Also, "Milton had a dark insight."  And again,
+"I can always read Milton in the reading-room."
+
+"The reading-room?"
+
+"Of the British Museum.  I go there every day."
+
+"You do?  I've only been there once.  I'm afraid I found it rather a
+depressing place.  It--it seemed to sap one's vitality."
+
+"It does.  That's why I go there.  The lower one's vitality, the more
+sensitive one is to great art.  I live near the museum.  I have rooms in
+Dyatt Street."
+
+"And you go round to the reading-room to read Milton?"
+
+"Usually Milton."  He looked at me.  "It was Milton," he
+certificatively added, "who converted me to diabolism."
+
+"Diabolism?  Oh, yes?  Really?" said I, with that vague discomfort
+and that intense desire to be polite which one feels when a man speaks of
+his own religion.  "You--worship the devil?"
+
+Soames shook his head.
+
+"It's not exactly worship," he qualified, sipping his absinthe.  "It's
+more a matter of trusting and encouraging."
+
+"I see, yes.  I had rather gathered from the preface to 'Negations'
+that you were a--a Catholic."
+
+"Je l'etais a cette epoque.  In fact, I still am.
+I am a Catholic diabolist."
+
+But this profession he made in an almost cursory tone.  I could see
+that what was upmost in his mind was the fact that I had read
+"Negations."  His pale eyes had for the first time gleamed.  I felt as one
+who is about to be examined viva voce on the very subject in
+which he is shakiest.  I hastily asked him how soon his poems were to be 
+published.
+
+"Next week," he told me.
+
+"And are they to be published without a title?"
+
+"No.  I found a title at last.  But I sha'n't tell you what it is," as
+though I had been so impertinent as to inquire.  "I am not sure that it
+wholly satisfies me.  But it is the best I can find.  It suggests something
+of the quality of the poems--strange growths, natural and wild, yet
+exquisite," he added, "and many-hued, and full of poisons."
+
+I asked him what he thought of Baudelaire.  He uttered the snort
+that was his laugh, and, "Baudelaire," he said, "was a bourgeois
+malgre lui."  France had had only one poet--Villon; "and two
+thirds of Villon were sheer journalism."  Verlaine was "an
+epicier malgre lui."  Altogether, rather to my
+surprise, he rated French literature lower than English.  There were
+"passages" in Villiers de l'Isle-Adam.  But, "I," he summed up, "owe
+nothing to France."  He nodded at me.  "You'll see," he predicted.
+
+I did not, when the time came, quite see that.  I thought the author
+of "Fungoids" did, unconsciously of course, owe something to the young
+Parisian decadents or to the young English ones who owed something to
+THEM.  I still think so.  The little book, bought by me in Oxford,
+lies before me as I write.  Its pale-gray buckram cover and silver lettering
+have not worn well.  Nor have its contents.  Through these, with a
+melancholy interest, I have again been looking.  They are not much.  But
+at the time of their publication I had a vague suspicion that they
+MIGHT be.  I suppose it is my capacity for faith, not poor Soames's
+work, that is weaker than it once was.
+
+
+
+TO A YOUNG WOMAN
+
+THOU ART, WHO HAST NOT BEEN!
+
+Pale tunes irresolute
+
+And traceries of old sounds
+
+Blown from a rotted flute
+Mingle with noise of cymbals rouged with
+
+rust,
+Nor not strange forms and epicene
+
+Lie bleeding in the dust,
+
+   Being wounded with wounds.
+
+For this it is
+That in thy counterpart
+
+Of age-long mockeries
+THOU HAST NOT BEEN NOR ART!
+
+
+
+There seemed to me a certain inconsistency as between the first and
+last lines of this.  I tried, with bent brows, to resolve the discord.  But I
+did not take my failure as wholly incompatible with a meaning in
+Soames's mind.  Might it not rather indicate the depth of his meaning? 
+As for the craftsmanship, "rouged with rust' seemed to me a fine stroke,
+and "nor not" instead of "and" had a curious felicity.  I wondered who the
+"young woman" was and what she had made of it all.  I sadly  suspect
+that Soames could not have made more of it than she.  Yet even now, if
+one doesn't try to make any sense at all of the poem, and reads it just for
+the sound, there is a certain grace of cadence.  Soames was an artist, in so
+far as he was anything, poor fellow!
+
+It seemed to me, when first I read "Fungoids," that, oddly enough,
+the diabolistic side of him was the best.  Diabolism seemed to be a
+cheerful, even a wholesome influence in his life.
+
+
+     NOCTURNE
+
+Round and round the shutter'd Square
+I strolled with the Devil's arm in mine.
+No sound but the scrape of his hoofs was
+
+there
+And the ring of his laughter and mine.
+   We had drunk black wine.
+
+I scream'd, "I will race you, Master!"
+"What matter," he shriek'd, "to-night
+Which of us runs the faster?
+There is nothing to fear to-night
+   In the foul moon's light!"
+
+Then I look'd him in the eyes
+And I laugh'd full shrill at the lie he told
+And the gnawing fear he would fain disguise.
+It was true, what I'd time and again been told:
+   He was old--old.
+
+
+There was, I felt, quite a swing about that first stanza--a joyous and
+rollicking note of comradeship.  The second was slightly hysterical,
+perhaps.  But I liked the third, it was so bracingly unorthodox, even
+according to the tenets of Soames's peculiar sect in the faith.  Not much
+"trusting and encouraging" here!  Soames triumphantly exposing the
+devil as a liar, and laughing "full shrill," cut a quite heartening figure, I
+thought, then!  Now, in the light of what befell, none of his other poems
+depresses me so much as "Nocturne."
+
+I looked out for what the metropolitan reviewers would have to say.
+They seemed to fall into two classes: those who had little to say and
+those who had nothing.  The second class was the larger, and the words
+of the first were cold; insomuch that
+
+
+Strikes a note of modernity. . . .  These tripping numbers.--"The
+Preston Telegraph."
+
+was the only lure offered in advertisements by Soames's publisher.  I had
+hoped that when next I met the poet I could congratulate him on having
+made a stir, for I fancied he was not so sure of his intrinsic greatness as
+he seemed.  I was but able to say, rather coarsely, when next I did see
+him, that I hoped "Fungoids" was "selling splendidly."  He looked at me
+across his glass of absinthe and asked if I had bought a copy.  His
+publisher had told him that three had been sold.  I laughed, as at a jest.
+
+"You don't suppose I CARE, do you?" he said, with
+something like a snarl.  I disclaimed the notion.  He added that he was
+not a tradesman.  I said mildly that I wasn't, either, and murmured that an
+artist who gave truly new and great things to the world had always to
+wait long for recognition.  He said he cared not a sou for recognition.  I
+agreed that the act of creation was its own reward.
+
+His moroseness might have alienated me if I had regarded myself as
+a nobody.  But ah! hadn't both John Lane and Aubrey Beardsley
+suggested that I should write an essay for the great new venture
+that was afoot--"The Yellow Book"?  And hadn't Henry Harland, as
+editor, accepted my essay?  And wasn't it to be in the very first number?
+At Oxford I was still in statu pupillari.  In London I regarded
+myself as very much indeed a graduate now--one whom no Soames could
+ruffle.  Partly to show off, partly in sheer good-will, I told Soames he
+ought to contribute to "The Yellow Book."  He uttered from the throat a 
+sound of scorn for that publication.
+
+Nevertheless, I did, a day or two later, tentatively ask Harland if he
+knew anything of the work of a man called Enoch Soames.  Harland
+paused in the midst of his characteristic stride around the room, threw up
+his hands toward the ceiling, and groaned aloud: he had often met "that 
+absurd creature" in Paris, and this very morning had received some
+poems in manuscript from him.
+
+"Has he NO talent?" I asked.
+
+"He has an income.  He's all right."  Harland was the most joyous
+of men and most generous of critics, and he hated to talk of anything
+about which he couldn't be enthusiastic.  So I dropped the subject of
+Soames. The news that Soames had an income did take the edge off
+solicitude.  I learned afterward that he was the son of an unsuccessful and
+deceased bookseller in Preston, but had inherited an annuity of three
+hundred pounds from a married aunt, and had no surviving relatives of
+any kind. Materially, then, he was "all right."  But there was still a
+spiritual pathos about him, sharpened for me now by the possibility that
+even the praises of "The Preston Telegraph" might not have been
+forthcoming had he not been the son of a Preston man He had a sort of
+weak doggedness which I could not but admire.  Neither he nor his work
+received the slightest encouragement; but he persisted in behaving as a
+personage: always he kept his dingy little flag flying.  Wherever
+congregated the jeunes feroces of the arts, in whatever
+Soho restaurant they had just discovered, in whatever music-hall they
+were most frequently, there was Soames in the midst of them, or, rather,
+on the fringe of them, a dim, but inevitable, figure.  He never sought to
+propitiate his fellow-writers, never bated a jot of his arrogance about his
+own work or of his contempt for theirs.  To the painters he was
+respectful, even humble; but for the poets and prosaists of "The Yellow
+Book" and later of "The Savoy" he had never a word but of scorn.  He
+wasn't resented.  It didn't occur to anybody that he or his Catholic
+diabolism mattered.  When, in the autumn of '96, he brought out (at his
+own expense, this time) a third book, his last book, nobody said a word
+for or against it.  I meant, but forgot, to buy it.  I never saw it, and am
+ashamed to say I don't even remember what it was called.  But I did, at
+the time of its publication, say to Rothenstein that I thought poor old
+Soames was really a rather tragic figure, and that I believed he would
+literally die for want of recognition.  Rothenstein scoffed.  He said I was
+trying to get credit for a kind heart which I didn't possess; and perhaps
+this was so.  But at the private view of the New English Art Club, a few
+weeks later, I beheld a pastel portrait of "Enoch Soames, Esq."  It was
+very like him, and very like Rothenstein to have done it.  Soames was 
+standing near it, in his soft hat and his waterproof cape, all through the
+afternoon.  Anybody who knew him would have recognized the portrait
+at a glance, but nobody who didn't know him would have recognized the
+portrait from its bystander: it "existed" so much more than he; it was
+bound to.  Also, it had not that expression of faint happiness which on
+that day was discernible, yes, in Soames's countenance.  Fame had
+breathed on him.  Twice again in the course of the month I went to the
+New English, and on both occasions Soames himself was on view there.
+Looking back, I regard the close of that exhibition as having been
+virtually the close of his career.  He had felt the breath of Fame against
+his cheek--so late, for such a little while; and at its withdrawal he gave in,
+gave up, gave out.  He, who had never looked strong or well, looked
+ghastly now--a shadow of the shade he had once been.  He still
+frequented the domino-room, but having lost all wish to excite curiosity,
+he no longer read books there.  "You read only at the museum now?" I
+asked, with attempted cheerfulness.  He said he never went there now.
+"No absinthe there," he muttered.  It was the sort of thing that in old days
+he would have said for effect; but it carried conviction now.  Absinthe, 
+erst but a point in the "personality" he had striven so hard to build up,
+was solace and necessity now.  He no longer called it "la
+sorciere glauque."   He had shed away all his French phrases.
+He had become a plain, unvarnished Preston man.
+
+Failure, if it be a plain, unvarnished, complete failure, and even
+though it be a squalid failure, has always a certain dignity.  I avoided
+Soames because he made me feel rather vulgar.  John Lane had
+published, by this time, two little books of mine, and they had had a
+pleasant little success of esteem.  I was a--slight, but definite
+--"personality."  Frank Harris had engaged me to kick up my heels in
+"The Saturday Review," Alfred Harmsworth was letting me do likewise
+in "The Daily Mail."  I was just what Soames wasn't.  And he shamed my
+gloss.  Had I known that he really and firmly believed in the greatness of
+what he as an artist had achieved, I might not have shunned him.  No
+man who hasn't lost his vanity can be held to have altogether failed. 
+Soames's dignity was an illusion of mine.  One day, in the first week of
+June, 1897, that illusion went.  But on the evening of that day Soames
+went, too.
+
+I had been out most of the morning and, as it was too late to reach
+home in time for luncheon, I sought the Vingtieme.  This little
+place--Restaurant du Vingtieme Siecle, to give it its full
+title--had been discovered in '96 by the poets and prosaists, but had now
+been more or less abandoned in favor of some later find.  I don't think it
+lived long enough to justify its name; but at that time there it still was, in
+Greek Street, a few doors from Soho Square, and almost opposite to that
+house where, in the first years of the century, a little girl, and with her a
+boy named De Quincey, made nightly encampment in darkness and
+hunger among dust and rats and old legal parchments.  The
+Vingtieme was but a small whitewashed room, leading out into
+the street at one end and into a kitchen at the other.  The proprietor and 
+cook was a Frenchman, known to us as Monsieur Vingtieme; the
+waiters were his two daughters, Rose and Berthe; and the food, according
+to faith, was good.  The tables were so narrow and were set so close
+together that there was space for twelve of them, six jutting from each
+wall.
+
+Only the two nearest to the door, as I went in, were occupied.  On
+one side sat a tall, flashy, rather Mephistophelian man whom I had seen
+from time to time in the domino-room and elsewhere.  On the other side
+sat Soames.  They made a queer contrast in that sunlit room, Soames
+sitting haggard in that hat and cape, which nowhere at any season had I
+seen him doff, and this other, this keenly vital man, at sight of whom I
+more than ever wondered whether he were a diamond merchant, a
+conjurer, or the head of a private detective agency.  I was sure Soames
+didn't want my company; but I asked, as it would have seemed brutal not
+to, whether I might join him, and took the chair opposite to his.  He was
+smoking a cigarette, with an untasted salmi of something on his plate and
+a half-empty bottle of Sauterne before him, and he was quite silent.  I
+said that the preparations for the Jubilee made London impossible.  (I
+rather liked them, really.) I professed a wish to go right away till the
+whole thing was over.  In vain did I attune myself to his gloom.  He
+seemed not to hear me or even to see me.  I felt that his behavior made
+me ridiculous in the eyes of the other man.  The gangway between the
+two rows of tables at the Vingtieme was hardly more than two
+feet wide (Rose and Berthe, in their ministrations, had always to edge
+past each other, quarreling in whispers as they did so), and any one at the
+table abreast of yours was virtually at yours.  I thought our neighbor was
+amused at my failure to interest Soames, and so, as I could not explain
+to him that my insistence was merely charitable, I became silent.
+Without turning my head, I had him well  within my range of vision.
+I hoped I looked less vulgar than he in contrast with Soames.
+I was sure he was not an Englishman, but what WAS his nationality?
+Though his jet-black hair was en brosse, I did not think he was French.
+To Berthe, who waited on him, he spoke French fluently, but with a hardly
+native idiom and accent.  I gathered that this was his first visit to the
+Vingtieme; but Berthe was offhand in her manner to him: he had not made a
+good impression.  His eyes were handsome, but, like the Vingtieme's tables,
+too narrow and set too close together.  His nose was predatory, and the points
+of his mustache, waxed up behind his nostrils, gave a fixity to his smile.
+Decidedly, he was sinister.  And my sense of discomfort in his presence
+was intensified by the scarlet waistcoat which tightly, and so
+unseasonably in June, sheathed his ample chest.  This waistcoat wasn't
+wrong merely because of the heat, either.  It was somehow all wrong in
+itself.  It wouldn't have done on Christmas morning.  It would have
+struck a jarring note at the first night of "Hernani."  I was trying to
+account for its wrongness when Soames suddenly and strangely broke silence.
+"A hundred years hence!" he murmured, as in a trance.
+
+"We shall not be here," I briskly, but fatuously, added.
+
+"We shall not be here.  No," he droned, "but the museum will still
+be just where it is.  And the reading-room just where it is.  And people
+will be able to go and read there."  He inhaled sharply, and a spasm as 
+of actual pain contorted his features.
+
+I wondered what train of thought poor Soames had been following.
+He did not enlighten me when he said, after a long pause, "You think I
+haven't minded."
+
+"Minded what, Soames?"
+
+"Neglect.  Failure."
+
+"FAILURE?" I said heartily.  "Failure?" I repeated vaguely.
+"Neglect--yes, perhaps; but that's quite another matter.  Of course you
+haven't been--appreciated.  But what, then?  Any artist who--who gives--" What I wanted to say was,
+"Any artist who gives truly new and great
+things to the world has always to wait long for recognition"; but the
+flattery would not out: in the face of his misery--a misery so
+genuine and so unmasked-- my lips would not say the words.
+
+And then he said them for me.  I flushed.  "That's what you were
+going to say, isn't it?" he asked.
+
+"How did you know?"
+
+"It's what you said to me three years ago, when 'Fungoids' was
+published."  I flushed the more.  I need not have flushed at all.  "It's the
+only important thing I ever heard you say," he continued.  "And I've 
+never forgotten it.  It's a true thing.  It's a horrible truth.  But--d'you
+remember what I answered?  I said, 'I don't care a sou for recognition.'
+And you believed me.  You've gone on believing I'm above that sort of 
+thing.  You're shallow.  What should YOU know of the feelings of
+a man like me?  You imagine that a great artist's faith in himself and in
+the verdict of posterity is enough to keep him happy.  You've never
+guessed at the bitterness and loneliness, the"--his voice broke; but
+presently he resumed, speaking with a force that I had never known in
+him.  "Posterity!  What use is it to ME?  A dead man doesn't know
+that people are visiting his grave, visiting his birthplace, putting up
+tablets to him, unveiling statues of him.  A dead man can't read the books
+that are written about him.  A hundred years hence!  Think of it!  If I
+could come back to life THEN--just for a few hours--and go to the
+reading-room and READ!  Or, better still, if I could be projected
+now, at this moment, into that future, into that reading-room, just for this
+one afternoon!  I'd sell myself body and soul to the devil for that!  Think
+of the pages and pages in the catalogue: 'Soames, Enoch'
+endlessly--endless editions, commentaries, prolegomena, biographies"--
+But here he was interrupted by a sudden loud crack of the chair at the
+next table.  Our neighbor had half risen from his place.  He was leaning
+toward us, apologetically intrusive.
+
+"Excuse--permit me," he said softly.  "I have been unable not to
+hear.  Might I take a liberty?  In this little
+restaurant-sans-facon--might I, as the phrase is, cut in?"
+
+I could but signify our acquiescence.  Berthe had appeared at the
+kitchen door, thinking the stranger wanted his bill.  He waved her away
+with his cigar, and in another moment had seated himself beside me,
+commanding a full view of Soames.
+
+"Though not an Englishman," he explained, "I know my London
+well, Mr. Soames.  Your name and fame--Mr. Beerbohm's, too--very
+known to me.  Your point is, who am _I_?"  He glanced quickly 
+over his shoulder, and in a lowered voice said, "I am the devil."
+
+I couldn't help it; I laughed.  I tried not to, I knew there was nothing
+to laugh at, my rudeness shamed me; but--I laughed with increasing
+volume.  The devil's quiet dignity, the surprise and disgust of his raised
+eyebrows, did but the more dissolve me.  I rocked to and fro; I lay back
+aching; I behaved deplorably.
+
+"I am a gentleman, and," he said with intense emphasis, "I thought I
+was in the company of GENTLEMEN."
+
+"Don't!" I gasped faintly.  "Oh, don't!"
+
+"Curious, nicht wahr?" I heard him say to Soames.  "There
+is a type of person to whom the very mention of my name is--oh, so
+awfully--funny!  In your theaters the dullest comedien
+needs only to say 'The devil!' and right away they give him 'the loud
+laugh what speaks the vacant mind.'  Is it not so?"
+
+I had now just breath enough to offer my apologies.  He accepted
+them, but coldly, and re-addressed himself to Soames.
+
+"I am a man of business," he said, "and always I would put things
+through 'right now,' as they say in the States.  You are a poet.  Les
+affaires--you detest them.  So be it.  But with me you will deal, eh?
+What you have said just now gives me furiously to hope."
+
+Soames had not moved except to light a fresh cigarette.  He sat
+crouched forward, with his elbows squared on the table, and his head just
+above the level of his hands, staring up at the devil.
+
+"Go on," he nodded.  I had no remnant of laughter in me now.
+
+"It will be the more pleasant, our little deal," the devil went on,
+"because you are--I mistake not?--a diabolist."
+
+"A Catholic diabolist," said Soames.
+
+The devil accepted the reservation genially.
+
+"You wish," he resumed, "to visit now--this afternoon as-ever-is
+--the reading-room of the British Museum, yes?  But of a hundred years
+hence, yes?  Parfaitement.  Time--an illusion.  Past and
+future--they are as ever present as the present, or at any rate only what
+you call 'just round the corner.'  I switch you on to any date.  I project
+you--pouf!  You wish to be in the reading-room just as it will be
+on the afternoon of June 3, 1997?  You wish to find yourself standing in
+that room, just past the swing-doors, this very minute, yes?  And to stay
+there till closing-time?  Am I right?"
+
+Soames nodded.
+
+The devil looked at his watch.  "Ten past two," he said.
+"Closing-time in summer same then as now--seven o'clock.  That will
+give you almost five hours.  At seven o'clock--pouf!--you find
+yourself again here, sitting at this table.  I am dining to-night dans le
+monde--dans le higlif.  That concludes my present visit to your great
+city.  I come and fetch you here, Mr. Soames, on my way home."
+
+"Home?" I echoed.
+
+"Be it never so humble!" said the devil, lightly.
+
+"All right," said Soames.
+
+"Soames!" I entreated.  But my friend moved not a muscle.
+
+The devil had made as though to stretch forth his hand across the
+table, but he paused in his gesture.
+
+"A hundred years hence, as now," he smiled, "no smoking allowed
+in the reading-room.  You would better therefore--"
+
+Soames removed the cigarette from his mouth and dropped it into
+his glass of Sauterne.
+
+"Soames!" again I cried.  "Can't you"--but the devil had now
+stretched forth his hand across the table.  He brought it slowly down on
+the table-cloth.  Soames's chair was empty.  His cigarette floated sodden
+in his wine-glass.  There was no other trace of him.
+
+For a few moments the devil let his hand rest where it lay, gazing at
+me out of the corners of his eyes, vulgarly triumphant.
+
+A shudder shook me.  With an effort I controlled myself and rose
+from my chair.  "Very clever," I said condescendingly.  "But--'The Time
+Machine' is a delightful book, don't you think?  So entirely original!"
+
+"You are pleased to sneer," said the devil, who had also risen, "but
+it is one thing to write about an impossible machine; it is a quite other
+thing to be a supernatural power."  All the same, I had scored.
+
+Berthe had come forth at the sound of our rising.  I explained to her
+that Mr. Soames had been called away, and that both he and I would be
+dining here.  It was not until I was out in the open air that I began to feel
+giddy.  I have but the haziest recollection of what I did, where I
+wandered, in the glaring sunshine of that endless afternoon.  I remember
+the sound of carpenters' hammers all along Piccadilly and the bare
+chaotic look of the half-erected "stands."  Was it in the Green Park or in
+Kensington Gardens or WHERE was it that I sat on a chair beneath
+a tree, trying to read an evening paper?  There was a phrase in the leading
+article that went on repeating itself in my fagged mind: "Little is hidden
+from this August Lady full of the garnered wisdom of sixty years of
+Sovereignty."  I remember wildly conceiving a letter (to reach Windsor
+by an express messenger told to await answer): "Madam: Well knowing
+that your Majesty is full of the garnered wisdom of sixty years of
+Sovereignty, I venture to ask your advice in the following delicate matter. 
+Mr. Enoch Soames, whose poems you may or may not know--" Was
+there NO way of helping him, saving him?  A bargain was a
+bargain, and I was the last man to aid or abet any one in wriggling out of
+a reasonable obligation.  I wouldn't have lifted a little finger to save
+Faust. But poor Soames!  Doomed to pay without respite
+an eternal price for nothing but a fruitless search and a bitter
+disillusioning.
+
+Odd and uncanny it seemed to me that he, Soames, in the flesh, in
+the waterproof cape, was at this moment living in the last decade of the
+next century, poring over books not yet written, and seeing and seen by
+men not yet born.  Uncannier and odder still that to-night and evermore
+he would be in hell.  Assuredly, truth was stranger than fiction.
+
+Endless that afternoon was.  Almost I wished I had gone with
+Soames, not, indeed, to stay in the reading-room, but to sally forth for a
+brisk sight-seeing walk around a new London.  I wandered restlessly out
+of the park I had sat in.  Vainly I tried to imagine myself an ardent tourist
+from the eighteenth century.  Intolerable was the strain of the
+slow-passing and empty minutes.  Long before seven o'clock I was back
+at the Vingtieme.
+
+I sat there just where I had sat for luncheon.  Air came in listlessly
+through the open door behind me.  Now and again Rose or Berthe
+appeared for a moment.  I had told them I would not order any dinner till
+Mr. Soames came.  A hurdy-gurdy began to play, abruptly drowning the
+noise of a quarrel between some Frenchmen farther up the street.
+Whenever the tune was changed I heard the quarrel still raging.  I had
+bought another evening paper on my way.  I unfolded it.  My eyes gazed
+ever away from it to the clock over the kitchen door.
+
+Five minutes now to the hour!  I remembered that clocks in
+restaurants are kept five minutes fast.  I concentrated my eyes on the
+paper.  I vowed I would not look away from it again.  I held it upright, at 
+its full width, close to my face, so that I had no view of anything but it.
+Rather a tremulous sheet?  Only because of the draft, I told myself.
+
+My arms gradually became stiff; they ached; but I could not drop
+them--now.  I had a suspicion, I had a certainty.  Well, what, then?  What
+else had I come for?  Yet I held tight that barrier of newspaper.  Only the
+sound of Berthe's brisk footstep from the kitchen enabled me, forced me,
+to drop it, and to utter:
+
+"What shall we have to eat, Soames?"
+
+"Il est souffrant, ce pauvre Monsieur Soames?" asked Berthe.
+
+"He's only--tired."  I asked her to get some wine--Burgundy--and
+whatever food might be ready.  Soames sat crouched forward against the
+table exactly as when last I had seen him.  It was as though he had never
+moved--he who had moved so unimaginably far.  Once or twice in the 
+afternoon it had for an instant occurred to me that perhaps his journey
+was not to be fruitless, that perhaps we had all been wrong in our
+estimate of the works of Enoch Soames.  That we had been horribly right
+was horribly clear from the look of him.  But, "Don't be discouraged," I 
+falteringly said.  "Perhaps it's only that you--didn't leave enough time.
+Two, three centuries hence, perhaps--"
+
+"Yes," his voice came; "I've thought of that."
+
+"And now--now for the more immediate future!  Where are you
+going to hide?  How would it be if you caught the Paris express from
+Charing Cross?  Almost an hour to spare.  Don't go on to Paris.  Stop at
+Calais.  Live in Calais.  He'd never think of looking for you in Calais."
+
+"It's like my luck," he said, "to spend my last hours on earth with an
+ass."  But I was not offended.  "And a treacherous ass," he strangely
+added, tossing across to me a crumpled bit of paper which he had been
+holding in his hand.  I glanced at the writing on it--some sort of
+gibberish, apparently.  I laid it impatiently aside.
+
+"Come, Soames, pull yourself together!  This isn't a mere matter of
+life or death.  It's a question of eternal torment, mind you!  You don't
+mean to say you're going to wait limply here till the devil comes to fetch
+you."
+
+"I can't do anything else.  I've no choice."
+
+"Come!  This is 'trusting and encouraging' with a vengeance!  This
+is diabolism run mad!"  I filled his glass with wine.  "Surely, now that
+you've SEEN the brute--"
+
+"It's no good abusing him."
+
+"You must admit there's nothing Miltonic about him, Soames."
+
+"I don't say he's not rather different from what I expected."
+
+"He's a vulgarian, he's a swell mobs-man, he's the sort of man who
+hangs about the corridors of trains going to the Riviera and steals ladies'
+jewel-cases.  Imagine eternal torment presided over by HIM!"
+
+"You don't suppose I look forward to it, do you?"
+
+"Then why not slip quietly out of the way?"
+
+Again and again I filled his glass, and always, mechanically, he
+emptied it; but the wine kindled no spark of enterprise in him.  He did
+not eat, and I myself ate hardly at all.  I did not in my heart believe that
+any dash for freedom could save him.  The chase would be swift, the
+capture certain.  But better anything than this passive, meek, miserable
+waiting.  I told Soames that for the honor of the human race he ought to
+make some show of resistance.  He asked what the human race had ever
+done for him.  "Besides," he said, "can't you understand that I'm in his
+power? You saw him touch me, didn't you?  There's an end of it.  I've no
+will.  I'm sealed."
+
+I made a gesture of despair.  He went on repeating the word
+"sealed."  I began to realize that the wine had clouded his brain.  No
+wonder!  Foodless he had gone into futurity, foodless he still was.  I
+urged him to eat, at any rate, some bread.  It was maddening to think that
+he, who had so much to tell, might tell nothing.  "How was it all," I
+asked, "yonder?  Come, tell me your adventures!"
+
+"They'd make first-rate 'copy,' wouldn't they?"
+
+"I'm awfully sorry for you, Soames, and I make all possible
+allowances; but what earthly right have you to insinuate that I should
+make 'copy,' as you call it, out of you?"
+
+The poor fellow pressed his hands to his forehead.
+
+"I don't know," he said.  "I had some reason, I know.  I'll try to
+remember.  He sat plunged in thought.
+
+"That's right.  Try to remember everything.  Eat a little more bread.
+What did the reading-room look like?"
+
+"Much as usual," he at length muttered.
+
+"Many people there?"
+
+"Usual sort of number."
+
+"What did they look like?"
+
+Soames tried to visualize them.
+
+"They all," he presently remembered, "looked very like one
+another."
+
+My mind took a fearsome leap.
+
+"All dressed in sanitary woolen?"
+
+"Yes, I think so.  Grayish-yellowish stuff."
+
+"A sort of uniform?"  He nodded.  "With a number on it perhaps--a
+number on a large disk of metal strapped round the left arm?  D. K. F.
+78,910--that sort of thing?"  It was even so.  "And all of them, men and
+women alike, looking very well cared for?  Very Utopian, and smelling
+rather strongly of carbolic, and all of them quite hairless?"  I was right
+every time.  Soames was only not sure whether the men and women were
+hairless or shorn.  "I hadn't time to look at them very closely," he
+explained.
+
+"No, of course not.  But--"
+
+"They stared at ME, I can tell you.  I attracted a great deal of
+attention."  At last he had done that!  "I think I rather scared them.  They
+moved away whenever I came near.  They followed me about, at a
+distance, wherever I went.  The men at the round desk in the middle
+seemed to have a sort of panic whenever I went to make inquiries."
+
+"What did you do when you arrived?"
+
+Well, he had gone straight to the catalogue, of course,--to the S
+volumes,--and had stood long before SN-SOF, unable to take this volume
+out of the shelf because his heart was beating so.  At first, he said, he
+wasn't disappointed; he only thought there was some new arrangement.
+He went to the middle desk and asked where the catalogue of
+twentieth-century books was kept.  He gathered that there was
+still only one catalogue.  Again he looked up his name, stared at
+the three little pasted slips he had known so well.  Then he went and sat
+down for a long time.
+
+"And then," he droned, "I looked up the 'Dictionary of National
+Biography,' and some encyclopedias.  I went back to the middle desk and
+asked what was the best modern book on late nineteenth-century
+literature.  They told me Mr. T. K. Nupton's book was considered the
+best.  I looked it up in the catalogue and filled in a form for it.  It was
+brought to me.  My name wasn't in the index, but--yes!" he said with a
+sudden change of tone, "that's what I'd forgotten.  Where's that bit of
+paper?  Give it me back."
+
+I, too, had forgotten that cryptic screed.  I found it fallen on the
+floor, and handed it to him.
+
+He smoothed it out, nodding and smiling at me disagreeably.
+
+"I found myself glancing through Nupton's book," he resumed.
+"Not very easy reading.  Some sort of phonetic spelling.  All the modern
+books I saw were phonetic."
+
+"Then I don't want to hear any more, Soames, please."
+
+"The proper names seemed all to be spelt in the old way.  But for
+that I mightn't have noticed my own name."
+
+"Your own name?  Really?  Soames, I'm VERY glad."
+
+"And yours."
+
+"No!"
+
+"I thought I should find you waiting here to-night, so I took the
+trouble to copy out the passage.  Read it."
+
+I snatched the paper.  Soames's handwriting was characteristically
+dim.  It and the noisome spelling and my excitement made me all the
+slower to grasp what T. K. Nupton was driving at.
+
+The document lies before me at this moment.  Strange that the
+words I here copy out for you were copied out for me by poor Soames
+just eighty-two years hence!
+
+From page 234 of "Inglish Littracher 1890-1900" bi T. K. Nupton,
+publishd bi th Stait, 1992.
+
+
+Fr egzarmpl, a riter ov th time, naimed Max Beerbohm, hoo woz
+stil alive in th twentith senchri, rote a stauri in wich e pautraid an
+immajnari karrakter kauld "Enoch Soames"--a thurd-rait poit hoo beleevz
+imself a grate jeneus an maix a bargin with th Devvl in auder ter no wot
+posterriti thinx ov im!  It iz a sumwot labud sattire, but not without vallu
+az showing hou seriusli the yung men ov th aiteen-ninetiz took
+themselvz.  Nou that th littreri profeshn haz bin auganized az a departmnt
+of publik servis, our riters hav found their levvl an hav lernt ter doo their
+duti without thort ov th morro.  "Th laibrer iz werthi ov hiz hire" an that
+iz aul.  Thank hevvn we hav no Enoch Soameses amung us to-dai!
+
+
+I found that by murmuring the words aloud (a device which I
+commend to my reader) I was able to master them little by little.  The
+clearer they became, the greater was my bewilderment, my distress and 
+horror.  The whole thing was a nightmare.  Afar, the great grisly
+background of what was in store for the poor dear art of letters; here, at
+the table, fixing on me a gaze that made me hot all over, the poor fellow 
+whom--whom evidently--but no: whatever down-grade my character
+might take in coming years, I should never be such a brute as to--
+
+Again I examined the screed.  "Immajnari."  But here Soames was,
+no more imaginary, alas! than I.  And "labud"--what on earth was that?
+(To this day I have never made out that word.) "It's all very--baffling," I
+at length stammered.
+
+Soames said nothing, but cruelly did not cease to look at me.
+
+"Are you sure," I temporized, "quite sure you copied the thing out
+correctly?"
+
+"Quite."
+
+"Well, then, it's this wretched Nupton who must have made--must
+be going to make--some idiotic mistake.  Look here Soames, you know
+me better than to suppose that I-- After all, the name Max Beerbohm is
+not at all an uncommon one, and there must be several Enoch Soameses
+running around, or, rather, Enoch Soames is a name that might occur
+to any one writing a story.  And I don't write stories; I'm an essayist,
+an observer, a recorder.  I admit that it's an extraordinary coincidence.
+But you must see--"
+
+"I see the whole thing," said Soames, quietly.  And he added, with a
+touch of his old manner, but with more dignity than I had ever known in
+him, "Parlons d'autre chose."
+
+I accepted that suggestion very promptly.  I returned straight to the
+more immediate future.  I spent most of the long evening in renewed
+appeals to Soames to come away and seek refuge somewhere.  I
+remember saying at last that if indeed I was destined to write about him,
+the supposed "stauri" had better have at least a happy ending.  Soames
+repeated those last three words in a tone of intense scorn.
+
+"In life and in art," he said, "all that matters is an INEVITABLE
+ending."
+
+"But," I urged more hopefully than I felt, "an ending that can be
+avoided ISN'T inevitable."
+
+"You aren't an artist," he rasped.  "And you're so hopelessly not an
+artist that, so far from being able to imagine a thing and make it seem
+true, you're going to make even a true thing seem as if you'd made it up.
+You're a miserable bungler.  And it's like my luck."
+
+I protested that the miserable bungler was not I, was not going to be
+I, but T. K. Nupton; and we had a rather heated argument, in the thick of
+which it suddenly seemed to me that Soames saw he was in the wrong:
+he had quite physically cowered.  But I wondered why--and now I
+guessed with a cold throb just why--he stared so past me.  The bringer of
+that "inevitable ending" filled the doorway.
+
+I managed to turn in my chair and to say, not without a semblance
+of lightness, "Aha, come in!"  Dread was indeed rather blunted in me by
+his looking so absurdly like a villain in a melodrama.  The sheen of his
+tilted hat and of his shirt-front, the repeated twists he was giving to his 
+mustache, and most of all the magnificence of his sneer, gave token that
+he was there only to be foiled.
+
+He was at our table in a stride.  "I am sorry," he sneered
+witheringly, "to break up your pleasant party, but--"
+
+"You don't; you complete it," I assured him.  "Mr. Soames and I
+want to have a little talk with you.  Won't you sit?  Mr. Soames got
+nothing, frankly nothing, by his journey this afternoon.  We don't wish to 
+say that the whole thing was a swindle, a common swindle.  On the
+contrary, we believe you meant well.  But of course the bargain, such as
+it was, is off."
+
+The devil gave no verbal answer.  He merely looked at Soames and
+pointed with rigid forefinger to the door.  Soames was wretchedly rising
+from his chair when, with a desperate, quick gesture, I swept together
+two dinner-knives that were on the table, and laid their blades across
+each other.  The devil stepped sharp back against the table behind him,
+averting his face and shuddering.
+
+"You are not superstitious!" he hissed.
+
+"Not at all," I smiled.
+
+"Soames," he said as to an underling, but without turning his face,
+"put those knives straight!"
+
+With an inhibitive gesture to my friend, "Mr. Soames," I said
+emphatically to the devil, "is a Catholic diabolist"; but my poor
+friend did the devil's bidding, not mine; and now, with his master's eyes 
+again fixed on him, he arose, he shuffled past me.  I tried to speak.  It
+was he that spoke.  "Try," was the prayer he threw back at me as the devil
+pushed him roughly out through the door--"TRY to make them
+know that I did exist!"
+
+In another instant I, too, was through that door.  I stood staring all
+ways, up the street, across it, down it.  There was moonlight and
+lamplight, but there was not Soames nor that other.
+
+Dazed, I stood there.  Dazed, I turned back at length into the little
+room, and I suppose I paid Berthe or Rose for my dinner and luncheon
+and for Soames's; I hope so, for I never went to the Vingtieme
+again.  Ever since that night I have avoided Greek Street altogether.  And
+for years I did not set foot even in Soho Square, because on that same
+night it was there that I paced and loitered, long and long, with
+some such dull sense of hope as a man has in not straying far from the
+place where he has lost something.  "Round and round the shutter'd
+Square"--that line came back to me on my lonely beat, and with it the
+whole stanza, ringing in my brain and bearing in on me how tragically 
+different from the happy scene imagined by him was the poet's actual
+experience of that prince in whom of all princes we should put not our
+trust!
+
+But strange how the mind of an essayist, be it never so stricken,
+roves and ranges!  I remember pausing before a wide door-step and
+wondering if perchance it was on this very one that the young De
+Quincey lay ill and faint while poor Ann flew as fast as her feet would
+carry her to Oxford Street, the "stony-hearted stepmother" of them both, 
+and came back bearing that "glass of port wine and spices" but for which
+he might, so he thought, actually have died.  Was this the very door-step
+that the old De Quincey used to revisit in homage?  I pondered Ann's
+fate, the cause of her sudden vanishing from the ken of her boy friend;
+and presently I blamed myself for letting the past override the present. 
+Poor vanished Soames!
+
+And for myself, too, I began to be troubled.  What had I better do?
+Would there be a hue and cry--"Mysterious Disappearance of an Author,"
+and all that?  He had last been seen lunching and dining in my company.
+Hadn't I better get a hansom and drive straight to Scotland Yard?  They
+would think I was a lunatic.  After all, I reassured myself, London was a 
+very large place, and one very dim figure might easily drop out of it
+unobserved, now especially, in the blinding glare of the near Jubilee.
+Better say nothing at all, I thought.
+
+AND I was right.  Soames's disappearance made no stir at all.  He was
+utterly forgotten before any one, so far as I am aware, noticed that he was
+no longer hanging around.  Now and again some poet or prosaist may
+have said to another, "What has become of that man Soames?" but I
+never heard any such question asked.  As for his landlady in Dyatt Street,
+no doubt he had paid her weekly, and what possessions he may have had
+in his rooms were enough to save her from fretting.  The solicitor through
+whom he was paid his annuity may be presumed to have made inquiries,
+but no echo of these resounded.  There was something rather ghastly to
+me in the general unconsciousness that Soames had existed, and more
+than once I caught myself wondering whether Nupton, that babe unborn,
+were going to be right in thinking him a figment of my brain.
+
+In that extract f rom Nupton's repulsive book there is one point
+which perhaps puzzles you.  How is it that the author, though I have here
+mentioned him by name and have quoted the exact words he is going to
+write, is not going to grasp the obvious corollary that I have invented 
+nothing?  The answer can be only this: Nupton will not have read the
+later passages of this memoir.  Such lack of thoroughness is a serious
+fault in any one who undertakes to do scholar's work.  And I hope these
+words will meet the eye of some contemporary rival to Nupton and be the
+undoing of Nupton.
+
+I like to think that some time between 1992 and 1997 somebody
+will have looked up this memoir, and will have forced on the world his
+inevitable and startling conclusions.  And I have reason for believing that
+this will be so.  You realize that the reading-room into which Soames
+was projected by the devil was in all respects precisely as it will be on the
+afternoon of June 3, 1997.  You realize, therefore, that on that afternoon, 
+when it comes round, there the selfsame crowd will be, and there Soames
+will be, punctually, he and they doing precisely what they did before.
+Recall now Soames's account of the sensation he made.  You may say
+that the mere difference of his costume was enough to make him
+sensational in that uniformed crowd.  You wouldn't say so if you had
+ever seen him, and I assure you that in no period would Soames be
+anything but dim.  The fact that people are going to stare at him
+and follow him around and seem afraid of him, can be explained only on
+the hypothesis that they will somehow have been prepared for his ghostly
+visitation. They will have been awfully waiting to see whether he really
+would come.  And when he does come the effect will of course
+be--awful.
+
+An authentic, guaranteed, proved ghost, but; only a ghost, alas!
+Only that.  In his first visit Soames was a creature of flesh and blood,
+whereas the creatures among whom he was projected were but ghosts, I 
+take it--solid, palpable, vocal, but unconscious and automatic ghosts, in a 
+building that was itself an illusion.  Next time that building and those
+creatures will be real.  It is of Soames that there will be but the
+semblance.  I wish I could think him destined to revisit the world
+actually, physically, consciously.  I wish he had this one brief escape, this
+one small treat, to look forward to.  I never forget him for long.  He is
+where he is and forever.  The more rigid moralists among you may say he
+has only himself to blame.  For my part, I think he has been very hardly
+used. It is well that vanity should be chastened; and Enoch Soames's
+vanity was, I admit, above the average, and called for special treatment. 
+But there was no need for vindictiveness.  You say he contracted to pay
+the price he is paying.  Yes; but I maintain that he was induced to do so
+by fraud.  Well informed in all things, the devil must have known that my
+friend would gain nothing by his visit to futurity.  The whole thing was a
+very shabby trick.  The more I think of it, the more detestable the devil
+seems to me.
+
+Of him I have caught sight several times, here and there, since that
+day at the Vingtieme.  Only once, however, have I seen him at
+close quarters.  This was a couple of years ago, in Paris.  I was walking 
+one afternoon along the rue d'Antin, and I saw him advancing from the
+opposite direction, overdressed as ever, and swinging an ebony cane and
+altogether behaving as though the whole pavement belonged to him.  At
+thought of Enoch Soames and the myriads of other sufferers eternally in
+this brute's dominion, a great cold wrath filled me, and I drew myself up 
+to my full height.  But--well, one is so used to nodding and smiling in the
+street to anybody whom one knows that the action becomes almost
+independent of oneself; to prevent it requires a very sharp effort and great
+presence of mind.  I was miserably aware, as I passed the devil, that I
+nodded and smiled to him.  And my shame was the deeper and hotter
+because he, if you please, stared straight at me with the utmost
+haughtiness.
+
+To be cut, deliberately cut, by HIM!  I was, I still am, furious
+at having had that happen to me.
+
+
+
+
+
+End of The Project Gutenberg Etext of Enoch Soames, by Max Beerbohm
+
+
+
+
+
+Note: I have closed contractions in the text; e.g.,
+"does n't" has become "doesn't" etc.
+
+
+
+
+
+End of The Project Gutenberg Etext of Enoch Soames, by Max Beerbohm
+

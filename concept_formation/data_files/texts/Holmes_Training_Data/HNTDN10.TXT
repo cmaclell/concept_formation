@@ -1,0 +1,1351 @@
+*The Project Gutenberg Etext of Hunted Down, by Charles Dickens*
+#16 in our series by Charles Dickens
+
+
+Copyright laws are changing all over the world, be sure to check
+the copyright laws for your country before posting these files!!
+
+Please take a look at the important information in this header.
+We encourage you to keep this file on your own disk, keeping an
+electronic path open for the next readers.  Do not remove this.
+
+
+**Welcome To The World of Free Plain Vanilla Electronic Texts**
+
+**Etexts Readable By Both Humans and By Computers, Since 1971**
+
+*These Etexts Prepared By Hundreds of Volunteers and Donations*
+
+Information on contacting Project Gutenberg to get Etexts, and
+further information is included below.  We need your donations.
+
+
+Hunted Down
+
+by Charles Dickens
+
+February, 1997  [Etext #807]
+
+
+*The Project Gutenberg Etext of Hunted Down, by Charles Dickens*
+*****This file should be named hntdn10.txt or hntdn10.zip******
+
+Corrected EDITIONS of our etexts get a new NUMBER, hntdn11.txt.
+VERSIONS based on separate sources get new LETTER, hntdn10a.txt.
+
+
+Scanned and proofed by David Price
+ccx074@coventry.ac.uk
+
+
+We are now trying to release all our books one month in advance
+of the official release dates, for time for better editing.
+
+Please note:  neither this list nor its contents are final till
+midnight of the last day of the month of any such announcement.
+The official release date of all Project Gutenberg Etexts is at
+Midnight, Central Time, of the last day of the stated month.  A
+preliminary version may often be posted for suggestion, comment
+and editing by those who wish to do so.  To be sure you have an
+up to date first edition [xxxxx10x.xxx] please check file sizes
+in the first week of the next month.  Since our ftp program has
+a bug in it that scrambles the date [tried to fix and failed] a
+look at the file size will have to do, but we will try to see a
+new copy has at least one byte more or less.
+
+
+Information about Project Gutenberg (one page)
+
+We produce about two million dollars for each hour we work.  The
+fifty hours is one conservative estimate for how long it we take
+to get any etext selected, entered, proofread, edited, copyright
+searched and analyzed, the copyright letters written, etc.  This
+projected audience is one hundred million readers.  If our value
+per text is nominally estimated at one dollar then we produce $2
+million dollars per hour this year as we release thirty-two text
+files per month:  or 400 more Etexts in 1996 for a total of 800.
+If these reach just 10% of the computerized population, then the
+total should reach 80 billion Etexts.  We will try add 800 more,
+during 1997, but it will take all the effort we can manage to do
+the doubling of our library again this year, what with the other
+massive requirements it is going to take to get incorporated and
+establish something that will have some permanence.
+
+The Goal of Project Gutenberg is to Give Away One Trillion Etext
+Files by the December 31, 2001.  [10,000 x 100,000,000=Trillion]
+This is ten thousand titles each to one hundred million readers,
+which is only 10% of the present number of computer users.  2001
+should have at least twice as many computer users as that, so it
+will require us reaching less than 5% of the users in 2001.
+
+
+We need your donations more than ever!
+
+
+All donations should be made to "Project Gutenberg"
+
+
+For these and other matters, please mail to:
+
+Project Gutenberg
+P. O. Box  2782
+Champaign, IL 61825
+
+When all other email fails try our Executive Director:
+Michael S. Hart <hart@pobox.com>
+
+We would prefer to send you this information by email
+(Internet, Bitnet, Compuserve, ATTMAIL or MCImail).
+
+******
+If you have an FTP program (or emulator), please
+FTP directly to the Project Gutenberg archives:
+[Mac users, do NOT point and click. . .type]
+
+ftp uiarchive.cso.uiuc.edu
+login:  anonymous
+password:  your@login
+cd etext/etext90 through /etext97
+or cd etext/articles [get suggest gut for more information]
+dir [to see files]
+get or mget [to get files. . .set bin for zip files]
+GET INDEX?00.GUT
+for a list of books
+and
+GET NEW GUT for general information
+and
+MGET GUT* for newsletters.
+
+**Information prepared by the Project Gutenberg legal advisor**
+(Three Pages)
+
+
+***START**THE SMALL PRINT!**FOR PUBLIC DOMAIN ETEXTS**START***
+Why is this "Small Print!" statement here?  You know: lawyers.
+They tell us you might sue us if there is something wrong with
+your copy of this etext, even if you got it for free from
+someone other than us, and even if what's wrong is not our
+fault.  So, among other things, this "Small Print!" statement
+disclaims most of our liability to you.  It also tells you how
+you can distribute copies of this etext if you want to.
+
+*BEFORE!* YOU USE OR READ THIS ETEXT
+By using or reading any part of this PROJECT GUTENBERG-tm
+etext, you indicate that you understand, agree to and accept
+this "Small Print!" statement.  If you do not, you can receive
+a refund of the money (if any) you paid for this etext by
+sending a request within 30 days of receiving it to the person
+you got it from.  If you received this etext on a physical
+medium (such as a disk), you must return it with your request.
+
+ABOUT PROJECT GUTENBERG-TM ETEXTS
+This PROJECT GUTENBERG-tm etext, like most PROJECT GUTENBERG-
+tm etexts, is a "public domain" work distributed by Professor
+Michael S. Hart through the Project Gutenberg (the "Project").
+Among other things, this means that no one owns a United States
+copyright on or for this work, so the Project (and you!) can copy
+and distribute it in the United States without permission and
+without paying copyright royalties.  Special rules, set forth
+below, apply if you wish to copy and distribute this etext
+under the Project's "PROJECT GUTENBERG" trademark.
+
+To create these etexts, the Project expends considerable
+efforts to identify, transcribe and proofread public domain
+works.  Despite these efforts, the Project's etexts and any
+medium they may be on may contain "Defects".  Among other
+things, Defects may take the form of incomplete, inaccurate or
+corrupt data, transcription errors, a copyright or other
+intellectual property infringement, a defective or damaged
+disk or other etext medium, a computer virus, or computer
+codes that damage or cannot be read by your equipment.
+
+LIMITED WARRANTY; DISCLAIMER OF DAMAGES
+But for the "Right of Replacement or Refund" described below,
+[1] the Project (and any other party you may receive this
+etext from as a PROJECT GUTENBERG-tm etext) disclaims all
+liability to you for damages, costs and expenses, including
+legal fees, and [2] YOU HAVE NO REMEDIES FOR NEGLIGENCE OR
+UNDER STRICT LIABILITY, OR FOR BREACH OF WARRANTY OR CONTRACT,
+INCLUDING BUT NOT LIMITED TO INDIRECT, CONSEQUENTIAL, PUNITIVE
+OR INCIDENTAL DAMAGES, EVEN IF YOU GIVE NOTICE OF THE
+POSSIBILITY OF SUCH DAMAGES.
+
+If you discover a Defect in this etext within 90 days of
+receiving it, you can receive a refund of the money (if any)
+you paid for it by sending an explanatory note within that
+time to the person you received it from.  If you received it
+on a physical medium, you must return it with your note, and
+such person may choose to alternatively give you a replacement
+copy.  If you received it electronically, such person may
+choose to alternatively give you a second opportunity to
+receive it electronically.
+
+THIS ETEXT IS OTHERWISE PROVIDED TO YOU "AS-IS".  NO OTHER
+WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED, ARE MADE TO YOU AS
+TO THE ETEXT OR ANY MEDIUM IT MAY BE ON, INCLUDING BUT NOT
+LIMITED TO WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A
+PARTICULAR PURPOSE.
+
+Some states do not allow disclaimers of implied warranties or
+the exclusion or limitation of consequential damages, so the
+above disclaimers and exclusions may not apply to you, and you
+may have other legal rights.
+
+INDEMNITY
+You will indemnify and hold the Project, its directors,
+officers, members and agents harmless from all liability, cost
+and expense, including legal fees, that arise directly or
+indirectly from any of the following that you do or cause:
+[1] distribution of this etext, [2] alteration, modification,
+or addition to the etext, or [3] any Defect.
+
+DISTRIBUTION UNDER "PROJECT GUTENBERG-tm"
+You may distribute copies of this etext electronically, or by
+disk, book or any other medium if you either delete this
+"Small Print!" and all other references to Project Gutenberg,
+or:
+
+[1]  Only give exact copies of it.  Among other things, this
+     requires that you do not remove, alter or modify the
+     etext or this "small print!" statement.  You may however,
+     if you wish, distribute this etext in machine readable
+     binary, compressed, mark-up, or proprietary form,
+     including any form resulting from conversion by word pro-
+     cessing or hypertext software, but only so long as
+     *EITHER*:
+
+     [*]  The etext, when displayed, is clearly readable, and
+          does *not* contain characters other than those
+          intended by the author of the work, although tilde
+          (~), asterisk (*) and underline (_) characters may
+          be used to convey punctuation intended by the
+          author, and additional characters may be used to
+          indicate hypertext links; OR
+
+     [*]  The etext may be readily converted by the reader at
+          no expense into plain ASCII, EBCDIC or equivalent
+          form by the program that displays the etext (as is
+          the case, for instance, with most word processors);
+          OR
+
+     [*]  You provide, or agree to also provide on request at
+          no additional cost, fee or expense, a copy of the
+          etext in its original plain ASCII form (or in EBCDIC
+          or other equivalent proprietary form).
+
+[2]  Honor the etext refund and replacement provisions of this
+     "Small Print!" statement.
+
+[3]  Pay a trademark license fee to the Project of 20% of the
+     net profits you derive calculated using the method you
+     already use to calculate your applicable taxes.  If you
+     don't derive profits, no royalty is due.  Royalties are
+     payable to "Project Gutenberg Association within the 60
+     days following each date you prepare (or were legally
+     required to prepare) your annual (or equivalent periodic)
+     tax return.
+
+WHAT IF YOU *WANT* TO SEND MONEY EVEN IF YOU DON'T HAVE TO?
+The Project gratefully accepts contributions in money, time,
+scanning machines, OCR software, public domain etexts, royalty
+free copyright licenses, and every other sort of contribution
+you can think of.  Money should be paid to "Project Gutenberg
+Association".
+
+*END*THE SMALL PRINT! FOR PUBLIC DOMAIN ETEXTS*Ver.04.29.93*END*
+
+
+
+
+
+Scanned and proofed by David Price
+ccx074@coventry.ac.uk
+
+
+
+
+
+Hunted Down
+
+by Charles Dickens
+
+
+
+I.
+
+
+Most of us see some romances in life.  In my capacity as Chief
+Manager of a Life Assurance Office, I think I have within the last
+thirty years seen more romances than the generality of men, however
+unpromising the opportunity may, at first sight, seem.
+
+As I have retired, and live at my ease, I possess the means that I
+used to want, of considering what I have seen, at leisure.  My
+experiences have a more remarkable aspect, so reviewed, than they
+had when they were in progress.  I have come home from the Play
+now, and can recall the scenes of the Drama upon which the curtain
+has fallen, free from the glare, bewilderment, and bustle of the
+Theatre.
+
+Let me recall one of these Romances of the real world.
+
+There is nothing truer than physiognomy, taken in connection with
+manner.  The art of reading that book of which Eternal Wisdom
+obliges every human creature to present his or her own page with
+the individual character written on it, is a difficult one,
+perhaps, and is little studied.  It may require some natural
+aptitude, and it must require (for everything does) some patience
+and some pains.  That these are not usually given to it, - that
+numbers of people accept a few stock commonplace expressions of the
+face as the whole list of characteristics, and neither seek nor
+know the refinements that are truest, - that You, for instance,
+give a great deal of time and attention to the reading of music,
+Greek, Latin, French, Italian, Hebrew, if you please, and do not
+qualify yourself to read the face of the master or mistress looking
+over your shoulder teaching it to you, - I assume to be five
+hundred times more probable than improbable.  Perhaps a little
+self-sufficiency may be at the bottom of this; facial expression
+requires no study from you, you think; it comes by nature to you to
+know enough about it, and you are not to be taken in.
+
+I confess, for my part, that I HAVE been taken in, over and over
+again.  I have been taken in by acquaintances, and I have been
+taken in (of course) by friends; far oftener by friends than by any
+other class of persons.  How came I to be so deceived?  Had I quite
+misread their faces?
+
+No.  Believe me, my first impression of those people, founded on
+face and manner alone, was invariably true.  My mistake was in
+suffering them to come nearer to me and explain themselves away.
+
+
+
+II.
+
+
+The partition which separated my own office from our general outer
+office in the City was of thick plate-glass.  I could see through
+it what passed in the outer office, without hearing a word.  I had
+it put up in place of a wall that had been there for years, - ever
+since the house was built.  It is no matter whether I did or did
+not make the change in order that I might derive my first
+impression of strangers, who came to us on business, from their
+faces alone, without being influenced by anything they said.
+Enough to mention that I turned my glass partition to that account,
+and that a Life Assurance Office is at all times exposed to be
+practised upon by the most crafty and cruel of the human race.
+
+It was through my glass partition that I first saw the gentleman
+whose story I am going to tell.
+
+He had come in without my observing it, and had put his hat and
+umbrella on the broad counter, and was bending over it to take some
+papers from one of the clerks.  He was about forty or so, dark,
+exceedingly well dressed in black, - being in mourning, - and the
+hand he extended with a polite air, had a particularly well-fitting
+black-kid glove upon it.  His hair, which was elaborately brushed
+and oiled, was parted straight up the middle; and he presented this
+parting to the clerk, exactly (to my thinking) as if he had said,
+in so many words: 'You must take me, if you please, my friend, just
+as I show myself.  Come straight up here, follow the gravel path,
+keep off the grass, I allow no trespassing.'
+
+I conceived a very great aversion to that man the moment I thus saw
+him.
+
+He had asked for some of our printed forms, and the clerk was
+giving them to him and explaining them.  An obliged and agreeable
+smile was on his face, and his eyes met those of the clerk with a
+sprightly look.  (I have known a vast quantity of nonsense talked
+about bad men not looking you in the face.  Don't trust that
+conventional idea.  Dishonesty will stare honesty out of
+countenance, any day in the week, if there is anything to be got by
+it.)
+
+I saw, in the corner of his eyelash, that he became aware of my
+looking at him.  Immediately he turned the parting in his hair
+toward the glass partition, as if he said to me with a sweet smile,
+'Straight up here, if you please.  Off the grass!'
+
+In a few moments he had put on his hat and taken up his umbrella,
+and was gone.
+
+I beckoned the clerk into my room, and asked, 'Who was that?'
+
+He had the gentleman's card in his hand.  'Mr. Julius Slinkton,
+Middle Temple.'
+
+'A barrister, Mr. Adams?'
+
+'I think not, sir.'
+
+'I should have thought him a clergyman, but for his having no
+Reverend here,' said I.
+
+'Probably, from his appearance,' Mr. Adams replied, 'he is reading
+for orders.'
+
+I should mention that he wore a dainty white cravat, and dainty
+linen altogether.
+
+'What did he want, Mr. Adams?'
+
+'Merely a form of proposal, sir, and form of reference.'
+
+'Recommended here?  Did he say?'
+
+'Yes, he said he was recommended here by a friend of yours.  He
+noticed you, but said that as he had not the pleasure of your
+personal acquaintance he would not trouble you.'
+
+'Did he know my name?'
+
+'O yes, sir!  He said, "There IS Mr. Sampson, I see!"'
+
+'A well-spoken gentleman, apparently?'
+
+'Remarkably so, sir.'
+
+'Insinuating manners, apparently?'
+
+'Very much so, indeed, sir.'
+
+'Hah!' said I.  'I want nothing at present, Mr. Adams.'
+
+Within a fortnight of that day I went to dine with a friend of
+mine, a merchant, a man of taste, who buys pictures and books, and
+the first man I saw among the company was Mr. Julius Slinkton.
+There he was, standing before the fire, with good large eyes and an
+open expression of face; but still (I thought) requiring everybody
+to come at him by the prepared way he offered, and by no other.
+
+I noticed him ask my friend to introduce him to Mr. Sampson, and my
+friend did so.  Mr. Slinkton was very happy to see me.  Not too
+happy; there was no over-doing of the matter; happy in a thoroughly
+well-bred, perfectly unmeaning way.
+
+'I thought you had met,' our host observed.
+
+'No,' said Mr. Slinkton.  'I did look in at Mr. Sampson's office,
+on your recommendation; but I really did not feel justified in
+troubling Mr. Sampson himself, on a point in the everyday, routine
+of an ordinary clerk.'
+
+I said I should have been glad to show him any attention on our
+friend's introduction.
+
+'I am sure of that,' said he, 'and am much obliged.  At another
+time, perhaps, I may be less delicate.  Only, however, if I have
+real business; for I know, Mr. Sampson, how precious business time
+is, and what a vast number of impertinent people there are in the
+world.'
+
+I acknowledged his consideration with a slight bow.  'You were
+thinking,' said I, 'of effecting a policy on your life.'
+
+'O dear no!  I am afraid I am not so prudent as you pay me the
+compliment of supposing me to be, Mr. Sampson.  I merely inquired
+for a friend.  But you know what friends are in such matters.
+Nothing may ever come of it.  I have the greatest reluctance to
+trouble men of business with inquiries for friends, knowing the
+probabilities to be a thousand to one that the friends will never
+follow them up.  People are so fickle, so selfish, so
+inconsiderate.  Don't you, in your business, find them so every
+day, Mr. Sampson?'
+
+I was going to give a qualified answer; but he turned his smooth,
+white parting on me with its 'Straight up here, if you please!' and
+I answered 'Yes.'
+
+'I hear, Mr. Sampson,' he resumed presently, for our friend had a
+new cook, and dinner was not so punctual as usual, 'that your
+profession has recently suffered a great loss.'
+
+'In money?' said I.
+
+He laughed at my ready association of loss with money, and replied,
+'No, in talent and vigour.'
+
+Not at once following out his allusion, I considered for a moment.
+'HAS it sustained a loss of that kind?' said I.  'I was not aware
+of it.'
+
+'Understand me, Mr. Sampson.  I don't imagine that you have
+retired.  It is not so bad as that.  But Mr. Meltham - '
+
+'O, to be sure!' said I.  'Yes!  Mr. Meltham, the young actuary of
+the "Inestimable."'
+
+'Just so,' he returned in a consoling way.
+
+'He is a great loss.  He was at once the most profound, the most
+original, and the most energetic man I have ever known connected
+with Life Assurance.'
+
+I spoke strongly; for I had a high esteem and admiration for
+Meltham; and my gentleman had indefinitely conveyed to me some
+suspicion that he wanted to sneer at him.  He recalled me to my
+guard by presenting that trim pathway up his head, with its
+internal 'Not on the grass, if you please - the gravel.'
+
+'You knew him, Mr. Slinkton.'
+
+'Only by reputation.  To have known him as an acquaintance or as a
+friend, is an honour I should have sought if he had remained in
+society, though I might never have had the good fortune to attain
+it, being a man of far inferior mark.  He was scarcely above
+thirty, I suppose?'
+
+'About thirty.'
+
+'Ah!' he sighed in his former consoling way.  'What creatures we
+are!  To break up, Mr. Sampson, and become incapable of business at
+that time of life! - Any reason assigned for the melancholy fact?'
+
+('Humph!' thought I, as I looked at him.  'But I WON'T go up the
+track, and I WILL go on the grass.')
+
+'What reason have you heard assigned, Mr. Slinkton?' I asked,
+point-blank.
+
+'Most likely a false one.  You know what Rumour is, Mr. Sampson.  I
+never repeat what I hear; it is the only way of paring the nails
+and shaving the head of Rumour.  But when YOU ask me what reason I
+have heard assigned for Mr. Meltham's passing away from among men,
+it is another thing.  I am not gratifying idle gossip then.  I was
+told, Mr. Sampson, that Mr. Meltham had relinquished all his
+avocations and all his prospects, because he was, in fact, broken-
+hearted.  A disappointed attachment I heard, - though it hardly
+seems probable, in the case of a man so distinguished and so
+attractive.'
+
+'Attractions and distinctions are no armour against death,' said I.
+
+'O, she died?  Pray pardon me.  I did not hear that.  That, indeed,
+makes it very, very sad.  Poor Mr. Meltham!  She died?  Ah, dear
+me!  Lamentable, lamentable!'
+
+I still thought his pity was not quite genuine, and I still
+suspected an unaccountable sneer under all this, until he said, as
+we were parted, like the other knots of talkers, by the
+announcement of dinner:
+
+'Mr. Sampson, you are surprised to see me so moved on behalf of a
+man whom I have never known.  I am not so disinterested as you may
+suppose.  I have suffered, and recently too, from death myself.  I
+have lost one of two charming nieces, who were my constant
+companions.  She died young - barely three-and-twenty; and even her
+remaining sister is far from strong.  The world is a grave!'
+
+He said this with deep feeling, and I felt reproached for the
+coldness of my manner.  Coldness and distrust had been engendered
+in me, I knew, by my bad experiences; they were not natural to me;
+and I often thought how much I had lost in life, losing
+trustfulness, and how little I had gained, gaining hard caution.
+This state of mind being habitual to me, I troubled myself more
+about this conversation than I might have troubled myself about a
+greater matter.  I listened to his talk at dinner, and observed how
+readily other men responded to it, and with what a graceful
+instinct he adapted his subjects to the knowledge and habits of
+those he talked with.  As, in talking with me, he had easily
+started the subject I might be supposed to understand best, and to
+be the most interested in, so, in talking with others, he guided
+himself by the same rule.  The company was of a varied character;
+but he was not at fault, that I could discover, with any member of
+it.  He knew just as much of each man's pursuit as made him
+agreeable to that man in reference to it, and just as little as
+made it natural in him to seek modestly for information when the
+theme was broached.
+
+As he talked and talked - but really not too much, for the rest of
+us seemed to force it upon him - I became quite angry with myself.
+I took his face to pieces in my mind, like a watch, and examined it
+in detail.  I could not say much against any of his features
+separately; I could say even less against them when they were put
+together.  'Then is it not monstrous,' I asked myself, 'that
+because a man happens to part his hair straight up the middle of
+his head, I should permit myself to suspect, and even to detest
+him?'
+
+(I may stop to remark that this was no proof of my sense.  An
+observer of men who finds himself steadily repelled by some
+apparently trifling thing in a stranger is right to give it great
+weight.  It may be the clue to the whole mystery.  A hair or two
+will show where a lion is hidden.  A very little key will open a
+very heavy door.)
+
+I took my part in the conversation with him after a time, and we
+got on remarkably well.  In the drawing-room I asked the host how
+long he had known Mr. Slinkton.  He answered, not many months; he
+had met him at the house of a celebrated painter then present, who
+had known him well when he was travelling with his nieces in Italy
+for their health.  His plans in life being broken by the death of
+one of them, he was reading with the intention of going back to
+college as a matter of form, taking his degree, and going into
+orders.  I could not but argue with myself that here was the true
+explanation of his interest in poor Meltham, and that I had been
+almost brutal in my distrust on that simple head.
+
+
+
+III.
+
+
+On the very next day but one I was sitting behind my glass
+partition, as before, when he came into the outer office, as
+before.  The moment I saw him again without hearing him, I hated
+him worse than ever.
+
+It was only for a moment that I had this opportunity; for he waved
+his tight-fitting black glove the instant I looked at him, and came
+straight in.
+
+'Mr. Sampson, good-day!  I presume, you see, upon your kind
+permission to intrude upon you.  I don't keep my word in being
+justified by business, for my business here - if I may so abuse the
+word - is of the slightest nature.'
+
+I asked, was it anything I could assist him in?
+
+'I thank you, no.  I merely called to inquire outside whether my
+dilatory friend had been so false to himself as to be practical and
+sensible.  But, of course, he has done nothing.  I gave him your
+papers with my own hand, and he was hot upon the intention, but of
+course he has done nothing.  Apart from the general human
+disinclination to do anything that ought to be done, I dare say
+there is a specially about assuring one's life.  You find it like
+will-making.  People are so superstitious, and take it for granted
+they will die soon afterwards.'
+
+'Up here, if you please; straight up here, Mr. Sampson.  Neither to
+the right nor to the left.'  I almost fancied I could hear him
+breathe the words as he sat smiling at me, with that intolerable
+parting exactly opposite the bridge of my nose.
+
+'There is such a feeling sometimes, no doubt,' I replied; 'but I
+don't think it obtains to any great extent.'
+
+'Well,' said he, with a shrug and a smile, 'I wish some good angel
+would influence my friend in the right direction.  I rashly
+promised his mother and sister in Norfolk to see it done, and he
+promised them that he would do it.  But I suppose he never will.'
+
+He spoke for a minute or two on indifferent topics, and went away.
+
+I had scarcely unlocked the drawers of my writing-table next
+morning, when he reappeared.  I noticed that he came straight to
+the door in the glass partition, and did not pause a single moment
+outside.
+
+'Can you spare me two minutes, my dear Mr. Sampson?'
+
+'By all means.'
+
+'Much obliged,' laying his hat and umbrella on the table; 'I came
+early, not to interrupt you.  The fact is, I am taken by surprise
+in reference to this proposal my friend has made.'
+
+'Has he made one?' said I.
+
+'Ye-es,' he answered, deliberately looking at me; and then a bright
+idea seemed to strike him - 'or he only tells me he has.  Perhaps
+that may be a new way of evading the matter.  By Jupiter, I never
+thought of that!'
+
+Mr. Adams was opening the morning's letters in the outer office.
+'What is the name, Mr. Slinkton?' I asked.
+
+'Beckwith.'
+
+I looked out at the door and requested Mr. Adams, if there were a
+proposal in that name, to bring it in.  He had already laid it out
+of his hand on the counter.  It was easily selected from the rest,
+and he gave it me.  Alfred Beckwith.  Proposal to effect a policy
+with us for two thousand pounds.  Dated yesterday.
+
+'From the Middle Temple, I see, Mr. Slinkton.'
+
+'Yes.  He lives on the same staircase with me; his door is
+opposite.  I never thought he would make me his reference though.'
+
+'It seems natural enough that he should.'
+
+'Quite so, Mr. Sampson; but I never thought of it.  Let me see.'
+He took the printed paper from his pocket.  'How am I to answer all
+these questions?'
+
+'According to the truth, of course,' said I.
+
+'O, of course!' he answered, looking up from the paper with a
+smile; 'I meant they were so many.  But you do right to be
+particular.  It stands to reason that you must be particular.  Will
+you allow me to use your pen and ink?'
+
+'Certainly.'
+
+'And your desk?'
+
+'Certainly.'
+
+He had been hovering about between his hat and his umbrella for a
+place to write on.  He now sat down in my chair, at my blotting-
+paper and inkstand, with the long walk up his head in accurate
+perspective before me, as I stood with my back to the fire.
+
+Before answering each question he ran over it aloud, and discussed
+it.  How long had he known Mr. Alfred Beckwith?  That he had to
+calculate by years upon his fingers.  What were his habits?  No
+difficulty about them; temperate in the last degree, and took a
+little too much exercise, if anything.  All the answers were
+satisfactory.  When he had written them all, he looked them over,
+and finally signed them in a very pretty hand.  He supposed he had
+now done with the business.  I told him he was not likely to be
+troubled any farther.  Should he leave the papers there? If he
+pleased.  Much obliged.  Good-morning.
+
+I had had one other visitor before him; not at the office, but at
+my own house.  That visitor had come to my bedside when it was not
+yet daylight, and had been seen by no one else but by my faithful
+confidential servant.
+
+A second reference paper (for we required always two) was sent down
+into Norfolk, and was duly received back by post.  This, likewise,
+was satisfactorily answered in every respect.  Our forms were all
+complied with; we accepted the proposal, and the premium for one
+year was paid.
+
+
+
+IV.
+
+
+For six or seven months I saw no more of Mr. Slinkton.  He called
+once at my house, but I was not at home; and he once asked me to
+dine with him in the Temple, but I was engaged.  His friend's
+assurance was effected in March.  Late in September or early in
+October I was down at Scarborough for a breath of sea-air, where I
+met him on the beach.  It was a hot evening; he came toward me with
+his hat in his hand; and there was the walk I had felt so strongly
+disinclined to take in perfect order again, exactly in front of the
+bridge of my nose.
+
+He was not alone, but had a young lady on his arm.
+
+She was dressed in mourning, and I looked at her with great
+interest.  She had the appearance of being extremely delicate, and
+her face was remarkably pale and melancholy; but she was very
+pretty.  He introduced her as his niece, Miss Niner.
+
+'Are you strolling, Mr. Sampson?  Is it possible you can be idle?'
+
+It WAS possible, and I WAS strolling.
+
+'Shall we stroll together?'
+
+'With pleasure.'
+
+The young lady walked between us, and we walked on the cool sea
+sand, in the direction of Filey.
+
+'There have been wheels here,' said Mr. Slinkton.  'And now I look
+again, the wheels of a hand-carriage!  Margaret, my love, your
+shadow without doubt!'
+
+'Miss Niner's shadow?' I repeated, looking down at it on the sand.
+
+'Not that one,' Mr. Slinkton returned, laughing.  'Margaret, my
+dear, tell Mr. Sampson.'
+
+'Indeed,' said the young lady, turning to me, 'there is nothing to
+tell - except that I constantly see the same invalid old gentleman
+at all times, wherever I go.  I have mentioned it to my uncle, and
+he calls the gentleman my shadow.'
+
+'Does he live in Scarborough?' I asked.
+
+'He is staying here.'
+
+'Do you live in Scarborough?'
+
+'No, I am staying here.  My uncle has placed me with a family here,
+for my health.'
+
+'And your shadow?' said I, smiling.
+
+'My shadow,' she answered, smiling too, 'is - like myself - not
+very robust, I fear; for I lose my shadow sometimes, as my shadow
+loses me at other times.  We both seem liable to confinement to the
+house.  I have not seen my shadow for days and days; but it does
+oddly happen, occasionally, that wherever I go, for many days
+together, this gentleman goes.  We have come together in the most
+unfrequented nooks on this shore.'
+
+'Is this he?' said I, pointing before us.
+
+The wheels had swept down to the water's edge, and described a
+great loop on the sand in turning.  Bringing the loop back towards
+us, and spinning it out as it came, was a hand-carriage, drawn by a
+man.
+
+'Yes,' said Miss Niner, 'this really is my shadow, uncle.'
+
+As the carriage approached us and we approached the carriage, I saw
+within it an old man, whose head was sunk on his breast, and who
+was enveloped in a variety of wrappers.  He was drawn by a very
+quiet but very keen-looking man, with iron-gray hair, who was
+slightly lame.  They had passed us, when the carriage stopped, and
+the old gentleman within, putting out his arm, called to me by my
+name.  I went back, and was absent from Mr. Slinkton and his niece
+for about five minutes.
+
+When I rejoined them, Mr. Slinkton was the first to speak.  Indeed,
+he said to me in a raised voice before I came up with him:
+
+'It is well you have not been longer, or my niece might have died
+of curiosity to know who her shadow is, Mr. Sampson.'
+
+'An old East India Director,' said I.  'An intimate friend of our
+friend's, at whose house I first had the pleasure of meeting you.
+A certain Major Banks.  You have heard of him?'
+
+'Never.'
+
+'Very rich, Miss Niner; but very old, and very crippled.  An
+amiable man, sensible - much interested in you.  He has just been
+expatiating on the affection that he has observed to exist between
+you and your uncle.'
+
+Mr. Slinkton was holding his hat again, and he passed his hand up
+the straight walk, as if he himself went up it serenely, after me.
+
+'Mr. Sampson,' he said, tenderly pressing his niece's arm in his,
+'our affection was always a strong one, for we have had but few
+near ties.  We have still fewer now.  We have associations to bring
+us together, that are not of this world, Margaret.'
+
+'Dear uncle!' murmured the young lady, and turned her face aside to
+hide her tears.
+
+'My niece and I have such remembrances and regrets in common, Mr.
+Sampson,' he feelingly pursued, 'that it would be strange indeed if
+the relations between us were cold or indifferent.  If I remember a
+conversation we once had together, you will understand the
+reference I make.  Cheer up, dear Margaret.  Don't droop, don't
+droop.  My Margaret!  I cannot bear to see you droop!'
+
+The poor young lady was very much affected, but controlled herself.
+His feelings, too, were very acute.  In a word, he found himself
+under such great need of a restorative, that he presently went
+away, to take a bath of sea-water, leaving the young lady and me
+sitting by a point of rock, and probably presuming - but that you
+will say was a pardonable indulgence in a luxury - that she would
+praise him with all her heart.
+
+She did, poor thing!  With all her confiding heart, she praised him
+to me, for his care of her dead sister, and for his untiring
+devotion in her last illness.  The sister had wasted away very
+slowly, and wild and terrible fantasies had come over her toward
+the end, but he had never been impatient with her, or at a loss;
+had always been gentle, watchful, and self-possessed.  The sister
+had known him, as she had known him, to be the best of men, the
+kindest of men, and yet a man of such admirable strength of
+character, as to be a very tower for the support of their weak
+natures while their poor lives endured.
+
+'I shall leave him, Mr. Sampson, very soon,' said the young lady;
+'I know my life is drawing to an end; and when I am gone, I hope he
+will marry and be happy.  I am sure he has lived single so long,
+only for my sake, and for my poor, poor sister's.'
+
+The little hand-carriage had made another great loop on the damp
+sand, and was coming back again, gradually spinning out a slim
+figure of eight, half a mile long.
+
+'Young lady,' said I, looking around, laying my hand upon her arm,
+and speaking in a low voice, 'time presses.  You hear the gentle
+murmur of that sea?'
+
+She looked at me with the utmost wonder and alarm, saying, 'Yes!'
+
+'And you know what a voice is in it when the storm comes?'
+
+'Yes!'
+
+'You see how quiet and peaceful it lies before us, and you know
+what an awful sight of power without pity it might be, this very
+night!'
+
+'Yes!'
+
+'But if you had never heard or seen it, or heard of it in its
+cruelty, could you believe that it beats every inanimate thing in
+its way to pieces, without mercy, and destroys life without
+remorse?'
+
+'You terrify me, sir, by these questions!'
+
+'To save you, young lady, to save you!  For God's sake, collect
+your strength and collect your firmness!  If you were here alone,
+and hemmed in by the rising tide on the flow to fifty feet above
+your head, you could not be in greater danger than the danger you
+are now to be saved from.'
+
+The figure on the sand was spun out, and straggled off into a
+crooked little jerk that ended at the cliff very near us.
+
+'As I am, before Heaven and the Judge of all mankind, your friend,
+and your dead sister's friend, I solemnly entreat you, Miss Niner,
+without one moment's loss of time, to come to this gentleman with
+me!'
+
+If the little carriage had been less near to us, I doubt if I could
+have got her away; but it was so near that we were there before she
+had recovered the hurry of being urged from the rock.  I did not
+remain there with her two minutes.  Certainly within five, I had
+the inexpressible satisfaction of seeing her - from the point we
+had sat on, and to which I had returned - half supported and half
+carried up some rude steps notched in the cliff, by the figure of
+an active man.  With that figure beside her, I knew she was safe
+anywhere.
+
+I sat alone on the rock, awaiting Mr. Slinkton's return.  The
+twilight was deepening and the shadows were heavy, when he came
+round the point, with his hat hanging at his button-hole, smoothing
+his wet hair with one of his hands, and picking out the old path
+with the other and a pocket-comb.
+
+'My niece not here, Mr. Sampson?' he said, looking about.
+
+'Miss Niner seemed to feel a chill in the air after the sun was
+down, and has gone home.'
+
+He looked surprised, as though she were not accustomed to do
+anything without him; even to originate so slight a proceeding.
+
+'I persuaded Miss Niner,' I explained.
+
+'Ah!' said he.  'She is easily persuaded - for her good.  Thank
+you, Mr. Sampson; she is better within doors.  The bathing-place
+was farther than I thought, to say the truth.'
+
+'Miss Niner is very delicate,' I observed.
+
+He shook his head and drew a deep sigh.  'Very, very, very.  You
+may recollect my saying so.  The time that has since intervened has
+not strengthened her.  The gloomy shadow that fell upon her sister
+so early in life seems, in my anxious eyes, to gather over her,
+ever darker, ever darker.  Dear Margaret, dear Margaret!  But we
+must hope.'
+
+The hand-carriage was spinning away before us at a most indecorous
+pace for an invalid vehicle, and was making most irregular curves
+upon the sand.  Mr. Slinkton, noticing it after he had put his
+handkerchief to his eyes, said;
+
+'If I may judge from appearances, your friend will be upset, Mr.
+Sampson.'
+
+'It looks probable, certainly,' said I.
+
+'The servant must be drunk.'
+
+'The servants of old gentlemen will get drunk sometimes,' said I.
+
+'The major draws very light, Mr. Sampson.'
+
+'The major does draw light,' said I.
+
+By this time the carriage, much to my relief, was lost in the
+darkness.  We walked on for a little, side by side over the sand,
+in silence.  After a short while he said, in a voice still affected
+by the emotion that his niece's state of health had awakened in
+him,
+
+'Do you stay here long, Mr. Sampson?'
+
+'Why, no.  I am going away to-night.'
+
+'So soon?  But business always holds you in request.  Men like Mr.
+Sampson are too important to others, to be spared to their own need
+of relaxation and enjoyment.'
+
+'I don't know about that,' said I.  'However, I am going back.'
+
+'To London?'
+
+'To London.'
+
+'I shall be there too, soon after you.'
+
+I knew that as well as he did.  But I did not tell him so.  Any
+more than I told him what defensive weapon my right hand rested on
+in my pocket, as I walked by his side.  Any more than I told him
+why I did not walk on the sea side of him with the night closing
+in.
+
+We left the beach, and our ways diverged.  We exchanged goodnight,
+and had parted indeed, when he said, returning,
+
+'Mr. Sampson, MAY I ask?  Poor Meltham, whom we spoke of, - dead
+yet?'
+
+'Not when I last heard of him; but too broken a man to live long,
+and hopelessly lost to his old calling.'
+
+'Dear, dear, dear!' said he, with great feeling.  'Sad, sad, sad!
+The world is a grave!'  And so went his way.
+
+It was not his fault if the world were not a grave; but I did not
+call that observation after him, any more than I had mentioned
+those other things just now enumerated.  He went his way, and I
+went mine with all expedition.  This happened, as I have said,
+either at the end of September or beginning of October.  The next
+time I saw him, and the last time, was late in November.
+
+
+
+V.
+
+
+I had a very particular engagement to breakfast in the Temple.  It
+was a bitter north-easterly morning, and the sleet and slush lay
+inches deep in the streets.  I could get no conveyance, and was
+soon wet to the knees; but I should have been true to that
+appointment, though I had to wade to it up to my neck in the same
+impediments.
+
+The appointment took me to some chambers in the Temple.  They were
+at the top of a lonely corner house overlooking the river.  The
+name, MR. ALFRED BECKWITH, was painted on the outer door.  On the
+door opposite, on the same landing, the name MR. JULIUS SLINKTON.
+The doors of both sets of chambers stood open, so that anything
+said aloud in one set could be heard in the other.
+
+I had never been in those chambers before.  They were dismal,
+close, unwholesome, and oppressive; the furniture, originally good,
+and not yet old, was faded and dirty, - the rooms were in great
+disorder; there was a strong prevailing smell of opium, brandy, and
+tobacco; the grate and fire-irons were splashed all over with
+unsightly blotches of rust; and on a sofa by the fire, in the room
+where breakfast had been prepared, lay the host, Mr. Beckwith, a
+man with all the appearances of the worst kind of drunkard, very
+far advanced upon his shameful way to death.
+
+'Slinkton is not come yet,' said this creature, staggering up when
+I went in; 'I'll call him. - Halloa!  Julius Caesar!  Come and
+drink!'  As he hoarsely roared this out, he beat the poker and
+tongs together in a mad way, as if that were his usual manner of
+summoning his associate.
+
+The voice of Mr. Slinkton was heard through the clatter from the
+opposite side of the staircase, and he came in.  He had not
+expected the pleasure of meeting me.  I have seen several artful
+men brought to a stand, but I never saw a man so aghast as he was
+when his eyes rested on mine.
+
+'Julius Caesar,' cried Beckwith, staggering between us, 'Mist'
+Sampson!  Mist' Sampson, Julius Caesar!  Julius, Mist' Sampson, is
+the friend of my soul.  Julius keeps me plied with liquor, morning,
+noon, and night.  Julius is a real benefactor. Julius threw the tea
+and coffee out of window when I used to have any.  Julius empties
+all the water-jugs of their contents, and fills 'em with spirits.
+Julius winds me up and keeps me going. - Boil the brandy, Julius!'
+
+There was a rusty and furred saucepan in the ashes, - the ashes
+looked like the accumulation of weeks, - and Beckwith, rolling and
+staggering between us as if he were going to plunge headlong into
+the fire, got the saucepan out, and tried to force it into
+Slinkton's hand.
+
+'Boil the brandy, Julius Caesar!  Come!  Do your usual office.
+Boil the brandy!'
+
+He became so fierce in his gesticulations with the saucepan, that I
+expected to see him lay open Slinkton's head with it.  I therefore
+put out my hand to check him.  He reeled back to the sofa, and sat
+there panting, shaking, and red-eyed, in his rags of dressing-gown,
+looking at us both.  I noticed then that there was nothing to drink
+on the table but brandy, and nothing to eat but salted herrings,
+and a hot, sickly, highly-peppered stew.
+
+'At all events, Mr. Sampson,' said Slinkton, offering me the smooth
+gravel path for the last time, 'I thank you for interfering between
+me and this unfortunate man's violence.  However you came here, Mr.
+Sampson, or with whatever motive you came here, at least I thank
+you for that.'
+
+'Boil the brandy,' muttered Beckwith.
+
+Without gratifying his desire to know how I came there, I said,
+quietly, 'How is your niece, Mr. Slinkton?'
+
+He looked hard at me, and I looked hard at him.
+
+'I am sorry to say, Mr. Sampson, that my niece has proved
+treacherous and ungrateful to her best friend.  She left me without
+a word of notice or explanation.  She was misled, no doubt, by some
+designing rascal.  Perhaps you may have heard of it.'
+
+'I did hear that she was misled by a designing rascal.  In fact, I
+have proof of it.'
+
+'Are you sure of that?' said he.
+
+'Quite.'
+
+'Boil the brandy,' muttered Beckwith.  'Company to breakfast,
+Julius Caesar.  Do your usual office, - provide the usual
+breakfast, dinner, tea, and supper.  Boil the brandy!'
+
+The eyes of Slinkton looked from him to me, and he said, after a
+moment's consideration,
+
+'Mr. Sampson, you are a man of the world, and so am I.  I will be
+plain with you.'
+
+'O no, you won't,' said I, shaking my head.
+
+'I tell you, sir, I will be plain with you.'
+
+'And I tell you you will not,' said I.  'I know all about you.  YOU
+plain with any one?  Nonsense, nonsense!'
+
+'I plainly tell you, Mr. Sampson,' he went on, with a manner almost
+composed, 'that I understand your object.  You want to save your
+funds, and escape from your liabilities; these are old tricks of
+trade with you Office-gentlemen.  But you will not do it, sir; you
+will not succeed.  You have not an easy adversary to play against,
+when you play against me.  We shall have to inquire, in due time,
+when and how Mr. Beckwith fell into his present habits.  With that
+remark, sir, I put this poor creature, and his incoherent
+wanderings of speech, aside, and wish you a good morning and a
+better case next time.'
+
+While he was saying this, Beckwith had filled a half-pint glass
+with brandy.  At this moment, he threw the brandy at his face, and
+threw the glass after it.  Slinkton put his hands up, half blinded
+with the spirit, and cut with the glass across the forehead.  At
+the sound of the breakage, a fourth person came into the room,
+closed the door, and stood at it; he was a very quiet but very
+keen-looking man, with iron-gray hair, and slightly lame.
+
+Slinkton pulled out his handkerchief, assuaged the pain in his
+smarting eyes, and dabbled the blood on his forehead.  He was a
+long time about it, and I saw that in the doing of it, a tremendous
+change came over him, occasioned by the change in Beckwith, - who
+ceased to pant and tremble, sat upright, and never took his eyes
+off him.  I never in my life saw a face in which abhorrence and
+determination were so forcibly painted as in Beckwith's then.
+
+'Look at me, you villain,' said Beckwith, 'and see me as I really
+am.  I took these rooms, to make them a trap for you.  I came into
+them as a drunkard, to bait the trap for you.  You fell into the
+trap, and you will never leave it alive.  On the morning when you
+last went to Mr. Sampson's office, I had seen him first.  Your plot
+has been known to both of us, all along, and you have been counter-
+plotted all along.  What?  Having been cajoled into putting that
+prize of two thousand pounds in your power, I was to be done to
+death with brandy, and, brandy not proving quick enough, with
+something quicker?  Have I never seen you, when you thought my
+senses gone, pouring from your little bottle into my glass?  Why,
+you Murderer and Forger, alone here with you in the dead of night,
+as I have so often been, I have had my hand upon the trigger of a
+pistol, twenty times, to blow your brains out!'
+
+This sudden starting up of the thing that he had supposed to be his
+imbecile victim into a determined man, with a settled resolution to
+hunt him down and be the death of him, mercilessly expressed from
+head to foot, was, in the first shock, too much for him.  Without
+any figure of speech, he staggered under it.  But there is no
+greater mistake than to suppose that a man who is a calculating
+criminal, is, in any phase of his guilt, otherwise than true to
+himself, and perfectly consistent with his whole character.  Such a
+man commits murder, and murder is the natural culmination of his
+course; such a man has to outface murder, and will do it with
+hardihood and effrontery.  It is a sort of fashion to express
+surprise that any notorious criminal, having such crime upon his
+conscience, can so brave it out.  Do you think that if he had it on
+his conscience at all, or had a conscience to have it upon, he
+would ever have committed the crime?
+
+Perfectly consistent with himself, as I believe all such monsters
+to be, this Slinkton recovered himself, and showed a defiance that
+was sufficiently cold and quiet.  He was white, he was haggard, he
+was changed; but only as a sharper who had played for a great stake
+and had been outwitted and had lost the game.
+
+'Listen to me, you villain,' said Beckwith, 'and let every word you
+hear me say be a stab in your wicked heart.  When I took these
+rooms, to throw myself in your way and lead you on to the scheme
+that I knew my appearance and supposed character and habits would
+suggest to such a devil, how did I know that?  Because you were no
+stranger to me.  I knew you well.  And I knew you to be the cruel
+wretch who, for so much money, had killed one innocent girl while
+she trusted him implicitly, and who was by inches killing another.'
+
+Slinkton took out a snuff-box, took a pinch of snuff, and laughed.
+
+'But see here,' said Beckwith, never looking away, never raising
+his voice, never relaxing his face, never unclenching his hand.
+'See what a dull wolf you have been, after all!  The infatuated
+drunkard who never drank a fiftieth part of the liquor you plied
+him with, but poured it away, here, there, everywhere - almost
+before your eyes; who bought over the fellow you set to watch him
+and to ply him, by outbidding you in his bribe, before he had been
+at his work three days - with whom you have observed no caution,
+yet who was so bent on ridding the earth of you as a wild beast,
+that he would have defeated you if you had been ever so prudent -
+that drunkard whom you have, many a time, left on the floor of this
+room, and who has even let you go out of it, alive and undeceived,
+when you have turned him over with your foot - has, almost as
+often, on the same night, within an hour, within a few minutes,
+watched you awake, had his hand at your pillow when you were
+asleep, turned over your papers, taken samples from your bottles
+and packets of powder, changed their contents, rifled every secret
+of your life!'
+
+He had had another pinch of snuff in his hand, but had gradually
+let it drop from between his fingers to the floor; where he now
+smoothed it out with his foot, looking down at it the while.
+
+'That drunkard,' said Beckwith, 'who had free access to your rooms
+at all times, that he might drink the strong drinks that you left
+in his way and be the sooner ended, holding no more terms with you
+than he would hold with a tiger, has had his master-key for all
+your locks, his test for all your poisons, his clue to your cipher-
+writing.  He can tell you, as well as you can tell him, how long it
+took to complete that deed, what doses there were, what intervals,
+what signs of gradual decay upon mind and body; what distempered
+fancies were produced, what observable changes, what physical pain.
+He can tell you, as well as you can tell him, that all this was
+recorded day by day, as a lesson of experience for future service.
+He can tell you, better than you can tell him, where that journal
+is at this moment.'
+
+Slinkton stopped the action of his foot, and looked at Beckwith.
+
+'No,' said the latter, as if answering a question from him.  'Not
+in the drawer of the writing-desk that opens with a spring; it is
+not there, and it never will be there again.'
+
+'Then you are a thief!' said Slinkton.
+
+Without any change whatever in the inflexible purpose, which it was
+quite terrific even to me to contemplate, and from the power of
+which I had always felt convinced it was impossible for this wretch
+to escape, Beckwith returned,
+
+'And I am your niece's shadow, too.'
+
+With an imprecation Slinkton put his hand to his head, tore out
+some hair, and flung it to the ground.  It was the end of the
+smooth walk; he destroyed it in the action, and it will soon be
+seen that his use for it was past.
+
+Beckwith went on: 'Whenever you left here, I left here.  Although I
+understood that you found it necessary to pause in the completion
+of that purpose, to avert suspicion, still I watched you close,
+with the poor confiding girl.  When I had the diary, and could read
+it word by word, - it was only about the night before your last
+visit to Scarborough, - you remember the night? you slept with a
+small flat vial tied to your wrist, - I sent to Mr. Sampson, who
+was kept out of view.  This is Mr. Sampson's trusty servant
+standing by the door.  We three saved your niece among us.'
+
+Slinkton looked at us all, took an uncertain step or two from the
+place where he had stood, returned to it, and glanced about him in
+a very curious way, - as one of the meaner reptiles might, looking
+for a hole to hide in.  I noticed at the same time, that a singular
+change took place in the figure of the man, - as if it collapsed
+within his clothes, and they consequently became ill-shapen and
+ill-fitting.
+
+'You shall know,' said Beckwith, 'for I hope the knowledge will be
+bitter and terrible to you, why you have been pursued by one man,
+and why, when the whole interest that Mr. Sampson represents would
+have expended any money in hunting you down, you have been tracked
+to death at a single individual's charge.  I hear you have had the
+name of Meltham on your lips sometimes?'
+
+I saw, in addition to those other changes, a sudden stoppage come
+upon his breathing.
+
+'When you sent the sweet girl whom you murdered (you know with what
+artfully made-out surroundings and probabilities you sent her) to
+Meltham's office, before taking her abroad to originate the
+transaction that doomed her to the grave, it fell to Meltham's lot
+to see her and to speak with her.  It did not fall to his lot to
+save her, though I know he would freely give his own life to have
+done it.  He admired her; - I would say he loved her deeply, if I
+thought it possible that you could understand the word.  When she
+was sacrificed, he was thoroughly assured of your guilt.  Having
+lost her, he had but one object left in life, and that was to
+avenge her and destroy you.'
+
+I saw the villain's nostrils rise and fall convulsively; but I saw
+no moving at his mouth.
+
+'That man Meltham,' Beckwith steadily pursued, 'was as absolutely
+certain that you could never elude him in this world, if he devoted
+himself to your destruction with his utmost fidelity and
+earnestness, and if he divided the sacred duty with no other duty
+in life, as he was certain that in achieving it he would be a poor
+instrument in the hands of Providence, and would do well before
+Heaven in striking you out from among living men.  I am that man,
+and I thank God that I have done my work!'
+
+If Slinkton had been running for his life from swift-footed
+savages, a dozen miles, he could not have shown more emphatic signs
+of being oppressed at heart and labouring for breath, than he
+showed now, when he looked at the pursuer who had so relentlessly
+hunted him down.
+
+'You never saw me under my right name before; you see me under my
+right name now.  You shall see me once again in the body, when you
+are tried for your life.  You shall see me once again in the
+spirit, when the cord is round your neck, and the crowd are crying
+against you!'
+
+When Meltham had spoken these last words, the miscreant suddenly
+turned away his face, and seemed to strike his mouth with his open
+hand.  At the same instant, the room was filled with a new and
+powerful odour, and, almost at the same instant, he broke into a
+crooked run, leap, start, - I have no name for the spasm, - and
+fell, with a dull weight that shook the heavy old doors and windows
+in their frames.
+
+That was the fitting end of him.
+
+When we saw that he was dead, we drew away from the room, and
+Meltham, giving me his hand, said, with a weary air,
+
+'I have no more work on earth, my friend.  But I shall see her
+again elsewhere.'
+
+It was in vain that I tried to rally him.  He might have saved her,
+he said; he had not saved her, and he reproached himself; he had
+lost her, and he was broken-hearted.
+
+'The purpose that sustained me is over, Sampson, and there is
+nothing now to hold me to life.  I am not fit for life; I am weak
+and spiritless; I have no hope and no object; my day is done.'
+
+In truth, I could hardly have believed that the broken man who then
+spoke to me was the man who had so strongly and so differently
+impressed me when his purpose was before him.  I used such
+entreaties with him, as I could; but he still said, and always
+said, in a patient, undemonstrative way, - nothing could avail him,
+- he was broken-hearted.
+
+He died early in the next spring.  He was buried by the side of the
+poor young lady for whom he had cherished those tender and unhappy
+regrets; and he left all he had to her sister.  She lived to be a
+happy wife and mother; she married my sister's son, who succeeded
+poor Meltham; she is living now, and her children ride about the
+garden on my walking-stick when I go to see her.
+
+
+
+
+End of The Project Gutenberg Etext of Hunted Down, by Charles Dickens
+

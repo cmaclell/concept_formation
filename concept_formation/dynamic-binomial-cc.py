@@ -4,13 +4,15 @@ import timeit
 from concept_formation.cobweb import CobwebNode
 from concept_formation.cobweb import CobwebTree
 from visualize import visualize
-from preprocess_text import _load_text
+from preprocess_text import load_text, stop_words
+
 
 def get_path(node):
     path = [node]
     while path[-1].parent:
         path.append(path[-1].parent)
     return path
+
 
 class ContextualCobwebTree(CobwebTree):
 
@@ -29,7 +31,7 @@ class ContextualCobwebTree(CobwebTree):
         self.n_concepts = 1
 
         self.window = window
-        self.anchor_weight = 1 
+        self.anchor_weight = 1
         self.context_weight = 2
         self.log_times = False
 
@@ -46,7 +48,7 @@ class ContextualCobwebTree(CobwebTree):
             for _ in range(2):
                 for i in range(self.window + 1):
                     idx = anchor_idx + i
-                    if idx < 0 or idx >= len(text): 
+                    if idx < 0 or idx >= len(text):
                         continue
                     instance = self.create_instance(idx, self.window, text, context_nodes)
                     context_nodes[idx] = self.categorize(instance)
@@ -74,7 +76,7 @@ class ContextualCobwebTree(CobwebTree):
 
     def cobweb(self, instance):
         """
-        counts nodes 
+        counts nodes
         """
         current = self.root
 
@@ -131,8 +133,8 @@ class ContextualCobwebTree(CobwebTree):
                                     ' impossible...')
         return current
 
-class ContextualCobwebNode(CobwebNode):
 
+class ContextualCobwebNode(CobwebNode):
     def __init__(self, otherNode=None):
         self.n_context_elements = 0
         super().__init__(otherNode)
@@ -187,16 +189,16 @@ class ContextualCobwebNode(CobwebNode):
         """
         self.count += node.count
         self.n_context_elements += node.n_context_elements
-        
+
         for attr in node.attrs('all'):
             self.av_counts[attr] = self.av_counts.setdefault(attr, {})
             if isinstance(attr, ContextualCobwebNode):
                 self.av_counts[attr]['count'] = (self.av_counts[attr].get('count', 0) +
-                        node.av_counts[attr]['count'])
+                                                 node.av_counts[attr]['count'])
             else:
                 for val in node.av_counts[attr]:
-                    self.av_counts[attr][val] = (self.av_counts[attr].get(val,
-                        0) + node.av_counts[attr][val])
+                    self.av_counts[attr][val] = (self.av_counts[attr].get(
+                        val, 0) + node.av_counts[attr][val])
 
     def expected_correct_guesses(self):
         """
@@ -208,7 +210,7 @@ class ContextualCobwebNode(CobwebNode):
         concept_counts = {}
         n_concepts = self.tree.n_concepts # len(self.tree.root.get_concepts())
         # assert n_concepts == self.tree.n_concepts
-        
+
         for attr in self.attrs():
 
             if isinstance(attr, ContextualCobwebNode):
@@ -228,13 +230,13 @@ class ContextualCobwebNode(CobwebNode):
         # count the concept nodes as a single attr
         # this is basically the weighting factor between anchor and context
         for c in concept_counts:
-            prob = concept_counts[c] / self.n_context_elements 
+            prob = concept_counts[c] / self.n_context_elements
             correct_guesses += (prob * prob) / n_concepts * self.tree.context_weight
             correct_guesses += ((1-prob) * (1-prob)) / n_concepts * self.tree.context_weight
 
         correct_guesses += (n_concepts - len(concept_counts)) / n_concepts * self.tree.context_weight
 
-        return correct_guesses 
+        return correct_guesses
 
     def output_json(self):
         """
@@ -275,7 +277,7 @@ class ContextualCobwebNode(CobwebNode):
 
             temp['aa-context-aa'][str(c)] = (concept_counts[c] /
                 self.n_context_elements * self.count)
-            
+
             # temp[str(c)] = {
             #         'count': concept_counts[c],
             #         'n': self.n_context_elements,
@@ -291,23 +293,10 @@ class ContextualCobwebNode(CobwebNode):
 
 
 if __name__ == "__main__":
-
     tree = ContextualCobwebTree(window=2)
 
-    stop_words = {*"i me my myself we our ours ourselves you your yours yourself "
-            "yourselves he him his himself she her hers herself it its "
-            "itself they them their theirs themselves what which who whom "
-            "this that these those am is are was were be been being have "
-            "has had having do does did doing a an the and but if or "
-            "because as until while of at by for with about against "
-            "between into through during before after above below to from "
-            "up down in out on off over under again further then once here "
-            "there when where why how all any both each few more most "
-            "other some such no nor not only own same so than too very s t "
-            "can will just don't should now th".split(' ')}
-
     for text_num in range(1):
-        text = [word for word in _load_text(text_num)
+        text = [word for word in load_text(text_num)
                 if word not in stop_words
                 ][:1500]
 
@@ -316,10 +305,3 @@ if __name__ == "__main__":
 
     # valid_concepts = tree.root.get_concepts()
     # tree.root.test_valid(valid_concepts)
-
-
-
-
-
-
-

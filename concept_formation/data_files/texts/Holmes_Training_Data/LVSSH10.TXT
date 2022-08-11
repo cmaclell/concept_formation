@@ -1,0 +1,1189 @@
+******The Project Gutenberg Etext of Lemorne Versus Huell******
+
+
+Copyright laws are changing all over the world, be sure to check
+the copyright laws for your country before posting these files!!
+
+Please take a look at the important information in this header.
+We encourage you to keep this file on your own disk, keeping an
+electronic path open for the next readers.  Do not remove this.
+
+
+**Welcome To The World of Free Plain Vanilla Electronic Texts**
+
+**Etexts Readable By Both Humans and By Computers, Since 1971**
+
+*These Etexts Prepared By Hundreds of Volunteers and Donations*
+
+Information on contacting Project Gutenberg to get Etexts, and
+further information is included below.  We need your donations.
+
+
+Lemorne Versus Huell
+
+by Elizabeth Drew Stoddard 
+
+April, 1997  [Etext #881]
+
+
+******The Project Gutenberg Etext of Lemorne Versus Huell******
+*****This file should be named lvssh10.txt or lvssh10.zip******
+
+Corrected EDITIONS of our etexts get a new NUMBER, lvssh11.txt.
+VERSIONS based on separate sources get new LETTER, lvssh10a.txt.
+
+
+Prepared by:
+John M. Krafft
+email: krafftjm@muohio.edu
+
+
+We are now trying to release all our books one month in advance
+of the official release dates, for time for better editing.
+
+Please note:  neither this list nor its contents are final till
+midnight of the last day of the month of any such announcement.
+The official release date of all Project Gutenberg Etexts is at
+Midnight, Central Time, of the last day of the stated month.  A
+preliminary version may often be posted for suggestion, comment
+and editing by those who wish to do so.  To be sure you have an
+up to date first edition [xxxxx10x.xxx] please check file sizes
+in the first week of the next month.  Since our ftp program has
+a bug in it that scrambles the date [tried to fix and failed] a
+look at the file size will have to do, but we will try to see a
+new copy has at least one byte more or less.
+
+
+Information about Project Gutenberg (one page)
+
+We produce about two million dollars for each hour we work.  The
+fifty hours is one conservative estimate for how long it we take
+to get any etext selected, entered, proofread, edited, copyright
+searched and analyzed, the copyright letters written, etc.  This
+projected audience is one hundred million readers.  If our value
+per text is nominally estimated at one dollar then we produce $2
+million dollars per hour this year as we release thirty-two text
+files per month:  or 400 more Etexts in 1996 for a total of 800.
+If these reach just 10% of the computerized population, then the
+total should reach 80 billion Etexts.  We will try add 800 more,
+during 1997, but it will take all the effort we can manage to do
+the doubling of our library again this year, what with the other
+massive requirements it is going to take to get incorporated and
+establish something that will have some permanence.
+
+The Goal of Project Gutenberg is to Give Away One Trillion Etext
+Files by the December 31, 2001.  [10,000 x 100,000,000=Trillion]
+This is ten thousand titles each to one hundred million readers,
+which is only 10% of the present number of computer users.  2001
+should have at least twice as many computer users as that, so it
+will require us reaching less than 5% of the users in 2001.
+
+
+We need your donations more than ever!
+
+
+All donations should be made to "Project Gutenberg"
+
+
+For these and other matters, please mail to:
+
+Project Gutenberg
+P. O. Box  2782
+Champaign, IL 61825
+
+When all other email fails try our Executive Director:
+Michael S. Hart <hart@pobox.com>
+
+We would prefer to send you this information by email
+(Internet, Bitnet, Compuserve, ATTMAIL or MCImail).
+
+******
+If you have an FTP program (or emulator), please
+FTP directly to the Project Gutenberg archives:
+[Mac users, do NOT point and click. . .type]
+
+ftp uiarchive.cso.uiuc.edu
+login:  anonymous
+password:  your@login
+cd etext/etext90 through /etext97
+or cd etext/articles [get suggest gut for more information]
+dir [to see files]
+get or mget [to get files. . .set bin for zip files]
+GET INDEX?00.GUT
+for a list of books
+and
+GET NEW GUT for general information
+and
+MGET GUT* for newsletters.
+
+**Information prepared by the Project Gutenberg legal advisor**
+(Three Pages)
+
+
+***START**THE SMALL PRINT!**FOR PUBLIC DOMAIN ETEXTS**START***
+Why is this "Small Print!" statement here?  You know: lawyers.
+They tell us you might sue us if there is something wrong with
+your copy of this etext, even if you got it for free from
+someone other than us, and even if what's wrong is not our
+fault.  So, among other things, this "Small Print!" statement
+disclaims most of our liability to you.  It also tells you how
+you can distribute copies of this etext if you want to.
+
+*BEFORE!* YOU USE OR READ THIS ETEXT
+By using or reading any part of this PROJECT GUTENBERG-tm
+etext, you indicate that you understand, agree to and accept
+this "Small Print!" statement.  If you do not, you can receive
+a refund of the money (if any) you paid for this etext by
+sending a request within 30 days of receiving it to the person
+you got it from.  If you received this etext on a physical
+medium (such as a disk), you must return it with your request.
+
+ABOUT PROJECT GUTENBERG-TM ETEXTS
+This PROJECT GUTENBERG-tm etext, like most PROJECT GUTENBERG-
+tm etexts, is a "public domain" work distributed by Professor
+Michael S. Hart through the Project Gutenberg (the "Project").
+Among other things, this means that no one owns a United States
+copyright on or for this work, so the Project (and you!) can copy
+and distribute it in the United States without permission and
+without paying copyright royalties.  Special rules, set forth
+below, apply if you wish to copy and distribute this etext
+under the Project's "PROJECT GUTENBERG" trademark.
+
+To create these etexts, the Project expends considerable
+efforts to identify, transcribe and proofread public domain
+works.  Despite these efforts, the Project's etexts and any
+medium they may be on may contain "Defects".  Among other
+things, Defects may take the form of incomplete, inaccurate or
+corrupt data, transcription errors, a copyright or other
+intellectual property infringement, a defective or damaged
+disk or other etext medium, a computer virus, or computer
+codes that damage or cannot be read by your equipment.
+
+LIMITED WARRANTY; DISCLAIMER OF DAMAGES
+But for the "Right of Replacement or Refund" described below,
+[1] the Project (and any other party you may receive this
+etext from as a PROJECT GUTENBERG-tm etext) disclaims all
+liability to you for damages, costs and expenses, including
+legal fees, and [2] YOU HAVE NO REMEDIES FOR NEGLIGENCE OR
+UNDER STRICT LIABILITY, OR FOR BREACH OF WARRANTY OR CONTRACT,
+INCLUDING BUT NOT LIMITED TO INDIRECT, CONSEQUENTIAL, PUNITIVE
+OR INCIDENTAL DAMAGES, EVEN IF YOU GIVE NOTICE OF THE
+POSSIBILITY OF SUCH DAMAGES.
+
+If you discover a Defect in this etext within 90 days of
+receiving it, you can receive a refund of the money (if any)
+you paid for it by sending an explanatory note within that
+time to the person you received it from.  If you received it
+on a physical medium, you must return it with your note, and
+such person may choose to alternatively give you a replacement
+copy.  If you received it electronically, such person may
+choose to alternatively give you a second opportunity to
+receive it electronically.
+
+THIS ETEXT IS OTHERWISE PROVIDED TO YOU "AS-IS".  NO OTHER
+WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED, ARE MADE TO YOU AS
+TO THE ETEXT OR ANY MEDIUM IT MAY BE ON, INCLUDING BUT NOT
+LIMITED TO WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A
+PARTICULAR PURPOSE.
+
+Some states do not allow disclaimers of implied warranties or
+the exclusion or limitation of consequential damages, so the
+above disclaimers and exclusions may not apply to you, and you
+may have other legal rights.
+
+INDEMNITY
+You will indemnify and hold the Project, its directors,
+officers, members and agents harmless from all liability, cost
+and expense, including legal fees, that arise directly or
+indirectly from any of the following that you do or cause:
+[1] distribution of this etext, [2] alteration, modification,
+or addition to the etext, or [3] any Defect.
+
+DISTRIBUTION UNDER "PROJECT GUTENBERG-tm"
+You may distribute copies of this etext electronically, or by
+disk, book or any other medium if you either delete this
+"Small Print!" and all other references to Project Gutenberg,
+or:
+
+[1]  Only give exact copies of it.  Among other things, this
+     requires that you do not remove, alter or modify the
+     etext or this "small print!" statement.  You may however,
+     if you wish, distribute this etext in machine readable
+     binary, compressed, mark-up, or proprietary form,
+     including any form resulting from conversion by word pro-
+     cessing or hypertext software, but only so long as
+     *EITHER*:
+
+     [*]  The etext, when displayed, is clearly readable, and
+          does *not* contain characters other than those
+          intended by the author of the work, although tilde
+          (~), asterisk (*) and underline (_) characters may
+          be used to convey punctuation intended by the
+          author, and additional characters may be used to
+          indicate hypertext links; OR
+
+     [*]  The etext may be readily converted by the reader at
+          no expense into plain ASCII, EBCDIC or equivalent
+          form by the program that displays the etext (as is
+          the case, for instance, with most word processors);
+          OR
+
+     [*]  You provide, or agree to also provide on request at
+          no additional cost, fee or expense, a copy of the
+          etext in its original plain ASCII form (or in EBCDIC
+          or other equivalent proprietary form).
+
+[2]  Honor the etext refund and replacement provisions of this
+     "Small Print!" statement.
+
+[3]  Pay a trademark license fee to the Project of 20% of the
+     net profits you derive calculated using the method you
+     already use to calculate your applicable taxes.  If you
+     don't derive profits, no royalty is due.  Royalties are
+     payable to "Project Gutenberg Association within the 60
+     days following each date you prepare (or were legally
+     required to prepare) your annual (or equivalent periodic)
+     tax return.
+
+WHAT IF YOU *WANT* TO SEND MONEY EVEN IF YOU DON'T HAVE TO?
+The Project gratefully accepts contributions in money, time,
+scanning machines, OCR software, public domain etexts, royalty
+free copyright licenses, and every other sort of contribution
+you can think of.  Money should be paid to "Project Gutenberg
+Association".
+
+*END*THE SMALL PRINT! FOR PUBLIC DOMAIN ETEXTS*Ver.04.29.93*END*
+
+
+
+
+
+
+
+
+
+
+Prepared by:
+John M. Krafft
+email: krafftjm@muohio.edu
+
+
+
+Lemorne Versus Huell
+Elizabeth Drew Stoddard 
+Harper's New Monthly Magazine 26 (1863): 537-43.
+
+
+
+The two months I spent at Newport with Aunt Eliza Huell, who had
+been ordered to the sea-side for the benefit of her health, were
+the months that created all that is dramatic in my destiny. My aunt
+was troublesome, for she was not only out of health, but in a
+lawsuit. She wrote to me, for we lived apart, asking me to
+accompany her--not because she was fond of me, or wished to give me
+pleasure, but because I was useful in various ways. Mother insisted
+upon my accepting her invitation, not because she loved her late
+husband's sister, but because she thought it wise to cotton to her
+in every particular, for Aunt Eliza was rich, and we--two lone
+women--were poor.
+
+I gave my music-pupils a longer and earlier vacation than usual,
+took a week to arrange my wardrobe--for I made my own dresses--and
+then started for New York, with the five dollars which Aunt Eliza
+had sent for my fare thither. I arrived at her house in Bond Street
+at 7 A.M., and found her man James in conversation with the
+milkman. He informed me that Miss Huell was very bad, and that the
+housekeeper was still in bed. I supposed that Aunt Eliza was in bed
+also, but I had hardly entered the house when I heard her bell ring
+as she only could ring it--with an impatient jerk.
+
+"She wants hot milk," said James, "and the man has just come."
+
+I laid my bonnet down, and went to the kitchen. Saluting the
+cook, who was an old acquaintance, and who told me that the "divil"
+had been in the range that morning, I took a pan, into which I
+poured some milk, and held it over the gaslight till it was hot;
+then I carried it up to Aunt Eliza.
+
+"Here is your milk, Aunt Eliza. You have sent for me to help you,
+and I begin with the earliest opportunity."
+
+"I looked for you an hour ago. Ring the bell."
+
+I rang it.
+
+"Your mother is well, I suppose. She would have sent you, though,
+had she been sick in bed."
+
+"She has done so. She thinks better of my coming than I do."
+
+The housekeeper, Mrs. Roll, came in, and Aunt Eliza politely
+requested her to have breakfast for her niece as soon as possible.
+
+"I do not go down of mornings yet," said Aunt Eliza, "but Mrs.
+Roll presides. See that the coffee is good, Roll."
+
+"It is good generally, Miss Huell."
+
+"You see that Margaret brought me my milk."
+
+"Ahem!" said Mrs. Roll, marching out.
+
+At the beginning of each visit to Aunt Eliza I was in the habit
+of dwelling on the contrast between her way of living and ours. We
+lived from "hand to mouth." Every thing about her wore a hereditary
+air; for she lived in my grandfather's house, and it was the same
+as in his day. If I was at home when these contrasts occurred to me
+I should have felt angry; as it was, I felt them as in a dream--the
+china, the silver, the old furniture, and the excellent fare
+soothed me.
+
+In the middle of the day Aunt Eliza came down stairs, and after
+she had received a visit from her doctor, decided to go to Newport
+on Saturday. It was Wednesday; and I could, if I chose, make any
+addition to my wardrobe. I had none to make, I informed her. What
+were my dresses?--had I a black silk? she asked. I had no black
+silk, and thought one would be unnecessary for hot weather.
+
+"Who ever heard of a girl of twenty-four having no black silk!
+You have slimsy muslins, I dare say?"
+
+"Yes."
+
+"And you like them?"
+
+"For present wear."
+
+That afternoon she sent Mrs. Roll out, who returned with a
+splendid heavy silk for me, which Aunt Eliza said should be made
+before Saturday, and it was. I went to a fashionable dress-maker of
+her recommending, and on Friday it came home, beautifully made and
+trimmed with real lace.
+
+"Even the Pushers could find no fault with this," said Aunt
+Eliza, turning over the sleeves and smoothing the lace. Somehow she
+smuggled into the house a white straw-bonnet, with white roses;
+also a handsome mantilla. She held the bonnet before me with a nod,
+and deposited it again in the box, which made a part of the luggage
+for Newport.
+
+On Sunday morning we arrived in Newport, and went to a quiet
+hotel in the town. James was with us, but Mrs. Roll was left in
+Bond Street, in charge of the household. Monday was spent in an
+endeavor to make an arrangement regarding the hire of a coach and
+coachman. Several livery-stable keepers were in attendance, but
+nothing was settled, till I suggested that Aunt Eliza should send
+for her own carriage. James was sent back the next day, and
+returned on Thursday with coach, horses, and William her coachman.
+That matter being finished, and the trunks being unpacked, she
+decided to take her first bath in the sea, expecting me to support
+her through the trying ordeal of the surf. As we were returning
+from the beach we met a carriage containing a number of persons
+with a family resemblance.
+
+When Aunt Eliza saw them she angrily exclaimed, "Am I to see
+those Uxbridges every day?"
+
+Of the Uxbridges this much I knew--that the two brothers Uxbridge
+were the lawyers of her opponents in the lawsuit which had existed
+three or four years. I had never felt any interest in it, though I
+knew that it was concerning a tract of ground in the city which had
+belonged to my grandfather, and which had, since his day, become
+very valuable. Litigation was a habit of the Huell family. So the
+sight of the Uxbridge family did not agitate me as it did Aunt
+Eliza.
+
+"The sly, methodical dogs! but I shall beat Lemorne yet!"
+
+"How will you amuse yourself then, aunt?"
+
+"I'll adopt some boys to inherit what I shall save from his
+clutches."
+
+The bath fatigued her so she remained in her room for the rest
+of the day; but she kept me busy with a hundred trifles. I wrote
+for her, computed interest, studied out bills of fare, till four
+o'clock came, and with it a fog. Nevertheless I must ride on the
+Avenue, and the carriage was ordered.
+
+"Wear your silk, Margaret; it will just about last your visit
+through--the fog will use it up."
+
+"I am glad of it," I answered.
+
+"You will ride every day. Wear the bonnet I bought for you also."
+
+"Certainly; but won't that go quicker in the fog than the dress?"
+
+"Maybe; but wear it."
+
+I rode every day afterward, from four to six, in the black silk,
+the mantilla, and the white straw. When Aunt Eliza went she was so
+on the alert for the Uxbridge family carriage that she could have
+had little enjoyment of the ride. Rocks never were a passion with
+her, she said, nor promontories, chasms, or sand. She came to
+Newport to be washed with salt-water; when she had washed up to the
+doctor's prescription she should leave, as ignorant of the peculiar
+pleasures of Newport as when she arrived. She had no fancy for its
+conglomerate societies, its literary cottages, its parvenue suits
+of rooms, its saloon habits, and its bathing herds.
+
+I considered the rides a part of the contract of what was
+expected in my two months' performance. I did not dream that I was
+enjoying them, any more than I supposed myself to be enjoying a
+sea-bath while pulling Aunt Eliza to and fro in the surf. Nothing
+in the life around me stirred me, nothing in nature attracted me.
+I liked the fog; somehow it seemed to emanate from me instead of
+rolling up from the ocean, and to represent me. Whether I went
+alone or not, the coachman was ordered to drive a certain round;
+after that I could extend the ride in whatever direction I pleased,
+but I always said, "Anywhere, William." One afternoon, which
+happened to be a bright one, I was riding on the road which led to
+the glen, when I heard the screaming of a flock of geese which were
+waddling across the path in front of the horses. I started, for I
+was asleep probably, and, looking forward, saw the Uxbridge
+carriage, filled with ladies and children, coming toward me; and by
+it rode a gentleman on horseback. His horse was rearing among the
+hissing geese, but neither horse nor geese appeared to engage him;
+his eyes were fixed upon me. The horse swerved so near that its
+long mane almost brushed against me. By an irresistible impulse I
+laid my ungloved hand upon it, but did not look at the rider.
+Carriage and horseman passed on, and William resumed his pace. A
+vague idea took possession of me that I had seen the horseman
+before on my various drives. I had a vision of a man galloping on
+a black horse out of the fog, and into it again. I was very sure,
+however, that I had never seen him on so pleasant a day as this!
+William did not bring his horses to time; it was after six when I
+went into Aunt Eliza's parlor, and found her impatient for her tea
+and toast. She was crosser than the occasion warranted; but I
+understood it when she gave me the outlines of a letter she desired
+me to write to her lawyer in New York. Something had turned up, he
+had written her; the Uxbridges believed that they had ferreted out
+what would go against her. I told her that I had met the Uxbridge
+carriage.
+
+"One of them is in New York; how else could they be giving me
+trouble just now?"
+
+"There was a gentleman on horseback beside the carriage."
+
+"Did he look mean and cunning?"
+
+"He did not wear his legal beaver up, I think; but he rode a fine
+horse and sat it well."
+
+"A lawyer on horseback should, like the beggar of the adage, ride
+to the devil."
+
+"Your business now is the 'Lemorne?'"
+
+"You know it is."
+
+"I did not know but that you had found something besides to
+litigate."
+
+"It must have been Edward Uxbridge that you saw. He is the brain
+of the firm."
+
+"You expect Mr. Van Horn?"
+
+"Oh, he must come; I can not be writing letters."
+
+We had been in Newport two weeks when Mr. Van Horn, Aunt Eliza's
+lawyer, came. He said that he would see Mr. Edward Uxbridge.
+Between them they might delay a term, which he thought would be
+best. "Would Miss Huell ever be ready for a compromise?" he
+jestingly asked.
+
+"Are you suspicious?" she inquired.
+
+"No; but the Uxbridge chaps are clever."
+
+He dined with us; and at four o'clock Aunt Eliza graciously asked
+him to take a seat in the carriage with me, making some excuse for
+not going herself.
+
+"Hullo!" said Mr. Van Horn when we had reached the country road;
+"there's Uxbridge now." And he waved his hand to him.
+
+It was indeed the black horse and the same rider that I had met.
+He reined up beside us, and shook hands with Mr. Van Horn.
+
+"We are required to answer this new complaint?" said Mr. Van
+Horn.
+
+Mr. Uxbridge nodded.
+
+"And after that the judgment?"
+
+Mr. Uxbridge laughed.
+
+"I wish that certain gore of land had been sunk instead of being
+mapped in 1835."
+
+
+"The surveyor did his business well enough, I am sure."
+
+They talked together in a low voice for a few minutes, and then
+Mr. Van Horn leaned back in his seat again. "Allow me," he said,
+"to introduce you, Uxbridge, to Miss Margaret Huell, Miss Huell's
+niece. Huell *vs.* Brown, you know," he added, in an explanatory
+tone; for I was Huell *vs.* Brown's daughter.
+"Oh!" said Mr. Uxbridge bowing, and looking at me gravely. I
+looked at him also; he was a pale, stern-looking man, and forty
+years old certainly. I derived the impression at once that he had
+a domineering disposition, perhaps from the way in which he
+controlled his horse.
+
+"Nice beast that," said Mr. Van Horn.
+
+"Yes," he answered, laying his hand on its mane, so that the
+action brought immediately to my mind the recollection that I had
+done so too. I would not meet his eye again, however.
+
+"How long shall you remain, Uxbridge?"
+
+"I don't know. You are not interested in the lawsuit, Miss
+Huell?" he said, putting on his hat.
+
+"Not in the least; nothing of mine is involved."
+
+"We'll gain it for your portion yet, Miss Margaret," said Mr. Van
+Horn, nodding to Mr. Uxbridge, and bidding William drive on. He
+returned the next day, and we settled into the routine of hotel
+life. A few mornings after, she sent me to a matinee, which was
+given by some of the Opera people, who were in Newport
+strengthening the larynx with applications of brine. When the
+concert was half over, and the audience were making the usual hum
+and stir, I saw Mr. Uxbridge against a pillar, with his hands
+incased in pearl-colored gloves, and holding a shiny hat. He turned
+half away when he caught my eye, and then darted toward me.
+
+"You have not been much more interested in the music than you are
+in the lawsuit," he said, seating himself beside me.
+
+"The *tutoyer* of the Italian voice is agreeable, however."
+
+"It makes one dreamy."
+
+"A child."
+
+"Yes, a child; not a man nor a woman."
+
+"I teach music. I can not dream over 'one, two, three.'"
+
+
+"*You*--a music teacher!"
+
+"For six years."
+
+I was aware that he looked at me from head to foot, and I picked
+at the lace on my invariable black silk; but what did it matter
+whether I owned that I was a genteel pauper, representing my aunt's
+position for two months, or not?
+
+"Where?"
+
+"In Waterbury."
+
+"Waterbury differs from Newport."
+
+"I suppose so."
+
+"You suppose!"
+
+A young gentleman sauntered by us, and Mr. Uxbridge called to him
+to look up the Misses Uxbridge, his nieces, on the other side of
+the hall.
+
+"Paterfamilias Uxbridge has left his brood in my charge," he
+said. "I try to do my duty," and he held out a twisted pearl-
+colored glove, which he had pulled off while talking. What white
+nervous fingers he had! I thought they might pinch like steel.
+
+"You suppose," he repeated.
+
+"I do not look at Newport."
+
+"Have you observed Waterbury?"
+
+"I observe what is in my sphere."
+
+"Oh!"
+
+He was silent then. The second part of the concert began; but I
+could not compose myself to appreciation. Either the music or I
+grew chaotic. So many tumultuous sounds I heard--of hope, doubt,
+inquiry, melancholy, and desire; or did I feel the emotions which
+these words express? Or was there magnetism stealing into me from
+the quiet man beside me? He left me with a bow before the concert
+was over, and I saw him making his way out of the hall when it was
+finished.
+
+I had been sent in the carriage, of course; but several carriages
+were in advance of it before the walk, and I waited there for
+William to drive up. When he did so, I saw by the oscillatory
+motion of his head, though his arms and whiphand were perfectly
+correct, that he was inebriated. It was his first occasion of
+meeting fellow-coachmen in full dress, and the occasion had proved
+too much for him. My hand, however, was on the coach door, when I
+heard Mr. Uxbridge say, at my elbow,
+
+"It is not safe for you."
+
+"Oh, Sir, it is in the programme that I ride home from the
+concert." And I prepared to step in.
+
+"I shall sit on the box, then."
+
+"But your nieces?"
+
+"They are walking home, squired by a younger knight."
+
+Aunt Eliza would say, I thought, "Needs must when a lawyer
+drives"; and I concluded to allow him to have his way, telling him
+that he was taking a great deal of trouble. He thought it would be
+less if he were allowed to sit inside; both ways were unsafe.
+
+Nothing happened. William drove well from habit; but James was
+obliged to assist him to dismount. Mr. Uxbridge waited a moment at
+the door, and so there was quite a little sensation, which spread
+its ripples till Aunt Eliza was reached. She sent for William,
+whose only excuse was "dampness."
+
+"Uxbridge knew my carriage, of course," she said, with a
+complacent voice.
+"He knew me," I replied.
+
+"You do not look like the Huells."
+
+"I look precisely like the young woman to whom he was introduced
+by Mr. Van Horn."
+
+"Oh ho!"
+
+"He thought it unsafe for me to come alone under William's
+charge."
+
+"Ah ha!"
+
+No more was said on the subject of his coming home with me. Aunt
+Eliza had several fits of musing in the course of the evening while
+I read aloud to her, which had no connection with the subject of
+the book. As I put it down she said that it would be well for me to
+go to church the next day. I acquiesced, but remarked that my piety
+would not require the carriage, and that I preferred to walk.
+Besides, it would be well for William and James to attend divine
+service. She could not spare James, and thought William had better
+clean the harness, by way of penance.
+
+The morning proved to be warm and sunny. I donned a muslin dress
+of home manufacture and my own bonnet, and started for church. I
+had walked but a few paces when the consciousness of being *free*
+and *alone* struck me. I halted, looked about me, and concluded
+that I would not go to church, but walk into the fields. I had no
+knowledge of the whereabouts of the fields; but I walked straight
+forward, and after a while came upon some barren fields, cropping
+with coarse rocks, along which ran a narrow road. I turned into it,
+and soon saw beyond the rough coast the blue ring of the ocean--
+vast, silent, and splendid in the sunshine. I found a seat on the
+ruins of an old stone-wall, among some tangled bushes and briers.
+There being no Aunt Eliza to pull through the surf, and no animated
+bathers near, I discovered the beauty of the sea, and that I loved
+it.
+
+Presently I heard the steps of a horse, and, to my astonishment,
+Mr. Uxbridge rode past. I was glad he did not know me. I watched
+him as he rode slowly down the road, deep in thought. He let drop
+the bridle, and the horse stopped, as if accustomed to the
+circumstance, and pawed the ground gently, or yawed his neck for
+pastime. Mr. Uxbridge folded his arms and raised his head to look
+seaward. It seemed to me as if he were about to address the jury.
+I had dropped so entirely from my observance of the landscape that
+I jumped when he resumed the bridle and turned his horse to come
+back. I slipped from my seat to look among the bushes, determined
+that he should not recognize me; but my attempt was a failure--he
+did not ride by the second time.
+
+"Miss Huell!" And he jumped from his saddle, slipping his arm
+through the bridle.
+
+"I am a runaway. What do you think of the Fugitive Slave Bill?"
+
+"I approve of returning property to its owners."
+
+"The sea must have been God's temple first, instead of the
+groves."
+
+"I believe the Saurians were an Orthodox tribe."
+
+"Did you stop yonder to ponder the sea?"
+
+"I was pondering 'Lemorne vs. Huell.'"
+
+He looked at me earnestly, and then gave a tug at the bridle, for
+his steed was inclined to make a crude repast from the bushes.
+
+"How was it that I did not detect you at once?" he continued.
+
+"My apparel is Waterbury apparel."
+
+"Ah!"
+
+We walked up the road slowly till we came to the end of it; then
+I stopped for him to understand that I thought it time for him to
+leave me. He sprang into the saddle.
+
+"Give us good-by!" he said, bringing his horse close to me.
+
+"We are not on equal terms; I feel too humble afoot to salute
+you."
+
+"Put your foot on the stirrup then."
+
+A leaf stuck in the horse's forelock, and I pulled it off and
+waved it in token of farewell. A powerful light shot into his eyes
+when he saw my hand close on the leaf.
+
+"May I come and see you?" he asked, abruptly. "I will."
+
+"I shall say neither 'No' or 'Yes.'"
+
+He rode on at a quick pace, and I walked homeward forgetting the
+sense of liberty I had started with, and proceeded straightway to
+Aunt Eliza.
+
+"I have not been to church, aunt, but to walk beyond the town;
+it was not so nominated in the bond, but I went. The taste of
+freedom was so pleasant that I warn you there is danger of my
+'striking.' When will you have done with Newport?"
+
+"I am pleased with Newport now," she answered, with a curious
+intonation. "I like it."
+
+"I do also."
+
+Her keen eyes sparkled.
+"Did you ever like anything when you were with me before?"
+
+"Never. I will tell you why I like it: because I have met, and
+shall probably meet, Mr. Uxbridge. I saw him to-day. He asked
+permission to visit me."
+
+"Let him come."
+
+"He will come."
+
+But we did not see him either at the hotel or when we went
+abroad. Aunt Eliza rode with me each afternoon, and each morning we
+went to the beach. She engaged me every moment when at home, and I
+faithfully performed all my tasks. I clapped to the door on self-
+investigation--locked it against any analysis or reasoning upon any
+circumstance connected with Mr. Uxbridge. The only piece of
+treachery to my code that I was guilty of was the putting of the
+leaf which I brought home on Sunday between the leaves of that poem
+whose motto is,
+        
+          "Mariana in the moated grange."
+
+On Saturday morning, nearly a week after I saw him on my walk,
+Aunt Eliza proposed that we should go to Turo Street on a shopping
+excursion; she wanted a cap, and various articles besides. As we
+went into a large shop I saw Mr. Uxbridge at a counter buying
+gloves; her quick eye caught sight of him, and she edged away,
+saying she would look at some goods on the other side; I might wait
+where I was. As he turned to go out he saw me and stopped.
+
+"I have been in New York since I saw you," he said. "Mr. Lemorne
+sent for me."
+
+"There is my aunt," I said.
+
+He shrugged his shoulders.
+
+"I shall not go away soon again," he remarked. "I missed Newport
+greatly."
+
+I made some foolish reply, and kept my eyes on Aunt Eliza, who
+dawdled unaccountably. He appeared amused, and after a little talk
+went away.
+
+Aunt Eliza's purchase was a rose-colored moire antique, which she
+said was to be made for me; for Mrs. Bliss, one of our hotel
+acquaintances, had offered to chaperon me to the great ball which
+would come off in a few days, and she had accepted the offer for
+me.
+
+"There will be no chance for you to take a walk instead," she
+finished with.
+
+"I can not dance, you know."
+
+"But you will be *there*."
+
+
+I was sent to a dress-maker of Mrs. Bliss's recommending; but I
+ordered the dress to be made after my own design, long plain
+sleeves, and high plain corsage, and requested that it should not
+be sent home till the evening of the ball. Before it came off Mr.
+Uxbridge called, and was graciously received by Aunt Eliza, who
+could be gracious to all except her relatives. I could not but
+perceive, however, that they watched each other in spite of their
+lively conversation. To me he was deferential, but went over the
+ground of our acquaintance as if it had been the most natural thing
+in the world. But for my life-long habit of never calling in
+question the behavior of those I came in contact with, and of never
+expecting any thing different from that I received, I might have
+wondered over his visit. Every person's individuality was sacred to
+me, from the fact, perhaps, that my own individuality had never
+been respected by any person with whom I had any relation--not even
+by my own mother.
+
+After Mr. Uxbridge went, I asked Aunt Eliza if she thought he
+looked mean and cunning? She laughed, and replied that she was
+bound to think that Mr. Lemorne's lawyer could not look otherwise.
+
+When, on the night of the ball, I presented myself in the rose-
+colored moire antique for her inspection, she raised her eyebrows,
+but said nothing about it.
+
+"I need not be careful of it, I suppose, aunt?"
+
+"Spill as much wine and ice-cream on it as you like."
+
+In the dressing-room Mrs. Bliss surveyed me.
+
+"I think I like this mass of rose-color," she said. "Your hair
+comes out in contrast so brilliantly. Why, you have not a single
+ornament on!"
+
+"It is so easy to dress without."
+
+This was all the conversation we had together during the evening,
+except when she introduced some acquaintance to fulfill her
+matronizing duties. As I was no dancer I was left alone most of the
+time, and amused myself by gliding from window to window along the
+wall, that it might not be observed that I was a fixed flower.
+Still I suffered the annoyance of being stared at by wandering
+squads of young gentlemen, the "curled darlings" of the ball-room.
+I borrowed Mrs. Bliss's fan in one of her visits for a protection.
+With that, and the embrasure of a remote window where I finally
+stationed myself, I hoped to escape further notice. The music of
+the celebrated band which played between the dances recalled the
+chorus of spirits which charmed Faust:
+
+   "And the fluttering
+   Ribbons of drapery
+   Cover the plains,
+   Cover the bowers,
+   Where lovers,
+   Deep in thought,
+   Give themselves for life."
+
+The voice of Mrs. Bliss broke its spell.
+
+"I bring an old friend, Miss Huell, and he tells me an
+acquaintance of yours."
+
+It was Mr. Uxbridge.
+
+"I had no thought of meeting you, Miss Huell."
+
+And he coolly took the seat beside me in the window, leaving to
+Mrs. Bliss the alternative of standing or of going away; she chose
+the latter.
+
+"I saw you as soon as I came in," he said, "gliding from window
+to window, like a vessel hugging the shore in a storm."
+
+"With colors at half-mast; I have no dancing partner."
+
+"How many have observed you?"
+
+"Several young gentlemen."
+
+"Moths."
+
+"Oh no, butterflies."
+
+"They must keep away now."
+
+"Are you Rhadamanthus?"
+
+"And Charon, too. I would have you row in the same boat with me."
+
+"Now you are fishing."
+
+"Won't you compliment me. Did I ever look better?"
+
+His evening costume *was* becoming, but he looked pale, and weary,
+and disturbed. But if we were engaged for a tournament, as his
+behavior indicated, I must do my best at telling. So I told him
+that he never looked better, and asked him how I looked. He would
+look at me presently, he said, and decide. Mrs. Bliss skimmed by us
+with nods and smiles; as she vanished our eyes followed her, and we
+talked vaguely on various matters, sounding ourselves and each
+other. When a furious redowa set in which cut our conversation into
+rhythm he pushed up the window and said, "Look out."
+
+I turned my face to him to do so, and saw the moon at the full,
+riding through the strip of sky which our vision commanded. From
+the moon our eyes fell on each other. After a moment's silence,
+during which I returned his steadfast gaze, for I could not help
+it, he said:
+"If we understand the impression we make upon each other, what
+must be said?"
+
+I made no reply, but fanned myself, neither looking at the moon,
+nor upon the redowa, nor upon any thing.
+
+He took the fan from me.
+
+"Speak of yourself," he said.
+
+"Speak you."
+
+"I am what I seem, a man within your sphere. By all the accidents
+of position and circumstance suited to it. Have you not learned
+it?"
+
+"I am not what I seem. I never wore so splendid a dress as this
+till tonight, and shall not again."
+
+He gave the fan such a twirl that its slender sticks snapped, and
+it dropped like the broken wing of a bird.
+
+"Mr. Uxbridge, that fan belongs to Mrs. Bliss."
+
+He threw it out of the window.
+
+"You have courage, fidelity, and patience--this character with
+a passionate soul. I am sure that you have such a soul?"
+
+
+"I do not know."
+
+"I have fallen in love with you. It happened on the very day when
+I passed you on the way to the Glen. I never got away from the
+remembrance of seeing your hand on the mane of my horse."
+
+He waited for me to speak, but I could not; the balance of my
+mind was gone. Why should this have happened to me--a slave? As it
+had happened, why did I not feel exultant in the sense of power
+which the chance for freedom with him should give?
+
+"What is it, Margaret? your face is as sad as death."
+
+"How do you call me 'Margaret?'"
+
+"As I would call my wife--Margaret."
+
+He rose and stood before me to screen my face from observation.
+I supposed so, and endeavored to stifle my agitation.
+
+"You are better," he said, presently. "Come go with me and get
+some refreshment." And he beckoned to Mrs. Bliss, who was down the
+hall with an unwieldy gentleman.
+
+"Will you go to supper now?" she asked.
+"We are only waiting for you," Mr. Uxbridge answered, offering
+me his arm.
+
+When we emerged into the blaze and glitter of the supper-room I
+sought refuge in the shadow of Mrs. Bliss's companion, for it
+seemed to me that I had lost my own.
+
+"Drink this Champagne," said Mr. Uxbridge. "Pay no attention to
+the Colonel on your left; he won't expect it."
+
+"Neither must you."
+
+"Drink."
+
+The Champagne did not prevent me from reflecting on the fact that
+he had not yet asked whether I loved him.
+
+The spirit chorus again floated through my mind:
+
+   "Where lovers,
+   Deep in thought,
+   *Give* themselves for life."
+
+I was not allowed to *give* myself--I was *taken*.
+
+"No heel-taps," he whispered, "to the bottom quaff."
+
+"Take me home, will you?"
+
+"Mrs. Bliss is not ready."
+
+"Tell her that I must go."
+
+He went behind her chair and whispered something, and she nodded
+to me to go without her.
+
+When her carriage came up, I think he gave the coachman an order
+to drive home in a round-about way, for we were a long time reaching
+it. I kept my face to the window, and he made no effort to divert
+my attention. When we came to a street whose thick rows of trees
+shut out the moonlight my eager soul longed to leap out into the
+dark and demand of him his heart, soul, life, for *me*.
+
+I struck him lightly on the shoulder; he seized my hand.
+
+"Oh, I know you, Margaret; you are mine!"
+
+"We are at the hotel."
+
+He sent the carriage back, and said that he would leave me at my
+aunt's door. He wished that he could see her then. Was it magic
+that made her open the door before I reached it?
+
+"Have you come on legal business?" she asked him.
+
+"You have divined what I come for."
+
+"Step in, step in; it's very late. I should have been in bed but
+for neuralgia. Did Mr. Uxbridge come home with you, Margaret?"
+
+"Yes, in Mrs. Bliss's carriage; I wished to come before she was
+ready to leave."
+
+"Well, Mr. Uxbridge is old enough for your protector, certainly."
+
+"I *am* forty, ma'am."
+
+"Do you want Margaret?"
+
+"I do."
+
+"You know exactly how much is involved in your client's suit?"
+
+"Exactly."
+
+"You know also that his claim is an unjust one."
+
+"Do I?"
+
+"I shall not be poor if I lose; if I gain, Margaret will be
+rich."
+
+"'Margaret will be rich,'" he repeated, absently.
+
+"What! have you changed your mind respecting the orphans, aunt?"
+
+"She has, and is--nothing," she went on, not heeding my remark.
+"Her father married below his station; when he died his wife fell
+back to her place--for he spent his fortune--and there she and
+Margaret must remain, unless Lemorne is defeated."
+
+"Aunt, for your succinct biography of my position many thanks."
+
+"Sixty thousand dollars," she continued. "Van Horn tells me that,
+as yet, the firm of Uxbridge Brothers have only an income--no
+capital."
+
+"It is true," he answered, musingly.
+
+The clock on the mantle struck two.
+
+"A thousand dollars for every year of my life," she said. "You
+and I, Uxbridge, know the value and beauty of money.
+
+"Yes, there is beauty in money, and"--looking at me--"beauty
+without it."
+
+"The striking of the clock," I soliloquized, "proves that this
+scene is not a phantasm."
+
+"Margaret is fatigued," he said, rising. "May I come to-morrow?"
+
+
+"It is my part only," replied Aunt Eliza, "to see that she is,
+or is not, Cinderella."
+
+"If you have ever thought of me, aunt, as an individual, you must
+have seen that I am not averse to ashes."
+
+He held my hand a moment, and then kissed me with a kiss of
+appropriation.
+
+"He is in love with you," she said, after he had gone. "I think
+I know him. He has found beauty ignorant of itself; he will teach
+you to develop it."
+
+The next morning Mr. Uxbridge had an interview with Aunt Eliza
+before he saw me.
+
+When we were alone I asked him how her eccentricities affected
+him; he could not but consider her violent, prejudiced, warped, and
+whimsical. I told him that I had been taught to accept all that she
+did on this basis. Would this explain to him my silence in regard
+to her?
+
+"Can you endure to live with her in Bond Street for the present,
+or would you rather return to Waterbury?"
+
+"She desires my company while she is in Newport only. I have
+never been with her so long before."
+
+"I understand her. Law is a game, in her estimation, in which
+cheating can as easily be carried on as at cards."
+
+"Her soul is in this case."
+
+"Her soul is not too large for it. Will you ride this afternoon?"
+
+I promised, of course. From that time till he left Newport we saw
+each other every day, and though I found little opportunity to
+express my own peculiar feelings, he comprehended many of my
+wishes, and all my tastes. I grew fond of him hourly. Had I not
+reason? Never was friend so considerate, never was lover more
+devoted.
+
+When he had been gone a few days, Aunt Eliza declared that she
+was ready to depart from Newport. The rose-colored days were ended!
+In two days we were on the Sound, coach, horses, servants, and
+ourselves.
+
+It was the 1st of September when we arrived in Bond Street. A
+week from that date Samuel Uxbridge, the senior partner of Uxbridge
+Brothers, went to Europe with his family, and I went to Waterbury,
+accompanied by Mr. Uxbridge. He consulted mother in regard to our
+marriage, and appointed it in November. In October Aunt Eliza sent
+for me to come back to Bond Street and spend a week. She had some
+fine marking to do, she wrote. While there I noticed a restlessness
+in her which I had never before observed, and conferred with Mrs.
+Roll on the matter. "She do be awake nights a deal, and that's the
+reason," Mrs. Roll said. Her manner was the same in other respects.
+She said she would not give me any thing for my wedding outfit, but
+she paid my fare from Waterbury and back.
+
+She could not spare me to go out, she told Mr. Uxbridge, and in
+consequence I saw little of him while there.
+
+In November we were married. Aunt Eliza was not at the wedding,
+which was a quiet one. Mr. Uxbridge desired me to remain in
+Waterbury till spring. He would not decide about taking a house in
+New York till then; by that time his brother might return, and if
+possible we would go to Europe for a few months. I acquiesced in
+all his plans. Indeed I was not consulted; but I was happy--happy
+in him, and happy in every thing.
+
+The winter passed in waiting for him to come to Waterbury every
+Saturday; and in the enjoyment of the two days he passed with me.
+In March Aunt Eliza wrote me that Lemorne was beaten! Van Horn had
+taken up the whole contents of his snuff-box in her house the
+evening before in amazement at the turn things had taken.
+
+That night I dreamed of the scene in the hotel at Newport. I
+heard Aunt Eliza saying, "If I gain, Margaret will be rich." And I
+heard also the clock strike two. As it struck I said, "*My husband
+is a scoundrel*," and woke with a start.
+
+
+
+
+
+End of The Project Gutenberg Etext of Lemorne Versus Huell
+

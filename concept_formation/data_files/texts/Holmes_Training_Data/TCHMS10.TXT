@@ -1,0 +1,3877 @@
+*The Project Gutenberg Etext of The Chimes, by Charles Dickens*
+#8 in our series by Charles Dickens
+
+
+Copyright laws are changing all over the world, be sure to check
+the copyright laws for your country before posting these files!!
+
+Please take a look at the important information in this header.
+We encourage you to keep this file on your own disk, keeping an
+electronic path open for the next readers.  Do not remove this.
+
+
+**Welcome To The World of Free Plain Vanilla Electronic Texts**
+
+**Etexts Readable By Both Humans and By Computers, Since 1971**
+
+*These Etexts Prepared By Hundreds of Volunteers and Donations*
+
+Information on contacting Project Gutenberg to get Etexts, and
+further information is included below.  We need your donations.
+
+
+The Chimes
+
+by Charles Dickens
+
+September, 1996  [Etext #653]
+
+
+*The Project Gutenberg Etext of The Chimes, by Charles Dickens*
+*****This file should be named tchms10.txt or tchms10.zip******
+
+Corrected EDITIONS of our etexts get a new NUMBER, tchms11.txt.
+VERSIONS based on separate sources get new LETTER, tchms10a.txt.
+
+
+We are now trying to release all our books one month in advance
+of the official release dates, for time for better editing.
+
+Please note:  neither this list nor its contents are final till
+midnight of the last day of the month of any such announcement.
+The official release date of all Project Gutenberg Etexts is at
+Midnight, Central Time, of the last day of the stated month.  A
+preliminary version may often be posted for suggestion, comment
+and editing by those who wish to do so.  To be sure you have an
+up to date first edition [xxxxx10x.xxx] please check file sizes
+in the first week of the next month.  Since our ftp program has
+a bug in it that scrambles the date [tried to fix and failed] a
+look at the file size will have to do, but we will try to see a
+new copy has at least one byte more or less.
+
+
+Information about Project Gutenberg (one page)
+
+We produce about two million dollars for each hour we work.  The
+fifty hours is one conservative estimate for how long it we take
+to get any etext selected, entered, proofread, edited, copyright
+searched and analyzed, the copyright letters written, etc.  This
+projected audience is one hundred million readers.  If our value
+per text is nominally estimated at one dollar then we produce $2
+million dollars per hour this year as we release thirty-two text
+files per month:  or 400 more Etexts in 1996 for a total of 800.
+If these reach just 10% of the computerized population, then the
+total should reach 80 billion Etexts.
+
+The Goal of Project Gutenberg is to Give Away One Trillion Etext
+Files by the December 31, 2001.  [10,000 x 100,000,000=Trillion]
+This is ten thousand titles each to one hundred million readers,
+which is only 10% of the present number of computer users.  2001
+should have at least twice as many computer users as that, so it
+will require us reaching less than 5% of the users in 2001.
+
+
+We need your donations more than ever!
+
+
+All donations should be made to "Project Gutenberg/BU":  and are
+tax deductible to the extent allowable by law. (BU = Benedictine
+University).  (Subscriptions to our paper newsletter go to BU.)
+
+For these and other matters, please mail to:
+
+Project Gutenberg
+P. O. Box  2782
+Champaign, IL 61825
+
+When all other email fails try our Executive Director:
+Michael S. Hart <hart@pobox.com>
+
+We would prefer to send you this information by email
+(Internet, Bitnet, Compuserve, ATTMAIL or MCImail).
+
+******
+If you have an FTP program (or emulator), please
+FTP directly to the Project Gutenberg archives:
+[Mac users, do NOT point and click. . .type]
+
+ftp uiarchive.cso.uiuc.edu
+login:  anonymous
+password:  your@login
+cd etext/etext90 through /etext96
+or cd etext/articles [get suggest gut for more information]
+dir [to see files]
+get or mget [to get files. . .set bin for zip files]
+GET INDEX?00.GUT
+for a list of books
+and
+GET NEW GUT for general information
+and
+MGET GUT* for newsletters.
+
+**Information prepared by the Project Gutenberg legal advisor**
+(Three Pages)
+
+
+***START**THE SMALL PRINT!**FOR PUBLIC DOMAIN ETEXTS**START***
+Why is this "Small Print!" statement here?  You know: lawyers.
+They tell us you might sue us if there is something wrong with
+your copy of this etext, even if you got it for free from
+someone other than us, and even if what's wrong is not our
+fault.  So, among other things, this "Small Print!" statement
+disclaims most of our liability to you.  It also tells you how
+you can distribute copies of this etext if you want to.
+
+*BEFORE!* YOU USE OR READ THIS ETEXT
+By using or reading any part of this PROJECT GUTENBERG-tm
+etext, you indicate that you understand, agree to and accept
+this "Small Print!" statement.  If you do not, you can receive
+a refund of the money (if any) you paid for this etext by
+sending a request within 30 days of receiving it to the person
+you got it from.  If you received this etext on a physical
+medium (such as a disk), you must return it with your request.
+
+ABOUT PROJECT GUTENBERG-TM ETEXTS
+This PROJECT GUTENBERG-tm etext, like most PROJECT GUTENBERG-
+tm etexts, is a "public domain" work distributed by Professor
+Michael S. Hart through the Project Gutenberg Association at
+Benedictine University (the "Project").  Among other
+things, this means that no one owns a United States copyright
+on or for this work, so the Project (and you!) can copy and
+distribute it in the United States without permission and
+without paying copyright royalties.  Special rules, set forth
+below, apply if you wish to copy and distribute this etext
+under the Project's "PROJECT GUTENBERG" trademark.
+
+To create these etexts, the Project expends considerable
+efforts to identify, transcribe and proofread public domain
+works.  Despite these efforts, the Project's etexts and any
+medium they may be on may contain "Defects".  Among other
+things, Defects may take the form of incomplete, inaccurate or
+corrupt data, transcription errors, a copyright or other
+intellectual property infringement, a defective or damaged
+disk or other etext medium, a computer virus, or computer
+codes that damage or cannot be read by your equipment.
+
+LIMITED WARRANTY; DISCLAIMER OF DAMAGES
+But for the "Right of Replacement or Refund" described below,
+[1] the Project (and any other party you may receive this
+etext from as a PROJECT GUTENBERG-tm etext) disclaims all
+liability to you for damages, costs and expenses, including
+legal fees, and [2] YOU HAVE NO REMEDIES FOR NEGLIGENCE OR
+UNDER STRICT LIABILITY, OR FOR BREACH OF WARRANTY OR CONTRACT,
+INCLUDING BUT NOT LIMITED TO INDIRECT, CONSEQUENTIAL, PUNITIVE
+OR INCIDENTAL DAMAGES, EVEN IF YOU GIVE NOTICE OF THE
+POSSIBILITY OF SUCH DAMAGES.
+
+If you discover a Defect in this etext within 90 days of
+receiving it, you can receive a refund of the money (if any)
+you paid for it by sending an explanatory note within that
+time to the person you received it from.  If you received it
+on a physical medium, you must return it with your note, and
+such person may choose to alternatively give you a replacement
+copy.  If you received it electronically, such person may
+choose to alternatively give you a second opportunity to
+receive it electronically.
+
+THIS ETEXT IS OTHERWISE PROVIDED TO YOU "AS-IS".  NO OTHER
+WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED, ARE MADE TO YOU AS
+TO THE ETEXT OR ANY MEDIUM IT MAY BE ON, INCLUDING BUT NOT
+LIMITED TO WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A
+PARTICULAR PURPOSE.
+
+Some states do not allow disclaimers of implied warranties or
+the exclusion or limitation of consequential damages, so the
+above disclaimers and exclusions may not apply to you, and you
+may have other legal rights.
+
+INDEMNITY
+You will indemnify and hold the Project, its directors,
+officers, members and agents harmless from all liability, cost
+and expense, including legal fees, that arise directly or
+indirectly from any of the following that you do or cause:
+[1] distribution of this etext, [2] alteration, modification,
+or addition to the etext, or [3] any Defect.
+
+DISTRIBUTION UNDER "PROJECT GUTENBERG-tm"
+You may distribute copies of this etext electronically, or by
+disk, book or any other medium if you either delete this
+"Small Print!" and all other references to Project Gutenberg,
+or:
+
+[1]  Only give exact copies of it.  Among other things, this
+     requires that you do not remove, alter or modify the
+     etext or this "small print!" statement.  You may however,
+     if you wish, distribute this etext in machine readable
+     binary, compressed, mark-up, or proprietary form,
+     including any form resulting from conversion by word pro-
+     cessing or hypertext software, but only so long as
+     *EITHER*:
+
+     [*]  The etext, when displayed, is clearly readable, and
+          does *not* contain characters other than those
+          intended by the author of the work, although tilde
+          (~), asterisk (*) and underline (_) characters may
+          be used to convey punctuation intended by the
+          author, and additional characters may be used to
+          indicate hypertext links; OR
+
+     [*]  The etext may be readily converted by the reader at
+          no expense into plain ASCII, EBCDIC or equivalent
+          form by the program that displays the etext (as is
+          the case, for instance, with most word processors);
+          OR
+
+     [*]  You provide, or agree to also provide on request at
+          no additional cost, fee or expense, a copy of the
+          etext in its original plain ASCII form (or in EBCDIC
+          or other equivalent proprietary form).
+
+[2]  Honor the etext refund and replacement provisions of this
+     "Small Print!" statement.
+
+[3]  Pay a trademark license fee to the Project of 20% of the
+     net profits you derive calculated using the method you
+     already use to calculate your applicable taxes.  If you
+     don't derive profits, no royalty is due.  Royalties are
+     payable to "Project Gutenberg Association / Benedictine
+     University" within the 60 days following each
+     date you prepare (or were legally required to prepare)
+     your annual (or equivalent periodic) tax return.
+
+WHAT IF YOU *WANT* TO SEND MONEY EVEN IF YOU DON'T HAVE TO?
+The Project gratefully accepts contributions in money, time,
+scanning machines, OCR software, public domain etexts, royalty
+free copyright licenses, and every other sort of contribution
+you can think of.  Money should be paid to "Project Gutenberg
+Association / Benedictine University".
+
+*END*THE SMALL PRINT! FOR PUBLIC DOMAIN ETEXTS*Ver.04.29.93*END*
+
+
+
+
+
+The Chimes by Charles Dickens
+Scanned and proofed by David Price
+email ccx074@coventry.ac.uk
+
+
+
+
+
+The Chimes
+
+
+
+
+CHAPTER I - First Quarter.
+
+
+
+HERE are not many people - and as it is desirable that a story-
+teller and a story-reader should establish a mutual understanding 
+as soon as possible, I beg it to be noticed that I confine this 
+observation neither to young people nor to little people, but 
+extend it to all conditions of people:  little and big, young and 
+old:  yet growing up, or already growing down again - there are 
+not, I say, many people who would care to sleep in a church.  I 
+don't mean at sermon-time in warm weather (when the thing has 
+actually been done, once or twice), but in the night, and alone.  A 
+great multitude of persons will be violently astonished, I know, by 
+this position, in the broad bold Day.  But it applies to Night.  It 
+must be argued by night, and I will undertake to maintain it 
+successfully on any gusty winter's night appointed for the purpose, 
+with any one opponent chosen from the rest, who will meet me singly 
+in an old churchyard, before an old church-door; and will 
+previously empower me to lock him in, if needful to his 
+satisfaction, until morning.
+
+For the night-wind has a dismal trick of wandering round and round 
+a building of that sort, and moaning as it goes; and of trying, 
+with its unseen hand, the windows and the doors; and seeking out 
+some crevices by which to enter.  And when it has got in; as one 
+not finding what it seeks, whatever that may be, it wails and howls 
+to issue forth again:  and not content with stalking through the 
+aisles, and gliding round and round the pillars, and tempting the 
+deep organ, soars up to the roof, and strives to rend the rafters:  
+then flings itself despairingly upon the stones below, and passes, 
+muttering, into the vaults.  Anon, it comes up stealthily, and 
+creeps along the walls, seeming to read, in whispers, the 
+Inscriptions sacred to the Dead.  At some of these, it breaks out 
+shrilly, as with laughter; and at others, moans and cries as if it 
+were lamenting.  It has a ghostly sound too, lingering within the 
+altar; where it seems to chaunt, in its wild way, of Wrong and 
+Murder done, and false Gods worshipped, in defiance of the Tables 
+of the Law, which look so fair and smooth, but are so flawed and 
+broken.  Ugh!  Heaven preserve us, sitting snugly round the fire!  
+It has an awful voice, that wind at Midnight, singing in a church!
+
+But, high up in the steeple!  There the foul blast roars and 
+whistles!  High up in the steeple, where it is free to come and go 
+through many an airy arch and loophole, and to twist and twine 
+itself about the giddy stair, and twirl the groaning weathercock, 
+and make the very tower shake and shiver!  High up in the steeple, 
+where the belfry is, and iron rails are ragged with rust, and 
+sheets of lead and copper, shrivelled by the changing weather, 
+crackle and heave beneath the unaccustomed tread; and birds stuff 
+shabby nests into corners of old oaken joists and beams; and dust 
+grows old and grey; and speckled spiders, indolent and fat with 
+long security, swing idly to and fro in the vibration of the bells, 
+and never loose their hold upon their thread-spun castles in the 
+air, or climb up sailor-like in quick alarm, or drop upon the 
+ground and ply a score of nimble legs to save one life!  High up in 
+the steeple of an old church, far above the light and murmur of the 
+town and far below the flying clouds that shadow it, is the wild 
+and dreary place at night:  and high up in the steeple of an old 
+church, dwelt the Chimes I tell of.
+
+They were old Chimes, trust me.  Centuries ago, these Bells had 
+been baptized by bishops:  so many centuries ago, that the register 
+of their baptism was lost long, long before the memory of man, and 
+no one knew their names.  They had had their Godfathers and 
+Godmothers, these Bells (for my own part, by the way, I would 
+rather incur the responsibility of being Godfather to a Bell than a 
+Boy), and had their silver mugs no doubt, besides.  But Time had 
+mowed down their sponsors, and Henry the Eighth had melted down 
+their mugs; and they now hung, nameless and mugless, in the church-
+tower.
+
+Not speechless, though.  Far from it.  They had clear, loud, lusty, 
+sounding voices, had these Bells; and far and wide they might be 
+heard upon the wind.  Much too sturdy Chimes were they, to be 
+dependent on the pleasure of the wind, moreover; for, fighting 
+gallantly against it when it took an adverse whim, they would pour 
+their cheerful notes into a listening ear right royally; and bent 
+on being heard on stormy nights, by some poor mother watching a 
+sick child, or some lone wife whose husband was at sea, they had 
+been sometimes known to beat a blustering Nor' Wester; aye, 'all to 
+fits,' as Toby Veck said; - for though they chose to call him 
+Trotty Veck, his name was Toby, and nobody could make it anything 
+else either (except Tobias) without a special act of parliament; he 
+having been as lawfully christened in his day as the Bells had been 
+in theirs, though with not quite so much of solemnity or public 
+rejoicing.
+
+For my part, I confess myself of Toby Veck's belief, for I am sure 
+he had opportunities enough of forming a correct one.  And whatever 
+Toby Veck said, I say.  And I take my stand by Toby Veck, although 
+he DID stand all day long (and weary work it was) just outside the 
+church-door.  In fact he was a ticket-porter, Toby Veck, and waited 
+there for jobs.
+
+And a breezy, goose-skinned, blue-nosed, red-eyed, stony-toed, 
+tooth-chattering place it was, to wait in, in the winter-time, as 
+Toby Veck well knew.  The wind came tearing round the corner - 
+especially the east wind - as if it had sallied forth, express, 
+from the confines of the earth, to have a blow at Toby.  And 
+oftentimes it seemed to come upon him sooner than it had expected, 
+for bouncing round the corner, and passing Toby, it would suddenly 
+wheel round again, as if it cried 'Why, here he is!'  Incontinently 
+his little white apron would be caught up over his head like a 
+naughty boy's garments, and his feeble little cane would be seen to 
+wrestle and struggle unavailingly in his hand, and his legs would 
+undergo tremendous agitation, and Toby himself all aslant, and 
+facing now in this direction, now in that, would be so banged and 
+buffeted, and to touzled, and worried, and hustled, and lifted off 
+his feet, as to render it a state of things but one degree removed 
+from a positive miracle, that he wasn't carried up bodily into the 
+air as a colony of frogs or snails or other very portable creatures 
+sometimes are, and rained down again, to the great astonishment of 
+the natives, on some strange corner of the world where ticket-
+porters are unknown.
+
+But, windy weather, in spite of its using him so roughly, was, 
+after all, a sort of holiday for Toby.  That's the fact.  He didn't 
+seem to wait so long for a sixpence in the wind, as at other times; 
+the having to fight with that boisterous element took off his 
+attention, and quite freshened him up, when he was getting hungry 
+and low-spirited.  A hard frost too, or a fall of snow, was an 
+Event; and it seemed to do him good, somehow or other - it would 
+have been hard to say in what respect though, Toby!  So wind and 
+frost and snow, and perhaps a good stiff storm of hail, were Toby 
+Veck's red-letter days.
+
+Wet weather was the worst; the cold, damp, clammy wet, that wrapped 
+him up like a moist great-coat - the only kind of great-coat Toby 
+owned, or could have added to his comfort by dispensing with.  Wet 
+days, when the rain came slowly, thickly, obstinately down; when 
+the street's throat, like his own, was choked with mist; when 
+smoking umbrellas passed and re-passed, spinning round and round 
+like so many teetotums, as they knocked against each other on the 
+crowded footway, throwing off a little whirlpool of uncomfortable 
+sprinklings; when gutters brawled and waterspouts were full and 
+noisy; when the wet from the projecting stones and ledges of the 
+church fell drip, drip, drip, on Toby, making the wisp of straw on 
+which he stood mere mud in no time; those were the days that tried 
+him.  Then, indeed, you might see Toby looking anxiously out from 
+his shelter in an angle of the church wall - such a meagre shelter 
+that in summer time it never cast a shadow thicker than a good-
+sized walking stick upon the sunny pavement - with a disconsolate 
+and lengthened face.  But coming out, a minute afterwards, to warm 
+himself by exercise, and trotting up and down some dozen times, he 
+would brighten even then, and go back more brightly to his niche.
+
+They called him Trotty from his pace, which meant speed if it 
+didn't make it.  He could have Walked faster perhaps; most likely; 
+but rob him of his trot, and Toby would have taken to his bed and 
+died.  It bespattered him with mud in dirty weather; it cost him a 
+world of trouble; he could have walked with infinitely greater 
+ease; but that was one reason for his clinging to it so 
+tenaciously.  A weak, small, spare old man, he was a very Hercules, 
+this Toby, in his good intentions.  He loved to earn his money.  He 
+delighted to believe - Toby was very poor, and couldn't well afford 
+to part with a delight - that he was worth his salt.  With a 
+shilling or an eighteenpenny message or small parcel in hand, his 
+courage always high, rose higher.  As he trotted on, he would call 
+out to fast Postmen ahead of him, to get out of the way; devoutly 
+believing that in the natural course of things he must inevitably 
+overtake and run them down; and he had perfect faith - not often 
+tested - in his being able to carry anything that man could lift.
+
+Thus, even when he came out of his nook to warm himself on a wet 
+day, Toby trotted.  Making, with his leaky shoes, a crooked line of 
+slushy footprints in the mire; and blowing on his chilly hands and 
+rubbing them against each other, poorly defended from the searching 
+cold by threadbare mufflers of grey worsted, with a private 
+apartment only for the thumb, and a common room or tap for the rest 
+of the fingers; Toby, with his knees bent and his cane beneath his 
+arm, still trotted.  Falling out into the road to look up at the 
+belfry when the Chimes resounded, Toby trotted still.
+
+He made this last excursion several times a day, for they were 
+company to him; and when he heard their voices, he had an interest 
+in glancing at their lodging-place, and thinking how they were 
+moved, and what hammers beat upon them.  Perhaps he was the more 
+curious about these Bells, because there were points of resemblance 
+between themselves and him.  They hung there, in all weathers, with 
+the wind and rain driving in upon them; facing only the outsides of 
+all those houses; never getting any nearer to the blazing fires 
+that gleamed and shone upon the windows, or came puffing out of the 
+chimney tops; and incapable of participation in any of the good 
+things that were constantly being handled, through the street doors 
+and the area railings, to prodigious cooks.  Faces came and went at 
+many windows:  sometimes pretty faces, youthful faces, pleasant 
+faces:  sometimes the reverse:  but Toby knew no more (though he 
+often speculated on these trifles, standing idle in the streets) 
+whence they came, or where they went, or whether, when the lips 
+moved, one kind word was said of him in all the year, than did the 
+Chimes themselves.
+
+Toby was not a casuist - that he knew of, at least - and I don't 
+mean to say that when he began to take to the Bells, and to knit up 
+his first rough acquaintance with them into something of a closer 
+and more delicate woof, he passed through these considerations one 
+by one, or held any formal review or great field-day in his 
+thoughts.  But what I mean to say, and do say is, that as the 
+functions of Toby's body, his digestive organs for example, did of 
+their own cunning, and by a great many operations of which he was 
+altogether ignorant, and the knowledge of which would have 
+astonished him very much, arrive at a certain end; so his mental 
+faculties, without his privity or concurrence, set all these wheels 
+and springs in motion, with a thousand others, when they worked to 
+bring about his liking for the Bells.
+
+And though I had said his love, I would not have recalled the word, 
+though it would scarcely have expressed his complicated feeling.  
+For, being but a simple man, he invested them with a strange and 
+solemn character.  They were so mysterious, often heard and never 
+seen; so high up, so far off, so full of such a deep strong melody, 
+that he regarded them with a species of awe; and sometimes when he 
+looked up at the dark arched windows in the tower, he half expected 
+to be beckoned to by something which was not a Bell, and yet was 
+what he had heard so often sounding in the Chimes.  For all this, 
+Toby scouted with indignation a certain flying rumour that the 
+Chimes were haunted, as implying the possibility of their being 
+connected with any Evil thing.  In short, they were very often in 
+his ears, and very often in his thoughts, but always in his good 
+opinion; and he very often got such a crick in his neck by staring 
+with his mouth wide open, at the steeple where they hung, that he 
+was fain to take an extra trot or two, afterwards, to cure it.
+
+The very thing he was in the act of doing one cold day, when the 
+last drowsy sound of Twelve o'clock, just struck, was humming like 
+a melodious monster of a Bee, and not by any means a busy bee, all 
+through the steeple!
+
+'Dinner-time, eh!' said Toby, trotting up and down before the 
+church.  'Ah!'
+
+Toby's nose was very red, and his eyelids were very red, and he 
+winked very much, and his shoulders were very near his ears, and 
+his legs were very stiff, and altogether he was evidently a long 
+way upon the frosty side of cool.
+
+'Dinner-time, eh!' repeated Toby, using his right-hand muffler like 
+an infantine boxing-glove, and punishing his chest for being cold.  
+'Ah-h-h-h!'
+
+He took a silent trot, after that, for a minute or two.
+
+'There's nothing,' said Toby, breaking forth afresh - but here he 
+stopped short in his trot, and with a face of great interest and 
+some alarm, felt his nose carefully all the way up.  It was but a 
+little way (not being much of a nose) and he had soon finished.
+
+'I thought it was gone,' said Toby, trotting off again.  'It's all 
+right, however.  I am sure I couldn't blame it if it was to go.  It 
+has a precious hard service of it in the bitter weather, and 
+precious little to look forward to; for I don't take snuff myself.  
+It's a good deal tried, poor creetur, at the best of times; for 
+when it DOES get hold of a pleasant whiff or so (which an't too 
+often) it's generally from somebody else's dinner, a-coming home 
+from the baker's.'
+
+The reflection reminded him of that other reflection, which he had 
+left unfinished.
+
+'There's nothing,' said Toby, 'more regular in its coming round 
+than dinner-time, and nothing less regular in its coming round than 
+dinner.  That's the great difference between 'em.  It's took me a 
+long time to find it out.  I wonder whether it would be worth any 
+gentleman's while, now, to buy that obserwation for the Papers; or 
+the Parliament!'
+
+Toby was only joking, for he gravely shook his head in self-
+depreciation.
+
+'Why! Lord!' said Toby.  'The Papers is full of obserwations as it 
+is; and so's the Parliament.  Here's last week's paper, now;' 
+taking a very dirty one from his pocket, and holding it from him at 
+arm's length; 'full of obserwations!  Full of obserwations!  I like 
+to know the news as well as any man,' said Toby, slowly; folding it 
+a little smaller, and putting it in his pocket again:  'but it 
+almost goes against the grain with me to read a paper now.  It 
+frightens me almost.  I don't know what we poor people are coming 
+to.  Lord send we may be coming to something better in the New Year 
+nigh upon us!'
+
+'Why, father, father!' said a pleasant voice, hard by.
+
+But Toby, not hearing it, continued to trot backwards and forwards:  
+musing as he went, and talking to himself.
+
+'It seems as if we can't go right, or do right, or be righted,' 
+said Toby.  'I hadn't much schooling, myself, when I was young; and 
+I can't make out whether we have any business on the face of the 
+earth, or not.  Sometimes I think we must have - a little; and 
+sometimes I think we must be intruding.  I get so puzzled sometimes 
+that I am not even able to make up my mind whether there is any 
+good at all in us, or whether we are born bad.  We seem to be 
+dreadful things; we seem to give a deal of trouble; we are always 
+being complained of and guarded against.  One way or other, we fill 
+the papers.  Talk of a New Year!' said Toby, mournfully.  'I can 
+bear up as well as another man at most times; better than a good 
+many, for I am as strong as a lion, and all men an't; but supposing 
+it should really be that we have no right to a New Year - supposing 
+we really ARE intruding - '
+
+'Why, father, father!' said the pleasant voice again.
+
+Toby heard it this time; started; stopped; and shortening his 
+sight, which had been directed a long way off as seeking the 
+enlightenment in the very heart of the approaching year, found 
+himself face to face with his own child, and looking close into her 
+eyes.
+
+Bright eyes they were.  Eyes that would bear a world of looking in, 
+before their depth was fathomed.  Dark eyes, that reflected back 
+the eyes which searched them; not flashingly, or at the owner's 
+will, but with a clear, calm, honest, patient radiance, claiming 
+kindred with that light which Heaven called into being.  Eyes that 
+were beautiful and true, and beaming with Hope.  With Hope so young 
+and fresh; with Hope so buoyant, vigorous, and bright, despite the 
+twenty years of work and poverty on which they had looked; that 
+they became a voice to Trotty Veck, and said:  'I think we have 
+some business here - a little!'
+
+Trotty kissed the lips belonging to the eyes, and squeezed the 
+blooming face between his hands.
+
+'Why, Pet,' said Trotty.  'What's to do?  I didn't expect you to-
+day, Meg.'
+
+'Neither did I expect to come, father,' cried the girl, nodding her 
+head and smiling as she spoke.  'But here I am!  And not alone; not 
+alone!'
+
+'Why you don't mean to say,' observed Trotty, looking curiously at 
+a covered basket which she carried in her hand, 'that you - '
+
+'Smell it, father dear,' said Meg.  'Only smell it!'
+
+Trotty was going to lift up the cover at once, in a great hurry, 
+when she gaily interposed her hand.
+
+'No, no, no,' said Meg, with the glee of a child.  'Lengthen it out 
+a little.  Let me just lift up the corner; just the lit-tle ti-ny 
+cor-ner, you know,' said Meg, suiting the action to the word with 
+the utmost gentleness, and speaking very softly, as if she were 
+afraid of being overheard by something inside the basket; 'there.  
+Now.  What's that?'
+
+Toby took the shortest possible sniff at the edge of the basket, 
+and cried out in a rapture:
+
+'Why, it's hot!'
+
+'It's burning hot!' cried Meg.  'Ha, ha, ha!  It's scalding hot!'
+
+'Ha, ha, ha!' roared Toby, with a sort of kick.  'It's scalding 
+hot!'
+
+'But what is it, father?' said Meg.  'Come.  You haven't guessed 
+what it is.  And you must guess what it is.  I can't think of 
+taking it out, till you guess what it is.  Don't be in such a 
+hurry!  Wait a minute!  A little bit more of the cover.  Now 
+guess!'
+
+Meg was in a perfect fright lest he should guess right too soon; 
+shrinking away, as she held the basket towards him; curling up her 
+pretty shoulders; stopping her ear with her hand, as if by so doing 
+she could keep the right word out of Toby's lips; and laughing 
+softly the whole time.
+
+Meanwhile Toby, putting a hand on each knee, bent down his nose to 
+the basket, and took a long inspiration at the lid; the grin upon 
+his withered face expanding in the process, as if he were inhaling 
+laughing gas.
+
+'Ah!  It's very nice,' said Toby.  'It an't - I suppose it an't 
+Polonies?'
+
+'No, no, no!' cried Meg, delighted.  'Nothing like Polonies!'
+
+'No,' said Toby, after another sniff.  'It's - it's mellower than 
+Polonies.  It's very nice.  It improves every moment.  It's too 
+decided for Trotters.  An't it?'
+
+Meg was in an ecstasy.  He could not have gone wider of the mark 
+than Trotters - except Polonies.
+
+'Liver?' said Toby, communing with himself.  'No.  There's a 
+mildness about it that don't answer to liver.  Pettitoes?  No.  It 
+an't faint enough for pettitoes.  It wants the stringiness of 
+Cocks' heads.  And I know it an't sausages.  I'll tell you what it 
+is.  It's chitterlings!'
+
+'No, it an't!' cried Meg, in a burst of delight.  'No, it an't!'
+
+'Why, what am I a-thinking of!' said Toby, suddenly recovering a 
+position as near the perpendicular as it was possible for him to 
+assume.  'I shall forget my own name next.  It's tripe!'
+
+Tripe it was; and Meg, in high joy, protested he should say, in 
+half a minute more, it was the best tripe ever stewed.
+
+'And so,' said Meg, busying herself exultingly with the basket, 
+'I'll lay the cloth at once, father; for I have brought the tripe 
+in a basin, and tied the basin up in a pocket-handkerchief; and if 
+I like to be proud for once, and spread that for a cloth, and call 
+it a cloth, there's no law to prevent me; is there, father?'
+
+'Not that I know of, my dear,' said Toby.  'But they're always a-
+bringing up some new law or other.'
+
+'And according to what I was reading you in the paper the other 
+day, father; what the Judge said, you know; we poor people are 
+supposed to know them all.  Ha ha!  What a mistake!  My goodness 
+me, how clever they think us!'
+
+'Yes, my dear,' cried Trotty; 'and they'd be very fond of any one 
+of us that DID know 'em all.  He'd grow fat upon the work he'd get, 
+that man, and be popular with the gentlefolks in his neighbourhood.  
+Very much so!'
+
+'He'd eat his dinner with an appetite, whoever he was, if it smelt 
+like this,' said Meg, cheerfully.  'Make haste, for there's a hot 
+potato besides, and half a pint of fresh-drawn beer in a bottle.  
+Where will you dine, father?  On the Post, or on the Steps?  Dear, 
+dear, how grand we are.  Two places to choose from!'
+
+'The steps to-day, my Pet,' said Trotty.  'Steps in dry weather.  
+Post in wet.  There's a greater conveniency in the steps at all 
+times, because of the sitting down; but they're rheumatic in the 
+damp.'
+
+'Then here,' said Meg, clapping her hands, after a moment's bustle; 
+'here it is, all ready!  And beautiful it looks!  Come, father.  
+Come!'
+
+Since his discovery of the contents of the basket, Trotty had been 
+standing looking at her - and had been speaking too - in an 
+abstracted manner, which showed that though she was the object of 
+his thoughts and eyes, to the exclusion even of tripe, he neither 
+saw nor thought about her as she was at that moment, but had before 
+him some imaginary rough sketch or drama of her future life.  
+Roused, now, by her cheerful summons, he shook off a melancholy 
+shake of the head which was just coming upon him, and trotted to 
+her side.  As he was stooping to sit down, the Chimes rang.
+
+'Amen!' said Trotty, pulling off his hat and looking up towards 
+them.
+
+'Amen to the Bells, father?' cried Meg.
+
+'They broke in like a grace, my dear,' said Trotty, taking his 
+seat.  'They'd say a good one, I am sure, if they could.  Many's 
+the kind thing they say to me.'
+
+'The Bells do, father!' laughed Meg, as she set the basin, and a 
+knife and fork, before him.  'Well!'
+
+'Seem to, my Pet,' said Trotty, falling to with great vigour.  'And 
+where's the difference?  If I hear 'em, what does it matter whether 
+they speak it or not?  Why bless you, my dear,' said Toby, pointing 
+at the tower with his fork, and becoming more animated under the 
+influence of dinner, 'how often have I heard them bells say, "Toby 
+Veck, Toby Veck, keep a good heart, Toby!  Toby Veck, Toby Veck, 
+keep a good heart, Toby!"  A million times?  More!'
+
+'Well, I never!' cried Meg.
+
+She had, though - over and over again.  For it was Toby's constant 
+topic.
+
+'When things is very bad,' said Trotty; 'very bad indeed, I mean; 
+almost at the worst; then it's "Toby Veck, Toby Veck, job coming 
+soon, Toby!  Toby Veck, Toby Veck, job coming soon, Toby!"  That 
+way.'
+
+'And it comes - at last, father,' said Meg, with a touch of sadness 
+in her pleasant voice.
+
+'Always,' answered the unconscious Toby.  'Never fails.'
+
+While this discourse was holding, Trotty made no pause in his 
+attack upon the savoury meat before him, but cut and ate, and cut 
+and drank, and cut and chewed, and dodged about, from tripe to hot 
+potato, and from hot potato back again to tripe, with an unctuous 
+and unflagging relish.  But happening now to look all round the 
+street - in case anybody should be beckoning from any door or 
+window, for a porter - his eyes, in coming back again, encountered 
+Meg:  sitting opposite to him, with her arms folded and only busy 
+in watching his progress with a smile of happiness.
+
+'Why, Lord forgive me!' said Trotty, dropping his knife and fork.  
+'My dove!  Meg! why didn't you tell me what a beast I was?'
+
+'Father?'
+
+'Sitting here,' said Trotty, in penitent explanation, 'cramming, 
+and stuffing, and gorging myself; and you before me there, never so 
+much as breaking your precious fast, nor wanting to, when - '
+
+'But I have broken it, father,' interposed his daughter, laughing, 
+'all to bits.  I have had my dinner.'
+
+'Nonsense,' said Trotty.  'Two dinners in one day!  It an't 
+possible!  You might as well tell me that two New Year's Days will 
+come together, or that I have had a gold head all my life, and 
+never changed it.'
+
+'I have had my dinner, father, for all that,' said Meg, coming 
+nearer to him.  'And if you'll go on with yours, I'll tell you how 
+and where; and how your dinner came to be brought; and - and 
+something else besides.'
+
+Toby still appeared incredulous; but she looked into his face with 
+her clear eyes, and laying her hand upon his shoulder, motioned him 
+to go on while the meat was hot.  So Trotty took up his knife and 
+fork again, and went to work.  But much more slowly than before, 
+and shaking his head, as if he were not at all pleased with 
+himself.
+
+'I had my dinner, father,' said Meg, after a little hesitation, 
+'with - with Richard.  His dinner-time was early; and as he brought 
+his dinner with him when he came to see me, we - we had it 
+together, father.'
+
+Trotty took a little beer, and smacked his lips.  Then he said, 
+'Oh!' - because she waited.
+
+'And Richard says, father - ' Meg resumed.  Then stopped.
+
+'What does Richard say, Meg?' asked Toby.
+
+'Richard says, father - '  Another stoppage.
+
+'Richard's a long time saying it,' said Toby.
+
+'He says then, father,' Meg continued, lifting up her eyes at last, 
+and speaking in a tremble, but quite plainly; 'another year is 
+nearly gone, and where is the use of waiting on from year to year, 
+when it is so unlikely we shall ever be better off than we are now?  
+He says we are poor now, father, and we shall be poor then, but we 
+are young now, and years will make us old before we know it.  He 
+says that if we wait:  people in our condition:  until we see our 
+way quite clearly, the way will be a narrow one indeed - the common 
+way - the Grave, father.'
+
+A bolder man than Trotty Veck must needs have drawn upon his 
+boldness largely, to deny it.  Trotty held his peace.
+
+'And how hard, father, to grow old, and die, and think we might 
+have cheered and helped each other!  How hard in all our lives to 
+love each other; and to grieve, apart, to see each other working, 
+changing, growing old and grey.  Even if I got the better of it, 
+and forgot him (which I never could), oh father dear, how hard to 
+have a heart so full as mine is now, and live to have it slowly 
+drained out every drop, without the recollection of one happy 
+moment of a woman's life, to stay behind and comfort me, and make 
+me better!'
+
+Trotty sat quite still.  Meg dried her eyes, and said more gaily:  
+that is to say, with here a laugh, and there a sob, and here a 
+laugh and sob together:
+
+'So Richard says, father; as his work was yesterday made certain 
+for some time to come, and as I love him, and have loved him full 
+three years - ah! longer than that, if he knew it! - will I marry 
+him on New Year's Day; the best and happiest day, he says, in the 
+whole year, and one that is almost sure to bring good fortune with 
+it.  It's a short notice, father - isn't it? - but I haven't my 
+fortune to be settled, or my wedding dresses to be made, like the 
+great ladies, father, have I?  And he said so much, and said it in 
+his way; so strong and earnest, and all the time so kind and 
+gentle; that I said I'd come and talk to you, father.  And as they 
+paid the money for that work of mine this morning (unexpectedly, I 
+am sure!) and as you have fared very poorly for a whole week, and 
+as I couldn't help wishing there should be something to make this 
+day a sort of holiday to you as well as a dear and happy day to me, 
+father, I made a little treat and brought it to surprise you.'
+
+'And see how he leaves it cooling on the step!' said another voice.
+
+It was the voice of this same Richard, who had come upon them 
+unobserved, and stood before the father and daughter; looking down 
+upon them with a face as glowing as the iron on which his stout 
+sledge-hammer daily rung.  A handsome, well-made, powerful 
+youngster he was; with eyes that sparkled like the red-hot 
+droppings from a furnace fire; black hair that curled about his 
+swarthy temples rarely; and a smile - a smile that bore out Meg's 
+eulogium on his style of conversation.
+
+'See how he leaves it cooling on the step!' said Richard.  'Meg 
+don't know what he likes.  Not she!'
+
+Trotty, all action and enthusiasm, immediately reached up his hand 
+to Richard, and was going to address him in great hurry, when the 
+house-door opened without any warning, and a footman very nearly 
+put his foot into the tripe.
+
+'Out of the vays here, will you!  You must always go and be a-
+settin on our steps, must you!  You can't go and give a turn to 
+none of the neighbours never, can't you!  WILL you clear the road, 
+or won't you?'
+
+Strictly speaking, the last question was irrelevant, as they had 
+already done it.
+
+'What's the matter, what's the matter!' said the gentleman for whom 
+the door was opened; coming out of the house at that kind of light-
+heavy pace - that peculiar compromise between a walk and a jog-trot 
+- with which a gentleman upon the smooth down-hill of life, wearing 
+creaking boots, a watch-chain, and clean linen, MAY come out of his 
+house:  not only without any abatement of his dignity, but with an 
+expression of having important and wealthy engagements elsewhere.  
+'What's the matter!  What's the matter!'
+
+'You're always a-being begged, and prayed, upon your bended knees 
+you are,' said the footman with great emphasis to Trotty Veck, 'to 
+let our door-steps be.  Why don't you let 'em be?  CAN'T you let 
+'em be?'
+
+'There!  That'll do, that'll do!' said the gentleman.  'Halloa 
+there!  Porter!' beckoning with his head to Trotty Veck.  'Come 
+here.  What's that?  Your dinner?'
+
+'Yes, sir,' said Trotty, leaving it behind him in a corner.
+
+'Don't leave it there,' exclaimed the gentleman.  'Bring it here, 
+bring it here.  So!  This is your dinner, is it?'
+
+'Yes, sir,' repeated Trotty, looking with a fixed eye and a watery 
+mouth, at the piece of tripe he had reserved for a last delicious 
+tit-bit; which the gentleman was now turning over and over on the 
+end of the fork.
+
+Two other gentlemen had come out with him.  One was a low-spirited 
+gentleman of middle age, of a meagre habit, and a disconsolate 
+face; who kept his hands continually in the pockets of his scanty 
+pepper-and-salt trousers, very large and dog's-eared from that 
+custom; and was not particularly well brushed or washed.  The 
+other, a full-sized, sleek, well-conditioned gentleman, in a blue 
+coat with bright buttons, and a white cravat.  This gentleman had a 
+very red face, as if an undue proportion of the blood in his body 
+were squeezed up into his head; which perhaps accounted for his 
+having also the appearance of being rather cold about the heart.
+
+He who had Toby's meat upon the fork, called to the first one by 
+the name of Filer; and they both drew near together.  Mr. Filer 
+being exceedingly short-sighted, was obliged to go so close to the 
+remnant of Toby's dinner before he could make out what it was, that 
+Toby's heart leaped up into his mouth.  But Mr. Filer didn't eat 
+it.
+
+'This is a description of animal food, Alderman,' said Filer, 
+making little punches in it with a pencil-case, 'commonly known to 
+the labouring population of this country, by the name of tripe.'
+
+The Alderman laughed, and winked; for he was a merry fellow, 
+Alderman Cute.  Oh, and a sly fellow too!  A knowing fellow.  Up to 
+everything.  Not to be imposed upon.  Deep in the people's hearts!  
+He knew them, Cute did.  I believe you!
+
+'But who eats tripe?' said Mr. Filer, looking round.  'Tripe is 
+without an exception the least economical, and the most wasteful 
+article of consumption that the markets of this country can by 
+possibility produce.  The loss upon a pound of tripe has been found 
+to be, in the boiling, seven-eights of a fifth more than the loss 
+upon a pound of any other animal substance whatever.  Tripe is more 
+expensive, properly understood, than the hothouse pine-apple.  
+Taking into account the number of animals slaughtered yearly within 
+the bills of mortality alone; and forming a low estimate of the 
+quantity of tripe which the carcases of those animals, reasonably 
+well butchered, would yield; I find that the waste on that amount 
+of tripe, if boiled, would victual a garrison of five hundred men 
+for five months of thirty-one days each, and a February over.  The 
+Waste, the Waste!'
+
+Trotty stood aghast, and his legs shook under him.  He seemed to 
+have starved a garrison of five hundred men with his own hand.
+
+'Who eats tripe?' said Mr. Filer, warmly.  'Who eats tripe?'
+
+Trotty made a miserable bow.
+
+'You do, do you?' said Mr. Filer.  'Then I'll tell you something.  
+You snatch your tripe, my friend, out of the mouths of widows and 
+orphans.'
+
+'I hope not, sir,' said Trotty, faintly.  'I'd sooner die of want!'
+
+'Divide the amount of tripe before-mentioned, Alderman,' said Mr. 
+Filer, 'by the estimated number of existing widows and orphans, and 
+the result will be one pennyweight of tripe to each.  Not a grain 
+is left for that man.  Consequently, he's a robber.'
+
+Trotty was so shocked, that it gave him no concern to see the 
+Alderman finish the tripe himself.  It was a relief to get rid of 
+it, anyhow.
+
+'And what do you say?' asked the Alderman, jocosely, of the red-
+faced gentleman in the blue coat.  'You have heard friend Filer.  
+What do YOU SAY?'
+
+'What's it possible to say?' returned the gentleman.  'What IS to 
+be said?  Who can take any interest in a fellow like this,' meaning 
+Trotty; 'in such degenerate times as these?  Look at him.  What an 
+object!  The good old times, the grand old times, the great old 
+times!  THOSE were the times for a bold peasantry, and all that 
+sort of thing.  Those were the times for every sort of thing, in 
+fact.  There's nothing now-a-days.  Ah!' sighed the red-faced 
+gentleman.  'The good old times, the good old times!'
+
+The gentleman didn't specify what particular times he alluded to; 
+nor did he say whether he objected to the present times, from a 
+disinterested consciousness that they had done nothing very 
+remarkable in producing himself.
+
+'The good old times, the good old times,' repeated the gentleman.  
+'What times they were!  They were the only times.  It's of no use 
+talking about any other times, or discussing what the people are in 
+THESE times.  You don't call these, times, do you?  I don't.  Look 
+into Strutt's Costumes, and see what a Porter used to be, in any of 
+the good old English reigns.'
+
+'He hadn't, in his very best circumstances, a shirt to his back, or 
+a stocking to his foot; and there was scarcely a vegetable in all 
+England for him to put into his mouth,' said Mr. Filer.  'I can 
+prove it, by tables.'
+
+But still the red-faced gentleman extolled the good old times, the 
+grand old times, the great old times.  No matter what anybody else 
+said, he still went turning round and round in one set form of 
+words concerning them; as a poor squirrel turns and turns in its 
+revolving cage; touching the mechanism, and trick of which, it has 
+probably quite as distinct perceptions, as ever this red-faced 
+gentleman had of his deceased Millennium.
+
+It is possible that poor Trotty's faith in these very vague Old 
+Times was not entirely destroyed, for he felt vague enough at that 
+moment.  One thing, however, was plain to him, in the midst of his 
+distress; to wit, that however these gentlemen might differ in 
+details, his misgivings of that morning, and of many other 
+mornings, were well founded.  'No, no.  We can't go right or do 
+right,' thought Trotty in despair.  'There is no good in us.  We 
+are born bad!'
+
+But Trotty had a father's heart within him; which had somehow got 
+into his breast in spite of this decree; and he could not bear that 
+Meg, in the blush of her brief joy, should have her fortune read by 
+these wise gentlemen.  'God help her,' thought poor Trotty.  'She 
+will know it soon enough.'
+
+He anxiously signed, therefore, to the young smith, to take her 
+away.  But he was so busy, talking to her softly at a little 
+distance, that he only became conscious of this desire, 
+simultaneously with Alderman Cute.  Now, the Alderman had not yet 
+had his say, but HE was a philosopher, too - practical, though!  
+Oh, very practical - and, as he had no idea of losing any portion 
+of his audience, he cried 'Stop!'
+
+'Now, you know,' said the Alderman, addressing his two friends, 
+with a self-complacent smile upon his face which was habitual to 
+him, 'I am a plain man, and a practical man; and I go to work in a 
+plain practical way.  That's my way.  There is not the least 
+mystery or difficulty in dealing with this sort of people if you 
+only understand 'em, and can talk to 'em in their own manner.  Now, 
+you Porter!  Don't you ever tell me, or anybody else, my friend, 
+that you haven't always enough to eat, and of the best; because I 
+know better.  I have tasted your tripe, you know, and you can't 
+"chaff" me.  You understand what "chaff" means, eh?  That's the 
+right word, isn't it?  Ha, ha, ha! Lord bless you,' said the 
+Alderman, turning to his friends again, 'it's the easiest thing on 
+earth to deal with this sort of people, if you understand 'em.'
+
+Famous man for the common people, Alderman Cute!  Never out of 
+temper with them!  Easy, affable, joking, knowing gentleman!
+
+'You see, my friend,' pursued the Alderman, 'there's a great deal 
+of nonsense talked about Want - "hard up," you know; that's the 
+phrase, isn't it? ha! ha! ha! - and I intend to Put it Down.  
+There's a certain amount of cant in vogue about Starvation, and I 
+mean to Put it Down.  That's all!  Lord bless you,' said the 
+Alderman, turning to his friends again, 'you may Put Down anything 
+among this sort of people, if you only know the way to set about 
+it.'
+
+Trotty took Meg's hand and drew it through his arm.  He didn't seem 
+to know what he was doing though.
+
+'Your daughter, eh?' said the Alderman, chucking her familiarly 
+under the chin.
+
+Always affable with the working classes, Alderman Cute!  Knew what 
+pleased them!  Not a bit of pride!
+
+'Where's her mother?' asked that worthy gentleman.
+
+'Dead,' said Toby.  'Her mother got up linen; and was called to 
+Heaven when She was born.'
+
+'Not to get up linen THERE, I suppose,' remarked the Alderman 
+pleasantly
+
+Toby might or might not have been able to separate his wife in 
+Heaven from her old pursuits.  But query:  If Mrs. Alderman Cute 
+had gone to Heaven, would Mr. Alderman Cute have pictured her as 
+holding any state or station there?
+
+'And you're making love to her, are you?' said Cute to the young 
+smith.
+
+'Yes,' returned Richard quickly, for he was nettled by the 
+question.  'And we are going to be married on New Year's Day.'
+
+'What do you mean!' cried Filer sharply.  'Married!'
+
+'Why, yes, we're thinking of it, Master,' said Richard.  'We're 
+rather in a hurry, you see, in case it should be Put Down first.'
+
+'Ah!' cried Filer, with a groan.  'Put THAT down indeed, Alderman, 
+and you'll do something.  Married!  Married!!  The ignorance of the 
+first principles of political economy on the part of these people; 
+their improvidence; their wickedness; is, by Heavens! enough to - 
+Now look at that couple, will you!'
+
+Well?  They were worth looking at.  And marriage seemed as 
+reasonable and fair a deed as they need have in contemplation.
+
+'A man may live to be as old as Methuselah,' said Mr. Filer, 'and 
+may labour all his life for the benefit of such people as those; 
+and may heap up facts on figures, facts on figures, facts on 
+figures, mountains high and dry; and he can no more hope to 
+persuade 'em that they have no right or business to be married, 
+than he can hope to persuade 'em that they have no earthly right or 
+business to be born.  And THAT we know they haven't.  We reduced it 
+to a mathematical certainty long ago!'
+
+Alderman Cute was mightily diverted, and laid his right forefinger 
+on the side of his nose, as much as to say to both his friends, 
+'Observe me, will you!  Keep your eye on the practical man!' - and 
+called Meg to him.
+
+'Come here, my girl!' said Alderman Cute.
+
+The young blood of her lover had been mounting, wrathfully, within 
+the last few minutes; and he was indisposed to let her come.  But, 
+setting a constraint upon himself, he came forward with a stride as 
+Meg approached, and stood beside her.  Trotty kept her hand within 
+his arm still, but looked from face to face as wildly as a sleeper 
+in a dream.
+
+'Now, I'm going to give you a word or two of good advice, my girl,' 
+said the Alderman, in his nice easy way.  'It's my place to give 
+advice, you know, because I'm a Justice.  You know I'm a Justice, 
+don't you?'
+
+Meg timidly said, 'Yes.'  But everybody knew Alderman Cute was a 
+Justice!  Oh dear, so active a Justice always!  Who such a mote of 
+brightness in the public eye, as Cute!
+
+'You are going to be married, you say,' pursued the Alderman.  
+'Very unbecoming and indelicate in one of your sex!  But never mind 
+that.  After you are married, you'll quarrel with your husband and 
+come to be a distressed wife.  You may think not; but you will, 
+because I tell you so.  Now, I give you fair warning, that I have 
+made up my mind to Put distressed wives Down.  So, don't be brought 
+before me.  You'll have children - boys.  Those boys will grow up 
+bad, of course, and run wild in the streets, without shoes and 
+stockings.  Mind, my young friend!  I'll convict 'em summarily, 
+every one, for I am determined to Put boys without shoes and 
+stockings, Down.  Perhaps your husband will die young (most likely) 
+and leave you with a baby.  Then you'll be turned out of doors, and 
+wander up and down the streets.  Now, don't wander near me, my 
+dear, for I am resolved, to Put all wandering mothers Down.  All 
+young mothers, of all sorts and kinds, it's my determination to Put 
+Down.  Don't think to plead illness as an excuse with me; or babies 
+as an excuse with me; for all sick persons and young children (I 
+hope you know the church-service, but I'm afraid not) I am 
+determined to Put Down.  And if you attempt, desperately, and 
+ungratefully, and impiously, and fraudulently attempt, to drown 
+yourself, or hang yourself, I'll have no pity for you, for I have 
+made up my mind to Put all suicide Down!  If there is one thing,' 
+said the Alderman, with his self-satisfied smile, 'on which I can 
+be said to have made up my mind more than on another, it is to Put 
+suicide Down.  So don't try it on.  That's the phrase, isn't it?  
+Ha, ha! now we understand each other.'
+
+Toby knew not whether to be agonised or glad, to see that Meg had 
+turned a deadly white, and dropped her lover's hand.
+
+'And as for you, you dull dog,' said the Alderman, turning with 
+even increased cheerfulness and urbanity to the young smith, 'what 
+are you thinking of being married for?  What do you want to be 
+married for, you silly fellow?  If I was a fine, young, strapping 
+chap like you, I should be ashamed of being milksop enough to pin 
+myself to a woman's apron-strings!  Why, she'll be an old woman 
+before you're a middle-aged man!  And a pretty figure you'll cut 
+then, with a draggle-tailed wife and a crowd of squalling children 
+crying after you wherever you go!'
+
+O, he knew how to banter the common people, Alderman Cute!
+
+'There!  Go along with you,' said the Alderman, 'and repent.  Don't 
+make such a fool of yourself as to get married on New Year's Day.  
+You'll think very differently of it, long before next New Year's 
+Day:  a trim young fellow like you, with all the girls looking 
+after you.  There!  Go along with you!'
+
+They went along.  Not arm in arm, or hand in hand, or interchanging 
+bright glances; but, she in tears; he, gloomy and down-looking.  
+Were these the hearts that had so lately made old Toby's leap up 
+from its faintness?  No, no.  The Alderman (a blessing on his 
+head!) had Put THEM Down.
+
+'As you happen to be here,' said the Alderman to Toby, 'you shall 
+carry a letter for me.  Can you be quick?  You're an old man.'
+
+Toby, who had been looking after Meg, quite stupidly, made shift to 
+murmur out that he was very quick, and very strong.
+
+'How old are you?' inquired the Alderman.
+
+'I'm over sixty, sir,' said Toby.
+
+'O!  This man's a great deal past the average age, you know,' cried 
+Mr. Filer breaking in as if his patience would bear some trying, 
+but this really was carrying matters a little too far.
+
+'I feel I'm intruding, sir,' said Toby.  'I - I misdoubted it this 
+morning.  Oh dear me!'
+
+The Alderman cut him short by giving him the letter from his 
+pocket.  Toby would have got a shilling too; but Mr. Filer clearly 
+showing that in that case he would rob a certain given number of 
+persons of ninepence-halfpenny a-piece, he only got sixpence; and 
+thought himself very well off to get that.
+
+Then the Alderman gave an arm to each of his friends, and walked 
+off in high feather; but, he immediately came hurrying back alone, 
+as if he had forgotten something.
+
+'Porter!' said the Alderman.
+
+'Sir!' said Toby.
+
+'Take care of that daughter of yours.  She's much too handsome.'
+
+'Even her good looks are stolen from somebody or other, I suppose,' 
+thought Toby, looking at the sixpence in his hand, and thinking of 
+the tripe.  'She's been and robbed five hundred ladies of a bloom 
+a-piece, I shouldn't wonder.  It's very dreadful!'
+
+'She's much too handsome, my man,' repeated the Alderman.  'The 
+chances are, that she'll come to no good, I clearly see.  Observe 
+what I say.  Take care of her!'  With which, he hurried off again.
+
+'Wrong every way.  Wrong every way!' said Trotty, clasping his 
+hands.  'Born bad.  No business here!'
+
+The Chimes came clashing in upon him as he said the words.  Full, 
+loud, and sounding - but with no encouragement.  No, not a drop.
+
+'The tune's changed,' cried the old man, as he listened.  'There's 
+not a word of all that fancy in it.  Why should there be?  I have 
+no business with the New Year nor with the old one neither.  Let me 
+die!'
+
+Still the Bells, pealing forth their changes, made the very air 
+spin.  Put 'em down, Put 'em down!  Good old Times, Good old Times!  
+Facts and Figures, Facts and Figures!  Put 'em down, Put 'em down!  
+If they said anything they said this, until the brain of Toby 
+reeled.
+
+He pressed his bewildered head between his hands, as if to keep it 
+from splitting asunder.  A well-timed action, as it happened; for 
+finding the letter in one of them, and being by that means reminded 
+of his charge, he fell, mechanically, into his usual trot, and 
+trotted off.
+
+
+
+CHAPTER II - The Second Quarter.
+
+
+
+THE letter Toby had received from Alderman Cute, was addressed to a 
+great man in the great district of the town.  The greatest district 
+of the town.  It must have been the greatest district of the town, 
+because it was commonly called 'the world' by its inhabitants.  The 
+letter positively seemed heavier in Toby's hand, than another 
+letter.  Not because the Alderman had sealed it with a very large 
+coat of arms and no end of wax, but because of the weighty name on 
+the superscription, and the ponderous amount of gold and silver 
+with which it was associated.
+
+'How different from us!' thought Toby, in all simplicity and 
+earnestness, as he looked at the direction.  'Divide the lively 
+turtles in the bills of mortality, by the number of gentlefolks 
+able to buy 'em; and whose share does he take but his own!  As to 
+snatching tripe from anybody's mouth - he'd scorn it!'
+
+With the involuntary homage due to such an exalted character, Toby 
+interposed a corner of his apron between the letter and his 
+fingers.
+
+'His children,' said Trotty, and a mist rose before his eyes; 'his 
+daughters - Gentlemen may win their hearts and marry them; they may 
+be happy wives and mothers; they may be handsome like my darling M-
+e-'.
+
+He couldn't finish the name.  The final letter swelled in his 
+throat, to the size of the whole alphabet.
+
+'Never mind,' thought Trotty.  'I know what I mean.  That's more 
+than enough for me.'  And with this consolatory rumination, trotted 
+on.
+
+It was a hard frost, that day.  The air was bracing, crisp, and 
+clear.  The wintry sun, though powerless for warmth, looked 
+brightly down upon the ice it was too weak to melt, and set a 
+radiant glory there.  At other times, Trotty might have learned a 
+poor man's lesson from the wintry sun; but, he was past that, now.
+
+The Year was Old, that day.  The patient Year had lived through the 
+reproaches and misuses of its slanderers, and faithfully performed 
+its work.  Spring, summer, autumn, winter.  It had laboured through 
+the destined round, and now laid down its weary head to die.  Shut 
+out from hope, high impulse, active happiness, itself, but active 
+messenger of many joys to others, it made appeal in its decline to 
+have its toiling days and patient hours remembered, and to die in 
+peace.  Trotty might have read a poor man's allegory in the fading 
+year; but he was past that, now.
+
+And only he?  Or has the like appeal been ever made, by seventy 
+years at once upon an English labourer's head, and made in vain!
+
+The streets were full of motion, and the shops were decked out 
+gaily.  The New Year, like an Infant Heir to the whole world, was 
+waited for, with welcomes, presents, and rejoicings.  There were 
+books and toys for the New Year, glittering trinkets for the New 
+Year, dresses for the New Year, schemes of fortune for the New 
+Year; new inventions to beguile it.  Its life was parcelled out in 
+almanacks and pocket-books; the coming of its moons, and stars, and 
+tides, was known beforehand to the moment; all the workings of its 
+seasons in their days and nights, were calculated with as much 
+precision as Mr. Filer could work sums in men and women.
+
+The New Year, the New Year.  Everywhere the New Year!  The Old Year 
+was already looked upon as dead; and its effects were selling 
+cheap, like some drowned mariner's aboardship.  Its patterns were 
+Last Year's, and going at a sacrifice, before its breath was gone.  
+Its treasures were mere dirt, beside the riches of its unborn 
+successor!
+
+Trotty had no portion, to his thinking, in the New Year or the Old.
+
+'Put 'em down, Put 'em down!  Facts and Figures, Facts and Figures!  
+Good old Times, Good old Times!  Put 'em down, Put 'em down!' - his 
+trot went to that measure, and would fit itself to nothing else.
+
+But, even that one, melancholy as it was, brought him, in due time, 
+to the end of his journey.  To the mansion of Sir Joseph Bowley, 
+Member of Parliament.
+
+The door was opened by a Porter.  Such a Porter!  Not of Toby's 
+order.  Quite another thing.  His place was the ticket though; not 
+Toby's.
+
+This Porter underwent some hard panting before he could speak; 
+having breathed himself by coming incautiously out of his chair, 
+without first taking time to think about it and compose his mind.  
+When he had found his voice - which it took him a long time to do, 
+for it was a long way off, and hidden under a load of meat - he 
+said in a fat whisper,
+
+'Who's it from?'
+
+Toby told him.
+
+'You're to take it in, yourself,' said the Porter, pointing to a 
+room at the end of a long passage, opening from the hall.  
+'Everything goes straight in, on this day of the year.  You're not 
+a bit too soon; for the carriage is at the door now, and they have 
+only come to town for a couple of hours, a' purpose.'
+
+Toby wiped his feet (which were quite dry already) with great care, 
+and took the way pointed out to him; observing as he went that it 
+was an awfully grand house, but hushed and covered up, as if the 
+family were in the country.  Knocking at the room-door, he was told 
+to enter from within; and doing so found himself in a spacious 
+library, where, at a table strewn with files and papers, were a 
+stately lady in a bonnet; and a not very stately gentleman in black 
+who wrote from her dictation; while another, and an older, and a 
+much statelier gentleman, whose hat and cane were on the table, 
+walked up and down, with one hand in his breast, and looked 
+complacently from time to time at his own picture - a full length; 
+a very full length - hanging over the fireplace.
+
+'What is this?' said the last-named gentleman.  'Mr. Fish, will you 
+have the goodness to attend?'
+
+Mr. Fish begged pardon, and taking the letter from Toby, handed it, 
+with great respect.
+
+'From Alderman Cute, Sir Joseph.'
+
+'Is this all?  Have you nothing else, Porter?' inquired Sir Joseph.
+
+Toby replied in the negative.
+
+'You have no bill or demand upon me - my name is Bowley, Sir Joseph 
+Bowley - of any kind from anybody, have you?' said Sir Joseph.  'If 
+you have, present it.  There is a cheque-book by the side of Mr. 
+Fish.  I allow nothing to be carried into the New Year.  Every 
+description of account is settled in this house at the close of the 
+old one.  So that if death was to - to - '
+
+'To cut,' suggested Mr. Fish.
+
+'To sever, sir,' returned Sir Joseph, with great asperity, 'the 
+cord of existence - my affairs would be found, I hope, in a state 
+of preparation.'
+
+'My dear Sir Joseph!' said the lady, who was greatly younger than 
+the gentleman.  'How shocking!'
+
+'My lady Bowley,' returned Sir Joseph, floundering now and then, as 
+in the great depth of his observations, 'at this season of the year 
+we should think of - of - ourselves.  We should look into our - our 
+accounts.  We should feel that every return of so eventful a period 
+in human transactions, involves a matter of deep moment between a 
+man and his - and his banker.'
+
+Sir Joseph delivered these words as if he felt the full morality of 
+what he was saying; and desired that even Trotty should have an 
+opportunity of being improved by such discourse.  Possibly he had 
+this end before him in still forbearing to break the seal of the 
+letter, and in telling Trotty to wait where he was, a minute.
+
+'You were desiring Mr. Fish to say, my lady - ' observed Sir 
+Joseph.
+
+'Mr. Fish has said that, I believe,' returned his lady, glancing at 
+the letter.  'But, upon my word, Sir Joseph, I don't think I can 
+let it go after all.  It is so very dear.'
+
+'What is dear?' inquired Sir Joseph.
+
+'That Charity, my love.  They only allow two votes for a 
+subscription of five pounds.  Really monstrous!'
+
+'My lady Bowley,' returned Sir Joseph, 'you surprise me.  Is the 
+luxury of feeling in proportion to the number of votes; or is it, 
+to a rightly constituted mind, in proportion to the number of 
+applicants, and the wholesome state of mind to which their 
+canvassing reduces them?  Is there no excitement of the purest kind 
+in having two votes to dispose of among fifty people?'
+
+'Not to me, I acknowledge,' replied the lady.  'It bores one.  
+Besides, one can't oblige one's acquaintance.  But you are the Poor 
+Man's Friend, you know, Sir Joseph.  You think otherwise.'
+
+'I AM the Poor Man's Friend,' observed Sir Joseph, glancing at the 
+poor man present.  'As such I may be taunted.  As such I have been 
+taunted.  But I ask no other title.'
+
+'Bless him for a noble gentleman!' thought Trotty.
+
+'I don't agree with Cute here, for instance,' said Sir Joseph, 
+holding out the letter.  'I don't agree with the Filer party.  I 
+don't agree with any party.  My friend the Poor Man, has no 
+business with anything of that sort, and nothing of that sort has 
+any business with him.  My friend the Poor Man, in my district, is 
+my business.  No man or body of men has any right to interfere 
+between my friend and me.  That is the ground I take.  I assume a - 
+a paternal character towards my friend.  I say, "My good fellow, I 
+will treat you paternally."'
+
+Toby listened with great gravity, and began to feel more 
+comfortable.
+
+'Your only business, my good fellow,' pursued Sir Joseph, looking 
+abstractedly at Toby; 'your only business in life is with me.  You 
+needn't trouble yourself to think about anything.  I will think for 
+you; I know what is good for you; I am your perpetual parent.  Such 
+is the dispensation of an all-wise Providence!  Now, the design of 
+your creation is - not that you should swill, and guzzle, and 
+associate your enjoyments, brutally, with food; Toby thought 
+remorsefully of the tripe; 'but that you should feel the Dignity of 
+Labour.  Go forth erect into the cheerful morning air, and - and 
+stop there.  Live hard and temperately, be respectful, exercise 
+your self-denial, bring up your family on next to nothing, pay your 
+rent as regularly as the clock strikes, be punctual in your 
+dealings (I set you a good example; you will find Mr. Fish, my 
+confidential secretary, with a cash-box before him at all times); 
+and you may trust to me to be your Friend and Father.'
+
+'Nice children, indeed, Sir Joseph!' said the lady, with a shudder.  
+'Rheumatisms, and fevers, and crooked legs, and asthmas, and all 
+kinds of horrors!'
+
+'My lady,' returned Sir Joseph, with solemnity, 'not the less am I 
+the Poor Man's Friend and Father.  Not the less shall he receive 
+encouragement at my hands.  Every quarter-day he will be put in 
+communication with Mr. Fish.  Every New Year's Day, myself and 
+friends will drink his health.  Once every year, myself and friends 
+will address him with the deepest feeling.  Once in his life, he 
+may even perhaps receive; in public, in the presence of the gentry; 
+a Trifle from a Friend.  And when, upheld no more by these 
+stimulants, and the Dignity of Labour, he sinks into his 
+comfortable grave, then, my lady' - here Sir Joseph blew his nose - 
+'I will be a Friend and a Father - on the same terms - to his 
+children.'
+
+Toby was greatly moved.
+
+'O! You have a thankful family, Sir Joseph!' cried his wife.
+
+'My lady,' said Sir Joseph, quite majestically, 'Ingratitude is 
+known to be the sin of that class.  I expect no other return.'
+
+'Ah!  Born bad!' thought Toby.  'Nothing melts us.'
+
+'What man can do, I do,' pursued Sir Joseph.  'I do my duty as the 
+Poor Man's Friend and Father; and I endeavour to educate his mind, 
+by inculcating on all occasions the one great moral lesson which 
+that class requires.  That is, entire Dependence on myself.  They 
+have no business whatever with - with themselves.  If wicked and 
+designing persons tell them otherwise, and they become impatient 
+and discontented, and are guilty of insubordinate conduct and 
+black-hearted ingratitude; which is undoubtedly the case; I am 
+their Friend and Father still.  It is so Ordained.  It is in the 
+nature of things.'
+
+With that great sentiment, he opened the Alderman's letter; and 
+read it.
+
+'Very polite and attentive, I am sure!' exclaimed Sir Joseph.  'My 
+lady, the Alderman is so obliging as to remind me that he has had 
+"the distinguished honour" - he is very good - of meeting me at the 
+house of our mutual friend Deedles, the banker; and he does me the 
+favour to inquire whether it will be agreeable to me to have Will 
+Fern put down.'
+
+'MOST agreeable!' replied my Lady Bowley.  'The worst man among 
+them!  He has been committing a robbery, I hope?'
+
+'Why no,' said Sir Joseph', referring to the letter.  'Not quite.  
+Very near.  Not quite.  He came up to London, it seems, to look for 
+employment (trying to better himself - that's his story), and being 
+found at night asleep in a shed, was taken into custody, and 
+carried next morning before the Alderman.  The Alderman observes 
+(very properly) that he is determined to put this sort of thing 
+down; and that if it will be agreeable to me to have Will Fern put 
+down, he will be happy to begin with him.'
+
+'Let him be made an example of, by all means,' returned the lady.  
+'Last winter, when I introduced pinking and eyelet-holing among the 
+men and boys in the village, as a nice evening employment, and had 
+the lines,
+
+
+O let us love our occupations,
+Bless the squire and his relations,
+Live upon our daily rations,
+And always know our proper stations,
+
+
+set to music on the new system, for them to sing the while; this 
+very Fern - I see him now - touched that hat of his, and said, "I 
+humbly ask your pardon, my lady, but AN'T I something different 
+from a great girl?"  I expected it, of course; who can expect 
+anything but insolence and ingratitude from that class of people!  
+That is not to the purpose, however.  Sir Joseph!  Make an example 
+of him!'
+
+'Hem!' coughed Sir Joseph.  'Mr. Fish, if you'll have the goodness 
+to attend - '
+
+Mr. Fish immediately seized his pen, and wrote from Sir Joseph's 
+dictation.
+
+'Private.  My dear Sir.  I am very much indebted to you for your 
+courtesy in the matter of the man William Fern, of whom, I regret 
+to add, I can say nothing favourable.  I have uniformly considered 
+myself in the light of his Friend and Father, but have been repaid 
+(a common case, I grieve to say) with ingratitude, and constant 
+opposition to my plans.  He is a turbulent and rebellious spirit.  
+His character will not bear investigation.  Nothing will persuade 
+him to be happy when he might.  Under these circumstances, it 
+appears to me, I own, that when he comes before you again (as you 
+informed me he promised to do to-morrow, pending your inquiries, 
+and I think he may be so far relied upon), his committal for some 
+short term as a Vagabond, would be a service to society, and would 
+be a salutary example in a country where - for the sake of those 
+who are, through good and evil report, the Friends and Fathers of 
+the Poor, as well as with a view to that, generally speaking, 
+misguided class themselves - examples are greatly needed.  And I 
+am,' and so forth.
+
+'It appears,' remarked Sir Joseph when he had signed this letter, 
+and Mr. Fish was sealing it, 'as if this were Ordained:  really.  
+At the close of the year, I wind up my account and strike my 
+balance, even with William Fern!'
+
+Trotty, who had long ago relapsed, and was very low-spirited, 
+stepped forward with a rueful face to take the letter.
+
+'With my compliments and thanks,' said Sir Joseph.  'Stop!'
+
+'Stop!' echoed Mr. Fish.
+
+'You have heard, perhaps,' said Sir Joseph, oracularly, 'certain 
+remarks into which I have been led respecting the solemn period of 
+time at which we have arrived, and the duty imposed upon us of 
+settling our affairs, and being prepared.  You have observed that I 
+don't shelter myself behind my superior standing in society, but 
+that Mr. Fish - that gentleman - has a cheque-book at his elbow, 
+and is in fact here, to enable me to turn over a perfectly new 
+leaf, and enter on the epoch before us with a clean account.  Now, 
+my friend, can you lay your hand upon your heart, and say, that you 
+also have made preparations for a New Year?'
+
+'I am afraid, sir,' stammered Trotty, looking meekly at him, 'that 
+I am a - a - little behind-hand with the world.'
+
+' Behind-hand with the world!' repeated Sir Joseph Bowley, in a 
+tone of terrible distinctness.
+
+'I am afraid, sir,' faltered Trotty, 'that there's a matter of ten 
+or twelve shillings owing to Mrs. Chickenstalker.'
+
+'To Mrs. Chickenstalker!' repeated Sir Joseph, in the same tone as 
+before.
+
+'A shop, sir,' exclaimed Toby, 'in the general line.  Also a - a 
+little money on account of rent.  A very little, sir.  It oughtn't 
+to be owing, I know, but we have been hard put to it, indeed!'
+
+Sir Joseph looked at his lady, and at Mr. Fish, and at Trotty, one 
+after another, twice all round.  He then made a despondent gesture 
+with both hands at once, as if he gave the thing up altogether.
+
+'How a man, even among this improvident and impracticable race; an 
+old man; a man grown grey; can look a New Year in the face, with 
+his affairs in this condition; how he can lie down on his bed at 
+night, and get up again in the morning, and - There!' he said, 
+turning his back on Trotty.  'Take the letter.  Take the letter!'
+
+'I heartily wish it was otherwise, sir,' said Trotty, anxious to 
+excuse himself.  'We have been tried very hard.'
+
+Sir Joseph still repeating 'Take the letter, take the letter!' and 
+Mr. Fish not only saying the same thing, but giving additional 
+force to the request by motioning the bearer to the door, he had 
+nothing for it but to make his bow and leave the house.  And in the 
+street, poor Trotty pulled his worn old hat down on his head, to 
+hide the grief he felt at getting no hold on the New Year, 
+anywhere.
+
+He didn't even lift his hat to look up at the Bell tower when he 
+came to the old church on his return.  He halted there a moment, 
+from habit:  and knew that it was growing dark, and that the 
+steeple rose above him, indistinct and faint, in the murky air.  He 
+knew, too, that the Chimes would ring immediately; and that they 
+sounded to his fancy, at such a time, like voices in the clouds.  
+But he only made the more haste to deliver the Alderman's letter, 
+and get out of the way before they began; for he dreaded to hear 
+them tagging 'Friends and Fathers, Friends and Fathers,' to the 
+burden they had rung out last.
+
+Toby discharged himself of his commission, therefore, with all 
+possible speed, and set off trotting homeward.  But what with his 
+pace, which was at best an awkward one in the street; and what with 
+his hat, which didn't improve it; he trotted against somebody in 
+less than no time, and was sent staggering out into the road.
+
+'I beg your pardon, I'm sure!' said Trotty, pulling up his hat in 
+great confusion, and between the hat and the torn lining, fixing 
+his head into a kind of bee-hive.  'I hope I haven't hurt you.'
+
+As to hurting anybody, Toby was not such an absolute Samson, but 
+that he was much more likely to be hurt himself:  and indeed, he 
+had flown out into the road, like a shuttlecock.  He had such an 
+opinion of his own strength, however, that he was in real concern 
+for the other party:  and said again,
+
+'I hope I haven't hurt you?'
+
+The man against whom he had run; a sun-browned, sinewy, country-
+looking man, with grizzled hair, and a rough chin; stared at him 
+for a moment, as if he suspected him to be in jest.  But, satisfied 
+of his good faith, he answered:
+
+'No, friend.  You have not hurt me.'
+
+'Nor the child, I hope?' said Trotty.
+
+'Nor the child,' returned the man.  'I thank you kindly.'
+
+As he said so, he glanced at a little girl he carried in his arms, 
+asleep:  and shading her face with the long end of the poor 
+handkerchief he wore about his throat, went slowly on.
+
+The tone in which he said 'I thank you kindly,' penetrated Trotty's 
+heart.  He was so jaded and foot-sore, and so soiled with travel, 
+and looked about him so forlorn and strange, that it was a comfort 
+to him to be able to thank any one:  no matter for how little.  
+Toby stood gazing after him as he plodded wearily away, with the 
+child's arm clinging round his neck.
+
+At the figure in the worn shoes - now the very shade and ghost of 
+shoes - rough leather leggings, common frock, and broad slouched 
+hat, Trotty stood gazing, blind to the whole street.  And at the 
+child's arm, clinging round its neck.
+
+Before he merged into the darkness the traveller stopped; and 
+looking round, and seeing Trotty standing there yet, seemed 
+undecided whether to return or go on.  After doing first the one 
+and then the other, he came back, and Trotty went half-way to meet 
+him.
+
+'You can tell me, perhaps,' said the man with a faint smile, 'and 
+if you can I am sure you will, and I'd rather ask you than another 
+- where Alderman Cute lives.'
+
+'Close at hand,' replied Toby.  'I'll show you his house with 
+pleasure.'
+
+'I was to have gone to him elsewhere to-morrow,' said the man, 
+accompanying Toby, 'but I'm uneasy under suspicion, and want to 
+clear myself, and to be free to go and seek my bread - I don't know 
+where.  So, maybe he'll forgive my going to his house to-night.'
+
+'It's impossible,' cried Toby with a start, 'that your name's 
+Fern!'
+
+'Eh!' cried the other, turning on him in astonishment.
+
+'Fern!  Will Fern!' said Trotty.
+
+'That's my name,' replied the other.
+
+'Why then,' said Trotty, seizing him by the arm, and looking 
+cautiously round, 'for Heaven's sake don't go to him!  Don't go to 
+him!  He'll put you down as sure as ever you were born.  Here! come 
+up this alley, and I'll tell you what I mean.  Don't go to HIM.'
+
+His new acquaintance looked as if he thought him mad; but he bore 
+him company nevertheless.  When they were shrouded from 
+observation, Trotty told him what he knew, and what character he 
+had received, and all about it.
+
+The subject of his history listened to it with a calmness that 
+surprised him.  He did not contradict or interrupt it, once.  He 
+nodded his head now and then - more in corroboration of an old and 
+worn-out story, it appeared, than in refutation of it; and once or 
+twice threw back his hat, and passed his freckled hand over a brow, 
+where every furrow he had ploughed seemed to have set its image in 
+little.  But he did no more.
+
+'It's true enough in the main,' he said, 'master, I could sift 
+grain from husk here and there, but let it be as 'tis.  What odds?  
+I have gone against his plans; to my misfortun'.  I can't help it; 
+I should do the like to-morrow.  As to character, them gentlefolks 
+will search and search, and pry and pry, and have it as free from 
+spot or speck in us, afore they'll help us to a dry good word! - 
+Well! I hope they don't lose good opinion as easy as we do, or 
+their lives is strict indeed, and hardly worth the keeping.  For 
+myself, master, I never took with that hand' - holding it before 
+him - 'what wasn't my own; and never held it back from work, 
+however hard, or poorly paid.  Whoever can deny it, let him chop it 
+off!  But when work won't maintain me like a human creetur; when my 
+living is so bad, that I am Hungry, out of doors and in; when I see 
+a whole working life begin that way, go on that way, and end that 
+way, without a chance or change; then I say to the gentlefolks 
+"Keep away from me!  Let my cottage be.  My doors is dark enough 
+without your darkening of 'em more.  Don't look for me to come up 
+into the Park to help the show when there's a Birthday, or a fine 
+Speechmaking, or what not.  Act your Plays and Games without me, 
+and be welcome to 'em, and enjoy 'em.  We've nowt to do with one 
+another.  I'm best let alone!"'
+
+Seeing that the child in his arms had opened her eyes, and was 
+looking about her in wonder, he checked himself to say a word or 
+two of foolish prattle in her ear, and stand her on the ground 
+beside him.  Then slowly winding one of her long tresses round and 
+round his rough forefinger like a ring, while she hung about his 
+dusty leg, he said to Trotty:
+
+'I'm not a cross-grained man by natu', I believe; and easy 
+satisfied, I'm sure.  I bear no ill-will against none of 'em.  I 
+only want to live like one of the Almighty's creeturs.  I can't - I 
+don't - and so there's a pit dug between me, and them that can and 
+do.  There's others like me.  You might tell 'em off by hundreds 
+and by thousands, sooner than by ones.'
+
+Trotty knew he spoke the Truth in this, and shook his head to 
+signify as much.
+
+'I've got a bad name this way,' said Fern; 'and I'm not likely, I'm 
+afeared, to get a better.  'Tan't lawful to be out of sorts, and I 
+AM out of sorts, though God knows I'd sooner bear a cheerful spirit 
+if I could.  Well!  I don't know as this Alderman could hurt ME 
+much by sending me to jail; but without a friend to speak a word 
+for me, he might do it; and you see - !' pointing downward with his 
+finger, at the child.
+
+'She has a beautiful face,' said Trotty.
+
+'Why yes!' replied the other in a low voice, as he gently turned it 
+up with both his hands towards his own, and looked upon it 
+steadfastly.  'I've thought so, many times.  I've thought so, when 
+my hearth was very cold, and cupboard very bare.  I thought so 
+t'other night, when we were taken like two thieves.  But they - 
+they shouldn't try the little face too often, should they, Lilian?  
+That's hardly fair upon a man!'
+
+He sunk his voice so low, and gazed upon her with an air so stern 
+and strange, that Toby, to divert the current of his thoughts, 
+inquired if his wife were living.
+
+'I never had one,' he returned, shaking his head.  'She's my 
+brother's child:  a orphan.  Nine year old, though you'd hardly 
+think it; but she's tired and worn out now.  They'd have taken care 
+on her, the Union - eight-and-twenty mile away from where we live - 
+between four walls (as they took care of my old father when he 
+couldn't work no more, though he didn't trouble 'em long); but I 
+took her instead, and she's lived with me ever since.  Her mother 
+had a friend once, in London here.  We are trying to find her, and 
+to find work too; but it's a large place.  Never mind.  More room 
+for us to walk about in, Lilly!'
+
+Meeting the child's eyes with a smile which melted Toby more than 
+tears, he shook him by the hand.
+
+'I don't so much as know your name,' he said, 'but I've opened my 
+heart free to you, for I'm thankful to you; with good reason.  I'll 
+take your advice, and keep clear of this - '
+
+'Justice,' suggested Toby.
+
+'Ah!' he said.  'If that's the name they give him.  This Justice.  
+And to-morrow will try whether there's better fortun' to be met 
+with, somewheres near London.  Good night.  A Happy New Year!'
+
+'Stay!' cried Trotty, catching at his hand, as he relaxed his grip.  
+'Stay!  The New Year never can be happy to me, if we part like 
+this.  The New Year never can be happy to me, if I see the child 
+and you go wandering away, you don't know where, without a shelter 
+for your heads.  Come home with me!  I'm a poor man, living in a 
+poor place; but I can give you lodging for one night and never miss 
+it.  Come home with me!  Here!  I'll take her!' cried Trotty, 
+lifting up the child.  'A pretty one!  I'd carry twenty times her 
+weight, and never know I'd got it.  Tell me if I go too quick for 
+you.  I'm very fast.  I always was!'  Trotty said this, taking 
+about six of his trotting paces to one stride of his fatigued 
+companion; and with his thin legs quivering again, beneath the load 
+he bore.
+
+'Why, she's as light,' said Trotty, trotting in his speech as well 
+as in his gait; for he couldn't bear to be thanked, and dreaded a 
+moment's pause; 'as light as a feather.  Lighter than a Peacock's 
+feather - a great deal lighter.  Here we are and here we go!  Round 
+this first turning to the right, Uncle Will, and past the pump, and 
+sharp off up the passage to the left, right opposite the public-
+house.  Here we are and here we go!  Cross over, Uncle Will, and 
+mind the kidney pieman at the corner!  Here we are and here we go!  
+Down the Mews here, Uncle Will, and stop at the black door, with 
+"T. Veck, Ticket Porter," wrote upon a board; and here we are and 
+here we go, and here we are indeed, my precious.  Meg, surprising 
+you!'
+
+With which words Trotty, in a breathless state, set the child down 
+before his daughter in the middle of the floor.  The little visitor 
+looked once at Meg; and doubting nothing in that face, but trusting 
+everything she saw there; ran into her arms.
+
+'Here we are and here we go!' cried Trotty, running round the room, 
+and choking audibly.  'Here, Uncle Will, here's a fire you know!  
+Why don't you come to the fire?  Oh here we are and here we go!  
+Meg, my precious darling, where's the kettle?  Here it is and here 
+it goes, and it'll bile in no time!'
+
+Trotty really had picked up the kettle somewhere or other in the 
+course of his wild career and now put it on the fire:  while Meg, 
+seating the child in a warm corner, knelt down on the ground before 
+her, and pulled off her shoes, and dried her wet feet on a cloth.  
+Ay, and she laughed at Trotty too - so pleasantly, so cheerfully, 
+that Trotty could have blessed her where she kneeled; for he had 
+seen that, when they entered, she was sitting by the fire in tears.
+
+'Why, father!' said Meg.  'You're crazy to-night, I think.  I don't 
+know what the Bells would say to that.  Poor little feet.  How cold 
+they are!'
+
+'Oh, they're warmer now!' exclaimed the child.  'They're quite warm 
+now!'
+
+'No, no, no,' said Meg.  'We haven't rubbed 'em half enough.  We're 
+so busy.  So busy!  And when they're done, we'll brush out the damp 
+hair; and when that's done, we'll bring some colour to the poor 
+pale face with fresh water; and when that's done, we'll be so gay, 
+and brisk, and happy - !'
+
+The child, in a burst of sobbing, clasped her round the neck; 
+caressed her fair cheek with its hand; and said, 'Oh Meg! oh dear 
+Meg!'
+
+Toby's blessing could have done no more.  Who could do more!
+
+'Why, father!' cried Meg, after a pause.
+
+'Here I am and here I go, my dear!' said Trotty.
+
+'Good Gracious me!' cried Meg.  'He's crazy!  He's put the dear 
+child's bonnet on the kettle, and hung the lid behind the door!'
+
+'I didn't go for to do it, my love,' said Trotty, hastily repairing 
+this mistake.  'Meg, my dear?'
+
+Meg looked towards him and saw that he had elaborately stationed 
+himself behind the chair of their male visitor, where with many 
+mysterious gestures he was holding up the sixpence he had earned.
+
+'I see, my dear,' said Trotty, 'as I was coming in, half an ounce 
+of tea lying somewhere on the stairs; and I'm pretty sure there was 
+a bit of bacon too.  As I don't remember where it was exactly, I'll 
+go myself and try to find 'em.'
+
+With this inscrutable artifice, Toby withdrew to purchase the 
+viands he had spoken of, for ready money, at Mrs. Chickenstalker's; 
+and presently came back, pretending he had not been able to find 
+them, at first, in the dark.
+
+'But here they are at last,' said Trotty, setting out the tea-
+things, 'all correct!  I was pretty sure it was tea, and a rasher.  
+So it is.  Meg, my pet, if you'll just make the tea, while your 
+unworthy father toasts the bacon, we shall be ready, immediate.  
+It's a curious circumstance,' said Trotty, proceeding in his 
+cookery, with the assistance of the toasting-fork, 'curious, but 
+well known to my friends, that I never care, myself, for rashers, 
+nor for tea.  I like to see other people enjoy 'em,' said Trotty, 
+speaking very loud, to impress the fact upon his guest, 'but to me, 
+as food, they're disagreeable.'
+
+Yet Trotty sniffed the savour of the hissing bacon - ah! - as if he 
+liked it; and when he poured the boiling water in the tea-pot, 
+looked lovingly down into the depths of that snug cauldron, and 
+suffered the fragrant steam to curl about his nose, and wreathe his 
+head and face in a thick cloud.  However, for all this, he neither 
+ate nor drank, except at the very beginning, a mere morsel for 
+form's sake, which he appeared to eat with infinite relish, but 
+declared was perfectly uninteresting to him.
+
+No.  Trotty's occupation was, to see Will Fern and Lilian eat and 
+drink; and so was Meg's.  And never did spectators at a city dinner 
+or court banquet find such high delight in seeing others feast:  
+although it were a monarch or a pope:  as those two did, in looking 
+on that night.  Meg smiled at Trotty, Trotty laughed at Meg.  Meg 
+shook her head, and made belief to clap her hands, applauding 
+Trotty; Trotty conveyed, in dumb-show, unintelligible narratives of 
+how and when and where he had found their visitors, to Meg; and 
+they were happy.  Very happy.
+
+'Although,' thought Trotty, sorrowfully, as he watched Meg's face; 
+'that match is broken off, I see!'
+
+'Now, I'll tell you what,' said Trotty after tea.  'The little one, 
+she sleeps with Meg, I know.'
+
+'With good Meg!' cried the child, caressing her.  'With Meg.'
+
+'That's right,' said Trotty.  'And I shouldn't wonder if she kiss 
+Meg's father, won't she?  I'M Meg's father.'
+
+Mightily delighted Trotty was, when the child went timidly towards 
+him, and having kissed him, fell back upon Meg again.
+
+'She's as sensible as Solomon,' said Trotty.  'Here we come and 
+here we - no, we don't - I don't mean that - I - what was I saying, 
+Meg, my precious?'
+
+Meg looked towards their guest, who leaned upon her chair, and with 
+his face turned from her, fondled the child's head, half hidden in 
+her lap.
+
+'To be sure,' said Toby.  'To be sure!  I don't know what I'm 
+rambling on about, to-night.  My wits are wool-gathering, I think.  
+Will Fern, you come along with me.  You're tired to death, and 
+broken down for want of rest.  You come along with me.'  The man 
+still played with the child's curls, still leaned upon Meg's chair, 
+still turned away his face.  He didn't speak, but in his rough 
+coarse fingers, clenching and expanding in the fair hair of the 
+child, there was an eloquence that said enough.
+
+'Yes, yes,' said Trotty, answering unconsciously what he saw 
+expressed in his daughter's face.  'Take her with you, Meg.  Get 
+her to bed.  There!  Now, Will, I'll show you where you lie.  It's 
+not much of a place:  only a loft; but, having a loft, I always 
+say, is one of the great conveniences of living in a mews; and till 
+this coach-house and stable gets a better let, we live here cheap.  
+There's plenty of sweet hay up there, belonging to a neighbour; and 
+it's as clean as hands, and Meg, can make it.  Cheer up!  Don't 
+give way.  A new heart for a New Year, always!'
+
+The hand released from the child's hair, had fallen, trembling, 
+into Trotty's hand.  So Trotty, talking without intermission, led 
+him out as tenderly and easily as if he had been a child himself.  
+Returning before Meg, he listened for an instant at the door of her 
+little chamber; an adjoining room.  The child was murmuring a 
+simple Prayer before lying down to sleep; and when she had 
+remembered Meg's name, 'Dearly, Dearly' - so her words ran - Trotty 
+heard her stop and ask for his.
+
+It was some short time before the foolish little old fellow could 
+compose himself to mend the fire, and draw his chair to the warm 
+hearth.  But, when he had done so, and had trimmed the light, he 
+took his newspaper from his pocket, and began to read.  Carelessly 
+at first, and skimming up and down the columns; but with an earnest 
+and a sad attention, very soon.
+
+For this same dreaded paper re-directed Trotty's thoughts into the 
+channel they had taken all that day, and which the day's events had 
+so marked out and shaped.  His interest in the two wanderers had 
+set him on another course of thinking, and a happier one, for the 
+time; but being alone again, and reading of the crimes and 
+violences of the people, he relapsed into his former train.
+
+In this mood, he came to an account (and it was not the first he 
+had ever read) of a woman who had laid her desperate hands not only 
+on her own life but on that of her young child.  A crime so 
+terrible, and so revolting to his soul, dilated with the love of 
+Meg, that he let the journal drop, and fell back in his chair, 
+appalled!
+
+'Unnatural and cruel!' Toby cried.  'Unnatural and cruel!  None but 
+people who were bad at heart, born bad, who had no business on the 
+earth, could do such deeds.  It's too true, all I've heard to-day; 
+too just, too full of proof.  We're Bad!'
+
+The Chimes took up the words so suddenly - burst out so loud, and 
+clear, and sonorous - that the Bells seemed to strike him in his 
+chair.
+
+And what was that, they said?
+
+'Toby Veck, Toby Veck, waiting for you Toby!  Toby Veck, Toby Veck, 
+waiting for you Toby!  Come and see us, come and see us, Drag him 
+to us, drag him to us, Haunt and hunt him, haunt and hunt him, 
+Break his slumbers, break his slumbers!  Toby Veck Toby Veck, door 
+open wide Toby, Toby Veck Toby Veck, door open wide Toby - ' then 
+fiercely back to their impetuous strain again, and ringing in the 
+very bricks and plaster on the walls.
+
+Toby listened.  Fancy, fancy!  His remorse for having run away from 
+them that afternoon!  No, no.  Nothing of the kind.  Again, again, 
+and yet a dozen times again.  'Haunt and hunt him, haunt and hunt 
+him, Drag him to us, drag him to us!'  Deafening the whole town!
+
+'Meg,' said Trotty softly:  tapping at her door.  'Do you hear 
+anything?'
+
+'I hear the Bells, father.  Surely they're very loud to-night.'
+
+'Is she asleep?' said Toby, making an excuse for peeping in.
+
+'So peacefully and happily!  I can't leave her yet though, father.  
+Look how she holds my hand!'
+
+'Meg,' whispered Trotty.  'Listen to the Bells!'
+
+She listened, with her face towards him all the time.  But it 
+underwent no change.  She didn't understand them.
+
+Trotty withdrew, resumed his seat by the fire, and once more 
+listened by himself.  He remained here a little time.
+
+It was impossible to bear it; their energy was dreadful.
+
+'If the tower-door is really open,' said Toby, hastily laying aside 
+his apron, but never thinking of his hat, 'what's to hinder me from 
+going up into the steeple and satisfying myself?  If it's shut, I 
+don't want any other satisfaction.  That's enough.'
+
+He was pretty certain as he slipped out quietly into the street 
+that he should find it shut and locked, for he knew the door well, 
+and had so rarely seen it open, that he couldn't reckon above three 
+times in all.  It was a low arched portal, outside the church, in a 
+dark nook behind a column; and had such great iron hinges, and such 
+a monstrous lock, that there was more hinge and lock than door.
+
+But what was his astonishment when, coming bare-headed to the 
+church; and putting his hand into this dark nook, with a certain 
+misgiving that it might be unexpectedly seized, and a shivering 
+propensity to draw it back again; he found that the door, which 
+opened outwards, actually stood ajar!
+
+He thought, on the first surprise, of going back; or of getting a 
+light, or a companion, but his courage aided him immediately, and 
+he determined to ascend alone.
+
+'What have I to fear?' said Trotty.  'It's a church!  Besides, the 
+ringers may be there, and have forgotten to shut the door.'  So he 
+went in, feeling his way as he went, like a blind man; for it was 
+very dark.  And very quiet, for the Chimes were silent.
+
+The dust from the street had blown into the recess; and lying 
+there, heaped up, made it so soft and velvet-like to the foot, that 
+there was something startling, even in that.  The narrow stair was 
+so close to the door, too, that he stumbled at the very first; and 
+shutting the door upon himself, by striking it with his foot, and 
+causing it to rebound back heavily, he couldn't open it again.
+
+This was another reason, however, for going on.  Trotty groped his 
+way, and went on.  Up, up, up, and round, and round; and up, up, 
+up; higher, higher, higher up!
+
+It was a disagreeable staircase for that groping work; so low and 
+narrow, that his groping hand was always touching something; and it 
+often felt so like a man or ghostly figure standing up erect and 
+making room for him to pass without discovery, that he would rub 
+the smooth wall upward searching for its face, and downward 
+searching for its feet, while a chill tingling crept all over him.  
+Twice or thrice, a door or niche broke the monotonous surface; and 
+then it seemed a gap as wide as the whole church; and he felt on 
+the brink of an abyss, and going to tumble headlong down, until he 
+found the wall again.
+
+Still up, up, up; and round and round; and up, up, up; higher, 
+higher, higher up!
+
+At length, the dull and stifling atmosphere began to freshen:  
+presently to feel quite windy:  presently it blew so strong, that 
+he could hardly keep his legs.  But, he got to an arched window in 
+the tower, breast high, and holding tight, looked down upon the 
+house-tops, on the smoking chimneys, on the blurr and blotch of 
+lights (towards the place where Meg was wondering where he was and 
+calling to him perhaps), all kneaded up together in a leaven of 
+mist and darkness.
+
+This was the belfry, where the ringers came.  He had caught hold of 
+one of the frayed ropes which hung down through apertures in the 
+oaken roof.  At first he started, thinking it was hair; then 
+trembled at the very thought of waking the deep Bell.  The Bells 
+themselves were higher.  Higher, Trotty, in his fascination, or in 
+working out the spell upon him, groped his way.  By ladders now, 
+and toilsomely, for it was steep, and not too certain holding for 
+the feet.
+
+Up, up, up; and climb and clamber; up, up, up; higher, higher, 
+higher up!
+
+Until, ascending through the floor, and pausing with his head just 
+raised above its beams, he came among the Bells.  It was barely 
+possible to make out their great shapes in the gloom; but there 
+they were.  Shadowy, and dark, and dumb.
+
+A heavy sense of dread and loneliness fell instantly upon him, as 
+he climbed into this airy nest of stone and metal.  His head went 
+round and round.  He listened, and then raised a wild 'Holloa!'  
+Holloa! was mournfully protracted by the echoes.
+
+Giddy, confused, and out of breath, and frightened, Toby looked 
+about him vacantly, and sunk down in a swoon.
+
+
+
+CHAPTER III - Third Quarter.
+
+
+
+BLACK are the brooding clouds and troubled the deep waters, when 
+the Sea of Thought, first heaving from a calm, gives up its Dead.  
+Monsters uncouth and wild, arise in premature, imperfect 
+resurrection; the several parts and shapes of different things are 
+joined and mixed by chance; and when, and how, and by what 
+wonderful degrees, each separates from each, and every sense and 
+object of the mind resumes its usual form and lives again, no man - 
+though every man is every day the casket of this type of the Great 
+Mystery - can tell.
+
+So, when and how the darkness of the night-black steeple changed to 
+shining light; when and how the solitary tower was peopled with a 
+myriad figures; when and how the whispered 'Haunt and hunt him,' 
+breathing monotonously through his sleep or swoon, became a voice 
+exclaiming in the waking ears of Trotty, 'Break his slumbers;' when 
+and how he ceased to have a sluggish and confused idea that such 
+things were, companioning a host of others that were not; there are 
+no dates or means to tell.  But, awake and standing on his feet 
+upon the boards where he had lately lain, he saw this Goblin Sight.
+
+He saw the tower, whither his charmed footsteps had brought him, 
+swarming with dwarf phantoms, spirits, elfin creatures of the 
+Bells.  He saw them leaping, flying, dropping, pouring from the 
+Bells without a pause.  He saw them, round him on the ground; above 
+him, in the air; clambering from him, by the ropes below; looking 
+down upon him, from the massive iron-girded beams; peeping in upon 
+him, through the chinks and loopholes in the walls; spreading away 
+and away from him in enlarging circles, as the water ripples give 
+way to a huge stone that suddenly comes plashing in among them.  He 
+saw them, of all aspects and all shapes.  He saw them ugly, 
+handsome, crippled, exquisitely formed.  He saw them young, he saw 
+them old, he saw them kind, he saw them cruel, he saw them merry, 
+he saw them grim; he saw them dance, and heard them sing; he saw 
+them tear their hair, and heard them howl.  He saw the air thick 
+with them.  He saw them come and go, incessantly.  He saw them 
+riding downward, soaring upward, sailing off afar, perching near at 
+hand, all restless and all violently active.  Stone, and brick, and 
+slate, and tile, became transparent to him as to them.  He saw them 
+IN the houses, busy at the sleepers' beds.  He saw them soothing 
+people in their dreams; he saw them beating them with knotted 
+whips; he saw them yelling in their ears; he saw them playing 
+softest music on their pillows; he saw them cheering some with the 
+songs of birds and the perfume of flowers; he saw them flashing 
+awful faces on the troubled rest of others, from enchanted mirrors 
+which they carried in their hands.
+
+He saw these creatures, not only among sleeping men but waking 
+also, active in pursuits irreconcilable with one another, and 
+possessing or assuming natures the most opposite.  He saw one 
+buckling on innumerable wings to increase his speed; another 
+loading himself with chains and weights, to retard his.  He saw 
+some putting the hands of clocks forward, some putting the hands of 
+clocks backward, some endeavouring to stop the clock entirely.  He 
+saw them representing, here a marriage ceremony, there a funeral; 
+in this chamber an election, in that a ball he saw, everywhere, 
+restless and untiring motion.
+
+Bewildered by the host of shifting and extraordinary figures, as 
+well as by the uproar of the Bells, which all this while were 
+ringing, Trotty clung to a wooden pillar for support, and turned 
+his white face here and there, in mute and stunned astonishment.
+
+As he gazed, the Chimes stopped.  Instantaneous change!  The whole 
+swarm fainted! their forms collapsed, their speed deserted them; 
+they sought to fly, but in the act of falling died and melted into 
+air.  No fresh supply succeeded them.  One straggler leaped down 
+pretty briskly from the surface of the Great Bell, and alighted on 
+his feet, but he was dead and gone before he could turn round.  
+Some few of the late company who had gambolled in the tower, 
+remained there, spinning over and over a little longer; but these 
+became at every turn more faint, and few, and feeble, and soon went 
+the way of the rest.  The last of all was one small hunchback, who 
+had got into an echoing corner, where he twirled and twirled, and 
+floated by himself a long time; showing such perseverance, that at 
+last he dwindled to a leg and even to a foot, before he finally 
+retired; but he vanished in the end, and then the tower was silent.
+
+Then and not before, did Trotty see in every Bell a bearded figure 
+of the bulk and stature of the Bell - incomprehensibly, a figure 
+and the Bell itself.  Gigantic, grave, and darkly watchful of him, 
+as he stood rooted to the ground.
+
+Mysterious and awful figures!  Resting on nothing; poised in the 
+night air of the tower, with their draped and hooded heads merged 
+in the dim roof; motionless and shadowy.  Shadowy and dark, 
+although he saw them by some light belonging to themselves - none 
+else was there - each with its muffled hand upon its goblin mouth.
+
+He could not plunge down wildly through the opening in the floor; 
+for all power of motion had deserted him.  Otherwise he would have 
+done so - aye, would have thrown himself, headforemost, from the 
+steeple-top, rather than have seen them watching him with eyes that 
+would have waked and watched although the pupils had been taken 
+out.
+
+Again, again, the dread and terror of the lonely place, and of the 
+wild and fearful night that reigned there, touched him like a 
+spectral hand.  His distance from all help; the long, dark, 
+winding, ghost-beleaguered way that lay between him and the earth 
+on which men lived; his being high, high, high, up there, where it 
+had made him dizzy to see the birds fly in the day; cut off from 
+all good people, who at such an hour were safe at home and sleeping 
+in their beds; all this struck coldly through him, not as a 
+reflection but a bodily sensation.  Meantime his eyes and thoughts 
+and fears, were fixed upon the watchful figures; which, rendered 
+unlike any figures of this world by the deep gloom and shade 
+enwrapping and enfolding them, as well as by their looks and forms 
+and supernatural hovering above the floor, were nevertheless as 
+plainly to be seen as were the stalwart oaken frames, cross-pieces, 
+bars and beams, set up there to support the Bells.  These hemmed 
+them, in a very forest of hewn timber; from the entanglements, 
+intricacies, and depths of which, as from among the boughs of a 
+dead wood blighted for their phantom use, they kept their darksome 
+and unwinking watch.
+
+A blast of air - how cold and shrill! - came moaning through the 
+tower.  As it died away, the Great Bell, or the Goblin of the Great 
+Bell, spoke.
+
+'What visitor is this!' it said.  The voice was low and deep, and 
+Trotty fancied that it sounded in the other figures as well.
+
+'I thought my name was called by the Chimes!' said Trotty, raising 
+his hands in an attitude of supplication.  'I hardly know why I am 
+here, or how I came.  I have listened to the Chimes these many 
+years.  They have cheered me often.'
+
+'And you have thanked them?' said the Bell.
+
+'A thousand times!' cried Trotty.
+
+'How?'
+
+'I am a poor man,' faltered Trotty, 'and could only thank them in 
+words.'
+
+'And always so?' inquired the Goblin of the Bell.  'Have you never 
+done us wrong in words?'
+
+'No!' cried Trotty eagerly.
+
+'Never done us foul, and false, and wicked wrong, in words?' 
+pursued the Goblin of the Bell.
+
+Trotty was about to answer, 'Never!'  But he stopped, and was 
+confused.
+
+'The voice of Time,' said the Phantom, 'cries to man, Advance!  
+Time is for his advancement and improvement; for his greater worth, 
+his greater happiness, his better life; his progress onward to that 
+goal within its knowledge and its view, and set there, in the 
+period when Time and He began.  Ages of darkness, wickedness, and 
+violence, have come and gone - millions uncountable, have suffered, 
+lived, and died - to point the way before him.  Who seeks to turn 
+him back, or stay him on his course, arrests a mighty engine which 
+will strike the meddler dead; and be the fiercer and the wilder, 
+ever, for its momentary check!'
+
+'I never did so to my knowledge, sir,' said Trotty.  'It was quite 
+by accident if I did.  I wouldn't go to do it, I'm sure.'
+
+'Who puts into the mouth of Time, or of its servants,' said the 
+Goblin of the Bell, 'a cry of lamentation for days which have had 
+their trial and their failure, and have left deep traces of it 
+which the blind may see - a cry that only serves the present time, 
+by showing men how much it needs their help when any ears can 
+listen to regrets for such a past - who does this, does a wrong.  
+And you have done that wrong, to us, the Chimes.'
+
+Trotty's first excess of fear was gone.  But he had felt tenderly 
+and gratefully towards the Bells, as you have seen; and when he 
+heard himself arraigned as one who had offended them so weightily, 
+his heart was touched with penitence and grief.
+
+'If you knew,' said Trotty, clasping his hands earnestly - 'or 
+perhaps you do know - if you know how often you have kept me 
+company; how often you have cheered me up when I've been low; how 
+you were quite the plaything of my little daughter Meg (almost the 
+only one she ever had) when first her mother died, and she and me 
+were left alone; you won't bear malice for a hasty word!'
+
+'Who hears in us, the Chimes, one note bespeaking disregard, or 
+stern regard, of any hope, or joy, or pain, or sorrow, of the many-
+sorrowed throng; who hears us make response to any creed that 
+gauges human passions and affections, as it gauges the amount of 
+miserable food on which humanity may pine and wither; does us 
+wrong.  That wrong you have done us!' said the Bell.
+
+'I have!' said Trotty.  'Oh forgive me!'
+
+'Who hears us echo the dull vermin of the earth:  the Putters Down 
+of crushed and broken natures, formed to be raised up higher than 
+such maggots of the time can crawl or can conceive,' pursued the 
+Goblin of the Bell; 'who does so, does us wrong.  And you have done 
+us wrong!'
+
+'Not meaning it,' said Trotty.  'In my ignorance.  Not meaning it!'
+
+'Lastly, and most of all,' pursued the Bell.  'Who turns his back 
+upon the fallen and disfigured of his kind; abandons them as vile; 
+and does not trace and track with pitying eyes the unfenced 
+precipice by which they fell from good - grasping in their fall 
+some tufts and shreds of that lost soil, and clinging to them still 
+when bruised and dying in the gulf below; does wrong to Heaven and 
+man, to time and to eternity.  And you have done that wrong!'
+
+'Spare me!' cried Trotty, falling on his knees; 'for Mercy's sake!'
+
+'Listen!' said the Shadow.
+
+'Listen!' cried the other Shadows.
+
+'Listen!' said a clear and childlike voice, which Trotty thought he 
+recognised as having heard before.
+
+The organ sounded faintly in the church below.  Swelling by 
+degrees, the melody ascended to the roof, and filled the choir and 
+nave.  Expanding more and more, it rose up, up; up, up; higher, 
+higher, higher up; awakening agitated hearts within the burly piles 
+of oak:  the hollow bells, the iron-bound doors, the stairs of 
+solid stone; until the tower walls were insufficient to contain it, 
+and it soared into the sky.
+
+No wonder that an old man's breast could not contain a sound so 
+vast and mighty.  It broke from that weak prison in a rush of 
+tears; and Trotty put his hands before his face.
+
+'Listen!' said the Shadow.
+
+'Listen!' said the other Shadows.
+
+'Listen!' said the child's voice.
+
+A solemn strain of blended voices, rose into the tower.
+
+It was a very low and mournful strain - a Dirge - and as he 
+listened, Trotty heard his child among the singers.
+
+'She is dead!' exclaimed the old man.  'Meg is dead!  Her Spirit 
+calls to me.  I hear it!'
+
+'The Spirit of your child bewails the dead, and mingles with the 
+dead - dead hopes, dead fancies, dead imaginings of youth,' 
+returned the Bell, 'but she is living.  Learn from her life, a 
+living truth.  Learn from the creature dearest to your heart, how 
+bad the bad are born.  See every bud and leaf plucked one by one 
+from off the fairest stem, and know how bare and wretched it may 
+be.  Follow her!  To desperation!'
+
+Each of the shadowy figures stretched its right arm forth, and 
+pointed downward.
+
+'The Spirit of the Chimes is your companion,' said the figure.
+
+'Go!  It stands behind you!'
+
+Trotty turned, and saw - the child!  The child Will Fern had 
+carried in the street; the child whom Meg had watched, but now, 
+asleep!
+
+'I carried her myself, to-night,' said Trotty.  'In these arms!'
+
+'Show him what he calls himself,' said the dark figures, one and 
+all.
+
+The tower opened at his feet.  He looked down, and beheld his own 
+form, lying at the bottom, on the outside:  crushed and motionless.
+
+'No more a living man!' cried Trotty.  'Dead!'
+
+'Dead!' said the figures all together.
+
+'Gracious Heaven!  And the New Year - '
+
+'Past,' said the figures.
+
+'What!' he cried, shuddering.  'I missed my way, and coming on the 
+outside of this tower in the dark, fell down - a year ago?'
+
+'Nine years ago!' replied the figures.
+
+As they gave the answer, they recalled their outstretched hands; 
+and where their figures had been, there the Bells were.
+
+And they rung; their time being come again.  And once again, vast 
+multitudes of phantoms sprung into existence; once again, were 
+incoherently engaged, as they had been before; once again, faded on 
+the stopping of the Chimes; and dwindled into nothing.
+
+'What are these?' he asked his guide.  'If I am not mad, what are 
+these?'
+
+'Spirits of the Bells.  Their sound upon the air,' returned the 
+child.  'They take such shapes and occupations as the hopes and 
+thoughts of mortals, and the recollections they have stored up, 
+give them.'
+
+'And you,' said Trotty wildly.  'What are you?'
+
+'Hush, hush!' returned the child.  'Look here!'
+
+In a poor, mean room; working at the same kind of embroidery which 
+he had often, often seen before her; Meg, his own dear daughter, 
+was presented to his view.  He made no effort to imprint his kisses 
+on her face; he did not strive to clasp her to his loving heart; he 
+knew that such endearments were, for him, no more.  But, he held 
+his trembling breath, and brushed away the blinding tears, that he 
+might look upon her; that he might only see her.
+
+Ah!  Changed.  Changed.  The light of the clear eye, how dimmed.  
+The bloom, how faded from the cheek.  Beautiful she was, as she had 
+ever been, but Hope, Hope, Hope, oh where was the fresh Hope that 
+had spoken to him like a voice!
+
+She looked up from her work, at a companion.  Following her eyes, 
+the old man started back.
+
+In the woman grown, he recognised her at a glance.  In the long 
+silken hair, he saw the self-same curls; around the lips, the 
+child's expression lingering still.  See!  In the eyes, now turned 
+inquiringly on Meg, there shone the very look that scanned those 
+features when he brought her home!
+
+Then what was this, beside him!
+
+Looking with awe into its face, he saw a something reigning there:  
+a lofty something, undefined and indistinct, which made it hardly 
+more than a remembrance of that child - as yonder figure might be - 
+yet it was the same:  the same:  and wore the dress.
+
+Hark.  They were speaking!
+
+'Meg,' said Lilian, hesitating.  'How often you raise your head 
+from your work to look at me!'
+
+'Are my looks so altered, that they frighten you?' asked Meg.
+
+'Nay, dear!  But you smile at that, yourself!  Why not smile, when 
+you look at me, Meg?'
+
+'I do so.  Do I not?' she answered:  smiling on her.
+
+'Now you do,' said Lilian, 'but not usually.  When you think I'm 
+busy, and don't see you, you look so anxious and so doubtful, that 
+I hardly like to raise my eyes.  There is little cause for smiling 
+in this hard and toilsome life, but you were once so cheerful.'
+
+'Am I not now!' cried Meg, speaking in a tone of strange alarm, and 
+rising to embrace her.  'Do I make our weary life more weary to 
+you, Lilian!'
+
+'You have been the only thing that made it life,' said Lilian, 
+fervently kissing her; 'sometimes the only thing that made me care 
+to live so, Meg.  Such work, such work!  So many hours, so many 
+days, so many long, long nights of hopeless, cheerless, never-
+ending work - not to heap up riches, not to live grandly or gaily, 
+not to live upon enough, however coarse; but to earn bare bread; to 
+scrape together just enough to toil upon, and want upon, and keep 
+alive in us the consciousness of our hard fate!  Oh Meg, Meg!' she 
+raised her voice and twined her arms about her as she spoke, like 
+one in pain.  'How can the cruel world go round, and bear to look 
+upon such lives!'
+
+'Lilly!' said Meg, soothing her, and putting back her hair from her 
+wet face.  'Why, Lilly!  You!  So pretty and so young!'
+
+'Oh Meg!' she interrupted, holding her at arm's-length, and looking 
+in her face imploringly.  'The worst of all, the worst of all!  
+Strike me old, Meg!  Wither me, and shrivel me, and free me from 
+the dreadful thoughts that tempt me in my youth!'
+
+Trotty turned to look upon his guide.  But the Spirit of the child 
+had taken flight.  Was gone.
+
+Neither did he himself remain in the same place; for, Sir Joseph 
+Bowley, Friend and Father of the Poor, held a great festivity at 
+Bowley Hall, in honour of the natal day of Lady Bowley.  And as 
+Lady Bowley had been born on New Year's Day (which the local 
+newspapers considered an especial pointing of the finger of 
+Providence to number One, as Lady Bowley's destined figure in 
+Creation), it was on a New Year's Day that this festivity took 
+place.
+
+Bowley Hall was full of visitors.  The red-faced gentleman was 
+there, Mr. Filer was there, the great Alderman Cute was there - 
+Alderman Cute had a sympathetic feeling with great people, and had 
+considerably improved his acquaintance with Sir Joseph Bowley on 
+the strength of his attentive letter:  indeed had become quite a 
+friend of the family since then - and many guests were there.  
+Trotty's ghost was there, wandering about, poor phantom, drearily; 
+and looking for its guide.
+
+There was to be a great dinner in the Great Hall.  At which Sir 
+Joseph Bowley, in his celebrated character of Friend and Father of 
+the Poor, was to make his great speech.  Certain plum-puddings were 
+to be eaten by his Friends and Children in another Hall first; and, 
+at a given signal, Friends and Children flocking in among their 
+Friends and Fathers, were to form a family assemblage, with not one 
+manly eye therein unmoistened by emotion.
+
+But, there was more than this to happen.  Even more than this.  Sir 
+Joseph Bowley, Baronet and Member of Parliament, was to play a 
+match at skittles - real skittles - with his tenants!
+
+'Which quite reminds me,' said Alderman Cute, 'of the days of old 
+King Hal, stout King Hal, bluff King Hal.  Ah!  Fine character!'
+
+'Very,' said Mr. Filer, dryly.  'For marrying women and murdering 
+'em.  Considerably more than the average number of wives by the 
+bye.'
+
+'You'll marry the beautiful ladies, and not murder 'em, eh?' said 
+Alderman Cute to the heir of Bowley, aged twelve.  'Sweet boy!  We 
+shall have this little gentleman in Parliament now,' said the 
+Alderman, holding him by the shoulders, and looking as reflective 
+as he could, 'before we know where we are.  We shall hear of his 
+successes at the poll; his speeches in the House; his overtures 
+from Governments; his brilliant achievements of all kinds; ah! we 
+shall make our little orations about him in the Common Council, 
+I'll be bound; before we have time to look about us!'
+
+'Oh, the difference of shoes and stockings!' Trotty thought.  But 
+his heart yearned towards the child, for the love of those same 
+shoeless and stockingless boys, predestined (by the Alderman) to 
+turn out bad, who might have been the children of poor Meg.
+
+'Richard,' moaned Trotty, roaming among the company, to and fro; 
+'where is he?  I can't find Richard!  Where is Richard?'  Not 
+likely to be there, if still alive!  But Trotty's grief and 
+solitude confused him; and he still went wandering among the 
+gallant company, looking for his guide, and saying, 'Where is 
+Richard?  Show me Richard!'
+
+He was wandering thus, when he encountered Mr. Fish, the 
+confidential Secretary:  in great agitation.
+
+'Bless my heart and soul!' cried Mr. Fish.  'Where's Alderman Cute?  
+Has anybody seen the Alderman?'
+
+Seen the Alderman?  Oh dear!  Who could ever help seeing the 
+Alderman?  He was so considerate, so affable, he bore so much in 
+mind the natural desires of folks to see him, that if he had a 
+fault, it was the being constantly On View.  And wherever the great 
+people were, there, to be sure, attracted by the kindred sympathy 
+between great souls, was Cute.
+
+Several voices cried that he was in the circle round Sir Joseph.  
+Mr. Fish made way there; found him; and took him secretly into a 
+window near at hand.  Trotty joined them.  Not of his own accord.  
+He felt that his steps were led in that direction.
+
+'My dear Alderman Cute,' said Mr. Fish.  'A little more this way.  
+The most dreadful circumstance has occurred.  I have this moment 
+received the intelligence.  I think it will be best not to acquaint 
+Sir Joseph with it till the day is over.  You understand Sir 
+Joseph, and will give me your opinion.  The most frightful and 
+deplorable event!'
+
+'Fish!' returned the Alderman.  'Fish!  My good fellow, what is the 
+matter?  Nothing revolutionary, I hope!  No - no attempted 
+interference with the magistrates?'
+
+'Deedles, the banker,' gasped the Secretary.  'Deedles Brothers - 
+who was to have been here to-day - high in office in the 
+Goldsmiths' Company - '
+
+'Not stopped!' exclaimed the Alderman, 'It can't be!'
+
+'Shot himself.'
+
+'Good God!'
+
+'Put a double-barrelled pistol to his mouth, in his own counting 
+house,' said Mr. Fish, 'and blew his brains out.  No motive.  
+Princely circumstances!'
+
+'Circumstances!' exclaimed the Alderman.  'A man of noble fortune.  
+One of the most respectable of men.  Suicide, Mr. Fish!  By his own 
+hand!'
+
+'This very morning,' returned Mr. Fish.
+
+'Oh the brain, the brain!' exclaimed the pious Alderman, lifting up 
+his hands.  'Oh the nerves, the nerves; the mysteries of this 
+machine called Man!  Oh the little that unhinges it:  poor 
+creatures that we are!  Perhaps a dinner, Mr. Fish.  Perhaps the 
+conduct of his son, who, I have heard, ran very wild, and was in 
+the habit of drawing bills upon him without the least authority!  A 
+most respectable man.  One of the most respectable men I ever knew!  
+A lamentable instance, Mr. Fish.  A public calamity!  I shall make 
+a point of wearing the deepest mourning.  A most respectable man!  
+But there is One above.  We must submit, Mr. Fish.  We must 
+submit!'
+
+What, Alderman!  No word of Putting Down?  Remember, Justice, your 
+high moral boast and pride.  Come, Alderman!  Balance those scales.  
+Throw me into this, the empty one, no dinner, and Nature's founts 
+in some poor woman, dried by starving misery and rendered obdurate 
+to claims for which her offspring HAS authority in holy mother Eve.  
+Weigh me the two, you Daniel, going to judgment, when your day 
+shall come!  Weigh them, in the eyes of suffering thousands, 
+audience (not unmindful) of the grim farce you play.  Or supposing 
+that you strayed from your five wits - it's not so far to go, but 
+that it might be - and laid hands upon that throat of yours, 
+warning your fellows (if you have a fellow) how they croak their 
+comfortable wickedness to raving heads and stricken hearts.  What 
+then?
+
+The words rose up in Trotty's breast, as if they had been spoken by 
+some other voice within him.  Alderman Cute pledged himself to Mr. 
+Fish that he would assist him in breaking the melancholy 
+catastrophe to Sir Joseph when the day was over.  Then, before they 
+parted, wringing Mr. Fish's hand in bitterness of soul, he said, 
+'The most respectable of men!'  And added that he hardly knew (not 
+even he), why such afflictions were allowed on earth.
+
+'It's almost enough to make one think, if one didn't know better,' 
+said Alderman Cute, 'that at times some motion of a capsizing 
+nature was going on in things, which affected the general economy 
+of the social fabric.  Deedles Brothers!'
+
+The skittle-playing came off with immense success.  Sir Joseph 
+knocked the pins about quite skilfully; Master Bowley took an 
+innings at a shorter distance also; and everybody said that now, 
+when a Baronet and the Son of a Baronet played at skittles, the 
+country was coming round again, as fast as it could come.
+
+At its proper time, the Banquet was served up.  Trotty 
+involuntarily repaired to the Hall with the rest, for he felt 
+himself conducted thither by some stronger impulse than his own 
+free will.  The sight was gay in the extreme; the ladies were very 
+handsome; the visitors delighted, cheerful, and good-tempered.  
+When the lower doors were opened, and the people flocked in, in 
+their rustic dresses, the beauty of the spectacle was at its 
+height; but Trotty only murmured more and more, 'Where is Richard!  
+He should help and comfort her!  I can't see Richard!'
+
+There had been some speeches made; and Lady Bowley's health had 
+been proposed; and Sir Joseph Bowley had returned thanks, and had 
+made his great speech, showing by various pieces of evidence that 
+he was the born Friend and Father, and so forth; and had given as a 
+Toast, his Friends and Children, and the Dignity of Labour; when a 
+slight disturbance at the bottom of the Hall attracted Toby's 
+notice.  After some confusion, noise, and opposition, one man broke 
+through the rest, and stood forward by himself.
+
+Not Richard.  No.  But one whom he had thought of, and had looked 
+for, many times.  In a scantier supply of light, he might have 
+doubted the identity of that worn man, so old, and grey, and bent; 
+but with a blaze of lamps upon his gnarled and knotted head, he 
+knew Will Fern as soon as he stepped forth.
+
+'What is this!' exclaimed Sir Joseph, rising.  'Who gave this man 
+admittance?  This is a criminal from prison!  Mr. Fish, sir, WILL 
+you have the goodness - '
+
+'A minute!' said Will Fern.  'A minute!  My Lady, you was born on 
+this day along with a New Year.  Get me a minute's leave to speak.'
+
+She made some intercession for him.  Sir Joseph took his seat 
+again, with native dignity.
+
+The ragged visitor - for he was miserably dressed - looked round 
+upon the company, and made his homage to them with a humble bow.
+
+'Gentlefolks!' he said.  'You've drunk the Labourer.  Look at me!'
+
+'Just come from jail,' said Mr. Fish.
+
+'Just come from jail,' said Will.  'And neither for the first time, 
+nor the second, nor the third, nor yet the fourth.'
+
+Mr. Filer was heard to remark testily, that four times was over the 
+average; and he ought to be ashamed of himself.
+
+'Gentlefolks!' repeated Will Fern.  'Look at me!  You see I'm at 
+the worst.  Beyond all hurt or harm; beyond your help; for the time 
+when your kind words or kind actions could have done me good,' - he 
+struck his hand upon his breast, and shook his head, 'is gone, with 
+the scent of last year's beans or clover on the air.  Let me say a 
+word for these,' pointing to the labouring people in the Hall; 'and 
+when you're met together, hear the real Truth spoke out for once.'
+
+'There's not a man here,' said the host, 'who would have him for a 
+spokesman.'
+
+'Like enough, Sir Joseph.  I believe it.  Not the less true, 
+perhaps, is what I say.  Perhaps that's a proof on it.  
+Gentlefolks, I've lived many a year in this place.  You may see the 
+cottage from the sunk fence over yonder.  I've seen the ladies draw 
+it in their books, a hundred times.  It looks well in a picter, 
+I've heerd say; but there an't weather in picters, and maybe 'tis 
+fitter for that, than for a place to live in.  Well!  I lived 
+there.  How hard - how bitter hard, I lived there, I won't say.  
+Any day in the year, and every day, you can judge for your own 
+selves.'
+
+He spoke as he had spoken on the night when Trotty found him in the 
+street.  His voice was deeper and more husky, and had a trembling 
+in it now and then; but he never raised it passionately, and seldom 
+lifted it above the firm stern level of the homely facts he stated.
+
+''Tis harder than you think for, gentlefolks, to grow up decent, 
+commonly decent, in such a place.  That I growed up a man and not a 
+brute, says something for me - as I was then.  As I am now, there's 
+nothing can be said for me or done for me.  I'm past it.'
+
+'I am glad this man has entered,' observed Sir Joseph, looking 
+round serenely.  'Don't disturb him.  It appears to be Ordained.  
+He is an example:  a living example.  I hope and trust, and 
+confidently expect, that it will not be lost upon my Friends here.'
+
+'I dragged on,' said Fern, after a moment's silence, 'somehow.  
+Neither me nor any other man knows how; but so heavy, that I 
+couldn't put a cheerful face upon it, or make believe that I was 
+anything but what I was.  Now, gentlemen - you gentlemen that sits 
+at Sessions - when you see a man with discontent writ on his face, 
+you says to one another, "He's suspicious.  I has my doubts," says 
+you, "about Will Fern.  Watch that fellow!"  I don't say, 
+gentlemen, it ain't quite nat'ral, but I say 'tis so; and from that 
+hour, whatever Will Fern does, or lets alone - all one - it goes 
+against him.'
+
+Alderman Cute stuck his thumbs in his waistcoat-pockets, and 
+leaning back in his chair, and smiling, winked at a neighbouring 
+chandelier.  As much as to say, 'Of course!  I told you so.  The 
+common cry!  Lord bless you, we are up to all this sort of thing - 
+myself and human nature.'
+
+'Now, gentlemen,' said Will Fern, holding out his hands, and 
+flushing for an instant in his haggard face, 'see how your laws are 
+made to trap and hunt us when we're brought to this.  I tries to 
+live elsewhere.  And I'm a vagabond.  To jail with him!  I comes 
+back here.  I goes a-nutting in your woods, and breaks - who don't? 
+- a limber branch or two.  To jail with him!  One of your keepers 
+sees me in the broad day, near my own patch of garden, with a gun.  
+To jail with him!  I has a nat'ral angry word with that man, when 
+I'm free again.  To jail with him!  I cuts a stick.  To jail with 
+him!  I eats a rotten apple or a turnip.  To jail with him!  It's 
+twenty mile away; and coming back I begs a trifle on the road.  To 
+jail with him!  At last, the constable, the keeper - anybody - 
+finds me anywhere, a-doing anything.  To jail with him, for he's a 
+vagrant, and a jail-bird known; and jail's the only home he's got.'
+
+The Alderman nodded sagaciously, as who should say, 'A very good 
+home too!'
+
+'Do I say this to serve MY cause!' cried Fern.  'Who can give me 
+back my liberty, who can give me back my good name, who can give me 
+back my innocent niece?  Not all the Lords and Ladies in wide 
+England.  But, gentlemen, gentlemen, dealing with other men like 
+me, begin at the right end.  Give us, in mercy, better homes when 
+we're a-lying in our cradles; give us better food when we're a-
+working for our lives; give us kinder laws to bring us back when 
+were a-going wrong; and don't set jail, jail, jail, afore us, 
+everywhere we turn.  There an't a condescension you can show the 
+Labourer then, that he won't take, as ready and as grateful as a 
+man can be; for, he has a patient, peaceful, willing heart.  But 
+you must put his rightful spirit in him first; for, whether he's a 
+wreck and ruin such as me, or is like one of them that stand here 
+now, his spirit is divided from you at this time.  Bring it back, 
+gentlefolks, bring it back!  Bring it back, afore the day comes 
+when even his Bible changes in his altered mind, and the words seem 
+to him to read, as they have sometimes read in my own eyes - in 
+jail:  "Whither thou goest, I can Not go; where thou lodgest, I do 
+Not lodge; thy people are Not my people; Nor thy God my God!'
+
+A sudden stir and agitation took place in Hall.  Trotty thought at 
+first, that several had risen to eject the man; and hence this 
+change in its appearance.  But, another moment showed him that the 
+room and all the company had vanished from his sight, and that his 
+daughter was again before him, seated at her work.  But in a 
+poorer, meaner garret than before; and with no Lilian by her side.
+
+The frame at which she had worked, was put away upon a shelf and 
+covered up.  The chair in which she had sat, was turned against the 
+wall.  A history was written in these little things, and in Meg's 
+grief-worn face.  Oh! who could fail to read it!
+
+Meg strained her eyes upon her work until it was too dark to see 
+the threads; and when the night closed in, she lighted her feeble 
+candle and worked on.  Still her old father was invisible about 
+her; looking down upon her; loving her - how dearly loving her! - 
+and talking to her in a tender voice about the old times, and the 
+Bells.  Though he knew, poor Trotty, though he knew she could not 
+hear him.
+
+A great part of the evening had worn away, when a knock came at her 
+door.  She opened it.  A man was on the threshold.  A slouching, 
+moody, drunken sloven, wasted by intemperance and vice, and with 
+his matted hair and unshorn beard in wild disorder; but, with some 
+traces on him, too, of having been a man of good proportion and 
+good features in his youth.
+
+He stopped until he had her leave to enter; and she, retiring a 
+pace of two from the open door, silently and sorrowfully looked 
+upon him.  Trotty had his wish.  He saw Richard.
+
+'May I come in, Margaret?'
+
+'Yes!  Come in.  Come in!'
+
+It was well that Trotty knew him before he spoke; for with any 
+doubt remaining on his mind, the harsh discordant voice would have 
+persuaded him that it was not Richard but some other man.
+
+There were but two chairs in the room.  She gave him hers, and 
+stood at some short distance from him, waiting to hear what he had 
+to say.
+
+He sat, however, staring vacantly at the floor; with a lustreless 
+and stupid smile.  A spectacle of such deep degradation, of such 
+abject hopelessness, of such a miserable downfall, that she put her 
+hands before her face and turned away, lest he should see how much 
+it moved her.
+
+Roused by the rustling of her dress, or some such trifling sound, 
+he lifted his head, and began to speak as if there had been no 
+pause since he entered.
+
+'Still at work, Margaret?  You work late.'
+
+'I generally do.'
+
+'And early?'
+
+'And early.'
+
+'So she said.  She said you never tired; or never owned that you 
+tired.  Not all the time you lived together.  Not even when you 
+fainted, between work and fasting.  But I told you that, the last 
+time I came.'
+
+'You did,' she answered.  'And I implored you to tell me nothing 
+more; and you made me a solemn promise, Richard, that you never 
+would.'
+
+'A solemn promise,' he repeated, with a drivelling laugh and vacant 
+stare.  'A solemn promise.  To he sure.  A solemn promise!'  
+Awakening, as it were, after a time; in the same manner as before; 
+he said with sudden animation:
+
+'How can I help it, Margaret?  What am I to do?  She has been to me 
+again!'
+
+'Again!' cried Meg, clasping her hands.  'O, does she think of me 
+so often!  Has she been again!'
+
+'Twenty times again,' said Richard.  'Margaret, she haunts me.  She 
+comes behind me in the street, and thrusts it in my hand.  I hear 
+her foot upon the ashes when I'm at my work (ha, ha! that an't 
+often), and before I can turn my head, her voice is in my ear, 
+saying, "Richard, don't look round.  For Heaven's love, give her 
+this!"  She brings it where I live:  she sends it in letters; she 
+taps at the window and lays it on the sill.  What CAN I do?  Look 
+at it!"
+
+He held out in his hand a little purse, and chinked the money it 
+enclosed.
+
+'Hide it,' sad Meg.  'Hide it!  When she comes again, tell her, 
+Richard, that I love her in my soul.  That I never lie down to 
+sleep, but I bless her, and pray for her.  That, in my solitary 
+work, I never cease to have her in my thoughts.  That she is with 
+me, night and day.  That if I died to-morrow, I would remember her 
+with my last breath.  But, that I cannot look upon it!'
+
+He slowly recalled his hand, and crushing the purse together, said 
+with a kind of drowsy thoughtfulness:
+
+'I told her so.  I told her so, as plain as words could speak.  
+I've taken this gift back and left it at her door, a dozen times 
+since then.  But when she came at last, and stood before me, face 
+to face, what could I do?'
+
+'You saw her!' exclaimed Meg.  'You saw her!  O, Lilian, my sweet 
+girl!  O, Lilian, Lilian!'
+
+'I saw her,' he went on to say, not answering, but engaged in the 
+same slow pursuit of his own thoughts.  'There she stood:  
+trembling!  "How does she look, Richard?  Does she ever speak of 
+me?  Is she thinner?  My old place at the table:  what's in my old 
+place?  And the frame she taught me our old work on - has she burnt 
+it, Richard!"  There she was.  I heard her say it.'
+
+Meg checked her sobs, and with the tears streaming from her eyes, 
+bent over him to listen.  Not to lose a breath.
+
+With his arms resting on his knees; and stooping forward in his 
+chair, as if what he said were written on the ground in some half 
+legible character, which it was his occupation to decipher and 
+connect; he went on.
+
+'"Richard, I have fallen very low; and you may guess how much I 
+have suffered in having this sent back, when I can bear to bring it 
+in my hand to you.  But you loved her once, even in my memory, 
+dearly.  Others stepped in between you; fears, and jealousies, and 
+doubts, and vanities, estranged you from her; but you did love her, 
+even in my memory!"  I suppose I did,' he said, interrupting 
+himself for a moment.  'I did!  That's neither here nor there - "O 
+Richard, if you ever did; if you have any memory for what is gone 
+and lost, take it to her once more.  Once more!  Tell her how I 
+laid my head upon your shoulder, where her own head might have 
+lain, and was so humble to you, Richard.  Tell her that you looked 
+into my face, and saw the beauty which she used to praise, all 
+gone:  all gone:  and in its place, a poor, wan, hollow cheek, that 
+she would weep to see.  Tell her everything, and take it back, and 
+she will not refuse again.  She will not have the heart!"'
+
+So he sat musing, and repeating the last words, until he woke 
+again, and rose.
+
+'You won't take it, Margaret?'
+
+She shook her head, and motioned an entreaty to him to leave her.
+
+'Good night, Margaret.'
+
+'Good night!'
+
+He turned to look upon her; struck by her sorrow, and perhaps by 
+the pity for himself which trembled in her voice.  It was a quick 
+and rapid action; and for the moment some flash of his old bearing 
+kindled in his form.  In the next he went as he had come.  Nor did 
+this glimmer of a quenched fire seem to light him to a quicker 
+sense of his debasement.
+
+In any mood, in any grief, in any torture of the mind or body, 
+Meg's work must be done.  She sat down to her task, and plied it.  
+Night, midnight.  Still she worked.
+
+She had a meagre fire, the night being very cold; and rose at 
+intervals to mend it.  The Chimes rang half-past twelve while she 
+was thus engaged; and when they ceased she heard a gentle knocking 
+at the door.  Before she could so much as wonder who was there, at 
+that unusual hour, it opened.
+
+O Youth and Beauty, happy as ye should be, look at this.  O Youth 
+and Beauty, blest and blessing all within your reach, and working 
+out the ends of your Beneficent Creator, look at this!
+
+She saw the entering figure; screamed its name; cried 'Lilian!'
+
+It was swift, and fell upon its knees before her:  clinging to her 
+dress.
+
+'Up, dear!  Up!  Lilian!  My own dearest!'
+
+'Never more, Meg; never more!  Here!  Here!  Close to you, holding 
+to you, feeling your dear breath upon my face!'
+
+'Sweet Lilian!  Darling Lilian!  Child of my heart - no mother's 
+love can be more tender - lay your head upon my breast!'
+
+'Never more, Meg.  Never more!  When I first looked into your face, 
+you knelt before me.  On my knees before you, let me die.  Let it 
+be here!'
+
+'You have come back.  My Treasure!  We will live together, work 
+together, hope together, die together!'
+
+'Ah!  Kiss my lips, Meg; fold your arms about me; press me to your 
+bosom; look kindly on me; but don't raise me.  Let it be here.  Let 
+me see the last of your dear face upon my knees!'
+
+O Youth and Beauty, happy as ye should be, look at this!  O Youth 
+and Beauty, working out the ends of your Beneficent Creator, look 
+at this!
+
+'Forgive me, Meg!  So dear, so dear!  Forgive me!  I know you do, I 
+see you do, but say so, Meg!'
+
+She said so, with her lips on Lilian's cheek.  And with her arms 
+twined round - she knew it now - a broken heart.
+
+'His blessing on you, dearest love.  Kiss me once more!  He 
+suffered her to sit beside His feet, and dry them with her hair.  O 
+Meg, what Mercy and Compassion!'
+
+As she died, the Spirit of the child returning, innocent and 
+radiant, touched the old man with its hand, and beckoned him away.
+
+
+
+CHAPTER IV - Fourth Quarter.
+
+
+
+SOME new remembrance of the ghostly figures in the Bells; some 
+faint impression of the ringing of the Chimes; some giddy 
+consciousness of having seen the swarm of phantoms reproduced and 
+reproduced until the recollection of them lost itself in the 
+confusion of their numbers; some hurried knowledge, how conveyed to 
+him he knew not, that more years had passed; and Trotty, with the 
+Spirit of the child attending him, stood looking on at mortal 
+company.
+
+Fat company, rosy-cheeked company, comfortable company.  They were 
+but two, but they were red enough for ten.  They sat before a 
+bright fire, with a small low table between them; and unless the 
+fragrance of hot tea and muffins lingered longer in that room than 
+in most others, the table had seen service very lately.  But all 
+the cups and saucers being clean, and in their proper places in the 
+corner-cupboard; and the brass toasting-fork hanging in its usual 
+nook and spreading its four idle fingers out as if it wanted to be 
+measured for a glove; there remained no other visible tokens of the 
+meal just finished, than such as purred and washed their whiskers 
+in the person of the basking cat, and glistened in the gracious, 
+not to say the greasy, faces of her patrons.
+
+This cosy couple (married, evidently) had made a fair division of 
+the fire between them, and sat looking at the glowing sparks that 
+dropped into the grate; now nodding off into a doze; now waking up 
+again when some hot fragment, larger than the rest, came rattling 
+down, as if the fire were coming with it.
+
+It was in no danger of sudden extinction, however; for it gleamed 
+not only in the little room, and on the panes of window-glass in 
+the door, and on the curtain half drawn across them, but in the 
+little shop beyond.  A little shop, quite crammed and choked with 
+the abundance of its stock; a perfectly voracious little shop, with 
+a maw as accommodating and full as any shark's.  Cheese, butter, 
+firewood, soap, pickles, matches, bacon, table-beer, peg-tops, 
+sweetmeats, boys' kites, bird-seed, cold ham, birch brooms, hearth-
+stones, salt, vinegar, blacking, red-herrings, stationery, lard, 
+mushroom-ketchup, staylaces, loaves of bread, shuttlecocks, eggs, 
+and slate pencil; everything was fish that came to the net of this 
+greedy little shop, and all articles were in its net.  How many 
+other kinds of petty merchandise were there, it would be difficult 
+to say; but balls of packthread, ropes of onions, pounds of 
+candles, cabbage-nets, and brushes, hung in bunches from the 
+ceiling, like extraordinary fruit; while various odd canisters 
+emitting aromatic smells, established the veracity of the 
+inscription over the outer door, which informed the public that the 
+keeper of this little shop was a licensed dealer in tea, coffee, 
+tobacco, pepper, and snuff.
+
+Glancing at such of these articles as were visible in the shining 
+of the blaze, and the less cheerful radiance of two smoky lamps 
+which burnt but dimly in the shop itself, as though its plethora 
+sat heavy on their lungs; and glancing, then, at one of the two 
+faces by the parlour-fire; Trotty had small difficulty in 
+recognising in the stout old lady, Mrs. Chickenstalker:  always 
+inclined to corpulency, even in the days when he had known her as 
+established in the general line, and having a small balance against 
+him in her books.
+
+The features of her companion were less easy to him.  The great 
+broad chin, with creases in it large enough to hide a finger in; 
+the astonished eyes, that seemed to expostulate with themselves for 
+sinking deeper and deeper into the yielding fat of the soft face; 
+the nose afflicted with that disordered action of its functions 
+which is generally termed The Snuffles; the short thick throat and 
+labouring chest, with other beauties of the like description; 
+though calculated to impress the memory, Trotty could at first 
+allot to nobody he had ever known:  and yet he had some 
+recollection of them too.  At length, in Mrs. Chickenstalker's 
+partner in the general line, and in the crooked and eccentric line 
+of life, he recognised the former porter of Sir Joseph Bowley; an 
+apoplectic innocent, who had connected himself in Trotty's mind 
+with Mrs. Chickenstalker years ago, by giving him admission to the 
+mansion where he had confessed his obligations to that lady, and 
+drawn on his unlucky head such grave reproach.
+
+Trotty had little interest in a change like this, after the changes 
+he had seen; but association is very strong sometimes; and he 
+looked involuntarily behind the parlour-door, where the accounts of 
+credit customers were usually kept in chalk.  There was no record 
+of his name.  Some names were there, but they were strange to him, 
+and infinitely fewer than of old; from which he argued that the 
+porter was an advocate of ready-money transactions, and on coming 
+into the business had looked pretty sharp after the Chickenstalker 
+defaulters.
+
+So desolate was Trotty, and so mournful for the youth and promise 
+of his blighted child, that it was a sorrow to him, even to have no 
+place in Mrs. Chickenstalker's ledger.
+
+'What sort of a night is it, Anne?' inquired the former porter of 
+Sir Joseph Bowley, stretching out his legs before the fire, and 
+rubbing as much of them as his short arms could reach; with an air 
+that added, 'Here I am if it's bad, and I don't want to go out if 
+it's good.'
+
+'Blowing and sleeting hard,' returned his wife; 'and threatening 
+snow.  Dark.  And very cold.'
+
+'I'm glad to think we had muffins,' said the former porter, in the 
+tone of one who had set his conscience at rest.  'It's a sort of 
+night that's meant for muffins.  Likewise crumpets.  Also Sally 
+Lunns.'
+
+The former porter mentioned each successive kind of eatable, as if 
+he were musingly summing up his good actions.  After which he 
+rubbed his fat legs as before, and jerking them at the knees to get 
+the fire upon the yet unroasted parts, laughed as if somebody had 
+tickled him.
+
+'You're in spirits, Tugby, my dear,' observed his wife.
+
+The firm was Tugby, late Chickenstalker.
+
+'No,' said Tugby.  'No.  Not particular.  I'm a little elewated.  
+The muffins came so pat!'
+
+With that he chuckled until he was black in the face; and had so 
+much ado to become any other colour, that his fat legs took the 
+strangest excursions into the air.  Nor were they reduced to 
+anything like decorum until Mrs. Tugby had thumped him violently on 
+the back, and shaken him as if he were a great bottle.
+
+'Good gracious, goodness, lord-a-mercy bless and save the man!' 
+cried Mrs. Tugby, in great terror.  'What's he doing?'
+
+Mr. Tugby wiped his eyes, and faintly repeated that he found 
+himself a little elewated.
+
+'Then don't be so again, that's a dear good soul,' said Mrs. Tugby, 
+'if you don't want to frighten me to death, with your struggling 
+and fighting!'
+
+Mr. Tugby said he wouldn't; but, his whole existence was a fight, 
+in which, if any judgment might be founded on the constantly-
+increasing shortness of his breath, and the deepening purple of his 
+face, he was always getting the worst of it.
+
+'So it's blowing, and sleeting, and threatening snow; and it's 
+dark, and very cold, is it, my dear?' said Mr. Tugby, looking at 
+the fire, and reverting to the cream and marrow of his temporary 
+elevation.
+
+'Hard weather indeed,' returned his wife, shaking her head.
+
+'Aye, aye!  Years,' said Mr. Tugby, 'are like Christians in that 
+respect.  Some of 'em die hard; some of 'em die easy.  This one 
+hasn't many days to run, and is making a fight for it.  I like him 
+all the better.  There's a customer, my love!'
+
+Attentive to the rattling door, Mrs. Tugby had already risen.
+
+'Now then!' said that lady, passing out into the little shop.  
+'What's wanted?  Oh!  I beg your pardon, sir, I'm sure.  I didn't 
+think it was you.'
+
+She made this apology to a gentleman in black, who, with his 
+wristbands tucked up, and his hat cocked loungingly on one side, 
+and his hands in his pockets, sat down astride on the table-beer 
+barrel, and nodded in return.
+
+'This is a bad business up-stairs, Mrs. Tugby,' said the gentleman.  
+'The man can't live.'
+
+'Not the back-attic can't!' cried Tugby, coming out into the shop 
+to join the conference.
+
+'The back-attic, Mr. Tugby,' said the gentleman, 'is coming down-
+stairs fast, and will be below the basement very soon.'
+
+Looking by turns at Tugby and his wife, he sounded the barrel with 
+his knuckles for the depth of beer, and having found it, played a 
+tune upon the empty part.
+
+'The back-attic, Mr. Tugby,' said the gentleman:  Tugby having 
+stood in silent consternation for some time:  'is Going.'
+
+'Then,' said Tugby, turning to his wife, 'he must Go, you know, 
+before he's Gone.'
+
+'I don't think you can move him,' said the gentleman, shaking his 
+head.  'I wouldn't take the responsibility of saying it could be 
+done, myself.  You had better leave him where he is.  He can't live 
+long.'
+
+'It's the only subject,' said Tugby, bringing the butter-scale down 
+upon the counter with a crash, by weighing his fist on it, 'that 
+we've ever had a word upon; she and me; and look what it comes to!  
+He's going to die here, after all.  Going to die upon the premises.  
+Going to die in our house!'
+
+'And where should he have died, Tugby?' cried his wife.
+
+'In the workhouse,' he returned.  'What are workhouses made for?'
+
+'Not for that,' said Mrs. Tugby, with great energy.  'Not for that!  
+Neither did I marry you for that.  Don't think it, Tugby.  I won't 
+have it.  I won't allow it.  I'd be separated first, and never see 
+your face again.  When my widow's name stood over that door, as it 
+did for many years:  this house being known as Mrs. 
+Chickenstalker's far and wide, and never known but to its honest 
+credit and its good report:  when my widow's name stood over that 
+door, Tugby, I knew him as a handsome, steady, manly, independent 
+youth; I knew her as the sweetest-looking, sweetest-tempered girl, 
+eyes ever saw; I knew her father (poor old creetur, he fell down 
+from the steeple walking in his sleep, and killed himself), for the 
+simplest, hardest-working, childest-hearted man, that ever drew the 
+breath of life; and when I turn them out of house and home, may 
+angels turn me out of Heaven.  As they would!  And serve me right!'
+
+Her old face, which had been a plump and dimpled one before the 
+changes which had come to pass, seemed to shine out of her as she 
+said these words; and when she dried her eyes, and shook her head 
+and her handkerchief at Tugby, with an expression of firmness which 
+it was quite clear was not to be easily resisted, Trotty said, 
+'Bless her!  Bless her!'
+
+Then he listened, with a panting heart, for what should follow.  
+Knowing nothing yet, but that they spoke of Meg.
+
+If Tugby had been a little elevated in the parlour, he more than 
+balanced that account by being not a little depressed in the shop, 
+where he now stood staring at his wife, without attempting a reply; 
+secretly conveying, however - either in a fit of abstraction or as 
+a precautionary measure - all the money from the till into his own 
+pockets, as he looked at her.
+
+The gentleman upon the table-beer cask, who appeared to be some 
+authorised medical attendant upon the poor, was far too well 
+accustomed, evidently, to little differences of opinion between man 
+and wife, to interpose any remark in this instance.  He sat softly 
+whistling, and turning little drops of beer out of the tap upon the 
+ground, until there was a perfect calm:  when he raised his head, 
+and said to Mrs. Tugby, late Chickenstalker:
+
+'There's something interesting about the woman, even now.  How did 
+she come to marry him?'
+
+'Why that,' said Mrs. Tugby, taking a seat near him, 'is not the 
+least cruel part of her story, sir.  You see they kept company, she 
+and Richard, many years ago.  When they were a young and beautiful 
+couple, everything was settled, and they were to have been married 
+on a New Year's Day.  But, somehow, Richard got it into his head, 
+through what the gentlemen told him, that he might do better, and 
+that he'd soon repent it, and that she wasn't good enough for him, 
+and that a young man of spirit had no business to be married.  And 
+the gentlemen frightened her, and made her melancholy, and timid of 
+his deserting her, and of her children coming to the gallows, and 
+of its being wicked to be man and wife, and a good deal more of it.  
+And in short, they lingered and lingered, and their trust in one 
+another was broken, and so at last was the match.  But the fault 
+was his.  She would have married him, sir, joyfully.  I've seen her 
+heart swell many times afterwards, when he passed her in a proud 
+and careless way; and never did a woman grieve more truly for a 
+man, than she for Richard when he first went wrong.'
+
+'Oh! he went wrong, did he?' said the gentleman, pulling out the 
+vent-peg of the table-beer, and trying to peep down into the barrel 
+through the hole.
+
+'Well, sir, I don't know that he rightly understood himself, you 
+see.  I think his mind was troubled by their having broke with one 
+another; and that but for being ashamed before the gentlemen, and 
+perhaps for being uncertain too, how she might take it, he'd have 
+gone through any suffering or trial to have had Meg's promise and 
+Meg's hand again.  That's my belief.  He never said so; more's the 
+pity!  He took to drinking, idling, bad companions:  all the fine 
+resources that were to be so much better for him than the Home he 
+might have had.  He lost his looks, his character, his health, his 
+strength, his friends, his work:  everything!'
+
+'He didn't lose everything, Mrs. Tugby,' returned the gentleman, 
+'because he gained a wife; and I want to know how he gained her.'
+
+'I'm coming to it, sir, in a moment.  This went on for years and 
+years; he sinking lower and lower; she enduring, poor thing, 
+miseries enough to wear her life away.  At last, he was so cast 
+down, and cast out, that no one would employ or notice him; and 
+doors were shut upon him, go where he would.  Applying from place 
+to place, and door to door; and coming for the hundredth time to 
+one gentleman who had often and often tried him (he was a good 
+workman to the very end); that gentleman, who knew his history, 
+said, "I believe you are incorrigible; there is only one person in 
+the world who has a chance of reclaiming you; ask me to trust you 
+no more, until she tries to do it."  Something like that, in his 
+anger and vexation.'
+
+'Ah!' said the gentleman.  'Well?'
+
+'Well, sir, he went to her, and kneeled to her; said it was so; 
+said it ever had been so; and made a prayer to her to save him.'
+
+'And she? - Don't distress yourself, Mrs. Tugby.'
+
+'She came to me that night to ask me about living here.  "What he 
+was once to me," she said, "is buried in a grave, side by side with 
+what I was to him.  But I have thought of this; and I will make the 
+trial.  In the hope of saving him; for the love of the light-
+hearted girl (you remember her) who was to have been married on a 
+New Year's Day; and for the love of her Richard."  And she said he 
+had come to her from Lilian, and Lilian had trusted to him, and she 
+never could forget that.  So they were married; and when they came 
+home here, and I saw them, I hoped that such prophecies as parted 
+them when they were young, may not often fulfil themselves as they 
+did in this case, or I wouldn't be the makers of them for a Mine of 
+Gold.'
+
+The gentleman got off the cask, and stretched himself, observing:
+
+'I suppose he used her ill, as soon as they were married?'
+
+'I don't think he ever did that,' said Mrs. Tugby, shaking her 
+head, and wiping her eyes.  'He went on better for a short time; 
+but, his habits were too old and strong to be got rid of; he soon 
+fell back a little; and was falling fast back, when his illness 
+came so strong upon him.  I think he has always felt for her.  I am 
+sure he has.  I have seen him, in his crying fits and tremblings, 
+try to kiss her hand; and I have heard him call her "Meg," and say 
+it was her nineteenth birthday.  There he has been lying, now, 
+these weeks and months.  Between him and her baby, she has not been 
+able to do her old work; and by not being able to be regular, she 
+has lost it, even if she could have done it.  How they have lived, 
+I hardly know!'
+
+'I know,' muttered Mr. Tugby; looking at the till, and round the 
+shop, and at his wife; and rolling his head with immense 
+intelligence.  'Like Fighting Cocks!'
+
+He was interrupted by a cry - a sound of lamentation - from the 
+upper story of the house.  The gentleman moved hurriedly to the 
+door.
+
+'My friend,' he said, looking back, 'you needn't discuss whether he 
+shall be removed or not.  He has spared you that trouble, I 
+believe.'
+
+Saying so, he ran up-stairs, followed by Mrs. Tugby; while Mr. 
+Tugby panted and grumbled after them at leisure:  being rendered 
+more than commonly short-winded by the weight of the till, in which 
+there had been an inconvenient quantity of copper.  Trotty, with 
+the child beside him, floated up the staircase like mere air.
+
+'Follow her!  Follow her!  Follow her!'  He heard the ghostly 
+voices in the Bells repeat their words as he ascended.  'Learn it, 
+from the creature dearest to your heart!'
+
+It was over.  It was over.  And this was she, her father's pride 
+and joy!  This haggard, wretched woman, weeping by the bed, if it 
+deserved that name, and pressing to her breast, and hanging down 
+her head upon, an infant.  Who can tell how spare, how sickly, and 
+how poor an infant!  Who can tell how dear!
+
+'Thank God!' cried Trotty, holding up his folded hands.  'O, God be 
+thanked!  She loves her child!'
+
+The gentleman, not otherwise hard-hearted or indifferent to such 
+scenes, than that he saw them every day, and knew that they were 
+figures of no moment in the Filer sums - mere scratches in the 
+working of these calculations - laid his hand upon the heart that 
+beat no more, and listened for the breath, and said, 'His pain is 
+over.  It's better as it is!'  Mrs. Tugby tried to comfort her with 
+kindness.  Mr. Tugby tried philosophy.
+
+'Come, come!' he said, with his hands in his pockets, 'you mustn't 
+give way, you know.  That won't do.  You must fight up.  What would 
+have become of me if I had given way when I was porter, and we had 
+as many as six runaway carriage-doubles at our door in one night!  
+But, I fell back upon my strength of mind, and didn't open it!'
+
+Again Trotty heard the voices saying, 'Follow her!'  He turned 
+towards his guide, and saw it rising from him, passing through the 
+air.  'Follow her!' it said.  And vanished.
+
+He hovered round her; sat down at her feet; looked up into her face 
+for one trace of her old self; listened for one note of her old 
+pleasant voice.  He flitted round the child:  so wan, so 
+prematurely old, so dreadful in its gravity, so plaintive in its 
+feeble, mournful, miserable wail.  He almost worshipped it.  He 
+clung to it as her only safeguard; as the last unbroken link that 
+bound her to endurance.  He set his father's hope and trust on the 
+frail baby; watched her every look upon it as she held it in her 
+arms; and cried a thousand times, 'She loves it!  God be thanked, 
+she loves it!'
+
+He saw the woman tend her in the night; return to her when her 
+grudging husband was asleep, and all was still; encourage her, shed 
+tears with her, set nourishment before her.  He saw the day come, 
+and the night again; the day, the night; the time go by; the house 
+of death relieved of death; the room left to herself and to the 
+child; he heard it moan and cry; he saw it harass her, and tire her 
+out, and when she slumbered in exhaustion, drag her back to 
+consciousness, and hold her with its little hands upon the rack; 
+but she was constant to it, gentle with it, patient with it.  
+Patient!  Was its loving mother in her inmost heart and soul, and 
+had its Being knitted up with hers as when she carried it unborn.
+
+All this time, she was in want:  languishing away, in dire and 
+pining want.  With the baby in her arms, she wandered here and 
+there, in quest of occupation; and with its thin face lying in her 
+lap, and looking up in hers, did any work for any wretched sum; a 
+day and night of labour for as many farthings as there were figures 
+on the dial.  If she had quarrelled with it; if she had neglected 
+it; if she had looked upon it with a moment's hate; if, in the 
+frenzy of an instant, she had struck it!  No.  His comfort was, She 
+loved it always.
+
+She told no one of her extremity, and wandered abroad in the day 
+lest she should be questioned by her only friend:  for any help she 
+received from her hands, occasioned fresh disputes between the good 
+woman and her husband; and it was new bitterness to be the daily 
+cause of strife and discord, where she owed so much.
+
+She loved it still.  She loved it more and more.  But a change fell 
+on the aspect of her love.  One night.
+
+She was singing faintly to it in its sleep, and walking to and fro 
+to hush it, when her door was softly opened, and a man looked in.
+
+'For the last time,' he said.
+
+'William Fern!'
+
+'For the last time.'
+
+He listened like a man pursued:  and spoke in whispers.
+
+'Margaret, my race is nearly run.  I couldn't finish it, without a 
+parting word with you.  Without one grateful word.'
+
+'What have you done?' she asked:  regarding him with terror.
+
+He looked at her, but gave no answer.
+
+After a short silence, he made a gesture with his hand, as if he 
+set her question by; as if he brushed it aside; and said:
+
+'It's long ago, Margaret, now:  but that night is as fresh in my 
+memory as ever 'twas.  We little thought, then,' he added, looking 
+round, 'that we should ever meet like this.  Your child, Margaret?  
+Let me have it in my arms.  Let me hold your child.'
+
+He put his hat upon the floor, and took it.  And he trembled as he 
+took it, from head to foot.
+
+'Is it a girl?'
+
+'Yes.'
+
+He put his hand before its little face.
+
+'See how weak I'm grown, Margaret, when I want the courage to look 
+at it!  Let her be, a moment.  I won't hurt her.  It's long ago, 
+but - What's her name?'
+
+'Margaret,' she answered, quickly.
+
+'I'm glad of that,' he said.  'I'm glad of that!'  He seemed to 
+breathe more freely; and after pausing for an instant, took away 
+his hand, and looked upon the infant's face.  But covered it again, 
+immediately.
+
+'Margaret!' he said; and gave her back the child.  'It's Lilian's.'
+
+'Lilian's!'
+
+'I held the same face in my arms when Lilian's mother died and left 
+her.'
+
+'When Lilian's mother died and left her!' she repeated, wildly.
+
+'How shrill you speak!  Why do you fix your eyes upon me so?  
+Margaret!'
+
+She sunk down in a chair, and pressed the infant to her breast, and 
+wept over it.  Sometimes, she released it from her embrace, to look 
+anxiously in its face:  then strained it to her bosom again.  At 
+those times, when she gazed upon it, then it was that something 
+fierce and terrible began to mingle with her love.  Then it was 
+that her old father quailed.
+
+'Follow her!' was sounded through the house.  'Learn it, from the 
+creature dearest to your heart!'
+
+'Margaret,' said Fern, bending over her, and kissing her upon the 
+brow:  'I thank you for the last time.  Good night.  Good bye!  Put 
+your hand in mine, and tell me you'll forget me from this hour, and 
+try to think the end of me was here.'
+
+'What have you done?' she asked again.
+
+'There'll be a Fire to-night,' he said, removing from her.  
+'There'll be Fires this winter-time, to light the dark nights, 
+East, West, North, and South.  When you see the distant sky red, 
+they'll be blazing.  When you see the distant sky red, think of me 
+no more; or, if you do, remember what a Hell was lighted up inside 
+of me, and think you see its flames reflected in the clouds.  Good 
+night.  Good bye!'  She called to him; but he was gone.  She sat 
+down stupefied, until her infant roused her to a sense of hunger, 
+cold, and darkness.  She paced the room with it the livelong night, 
+hushing it and soothing it.  She said at intervals, 'Like Lilian, 
+when her mother died and left her!'  Why was her step so quick, her 
+eye so wild, her love so fierce and terrible, whenever she repeated 
+those words?
+
+'But, it is Love,' said Trotty.  'It is Love.  She'll never cease 
+to love it.  My poor Meg!'
+
+She dressed the child next morning with unusual care - ah, vain 
+expenditure of care upon such squalid robes! - and once more tried 
+to find some means of life.  It was the last day of the Old Year.  
+She tried till night, and never broke her fast.  She tried in vain.
+
+She mingled with an abject crowd, who tarried in the snow, until it 
+pleased some officer appointed to dispense the public charity (the 
+lawful charity; not that once preached upon a Mount), to call them 
+in, and question them, and say to this one, 'Go to such a place,' 
+to that one, 'Come next week;' to make a football of another 
+wretch, and pass him here and there, from hand to hand, from house 
+to house, until he wearied and lay down to die; or started up and 
+robbed, and so became a higher sort of criminal, whose claims 
+allowed of no delay.  Here, too, she failed.
+
+She loved her child, and wished to have it lying on her breast.  
+And that was quite enough.
+
+It was night:  a bleak, dark, cutting night:  when, pressing the 
+child close to her for warmth, she arrived outside the house she 
+called her home.  She was so faint and giddy, that she saw no one 
+standing in the doorway until she was close upon it, and about to 
+enter.  Then, she recognised the master of the house, who had so 
+disposed himself - with his person it was not difficult - as to 
+fill up the whole entry.
+
+'O!' he said softly.  'You have come back?'
+
+She looked at the child, and shook her head.
+
+'Don't you think you have lived here long enough without paying any 
+rent?  Don't you think that, without any money, you've been a 
+pretty constant customer at this shop, now?' said Mr. Tugby.
+
+She repeated the same mute appeal.
+
+'Suppose you try and deal somewhere else,' he said.  'And suppose 
+you provide yourself with another lodging.  Come!  Don't you think 
+you could manage it?'
+
+She said in a low voice, that it was very late.  To-morrow.
+
+'Now I see what you want,' said Tugby; 'and what you mean.  You 
+know there are two parties in this house about you, and you delight 
+in setting 'em by the ears.  I don't want any quarrels; I'm 
+speaking softly to avoid a quarrel; but if you don't go away, I'll 
+speak out loud, and you shall cause words high enough to please 
+you.  But you shan't come in.  That I am determined.'
+
+She put her hair back with her hand, and looked in a sudden manner 
+at the sky, and the dark lowering distance.
+
+'This is the last night of an Old Year, and I won't carry ill-blood 
+and quarrellings and disturbances into a New One, to please you nor 
+anybody else,' said Tugby, who was quite a retail Friend and 
+Father.  'I wonder you an't ashamed of yourself, to carry such 
+practices into a New Year.  If you haven't any business in the 
+world, but to be always giving way, and always making disturbances 
+between man and wife, you'd be better out of it.  Go along with 
+you.'
+
+'Follow her!  To desperation!'
+
+Again the old man heard the voices.  Looking up, he saw the figures 
+hovering in the air, and pointing where she went, down the dark 
+street.
+
+'She loves it!' he exclaimed, in agonised entreaty for her.  
+'Chimes! she loves it still!'
+
+'Follow her!'  The shadow swept upon the track she had taken, like 
+a cloud.
+
+He joined in the pursuit; he kept close to her; he looked into her 
+face.  He saw the same fierce and terrible expression mingling with 
+her love, and kindling in her eyes.  He heard her say, 'Like 
+Lilian!  To be changed like Lilian!' and her speed redoubled.
+
+O, for something to awaken her!  For any sight, or sound, or scent, 
+to call up tender recollections in a brain on fire!  For any gentle 
+image of the Past, to rise before her!
+
+'I was her father!  I was her father!' cried the old man, 
+stretching out his hands to the dark shadows flying on above.  
+'Have mercy on her, and on me!  Where does she go?  Turn her back!  
+I was her father!'
+
+But they only pointed to her, as she hurried on; and said, 'To 
+desperation!  Learn it from the creature dearest to your heart!'  A 
+hundred voices echoed it.  The air was made of breath expended in 
+those words.  He seemed to take them in, at every gasp he drew.  
+They were everywhere, and not to be escaped.  And still she hurried 
+on; the same light in her eyes, the same words in her mouth, 'Like 
+Lilian!  To be changed like Lilian!'  All at once she stopped.
+
+'Now, turn her back!' exclaimed the old man, tearing his white 
+hair.  'My child!  Meg!  Turn her back!  Great Father, turn her 
+back!'
+
+In her own scanty shawl, she wrapped the baby warm.  With her 
+fevered hands, she smoothed its limbs, composed its face, arranged 
+its mean attire.  In her wasted arms she folded it, as though she 
+never would resign it more.  And with her dry lips, kissed it in a 
+final pang, and last long agony of Love.
+
+Putting its tiny hand up to her neck, and holding it there, within 
+her dress, next to her distracted heart, she set its sleeping face 
+against her:  closely, steadily, against her:  and sped onward to 
+the River.
+
+To the rolling River, swift and dim, where Winter Night sat 
+brooding like the last dark thoughts of many who had sought a 
+refuge there before her.  Where scattered lights upon the banks 
+gleamed sullen, red, and dull, as torches that were burning there, 
+to show the way to Death.  Where no abode of living people cast its 
+shadow, on the deep, impenetrable, melancholy shade.
+
+To the River!  To that portal of Eternity, her desperate footsteps 
+tended with the swiftness of its rapid waters running to the sea.  
+He tried to touch her as she passed him, going down to its dark 
+level:  but, the wild distempered form, the fierce and terrible 
+love, the desperation that had left all human check or hold behind, 
+swept by him like the wind.
+
+He followed her.  She paused a moment on the brink, before the 
+dreadful plunge.  He fell down on his knees, and in a shriek 
+addressed the figures in the Bells now hovering above them.
+
+'I have learnt it!' cried the old man.  'From the creature dearest 
+to my heart!  O, save her, save her!'
+
+He could wind his fingers in her dress; could hold it!  As the 
+words escaped his lips, he felt his sense of touch return, and knew 
+that he detained her.
+
+The figures looked down steadfastly upon him.
+
+'I have learnt it!' cried the old man.  'O, have mercy on me in 
+this hour, if, in my love for her, so young and good, I slandered 
+Nature in the breasts of mothers rendered desperate!  Pity my 
+presumption, wickedness, and ignorance, and save her.'  He felt his 
+hold relaxing.  They were silent still.
+
+'Have mercy on her!' he exclaimed, 'as one in whom this dreadful 
+crime has sprung from Love perverted; from the strongest, deepest 
+Love we fallen creatures know!  Think what her misery must have 
+been, when such seed bears such fruit!  Heaven meant her to be 
+good.  There is no loving mother on the earth who might not come to 
+this, if such a life had gone before.  O, have mercy on my child, 
+who, even at this pass, means mercy to her own, and dies herself, 
+and perils her immortal soul, to save it!'
+
+She was in his arms.  He held her now.  His strength was like a 
+giant's.
+
+'I see the Spirit of the Chimes among you!' cried the old man, 
+singling out the child, and speaking in some inspiration, which 
+their looks conveyed to him.  'I know that our inheritance is held 
+in store for us by Time.  I know there is a sea of Time to rise one 
+day, before which all who wrong us or oppress us will be swept away 
+like leaves.  I see it, on the flow!  I know that we must trust and 
+hope, and neither doubt ourselves, nor doubt the good in one 
+another.  I have learnt it from the creature dearest to my heart.  
+I clasp her in my arms again.  O Spirits, merciful and good, I take 
+your lesson to my breast along with her!  O Spirits, merciful and 
+good, I am grateful!'
+
+He might have said more; but, the Bells, the old familiar Bells, 
+his own dear, constant, steady friends, the Chimes, began to ring 
+the joy-peals for a New Year:  so lustily, so merrily, so happily, 
+so gaily, that he leapt upon his feet, and broke the spell that 
+bound him.
+
+
+'And whatever you do, father,' said Meg, 'don't eat tripe again, 
+without asking some doctor whether it's likely to agree with you; 
+for how you HAVE been going on, Good gracious!'
+
+She was working with her needle, at the little table by the fire; 
+dressing her simple gown with ribbons for her wedding.  So quietly 
+happy, so blooming and youthful, so full of beautiful promise, that 
+he uttered a great cry as if it were an Angel in his house; then 
+flew to clasp her in his arms.
+
+But, he caught his feet in the newspaper, which had fallen on the 
+hearth; and somebody came rushing in between them.
+
+'No!' cried the voice of this same somebody; a generous and jolly 
+voice it was!  'Not even you.  Not even you.  The first kiss of Meg 
+in the New Year is mine.  Mine!  I have been waiting outside the 
+house, this hour, to hear the Bells and claim it.  Meg, my precious 
+prize, a happy year!  A life of happy years, my darling wife!'
+
+And Richard smothered her with kisses.
+
+You never in all your life saw anything like Trotty after this.  I 
+don't care where you have lived or what you have seen; you never in 
+all your life saw anything at all approaching him!  He sat down in 
+his chair and beat his knees and cried; he sat down in his chair 
+and beat his knees and laughed; he sat down in his chair and beat 
+his knees and laughed and cried together; he got out of his chair 
+and hugged Meg; he got out of his chair and hugged Richard; he got 
+out of his chair and hugged them both at once; he kept running up 
+to Meg, and squeezing her fresh face between his hands and kissing 
+it, going from her backwards not to lose sight of it, and running 
+up again like a figure in a magic lantern; and whatever he did, he 
+was constantly sitting himself down in his chair, and never 
+stopping in it for one single moment; being - that's the truth - 
+beside himself with joy.
+
+'And to-morrow's your wedding-day, my pet!' cried Trotty.  'Your 
+real, happy wedding-day!'
+
+'To-day!' cried Richard, shaking hands with him.  'To-day.  The 
+Chimes are ringing in the New Year.  Hear them!'
+
+They WERE ringing!  Bless their sturdy hearts, they WERE ringing!  
+Great Bells as they were; melodious, deep-mouthed, noble Bells; 
+cast in no common metal; made by no common founder; when had they 
+ever chimed like that, before!
+
+'But, to-day, my pet,' said Trotty.  'You and Richard had some 
+words to-day.'
+
+'Because he's such a bad fellow, father,' said Meg.  'An't you, 
+Richard?  Such a headstrong, violent man!  He'd have made no more 
+of speaking his mind to that great Alderman, and putting HIM down I 
+don't know where, than he would of - '
+
+' - Kissing Meg,' suggested Richard.  Doing it too!
+
+'No.  Not a bit more,' said Meg.  'But I wouldn't let him, father.  
+Where would have been the use!'
+
+'Richard my boy!' cried Trotty.  'You was turned up Trumps 
+originally; and Trumps you must be, till you die!  But, you were 
+crying by the fire to-night, my pet, when I came home!  Why did you 
+cry by the fire?'
+
+'I was thinking of the years we've passed together, father.  Only 
+that.  And thinking that you might miss me, and be lonely.'
+
+Trotty was backing off to that extraordinary chair again, when the 
+child, who had been awakened by the noise, came running in half-
+dressed.
+
+'Why, here she is!' cried Trotty, catching her up.  'Here's little 
+Lilian!  Ha ha ha!  Here we are and here we go!  O here we are and 
+here we go again!  And here we are and here we go! and Uncle Will 
+too!'  Stopping in his trot to greet him heartily.  'O, Uncle Will, 
+the vision that I've had to-night, through lodging you!  O, Uncle 
+Will, the obligations that you've laid me under, by your coming, my 
+good friend!'
+
+Before Will Fern could make the least reply, a band of music burst 
+into the room, attended by a lot of neighbours, screaming 'A Happy 
+New Year, Meg!'  'A Happy Wedding!'  'Many of em!' and other 
+fragmentary good wishes of that sort.  The Drum (who was a private 
+friend of Trotty's) then stepped forward, and said:
+
+'Trotty Veck, my boy!  It's got about, that your daughter is going 
+to be married to-morrow.  There an't a soul that knows you that 
+don't wish you well, or that knows her and don't wish her well.  Or 
+that knows you both, and don't wish you both all the happiness the 
+New Year can bring.  And here we are, to play it in and dance it 
+in, accordingly.'
+
+Which was received with a general shout.  The Drum was rather 
+drunk, by-the-bye; but, never mind.
+
+'What a happiness it is, I'm sure,' said Trotty, 'to be so 
+esteemed!  How kind and neighbourly you are!  It's all along of my 
+dear daughter.  She deserves it!'
+
+They were ready for a dance in half a second (Meg and Richard at 
+the top); and the Drum was on the very brink of feathering away 
+with all his power; when a combination of prodigious sounds was 
+heard outside, and a good-humoured comely woman of some fifty years 
+of age, or thereabouts, came running in, attended by a man bearing 
+a stone pitcher of terrific size, and closely followed by the 
+marrow-bones and cleavers, and the bells; not THE Bells, but a 
+portable collection on a frame.
+
+Trotty said, 'It's Mrs. Chickenstalker!'  And sat down and beat his 
+knees again.
+
+'Married, and not tell me, Meg!' cried the good woman.  'Never!  I 
+couldn't rest on the last night of the Old Year without coming to 
+wish you joy.  I couldn't have done it, Meg.  Not if I had been 
+bed-ridden.  So here I am; and as it's New Year's Eve, and the Eve 
+of your wedding too, my dear, I had a little flip made, and brought 
+it with me.'
+
+Mrs. Chickenstalker's notion of a little flip did honour to her 
+character.  The pitcher steamed and smoked and reeked like a 
+volcano; and the man who had carried it, was faint.
+
+'Mrs. Tugby!' said Trotty, who had been going round and round her, 
+in an ecstasy. - 'I SHOULD say, Chickenstalker - Bless your heart 
+and soul!  A Happy New Year, and many of 'em!  Mrs. Tugby,' said 
+Trotty when he had saluted her; - 'I SHOULD say, Chickenstalker - 
+This is William Fern and Lilian.'
+
+The worthy dame, to his surprise, turned very pale and very red.
+
+'Not Lilian Fern whose mother died in Dorsetshire!' said she.
+
+Her uncle answered 'Yes,' and meeting hastily, they exchanged some 
+hurried words together; of which the upshot was, that Mrs. 
+Chickenstalker shook him by both hands; saluted Trotty on his cheek 
+again of her own free will; and took the child to her capacious 
+breast.
+
+'Will Fern!' said Trotty, pulling on his right-hand muffler.  'Not 
+the friend you was hoping to find?'
+
+'Ay!' returned Will, putting a hand on each of Trotty's shoulders.  
+'And like to prove a'most as good a friend, if that can be, as one 
+I found.'
+
+'O!' said Trotty.  'Please to play up there.  Will you have the 
+goodness!'
+
+To the music of the band, and, the bells, the marrow-bones and 
+cleavers, all at once; and while the Chimes were yet in lusty 
+operation out of doors; Trotty, making Meg and Richard, second 
+couple, led off Mrs. Chickenstalker down the dance, and danced it 
+in a step unknown before or since; founded on his own peculiar 
+trot.
+
+Had Trotty dreamed?  Or, are his joys and sorrows, and the actors 
+in them, but a dream; himself a dream; the teller of this tale a 
+dreamer, waking but now?  If it be so, O listener, dear to him in 
+all his visions, try to bear in mind the stern realities from which 
+these shadows come; and in your sphere - none is too wide, and none 
+too limited for such an end - endeavour to correct, improve, and 
+soften them.  So may the New Year be a happy one to you, happy to 
+many more whose happiness depends on you!  So may each year be 
+happier than the last, and not the meanest of our brethren or 
+sisterhood debarred their rightful share, in what our Great Creator 
+formed them to enjoy.
+
+
+
+
+End of the Project Gutenberg eText The Chimes
+

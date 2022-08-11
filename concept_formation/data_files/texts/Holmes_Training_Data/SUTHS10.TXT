@@ -1,0 +1,1381 @@
+Project Gutenberg's Etext of Sunday Under Three Heads by Dickens
+#27 in our series by Charles Dickens
+
+
+Copyright laws are changing all over the world, be sure to check
+the copyright laws for your country before posting these files!!
+
+Please take a look at the important information in this header.
+We encourage you to keep this file on your own disk, keeping an
+electronic path open for the next readers.  Do not remove this.
+
+
+**Welcome To The World of Free Plain Vanilla Electronic Texts**
+
+**Etexts Readable By Both Humans and By Computers, Since 1971**
+
+*These Etexts Prepared By Hundreds of Volunteers and Donations*
+
+Information on contacting Project Gutenberg to get Etexts, and
+further information is included below.  We need your donations.
+
+
+Sunday Under Three Heads
+
+by Charles Dickens
+
+May, 1997  [Etext #922]
+
+
+Project Gutenberg's Etext of Sunday Under Three Heads by Dickens
+*****This file should be named rddsk10.txt or rddsk10.zip******
+
+Corrected EDITIONS of our etexts get a new NUMBER, rddsk11.txt.
+VERSIONS based on separate sources get new LETTER, rddsk10a.txt.
+
+
+Scanned and proofed by David Price
+ccx074@coventry.ac.uk
+
+
+We are now trying to release all our books one month in advance
+of the official release dates, for time for better editing.
+
+Please note:  neither this list nor its contents are final till
+midnight of the last day of the month of any such announcement.
+The official release date of all Project Gutenberg Etexts is at
+Midnight, Central Time, of the last day of the stated month.  A
+preliminary version may often be posted for suggestion, comment
+and editing by those who wish to do so.  To be sure you have an
+up to date first edition [xxxxx10x.xxx] please check file sizes
+in the first week of the next month.  Since our ftp program has
+a bug in it that scrambles the date [tried to fix and failed] a
+look at the file size will have to do, but we will try to see a
+new copy has at least one byte more or less.
+
+
+Information about Project Gutenberg (one page)
+
+We produce about two million dollars for each hour we work.  The
+fifty hours is one conservative estimate for how long it we take
+to get any etext selected, entered, proofread, edited, copyright
+searched and analyzed, the copyright letters written, etc.  This
+projected audience is one hundred million readers.  If our value
+per text is nominally estimated at one dollar then we produce $2
+million dollars per hour this year as we release thirty-two text
+files per month:  or 400 more Etexts in 1996 for a total of 800.
+If these reach just 10% of the computerized population, then the
+total should reach 80 billion Etexts.
+
+The Goal of Project Gutenberg is to Give Away One Trillion Etext
+Files by the December 31, 2001.  [10,000 x 100,000,000=Trillion]
+This is ten thousand titles each to one hundred million readers,
+which is only 10% of the present number of computer users.  2001
+should have at least twice as many computer users as that, so it
+will require us reaching less than 5% of the users in 2001.
+
+
+We need your donations more than ever!
+
+
+All donations should be made to "Project Gutenberg/CMU": and are
+tax deductible to the extent allowable by law.  (CMU = Carnegie-
+Mellon University).
+
+For these and other matters, please mail to:
+
+Project Gutenberg
+P. O. Box  2782
+Champaign, IL 61825
+
+When all other email fails try our Executive Director:
+Michael S. Hart <hart@pobox.com>
+
+We would prefer to send you this information by email
+(Internet, Bitnet, Compuserve, ATTMAIL or MCImail).
+
+******
+If you have an FTP program (or emulator), please
+FTP directly to the Project Gutenberg archives:
+[Mac users, do NOT point and click. . .type]
+
+ftp uiarchive.cso.uiuc.edu
+login:  anonymous
+password:  your@login
+cd etext/etext90 through /etext96
+or cd etext/articles [get suggest gut for more information]
+dir [to see files]
+get or mget [to get files. . .set bin for zip files]
+GET INDEX?00.GUT
+for a list of books
+and
+GET NEW GUT for general information
+and
+MGET GUT* for newsletters.
+
+**Information prepared by the Project Gutenberg legal advisor**
+(Three Pages)
+
+
+***START**THE SMALL PRINT!**FOR PUBLIC DOMAIN ETEXTS**START***
+Why is this "Small Print!" statement here?  You know: lawyers.
+They tell us you might sue us if there is something wrong with
+your copy of this etext, even if you got it for free from
+someone other than us, and even if what's wrong is not our
+fault.  So, among other things, this "Small Print!" statement
+disclaims most of our liability to you.  It also tells you how
+you can distribute copies of this etext if you want to.
+
+*BEFORE!* YOU USE OR READ THIS ETEXT
+By using or reading any part of this PROJECT GUTENBERG-tm
+etext, you indicate that you understand, agree to and accept
+this "Small Print!" statement.  If you do not, you can receive
+a refund of the money (if any) you paid for this etext by
+sending a request within 30 days of receiving it to the person
+you got it from.  If you received this etext on a physical
+medium (such as a disk), you must return it with your request.
+
+ABOUT PROJECT GUTENBERG-TM ETEXTS
+This PROJECT GUTENBERG-tm etext, like most PROJECT GUTENBERG-
+tm etexts, is a "public domain" work distributed by Professor
+Michael S. Hart through the Project Gutenberg Association at
+Carnegie-Mellon University (the "Project").  Among other
+things, this means that no one owns a United States copyright
+on or for this work, so the Project (and you!) can copy and
+distribute it in the United States without permission and
+without paying copyright royalties.  Special rules, set forth
+below, apply if you wish to copy and distribute this etext
+under the Project's "PROJECT GUTENBERG" trademark.
+
+To create these etexts, the Project expends considerable
+efforts to identify, transcribe and proofread public domain
+works.  Despite these efforts, the Project's etexts and any
+medium they may be on may contain "Defects".  Among other
+things, Defects may take the form of incomplete, inaccurate or
+corrupt data, transcription errors, a copyright or other
+intellectual property infringement, a defective or damaged
+disk or other etext medium, a computer virus, or computer
+codes that damage or cannot be read by your equipment.
+
+LIMITED WARRANTY; DISCLAIMER OF DAMAGES
+But for the "Right of Replacement or Refund" described below,
+[1] the Project (and any other party you may receive this
+etext from as a PROJECT GUTENBERG-tm etext) disclaims all
+liability to you for damages, costs and expenses, including
+legal fees, and [2] YOU HAVE NO REMEDIES FOR NEGLIGENCE OR
+UNDER STRICT LIABILITY, OR FOR BREACH OF WARRANTY OR CONTRACT,
+INCLUDING BUT NOT LIMITED TO INDIRECT, CONSEQUENTIAL, PUNITIVE
+OR INCIDENTAL DAMAGES, EVEN IF YOU GIVE NOTICE OF THE
+POSSIBILITY OF SUCH DAMAGES.
+
+If you discover a Defect in this etext within 90 days of
+receiving it, you can receive a refund of the money (if any)
+you paid for it by sending an explanatory note within that
+time to the person you received it from.  If you received it
+on a physical medium, you must return it with your note, and
+such person may choose to alternatively give you a replacement
+copy.  If you received it electronically, such person may
+choose to alternatively give you a second opportunity to
+receive it electronically.
+
+THIS ETEXT IS OTHERWISE PROVIDED TO YOU "AS-IS".  NO OTHER
+WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED, ARE MADE TO YOU AS
+TO THE ETEXT OR ANY MEDIUM IT MAY BE ON, INCLUDING BUT NOT
+LIMITED TO WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A
+PARTICULAR PURPOSE.
+
+Some states do not allow disclaimers of implied warranties or
+the exclusion or limitation of consequential damages, so the
+above disclaimers and exclusions may not apply to you, and you
+may have other legal rights.
+
+INDEMNITY
+You will indemnify and hold the Project, its directors,
+officers, members and agents harmless from all liability, cost
+and expense, including legal fees, that arise directly or
+indirectly from any of the following that you do or cause:
+[1] distribution of this etext, [2] alteration, modification,
+or addition to the etext, or [3] any Defect.
+
+DISTRIBUTION UNDER "PROJECT GUTENBERG-tm"
+You may distribute copies of this etext electronically, or by
+disk, book or any other medium if you either delete this
+"Small Print!" and all other references to Project Gutenberg,
+or:
+
+[1]  Only give exact copies of it.  Among other things, this
+     requires that you do not remove, alter or modify the
+     etext or this "small print!" statement.  You may however,
+     if you wish, distribute this etext in machine readable
+     binary, compressed, mark-up, or proprietary form,
+     including any form resulting from conversion by word pro-
+     cessing or hypertext software, but only so long as
+     *EITHER*:
+
+     [*]  The etext, when displayed, is clearly readable, and
+          does *not* contain characters other than those
+          intended by the author of the work, although tilde
+          (~), asterisk (*) and underline (_) characters may
+          be used to convey punctuation intended by the
+          author, and additional characters may be used to
+          indicate hypertext links; OR
+
+     [*]  The etext may be readily converted by the reader at
+          no expense into plain ASCII, EBCDIC or equivalent
+          form by the program that displays the etext (as is
+          the case, for instance, with most word processors);
+          OR
+
+     [*]  You provide, or agree to also provide on request at
+          no additional cost, fee or expense, a copy of the
+          etext in its original plain ASCII form (or in EBCDIC
+          or other equivalent proprietary form).
+
+[2]  Honor the etext refund and replacement provisions of this
+     "Small Print!" statement.
+
+[3]  Pay a trademark license fee to the Project of 20% of the
+     net profits you derive calculated using the method you
+     already use to calculate your applicable taxes.  If you
+     don't derive profits, no royalty is due.  Royalties are
+     payable to "Project Gutenberg Association/Carnegie-Mellon
+     University" within the 60 days following each
+     date you prepare (or were legally required to prepare)
+     your annual (or equivalent periodic) tax return.
+
+WHAT IF YOU *WANT* TO SEND MONEY EVEN IF YOU DON'T HAVE TO?
+The Project gratefully accepts contributions in money, time,
+scanning machines, OCR software, public domain etexts, royalty
+free copyright licenses, and every other sort of contribution
+you can think of.  Money should be paid to "Project Gutenberg
+Association / Carnegie-Mellon University".
+
+*END*THE SMALL PRINT! FOR PUBLIC DOMAIN ETEXTS*Ver.04.29.93*END*
+
+
+
+
+
+Sunday Under Three Heads by Charles Dickens
+Scanned and proofed by David Price
+ccx074@coventry.ac.uk
+
+
+
+
+
+SUNDAY UNDER THREE HEADS
+
+
+
+
+DEDICATION
+To The Right Reverend
+THE BISHOP OF LONDON
+
+MY LORD,
+
+You were among the first, some years ago, to expatiate on the
+vicious addiction of the lower classes of society to Sunday
+excursions; and were thus instrumental in calling forth occasional
+demonstrations of those extreme opinions on the subject, which are
+very generally received with derision, if not with contempt.
+
+Your elevated station, my Lord, affords you countless opportunities
+of increasing the comforts and pleasures of the humbler classes of
+society - not by the expenditure of the smallest portion of your
+princely income, but by merely sanctioning with the influence of
+your example, their harmless pastimes, and innocent recreations.
+
+That your Lordship would ever have contemplated Sunday recreations
+with so much horror, if you had been at all acquainted with the
+wants and necessities of the people who indulged in them, I cannot
+imagine possible.  That a Prelate of your elevated rank has the
+faintest conception of the extent of those wants, and the nature of
+those necessities, I do not believe.
+
+For these reasons, I venture to address this little Pamphlet to
+your Lordship's consideration.  I am quite conscious that the
+outlines I have drawn, afford but a very imperfect description of
+the feelings they are intended to illustrate; but I claim for them
+one merit - their truth and freedom from exaggeration.  I may have
+fallen short of the mark, but I have never overshot it:  and while
+I have pointed out what appears to me, to be injustice on the part
+of others, I hope I have carefully abstained from committing it
+myself.
+
+I am,
+My Lord,
+Your Lordship's most obedient,
+Humble Servant,
+TIMOTHY SPARKS.
+JUNE, 1836.
+
+
+
+CHAPTER I - AS IT IS
+
+
+
+There are few things from which I derive greater pleasure, than
+walking through some of the principal streets of London on a fine
+Sunday, in summer, and watching the cheerful faces of the lively
+groups with which they are thronged.  There is something, to my
+eyes at least, exceedingly pleasing in the general desire evinced
+by the humbler classes of society, to appear neat and clean on this
+their only holiday.  There are many grave old persons, I know, who
+shake their heads with an air of profound wisdom, and tell you that
+poor people dress too well now-a-days; that when they were
+children, folks knew their stations in life better; that you may
+depend upon it, no good will come of this sort of thing in the end,
+- and so forth:  but I fancy I can discern in the fine bonnet of
+the working-man's wife, or the feather-bedizened hat of his child,
+no inconsiderable evidence of good feeling on the part of the man
+himself, and an affectionate desire to expend the few shillings he
+can spare from his week's wages, in improving the appearance and
+adding to the happiness of those who are nearest and dearest to
+him.  This may be a very heinous and unbecoming degree of vanity,
+perhaps, and the money might possibly be applied to better uses; it
+must not be forgotten, however, that it might very easily be
+devoted to worse:  and if two or three faces can be rendered happy
+and contented, by a trifling improvement of outward appearance, I
+cannot help thinking that the object is very cheaply purchased,
+even at the expense of a smart gown, or a gaudy riband.  There is a
+great deal of very unnecessary cant about the over-dressing of the
+common people.  There is not a manufacturer or tradesman in
+existence, who would not employ a man who takes a reasonable degree
+of pride in the appearance of himself and those about him, in
+preference to a sullen, slovenly fellow, who works doggedly on,
+regardless of his own clothing and that of his wife and children,
+and seeming to take pleasure or pride in nothing.
+
+The pampered aristocrat, whose life is one continued round of
+licentious pleasures and sensual gratifications; or the gloomy
+enthusiast, who detests the cheerful amusements he can never enjoy,
+and envies the healthy feelings he can never know, and who would
+put down the one and suppress the other, until he made the minds of
+his fellow-beings as besotted and distorted as his own; - neither
+of these men can by possibility form an adequate notion of what
+Sunday really is to those whose lives are spent in sedentary or
+laborious occupations, and who are accustomed to look forward to it
+through their whole existence, as their only day of rest from toil,
+and innocent enjoyment.
+
+The sun that rises over the quiet streets of London on a bright
+Sunday morning, shines till his setting, on gay and happy faces.
+Here and there, so early as six o'clock, a young man and woman in
+their best attire, may be seen hurrying along on their way to the
+house of some acquaintance, who is included in their scheme of
+pleasure for the day; from whence, after stopping to take "a bit of
+breakfast," they sally forth, accompanied by several old people,
+and a whole crowd of young ones, bearing large hand-baskets full of
+provisions, and Belcher handkerchiefs done up in bundles, with the
+neck of a bottle sticking out at the top, and closely-packed apples
+bulging out at the sides, - and away they hurry along the streets
+leading to the steam-packet wharfs, which are already plentifully
+sprinkled with parties bound for the same destination.  Their good
+humour and delight know no bounds - for it is a delightful morning,
+all blue over head, and nothing like a cloud in the whole sky; and
+even the air of the river at London Bridge is something to them,
+shut up as they have been, all the week, in close streets and
+heated rooms.  There are dozens of steamers to all sorts of places
+- Gravesend, Greenwich, and Richmond; and such numbers of people,
+that when you have once sat down on the deck, it is all but a moral
+impossibility to get up again - to say nothing of walking about,
+which is entirely out of the question.  Away they go, joking and
+laughing, and eating and drinking, and admiring everything they
+see, and pleased with everything they hear, to climb Windmill Hill,
+and catch a glimpse of the rich corn-fields and beautiful orchards
+of Kent; or to stroll among the fine old trees of Greenwich Park,
+and survey the wonders of Shooter's Hill and Lady James's Folly; or
+to glide past the beautiful meadows of Twickenham and Richmond, and
+to gaze with a delight which only people like them can know, on
+every lovely object in the fair prospect around.  Boat follows
+boat, and coach succeeds coach, for the next three hours; but all
+are filled, and all with the same kind of people - neat and clean,
+cheerful and contented.
+
+They reach their places of destination, and the taverns are
+crowded; but there is no drunkenness or brawling, for the class of
+men who commit the enormity of making Sunday excursions, take their
+families with them:  and this in itself would be a check upon them,
+even if they were inclined to dissipation, which they really are
+not.  Boisterous their mirth may be, for they have all the
+excitement of feeling that fresh air and green fields can impart to
+the dwellers in crowded cities, but it is innocent and harmless.
+The glass is circulated, and the joke goes round; but the one is
+free from excess, and the other from offence; and nothing but good
+humour and hilarity prevail.
+
+In streets like Holborn and Tottenham Court Road, which form the
+central market of a large neighbourhood, inhabited by a vast number
+of mechanics and poor people, a few shops are open at an early hour
+of the morning; and a very poor man, with a thin and sickly woman
+by his side, may be seen with their little basket in hand,
+purchasing the scanty quantity of necessaries they can afford,
+which the time at which the man receives his wages, or his having a
+good deal of work to do, or the woman's having been out charing
+till a late hour, prevented their procuring over-night.  The
+coffee-shops too, at which clerks and young men employed in
+counting-houses can procure their breakfasts, are also open.  This
+class comprises, in a place like London, an enormous number of
+people, whose limited means prevent their engaging for their
+lodgings any other apartment than a bedroom, and who have
+consequently no alternative but to take their breakfasts at a
+coffee-shop, or go without it altogether.  All these places,
+however, are quickly closed; and by the time the church bells begin
+to ring, all appearance of traffic has ceased.  And then, what are
+the signs of immorality that meet the eye?  Churches are well
+filled, and Dissenters' chapels are crowded to suffocation.  There
+is no preaching to empty benches, while the drunken and dissolute
+populace run riot in the streets.
+
+Here is a fashionable church, where the service commences at a late
+hour, for the accommodation of such members of the congregation -
+and they are not a few - as may happen to have lingered at the
+Opera far into the morning of the Sabbath; an excellent contrivance
+for poising the balance between God and Mammon, and illustrating
+the ease with which a man's duties to both, may be accommodated and
+adjusted.  How the carriages rattle up, and deposit their richly-
+dressed burdens beneath the lofty portico!  The powdered footmen
+glide along the aisle, place the richly-bound prayer-books on the
+pew desks, slam the doors, and hurry away, leaving the fashionable
+members of the congregation to inspect each other through their
+glasses, and to dazzle and glitter in the eyes of the few shabby
+people in the free seats.  The organ peals forth, the hired singers
+commence a short hymn, and the congregation condescendingly rise,
+stare about them, and converse in whispers.  The clergyman enters
+the reading-desk, - a young man of noble family and elegant
+demeanour, notorious at Cambridge for his knowledge of horse-flesh
+and dancers, and celebrated at Eton for his hopeless stupidity.
+The service commences.  Mark the soft voice in which he reads, and
+the impressive manner in which he applies his white hand, studded
+with brilliants, to his perfumed hair.  Observe the graceful
+emphasis with which he offers up the prayers for the King, the
+Royal Family, and all the Nobility; and the nonchalance with which
+he hurries over the more uncomfortable portions of the service, the
+seventh commandment for instance, with a studied regard for the
+taste and feeling of his auditors, only to be equalled by that
+displayed by the sleek divine who succeeds him, who murmurs, in a
+voice kept down by rich feeding, most comfortable doctrines for
+exactly twelve minutes, and then arrives at the anxiously expected
+'Now to God,' which is the signal for the dismissal of the
+congregation.  The organ is again heard; those who have been asleep
+wake up, and those who have kept awake, smile and seem greatly
+relieved; bows and congratulations are exchanged, the livery
+servants are all bustle and commotion, bang go the steps, up jump
+the footmen, and off rattle the carriages:  the inmates discoursing
+on the dresses of the congregation, and congratulating themselves
+on having set so excellent an example to the community in general,
+and Sunday-pleasurers in particular.
+
+Enter a less orthodox place of religious worship, and observe the
+contrast.  A small close chapel with a white-washed wall, and plain
+deal pews and pulpit, contains a closely-packed congregation, as
+different in dress, as they are opposed in manner, to that we have
+just quitted.  The hymn is sung - not by paid singers, but by the
+whole assembly at the loudest pitch of their voices, unaccompanied
+by any musical instrument, the words being given out, two lines at
+a time, by the clerk.  There is something in the sonorous quavering
+of the harsh voices, in the lank and hollow faces of the men, and
+the sour solemnity of the women, which bespeaks this a strong-hold
+of intolerant zeal and ignorant enthusiasm.  The preacher enters
+the pulpit.  He is a coarse, hard-faced man of forbidding aspect,
+clad in rusty black, and bearing in his hand a small plain Bible
+from which he selects some passage for his text, while the hymn is
+concluding.  The congregation fall upon their knees, and are hushed
+into profound stillness as he delivers an extempore prayer, in
+which he calls upon the Sacred Founder of the Christian faith to
+bless his ministry, in terms of disgusting and impious familiarity
+not to be described.  He begins his oration in a drawling tone, and
+his hearers listen with silent attention.  He grows warmer as he
+proceeds with his subject, and his gesticulation becomes
+proportionately violent.  He clenches his fists, beats the book
+upon the desk before him, and swings his arms wildly about his
+head.  The congregation murmur their acquiescence in his doctrines:
+and a short groan, occasionally bears testimony to the moving
+nature of his eloquence.  Encouraged by these symptoms of approval,
+and working himself up to a pitch of enthusiasm amounting almost to
+frenzy, he denounces sabbath-breakers with the direst vengeance of
+offended Heaven.  He stretches his body half out of the pulpit,
+thrusts forth his arms with frantic gestures, and blasphemously
+calls upon The Deity to visit with eternal torments, those who turn
+aside from the word, as interpreted and preached by - himself.  A
+low moaning is heard, the women rock their bodies to and fro, and
+wring their hands; the preacher's fervour increases, the
+perspiration starts upon his brow, his face is flushed, and he
+clenches his hands convulsively, as he draws a hideous and
+appalling picture of the horrors preparing for the wicked in a
+future state.  A great excitement is visible among his hearers, a
+scream is heard, and some young girl falls senseless on the floor.
+There is a momentary rustle, but it is only for a moment - all eyes
+are turned towards the preacher.  He pauses, passes his
+handkerchief across his face, and looks complacently round.  His
+voice resumes its natural tone, as with mock humility he offers up
+a thanksgiving for having been successful in his efforts, and
+having been permitted to rescue one sinner from the path of evil.
+He sinks back into his seat, exhausted with the violence of his
+ravings; the girl is removed, a hymn is sung, a petition for some
+measure for securing the better observance of the Sabbath, which
+has been prepared by the good man, is read; and his worshipping
+admirers struggle who shall be the first to sign it.
+
+But the morning service has concluded, and the streets are again
+crowded with people.  Long rows of cleanly-dressed charity
+children, preceded by a portly beadle and a withered schoolmaster,
+are returning to their welcome dinner; and it is evident, from the
+number of men with beer-trays who are running from house to house,
+that no inconsiderable portion of the population are about to take
+theirs at this early hour.  The bakers' shops in the humbler
+suburbs especially, are filled with men, women, and children, each
+anxiously waiting for the Sunday dinner.  Look at the group of
+children who surround that working man who has just emerged from
+the baker's shop at the corner of the street, with the reeking
+dish, in which a diminutive joint of mutton simmers above a vast
+heap of half-browned potatoes.  How the young rogues clap their
+hands, and dance round their father, for very joy at the prospect
+of the feast:  and how anxiously the youngest and chubbiest of the
+lot, lingers on tiptoe by his side, trying to get a peep into the
+interior of the dish.  They turn up the street, and the chubby-
+faced boy trots on as fast as his little legs will carry him, to
+herald the approach of the dinner to 'Mother' who is standing with
+a baby in her arms on the doorstep, and who seems almost as pleased
+with the whole scene as the children themselves; whereupon 'baby'
+not precisely understanding the importance of the business in hand,
+but clearly perceiving that it is something unusually lively, kicks
+and crows most lustily, to the unspeakable delight of all the
+children and both the parents:  and the dinner is borne into the
+house amidst a shouting of small voices, and jumping of fat legs,
+which would fill Sir Andrew Agnew with astonishment; as well it
+might, seeing that Baronets, generally speaking, eat pretty
+comfortable dinners all the week through, and cannot be expected to
+understand what people feel, who only have a meat dinner on one day
+out of every seven.
+
+The bakings being all duly consigned to their respective owners,
+and the beer-man having gone his rounds, the church bells ring for
+afternoon service, the shops are again closed, and the streets are
+more than ever thronged with people; some who have not been to
+church in the morning, going to it now; others who have been to
+church, going out for a walk; and others - let us admit the full
+measure of their guilt - going for a walk, who have not been to
+church at all.  I am afraid the smart servant of all work, who has
+been loitering at the corner of the square for the last ten
+minutes, is one of the latter class.  She is evidently waiting for
+somebody, and though she may have made up her mind to go to church
+with him one of these mornings, I don't think they have any such
+intention on this particular afternoon.  Here he is, at last.  The
+white trousers, blue coat, and yellow waistcoat - and more
+especially that cock of the hat - indicate, as surely as inanimate
+objects can, that Chalk Farm and not the parish church, is their
+destination.  The girl colours up, and puts out her hand with a
+very awkward affectation of indifference.  He gives it a gallant
+squeeze, and away they walk, arm in arm, the girl just looking back
+towards her 'place' with an air of conscious self-importance, and
+nodding to her fellow-servant who has gone up to the two-pair-of-
+stairs window, to take a full view of 'Mary's young man,' which
+being communicated to William, he takes off his hat to the fellow-
+servant:  a proceeding which affords unmitigated satisfaction to
+all parties, and impels the fellow-servant to inform Miss Emily
+confidentially, in the course of the evening, 'that the young man
+as Mary keeps company with, is one of the most genteelest young men
+as ever she see.'
+
+The two young people who have just crossed the road, and are
+following this happy couple down the street, are a fair specimen of
+another class of Sunday - pleasurers.  There is a dapper smartness,
+struggling through very limited means, about the young man, which
+induces one to set him down at once as a junior clerk to a
+tradesman or attorney.  The girl no one could possibly mistake.
+You may tell a young woman in the employment of a large dress-
+maker, at any time, by a certain neatness of cheap finery and
+humble following of fashion, which pervade her whole attire; but
+unfortunately there are other tokens not to be misunderstood - the
+pale face with its hectic bloom, the slight distortion of form
+which no artifice of dress can wholly conceal, the unhealthy stoop,
+and the short cough - the effects of hard work and close
+application to a sedentary employment, upon a tender frame.  They
+turn towards the fields.  The girl's countenance brightens, and an
+unwonted glow rises in her face.  They are going to Hampstead or
+Highgate, to spend their holiday afternoon in some place where they
+can see the sky, the fields, and trees, and breathe for an hour or
+two the pure air, which so seldom plays upon that poor girl's form,
+or exhilarates her spirits.
+
+I would to God, that the iron-hearted man who would deprive such
+people as these of their only pleasures, could feel the sinking of
+heart and soul, the wasting exhaustion of mind and body, the utter
+prostration of present strength and future hope, attendant upon
+that incessant toil which lasts from day to day, and from month to
+month; that toil which is too often protracted until the silence of
+midnight, and resumed with the first stir of morning.  How
+marvellously would his ardent zeal for other men's souls, diminish
+after a short probation, and how enlightened and comprehensive
+would his views of the real object and meaning of the institution
+of the Sabbath become!
+
+The afternoon is far advanced - the parks and public drives are
+crowded.  Carriages, gigs, phaetons, stanhopes, and vehicles of
+every description, glide smoothly on.  The promenades are filled
+with loungers on foot, and the road is thronged with loungers on
+horseback.  Persons of every class are crowded together, here, in
+one dense mass.  The plebeian, who takes his pleasure on no day but
+Sunday, jostles the patrician, who takes his, from year's end to
+year's end.  You look in vain for any outward signs of profligacy
+or debauchery.  You see nothing before you but a vast number of
+people, the denizens of a large and crowded city, in the needful
+and rational enjoyment of air and exercise.
+
+It grows dusk.  The roads leading from the different places of
+suburban resort, are crowded with people on their return home, and
+the sound of merry voices rings through the gradually darkening
+fields.  The evening is hot and sultry.  The rich man throws open
+the sashes of his spacious dining-room, and quaffs his iced wine in
+splendid luxury.  The poor man, who has no room to take his meals
+in, but the close apartment to which he and his family have been
+confined throughout the week, sits in the tea-garden of some famous
+tavern, and drinks his beer in content and comfort.  The fields and
+roads are gradually deserted, the crowd once more pour into the
+streets, and disperse to their several homes; and by midnight all
+is silent and quiet, save where a few stragglers linger beneath the
+window of some great man's house, to listen to the strains of music
+from within:  or stop to gaze upon the splendid carriages which are
+waiting to convey the guests from the dinner-party of an Earl.
+
+There is a darker side to this picture, on which, so far from its
+being any part of my purpose to conceal it, I wish to lay
+particular stress.  In some parts of London, and in many of the
+manufacturing towns of England, drunkenness and profligacy in their
+most disgusting forms, exhibit in the open streets on Sunday, a sad
+and a degrading spectacle.  We need go no farther than St. Giles's,
+or Drury Lane, for sights and scenes of a most repulsive nature.
+Women with scarcely the articles of apparel which common decency
+requires, with forms bloated by disease, and faces rendered hideous
+by habitual drunkenness - men reeling and staggering along -
+children in rags and filth - whole streets of squalid and miserable
+appearance, whose inhabitants are lounging in the public road,
+fighting, screaming, and swearing - these are the common objects
+which present themselves in, these are the well-known
+characteristics of, that portion of London to which I have just
+referred.
+
+And why is it, that all well-disposed persons are shocked, and
+public decency scandalised, by such exhibitions?
+
+These people are poor - that is notorious.  It may be said that
+they spend in liquor, money with which they might purchase
+necessaries, and there is no denying the fact; but let it be
+remembered that even if they applied every farthing of their
+earnings in the best possible way, they would still be very - very
+poor.  Their dwellings are necessarily uncomfortable, and to a
+certain degree unhealthy.  Cleanliness might do much, but they are
+too crowded together, the streets are too narrow, and the rooms too
+small, to admit of their ever being rendered desirable habitations.
+They work very hard all the week.  We know that the effect of
+prolonged and arduous labour, is to produce, when a period of rest
+does arrive, a sensation of lassitude which it requires the
+application of some stimulus to overcome.  What stimulus have they?
+Sunday comes, and with it a cessation of labour.  How are they to
+employ the day, or what inducement have they to employ it, in
+recruiting their stock of health?  They see little parties, on
+pleasure excursions, passing through the streets; but they cannot
+imitate their example, for they have not the means.  They may walk,
+to be sure, but it is exactly the inducement to walk that they
+require.  If every one of these men knew, that by taking the
+trouble to walk two or three miles he would be enabled to share in
+a good game of cricket, or some athletic sport, I very much
+question whether any of them would remain at home.
+
+But you hold out no inducement, you offer no relief from
+listlessness, you provide nothing to amuse his mind, you afford him
+no means of exercising his body.  Unwashed and unshaven, he
+saunters moodily about, weary and dejected.  In lieu of the
+wholesome stimulus he might derive from nature, you drive him to
+the pernicious excitement to be gained from art.  He flies to the
+gin-shop as his only resource; and when, reduced to a worse level
+than the lowest brute in the scale of creation, he lies wallowing
+in the kennel, your saintly lawgivers lift up their hands to
+heaven, and exclaim for a law which shall convert the day intended
+for rest and cheerfulness, into one of universal gloom, bigotry,
+and persecution.
+
+
+
+CHAPTER II - AS SABBATH BILLS WOULD MAKE IT
+
+
+
+The provisions of the bill introduced into the House of Commons by
+Sir Andrew Agnew, and thrown out by that House on the motion for
+the second reading, on the 18th of May in the present year, by a
+majority of 32, may very fairly be taken as a test of the length to
+which the fanatics, of which the honourable Baronet is the
+distinguished leader, are prepared to go.  No test can be fairer;
+because while on the one hand this measure may be supposed to
+exhibit all that improvement which mature reflection and long
+deliberation may have suggested, so on the other it may very
+reasonably be inferred, that if it be quite as severe in its
+provisions, and to the full as partial in its operation, as those
+which have preceded it and experienced a similar fate, the disease
+under which the honourable Baronet and his friends labour, is
+perfectly hopeless, and beyond the reach of cure.
+
+The proposed enactments of the bill are briefly these:- All work is
+prohibited on the Lord's day, under heavy penalties, increasing
+with every repetition of the offence.  There are penalties for
+keeping shops open - penalties for drunkenness - penalties for
+keeping open houses of entertainment - penalties for being present
+at any public meeting or assembly - penalties for letting
+carriages, and penalties for hiring them - penalties for travelling
+in steam-boats, and penalties for taking passengers - penalties on
+vessels commencing their voyage on Sunday - penalties on the owners
+of cattle who suffer them to be driven on the Lord's day -
+penalties on constables who refuse to act, and penalties for
+resisting them when they do.  In addition to these trifles, the
+constables are invested with arbitrary, vexatious, and most
+extensive powers; and all this in a bill which sets out with a
+hypocritical and canting declaration that 'nothing is more
+acceptable to God than the TRUE AND SINCERE worship of Him
+according to His holy will, and that it is the bounden duty of
+Parliament to promote the observance of the Lord's day, by
+protecting every class of society against being required to
+sacrifice their comfort, health, religious privileges, and
+conscience, for the convenience, enjoyment, or supposed advantage
+of any other class on the Lord's day'!  The idea of making a man
+truly moral through the ministry of constables, and sincerely
+religious under the influence of penalties, is worthy of the mind
+which could form such a mass of monstrous absurdity as this bill is
+composed of.
+
+The House of Commons threw the measure out certainly, and by so
+doing retrieved the disgrace - so far as it could be retrieved - of
+placing among the printed papers of Parliament, such an egregious
+specimen of legislative folly; but there was a degree of delicacy
+and forbearance about the debate that took place, which I cannot
+help thinking as unnecessary and uncalled for, as it is unusual in
+Parliamentary discussions.  If it had been the first time of Sir
+Andrew Agnew's attempting to palm such a measure upon the country,
+we might well understand, and duly appreciate, the delicate and
+compassionate feeling due to the supposed weakness and imbecility
+of the man, which prevented his proposition being exposed in its
+true colours, and induced this Hon. Member to bear testimony to his
+excellent motives, and that Noble Lord to regret that he could not
+- although he had tried to do so - adopt any portion of the bill.
+But when these attempts have been repeated, again and again; when
+Sir Andrew Agnew has renewed them session after session, and when
+it has become palpably evident to the whole House that
+
+
+His impudence of proof in every trial,
+Kens no polite, and heeds no plain denial -
+
+
+it really becomes high time to speak of him and his legislation, as
+they appear to deserve, without that gloss of politeness, which is
+all very well in an ordinary case, but rather out of place when the
+liberties and comforts of a whole people are at stake.
+
+In the first place, it is by no means the worst characteristic of
+this bill, that it is a bill of blunders:  it is, from beginning to
+end, a piece of deliberate cruelty, and crafty injustice.  If the
+rich composed the whole population of this country, not a single
+comfort of one single man would be affected by it.  It is directed
+exclusively, and without the exception of a solitary instance,
+against the amusements and recreations of the poor.  This was the
+bait held out by the Hon. Baronet to a body of men, who cannot be
+supposed to have any very strong sympathies in common with the
+poor, because they cannot understand their sufferings or their
+struggles.  This is the bait, which will in time prevail, unless
+public attention is awakened, and public feeling exerted, to
+prevent it.
+
+Take the very first clause, the provision that no man shall be
+allowed to work on Sunday - 'That no person, upon the Lord's day,
+shall do, or hire, or employ any person to do any manner of labour,
+or any work of his or her ordinary calling.'  What class of persons
+does this affect?  The rich man?  No.  Menial servants, both male
+and female, are specially exempted from the operation of the bill.
+'Menial servants' are among the poor people.  The bill has no
+regard for them.  The Baronet's dinner must be cooked on Sunday,
+the Bishop's horses must be groomed, and the Peer's carriage must
+be driven.  So the menial servants are put utterly beyond the pale
+of grace; - unless indeed, they are to go to heaven through the
+sanctity of their masters, and possibly they might think even that,
+rather an uncertain passport.
+
+There is a penalty for keeping open, houses of entertainment.  Now,
+suppose the bill had passed, and that half-a-dozen adventurous
+licensed victuallers, relying upon the excitement of public feeling
+on the subject, and the consequent difficulty of conviction (this
+is by no means an improbable supposition), had determined to keep
+their houses and gardens open, through the whole Sunday afternoon,
+in defiance of the law.  Every act of hiring or working, every act
+of buying or selling, or delivering, or causing anything to be
+bought or sold, is specifically made a separate offence - mark the
+effect.  A party, a man and his wife and children, enter a tea-
+garden, and the informer stations himself in the next box, from
+whence he can see and hear everything that passes.  'Waiter!' says
+the father.  'Yes.  Sir.'  'Pint of the best ale!'  'Yes, Sir.'
+Away runs the waiter to the bar, and gets the ale from the
+landlord.  Out comes the informer's note-book - penalty on the
+father for hiring, on the waiter for delivering, and on the
+landlord for selling, on the Lord's day.  But it does not stop
+here.  The waiter delivers the ale, and darts off, little
+suspecting the penalties in store for him.  'Hollo,' cries the
+father, 'waiter!'  'Yes, Sir.'  'Just get this little boy a
+biscuit, will you?'  'Yes, Sir.'  Off runs the waiter again, and
+down goes another case of hiring, another case of delivering, and
+another case of selling; and so it would go on AD INFINITUM, the
+sum and substance of the matter being, that every time a man or
+woman cried 'Waiter!' on Sunday, he or she would be fined not less
+than forty shillings, nor more than a hundred; and every time a
+waiter replied, 'Yes, Sir,' he and his master would be fined in the
+same amount:  with the addition of a new sort of window duty on the
+landlord, to wit, a tax of twenty shillings an hour for every hour
+beyond the first one, during which he should have his shutters down
+on the Sabbath.
+
+With one exception, there are perhaps no clauses in the whole bill,
+so strongly illustrative of its partial operation, and the
+intention of its framer, as those which relate to travelling on
+Sunday.  Penalties of ten, twenty, and thirty pounds, are
+mercilessly imposed upon coach proprietors who shall run their
+coaches on the Sabbath; one, two, and ten pounds upon those who
+hire, or let to hire, horses and carriages upon the Lord's day, but
+not one syllable about those who have no necessity to hire, because
+they have carriages and horses of their own; not one word of a
+penalty on liveried coachmen and footmen.  The whole of the saintly
+venom is directed against the hired cabriolet, the humble fly, or
+the rumbling hackney-coach, which enables a man of the poorer class
+to escape for a few hours from the smoke and dirt, in the midst of
+which he has been confined throughout the week:  while the
+escutcheoned carriage and the dashing cab, may whirl their wealthy
+owners to Sunday feasts and private oratorios, setting constables,
+informers, and penalties, at defiance.  Again, in the description
+of the places of public resort which it is rendered criminal to
+attend on Sunday, there are no words comprising a very fashionable
+promenade.  Public discussions, public debates, public lectures and
+speeches, are cautiously guarded against; for it is by their means
+that the people become enlightened enough to deride the last
+efforts of bigotry and superstition.  There is a stringent
+provision for punishing the poor man who spends an hour in a news-
+room, but there is nothing to prevent the rich one from lounging
+away the day in the Zoological Gardens.
+
+There is, in four words, a mock proviso, which affects to forbid
+travelling 'with any animal' on the Lord's day.  This, however, is
+revoked, as relates to the rich man, by a subsequent provision.  We
+have then a penalty of not less than fifty, nor more than one
+hundred pounds, upon any person participating in the control, or
+having the command of any vessel which shall commence her voyage on
+the Lord's day, should the wind prove favourable.  The next time
+this bill is brought forward (which will no doubt be at an early
+period of the next session of Parliament) perhaps it will be better
+to amend this clause by declaring, that from and after the passing
+of the act, it shall be deemed unlawful for the wind to blow at all
+upon the Sabbath.  It would remove a great deal of temptation from
+the owners and captains of vessels.
+
+The reader is now in possession of the principal enacting clauses
+of Sir Andrew Agnew's bill, with the exception of one, for
+preventing the killing or taking of 'FISH, OR OTHER WILD ANIMALS,'
+and the ordinary provisions which are inserted for form's sake in
+all acts of Parliament.  I now beg his attention to the clauses of
+exemption.
+
+They are two in number.  The first exempts menial servants from any
+rest, and all poor men from any recreation:  outlaws a milkman
+after nine o'clock in the morning, and makes eating-houses lawful
+for only two hours in the afternoon; permits a medical man to use
+his carriage on Sunday, and declares that a clergyman may either
+use his own, or hire one.
+
+The second is artful, cunning, and designing; shielding the rich
+man from the possibility of being entrapped, and affecting at the
+same time, to have a tender and scrupulous regard, for the
+interests of the whole community.  It declares, 'that nothing in
+this act contained, shall extend to works of piety, charity, or
+necessity.'
+
+What is meant by the word 'necessity' in this clause?  Simply this
+- that the rich man shall be at liberty to make use of all the
+splendid luxuries he has collected around him, on any day in the
+week, because habit and custom have rendered them 'necessary' to
+his easy existence; but that the poor man who saves his money to
+provide some little pleasure for himself and family at lengthened
+intervals, shall not be permitted to enjoy it.  It is not
+'necessary' to him:- Heaven knows, he very often goes long enough
+without it.  This is the plain English of the clause.  The carriage
+and pair of horses, the coachman, the footman, the helper, and the
+groom, are 'necessary' on Sundays, as on other days, to the bishop
+and the nobleman; but the hackney-coach, the hired gig, or the
+taxed cart, cannot possibly be 'necessary' to the working-man on
+Sunday, for he has it not at other times.  The sumptuous dinner and
+the rich wines, are 'necessaries' to a great man in his own
+mansion:  but the pint of beer and the plate of meat, degrade the
+national character in an eating-house.
+
+Such is the bill for promoting the true and sincere worship of God
+according to his Holy Will, and for protecting every class of
+society against being required to sacrifice their health and
+comfort on the Sabbath.  Instances in which its operation would be
+as unjust as it would be absurd, might be multiplied to an endless
+amount; but it is sufficient to place its leading provisions before
+the reader.  In doing so, I have purposely abstained from drawing
+upon the imagination for possible cases; the provisions to which I
+have referred, stand in so many words upon the bill as printed by
+order of the House of Commons; and they can neither be disowned,
+nor explained away.
+
+Let us suppose such a bill as this, to have actually passed both
+branches of the legislature; to have received the royal assent; and
+to have come into operation.  Imagine its effect in a great city
+like London.
+
+Sunday comes, and brings with it a day of general gloom and
+austerity.  The man who has been toiling hard all the week, has
+been looking towards the Sabbath, not as to a day of rest from
+labour, and healthy recreation, but as one of grievous tyranny and
+grinding oppression.  The day which his Maker intended as a
+blessing, man has converted into a curse.  Instead of being hailed
+by him as his period of relaxation, he finds it remarkable only as
+depriving him of every comfort and enjoyment.  He has many children
+about him, all sent into the world at an early age, to struggle for
+a livelihood; one is kept in a warehouse all day, with an interval
+of rest too short to enable him to reach home, another walks four
+or five miles to his employment at the docks, a third earns a few
+shillings weekly, as an errand boy, or office messenger; and the
+employment of the man himself, detains him at some distance from
+his home from morning till night.  Sunday is the only day on which
+they could all meet together, and enjoy a homely meal in social
+comfort; and now they sit down to a cold and cheerless dinner:  the
+pious guardians of the man's salvation having, in their regard for
+the welfare of his precious soul, shut up the bakers' shops.  The
+fire blazes high in the kitchen chimney of these well-fed
+hypocrites, and the rich steams of the savoury dinner scent the
+air.  What care they to be told that this class of men have neither
+a place to cook in - nor means to bear the expense, if they had?
+
+Look into your churches - diminished congregations, and scanty
+attendance.  People have grown sullen and obstinate, and are
+becoming disgusted with the faith which condemns them to such a day
+as this, once in every seven.  And as you cannot make people
+religious by Act of Parliament, or force them to church by
+constables, they display their feeling by staying away.
+
+Turn into the streets, and mark the rigid gloom that reigns over
+everything around.  The roads are empty, the fields are deserted,
+the houses of entertainment are closed.  Groups of filthy and
+discontented-looking men, are idling about at the street corners,
+or sleeping in the sun; but there are no decently-dressed people of
+the poorer class, passing to and fro.  Where should they walk to?
+It would take them an hour, at least, to get into the fields, and
+when they reached them, they could procure neither bite nor sup,
+without the informer and the penalty.  Now and then, a carriage
+rolls smoothly on, or a well-mounted horseman, followed by a
+liveried attendant, canters by; but with these exceptions, all is
+as melancholy and quiet as if a pestilence had fallen on the city.
+
+Bend your steps through the narrow and thickly-inhabited streets,
+and observe the sallow faces of the men and women who are lounging
+at the doors, or lolling from the windows.  Regard well the
+closeness of these crowded rooms, and the noisome exhalations that
+rise from the drains and kennels; and then laud the triumph of
+religion and morality, which condemns people to drag their lives
+out in such stews as these, and makes it criminal for them to eat
+or drink in the fresh air, or under the clear sky.  Here and there,
+from some half-opened window, the loud shout of drunken revelry
+strikes upon the ear, and the noise of oaths and quarrelling - the
+effect of the close and heated atmosphere - is heard on all sides.
+See how the men all rush to join the crowd that are making their
+way down the street, and how loud the execrations of the mob become
+as they draw nearer.  They have assembled round a little knot of
+constables, who have seized the stock-in-trade, heinously exposed
+on Sunday, of some miserable walking-stick seller, who follows
+clamouring for his property.  The dispute grows warmer and fiercer,
+until at last some of the more furious among the crowd, rush
+forward to restore the goods to their owner.  A general conflict
+takes place; the sticks of the constables are exercised in all
+directions; fresh assistance is procured; and half a dozen of the
+assailants are conveyed to the station-house, struggling, bleeding,
+and cursing.  The case is taken to the police-office on the
+following morning; and after a frightful amount of perjury on both
+sides, the men are sent to prison for resisting the officers, their
+families to the workhouse to keep them from starving:  and there
+they both remain for a month afterwards, glorious trophies of the
+sanctified enforcement of the Christian Sabbath.  Add to such
+scenes as these, the profligacy, idleness, drunkenness, and vice,
+that will be committed to an extent which no man can foresee, on
+Monday, as an atonement for the restraint of the preceding day; and
+you have a very faint and imperfect picture of the religious
+effects of this Sunday legislation, supposing it could ever be
+forced upon the people.
+
+But let those who advocate the cause of fanaticism, reflect well
+upon the probable issue of their endeavours.  They may by
+perseverance, succeed with Parliament.  Let them ponder on the
+probability of succeeding with the people.  You may deny the
+concession of a political question for a time, and a nation will
+bear it patiently.  Strike home to the comforts of every man's
+fireside - tamper with every man's freedom and liberty - and one
+month, one week, may rouse a feeling abroad, which a king would
+gladly yield his crown to quell, and a peer would resign his
+coronet to allay.
+
+It is the custom to affect a deference for the motives of those who
+advocate these measures, and a respect for the feelings by which
+they are actuated.  They do not deserve it.  If they legislate in
+ignorance, they are criminal and dishonest; if they do so with
+their eyes open, they commit wilful injustice; in either case, they
+bring religion into contempt.  But they do NOT legislate in
+ignorance.  Public prints, and public men, have pointed out to them
+again and again, the consequences of their proceedings.  If they
+persist in thrusting themselves forward, let those consequences
+rest upon their own heads, and let them be content to stand upon
+their own merits.
+
+It may be asked, what motives can actuate a man who has so little
+regard for the comfort of his fellow-beings, so little respect for
+their wants and necessities, and so distorted a notion of the
+beneficence of his Creator.  I reply, an envious, heartless, ill-
+conditioned dislike to seeing those whom fortune has placed below
+him, cheerful and happy - an intolerant confidence in his own high
+worthiness before God, and a lofty impression of the demerits of
+others - pride, selfish pride, as inconsistent with the spirit of
+Christianity itself, as opposed to the example of its Founder upon
+earth.
+
+To these may be added another class of men - the stern and gloomy
+enthusiasts, who would make earth a hell, and religion a torment:
+men who, having wasted the earlier part of their lives in
+dissipation and depravity, find themselves when scarcely past its
+meridian, steeped to the neck in vice, and shunned like a loathsome
+disease.  Abandoned by the world, having nothing to fall back upon,
+nothing to remember but time mis-spent, and energies misdirected,
+they turn their eyes and not their thoughts to Heaven, and delude
+themselves into the impious belief, that in denouncing the
+lightness of heart of which they cannot partake, and the rational
+pleasures from which they never derived enjoyment, they are more
+than remedying the sins of their old career, and - like the
+founders of monasteries and builders of churches, in ruder days -
+establishing a good set claim upon their Maker.
+
+
+
+CHAPTER III - AS IT MIGHT BE MADE
+
+
+
+The supporters of Sabbath Bills, and more especially the extreme
+class of Dissenters, lay great stress upon the declarations
+occasionally made by criminals from the condemned cell or the
+scaffold, that to Sabbath-breaking they attribute their first
+deviation from the path of rectitude; and they point to these
+statements, as an incontestable proof of the evil consequences
+which await a departure from that strict and rigid observance of
+the Sabbath, which they uphold.  I cannot help thinking that in
+this, as in almost every other respect connected with the subject,
+there is a considerable degree of cant, and a very great deal of
+wilful blindness.  If a man be viciously disposed - and with very
+few exceptions, not a man dies by the executioner's hands, who has
+not been in one way or other a most abandoned and profligate
+character for many years - if a man be viciously disposed, there is
+no doubt that he will turn his Sunday to bad account, that he will
+take advantage of it, to dissipate with other bad characters as
+vile as himself; and that in this way, he may trace his first
+yielding to temptation, possibly his first commission of crime, to
+an infringement of the Sabbath.  But this would be an argument
+against any holiday at all.  If his holiday had been Wednesday
+instead of Sunday, and he had devoted it to the same improper uses,
+it would have been productive of the same results.  It is too much
+to judge of the character of a whole people, by the confessions of
+the very worst members of society.  It is not fair, to cry down
+things which are harmless in themselves, because evil-disposed men
+may turn them to bad account.  Who ever thought of deprecating the
+teaching poor people to write, because some porter in a warehouse
+had committed forgery?  Or into what man's head did it ever enter,
+to prevent the crowding of churches, because it afforded a
+temptation for the picking of pockets?
+
+When the Book of Sports, for allowing the peasantry of England to
+divert themselves with certain games in the open air, on Sundays,
+after evening service, was published by Charles the First, it is
+needless to say the English people were comparatively rude and
+uncivilised.  And yet it is extraordinary to how few excesses it
+gave rise, even in that day, when men's minds were not enlightened,
+or their passions moderated, by the influence of education and
+refinement.  That some excesses were committed through its means,
+in the remoter parts of the country, and that it was discontinued
+in those places, in consequence, cannot be denied:  but generally
+speaking, there is no proof whatever on record, of its having had
+any tendency to increase crime, or to lower the character of the
+people.
+
+The Puritans of that time, were as much opposed to harmless
+recreations and healthful amusements as those of the present day,
+and it is amusing to observe that each in their generation, advance
+precisely the same description of arguments.  In the British
+Museum, there is a curious pamphlet got up by the Agnews of
+Charles's time, entitled 'A Divine Tragedie lately acted, or a
+Collection of sundry memorable examples of God's Judgements upon
+Sabbath Breakers, and other like Libertines in their unlawful
+Sports, happening within the realme of England, in the compass only
+of two yeares last past, since the Booke (of Sports) was published,
+worthy to be knowne and considered of all men, especially such who
+are guilty of the sinne, or archpatrons thereof.'  This amusing
+document, contains some fifty or sixty veritable accounts of balls
+of fire that fell into churchyards and upset the sporters, and
+sporters that quarrelled, and upset one another, and so forth:  and
+among them is one anecdote containing an example of a rather
+different kind, which I cannot resist the temptation of quoting, as
+strongly illustrative of the fact, that this blinking of the
+question has not even the recommendation of novelty.
+
+'A woman about Northampton, the same day that she heard the booke
+for sports read, went immediately, and having 3. pence in her
+purse, hired a fellow to goe to the next towne to fetch a
+Minstrell, who coming, she with others fell a dauncing, which
+continued within night; at which time shee was got with child,
+which at the birth shee murthering, was detected and apprehended,
+and being converted before the justice, shee confessed it, and
+withal told the occasion of it, saying it was her falling to sport
+on the Sabbath, upon the reading of the Booke, so as for this
+treble sinfull act, her presumptuous profaning of the Sabbath, wh.
+brought her adultory and that murther.  Shee was according to the
+Law both of God and man, put to death.  Much sinne and misery
+followeth upon Sabbath-breaking.'
+
+It is needless to say, that if the young lady near Northampton had
+'fallen to sport' of such a dangerous description, on any other day
+but Sunday, the first result would probably have been the same:  it
+never having been distinctly shown that Sunday is more favourable
+to the propagation of the human race than any other day in the
+week.  The second result - the murder of the child - does not speak
+very highly for the amiability of her natural disposition; and the
+whole story, supposing it to have had any foundation at all, is
+about as much chargeable upon the Book of Sports, as upon the Book
+of Kings.  Such 'sports' have taken place in Dissenting Chapels
+before now; but religion has never been blamed in consequence; nor
+has it been proposed to shut up the chapels on that account.
+
+The question, then, very fairly arises, whether we have any reason
+to suppose that allowing games in the open air on Sundays, or even
+providing the means of amusement for the humbler classes of society
+on that day, would be hurtful and injurious to the character and
+morals of the people.
+
+I was travelling in the west of England a summer or two back, and
+was induced by the beauty of the scenery, and the seclusion of the
+spot, to remain for the night in a small village, distant about
+seventy miles from London.  The next morning was Sunday; and I
+walked out, towards the church.  Groups of people - the whole
+population of the little hamlet apparently - were hastening in the
+same direction.  Cheerful and good-humoured congratulations were
+heard on all sides, as neighbours overtook each other, and walked
+on in company.  Occasionally I passed an aged couple, whose married
+daughter and her husband were loitering by the side of the old
+people, accommodating their rate of walking to their feeble pace,
+while a little knot of children hurried on before; stout young
+labourers in clean round frocks; and buxom girls with healthy,
+laughing faces, were plentifully sprinkled about in couples, and
+the whole scene was one of quiet and tranquil contentment,
+irresistibly captivating.  The morning was bright and pleasant, the
+hedges were green and blooming, and a thousand delicious scents
+were wafted on the air, from the wild flowers which blossomed on
+either side of the footpath.  The little church was one of those
+venerable simple buildings which abound in the English counties;
+half overgrown with moss and ivy, and standing in the centre of a
+little plot of ground, which, but for the green mounds with which
+it was studded, might have passed for a lovely meadow.  I fancied
+that the old clanking bell which was now summoning the congregation
+together, would seem less terrible when it rung out the knell of a
+departed soul, than I had ever deemed possible before - that the
+sound would tell only of a welcome to calmness and rest, amidst the
+most peaceful and tranquil scene in nature.
+
+I followed into the church - a low-roofed building with small
+arched windows, through which the sun's rays streamed upon a plain
+tablet on the opposite wall, which had once recorded names, now as
+undistinguishable on its worn surface, as were the bones beneath,
+from the dust into which they had resolved.  The impressive service
+of the Church of England was spoken - not merely READ - by a grey-
+headed minister, and the responses delivered by his auditors, with
+an air of sincere devotion as far removed from affectation or
+display, as from coldness or indifference.  The psalms were
+accompanied by a few instrumental performers, who were stationed in
+a small gallery extending across the church at the lower end, over
+the door:  and the voices were led by the clerk, who, it was
+evident, derived no slight pride and gratification from this
+portion of the service.  The discourse was plain, unpretending, and
+well adapted to the comprehension of the hearers.  At the
+conclusion of the service, the villagers waited in the churchyard,
+to salute the clergyman as he passed; and two or three, I observed,
+stepped aside, as if communicating some little difficulty, and
+asking his advice.  This, to guess from the homely bows, and other
+rustic expressions of gratitude, the old gentleman readily
+conceded.  He seemed intimately acquainted with the circumstances
+of all his parishioners; for I heard him inquire after one man's
+youngest child, another man's wife, and so forth; and that he was
+fond of his joke, I discovered from overhearing him ask a stout,
+fresh-coloured young fellow, with a very pretty bashful-looking
+girl on his arm, 'when those banns were to be put up?' - an inquiry
+which made the young fellow more fresh-coloured, and the girl more
+bashful, and which, strange to say, caused a great many other girls
+who were standing round, to colour up also, and look anywhere but
+in the faces of their male companions.
+
+As I approached this spot in the evening about half an hour before
+sunset, I was surprised to hear the hum of voices, and occasionally
+a shout of merriment from the meadow beyond the churchyard; which I
+found, when I reached the stile, to be occasioned by a very
+animated game of cricket, in which the boys and young men of the
+place were engaged, while the females and old people were scattered
+about:  some seated on the grass watching the progress of the game,
+and others sauntering about in groups of two or three, gathering
+little nosegays of wild roses and hedge flowers.  I could not but
+take notice of one old man in particular, with a bright-eyed grand-
+daughter by his side, who was giving a sunburnt young fellow some
+instructions in the game, which he received with an air of profound
+deference, but with an occasional glance at the girl, which induced
+me to think that his attention was rather distracted from the old
+gentleman's narration of the fruits of his experience.  When it was
+his turn at the wicket, too, there was a glance towards the pair
+every now and then, which the old grandfather very complacently
+considered as an appeal to his judgment of a particular hit, but
+which a certain blush in the girl's face, and a downcast look of
+the bright eye, led me to believe was intended for somebody else
+than the old man, - and understood by somebody else, too, or I am
+much mistaken.
+
+I was in the very height of the pleasure which the contemplation of
+this scene afforded me, when I saw the old clergyman making his way
+towards us.  I trembled for an angry interruption to the sport, and
+was almost on the point of crying out, to warn the cricketers of
+his approach; he was so close upon me, however, that I could do
+nothing but remain still, and anticipate the reproof that was
+preparing.  What was my agreeable surprise to see the old gentleman
+standing at the stile, with his hands in his pockets, surveying the
+whole scene with evident satisfaction!  And how dull I must have
+been, not to have known till my friend the grandfather (who, by-
+the-bye, said he had been a wonderful cricketer in his time) told
+me, that it was the clergyman himself who had established the whole
+thing:  that it was his field they played in; and that it was he
+who had purchased stumps, bats, ball, and all!
+
+It is such scenes as this, I would see near London, on a Sunday
+evening.  It is such men as this, who would do more in one year to
+make people properly religious, cheerful, and contented, than all
+the legislation of a century could ever accomplish.
+
+It will be said - it has been very often - that it would be matter
+of perfect impossibility to make amusements and exercises succeed
+in large towns, which may be very well adapted to a country
+population.  Here, again, we are called upon to yield to bare
+assertions on matters of belief and opinion, as if they were
+established and undoubted facts.  That there is a wide difference
+between the two cases, no one will be prepared to dispute; that the
+difference is such as to prevent the application of the same
+principle to both, no reasonable man, I think, will be disposed to
+maintain.  The great majority of the people who make holiday on
+Sunday now, are industrious, orderly, and well-behaved persons.  It
+is not unreasonable to suppose that they would be no more inclined
+to an abuse of pleasures provided for them, than they are to an
+abuse of the pleasures they provide for themselves; and if any
+people, for want of something better to do, resort to criminal
+practices on the Sabbath as at present observed, no better remedy
+for the evil can be imagined, than giving them the opportunity of
+doing something which will amuse them, and hurt nobody else.
+
+The propriety of opening the British Museum to respectable people
+on Sunday, has lately been the subject of some discussion.  I think
+it would puzzle the most austere of the Sunday legislators to
+assign any valid reason for opposing so sensible a proposition.
+The Museum contains rich specimens from all the vast museums and
+repositories of Nature, and rare and curious fragments of the
+mighty works of art, in bygone ages:  all calculated to awaken
+contemplation and inquiry, and to tend to the enlightenment and
+improvement of the people.  But attendants would be necessary, and
+a few men would be employed upon the Sabbath.  They certainly
+would; but how many?  Why, if the British Museum, and the National
+Gallery, and the Gallery of Practical Science, and every other
+exhibition in London, from which knowledge is to be derived and
+information gained, were to be thrown open on a Sunday afternoon,
+not fifty people would be required to preside over the whole:  and
+it would take treble the number to enforce a Sabbath bill in any
+three populous parishes.
+
+I should like to see some large field, or open piece of ground, in
+every outskirt of London, exhibiting each Sunday evening on a
+larger scale, the scene of the little country meadow.  I should
+like to see the time arrive, when a man's attendance to his
+religious duties might be left to that religious feeling which most
+men possess in a greater or less degree, but which was never forced
+into the breast of any man by menace or restraint.  I should like
+to see the time when Sunday might be looked forward to, as a
+recognised day of relaxation and enjoyment, and when every man
+might feel, what few men do now, that religion is not incompatible
+with rational pleasure and needful recreation.
+
+How different a picture would the streets and public places then
+present!  The museums, and repositories of scientific and useful
+inventions, would be crowded with ingenious mechanics and
+industrious artisans, all anxious for information, and all unable
+to procure it at any other time.  The spacious saloons would be
+swarming with practical men:  humble in appearance, but destined,
+perhaps, to become the greatest inventors and philosophers of their
+age.  The labourers who now lounge away the day in idleness and
+intoxication, would be seen hurrying along, with cheerful faces and
+clean attire, not to the close and smoky atmosphere of the public-
+house but to the fresh and airy fields.  Fancy the pleasant scene.
+Throngs of people, pouring out from the lanes and alleys of the
+metropolis, to various places of common resort at some short
+distance from the town, to join in the refreshing sports and
+exercises of the day - the children gambolling in crowds upon the
+grass, the mothers looking on, and enjoying themselves the little
+game they seem only to direct; other parties strolling along some
+pleasant walks, or reposing in the shade of the stately trees;
+others again intent upon their different amusements.  Nothing
+should be heard on all sides, but the sharp stroke of the bat as it
+sent the ball skimming along the ground, the clear ring of the
+quoit, as it struck upon the iron peg:  the noisy murmur of many
+voices, and the loud shout of mirth and delight, which would awaken
+the echoes far and wide, till the fields rung with it.  The day
+would pass away, in a series of enjoyments which would awaken no
+painful reflections when night arrived; for they would be
+calculated to bring with them, only health and contentment.  The
+young would lose that dread of religion, which the sour austerity
+of its professors too often inculcates in youthful bosoms; and the
+old would find less difficulty in persuading them to respect its
+observances.  The drunken and dissipated, deprived of any excuse
+for their misconduct, would no longer excite pity but disgust.
+Above all, the more ignorant and humble class of men, who now
+partake of many of the bitters of life, and taste but few of its
+sweets, would naturally feel attachment and respect for that code
+of morality, which, regarding the many hardships of their station,
+strove to alleviate its rigours, and endeavoured to soften its
+asperity.
+
+This is what Sunday might be made, and what it might be made
+without impiety or profanation.  The wise and beneficent Creator
+who places men upon earth, requires that they shall perform the
+duties of that station of life to which they are called, and He can
+never intend that the more a man strives to discharge those duties,
+the more he shall be debarred from happiness and enjoyment.  Let
+those who have six days in the week for all the world's pleasures,
+appropriate the seventh to fasting and gloom, either for their own
+sins or those of other people, if they like to bewail them; but let
+those who employ their six days in a worthier manner, devote their
+seventh to a different purpose.  Let divines set the example of
+true morality:  preach it to their flocks in the morning, and
+dismiss them to enjoy true rest in the afternoon; and let them
+select for their text, and let Sunday legislators take for their
+motto, the words which fell from the lips of that Master, whose
+precepts they misconstrue, and whose lessons they pervert - 'The
+Sabbath was made for man, and not man to serve the Sabbath.'
+
+
+
+
+
+End of Project Gutenberg's Etext of Sunday Under Three Heads by Dickens
+

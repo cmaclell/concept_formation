@@ -1,0 +1,1529 @@
+*The Project Gutenberg Etext of George Silverman's Explanation*
+#18 in our series by Charles Dickens
+
+
+Copyright laws are changing all over the world, be sure to check
+the copyright laws for your country before posting these files!!
+
+Please take a look at the important information in this header.
+We encourage you to keep this file on your own disk, keeping an
+electronic path open for the next readers.  Do not remove this.
+
+
+**Welcome To The World of Free Plain Vanilla Electronic Texts**
+
+**Etexts Readable By Both Humans and By Computers, Since 1971**
+
+*These Etexts Prepared By Hundreds of Volunteers and Donations*
+
+Information on contacting Project Gutenberg to get Etexts, and
+further information is included below.  We need your donations.
+
+
+George Silverman's Explanation
+
+by Charles Dickens
+
+February, 1997  [Etext #809]
+
+
+*The Project Gutenberg Etext of George Silverman's Explanation*
+*****This file should be named hldrm10.txt or hldrm10.zip******
+
+Corrected EDITIONS of our etexts get a new NUMBER, hldrm11.txt.
+VERSIONS based on separate sources get new LETTER, hldrm10a.txt.
+
+
+Scanned and proofed by David Price
+ccx074@coventry.ac.uk
+
+
+We are now trying to release all our books one month in advance
+of the official release dates, for time for better editing.
+
+Please note:  neither this list nor its contents are final till
+midnight of the last day of the month of any such announcement.
+The official release date of all Project Gutenberg Etexts is at
+Midnight, Central Time, of the last day of the stated month.  A
+preliminary version may often be posted for suggestion, comment
+and editing by those who wish to do so.  To be sure you have an
+up to date first edition [xxxxx10x.xxx] please check file sizes
+in the first week of the next month.  Since our ftp program has
+a bug in it that scrambles the date [tried to fix and failed] a
+look at the file size will have to do, but we will try to see a
+new copy has at least one byte more or less.
+
+
+Information about Project Gutenberg (one page)
+
+We produce about two million dollars for each hour we work.  The
+fifty hours is one conservative estimate for how long it we take
+to get any etext selected, entered, proofread, edited, copyright
+searched and analyzed, the copyright letters written, etc.  This
+projected audience is one hundred million readers.  If our value
+per text is nominally estimated at one dollar then we produce $2
+million dollars per hour this year as we release thirty-two text
+files per month:  or 400 more Etexts in 1996 for a total of 800.
+If these reach just 10% of the computerized population, then the
+total should reach 80 billion Etexts.  We will try add 800 more,
+during 1997, but it will take all the effort we can manage to do
+the doubling of our library again this year, what with the other
+massive requirements it is going to take to get incorporated and
+establish something that will have some permanence.
+
+The Goal of Project Gutenberg is to Give Away One Trillion Etext
+Files by the December 31, 2001.  [10,000 x 100,000,000=Trillion]
+This is ten thousand titles each to one hundred million readers,
+which is only 10% of the present number of computer users.  2001
+should have at least twice as many computer users as that, so it
+will require us reaching less than 5% of the users in 2001.
+
+
+We need your donations more than ever!
+
+
+All donations should be made to "Project Gutenberg"
+
+
+For these and other matters, please mail to:
+
+Project Gutenberg
+P. O. Box  2782
+Champaign, IL 61825
+
+When all other email fails try our Executive Director:
+Michael S. Hart <hart@pobox.com>
+
+We would prefer to send you this information by email
+(Internet, Bitnet, Compuserve, ATTMAIL or MCImail).
+
+******
+If you have an FTP program (or emulator), please
+FTP directly to the Project Gutenberg archives:
+[Mac users, do NOT point and click. . .type]
+
+ftp uiarchive.cso.uiuc.edu
+login:  anonymous
+password:  your@login
+cd etext/etext90 through /etext97
+or cd etext/articles [get suggest gut for more information]
+dir [to see files]
+get or mget [to get files. . .set bin for zip files]
+GET INDEX?00.GUT
+for a list of books
+and
+GET NEW GUT for general information
+and
+MGET GUT* for newsletters.
+
+**Information prepared by the Project Gutenberg legal advisor**
+(Three Pages)
+
+
+***START**THE SMALL PRINT!**FOR PUBLIC DOMAIN ETEXTS**START***
+Why is this "Small Print!" statement here?  You know: lawyers.
+They tell us you might sue us if there is something wrong with
+your copy of this etext, even if you got it for free from
+someone other than us, and even if what's wrong is not our
+fault.  So, among other things, this "Small Print!" statement
+disclaims most of our liability to you.  It also tells you how
+you can distribute copies of this etext if you want to.
+
+*BEFORE!* YOU USE OR READ THIS ETEXT
+By using or reading any part of this PROJECT GUTENBERG-tm
+etext, you indicate that you understand, agree to and accept
+this "Small Print!" statement.  If you do not, you can receive
+a refund of the money (if any) you paid for this etext by
+sending a request within 30 days of receiving it to the person
+you got it from.  If you received this etext on a physical
+medium (such as a disk), you must return it with your request.
+
+ABOUT PROJECT GUTENBERG-TM ETEXTS
+This PROJECT GUTENBERG-tm etext, like most PROJECT GUTENBERG-
+tm etexts, is a "public domain" work distributed by Professor
+Michael S. Hart through the Project Gutenberg (the "Project").
+Among other things, this means that no one owns a United States
+copyright on or for this work, so the Project (and you!) can copy
+and distribute it in the United States without permission and
+without paying copyright royalties.  Special rules, set forth
+below, apply if you wish to copy and distribute this etext
+under the Project's "PROJECT GUTENBERG" trademark.
+
+To create these etexts, the Project expends considerable
+efforts to identify, transcribe and proofread public domain
+works.  Despite these efforts, the Project's etexts and any
+medium they may be on may contain "Defects".  Among other
+things, Defects may take the form of incomplete, inaccurate or
+corrupt data, transcription errors, a copyright or other
+intellectual property infringement, a defective or damaged
+disk or other etext medium, a computer virus, or computer
+codes that damage or cannot be read by your equipment.
+
+LIMITED WARRANTY; DISCLAIMER OF DAMAGES
+But for the "Right of Replacement or Refund" described below,
+[1] the Project (and any other party you may receive this
+etext from as a PROJECT GUTENBERG-tm etext) disclaims all
+liability to you for damages, costs and expenses, including
+legal fees, and [2] YOU HAVE NO REMEDIES FOR NEGLIGENCE OR
+UNDER STRICT LIABILITY, OR FOR BREACH OF WARRANTY OR CONTRACT,
+INCLUDING BUT NOT LIMITED TO INDIRECT, CONSEQUENTIAL, PUNITIVE
+OR INCIDENTAL DAMAGES, EVEN IF YOU GIVE NOTICE OF THE
+POSSIBILITY OF SUCH DAMAGES.
+
+If you discover a Defect in this etext within 90 days of
+receiving it, you can receive a refund of the money (if any)
+you paid for it by sending an explanatory note within that
+time to the person you received it from.  If you received it
+on a physical medium, you must return it with your note, and
+such person may choose to alternatively give you a replacement
+copy.  If you received it electronically, such person may
+choose to alternatively give you a second opportunity to
+receive it electronically.
+
+THIS ETEXT IS OTHERWISE PROVIDED TO YOU "AS-IS".  NO OTHER
+WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED, ARE MADE TO YOU AS
+TO THE ETEXT OR ANY MEDIUM IT MAY BE ON, INCLUDING BUT NOT
+LIMITED TO WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A
+PARTICULAR PURPOSE.
+
+Some states do not allow disclaimers of implied warranties or
+the exclusion or limitation of consequential damages, so the
+above disclaimers and exclusions may not apply to you, and you
+may have other legal rights.
+
+INDEMNITY
+You will indemnify and hold the Project, its directors,
+officers, members and agents harmless from all liability, cost
+and expense, including legal fees, that arise directly or
+indirectly from any of the following that you do or cause:
+[1] distribution of this etext, [2] alteration, modification,
+or addition to the etext, or [3] any Defect.
+
+DISTRIBUTION UNDER "PROJECT GUTENBERG-tm"
+You may distribute copies of this etext electronically, or by
+disk, book or any other medium if you either delete this
+"Small Print!" and all other references to Project Gutenberg,
+or:
+
+[1]  Only give exact copies of it.  Among other things, this
+     requires that you do not remove, alter or modify the
+     etext or this "small print!" statement.  You may however,
+     if you wish, distribute this etext in machine readable
+     binary, compressed, mark-up, or proprietary form,
+     including any form resulting from conversion by word pro-
+     cessing or hypertext software, but only so long as
+     *EITHER*:
+
+     [*]  The etext, when displayed, is clearly readable, and
+          does *not* contain characters other than those
+          intended by the author of the work, although tilde
+          (~), asterisk (*) and underline (_) characters may
+          be used to convey punctuation intended by the
+          author, and additional characters may be used to
+          indicate hypertext links; OR
+
+     [*]  The etext may be readily converted by the reader at
+          no expense into plain ASCII, EBCDIC or equivalent
+          form by the program that displays the etext (as is
+          the case, for instance, with most word processors);
+          OR
+
+     [*]  You provide, or agree to also provide on request at
+          no additional cost, fee or expense, a copy of the
+          etext in its original plain ASCII form (or in EBCDIC
+          or other equivalent proprietary form).
+
+[2]  Honor the etext refund and replacement provisions of this
+     "Small Print!" statement.
+
+[3]  Pay a trademark license fee to the Project of 20% of the
+     net profits you derive calculated using the method you
+     already use to calculate your applicable taxes.  If you
+     don't derive profits, no royalty is due.  Royalties are
+     payable to "Project Gutenberg Association within the 60
+     days following each date you prepare (or were legally
+     required to prepare) your annual (or equivalent periodic)
+     tax return.
+
+WHAT IF YOU *WANT* TO SEND MONEY EVEN IF YOU DON'T HAVE TO?
+The Project gratefully accepts contributions in money, time,
+scanning machines, OCR software, public domain etexts, royalty
+free copyright licenses, and every other sort of contribution
+you can think of.  Money should be paid to "Project Gutenberg
+Association".
+
+*END*THE SMALL PRINT! FOR PUBLIC DOMAIN ETEXTS*Ver.04.29.93*END*
+
+
+
+
+
+George Silverman's Explanation by Charles Dickens
+Scanned and proofed by David Price
+ccx074@coventry.ac.uk
+
+
+
+
+
+GEORGE SILVERMAN'S EXPLANATION
+
+
+
+
+FIRST CHAPTER
+
+
+
+IT happened in this wise -
+
+But, sitting with my pen in my hand looking at those words again,
+without descrying any hint in them of the words that should follow,
+it comes into my mind that they have an abrupt appearance.  They
+may serve, however, if I let them remain, to suggest how very
+difficult I find it to begin to explain my explanation.  An uncouth
+phrase: and yet I do not see my way to a better.
+
+
+
+SECOND CHAPTER
+
+
+
+IT happened in THIS wise -
+
+But, looking at those words, and comparing them with my former
+opening, I find they are the self-same words repeated.  This is the
+more surprising to me, because I employ them in quite a new
+connection.  For indeed I declare that my intention was to discard
+the commencement I first had in my thoughts, and to give the
+preference to another of an entirely different nature, dating my
+explanation from an anterior period of my life.  I will make a
+third trial, without erasing this second failure, protesting that
+it is not my design to conceal any of my infirmities, whether they
+be of head or heart.
+
+
+
+THIRD CHAPTER
+
+
+
+NOT as yet directly aiming at how it came to pass, I will come upon
+it by degrees.  The natural manner, after all, for God knows that
+is how it came upon me.
+
+My parents were in a miserable condition of life, and my infant
+home was a cellar in Preston.  I recollect the sound of father's
+Lancashire clogs on the street pavement above, as being different
+in my young hearing from the sound of all other clogs; and I
+recollect, that, when mother came down the cellar-steps, I used
+tremblingly to speculate on her feet having a good or an ill-
+tempered look, - on her knees, - on her waist, - until finally her
+face came into view, and settled the question.  From this it will
+be seen that I was timid, and that the cellar-steps were steep, and
+that the doorway was very low.
+
+Mother had the gripe and clutch of poverty upon her face, upon her
+figure, and not least of all upon her voice.  Her sharp and high-
+pitched words were squeezed out of her, as by the compression of
+bony fingers on a leathern bag; and she had a way of rolling her
+eyes about and about the cellar, as she scolded, that was gaunt and
+hungry.  Father, with his shoulders rounded, would sit quiet on a
+three-legged stool, looking at the empty grate, until she would
+pluck the stool from under him, and bid him go bring some money
+home.  Then he would dismally ascend the steps; and I, holding my
+ragged shirt and trousers together with a hand (my only braces),
+would feint and dodge from mother's pursuing grasp at my hair.
+
+A worldly little devil was mother's usual name for me.  Whether I
+cried for that I was in the dark, or for that it was cold, or for
+that I was hungry, or whether I squeezed myself into a warm corner
+when there was a fire, or ate voraciously when there was food, she
+would still say, 'O, you worldly little devil!'  And the sting of
+it was, that I quite well knew myself to be a worldly little devil.
+Worldly as to wanting to be housed and warmed, worldly as to
+wanting to be fed, worldly as to the greed with which I inwardly
+compared how much I got of those good things with how much father
+and mother got, when, rarely, those good things were going.
+
+Sometimes they both went away seeking work; and then I would be
+locked up in the cellar for a day or two at a time.  I was at my
+worldliest then.  Left alone, I yielded myself up to a worldly
+yearning for enough of anything (except misery), and for the death
+of mother's father, who was a machine-maker at Birmingham, and on
+whose decease, I had heard mother say, she would come into a whole
+courtful of houses 'if she had her rights.'  Worldly little devil,
+I would stand about, musingly fitting my cold bare feet into
+cracked bricks and crevices of the damp cellar-floor, - walking
+over my grandfather's body, so to speak, into the courtful of
+houses, and selling them for meat and drink, and clothes to wear.
+
+At last a change came down into our cellar.  The universal change
+came down even as low as that, - so will it mount to any height on
+which a human creature can perch, - and brought other changes with
+it.
+
+We had a heap of I don't know what foul litter in the darkest
+corner, which we called 'the bed.'  For three days mother lay upon
+it without getting up, and then began at times to laugh.  If I had
+ever heard her laugh before, it had been so seldom that the strange
+sound frightened me.  It frightened father too; and we took it by
+turns to give her water.  Then she began to move her head from side
+to side, and sing.  After that, she getting no better, father fell
+a-laughing and a-singing; and then there was only I to give them
+both water, and they both died.
+
+
+
+FOURTH CHAPTER
+
+
+
+WHEN I was lifted out of the cellar by two men, of whom one came
+peeping down alone first, and ran away and brought the other, I
+could hardly bear the light of the street.  I was sitting in the
+road-way, blinking at it, and at a ring of people collected around
+me, but not close to me, when, true to my character of worldly
+little devil, I broke silence by saying, 'I am hungry and thirsty!'
+
+'Does he know they are dead?' asked one of another.
+
+'Do you know your father and mother are both dead of fever?' asked
+a third of me severely.
+
+'I don't know what it is to be dead.  I supposed it meant that,
+when the cup rattled against their teeth, and the water spilt over
+them.  I am hungry and thirsty.'  That was all I had to say about
+it.
+
+The ring of people widened outward from the inner side as I looked
+around me; and I smelt vinegar, and what I know to be camphor,
+thrown in towards where I sat.  Presently some one put a great
+vessel of smoking vinegar on the ground near me; and then they all
+looked at me in silent horror as I ate and drank of what was
+brought for me.  I knew at the time they had a horror of me, but I
+couldn't help it.
+
+I was still eating and drinking, and a murmur of discussion had
+begun to arise respecting what was to be done with me next, when I
+heard a cracked voice somewhere in the ring say, 'My name is
+Hawkyard, Mr. Verity Hawkyard, of West Bromwich.'  Then the ring
+split in one place; and a yellow-faced, peak-nosed gentleman, clad
+all in iron-gray to his gaiters, pressed forward with a policeman
+and another official of some sort.  He came forward close to the
+vessel of smoking vinegar; from which he sprinkled himself
+carefully, and me copiously.
+
+'He had a grandfather at Birmingham, this young boy, who is just
+dead too,' said Mr. Hawkyard.
+
+I turned my eyes upon the speaker, and said in a ravening manner,
+'Where's his houses?'
+
+'Hah!  Horrible worldliness on the edge of the grave,' said Mr.
+Hawkyard, casting more of the vinegar over me, as if to get my
+devil out of me.  'I have undertaken a slight - a very slight -
+trust in behalf of this boy; quite a voluntary trust: a matter of
+mere honour, if not of mere sentiment: still I have taken it upon
+myself, and it shall be (O, yes, it shall be!) discharged.'
+
+The bystanders seemed to form an opinion of this gentleman much
+more favourable than their opinion of me.
+
+'He shall be taught,' said Mr. Hawkyard, '(O, yes, he shall be
+taught!) but what is to be done with him for the present?  He may
+be infected.  He may disseminate infection.'  The ring widened
+considerably.  'What is to be done with him?'
+
+He held some talk with the two officials.  I could distinguish no
+word save 'Farm-house.'  There was another sound several times
+repeated, which was wholly meaningless in my ears then, but which I
+knew afterwards to be 'Hoghton Towers.'
+
+'Yes,' said Mr. Hawkyard.  'I think that sounds promising; I think
+that sounds hopeful.  And he can be put by himself in a ward, for a
+night or two, you say?'
+
+It seemed to be the police-officer who had said so; for it was he
+who replied, Yes!  It was he, too, who finally took me by the arm,
+and walked me before him through the streets, into a whitewashed
+room in a bare building, where I had a chair to sit in, a table to
+sit at, an iron bedstead and good mattress to lie upon, and a rug
+and blanket to cover me.  Where I had enough to eat too, and was
+shown how to clean the tin porringer in which it was conveyed to
+me, until it was as good as a looking-glass.  Here, likewise, I was
+put in a bath, and had new clothes brought to me; and my old rags
+were burnt, and I was camphored and vinegared and disinfected in a
+variety of ways.
+
+When all this was done, - I don't know in how many days or how few,
+but it matters not, - Mr. Hawkyard stepped in at the door,
+remaining close to it, and said, 'Go and stand against the opposite
+wall, George Silverman.  As far off as you can.  That'll do.  How
+do you feel?'
+
+I told him that I didn't feel cold, and didn't feel hungry, and
+didn't feel thirsty.  That was the whole round of human feelings,
+as far as I knew, except the pain of being beaten.
+
+'Well,' said he, 'you are going, George, to a healthy farm-house to
+be purified.  Keep in the air there as much as you can.  Live an
+out-of-door life there, until you are fetched away.  You had better
+not say much - in fact, you had better be very careful not to say
+anything - about what your parents died of, or they might not like
+to take you in.  Behave well, and I'll put you to school; O, yes!
+I'll put you to school, though I'm not obligated to do it.  I am a
+servant of the Lord, George; and I have been a good servant to him,
+I have, these five-and-thirty years.  The Lord has had a good
+servant in me, and he knows it.'
+
+What I then supposed him to mean by this, I cannot imagine.  As
+little do I know when I began to comprehend that he was a prominent
+member of some obscure denomination or congregation, every member
+of which held forth to the rest when so inclined, and among whom he
+was called Brother Hawkyard.  It was enough for me to know, on that
+day in the ward, that the farmer's cart was waiting for me at the
+street corner.  I was not slow to get into it; for it was the first
+ride I ever had in my life.
+
+It made me sleepy, and I slept.  First, I stared at Preston streets
+as long as they lasted; and, meanwhile, I may have had some small
+dumb wondering within me whereabouts our cellar was; but I doubt
+it.  Such a worldly little devil was I, that I took no thought who
+would bury father and mother, or where they would be buried, or
+when.  The question whether the eating and drinking by day, and the
+covering by night, would be as good at the farm-house as at the
+ward superseded those questions.
+
+The jolting of the cart on a loose stony road awoke me; and I found
+that we were mounting a steep hill, where the road was a rutty by-
+road through a field.  And so, by fragments of an ancient terrace,
+and by some rugged outbuildings that had once been fortified, and
+passing under a ruined gateway we came to the old farm-house in the
+thick stone wall outside the old quadrangle of Hoghton Towers:
+which I looked at like a stupid savage, seeing no specially in,
+seeing no antiquity in; assuming all farm-houses to resemble it;
+assigning the decay I noticed to the one potent cause of all ruin
+that I knew, - poverty; eyeing the pigeons in their flights, the
+cattle in their stalls, the ducks in the pond, and the fowls
+pecking about the yard, with a hungry hope that plenty of them
+might be killed for dinner while I stayed there; wondering whether
+the scrubbed dairy vessels, drying in the sunlight, could be goodly
+porringers out of which the master ate his belly-filling food, and
+which he polished when he had done, according to my ward
+experience; shrinkingly doubtful whether the shadows, passing over
+that airy height on the bright spring day, were not something in
+the nature of frowns, - sordid, afraid, unadmiring, - a small brute
+to shudder at.
+
+To that time I had never had the faintest impression of duty.  I
+had had no knowledge whatever that there was anything lovely in
+this life.  When I had occasionally slunk up the cellar-steps into
+the street, and glared in at shop-windows, I had done so with no
+higher feelings than we may suppose to animate a mangy young dog or
+wolf-cub.  It is equally the fact that I had never been alone, in
+the sense of holding unselfish converse with myself.  I had been
+solitary often enough, but nothing better.
+
+Such was my condition when I sat down to my dinner that day, in the
+kitchen of the old farm-house.  Such was my condition when I lay on
+my bed in the old farm-house that night, stretched out opposite the
+narrow mullioned window, in the cold light of the moon, like a
+young vampire.
+
+
+
+FIFTH CHAPTER
+
+
+
+WHAT do I know of Hoghton Towers?  Very little; for I have been
+gratefully unwilling to disturb my first impressions.  A house,
+centuries old, on high ground a mile or so removed from the road
+between Preston and Blackburn, where the first James of England, in
+his hurry to make money by making baronets, perhaps made some of
+those remunerative dignitaries.  A house, centuries old, deserted
+and falling to pieces, its woods and gardens long since grass-land
+or ploughed up, the Rivers Ribble and Darwen glancing below it, and
+a vague haze of smoke, against which not even the supernatural
+prescience of the first Stuart could foresee a counter-blast,
+hinting at steam-power, powerful in two distances.
+
+What did I know then of Hoghton Towers?  When I first peeped in at
+the gate of the lifeless quadrangle, and started from the
+mouldering statue becoming visible to me like its guardian ghost;
+when I stole round by the back of the farm-house, and got in among
+the ancient rooms, many of them with their floors and ceilings
+falling, the beams and rafters hanging dangerously down, the
+plaster dropping as I trod, the oaken panels stripped away, the
+windows half walled up, half broken; when I discovered a gallery
+commanding the old kitchen, and looked down between balustrades
+upon a massive old table and benches, fearing to see I know not
+what dead-alive creatures come in and seat themselves, and look up
+with I know not what dreadful eyes, or lack of eyes, at me; when
+all over the house I was awed by gaps and chinks where the sky
+stared sorrowfully at me, where the birds passed, and the ivy
+rustled, and the stains of winter weather blotched the rotten
+floors; when down at the bottom of dark pits of staircase, into
+which the stairs had sunk, green leaves trembled, butterflies
+fluttered, and bees hummed in and out through the broken door-ways;
+when encircling the whole ruin were sweet scents, and sights of
+fresh green growth, and ever-renewing life, that I had never
+dreamed of, - I say, when I passed into such clouded perception of
+these things as my dark soul could compass, what did I know then of
+Hoghton Towers?
+
+I have written that the sky stared sorrowfully at me.  Therein have
+I anticipated the answer.  I knew that all these things looked
+sorrowfully at me; that they seemed to sigh or whisper, not without
+pity for me, 'Alas! poor worldly little devil!'
+
+There were two or three rats at the bottom of one of the smaller
+pits of broken staircase when I craned over and looked in.  They
+were scuffling for some prey that was there; and, when they started
+and hid themselves close together in the dark, I thought of the old
+life (it had grown old already) in the cellar.
+
+How not to be this worldly little devil? how not to have a
+repugnance towards myself as I had towards the rats?  I hid in a
+corner of one of the smaller chambers, frightened at myself, and
+crying (it was the first time I had ever cried for any cause not
+purely physical), and I tried to think about it.  One of the farm-
+ploughs came into my range of view just then; and it seemed to help
+me as it went on with its two horses up and down the field so
+peacefully and quietly.
+
+There was a girl of about my own age in the farm-house family, and
+she sat opposite to me at the narrow table at meal-times.  It had
+come into my mind, at our first dinner, that she might take the
+fever from me.  The thought had not disquieted me then.  I had only
+speculated how she would look under the altered circumstances, and
+whether she would die.  But it came into my mind now, that I might
+try to prevent her taking the fever by keeping away from her.  I
+knew I should have but scrambling board if I did; so much the less
+worldly and less devilish the deed would be, I thought.
+
+From that hour, I withdrew myself at early morning into secret
+corners of the ruined house, and remained hidden there until she
+went to bed.  At first, when meals were ready, I used to hear them
+calling me; and then my resolution weakened.  But I strengthened it
+again by going farther off into the ruin, and getting out of
+hearing.  I often watched for her at the dim windows; and, when I
+saw that she was fresh and rosy, felt much happier.
+
+Out of this holding her in my thoughts, to the humanising of
+myself, I suppose some childish love arose within me.  I felt, in
+some sort, dignified by the pride of protecting her, - by the pride
+of making the sacrifice for her.  As my heart swelled with that new
+feeling, it insensibly softened about mother and father.  It seemed
+to have been frozen before, and now to be thawed.  The old ruin and
+all the lovely things that haunted it were not sorrowful for me
+only, but sorrowful for mother and father as well.  Therefore did I
+cry again, and often too.
+
+The farm-house family conceived me to be of a morose temper, and
+were very short with me; though they never stinted me in such
+broken fare as was to be got out of regular hours.  One night when
+I lifted the kitchen latch at my usual time, Sylvia (that was her
+pretty name) had but just gone out of the room.  Seeing her
+ascending the opposite stairs, I stood still at the door.  She had
+heard the clink of the latch, and looked round.
+
+'George,' she called to me in a pleased voice, 'to-morrow is my
+birthday; and we are to have a fiddler, and there's a party of boys
+and girls coming in a cart, and we shall dance.  I invite you.  Be
+sociable for once, George.'
+
+'I am very sorry, miss,' I answered; 'but I - but, no; I can't
+come.'
+
+'You are a disagreeable, ill-humoured lad,' she returned
+disdainfully; 'and I ought not to have asked you.  I shall never
+speak to you again.'
+
+As I stood with my eyes fixed on the fire, after she was gone, I
+felt that the farmer bent his brows upon me.
+
+'Eh, lad!' said he; 'Sylvy's right.  You're as moody and broody a
+lad as never I set eyes on yet.'
+
+I tried to assure him that I meant no harm; but he only said
+coldly, 'Maybe not, maybe not!  There, get thy supper, get thy
+supper; and then thou canst sulk to thy heart's content again.'
+
+Ah! if they could have seen me next day, in the ruin, watching for
+the arrival of the cart full of merry young guests; if they could
+have seen me at night, gliding out from behind the ghostly statue,
+listening to the music and the fall of dancing feet, and watching
+the lighted farm-house windows from the quadrangle when all the
+ruin was dark; if they could have read my heart, as I crept up to
+bed by the back way, comforting myself with the reflection, 'They
+will take no hurt from me,' - they would not have thought mine a
+morose or an unsocial nature.
+
+It was in these ways that I began to form a shy disposition; to be
+of a timidly silent character under misconstruction; to have an
+inexpressible, perhaps a morbid, dread of ever being sordid or
+worldly.  It was in these ways that my nature came to shape itself
+to such a mould, even before it was affected by the influences of
+the studious and retired life of a poor scholar.
+
+
+
+SIXTH CHAPTER
+
+
+
+BROTHER HAWKYARD (as he insisted on my calling him) put me to
+school, and told me to work my way.  'You are all right, George,'
+he said.  'I have been the best servant the Lord has had in his
+service for this five-and-thirty year (O, I have!); and he knows
+the value of such a servant as I have been to him (O, yes, he
+does!); and he'll prosper your schooling as a part of my reward.
+That's what HE'll do, George.  He'll do it for me.'
+
+From the first I could not like this familiar knowledge of the ways
+of the sublime, inscrutable Almighty, on Brother Hawkyard's part.
+As I grew a little wiser, and still a little wiser, I liked it less
+and less.  His manner, too, of confirming himself in a parenthesis,
+- as if, knowing himself, he doubted his own word, - I found
+distasteful.  I cannot tell how much these dislikes cost me; for I
+had a dread that they were worldly.
+
+As time went on, I became a Foundation-boy on a good foundation,
+and I cost Brother Hawkyard nothing.  When I had worked my way so
+far, I worked yet harder, in the hope of ultimately getting a
+presentation to college and a fellowship.  My health has never been
+strong (some vapour from the Preston cellar cleaves to me, I
+think); and what with much work and some weakness, I came again to
+be regarded - that is, by my fellow-students - as unsocial.
+
+All through my time as a foundation-boy, I was within a few miles
+of Brother Hawkyard's congregation; and whenever I was what we
+called a leave-boy on a Sunday, I went over there at his desire.
+Before the knowledge became forced upon me that outside their place
+of meeting these brothers and sisters were no better than the rest
+of the human family, but on the whole were, to put the case mildly,
+as bad as most, in respect of giving short weight in their shops,
+and not speaking the truth, - I say, before this knowledge became
+forced upon me, their prolix addresses, their inordinate conceit,
+their daring ignorance, their investment of the Supreme Ruler of
+heaven and earth with their own miserable meannesses and
+littlenesses, greatly shocked me.  Still, as their term for the
+frame of mind that could not perceive them to be in an exalted
+state of grace was the 'worldly' state, I did for a time suffer
+tortures under my inquiries of myself whether that young worldly-
+devilish spirit of mine could secretly be lingering at the bottom
+of my non-appreciation.
+
+Brother Hawkyard was the popular expounder in this assembly, and
+generally occupied the platform (there was a little platform with a
+table on it, in lieu of a pulpit) first, on a Sunday afternoon.  He
+was by trade a drysalter.  Brother Gimblet, an elderly man with a
+crabbed face, a large dog's-eared shirt-collar, and a spotted blue
+neckerchief reaching up behind to the crown of his head, was also a
+drysalter and an expounder.  Brother Gimblet professed the greatest
+admiration for Brother Hawkyard, but (I had thought more than once)
+bore him a jealous grudge.
+
+Let whosoever may peruse these lines kindly take the pains here to
+read twice my solemn pledge, that what I write of the language and
+customs of the congregation in question I write scrupulously,
+literally, exactly, from the life and the truth.
+
+On the first Sunday after I had won what I had so long tried for,
+and when it was certain that I was going up to college, Brother
+Hawkyard concluded a long exhortation thus:
+
+'Well, my friends and fellow-sinners, now I told you when I began,
+that I didn't know a word of what I was going to say to you (and
+no, I did not!), but that it was all one to me, because I knew the
+Lord would put into my mouth the words I wanted.'
+
+('That's it!' from Brother Gimblet.)
+
+'And he did put into my mouth the words I wanted.'
+
+('So he did!' from Brother Gimblet.)
+
+'And why?'
+
+('Ah, let's have that!' from Brother Gimblet.)
+
+'Because I have been his faithful servant for five-and-thirty
+years, and because he knows it.  For five-and-thirty years!  And he
+knows it, mind you!  I got those words that I wanted on account of
+my wages.  I got 'em from the Lord, my fellow-sinners.  Down! I
+said, "Here's a heap of wages due; let us have something down, on
+account."  And I got it down, and I paid it over to you; and you
+won't wrap it up in a napkin, nor yet in a towel, nor yet
+pocketankercher, but you'll put it out at good interest.  Very
+well.  Now, my brothers and sisters and fellow-sinners, I am going
+to conclude with a question, and I'll make it so plain (with the
+help of the Lord, after five-and-thirty years, I should rather
+hope!) as that the Devil shall not be able to confuse it in your
+heads, - which he would be overjoyed to do.'
+
+('Just his way.  Crafty old blackguard!' from Brother Gimblet.)
+
+'And the question is this, Are the angels learned?'
+
+('Not they.  Not a bit on it!' from Brother Gimblet, with the
+greatest confidence.)
+
+'Not they.  And where's the proof? sent ready-made by the hand of
+the Lord.  Why, there's one among us here now, that has got all the
+learning that can be crammed into him.  I got him all the learning
+that could be crammed into him.  His grandfather' (this I had never
+heard before) 'was a brother of ours.  He was Brother Parksop.
+That's what he was.  Parksop; Brother Parksop.  His worldly name
+was Parksop, and he was a brother of this brotherhood.  Then wasn't
+he Brother Parksop?'
+
+('Must be.  Couldn't help hisself!' from Brother Gimblet.)
+
+'Well, he left that one now here present among us to the care of a
+brother-sinner of his (and that brother-sinner, mind you, was a
+sinner of a bigger size in his time than any of you; praise the
+Lord!), Brother Hawkyard.  Me.  I got him without fee or reward, -
+without a morsel of myrrh, or frankincense, nor yet amber, letting
+alone the honeycomb, - all the learning that could be crammed into
+him.  Has it brought him into our temple, in the spirit?  No.  Have
+we had any ignorant brothers and sisters that didn't know round O
+from crooked S, come in among us meanwhile?  Many.  Then the angels
+are NOT learned; then they don't so much as know their alphabet.
+And now, my friends and fellow-sinners, having brought it to that,
+perhaps some brother present - perhaps you, Brother Gimblet - will
+pray a bit for us?'
+
+Brother Gimblet undertook the sacred function, after having drawn
+his sleeve across his mouth, and muttered, 'Well!  I don't know as
+I see my way to hitting any of you quite in the right place
+neither.'  He said this with a dark smile, and then began to
+bellow.  What we were specially to be preserved from, according to
+his solicitations, was, despoilment of the orphan, suppression of
+testamentary intentions on the part of a father or (say)
+grandfather, appropriation of the orphan's house-property, feigning
+to give in charity to the wronged one from whom we withheld his
+due; and that class of sins.  He ended with the petition, 'Give us
+peace!' which, speaking for myself, was very much needed after
+twenty minutes of his bellowing.
+
+Even though I had not seen him when he rose from his knees,
+steaming with perspiration, glance at Brother Hawkyard, and even
+though I had not heard Brother Hawkyard's tone of congratulating
+him on the vigour with which he had roared, I should have detected
+a malicious application in this prayer.  Unformed suspicions to a
+similar effect had sometimes passed through my mind in my earlier
+school-days, and had always caused me great distress; for they were
+worldly in their nature, and wide, very wide, of the spirit that
+had drawn me from Sylvia.  They were sordid suspicions, without a
+shadow of proof.  They were worthy to have originated in the
+unwholesome cellar.  They were not only without proof, but against
+proof; for was I not myself a living proof of what Brother Hawkyard
+had done? and without him, how should I ever have seen the sky look
+sorrowfully down upon that wretched boy at Hoghton Towers?
+
+Although the dread of a relapse into a stage of savage selfishness
+was less strong upon me as I approached manhood, and could act in
+an increased degree for myself, yet I was always on my guard
+against any tendency to such relapse.  After getting these
+suspicions under my feet, I had been troubled by not being able to
+like Brother Hawkyard's manner, or his professed religion.  So it
+came about, that, as I walked back that Sunday evening, I thought
+it would be an act of reparation for any such injury my struggling
+thoughts had unwillingly done him, if I wrote, and placed in his
+hands, before going to college, a full acknowledgment of his
+goodness to me, and an ample tribute of thanks.  It might serve as
+an implied vindication of him against any dark scandal from a rival
+brother and expounder, or from any other quarter.
+
+Accordingly, I wrote the document with much care.  I may add with
+much feeling too; for it affected me as I went on.  Having no set
+studies to pursue, in the brief interval between leaving the
+Foundation and going to Cambridge, I determined to walk out to his
+place of business, and give it into his own hands.
+
+It was a winter afternoon, when I tapped at the door of his little
+counting-house, which was at the farther end of his long, low shop.
+As I did so (having entered by the back yard, where casks and boxes
+were taken in, and where there was the inscription, 'Private way to
+the counting-house'), a shopman called to me from the counter that
+he was engaged.
+
+'Brother Gimblet' (said the shopman, who was one of the
+brotherhood) 'is with him.'
+
+I thought this all the better for my purpose, and made bold to tap
+again.  They were talking in a low tone, and money was passing; for
+I heard it being counted out.
+
+'Who is it?' asked Brother Hawkyard, sharply.
+
+'George Silverman,' I answered, holding the door open.  'May I come
+in?'
+
+Both brothers seemed so astounded to see me that I felt shyer than
+usual.  But they looked quite cadaverous in the early gaslight, and
+perhaps that accidental circumstance exaggerated the expression of
+their faces.
+
+'What is the matter?' asked Brother Hawkyard.
+
+'Ay! what is the matter?' asked Brother Gimblet.
+
+'Nothing at all,' I said, diffidently producing my document: 'I am
+only the bearer of a letter from myself.'
+
+'From yourself, George?' cried Brother Hawkyard.
+
+'And to you,' said I.
+
+'And to me, George?'
+
+He turned paler, and opened it hurriedly; but looking over it, and
+seeing generally what it was, became less hurried, recovered his
+colour, and said, 'Praise the Lord!'
+
+'That's it!' cried Brother Gimblet.  'Well put!  Amen.'
+
+Brother Hawkyard then said, in a livelier strain, 'You must know,
+George, that Brother Gimblet and I are going to make our two
+businesses one.  We are going into partnership.  We are settling it
+now.  Brother Gimblet is to take one clear half of the profits (O,
+yes! he shall have it; he shall have it to the last farthing).'
+
+'D.V.!' said Brother Gimblet, with his right fist firmly clinched
+on his right leg.
+
+'There is no objection,' pursued Brother Hawkyard, 'to my reading
+this aloud, George?'
+
+As it was what I expressly desired should be done, after
+yesterday's prayer, I more than readily begged him to read it
+aloud.  He did so; and Brother Gimblet listened with a crabbed
+smile.
+
+'It was in a good hour that I came here,' he said, wrinkling up his
+eyes.  'It was in a good hour, likewise, that I was moved yesterday
+to depict for the terror of evil-doers a character the direct
+opposite of Brother Hawkyard's.  But it was the Lord that done it:
+I felt him at it while I was perspiring.'
+
+After that it was proposed by both of them that I should attend the
+congregation once more before my final departure.  What my shy
+reserve would undergo, from being expressly preached at and prayed
+at, I knew beforehand.  But I reflected that it would be for the
+last time, and that it might add to the weight of my letter.  It
+was well known to the brothers and sisters that there was no place
+taken for me in THEIR paradise; and if I showed this last token of
+deference to Brother Hawkyard, notoriously in despite of my own
+sinful inclinations, it might go some little way in aid of my
+statement that he had been good to me, and that I was grateful to
+him.  Merely stipulating, therefore, that no express endeavour
+should be made for my conversion, - which would involve the rolling
+of several brothers and sisters on the floor, declaring that they
+felt all their sins in a heap on their left side, weighing so many
+pounds avoirdupois, as I knew from what I had seen of those
+repulsive mysteries, - I promised.
+
+Since the reading of my letter, Brother Gimblet had been at
+intervals wiping one eye with an end of his spotted blue
+neckerchief, and grinning to himself.  It was, however, a habit
+that brother had, to grin in an ugly manner even when expounding.
+I call to mind a delighted snarl with which he used to detail from
+the platform the torments reserved for the wicked (meaning all
+human creation except the brotherhood), as being remarkably
+hideous.
+
+I left the two to settle their articles of partnership, and count
+money; and I never saw them again but on the following Sunday.
+Brother Hawkyard died within two or three years, leaving all he
+possessed to Brother Gimblet, in virtue of a will dated (as I have
+been told) that very day.
+
+Now I was so far at rest with myself, when Sunday came, knowing
+that I had conquered my own mistrust, and righted Brother Hawkyard
+in the jaundiced vision of a rival, that I went, even to that
+coarse chapel, in a less sensitive state than usual.  How could I
+foresee that the delicate, perhaps the diseased, corner of my mind,
+where I winced and shrunk when it was touched, or was even
+approached, would be handled as the theme of the whole proceedings?
+
+On this occasion it was assigned to Brother Hawkyard to pray, and
+to Brother Gimblet to preach.  The prayer was to open the
+ceremonies; the discourse was to come next.  Brothers Hawkyard and
+Gimblet were both on the platform; Brother Hawkyard on his knees at
+the table, unmusically ready to pray; Brother Gimblet sitting
+against the wall, grinningly ready to preach.
+
+'Let us offer up the sacrifice of prayer, my brothers and sisters
+and fellow-sinners.'  Yes; but it was I who was the sacrifice.  It
+was our poor, sinful, worldly-minded brother here present who was
+wrestled for.  The now-opening career of this our unawakened
+brother might lead to his becoming a minister of what was called
+'the church.'  That was what HE looked to.  The church.  Not the
+chapel, Lord.  The church.  No rectors, no vicars, no archdeacons,
+no bishops, no archbishops, in the chapel, but, O Lord! many such
+in the church.  Protect our sinful brother from his love of lucre.
+Cleanse from our unawakened brother's breast his sin of worldly-
+mindedness.  The prayer said infinitely more in words, but nothing
+more to any intelligible effect.
+
+Then Brother Gimblet came forward, and took (as I knew he would)
+the text, 'My kingdom is not of this world.'  Ah! but whose was, my
+fellow-sinners?  Whose?  Why, our brother's here present was.  The
+only kingdom he had an idea of was of this world.  ('That's it!'
+from several of the congregation.)  What did the woman do when she
+lost the piece of money?  Went and looked for it.  What should our
+brother do when he lost his way?  ('Go and look for it,' from a
+sister.)  Go and look for it, true.  But must he look for it in the
+right direction, or in the wrong?  ('In the right,' from a
+brother.)  There spake the prophets!  He must look for it in the
+right direction, or he couldn't find it.  But he had turned his
+back upon the right direction, and he wouldn't find it.  Now, my
+fellow-sinners, to show you the difference betwixt worldly-
+mindedness and unworldly-mindedness, betwixt kingdoms not of this
+world and kingdoms OF this world, here was a letter wrote by even
+our worldly-minded brother unto Brother Hawkyard.  Judge, from
+hearing of it read, whether Brother Hawkyard was the faithful
+steward that the Lord had in his mind only t'other day, when, in
+this very place, he drew you the picter of the unfaithful one; for
+it was him that done it, not me.  Don't doubt that!
+
+Brother Gimblet then groaned and bellowed his way through my
+composition, and subsequently through an hour.  The service closed
+with a hymn, in which the brothers unanimously roared, and the
+sisters unanimously shrieked at me, That I by wiles of worldly gain
+was mocked, and they on waters of sweet love were rocked; that I
+with mammon struggled in the dark, while they were floating in a
+second ark.
+
+I went out from all this with an aching heart and a weary spirit:
+not because I was quite so weak as to consider these narrow
+creatures interpreters of the Divine Majesty and Wisdom, but
+because I was weak enough to feel as though it were my hard fortune
+to be misrepresented and misunderstood, when I most tried to subdue
+any risings of mere worldliness within me, and when I most hoped
+that, by dint of trying earnestly, I had succeeded.
+
+
+
+SEVENTH CHAPTER
+
+
+
+MY timidity and my obscurity occasioned me to live a secluded life
+at college, and to be little known.  No relative ever came to visit
+me, for I had no relative.  No intimate friends broke in upon my
+studies, for I made no intimate friends.  I supported myself on my
+scholarship, and read much.  My college time was otherwise not so
+very different from my time at Hoghton Towers.
+
+Knowing myself to be unfit for the noisier stir of social
+existence, but believing myself qualified to do my duty in a
+moderate, though earnest way, if I could obtain some small
+preferment in the Church, I applied my mind to the clerical
+profession.  In due sequence I took orders, was ordained, and began
+to look about me for employment.  I must observe that I had taken a
+good degree, that I had succeeded in winning a good fellowship, and
+that my means were ample for my retired way of life.  By this time
+I had read with several young men; and the occupation increased my
+income, while it was highly interesting to me.  I once accidentally
+overheard our greatest don say, to my boundless joy, 'That he heard
+it reported of Silverman that his gift of quiet explanation, his
+patience, his amiable temper, and his conscientiousness made him
+the best of coaches.'  May my 'gift of quiet explanation' come more
+seasonably and powerfully to my aid in this present explanation
+than I think it will!
+
+It may be in a certain degree owing to the situation of my college-
+rooms (in a corner where the daylight was sobered), but it is in a
+much larger degree referable to the state of my own mind, that I
+seem to myself, on looking back to this time of my life, to have
+been always in the peaceful shade.  I can see others in the
+sunlight; I can see our boats' crews and our athletic young men on
+the glistening water, or speckled with the moving lights of sunlit
+leaves; but I myself am always in the shadow looking on.  Not
+unsympathetically, - God forbid! - but looking on alone, much as I
+looked at Sylvia from the shadows of the ruined house, or looked at
+the red gleam shining through the farmer's windows, and listened to
+the fall of dancing feet, when all the ruin was dark that night in
+the quadrangle.
+
+I now come to the reason of my quoting that laudation of myself
+above given.  Without such reason, to repeat it would have been
+mere boastfulness.
+
+Among those who had read with me was Mr. Fareway, second son of
+Lady Fareway, widow of Sir Gaston Fareway, baronet.  This young
+gentleman's abilities were much above the average; but he came of a
+rich family, and was idle and luxurious.  He presented himself to
+me too late, and afterwards came to me too irregularly, to admit of
+my being of much service to him.  In the end, I considered it my
+duty to dissuade him from going up for an examination which he
+could never pass; and he left college without a degree.  After his
+departure, Lady Fareway wrote to me, representing the justice of my
+returning half my fee, as I had been of so little use to her son.
+Within my knowledge a similar demand had not been made in any other
+case; and I most freely admit that the justice of it had not
+occurred to me until it was pointed out.  But I at once perceived
+it, yielded to it, and returned the money -
+
+Mr. Fareway had been gone two years or more, and I had forgotten
+him, when he one day walked into my rooms as I was sitting at my
+books.
+
+Said he, after the usual salutations had passed, 'Mr. Silverman, my
+mother is in town here, at the hotel, and wishes me to present you
+to her.'
+
+I was not comfortable with strangers, and I dare say I betrayed
+that I was a little nervous or unwilling.  'For,' said he, without
+my having spoken, 'I think the interview may tend to the
+advancement of your prospects.'
+
+It put me to the blush to think that I should be tempted by a
+worldly reason, and I rose immediately.
+
+Said Mr. Fareway, as we went along, 'Are you a good hand at
+business?'
+
+'I think not,' said I.
+
+Said Mr. Fareway then, 'My mother is.'
+
+'Truly?' said I.
+
+'Yes: my mother is what is usually called a managing woman.
+Doesn't make a bad thing, for instance, even out of the spendthrift
+habits of my eldest brother abroad.  In short, a managing woman.
+This is in confidence.'
+
+He had never spoken to me in confidence, and I was surprised by his
+doing so.  I said I should respect his confidence, of course, and
+said no more on the delicate subject.  We had but a little way to
+walk, and I was soon in his mother's company.  He presented me,
+shook hands with me, and left us two (as he said) to business.
+
+I saw in my Lady Fareway a handsome, well-preserved lady of
+somewhat large stature, with a steady glare in her great round dark
+eyes that embarrassed me.
+
+Said my lady, 'I have heard from my son, Mr. Silverman, that you
+would be glad of some preferment in the church.'  I gave my lady to
+understand that was so.
+
+'I don't know whether you are aware,' my lady proceeded, 'that we
+have a presentation to a living?  I say WE have; but, in point of
+fact, I have.'
+
+I gave my lady to understand that I had not been aware of this.
+
+Said my lady, 'So it is: indeed I have two presentations, - one to
+two hundred a year, one to six.  Both livings are in our county, -
+North Devonshire, - as you probably know.  The first is vacant.
+Would you like it?'
+
+What with my lady's eyes, and what with the suddenness of this
+proposed gift, I was much confused.
+
+'I am sorry it is not the larger presentation,' said my lady,
+rather coldly; 'though I will not, Mr. Silverman, pay you the bad
+compliment of supposing that YOU are, because that would be
+mercenary, - and mercenary I am persuaded you are not.'
+
+Said I, with my utmost earnestness, 'Thank you, Lady Fareway, thank
+you, thank you!  I should be deeply hurt if I thought I bore the
+character.'
+
+'Naturally,' said my lady.  'Always detestable, but particularly in
+a clergyman.  You have not said whether you will like the living?'
+
+With apologies for my remissness or indistinctness, I assured my
+lady that I accepted it most readily and gratefully.  I added that
+I hoped she would not estimate my appreciation of the generosity of
+her choice by my flow of words; for I was not a ready man in that
+respect when taken by surprise or touched at heart.
+
+'The affair is concluded,' said my lady; 'concluded.  You will find
+the duties very light, Mr. Silverman.  Charming house; charming
+little garden, orchard, and all that.  You will be able to take
+pupils.  By the bye!  No: I will return to the word afterwards.
+What was I going to mention, when it put me out?'
+
+My lady stared at me, as if I knew.  And I didn't know.  And that
+perplexed me afresh.
+
+Said my lady, after some consideration, 'O, of course, how very
+dull of me!  The last incumbent, - least mercenary man I ever saw,
+- in consideration of the duties being so light and the house so
+delicious, couldn't rest, he said, unless I permitted him to help
+me with my correspondence, accounts, and various little things of
+that kind; nothing in themselves, but which it worries a lady to
+cope with.  Would Mr. Silverman also like to -?  Or shall I -?'
+
+I hastened to say that my poor help would be always at her
+ladyship's service.
+
+'I am absolutely blessed,' said my lady, casting up her eyes (and
+so taking them off me for one moment), 'in having to do with
+gentlemen who cannot endure an approach to the idea of being
+mercenary!'  She shivered at the word.  'And now as to the pupil.'
+
+'The -?' I was quite at a loss.
+
+'Mr. Silverman, you have no idea what she is.  She is,' said my
+lady, laying her touch upon my coat-sleeve, 'I do verily believe,
+the most extraordinary girl in this world.  Already knows more
+Greek and Latin than Lady Jane Grey.  And taught herself!  Has not
+yet, remember, derived a moment's advantage from Mr. Silverman's
+classical acquirements.  To say nothing of mathematics, which she
+is bent upon becoming versed in, and in which (as I hear from my
+son and others) Mr. Silverman's reputation is so deservedly high!'
+
+Under my lady's eyes I must have lost the clue, I felt persuaded;
+and yet I did not know where I could have dropped it.
+
+'Adelina,' said my lady, 'is my only daughter.  If I did not feel
+quite convinced that I am not blinded by a mother's partiality;
+unless I was absolutely sure that when you know her, Mr. Silverman,
+you will esteem it a high and unusual privilege to direct her
+studies, - I should introduce a mercenary element into this
+conversation, and ask you on what terms - '
+
+I entreated my lady to go no further.  My lady saw that I was
+troubled, and did me the honour to comply with my request.
+
+
+
+EIGHTH CHAPTER
+
+
+
+EVERYTHING in mental acquisition that her brother might have been,
+if he would, and everything in all gracious charms and admirable
+qualities that no one but herself could be, - this was Adelina.
+
+I will not expatiate upon her beauty; I will not expatiate upon her
+intelligence, her quickness of perception, her powers of memory,
+her sweet consideration, from the first moment, for the slow-paced
+tutor who ministered to her wonderful gifts.  I was thirty then; I
+am over sixty now: she is ever present to me in these hours as she
+was in those, bright and beautiful and young, wise and fanciful and
+good.
+
+When I discovered that I loved her, how can I say?  In the first
+day? in the first week? in the first month?  Impossible to trace.
+If I be (as I am) unable to represent to myself any previous period
+of my life as quite separable from her attracting power, how can I
+answer for this one detail?
+
+Whensoever I made the discovery, it laid a heavy burden on me.  And
+yet, comparing it with the far heavier burden that I afterwards
+took up, it does not seem to me now to have been very hard to bear.
+In the knowledge that I did love her, and that I should love her
+while my life lasted, and that I was ever to hide my secret deep in
+my own breast, and she was never to find it, there was a kind of
+sustaining joy or pride, or comfort, mingled with my pain.
+
+But later on, - say, a year later on, - when I made another
+discovery, then indeed my suffering and my struggle were strong.
+That other discovery was -
+
+These words will never see the light, if ever, until my heart is
+dust; until her bright spirit has returned to the regions of which,
+when imprisoned here, it surely retained some unusual glimpse of
+remembrance; until all the pulses that ever beat around us shall
+have long been quiet; until all the fruits of all the tiny
+victories and defeats achieved in our little breasts shall have
+withered away.  That discovery was that she loved me.
+
+She may have enhanced my knowledge, and loved me for that; she may
+have over-valued my discharge of duty to her, and loved me for
+that; she may have refined upon a playful compassion which she
+would sometimes show for what she called my want of wisdom,
+according to the light of the world's dark lanterns, and loved me
+for that; she may - she must - have confused the borrowed light of
+what I had only learned, with its brightness in its pure, original
+rays; but she loved me at that time, and she made me know it.
+
+Pride of family and pride of wealth put me as far off from her in
+my lady's eyes as if I had been some domesticated creature of
+another kind.  But they could not put me farther from her than I
+put myself when I set my merits against hers.  More than that.
+They could not put me, by millions of fathoms, half so low beneath
+her as I put myself when in imagination I took advantage of her
+noble trustfulness, took the fortune that I knew she must possess
+in her own right, and left her to find herself, in the zenith of
+her beauty and genius, bound to poor rusty, plodding me.
+
+No!  Worldliness should not enter here at any cost.  If I had tried
+to keep it out of other ground, how much harder was I bound to try
+to keep it out from this sacred place!
+
+But there was something daring in her broad, generous character,
+that demanded at so delicate a crisis to be delicately and
+patiently addressed.  And many and many a bitter night (O, I found
+I could cry for reasons not purely physical, at this pass of my
+life!) I took my course.
+
+My lady had, in our first interview, unconsciously overstated the
+accommodation of my pretty house.  There was room in it for only
+one pupil.  He was a young gentleman near coming of age, very well
+connected, but what is called a poor relation.  His parents were
+dead.  The charges of his living and reading with me were defrayed
+by an uncle; and he and I were to do our utmost together for three
+years towards qualifying him to make his way.  At this time he had
+entered into his second year with me.  He was well-looking, clever,
+energetic, enthusiastic; bold; in the best sense of the term, a
+thorough young Anglo-Saxon.
+
+I resolved to bring these two together.
+
+
+
+NINTH CHAPTER
+
+
+
+SAID I, one night, when I had conquered myself, 'Mr. Granville,' -
+Mr. Granville Wharton his name was, - 'I doubt if you have ever yet
+so much as seen Miss Fareway.'
+
+'Well, sir,' returned he, laughing, 'you see her so much yourself,
+that you hardly leave another fellow a chance of seeing her.'
+
+'I am her tutor, you know,' said I.
+
+And there the subject dropped for that time.  But I so contrived as
+that they should come together shortly afterwards.  I had
+previously so contrived as to keep them asunder; for while I loved
+her, - I mean before I had determined on my sacrifice, - a lurking
+jealousy of Mr. Granville lay within my unworthy breast.
+
+It was quite an ordinary interview in the Fareway Park but they
+talked easily together for some time: like takes to like, and they
+had many points of resemblance.  Said Mr. Granville to me, when he
+and I sat at our supper that night, 'Miss Fareway is remarkably
+beautiful, sir, remarkably engaging.  Don't you think so?'  'I
+think so,' said I.  And I stole a glance at him, and saw that he
+had reddened and was thoughtful.  I remember it most vividly,
+because the mixed feeling of grave pleasure and acute pain that the
+slight circumstance caused me was the first of a long, long series
+of such mixed impressions under which my hair turned slowly gray.
+
+I had not much need to feign to be subdued; but I counterfeited to
+be older than I was in all respects (Heaven knows! my heart being
+all too young the while), and feigned to be more of a recluse and
+bookworm than I had really become, and gradually set up more and
+more of a fatherly manner towards Adelina.  Likewise I made my
+tuition less imaginative than before; separated myself from my
+poets and philosophers; was careful to present them in their own
+light, and me, their lowly servant, in my own shade.  Moreover, in
+the matter of apparel I was equally mindful; not that I had ever
+been dapper that way; but that I was slovenly now.
+
+As I depressed myself with one hand, so did I labour to raise Mr.
+Granville with the other; directing his attention to such subjects
+as I too well knew interested her, and fashioning him (do not
+deride or misconstrue the expression, unknown reader of this
+writing; for I have suffered!) into a greater resemblance to myself
+in my solitary one strong aspect.  And gradually, gradually, as I
+saw him take more and more to these thrown-out lures of mine, then
+did I come to know better and better that love was drawing him on,
+and was drawing her from me.
+
+So passed more than another year; every day a year in its number of
+my mixed impressions of grave pleasure and acute pain; and then
+these two, being of age and free to act legally for themselves,
+came before me hand in hand (my hair being now quite white), and
+entreated me that I would unite them together.  'And indeed, dear
+tutor,' said Adelina, 'it is but consistent in you that you should
+do this thing for us, seeing that we should never have spoken
+together that first time but for you, and that but for you we could
+never have met so often afterwards.'  The whole of which was
+literally true; for I had availed myself of my many business
+attendances on, and conferences with, my lady, to take Mr.
+Granville to the house, and leave him in the outer room with
+Adelina.
+
+I knew that my lady would object to such a marriage for her
+daughter, or to any marriage that was other than an exchange of her
+for stipulated lands, goods, and moneys.  But looking on the two,
+and seeing with full eyes that they were both young and beautiful;
+and knowing that they were alike in the tastes and acquirements
+that will outlive youth and beauty; and considering that Adelina
+had a fortune now, in her own keeping; and considering further that
+Mr. Granville, though for the present poor, was of a good family
+that had never lived in a cellar in Preston; and believing that
+their love would endure, neither having any great discrepancy to
+find out in the other, - I told them of my readiness to do this
+thing which Adelina asked of her dear tutor, and to send them
+forth, husband and wife, into the shining world with golden gates
+that awaited them.
+
+It was on a summer morning that I rose before the sun to compose
+myself for the crowning of my work with this end; and my dwelling
+being near to the sea, I walked down to the rocks on the shore, in
+order that I might behold the sun in his majesty.
+
+The tranquillity upon the deep, and on the firmament, the orderly
+withdrawal of the stars, the calm promise of coming day, the rosy
+suffusion of the sky and waters, the ineffable splendour that then
+burst forth, attuned my mind afresh after the discords of the
+night.  Methought that all I looked on said to me, and that all I
+heard in the sea and in the air said to me, 'Be comforted, mortal,
+that thy life is so short.  Our preparation for what is to follow
+has endured, and shall endure, for unimaginable ages.'
+
+I married them.  I knew that my hand was cold when I placed it on
+their hands clasped together; but the words with which I had to
+accompany the action I could say without faltering, and I was at
+peace.
+
+They being well away from my house and from the place after our
+simple breakfast, the time was come when I must do what I had
+pledged myself to them that I would do, - break the intelligence to
+my lady.
+
+I went up to the house, and found my lady in her ordinary business-
+room.  She happened to have an unusual amount of commissions to
+intrust to me that day; and she had filled my hands with papers
+before I could originate a word.
+
+'My lady,' I then began, as I stood beside her table.
+
+'Why, what's the matter?' she said quickly, looking up.
+
+'Not much, I would fain hope, after you shall have prepared
+yourself, and considered a little.'
+
+'Prepared myself; and considered a little!  You appear to have
+prepared YOURSELF but indifferently, anyhow, Mr. Silverman.'  This
+mighty scornfully, as I experienced my usual embarrassment under
+her stare.
+
+Said I, in self-extenuation once for all, 'Lady Fareway, I have but
+to say for myself that I have tried to do my duty.'
+
+'For yourself?' repeated my lady.  'Then there are others
+concerned, I see.  Who are they?'
+
+I was about to answer, when she made towards the bell with a dart
+that stopped me, and said, 'Why, where is Adelina?'
+
+'Forbear! be calm, my lady.  I married her this morning to Mr.
+Granville Wharton.'
+
+She set her lips, looked more intently at me than ever, raised her
+right hand, and smote me hard upon the cheek.
+
+'Give me back those papers! give me back those papers!'  She tore
+them out of my hands, and tossed them on her table.  Then seating
+herself defiantly in her great chair, and folding her arms, she
+stabbed me to the heart with the unlooked-for reproach, 'You
+worldly wretch!'
+
+'Worldly?' I cried.  'Worldly?'
+
+'This, if you please,' - she went on with supreme scorn, pointing
+me out as if there were some one there to see, - 'this, if you
+please, is the disinterested scholar, with not a design beyond his
+books!  This, if you please, is the simple creature whom any one
+could overreach in a bargain!  This, if you please, is Mr.
+Silverman!  Not of this world; not he!  He has too much simplicity
+for this world's cunning.  He has too much singleness of purpose to
+be a match for this world's double-dealing.  What did he give you
+for it?'
+
+'For what?  And who?'
+
+'How much,' she asked, bending forward in her great chair, and
+insultingly tapping the fingers of her right hand on the palm of
+her left, - 'how much does Mr. Granville Wharton pay you for
+getting him Adelina's money?  What is the amount of your percentage
+upon Adelina's fortune?  What were the terms of the agreement that
+you proposed to this boy when you, the Rev. George Silverman,
+licensed to marry, engaged to put him in possession of this girl?
+You made good terms for yourself, whatever they were.  He would
+stand a poor chance against your keenness.'
+
+Bewildered, horrified, stunned by this cruel perversion, I could
+not speak.  But I trust that I looked innocent, being so.
+
+'Listen to me, shrewd hypocrite,' said my lady, whose anger
+increased as she gave it utterance; 'attend to my words, you
+cunning schemer, who have carried this plot through with such a
+practised double face that I have never suspected you.  I had my
+projects for my daughter; projects for family connection; projects
+for fortune.  You have thwarted them, and overreached me; but I am
+not one to be thwarted and overreached without retaliation.  Do you
+mean to hold this living another month?'
+
+'Do you deem it possible, Lady Fareway, that I can hold it another
+hour, under your injurious words?'
+
+'Is it resigned, then?'
+
+'It was mentally resigned, my lady, some minutes ago.'
+
+Don't equivocate, sir.  IS it resigned?'
+
+'Unconditionally and entirely; and I would that I had never, never
+come near it!'
+
+'A cordial response from me to THAT wish, Mr. Silverman!  But take
+this with you, sir.  If you had not resigned it, I would have had
+you deprived of it.  And though you have resigned it, you will not
+get quit of me as easily as you think for.  I will pursue you with
+this story.  I will make this nefarious conspiracy of yours, for
+money, known.  You have made money by it, but you have at the same
+time made an enemy by it.  YOU will take good care that the money
+sticks to you; I will take good care that the enemy sticks to you.'
+
+Then said I finally, 'Lady Fareway, I think my heart is broken.
+Until I came into this room just now, the possibility of such mean
+wickedness as you have imputed to me never dawned upon my thoughts.
+Your suspicions - '
+
+'Suspicions!  Pah!' said she indignantly.  'Certainties.'
+
+'Your certainties, my lady, as you call them, your suspicions as I
+call them, are cruel, unjust, wholly devoid of foundation in fact.
+I can declare no more; except that I have not acted for my own
+profit or my own pleasure.  I have not in this proceeding
+considered myself.  Once again, I think my heart is broken.  If I
+have unwittingly done any wrong with a righteous motive, that is
+some penalty to pay.'
+
+She received this with another and more indignant 'Pah!' and I made
+my way out of her room (I think I felt my way out with my hands,
+although my eyes were open), almost suspecting that my voice had a
+repulsive sound, and that I was a repulsive object.
+
+There was a great stir made, the bishop was appealed to, I received
+a severe reprimand, and narrowly escaped suspension.  For years a
+cloud hung over me, and my name was tarnished.
+
+But my heart did not break, if a broken heart involves death; for I
+lived through it.
+
+They stood by me, Adelina and her husband, through it all.  Those
+who had known me at college, and even most of those who had only
+known me there by reputation, stood by me too.  Little by little,
+the belief widened that I was not capable of what was laid to my
+charge.  At length I was presented to a college-living in a
+sequestered place, and there I now pen my explanation.  I pen it at
+my open window in the summer-time, before me, lying in the
+churchyard, equal resting-place for sound hearts, wounded hearts,
+and broken hearts.  I pen it for the relief of my own mind, not
+foreseeing whether or no it will ever have a reader.
+
+
+
+
+
+End of The Project Gutenberg Etext of George Silverman's Explanation
+

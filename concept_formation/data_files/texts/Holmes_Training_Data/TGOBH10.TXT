@@ -1,0 +1,3710 @@
+The Project Gutenberg Etext of The Gathering of Brother Hilarius
+#2 in our series by Michael Fairless
+Alias of Margaret Fairless Barber
+
+
+Copyright laws are changing all over the world, be sure to check
+the copyright laws for your country before posting these files!!
+
+Please take a look at the important information in this header.
+We encourage you to keep this file on your own disk, keeping an
+electronic path open for the next readers.  Do not remove this.
+
+
+**Welcome To The World of Free Plain Vanilla Electronic Texts**
+
+**Etexts Readable By Both Humans and By Computers, Since 1971**
+
+*These Etexts Prepared By Hundreds of Volunteers and Donations*
+
+Information on contacting Project Gutenberg to get Etexts, and
+further information is included below.  We need your donations.
+
+
+The Gathering of Brother Hilarius
+
+by Michael Fairless
+Alias of Margaret Fairless Barber
+
+January, 1997  [Etext #789]
+
+
+The Project Gutenberg Etext of The Gathering of Brother Hilarius
+******This file should be named tgobh10.txt or tgobh10.zip******
+
+Corrected EDITIONS of our etexts get a new NUMBER, tgobh11.txt.
+VERSIONS based on separate sources get new LETTER, tgobh10a.txt.
+
+
+Scanned and proofed by David Price
+
+
+We are now trying to release all our books one month in advance
+of the official release dates, for time for better editing.
+
+Please note:  neither this list nor its contents are final till
+midnight of the last day of the month of any such announcement.
+The official release date of all Project Gutenberg Etexts is at
+Midnight, Central Time, of the last day of the stated month.  A
+preliminary version may often be posted for suggestion, comment
+and editing by those who wish to do so.  To be sure you have an
+up to date first edition [xxxxx10x.xxx] please check file sizes
+in the first week of the next month.  Since our ftp program has
+a bug in it that scrambles the date [tried to fix and failed] a
+look at the file size will have to do, but we will try to see a
+new copy has at least one byte more or less.
+
+
+Information about Project Gutenberg (one page)
+
+We produce about two million dollars for each hour we work.  The
+fifty hours is one conservative estimate for how long it we take
+to get any etext selected, entered, proofread, edited, copyright
+searched and analyzed, the copyright letters written, etc.  This
+projected audience is one hundred million readers.  If our value
+per text is nominally estimated at one dollar then we produce $2
+million dollars per hour this year as we release thirty-two text
+files per month:  or 400 more Etexts in 1996 for a total of 800.
+If these reach just 10% of the computerized population, then the
+total should reach 80 billion Etexts.  We will try add 800 more,
+during 1997, but it will take all the effort we can manage to do
+the doubling of our library again this year, what with the other
+massive requirements it is going to take to get incorporated and
+establish something that will have some permanence.
+
+The Goal of Project Gutenberg is to Give Away One Trillion Etext
+Files by the December 31, 2001.  [10,000 x 100,000,000=Trillion]
+This is ten thousand titles each to one hundred million readers,
+which is only 10% of the present number of computer users.  2001
+should have at least twice as many computer users as that, so it
+will require us reaching less than 5% of the users in 2001.
+
+
+We need your donations more than ever!
+
+
+All donations should be made to "Project Gutenberg"
+
+
+For these and other matters, please mail to:
+
+Project Gutenberg
+P. O. Box  2782
+Champaign, IL 61825
+
+When all other email fails try our Executive Director:
+Michael S. Hart <hart@pobox.com>
+
+We would prefer to send you this information by email
+(Internet, Bitnet, Compuserve, ATTMAIL or MCImail).
+
+******
+If you have an FTP program (or emulator), please
+FTP directly to the Project Gutenberg archives:
+[Mac users, do NOT point and click. . .type]
+
+ftp uiarchive.cso.uiuc.edu
+login:  anonymous
+password:  your@login
+cd etext/etext90 through /etext97
+or cd etext/articles [get suggest gut for more information]
+dir [to see files]
+get or mget [to get files. . .set bin for zip files]
+GET INDEX?00.GUT
+for a list of books
+and
+GET NEW GUT for general information
+and
+MGET GUT* for newsletters.
+
+**Information prepared by the Project Gutenberg legal advisor**
+(Three Pages)
+
+
+***START**THE SMALL PRINT!**FOR PUBLIC DOMAIN ETEXTS**START***
+Why is this "Small Print!" statement here?  You know: lawyers.
+They tell us you might sue us if there is something wrong with
+your copy of this etext, even if you got it for free from
+someone other than us, and even if what's wrong is not our
+fault.  So, among other things, this "Small Print!" statement
+disclaims most of our liability to you.  It also tells you how
+you can distribute copies of this etext if you want to.
+
+*BEFORE!* YOU USE OR READ THIS ETEXT
+By using or reading any part of this PROJECT GUTENBERG-tm
+etext, you indicate that you understand, agree to and accept
+this "Small Print!" statement.  If you do not, you can receive
+a refund of the money (if any) you paid for this etext by
+sending a request within 30 days of receiving it to the person
+you got it from.  If you received this etext on a physical
+medium (such as a disk), you must return it with your request.
+
+ABOUT PROJECT GUTENBERG-TM ETEXTS
+This PROJECT GUTENBERG-tm etext, like most PROJECT GUTENBERG-
+tm etexts, is a "public domain" work distributed by Professor
+Michael S. Hart through the Project Gutenberg (the "Project").
+Among other things, this means that no one owns a United States
+copyright on or for this work, so the Project (and you!) can copy
+and distribute it in the United States without permission and
+without paying copyright royalties.  Special rules, set forth
+below, apply if you wish to copy and distribute this etext
+under the Project's "PROJECT GUTENBERG" trademark.
+
+To create these etexts, the Project expends considerable
+efforts to identify, transcribe and proofread public domain
+works.  Despite these efforts, the Project's etexts and any
+medium they may be on may contain "Defects".  Among other
+things, Defects may take the form of incomplete, inaccurate or
+corrupt data, transcription errors, a copyright or other
+intellectual property infringement, a defective or damaged
+disk or other etext medium, a computer virus, or computer
+codes that damage or cannot be read by your equipment.
+
+LIMITED WARRANTY; DISCLAIMER OF DAMAGES
+But for the "Right of Replacement or Refund" described below,
+[1] the Project (and any other party you may receive this
+etext from as a PROJECT GUTENBERG-tm etext) disclaims all
+liability to you for damages, costs and expenses, including
+legal fees, and [2] YOU HAVE NO REMEDIES FOR NEGLIGENCE OR
+UNDER STRICT LIABILITY, OR FOR BREACH OF WARRANTY OR CONTRACT,
+INCLUDING BUT NOT LIMITED TO INDIRECT, CONSEQUENTIAL, PUNITIVE
+OR INCIDENTAL DAMAGES, EVEN IF YOU GIVE NOTICE OF THE
+POSSIBILITY OF SUCH DAMAGES.
+
+If you discover a Defect in this etext within 90 days of
+receiving it, you can receive a refund of the money (if any)
+you paid for it by sending an explanatory note within that
+time to the person you received it from.  If you received it
+on a physical medium, you must return it with your note, and
+such person may choose to alternatively give you a replacement
+copy.  If you received it electronically, such person may
+choose to alternatively give you a second opportunity to
+receive it electronically.
+
+THIS ETEXT IS OTHERWISE PROVIDED TO YOU "AS-IS".  NO OTHER
+WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED, ARE MADE TO YOU AS
+TO THE ETEXT OR ANY MEDIUM IT MAY BE ON, INCLUDING BUT NOT
+LIMITED TO WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A
+PARTICULAR PURPOSE.
+
+Some states do not allow disclaimers of implied warranties or
+the exclusion or limitation of consequential damages, so the
+above disclaimers and exclusions may not apply to you, and you
+may have other legal rights.
+
+INDEMNITY
+You will indemnify and hold the Project, its directors,
+officers, members and agents harmless from all liability, cost
+and expense, including legal fees, that arise directly or
+indirectly from any of the following that you do or cause:
+[1] distribution of this etext, [2] alteration, modification,
+or addition to the etext, or [3] any Defect.
+
+DISTRIBUTION UNDER "PROJECT GUTENBERG-tm"
+You may distribute copies of this etext electronically, or by
+disk, book or any other medium if you either delete this
+"Small Print!" and all other references to Project Gutenberg,
+or:
+
+[1]  Only give exact copies of it.  Among other things, this
+     requires that you do not remove, alter or modify the
+     etext or this "small print!" statement.  You may however,
+     if you wish, distribute this etext in machine readable
+     binary, compressed, mark-up, or proprietary form,
+     including any form resulting from conversion by word pro-
+     cessing or hypertext software, but only so long as
+     *EITHER*:
+
+     [*]  The etext, when displayed, is clearly readable, and
+          does *not* contain characters other than those
+          intended by the author of the work, although tilde
+          (~), asterisk (*) and underline (_) characters may
+          be used to convey punctuation intended by the
+          author, and additional characters may be used to
+          indicate hypertext links; OR
+
+     [*]  The etext may be readily converted by the reader at
+          no expense into plain ASCII, EBCDIC or equivalent
+          form by the program that displays the etext (as is
+          the case, for instance, with most word processors);
+          OR
+
+     [*]  You provide, or agree to also provide on request at
+          no additional cost, fee or expense, a copy of the
+          etext in its original plain ASCII form (or in EBCDIC
+          or other equivalent proprietary form).
+
+[2]  Honor the etext refund and replacement provisions of this
+     "Small Print!" statement.
+
+[3]  Pay a trademark license fee to the Project of 20% of the
+     net profits you derive calculated using the method you
+     already use to calculate your applicable taxes.  If you
+     don't derive profits, no royalty is due.  Royalties are
+     payable to "Project Gutenberg Association within the 60
+     days following each date you prepare (or were legally
+     required to prepare) your annual (or equivalent periodic)
+     tax return.
+
+WHAT IF YOU *WANT* TO SEND MONEY EVEN IF YOU DON'T HAVE TO?
+The Project gratefully accepts contributions in money, time,
+scanning machines, OCR software, public domain etexts, royalty
+free copyright licenses, and every other sort of contribution
+you can think of.  Money should be paid to "Project Gutenberg
+Association".
+
+*END*THE SMALL PRINT! FOR PUBLIC DOMAIN ETEXTS*Ver.04.29.93*END*
+
+
+
+
+
+The Gathering of Brother Hilarius by Michael Fairless
+Scanned and proofed by David Price
+ccx074@coventry.ac.uk
+
+
+
+
+
+THE GATHERING OF BROTHER HILARIUS
+
+
+
+
+
+PART I - THE SEED
+
+
+
+
+CHAPTER I - BLIND EYES IN THE FOREST
+
+
+
+HILARIUS stood at the Monastery gate, looking away down the smooth,
+well-kept road to the highway beyond.  It lay quiet and serene in
+the June sunshine, the white way to the outer world, and not even a
+dust cloud on the horizon promised the approach of the train of
+sumpter mules laden with meats for the bellies and cloth for the
+backs of the good Brethren within.  The Cellarer lacked wine, the
+drug stores in the farmery were running low; last, but not least,
+the Precentor had bespoken precious colours, rich gold, costly
+vellum, and on these the thoughts of Hilarius tarried with anxious
+expectation.
+
+On his left lay the forest, home of his longing imaginings.  The
+Monastery wall crept up one side of it, and over the top the great
+trees peered and beckoned with their tossing, feathery branches.
+Twice had Hilarius walked there, attending the Prior as he paced
+slowly and silently along the mossy ways, under the strong,
+springing pines; and the occasions were stored in his memory with
+the glories of St Benedict's Day and Our Lady's Festivals.  Away to
+the right, within the great enclosure, stretched the Monastery
+lands, fair to the eye, with orchard and fruitful field, teeming
+with glad, unhurried labour.
+
+At a little elevation, overlooking the whole domain, rose the
+Priory buildings, topped by the Church, crown and heart of the
+place, signing the sign of the Cross over the daily life and work
+of the Brethren, itself the centre of that life, the object of that
+work, ever unfinished because love knows not how to make an end.
+To the monks it was a page in the history of the life of the Order,
+written in stone, blazoned with beauty of the world's treasure; a
+page on which each generation might spell out a word, perchance add
+a line, to the greater glory of God and St Benedict.  They were
+always at work on it, stretching out eager hands for the rare
+stuffs and precious stones devout men brought from overseas,
+finding a place for the best of every ordered craft; their shame an
+uncouth line or graceless arch, their glory each completed pinnacle
+and fretted spire; ever restoring, enlarging, repairing,
+spendthrift of money and time in the service of the House of the
+Lord.
+
+The sun shone hot on grey wall and green garth; the spirit of
+insistent peace brooded over the place.  The wheeling white pigeons
+circling the cloister walls cried peace; the sculptured saints in
+their niches over the west door gave the blessing of peace; an old,
+blind monk crossed the garth with the hesitating gait of habit
+lately acquired - on his face was great peace.  It rested
+everywhere, this peace of prayerful service, where the clang of the
+blacksmith's hammer smote the sound of the Office bell.
+
+Hilarius, at the gate, questioned the road again and again for sign
+of the belated train.  It was vexatious; the Prior's lips would
+take a thinner line, for the mules were already some days overdue;
+and it was ill to keep the Prior waiting.  The soft June wind swept
+the fragrance of Mary's lilies across to the lad; he turned his
+dreamy, blue eyes from the highway to the forest.  The scent of the
+pinewoods rushed to meet his sudden thought.  Should he, dare he,
+break cloister, and taste the wondrous delight of an unwalled
+world?  It were a sin, a grave sin, in a newly-made novice,
+cloister-bred.  The sweet, pungent smell overpowered him; the trees
+beckoned with their long arms and slender fingers; the voice of the
+forest called, and Hilarius, answering, walked swiftly away, with
+bowed head and beating heart, between the sunburnt pine-boles.
+
+At last he ventured to stop and look around him, his fair hair
+aflame in the sunlight, his eyes full of awe of this arched and
+pillared city of mystery and wonder.
+
+It was very silent.  Here and there a coney peeped out and fled,
+and a woodpecker toiled with sharp, effective stroke.  Hilarius'
+eyes shone as he lifted his head and caught sight of the sunlit
+blue between the great, green-fringed branches:  it was as if Our
+Lady trailed her gracious robe across the tree-tops.  Then, as he
+bathed his thirsty soul in the great sea of light and shade, cool
+depths and shifting colours, the sense of his wrong-doing slipped
+from him, and joy replaced it - joy so great that his heart ached
+with it.  He went on his way, singing Lauda Syon, his eyes
+following the pine-boles, and presently, coming out into an open
+glade, halted in amazement.
+
+A flower incarnate stood before him; stood - nay, danced in the
+wind.  Over the sunny sward two little scarlet-clad feet chased
+each other in rhythmic maze; dainty little brown hands spread the
+folds of the deep blue skirt; a bodice, silver-laced, served as
+stalk, on which balanced, lightly swaying, the flower of flowers
+itself.  Hilarius' eyes travelled upwards and rested there.  Cheeks
+like a sunburnt peach, lips, a scarlet bow; shimmering, tender,
+laughing grey eyes curtained by long curling lashes; soft tendrils
+of curly hair, blue black in the shadows, hiding the low level
+brow.  A sight for gods, but not for monks; above all, not for
+untutored novices such as Hilarius.
+
+His sin had found him out; it was the Devil, the lovely lady of St
+Benedict; he drew breath and crossed himself hastily with a
+murmured "Apage Sataas!"
+
+The dancer stopped, conscious perhaps of a chill in the wind.
+
+"O what a pretty boy!" she cried gaily.  "Playing truant, I dare
+wager.  Come and dance!"
+
+Hilarius crimsoned with shame and horror.  "Woman," he said, and
+his voice trembled somewhat, "art thou not shamed to deck thyself
+in this devil's guise?"
+
+The dancer bit her lip and stamped her little red shoe angrily.
+
+"No more devil's guise than thine own," she retorted, eyeing his
+semi-monastic garb with scant favour.  "Can a poor maid not
+practise her steps in the heart of a forest, but a cloister-bred
+youngster must cry devil's guise?"
+
+As she spoke her anger vanished like a summer cloud, and she broke
+into peal on peal of joyous laughter.  "Poor lad, with thy talk of
+devils; hast thou never looked a maid in the eyes before?"
+
+Shrewdly hit, mistress; never before has Hilarius looked a maid in
+the eyes, and now he drops his own.
+
+"Dost thou not know it is sin to deck the body thus, and entice
+men's souls to their undoing?"
+
+"An what is the matter with my poor body, may it please you, kind
+sir?" she asked demurely, and stood with downcast eyes, like a
+scolded child.
+
+"It is wrong to deck the body," began Hilarius, softening at her
+attitude, "because, because - "
+
+Again the merry laugh rang out.
+
+"Because, because - nay, Father" (with a mock reverence), "methinks
+thy sermon is not ready; let it simmer awhile, and I will
+catechise.  How old art thou?"  She held up her small finger
+admonishingly.
+
+"Seventeen," replied Hilarius, surprised into reply.
+
+"Art thou a monk?"
+
+"Nay, a novice only."
+
+"Hast thou ever loved?"
+
+Hilarius threw up his hands in shocked indignation, but she went on
+unconcerned -
+
+"'Twas a foolish question; the answer's writ large for any maid to
+read.  But tell me, why art thou angry at the thought of love?"
+
+Hilarius felt the ground slipping from under his feet.
+
+"There is an evil love, and a holy love; it is good to love God and
+the Saints and the Brethren - "
+
+"But not the sisters?" the wicked little laugh pealed out.  "Poor
+sisters!  Why, boy, the world is full of love, and not all for the
+Saints and the Brethren, and it is good - good - good!"  She opened
+her arms wide.  "'Tis the devil and the monks who call it evil.
+Hast thou never seen the birds mate in the springtime, nor heard
+the nightingale sing?"
+
+"It is well for a husband to love his wife, and a mother her child.
+That is love in measure, but not so high as the love we bear to God
+and the Saints!" quoth Hilarius sententiously, mindful of
+yesterday's homily in the Frater.
+
+"But how can'st thou know that thou lovest the Saints?" the dancer
+persisted.
+
+How did he know?
+
+"How dost thou know that thou lovest thy mother?" he cried
+triumphantly, forgetting the reprobate nature of the catechist, and
+anxious only to come well out of the wordy war.
+
+But the unexpected happened.
+
+"Dost thou dare speak to me of my mother?  I, love her? - I hate
+her;" and she flung herself down on the grass in a passion of
+weeping.
+
+Even a master of theology is helpless before a woman's tears.
+
+"Maid, maid," said Hilarius, in deep distress, "indeed I did not
+mean to vex thee;" and he came up and laid his hand on her
+shoulder.
+
+So successfully can the Prince of Darkness simulate grief!
+
+The dancer sat up and brushed away her tears; she looked fairer and
+more flowerlike than before, sitting on the green sward, looking up
+at him through shining lashes.
+
+"There, boy, 'tis naught.  How could'st thou know?  But what of
+thine own mother?"
+
+"I know not."
+
+"Nay, what is this?  And thy father?"
+
+"He was a gentle knight who died in battle ere I knew him.  I came
+a little child to the Monastery, and know no other place."
+
+"Ah," - vindictively, - "then thy mother may have been a light o'
+love."
+
+"Light of love; it has a wondrous fair sound," said Hilarius with a
+smile.
+
+The maid looked at him speechless.
+
+"Go home, Boy," she said at last emphatically.
+
+Just then a lad, a tumbler by his dress, pushed a way through the
+undergrowth, and stood grinning at the pair.
+
+"So, Gia!" he said.  "We must make haste; the others wait."
+
+"''Tis my brother," said the dancer, "and" - pointing to the bag
+slung across the youth's shoulder - "I trust he hath a fine fat hen
+from thy Monastery for our meal."
+
+Hilarius broke into a cold sweat.
+
+The Convent's hens!  The Saints preserve us!  Was nothing sacred,
+and were the Ten Commandments written solely for use in the
+Monasteries?
+
+"'Tis stealing," he said feebly.
+
+"'Tis stealing," the dancer mocked.  "Hast thou another sermon
+ready, Sir Preacher?"
+
+"Empty bellies make light fingers," quoth the youth.  "Did'st thou
+ever hunger, master?"
+
+"There is the fast of Lent which presses somewhat," said Hilarius.
+
+"But ever a meal certain once in the day?" queried the girl.
+
+"Ay, surely, and collation also; and Sunday is no fast."
+
+The mischievous apes laughed - how they laughed!
+
+"So, good Preacher," said the dancer at last, rising to her feet,
+"thou dost know it is wrong to steal; but hast never felt hunger.
+Thou dost know it is wrong to love any but God, the Saints, and thy
+mother; but thou hast never known a mother, nor felt what it was to
+love.  Blind eyes!  Blind eyes! the very forest could teach thee
+these things an thou would'st learn.  Farewell, good novice, back
+to thy Saints and thy nursery; for me the wide wide world; hunger
+and love - love - love!"
+
+She seized her brother's hand and together they danced away like
+two bright butterflies among the trees.
+
+Hilarius stared after them until they disappeared, and then with
+dazed eyes and drooping head took his way back to the Monastery.
+The train of mules had just arrived; all was stir, bustle, and
+explanation; and in the thick of it he slipped in unseen,
+unquestioned; but he was hardly conscious of this mercy vouchsafed
+him, for in his heart reigned desolation and doubt, and in his ears
+rang the dancer's parting cry, "Hunger and love - love - love!"
+
+
+
+CHAPTER II - THE LOVE OF PRIOR STEPHEN
+
+
+
+BROTHER BERNARD, the Precentor, dealt out gold, paint and vellum
+with generous hand to his favourite pupil, and wondered at his
+downcast look.
+
+"Methinks this gold is dull, Brother," said Hilarius one day,
+fretfully, to his old master.
+
+And again -
+
+"'Tis very poor vermilion."
+
+The Brother looked at him enquiry.
+
+"Nay, nay, boy; 'tis thine eyes at fault; naught ails the colours."
+
+Later, the Precentor came to look at the delicate border Hilarius
+was setting to the page of the Nativity of Our Lady.
+
+"Now may God be good to us!" he cried with uplifted hands.  "Since
+when did man paint the Blessed Mother with grey eyes and black hair
+- curly too, i' faith?"
+
+Hilarius crimsoned, he was weary of limning ever with blue and
+gold, he faltered.
+
+It was the same in chapel.  The insistent question pursued him
+through chant and psalm.  Did he really love the Saints - St
+Benedict, St Scholastica, St Bernard, St Hilary?  The names left
+him untouched; but his lips quivered as he thought of the great
+love between the holy brother and sister of his Order.  If he had
+had a sister would they have loved like that?
+
+The Saints' Days came and went, and he scourged himself with the
+repeated question, kneeling with burning cheeks, and eyes from
+which tears were not absent, in the Chapel of the Great Mother.
+"Light of Love," the girl had called his mother; what more
+beautiful name could he find for the Queen of Saints herself?  So
+he prayed in his simplicity:- "Great Light of Love, Mother of my
+mother, grant love, love, love, to thy poor sinful son!"
+
+The question came in his daily life.
+
+Did he love the Prior?  He feared him; and his voice was for
+Hilarius as the voice of God Himself.  Brother John?  He feared him
+too; Brother John's tongue was a thing to fear.  Brother Richard,
+old, half-blind?  Surely he loved Brother Richard? - sad, helpless,
+and lonely, by reason of his infirmities - or was it only pity he
+felt for him?
+
+Nay, let be; he loved them all.  The Monastery was his home, the
+Prior his father, the monks his brethren; why heed the wild words
+of the witch in the forest?  And yet what was it she had said?
+"For me the wide world, hunger, and love - love - love!"
+
+He wandered in the Monastery garden and was troubled by its
+beauties.  Two sulphur butterflies sported around the tall white
+lilies at the farmery door.  Did they love?
+
+He watched the sparrows at their second nesting, full of business
+and cheerful bickerings.  Did they love?
+
+She had said the answer was writ large for him to see:  he wandered
+staring, wide-eyed but sightless.
+
+At last in his sore distress he turned to the Prior, as the ship-
+wrecked mariner turns to the sea-girt rock that towers serene and
+unhurt above the devouring waves.
+
+The Prior heard him patiently, with here and there a shrewd
+question.  When the halting tale was told he mused awhile, his
+stern blue eyes grew tender, and a little smile troubled the firm
+line of his mouth.
+
+"My son," he said at length, "thou art in the wrong school;
+nursery, was it the maid said?  A shrewd lass and welcome to the
+hen.  Thou art a limner at heart - Brother Bernard tells of thy
+wondrous skill with the brush - and to be limner thou must learn to
+hunger and to love as the maid said.  Ay, boy, and to be monk too,
+though alack, men gainsay it."
+
+"Father," said Hilarius, waxing bold from excessive need, "did'st
+thou ever love as the maid meant?"
+
+"Ay, boy - thy mother."
+
+There was a long silence.  Then the boy said timidly:-
+
+"The maid said she might be light of love; 'tis a beautiful
+thought."
+
+The Prior started, and looked at him curiously:-
+
+"What didst thou tell the maid?"
+
+"That I never knew her, but that my father was a gentle knight who
+died ere I saw him; and then the maid said perchance my mother was
+light of love."
+
+"Boy," said the Prior gravely, "'tis a weary tale, and sad of
+telling.  Thy mother was wondrous fair without, but she reckoned
+love lightly, nay, knew it not for the holy thing it is, but
+thought only of bodily lusts.  Pray for her soul" - his voice grew
+stern - "as for one of those upon whom God, in His great pity, may
+have mercy.  Thus have I prayed these many years."
+
+ Hilarius looked at him in wide-eyed horror:-
+
+"She was evil, wicked, my mother?"
+
+"Ay - a light woman, that was what the maid meant."
+
+Then great darkness fell upon the soul of Hilarius, and he clasped
+the Prior's knees weeping and praying like a little child.
+
+
+"And so, my son," said the Prior, "for a time thou shalt go out
+into the world, to strive and fail, hunger and love; only have a
+care that thou art chaste in heart and life; for it is the pure
+shall see God, and seeing love Him.  Leave me now that.  I may set
+in order thy going; and send the Chamberlain hither to me."
+
+That night Hilarius knelt through the long hours at the great Rood,
+and then at St Mary Maudlin's altar he did penance for his dead
+mother's sin.
+
+A week later he left the Monastery as a bird leaves its nest, nay,
+is pushed out by the far-seeing parent bird, full of vague terrors
+of the great world without.  He had a purse for his immediate
+needs; a letter to a great knight, Sir John Maltravers, who would
+be his patron; and another to the Prior's good friend, the Abbat of
+St Alban's.  The Convent bade him a sad farewell, for they loved
+this gentle lad who had been with them from a little child; and
+Brother Richard strained his filmy eyes to look his last at the
+young face he would never see again.
+
+The Prior gave him the Communion; and later walked beside him to
+the gates.  Then as Hilarius knelt he blessed him; and the boy,
+overmastered by nameless fear, sprang up and prayed that he might
+stay and learn some other way, however hard.  The Prior shook his
+head.
+
+"Nay, my son, so it must be; else how shall I answer to the Master
+for this most precious lamb of my flock?  Come back to us - an thou
+can'st - let no fear deter thee; only take heed, when thine eyes
+are opened and the great gifts of hunger and love are vouchsafed
+thee, to keep still the faithful heart of a little child."
+
+Then he bade him go; and Hilarius, for the pull of his heart-
+strings, must needs run hot-foot down the broad forest road and
+along the highway, without daring to look back, and so out into the
+wide, wide world.
+
+
+
+CHAPTER III - THE KING'S SONG-BIRD
+
+
+
+MARTIN THE MINSTREL sat under a wayside oak singing softly to
+himself as he tuned his vielle.  He was a long lanky fellow with
+straight black locks flat against his sallow face, and dark eyes
+that smouldered in hollow cavities.  He wore the King's colours,
+and broke a manchet of white bread with his mid-day repast.
+
+"Heigh-ho!" sighed Martin, and laid the vielle lovingly beside him,
+"another four leagues to Westminster, and I weary enough of shoe-
+leather already, and not another penny piece in my pocket 'til I
+win back to good King Ned.  A brave holiday I have had, from
+Candlemas to Midsummer; free to sing or to be silent, to smile or
+frown; wide England instead of palace walls; a crust of bread and a
+jug of cider instead of a king's banquet.  Now but another few
+leagues and the cage again.  Money in my pocket, true; but a song
+here and a song there, such as suit the fancy of the Court gentles,
+not of Martin the Minstrel.  Heigh-ho, heigh-ho! 'tis a poor bird
+sings at the word of a king, and a poor enough song too, if Edward
+did but know it.
+
+"Who comes here?  Faith, the lad goes a steady pace and carries a
+light heart from his song; and no ill voice either."
+
+It was Hilarius, and he sang the Alma Redemptoris as he sped along
+the green grass which bordered the highway.
+
+When Martin hailed him he turned aside gladly, and his face lit up
+at the sight of the vielle.
+
+"Whence dost thou come, lad?" said Martin, eyeing him with
+interest.
+
+"Many days' journey from the Monastery of Prior Stephen," answered
+Hilarius.
+
+"But thou art no monk!"
+
+"Nay, a novice scarcely; but the Prior hath bidden me go forth to
+see the world.  It is wondrous fair," he added sincerely.
+
+"He who speaks thus is cloister-bred," said Martin, and as Hilarius
+made sign of assent, "'tis writ on thy face as well.  Thy Prior
+gave thee letters to the Abbat of St Peter's, I doubt not; thy face
+is set for Westminster."
+
+"Ay, for Westminster, but my letters are for that good knight, Sir
+John Maltravers.  I should have made an end of my journeying ere
+now but that two days ago I met strange company.  They took my
+purse and hat and shoes, and kept me with them all night until the
+late dawn.  Then they gave me my goods again, and bade me God-
+speed.'
+
+"But kept thy purse?" Martin laughed.
+
+"Nay, it is here, and naught is missing.  It was all passing
+strange, and I feared them, for they looked evil men; yet they did
+me no wrong, and set me on my way gently enough, giving me
+provision, which I lacked."
+
+"Pick-purses and cut-throats afraid of God's judgments for once,"
+muttered Martin; then aloud, "Well, young sir, we shall do well if
+we win Westminster before night-fall; shall we journey together
+since our way is the same?"
+
+Hilarius assented gladly; and as they went, Martin told him of
+Court and King, and the wondrous doings when the Princess Isabel
+was wed.  He listened open-eyed to tales of joust and revel and
+sport; and heard eagerly all the minstrel could tell of Sir John
+Maltravers himself, a man of great and good reputation, and no mean
+musician; "and," added Martin, "three fair daughters he hath, the
+eldest Eleanor, fairest of them all, of whom men say she would fain
+be a nun.  Thou art a pretty lad, I wager one or other will claim
+thee for page."
+
+"I will strive to serve well," said Hilarius soberly, "but I have
+never spoken but to one maid 'til yesterday, when a woman gave me
+good-morrow."
+
+Martin looked at his companion queerly.
+
+"And thou art for Westminster!  Nay, but by all the Saints this
+Prior of thine is a strange master!"
+
+"It is but for a time," said Hilarius, "then I shall go back to the
+Monastery again.  But first I would learn to be a real limner; I
+have some small skill with the brush," he added simply.
+
+Martin stared.
+
+"Back to the cloister?  Nay, lad, best turn about and get back now,
+not wait till thou hast had a taste of Court life.  Joust and
+banquet and revel, revel, banquet, and joust, much merry-making and
+little reason, much love and few marryings:  a gay round, but not
+such as makes a monk."
+
+Hilarius smiled.
+
+"Nay, that life will not be for me.  I am to serve my lord, write
+for him, methinks.  But tell me, good Martin, dost thou love the
+Court?  It seems a fine thing to be the King's Minstrel."
+
+"Nay, lad, nay," said the other hastily, "give me the open country
+and the greenwood, and leave to sing or be silent.  Still, the King
+is a good master, and lets me roam as I list if I will but come
+back; 'tis ill-faring in winter, so back I go to pipe in my cage
+and follow the Court until next Lady-day lets the sun in on us
+again."
+
+He struck his vielle lightly, and the two fell into a slower pace
+as the minstrel sang.  Hilarius' eyes filled with tears, for he was
+still heart-sore, and Martin's voice rose and fell like the wind in
+the tossing tree-tops which had beckoned him over the Monastery
+wall.  The song itself was sad - of a lover torn from his mistress
+and borne away captive to alien service.  When it was ended they
+took a brisker pace in silence; then, after a while, Hilarius said
+timidly:-
+
+"Did'st thou sing of thyself, good Martin?"
+
+"Ay, lad, and of my mistress."  He stopped suddenly, louted low to
+the sky, and with comprehensive gesture took in the countryside.
+"A fair mistress, lad, and a faithful one, though of many moods.  A
+man suns himself in the warmth of her caresses by day, and at night
+she is cold, chaste, unattainable; at one time she is all smiles
+and tears, then with boisterous gesture she bids one seek shelter
+from her buffets.  She gives all and yet nothing; she trails the
+very traces of her hair across a man's face only to elude him.  She
+holds him fast, for she is mother of all his children; yet he must
+seek as though he knew her not, or she flouts him."
+
+Hilarius listened eagerly.  Was this what the dancer had meant -
+the "wide wide world, hunger and love"?
+
+"Did'st thou ever hunger, good Martin?"
+
+"Ay, lad," said the minstrel, surprised, "and 'tis good sauce for
+the next meal"
+
+"Did'st thou ever love?"
+
+Martin broke into a great laugh.
+
+"Ay, marry I have more times than I count years.  But see, here
+comes one who knows little enough of hunger or love."  Round the
+bend of the road came a man in hermit's dress carrying a staff and
+a well-filled wallet.  His carriage seemed suddenly to become less
+upright, and he leaned heavily on his stick as he besought an alms
+from the two travellers.
+
+Hilarius felt for his purse, but Martin stayed him.
+
+"Nay, lad, better have left thy money with the pick-purses than
+help to fill the skin of this lazy rogue; 'tis not the first time
+we have met.  See here," and with a dexterous jerk he caught the
+hermit's wallet.
+
+This one was too quick for him; with uplifted staff and a mouthful
+of oaths, sorely at variance with his habit, he snatched it back,
+flung the bag across his shoulder, and made off at a round pace
+down the road, while Martin roared after him to wait an alms laid
+on with a cudgel.
+
+Hilarius gazed horrified from the retreating figure to his laughing
+companion, who answered the unspoken question.
+
+"A rascal, lad, yon carrion, and no holy father.  They are the pest
+of every country-side, these lazy rogues, who never do a hand's
+turn and yet live better than many a squire.  I warrant he has good
+stuff in that larder of his to make merry with."
+
+Hilarius walked on for some time in silence with bent head.
+
+"I fear the world is an ill place and far from godliness," he said
+at last.
+
+"It will look thus to one cloister-bred, and 'tis true enough that
+godliness is far from most men; but if a hermit's robe may cover a
+rascal, often enough a good heart lies under an ill-favoured face
+and tongue.  See, lad," as another turn in the road brought them in
+sight of Westminster, "there lies thy new world, God keep thee in
+it!"
+
+He pointed to a grey-walled city rising from the water's edge, with
+roof and pinnacle, gable and turret, aflame in the light of the
+western sky; in front flowed the river like a stream of molten
+gold.
+
+Hilarius gave a little cry.
+
+"'Tis like the New Jerusalem!" he said, and Martin smiled grimly.
+
+An hour later they stood within the walls of Westminster city, and
+Hilarius, amazed and weary, clung close to Martin's side.  Around
+him he saw russet-clad archers, grooms, men on horseback, pedlars,
+pages, falconers, scullions with meats, gallant knights, gaily
+dressed ladies; it was like a tangled dream.  The gabled fronts of
+the houses were richly blazoned or hung with scarlet cloth; it was
+a shifting scene of colour, life, and movement, and to Hilarius'
+untutored eyes, wild confusion.  Outside the taverns clustered all
+sorts and conditions of men, drinking, gossiping, singing, for the
+day's work was done.  In the courtyard of the "Black Boar" a
+chained bear padded restlessly to and fro, and Hilarius crossed
+himself anxiously - was the devil about to beset him under all
+guises at once?  He raised a fervent Ora pro me to St Benedict as
+he hurried past.  A string of pack-horses in the narrow street sent
+folk flying for refuge to the low dark doorways, and a buxom wench,
+seeing the pretty lad, bussed him soundly.  This was too much, only
+the man in him stayed the indignant tears.  "Martin, Martin!" he
+cried; but the minstrel was on his own ground now, and was hailed
+everywhere with acclamations, and news given and demanded in a
+breath.  Hilarius, shrinking, aghast, his ears scourged with rough
+oaths and rude jests, his eyes offended by the easy manners round
+him, his cheek hot from the late salute, took refuge under a low
+archway, and waited with anxious heart until the minstrel should
+have done with the crowd.
+
+Martin did not forget him.
+
+"Hole, lad!" he cried, "see how they welcome the King's bird back
+to his cage!  As for thee, thou hast gone straight to thy cot like
+a homing pigeon; through that archway, lad, lies thy journey's
+end."  Then, apprehending for the first time Hilarius' white face
+and piteous eyes, Martin strode across, swept him under the archway
+into a quiet courtyard where a fountain rippled, and, having handed
+him over to Sir John's steward, left him with a friendly slap on
+the back and the promise of speedy meeting.
+
+Hilarius delivered the Prior's letter, and followed the steward
+into a rush-strewn hall where scullions and serving-men were busy
+with preparations for the evening meal; and sat there, lonely and
+dejected, his curiosity quenched, his heart sore, his whole being
+crying out for the busied peace and silent orderliness of his
+cloister home.  The servants gibed at him, but he was too weary to
+heed; indeed he hardly noticed when the household swept in to
+supper, until a page-boy tweaked him slyly by the ear and bade him
+come to table.  He ate and drank thankfully, too dazed to take note
+of the meal; and the pages and squires among whom he sat left him
+alone, abashed at his gentleness.  At last, something restored by
+the much-needed food, Hilarius looked round the hall.
+
+It reminded him of the Refectory at home, save that it was far
+loftier and heavily timbered.  The twilight stealing in through
+high lancet windows served but to emphasize the upper gloom, which
+the morrow's sun would dissipate into cunningly carved woodwork - a
+man's thought in every quaintly wrought boss and panel, grotesque
+beast and guarding saint.  A raised table stood at the upper end of
+the hall, and here gaily dressed pages waited on the master of the
+house and his honoured guests.  Hilarius rightly guessed the tall,
+careworn man of distinguished presence to be no other than Sir John
+himself, and he liked him well; but his eyes wandered carelessly
+over the rest of the company until they were caught and held by a
+woman's face.  It was Eleanor, the fairest of the knight's three
+fair daughters; and when Hilarius saw her he felt as a weary
+traveller feels who meets a fellow citizen in a far-off land.
+
+"Even such a face must the Blessed Agnes have had," he thought, his
+mind reverting to his favourite Saint; "she is like the lilies in
+the garth at home."
+
+It was a strange comparison, for the girl was extravagantly dressed
+in costly materials and brilliant colours, her hair coifed in the
+foolish French fashion of the day; and yet, despite it all, she
+looked a nun.  Her face was pale, her brows set straight; her eyes,
+save when she was much moved, were like grey shadows veiling an
+unknown soul; her mouth, delicately curved, was scarcely reddened;
+her head drooped slightly on her long, slender neck, a gesture
+instinct with gracious humility.  She was like a pictured saint:
+Hilarius' gaze clung to her, followed her as she left the hall, and
+saw her still as he sat apart while the serving men cleared the
+lower tables and brought in the sleeping gear for the night.  He
+lay down with the rest, and through the high, lancet windows the
+moonlight kissed his white and weary face as it was wont to do on
+bright nights in the cloister dormitory.  Around him men lay
+sleeping soundly after the day's toils; there was none to heed, and
+he sobbed like a little homesick child, until his tired youth
+triumphed, and he fell asleep, to dream of Martin and the Prior,
+the lady at the raised table, and the pale, sweet lilies in the
+cloister garth.
+
+
+
+
+PART II - THE FLOWER
+
+
+
+
+CHAPTER I - THE CITY OF PURE GOLD
+
+
+
+"BLIND eyes, blind eyes!" sang the dancer.
+
+Hilarius woke with a start.  He had fallen asleep on a bench in the
+sunny courtyard and his dream had carried him back to the forest.
+He sat rubbing his eyes and only half-awake, the sun kissing his
+hair into a halo against the old grey wall.  A falcon near fretted
+restlessly on her perch, and a hound asleep by the fountain rose,
+and, slowly stretching its great limbs, came towards him.
+
+It was four o'clock on a warm day in September; the courtyard was
+deserted save for a few busied serving men, and the knight and his
+household, were at a tilting in the Outer Bailey, all but the Lady
+Eleanor, Hilarius' mistress, for, as Martin had foreseen, Sir John
+had so appointed it.
+
+It was now two months since Hilarius had come to the city which had
+seemed to him in the distance as the New Jerusalem full of promise;
+but he had found no angels at the gates, nor were the streets full
+of the righteous; nay, the place seemed nearer of kin to the
+Babylon of Blessed John's Vision - with a few holy ones who would
+surely be caught up ere judgment fell, amongst them Sir John and
+Lady Eleanor.
+
+A good knight and a God-fearing man was Sir John, tender to his
+children, gentle with his people, a faithful servant to God and
+King Edward; shrewd withal, and an apt reader of men.  Therefore,
+and because of the love he bore to Prior Stephen, he set Hilarius
+to attend his eldest daughter, who seemed to belong as little to
+this world as the lad himself; and felt that in so doing he had
+achieved the best possible for his old friend, according to his
+asking.
+
+Hilarius for his part served the Lady Eleanor as an acolyte tends
+the chapel of a saint, only she was further removed from him than a
+saint, by reason of her pale humanity.  He soon perceived, as he
+watched her at banquet, tourney, or pageant, that she went to a
+revel as to the Sacrament, and sat at a mummers' show with eyes
+fixed on the Unseen.  She moved through the gay vivid world of
+Court gallants and joyous maidens like a shadow, and the rout grew
+graver at her coming.
+
+It was much the same with her lover, Guy de Steyning - brother of
+that Hugh de Steyning men wot of as Brother Ambrosius - a gentle
+knight with mild blue eyes, a peaked red beard, and great fervour
+for heavenly things.  The pair liked one another well; but their
+time was taken up with preparation for Paradise rather than with
+earthly business, and their speech lent itself more readily to
+devout phrases than to lovers' vows.  It was small wonder,
+therefore, that another year saw them both by glad consent in the
+cloister, he at Oxford, and Eleanor in the Benedictine House of
+which her aunt was Prioress.
+
+Hilarius had written of his saintly mistress to Prior Stephen just
+as he had written of the wondrous beauty of St Peter's Abbey:
+"With all its straight, slender, upstanding pillars, methinks 'tis
+like the forest at home" (forgetting that his more intimate
+knowledge of the forest partook of the nature of sin).  "The Lady
+Eleanor, my honoured mistress," he wrote, "is a most saintly and
+devout maiden, full of heavenly lore, and caring nought for the
+things of this world;" and he added, "'tis beautiful to see such
+devotion where for the most part are sinful and light-minded
+persons."
+
+The Prior laid the script aside with a smile and a sigh; and when
+Brother Bernard asked news of the lad, answered a little sadly,
+"Nay, Brother, he still sleeps;" and indeed there seemed no waking
+him to a world of men - living, striving, sorely-tried men.
+
+He dwelt in a land of his own making - a land of colour and light
+and shadow in which much that he saw played a part; only the
+gorgeous pageants turned to hosts of triumphant saints heralded by
+angels; while the knights at a tourney in their brave armour
+pictured St George, St Michael, or St Martin in his dreams.
+
+It was a limner he longed to be, far away from the stir and stress,
+not a page attending a great lady to the Court functions.  He
+yearned ever after the Scriptorium, with its busied monks and
+stores of colour and gold.  It lay but a stone's throw away behind
+the jealous Monastery walls, but it was no part of Prior Stephen's
+plan that the lad should go straight from one cloister to another.
+
+To Hilarius sitting on the bench in the sun, came one of Eleanor's
+tirewomen to bid him wait on her mistress.  He rose at once and
+followed her through the hall and up the winding stair, along a
+gallery hung with wondrous story-telling tapestry, to the bower
+where Eleanor sat with two of her women busied with their needle.
+
+Hilarius found his mistress, her hands idle on her knee.  He louted
+low, and she bade him bring a stool and sit beside her.
+
+"I am weary," she said; "this life is weariness.  Tell me of the
+Monastery and the forest - stay, tell me rather of the New
+Jerusalem that Brother Ambrose saw and limned.'
+
+Hilarius, nothing loth, settled himself at her feet, elbow on knee,
+and chin on his open hands, his dreamy blue eyes gazing away out of
+the window at the cloud-flecked sky above the Abbey pinnacles.
+
+"The Brother Ambrose," he began, "was ever a saintly man, approved
+of God and beloved by the Brethren; ay, and a crafty limner, save
+that of late his eyesight failed him.  To him one night, as he lay
+a-bed in the dormitory, came the word of the Lord, saying:  "Come,
+and I will show thee the Bride, the Lamb's wife."  And Brother
+Ambrose arose and was carried to a great and high mountain, even as
+in the Vision of Blessed John.  'Twas a still night of many stars,
+and Brother Ambrose, looking up, saw a radiant path in the heavens;
+and lo! the stars gathered themselves together on either side until
+they stood as walls of light, and the four winds lapped him about
+as in a mantle and bore him towards the wondrous gleaming roadway.
+Then between the stars came the Holy City with roof and pinnacle
+aflame, and walls aglow with such colours as no earthly limner
+dreams of, and much gold.  Brother Ambrose beheld the Gates of
+Pearl, and by every gate an angel, with wings of snow and fire, and
+a face no man dare look on, because of its exceeding radiance.
+
+"Then as Brother Ambrose stretched out his arms because of his
+great longing, a little grey cloud came out of the north and hung
+between the walls of light, so that he no longer beheld the Vision,
+but heard only a sound as of a great multitude crying, 'Alleluia';
+and suddenly the winds came about him again, and lo! he found
+himself in bed in the dormitory, and it was midnight, for the bell
+was ringing to Matins; and he rose and went down with the rest; but
+when the Brethren left the choir, Brother Ambrose stayed fast in
+his place, hearing and seeing nothing because of the Vision of God;
+and at Lauds they found him and told the Prior.
+
+"He questioned Brother Ambrose of the matter, and when he heard the
+Vision, bade him limn the Holy City even as he had seen it; and the
+Precentor gave him uterine vellum and much fine gold and what
+colours he asked for the work.  Then Brother Ambrose limned a
+wondrous fair city of gold with turrets and spires; and he inlaid
+blue for the sapphire, and green for the emerald, and vermilion
+where the city seemed aflame with the glory of God; but the angels
+he could not limn, nor could he set the rest of the colours as he
+saw them, nor the wall of stars on either hand; and Brother Ambrose
+fell sick because of the exceeding great longing he had to limn the
+Holy City, and was very sad; but our Prior bade him thank God and
+remember the infirmity of the flesh, which, like the little grey
+cloud, veiled Jerusalem to his sight."
+
+There was silence.  Lady Eleanor clasped her shadowy blue-veined
+hands under her chin, and in her eyes too was a great longing.
+
+"It seemeth to me small wonder that Brother Ambrose fell sick," she
+said, at length.
+
+Hilarius nodded:
+
+"He had ever a patient, wistful look as of one from home; and often
+he would sit musing in the cloister and scarce give heed to the
+Office bell."
+
+"Methinks, Hilarius, it will be passing sweet to dwell in that Holy
+City."
+
+"Nay, lady," said her page tenderly, "surely thou hast had a vision
+even as Brother Ambrose, for thine eyes wait always, like unto
+his."
+
+Eleanor shook her head, and two tears crept slowly from the shadow
+of her eyes.
+
+"Nay, not to such as I am is the vision vouchsafed; though my
+desire is great, 'tis ever clogged by sin; and for this same reason
+I would get me to a cloister where I might fast and pray
+unhindered."
+
+Hilarius looked at her with great compassion.
+
+"Sweet lady, the Lord fulfil all thy desires; yet, methinks, thou
+art already as one of His saints."
+
+"Nay, but a poor sinner in an evil world," she answered.  "Sing to
+me, Hilarius."
+
+And he sang her the Salve Regina, and when it was ended she bade
+him go, for she would fain spend some time in prayer upon her
+primer.
+
+"Our Lady and all Saints be with thee, sweet mistress!" he said,
+and left her to sob out once more the sins and sorrows of her
+tender childlike heart.
+
+
+
+CHAPTER II - THE CITY THAT HILARIUS SAW
+
+
+
+HILARIUS went back to the courtyard, his soul full of trouble.  He
+leant against the fountain, playing with the cool water which fell
+with monotonous rhythm into the shallow timeworn basin.  The
+cloudless sky smiled back at him from the broken mirror into which
+he gazed, and the glory of its untroubled blue thrilled him
+strangely.  He too had a vision which he longed to limn; but it was
+of earth, not Heaven, like that vouchsafed to Brother Ambrose; and
+yet none the less precious, for was it not the Monastery at home
+which so haunted him, the grey, familiar walls with their girdle of
+sunlit pasture, and the mantling forest which bowed and swayed at
+the will of the whispering wind?
+
+"As well seek Heaven's gate in yon fair reflection as learn to love
+in this light-minded, deceitful city," Hilarius said to himself a
+little bitterly.  He deemed that he had plumbed its hollowness and
+learnt the full measure of its vanity.  Already he shunned the
+company and diversions of his fellow pages, though he was ever
+ready to serve them.  A prentice lad's homely brawl set him
+shivering; a woman's jest painted his cheeks 'til they rivalled a
+young maid's at her first wooing.  He plucked aside his skirts and
+walked in judgment; only wherever mountebank or juggler held the
+crowd enthralled, there Hilarius, half-ashamed, would push his way,
+in the unacknowledged hope of seeing again the maid whose mother,
+like his own, was light o' love:  a strange link truly to bind
+Hilarius in his blindness to the rest of poor sinful humanity.
+
+Suddenly there broke on his musing the clatter of horse-hoofs, and
+a gay young page came spurring with bent head under the low
+archway.  He reined up by Hilarius:
+
+"Dear lad, kind lad, wilt thou do me a service?"
+
+"That will I, Hal, an it be in my power."
+
+"Take this purse, then, to the Cock Tavern and give it mine host.
+'Tis Luke Langland's reckoning; he left it with me yesternight, but
+my head was full of feast and tourney, and 'tis yet undelivered.
+Mine host will not let the serving men and the two horses go 'til
+he hath seen Luke's money, and I cannot stay, for my lord will need
+me."
+
+Hilarius took the purse; and his fellow page, blessing him for a
+good comrade, clattered back through the gateway.
+
+The streets were full of life and colour; serving men in the livery
+of Abbat and Knight, King and Cardinal, lounged at the tavern doors
+dicing, gaming, and drinking.  Hilarius walked delicately and
+strove to shut eyes and ears to the sights and sounds of sin.  He
+delivered the purse, only to hear mine host curse roundly because
+it was lighter than the reckoning; and after being hustled and
+jeered at for a milk-faced varlet by the men who stood drinking, he
+sought with scarlet cheeks for a less frequented way.
+
+The quiet of a narrow street invited him; he turned aside, and
+suddenly traffic and turmoil died away.  He was in a city within a
+city; a place of mean tenements, wretched hovels, ruined houses,
+and, keeping guard over them all, a grim square tower, blind save
+for two windowed eyes.  Men, ill-favoured, hang-dog, or care-worn,
+stood about the house doors silent and moody; a white-faced woman
+crossing the street with a bucket gave no greeting; the very
+children rolling in the foul gutters neither laughed nor chattered
+nor played.  The city without seemed very far from this dismal
+sordid place.
+
+Hilarius felt a touch on his shoulder, and a kindly voice said:-
+
+"How now, young sir, for what crime dost thou take sanctuary?"
+
+He looked up and saw an old man in the black dress of an
+ecclesiastic, the keys of St Peter broidered on his arm.
+
+"Sanctuary," stammered Hilarius, "nay, good sir, I - "
+
+The other laughed.
+
+"Wert thou star-gazing, then, that thou could'st stray into these
+precincts and know it not?  This is the City of Refuge to which a
+man may flee when he has robbed or murdered his fellow, or been
+guilty of treason, seditious talk, or slander - a strange place in
+which to see such a face as thine."
+
+"I did but seek a quiet way home and lost the turning," said
+Hilarius; "in sooth, 'tis a fearful place."
+
+"Ay, boy, 'tis a place of darkness and despair, despite its safety
+- even the King's arm falls short when a man is in these precincts:
+but from himself and the knowledge of his crime, a man cannot flee;
+hence I say 'tis a place of darkness and despair."
+
+The unspoken question shone in Hilarius' eyes, and the other
+answered it.
+
+"Nay, there is no blood on my soul, young sir.  'Twas good advice I
+gave, well meant but ill received, so here I dwell to learn the
+wisdom of fools and the foolishness of wisdom."
+
+"Does the Abbat know what evil men these are that seek the shelter
+of Holy Church?" asked Hilarius, perplexed.
+
+"Most surely he knows; but what would'st thou have?  It hath ever
+been the part of the Church to embrace sinners with open arms lest
+they repent.  A man leaves wrath behind him when he flees hither;
+but should he set foot in the city without, he is the law's, and no
+man may gainsay it."
+
+"Nay, sir, but these look far from repentance," said Hilarius.
+
+"Ay, ay, true eno'," rejoined the other cheerfully, "but then 'tis
+not for nothing Mother Church holds the keys.  Man's law may fail
+to reach, but there is ever hell-fire for the unrepented sinner."
+
+Hilarius nodded, and his eyes wandered over the squalid place with
+the North Porch of the Abbey for its sole beauty.
+
+"It must be as hell here, to live with robbers and men with bloody
+hands."
+
+"Nay," said the old man hastily, "many of them are kindly folk, and
+many have slain in anger without thought.  'Tis a sad place,
+though, and thy young face is like a sunbeam on a winter's day.
+Come, I will show thee thy road."
+
+He led Hilarius through the winding alleys and set him once more on
+the edge of the city's stir and hum.
+
+"I can no further," he said.  "Farewell, young sir, and God keep
+thee!  An old man's blessing ne'er harmed any one."
+
+Hilarius gave him godden, and sped swiftly back through the streets
+crowded with folks returning from the tourney.  The Abbey bell rang
+out above the shouts and din.
+
+"'Tis an evil, evil world," quoth young Hilarius.
+
+
+
+CHAPTER III - A SENDING FROM THE LORD
+
+
+
+OCTOBER and November came and sped, and Hilarius' longing to be a
+limner waxed with the waning year.  One day by the waterside he met
+Martin, of whom he saw now much, now little, for the Minstrel
+followed the Court.
+
+"The cage grows too small for me, lad," he said, as he stood with
+Hilarius watching the sun sink below the Surrey uplands; "ay, and I
+love one woman, which is ill for a man of my trade.  I must be away
+to my mistress, winter or no winter, else my song will die and my
+heart break."
+
+"'Tis even so with me, good Martin," said Hilarius sadly; "I too
+would fain go forth and serve my mistress; but the cage door is
+barred, and I may not open it from within."
+
+Martin whistled and smote the lad friendly on the shoulder.
+
+"Patience, lad, patience, thou art young yet.  Eighteen this
+Martinmas, say you?  In truth 'tis a great age, but still leaves
+time and to spare.  'All things come to a waiting man,' saith the
+proverb."
+
+A week later he chanced on Hilarius sitting on a bench under the
+south wall of the farmery cloister.  It was a mild, melancholy day,
+and suited the Minstrel's mood.
+
+He sat down by him and told of King and Court; then when Hilarius
+had once more cried his longing, he said gravely:-
+
+"One comes who will open more cage doors than thine and mine, lad -
+and yet earn no welcome."
+
+Hilarius looked at him questioningly.
+
+"Lad, hast thou ever seen Death?"
+
+"Nay, good Martin."
+
+"It comes, lad, it comes; or I am greatly at fault.  I saw the
+Plague once in Flanders, and fled against the wind, and so came out
+with a clean skin; now I am like to see it again; for it has landed
+in the south, and creeps this way.  Mark my words, lad, thou wilt
+know Death ere the winter is out, and such as God keep thee from."
+
+Hilarius understood little of these words but the sound of them,
+and turned to speak of other things.
+
+Martin looked at him gloomily.
+
+"Best get back to the cloister and Prior Stephen, lad."
+
+"Nay, good Martin, that may not be; but I have still a letter for
+the Abbat of St Alban's, and would hasten thither if Sir John would
+set me free.  Methinks I am a slow scholar," went on poor Hilarius
+ruefully, "for I have not yet gone hungry - and as for love,
+methinks there are few folk to love in this wicked city."
+
+Martin laughed and then grew grave again.
+
+"Maybe he comes who will teach thee both, and yet I would fain find
+thee a kinder master.  Well, well, lad, get thee to St Alban's an
+it be possible; thou art best in a cloister, methinks, for all thy
+wise Prior Stephen may say."
+
+And he went off singing -
+
+
+"Three felons hung from a roadside tree,
+One black and one white and one grey;
+And the ravens plucked their eyes away
+From one and two and three,
+That honest men might see
+And thievish knaves should pay;
+Lest these might be
+As blind as they.
+Ah, well-a-day, well-a-day!
+One - two - three!  On the gallows-tree hung they."
+
+Hilarius listened with a smile until the last notes of Martin's
+voice had died away, and then fell a-musing of hunger and love, the
+dancer and the Prior.
+
+Suddenly, as if his thought had taken speech, he heard a voice say:
+
+"I hunger, I hunger, feed me most sweet Manna, for I hunger - I
+hunger, and I love."
+
+He sprang to his feet, but there was no one in sight.  Again the
+shrill quavering voice called:
+
+"Love of God, I hunger, Love of God, I die.  Blessed Peter, pray
+for me!  Blessed Michael, defend me!"
+
+Hilarius knew now; it was the Ankret, that holy man who for sixty
+years had fasted and prayed in his living tomb at the corner of the
+cloister.  He was held a saint above all the ankrets before him,
+and wondrous wise; the King himself had sought his counsel, and the
+Convent held him in high esteem.
+
+Again the voice:  Hilarius strove to reach up to the grated window
+of the cell - it was too high above him.  An overpowering desire
+came upon him to ask the Ankret of his future.  With a spring he
+caught at the window's upright bars; his cap flew off and he hung
+bare-headed, the sun behind him, gazing into the cell.
+
+On his knees was an old man whose long white hair lay in matted
+locks upon his shoulders, and whose beard fell far below his
+girdle.  The skin of his face was like grey parchment, and his
+deep-set eyes glowed strangely in their hollow cavities.
+
+Hilarius strove to speak, but words failed him.
+
+The Ankret looking up saw the beautiful face at his window with its
+aureole of yellow hair, and stretched out his bony withered hands.
+
+"Blessed Michael, Blessed Michael, the messenger of the Lord!" he
+cried, gaining strength from the vision.
+
+"What would'st thou, Father!" said Hilarius, afraid.
+
+"Nay, who am I that I should speak? and yet, and yet - " the old
+man's voice grew weaker - "the Bread of Heaven, that I may die in
+peace."
+
+He stretched out his hands again entreatingly, and Hilarius was
+sore perplexed.
+
+"Dost thou crave speech of the Abbat, my Father?"
+
+The Ankret looked troubled.
+
+"Blessed Michael, Blessed Michael!" he murmured entreatingly.
+
+Hilarius' hands hurt him sore; it was clear that the holy man saw
+some wondrous vision, and 'twas no gain time to speech of him.
+
+"Blessed Michael, Blessed Michael!" quavered the old, tired voice.
+
+Hilarius felt himself slipping; with a great effort he held fast
+and braced himself against the wall
+
+"Blessed Michael, Blessed Michael!" - The appeal in the half-dead
+face was awful.
+
+Hilarius' grip failed; he slid to the ground bruised and sore from
+the unaccustomed strain, but well pleased.  True, he had gained no
+counsel from the Ankret, but he had seen the holy man - ay, even
+when he was visited by a heavenly messenger, and that in itself
+should bring a blessing.  He turned to go, when a sudden thought
+came to him.  There was no one in sight, no sound but the failing
+cry from the tired old saint.  Hilarius doffed his cap again and
+his fresh young voice rose clear and sweet through the thin still
+air:-
+
+
+"Iesu, dulcis memoria,
+Dans vera cordis gaudia;
+Sed super mel et omnia
+Dulcis ejus praesentia."
+
+
+At the fourth stanza his memory failed him; but he could hear the
+Ankret crooning to himself the words he had sung, and crying softly
+like a little child.
+
+Hilarius went home with wonder in his heart, but said no word of
+what had befallen him; and that night the Ankret died, and the Sub-
+Prior gave him the last sacraments.
+
+Next day it was known that a vision had been vouchsafed the holy
+man before his end; and that the Prince of Angels himself had
+brought his message of release:  and Hilarius, greatly content to
+think that the Blessed Michael had indeed been so near him, kept
+his own counsel.
+
+He told Lady Eleanor of Martin's words.
+
+"God save the King!" she said, and went into her oratory to pray:
+and there was need of prayer, for the Minstrel's foreboding was no
+idle one.  Ere London knew it the Plague was at her gates; yet the
+King, undeterred, came to spend Christmas at Westminster; but
+Martin was not in his train.  Men's mirth waxed hot by reason of
+the terror they would not recognise.  Banquet and revel, allegory
+and miracle play; pageant of beautiful women and brave men;
+junketing, ay, and rioting - thus they flung a defiance at the
+enemy; and then fled:  for across the clash of the feast bells
+sounded the mournful note of funeral dirge and requiem.
+
+Eleanor, knowing Hilarius' ardent longing for school and master,
+prayed her father to set him on the way to St Alban's instead of
+keeping him with them to follow a fugitive Court.  The good knight,
+feeling one page more or less mattered little when Death was so
+ready to serve, and anxious for the lad's safety and well-being,
+assented gladly enough.  So it came to pass that on the Feast of
+the Three Kings Hilarius found himself on the Watling Street Way, a
+well-filled purse in his pocket, but a fearful heart under his
+jerkin; for the Death he had never seen loomed large, a great king,
+and by all accounts a most mighty hunter.
+
+
+
+CHAPTER IV - BLIND EYES WHICH COULD SEE
+
+
+
+IT is, for the most part, the moneyed man who flees from the face
+of Death; the poor man awaits him quietly, with patient
+indifference, in the field or under his own roof-tree; ay, and
+often flings the door wide for the guest, or hastens his coming.
+Thus it came to pass that while the stricken poor agonised in the
+grip of unknown horror, bishop and merchant, prince and chapman,
+fine ladies in gorgeous litters, abbesses with their train of nuns,
+and many more, fled north, east, and west, from the pestilent
+cities, and encumbered the roads with much traffic.  One
+procession, and one only, did Hilarius meet making its way to
+London.
+
+It was a keen frosty day; there had been little previous rain or
+snow, and the roads were dry; the trees in the hedgerows, bare and
+stricken skeletons, stood out sharp and black against a cold grey
+sky.  Suddenly the sound of a mournful chant smote upon the still
+air, music and words alike strange.  The singers came slowly up the
+roadway, men of foreign aspect walking with bent heads, their dark,
+matted locks almost hiding their wild, fixed eyes and thin, haggard
+faces.  They were stripped to the waist, their backs torn and
+bleeding, and carried each a bloody scourge wherewith to strike his
+fellow.  At the third step they signed the sign of the Cross with
+their prostrate bodies on the ground; and thus in blood and
+penitence they went towards London.
+
+Hilarius was familiar with the exercise but not the manner of it.
+These strange, wild men filled him with horror, and he shrank back
+with the rest.  Then a man sprang from among the watching crowd,
+tore off jerkin and shirt, and flung up his arms to heaven with a
+great sob.
+
+"I left wife and children to perish alone," he cried, "and fled to
+save my miserable skin.  Now may God have mercy on my soul, for I
+go back.  Smite, and smite hard, brother!" and he stepped in front
+of the first flagellant.
+
+At this there arose a cry from the folk that looked on, and many
+fell on their knees and confessed their sins, accusing themselves
+with groanings and tears; but Hilarius, seized with sudden terror,
+turned and fled blindly, without thought of direction, his eyes
+wide, the blood drumming in his ears, a great horror at his heels -
+a horror that could drive a man from wife and child, that had
+driven brave Martin to flee against the wind, and all this folk to
+leave house and home to save that which most men count dearer than
+either.
+
+At last, exhausted and panting, he stayed to rest, and saw, coming
+towards him, a blind friar.  Hilarius had turned into a by-way in
+the hurry of his terror, and they two were alone.  The friar was a
+small, mean-looking man, feeling his way by the aid of hand and
+staff; his face upturned, craving the light.  He stopped when he
+came up with Hilarius, and turned his sightless eyes on him; a fire
+burnt in the dead ashes.
+
+"Art thou that son of Christ waiting to guide my steps, as the Lord
+promised me?"
+
+Hilarius started back, afraid at the strange address; but the friar
+laid one lean hand on his arm, and, letting the staff slip back
+against his shoulder, felt Hilarius' face, not with the light and
+practised touch of the blind, but slowly and carefully, frowning
+the while.
+
+"Son, thou wilt come with me?"
+
+"Nay, good Father, I may not; I am for St Alban's."
+
+"Whence, my son?"
+
+"From Westminster, good Father."
+
+"Nay, then, thou mayest spare shoe-leather.  I left the Monastery
+but now, and, I warrant thee, they promise small welcome to those
+from the pestilent cities.  What would'st thou with the Abbat?"
+
+Hilarius told him.
+
+The friar flung up his hands.
+
+"Laus Deo!  Laus Deo!" he cried, "now I know thou art in very truth
+the lad of my dream.  Listen, my son, and I will tell thee all.
+Thrice has the vision come to me; I see the mother who bore me
+carried away, struggling and cursing, by men in black apparel, and
+Hell is near at hand, belching out smoke and flame, and many
+hideous devils; yet the place is little Bungay, where my mother
+hath a cot by the river.  When first the dream came I lay at
+Mechlin in the Monastery there; my flesh quaked and my hair stood
+up by reason of the awfulness of the vision; then as I mused and
+prayed I saw in it the call of the Lord, that I might wrestle with
+Satan for my mother's soul, for she was ever inclined to evil arts
+and spells, and thought little of aught save gain.
+
+"Forthwith I suffered no man to stay me, and set off, the Plague at
+my heels; but ever out-stripping it, I was careful to preach its
+coming in every place, that men might turn and repent.  Then as I
+tarried on the seaboard for a ship the Plague came; and because I
+had preached its coming, the people rose in wrath, and, falling
+upon me, roughly handled me.  They beat me full sore in the market-
+place; then, piercing my eyeballs, set me adrift in a small boat.
+
+"Two days and two nights I lay at the mercy of the sea, darkness
+and light alike to me, and with no thought of time; for the flames
+of hell burnt in my eyes, and a worse anguish in my heart because
+of my mother's soul."
+
+"And then, and then?" tried Hilarius breathlessly, tears of pure
+pity in his eyes.
+
+"Then the Lord cared for me even as He cared for the Prophet Jonas,
+and sent a ship that His message might not be hindered.  The
+shipmen were kindly folk, but we were driven out of our course by a
+great wind, and at last came ashore in Lincolnshire.  I have come
+south thus far by the aid of Christian men, but time presses; and
+now, lo! thou art here to guide me."
+
+"But, my Father," said poor Hilarius, seeing yet another barrier in
+the way of his desires, "'tis a limner I would be; and I am from
+Westminster, not London, and then there is Prior Stephen's letter -
+"
+
+ The friar held up his hand:
+
+"Thou shalt be a limner, my son, the Lord hath revealed it to me.
+Last night the vision came again, and a voice cried:  'Speed, for a
+son of Christ waits by the way to guide thy steps,' and lo! thou
+art here, waiting by the way, as the voice said.  And now, son, an
+thou wilt come thou shalt take thy letter to Wymondham - 'tis a
+cell of this Abbey - for there is Brother Andreas from overseas who
+hath wondrous skill with the brush; he will teach thee, for thou
+shalt say to him that Brother Amadeus sent thee, who is now as
+Bartimeus, waiting for the light of the Lord; but first thou shalt
+set me in that village of Bungay, where my mother dwelleth."
+
+Hilarius listened, gazing awestruck at the withered eyes that
+vainly questioned his face.  He had forgotten plague, death,
+flagellants, in this absorbing tale of the man of God, who was even
+as one of the blessed martyrs.  Brother Andreas!  A skilled limner!
+How should he, Hilarius, gainsay one with a vision from the Lord?"
+
+"I obey, my Father," he cried joyously, taking the friar's hand;
+and they two passed swiftly down the road, their faces to the east.
+
+
+
+CHAPTER V - THE WHITE WAY AND WHERE IT LED
+
+
+
+IT was a bitterly cold night and St Agnes' Eve; the snow fell
+heavily, caught into whirling eddies by the keen north wind.
+Hilarius and the Friar, crossing an empty waste of bleak
+unprotected heath, met the full force of the blast, and each moment
+the snow grew denser, the darkness more complete.  They struggled
+on, breathless, beaten, exhausted and lost; Hilarius, leading the
+Friar by one hand, held the other across his bent head to shield
+himself from the buffets of the wind.
+
+Suddenly he stood fast.
+
+"I can no more, Father," he said, "the snow is as a wall; there is
+naught to see or to hear; I deem we are far from our right way."
+His voice was very weak, and he caught at the Friar for support.
+
+"I will pray the Lord, my son, that He open thine eyes, even as He
+opened the eyes of the prophet's servant in the besieged city; so
+shalt thou see a host of angels encompassing us, for we are about
+the Lord's business."
+
+"Nay, my Father," said Hilarius feebly, "I see no angels, and I
+perish."  He tottered, and would have fallen, but the Friar caught
+him in his arms.  A moment he stood irresolute, the boy on his
+breast, then flung away his staff and lifted him to his shoulder.
+
+With unerring, confident step he went forward through the snow, a
+white figure bearing a white burden in a white world.  All at once
+the wind dropped, the blinding shower ceased, and Hilarius, rested
+and comforted, spoke:-
+
+"Is it thou, my Father?"
+
+"It is I, my son, but angels are on either hand and go before to
+guide.  The snow hath ceased, canst thou walk?"
+
+He set Hilarius gently on his feet, and lo! he found the stars
+alight!
+
+The boy gave a cry, and forgetting his companion's darkness,
+pointed to the left where lay a snow-clad village.
+
+"A miracle, a miracle, my Father!"
+
+"A miracle, i' faith, my son:  the Lord hath given guidance to the
+blind as He promised.  Let us go down."
+
+They went by the white way under the stars; and Hilarius was full
+of awe and comfort because of the angels of God which attended on a
+poor friar.
+
+At the village hostel they found rough but friendly entertainment
+and several guests.  They dried themselves at a roaring fire, and
+Hilarius made a hearty meal; the Friar would eat nothing save a
+morsel of bread.
+
+A messenger was there, a short stout man with stubbly beard, bright
+black eyes like beads, and a high colour.  He was riding with
+despatches from the King to the Abbat at Bury, and had fearful
+tales to tell of the Plague; how in London they piled the dead in
+trenches, while many who escaped the pest died of want and cold; it
+was a city of the dead rather than the living.  One great lord,
+travelling post-haste from Westminster, had been found by his
+servants to have the disorder, and they fled, leaving him by the
+wayside to perish.
+
+Hilarius heard horror-struck.
+
+"'Tis a grievous shame so to desert a sick master," he said.
+
+"Nay, lad," said a chapman in the corner, "but a man loves his own
+skin best."
+
+"Ay, ay," said a fat ruddy-faced miller, overtaken by the storm on
+his way to a neighbouring village, "a man's own skin before all.
+Fill your belly first and your neighbour's afterwards.  Live and
+let live."
+
+"Ay, let live," chimed in mine host, bustling in with a stoop of
+cider for the chapman, "but, by the Rood, 'tis cruel work when two
+lone women are murdered for a bit of mouldy bacon and a lump of
+bread; for I'se warrant 'tis a long day sin' they had more than
+that at best."
+
+The chapman took his cider.
+
+"Where was this work done?" he said.
+
+"Nay, where but here on the bruary!  The women were found Wednesday
+se'n-night by the herd as he went folding.  They lay on the floor
+in their blood."
+
+Hilarius turned sick.  In Westminster, by some miracle, he had been
+spared the sight of violent death - ay, or of death in any form -
+and had seen nothing worse than a rogue in the stocks, for which
+sight he had thanked Heaven piously.
+
+"'Tis the fault of the rich," said a voice, and Hilarius saw, to
+his surprise, that there was a second friar in the room; a tall,
+bullet-headed man, with a heavy, obstinate jaw ornamented with a
+scanty fringe of black hair.
+
+"The rich grow fat, and the poor starve," he went on, "'tis hunger
+makes a man kill his brother for a mouthful of mouldy bacon."
+
+"Nay," said the miller, "there was no need to kill, Father.  A man
+could have taken the meat from two lone women and left them their
+lives."
+
+"Why take from folk as poor as themselves?" said mine host.  "Let
+them rob the rich an they must rob."
+
+"Ay," said the friar, "rob the rich, say you, take their own, say
+I.  God did not make this world that one man should be over full
+and another go empty; nor is it religion that the monks' should
+live on the fat o' the land and grind the faces of the poor.  How
+many manors, think you, has the Abbat of St Edmund's, and how many
+on his land lack bread?"
+
+Hilarius listened, scarlet with indignation, a flood of wrathful
+defence pent at his lips, for the blind friar laid a restraining
+hand on his sleeve.
+
+Mine host scratched his head doubtfully.  The teaching was
+seditious, and made a man liable to stocks and pillory; but it
+tickled the ears of the common folk and 'twas ill to quarrel with
+the Mendicants.  Help came to him in his perplexity:  a loud
+knocking on the barred door made the guests within start.
+
+"'Tis eight o' the clock," said the miller, affrighted, for he had
+a heavy purse on him.
+
+"Let them knock and cool their hot heads," said the seditious friar
+composedly.
+
+The rest nodded approval.
+
+Then a man's voice threatened without.
+
+"What ho! unbar the door.  Is this a night to keep a man without?
+Open, open, or, by the Mass, thou shalt smart for it."
+
+Mine host shook his head fearfully, and his fat cheeks trembled; he
+moved slowly and unwillingly to the door and took down the stout
+wooden bar.  As it swung back the door flew open, and a man burst
+in, at sight of whom mine host turned yet paler.
+
+"Food and drink," said the new-comer sharply, flinging himself on a
+bench by the fire.
+
+Hilarius thought he had never seen so strange a fellow.  His hair
+was close cropped; ay, and his ears also.  His eyes were very small
+and near together; his nose a shapeless lump; his lip drawn up
+showed two rat-like teeth.  Silence fell on the company, and the
+chapman who had been searching amongst his goods for something
+wherewith to pay his hospitality, was hastily putting them back,
+when the man, looking up, caught sight of a bundle of oaten pipes
+among the miscellaneous wares.  He plucked one to him, and in a
+moment the air was full of tender liquid notes - a thrush's
+roundelay.  Then a blackbird called and his mate answered; a cuckoo
+cried the spring-song; a linnet mourned with lifting cadence; a
+nightingale poured forth her deathless love.
+
+Mine host came in with a dish piled high and a stoop of mead; the
+man threw the pipe from him with a rough oath and fell to
+ravenously on the victuals.  He held his head low and ate brutishly
+amid dead silence; then he looked up and cursed at them for their
+sorry mood.
+
+"What!  Hugh pipes and never a word of thanks nor a jest?  Damn you
+all for dull dogs!"
+
+The blind friar rose and fixed his withered eyes on the man's
+dreadful face.
+
+"Piping Hugh of Mildenhall," he said, and at his voice the man
+leapt to his feet and thrust his arm out as if for protection.
+"Piping Hugh of Mildenhall," said the Friar again, "I have a
+message for thee from the Lord God.  I cried thee damned in my own
+name once, when thou did'st take my little sister to shame and
+death; now I cry thee thrice damned in the name of the Lord, for
+the cup of thine iniquity is full and thy hands red with blood.
+Man hath branded thee; now God will set His mark on thee and all
+men shall see it.  The Plague will come and come swiftly, but it
+shall not touch thee; many shall die in their sins; thou shalt live
+on with thine.  A brute thou art, and with brutes thou shalt herd;
+thou shalt howl as a ravening wolf, and as such men shall hunt thee
+from their doors.  Thou shalt seek death, even as Cain sought and
+found it not, because of the mark of the Lord.  Thou art damned,
+thrice damned; thy speech shall go from thee, thy sight fail thee,
+thy mind be darkened; thou art given over to the Evil One, and he
+shall torment thee with remembrance."
+
+There was dead silence; then with a long shrill howl the man tore
+open the door, dashed from the house, and fled, a black blotch upon
+the whiteness of the night.
+
+The guests huddled together aghast, and no man moved, until
+Hilarius, full of pride at his Friar's powers, stepped forward to
+close the door.  He was too late; it swung to with a loud crash
+like the sound of doom.  The Friar sank back composedly on the
+bench, and the company began in silence to make preparation for the
+night.  When all was ordered, Hilarius bade the Friar come, and he
+rose at the lad's voice and touch.  Then he crossed to where the
+others stood apart eyeing him fearfully.
+
+He laid his hand on the miller's breast and said in a clear, low
+voice:  "Thou wilt die, brother."
+
+He laid his hand on the messenger's breast:  "Thou wilt die,
+brother."
+
+He laid his hand on the chapman's breast:  "Thou wilt die,
+brother."
+
+He laid his hand on mine host's breast:  "Thou wilt die, brother."
+
+Then he came to the other Friar who stood at a little distance, his
+face dark with anger and fear, and laid his hand on his breast:
+"Thou wilt live, my brother - and repent."
+
+
+
+CHAPTER VI - A DARK FINDING
+
+
+
+IT is a far cry from St Alban's to Bungay - which village of the
+good ford lies somewhat south-east of Norwich, five leagues distant
+- and the journey is doubled in the winter time.  Hilarius and the
+Friar were long on the road, for January's turbulent mood had
+imprisoned them many days, and early February had proved little
+kinder.  They had companied with folk, light women and brutal men;
+but, for the most part, coarse word and foul jest were hushed in
+the presence of the blind friar and the lad with the wondering
+eyes.  In every village the Friar preached and called on men to
+repent and be saved, for Death's shadow was already upon them.
+Folk wondered and gaped - the Plague was still only a name ten
+leagues east of London - but many repented and confessed and made
+restitution, though some heard with idle ears, remembering the
+prophecy of Brother Robert who had come with the same message half
+a man's lifetime before, and that no evil had followed his
+preaching.
+
+At last St Matthias' Eve saw Hilarius and the Friar at St Edmund's
+Abbey.  There were many guests for the Convent's hospitality that
+night, and as Hilarius entered the hall of the guest-house - a
+brother had charged himself with the care of the Friar - he heard
+the sound of the vielle, and a rich voice which sang in good round
+English against the fashion of the day.
+
+"Martin, Martin!" he cried.
+
+The vielle was instantly silent.
+
+"Hole, lad!" cried the Minstrel, springing to his feet; he caught
+Hilarius to him and embraced him heartily.
+
+"Why, lad, not back in thy monastery?  Nay, but I made sure the
+Plague would send thee flying home, and instead I find thee strayed
+farther afield."  Then seeing the injured faces round him for that
+the song was not ended, he drew Hilarius to the bench beside him
+and took up his vielle.  "Be still now, lad, 'til I have finished
+my ditty for this worshipful company; then, an't please thee to
+tell it, I will hear thy tale."
+
+The guests, who had looked somewhat sour at the interruption,
+unpursed their lips, and settled to listen as the minstrel took up
+his song:-
+
+
+"The fair maid came to the old oak tree
+(Sun and wind and a bird on the bough),
+The throstle he sang merrily - merrily - merrily,
+But the fair maid wept, for sad was she, sad was she,
+Her sweet knight - Oh! where was he?
+
+He lay dead in the cold, cold ground
+(Moon and stars and rain on the hill),
+In his side and breast were bloody wounds.
+Woe, woe is me for the fair ladye, and the poor knight he,
+The poor knight - Ah! cold was he.
+
+The maiden sat her down to die
+(Cold, cold earth on her lover's breast),
+And the little birds rang mournfully,
+And the moonshine kissed her tenderly,
+And the stars looked down right pityingly
+On the poor fair maid and the poor cold knight.
+Ah misery, dear misery, sweet misery!"
+
+
+This mournful song was no sooner ended than supper was served; and
+the company proved themselves good trenchermen.  Hilarius caught
+sight of the seditious friar making short work of the Convent's
+victuals, and marvelled to see him in a place to which he had given
+so evil a name.
+
+Martin was unfeignedly glad to see the lad, and listened intently
+to his tale.  He nodded his head as Hilarius related how the friar
+he companied with preached in each village that men should repent
+ere the scourge of God fell upon them; "but there is naught of it
+as yet," said the lad.
+
+"Nay, nay, it is like a thief in the night.  One day it is not; and
+then the next, men sicken and fall like blasted wheat.  I heard a
+bruit of London that it was but a heap of graves - nay, one grave
+rather, for they flung the bodies into a great trench; there was no
+time to do otherwise:  Black Death is swift with his stroke."
+
+Then Hilarius told of Piping Hugh and the Friar's death-words to
+the guests.
+
+Martin swore a round oath and slapped his thigh.
+
+"Now know I that thy Friar is a proper man an he has set a curse on
+Piping Hugh of Mildenhall!  A foul-mouthed knave, with many a black
+deed to his name and blood on his hands, if men say truth; and yet
+there was never a bird that would not come at his call, and I never
+heard tell that he harmed one.  What will thy Friar in Bungay,
+lad?"
+
+When he had heard the story of the Friar's twice-repeated vision
+and quest, the Minstrel sat silent awhile with knitted brow and
+head sunk on his breast; then he eyed Hilarius half humorously,
+half tenderly.
+
+"Methinks, lad, an thy Friar alloweth it, I will even go to Bungay
+with thee; for I love thee well, lad, and would have thy company.
+Also I like not the matter of the vision and would fain see the end
+of it."
+
+That night the dream came again to the Friar, and a voice cried:
+"Haste, haste, ere it be too late."  And so Hilarius and Martin
+came to Bungay, the Friar guiding them, for the way was his own.
+None of the three ever saw St Edmund's Abbey again, for in one
+short month the minster with its sister churches was turned to be a
+spital-house, while the dead lay in heaps, silently waiting to
+summon to their ghastly company the living that sought to make them
+a bed.
+
+Quaint little Bungay lay snug enough in the embrace of the low
+vine-crowned hills which half encircled common and town.  The Friar
+strode forward, straining in his pace like a leashed hound; Martin
+and Hilarius following.  Once he stopped and turned a stricken face
+on his companions.
+
+"What is that?" he said shrilly.
+
+A magpie went ducking across the road, and Hilarius crossed himself
+fearfully.
+
+"Let us make haste," cried the Friar when they told him; and so at
+full pace they came to Bungay town.
+
+The place looked empty and deserted, but from the distance came the
+roar and hum of an angry crowd.
+
+"The people are abroad," said Martin, and his face was very grave,
+"no doubt some knight is here, and there is a bear-baiting on the
+common.  Prithee, where is thy mother's dwelling, good Father, and
+I will go and ask news of her?"
+
+"'Tis a lonely hovel by the waterside not far from the Cattle Gate;
+Goody Wooten thou shalt ask for."
+
+Martin went swiftly forward over the Common; Hilarius and the Friar
+followed more slowly, and when they came to the Cattle Gate they
+stood fast and waited, the Friar turning his head anxiously and
+straining to make his ears do a double service.
+
+Hilarius, who had hitherto regarded Bungay and the Friar's business
+as the last stage of his journey to Wymondham and Brother Andreas,
+was full of foreboding; he watched Martin on the outskirts of the
+crowd, saw him throw up his hands with an angry gesture and point
+to the Friar.  Then he fell to parleying with the people, but
+Hilarius was too far off to catch what was said.
+
+"See there, 'tis her son," Martin was saying vehemently; "yon holy
+friar hath seen this thing in a vision, but alack! he reads it
+otherwise; yea, and hath hasted hither from overseas to wrestle
+with the Evil One for his mother's soul - and now, and now - "
+
+The crowd parted, and he saw the most miserable sight.  An old
+woman lay on the ground by the river's edge; a bundle of filthy
+water-logged rags crowned by a bruised, vindictive face and grey
+hair smeared with filth and slime.  She lay on her back a shapeless
+huddle; her right thumb tied to her left toe and so across:  there
+was a rope about her middle, but in their hot haste they had not
+stayed to strip her.
+
+Martin pressed forward, and then turning to the jeering, vengeful
+crowd:
+
+"By Christ's Rood, this is an evil work ye have wrought," he said.
+
+"Nay," said one of the bystanders, "but it was fair judgment,
+Minstrel.  For years she hath worked her spells and black arts in
+this place, ay, and cattle have perished and women gone barren
+through her means.  Near two days agone a child was lost and seen
+last near her door, ay, and never seen again.  When we came to
+question her she cursed at us for meddling mischief-makers, and
+would but glare and spit, and swear she knew naught of the
+misbegotten brat."
+
+"Maybe 'twas true eno'," said Martin.  "I hate these rough-cast
+witch-findings - 'tis not a matter for man's judgment, unless 'tis
+sworn and proven in court before the Justiciary."
+
+"Nay," joined in an old man, "what need of a Justice when God
+speaks?  We did but thole her to the river to see if she would sink
+or swim.  The witch did swim, as all can testify, her Master
+helping her; and seeing that, we drew her under - ay, and see her
+now as she lies, and say whether the Devil hath not set a mark on
+his own?"
+
+Martin wrung his hands.
+
+"For the love of Christ, lay her decently on her pallet, and say no
+word of this to yon holy man."
+
+Moved by his earnest manner, one or two more kindly folk busied
+themselves unfastening the ropes and thongs which bound the witch,
+and bore her to her wretched bed.
+
+The people, in their previous eagerness, had torn down the front of
+the miserable hovel she called home, so all men could see the poor
+place and its dead dishonoured mistress.
+
+Martin, finding his bidding accomplished, turned to meet Hilarius
+and the Friar who were now coming slowly across the windswept
+common.  March mists gathered and draped the sluggish river; the
+dry reeds rattled dismally in the ooze and sedge.  Hilarius
+shivered, and the Friar started nervously when Martin spoke.
+
+"Friar," he said, "God comfort thee!  After all thy pains thou art
+too late to speed thy mother's soul; she passed to-day, and lies
+even now awaiting burial at thy faithful hands."
+
+The Friar drew a quick breath, and Hilarius questioned Martin with
+a look.  The crowd parted to let them through, and hung their heads
+abashed in painful silence as the Friar, led by Hilarius, gave his
+blessing.
+
+They were close to the mean hovel now, and he turned to Martin.
+
+"Didst thou hear of her end, or did she die alone, for the people
+feared her?"
+
+"Ay, she died alone," answered Martin, and muttered, "now God
+forgive me!" under his breath.
+
+As they went into the wretched shed the setting sun broke through
+the lowering grey clouds and shone full on the dead woman.  It
+lighted each vicious line and hideous trait of the wrinkled,
+toothless face, and betrayed the mark of an evil life, surcharged
+with horrid fear.
+
+Hilarius shrank back shuddering.  Could this hideousness be death?
+The Friar stepped forward, but Martin stayed him.
+
+"Nay, touch her not, Father, it may be the pestilence as thou didst
+read in thy dream."
+
+The Friar fell on his knees; and, in the silence that followed was
+heard the drip, drip, drip, from the sodden rags on the beaten
+earth floor.  The people without, staring, open-mouthed and silent,
+saw the Friar look up; his hand hastily outstretched touched the
+dank, muddy hair; then he knew all, and fell on his face with an
+exceeding bitter cry.  It was answered by another cry - the glad
+cry of a lost child that is found.
+
+
+The Friar, standing in front of that hovel of death, preached to
+the cringing, terrified people, many of whom knelt and crouched in
+the down-trodden grass and quag.  He threw up his arms, and turned
+his blind, anguished face to the setting sun.
+
+"Woe to the rebellious children, saith the Lord, that take counsel
+but not of Me, that they may add sin to sin.  Darkness shall come
+upon them; Death shall overtake them; their place shall know them
+no more.  Let them bare their backs to the scourge, let them
+confess and repent ere I visit them as I visited Sodom and
+Gomorrah, cities of the Plain.
+
+"O ye people, ye have taken judgment in your hands and judged
+falsely withal; but ye shall be judged in truth, yea, even
+according to your measure.  Repent, repent, for Death cometh
+swiftly and maketh no long tarrying.  It shall come; it shall
+snatch men's souls away, even as ye have torn away my mother's
+soul, leaving no space for repentance."
+
+He stretched his hands out over the common, and pointed to the
+little town.
+
+"Your dwellings shall be desolate, and this place a place of heaps.
+Ye shall run hither and thither, seeking safety and finding none;
+for the arm of the Lord is stretched out still because of the
+wickedness of the earth.  Woe, woe, woe, a disobedient and
+gainsaying people!  Woe, woe, woe, a people hating righteousness
+and loving iniquity!  The Lord shall straightway destroy them from
+off the face of the earth."
+
+He made an imperative gesture of dismissal, and first one and then
+another in the crowd turned to slink home like beaten dogs,
+snarling, growling, but afraid.
+
+Hilarius and Martin buried the witch at the back of her wretched
+den; and the Friar, the priest lost in the son, prayed long by the
+else unhallowed grave, and Martin prayed beside him.
+
+Hilarius stood apart, his lips set straight, and said no prayer;
+for what availed it to pray for an unassoilzied witch who had met
+her due, damned alike by God and man?
+
+Martin came up to him.
+
+"She was his mother," he said, as if making excuse.
+
+Hilarius stared in bewilderment.  His mother?  Ay, but an evil
+liver; and the people of Bungay had wrought a good work in sending
+her to her own place.  He crossed himself piously at the thought of
+the near neighbourhood of devils busied with a thrice-damned soul.
+
+Martin led them out of Bungay by the Earsham road, and the Friar
+clung to him like a little child, for the strength of his vision
+was spent.  They lay that night with a friendly shepherd; but only
+one slept, and that one Hilarius.  He lay on a truss of sweet-
+smelling hay, and dreamt of Wymondham and Brother Andreas; of gold,
+vermilion and blue; of wondrous pictures, and a great name:  and
+the scent of the pine forest at home swept across his quiet sleep.
+
+On the morrow came the parting of the ways, for Hilarius was all
+aglow for Wymondham, and Martin had charged himself with the Friar
+at least as far as Norwich.
+
+"As well lead a blind friar as sing blindly at another's bidding,"
+he said whimsically, and so they bade one another farewell never to
+meet again in this world:  for Martin and the Friar went to
+Yarmouth, not Norwich, and there they perished among the first when
+the east wind swept the Plague thither in a boat-load of sickened
+shipmen.  And Hilarius - once again the Angel of the Lord stood in
+the path of his desires.
+
+
+
+CHAPTER VII - THE COMING OF HUNGER AND LOVE
+
+
+
+HILARIUS fared but slowly; it was ill travelling on a high-road in
+good weather, but on a cross-road in the spring! - that was a time
+to commend oneself body and soul to the Saints.  He walked warily,
+picking his way in and out of the bog between fence and ditch,
+which was all that remained to show where the piety of the past
+once kept a road.  The low land to his left was submerged, a
+desolate tract giving back a sullen grey sky, lifeless, barren,
+save where a gaunt poplar like the mast of a sunken ship broke the
+waste of waters.
+
+The sight brought Hilarius' thoughts sharply back to the events of
+the evening before.  Wonderful indeed were the judgments of God!  A
+witch - plainly proved to be such - had been struck dead in the
+midst of her sins; and London, that light-minded, reprobate city,
+was a heap of graves.  Now he, Hilarius, having seen much evil and
+the justice of the Almighty, would get him in peace to Wymondham,
+there to learn to be a cunning limner; and having so learnt would
+joyfully hie him back to Prior Stephen and his own monastery.
+
+Presently the way led somewhat uphill, and he saw to his right a
+small hamlet.  It lay some distance off his road, but he was sharp-
+set, for the shepherd's fare had been meagre; and so turned aside
+in the hope of an ale-house.  There was no side road visible, and
+he struck across the dank, marshy fields until he lighted on a rude
+track which led to the group of cottages.  The place struck him as
+strangely quiet; no smoke rose from the chimneys; no dogs rushed
+out barking furiously at a stranger's advent.  The first hovel he
+passed was empty, the open door showed a fireless hearth.  At the
+second he knocked and heard a sound of scuffling within.  As no one
+answered his repeated summons he pushed the door open; the low room
+was desolate, but two bright eyes peered at him from a corner, -
+'twas a rat.  Hilarius turned away, sudden fear at his heart, and
+passed on, finding in each hovel only empty silence.
+
+Apart from the rest, standing alone in a field, was a somewhat
+larger cottage; a bush swung from the projecting pole above the
+door:  it was the ale-house that he sought; here, at least, he
+would find some one.  As he came up he heard a child crying, and
+lo! on the doorstep sat a dirty little maid of some four summers,
+sobbing away for dear life.
+
+Hilarius approached diffidently, and stooped down to wipe away the
+grimy tears.
+
+The child regarded him, round eyes, open mouth; then with a shrill
+cry of joy, she held out her thin arms.
+
+At the sound of her cry the door opened; on the threshold stood a
+woman still young but haggard and weary-eyed; at her breast was a
+little babe.  She stared at Hilarius, and then pulling the child to
+her in the doorway, waved him away.
+
+"Stand off, fool! - 'tis the Plague."
+
+Hilarius shrank back.
+
+"And thy neighbours?" he asked.
+
+"Nay, they were light-footed eno' when they saw what was to do, and
+left us three to die like rats in a hole."  Then eagerly:  "Hast
+thou any bread?"
+
+He shook his head.
+
+"Nay, I came here seeking some.  Art thou hungry?"
+
+She threw out her hands.
+
+"'Tis two days sin' I had bite or sup."
+
+"Where lies the nearest village? and how far?"
+
+"A matter of an hour, over yonder."
+
+"See, goodwife," said Hilarius, "I will go buy thee food and come
+again."
+
+She looked at him doubtfully.
+
+"So said another, and he never came back."
+
+"Nay, but perchance some evil befell him," said gentle Hilarius.
+
+"Well, I will trust thee."  She went in and returned with a few
+small coins.  "'Tis all I have.  Tell no man whence thou art, else
+they will hunt thee from their doors."
+
+Hilarius nodded, took the money, and ran as fast as he could go in
+the direction of the village.
+
+The woman watched him.
+
+"Is it fear or love that lends him that pace?" she muttered, as she
+sat down to wait.
+
+It was love.
+
+Hilarius entered the village discreetly, and adding the little
+money he had to the woman's scanty store, bought bread, a flask of
+wine, flour and beans, and a jug of milk.
+
+"'Tis for a sick child," he said when he asked for it, and the
+woman pushed back the money, bidding him God-speed.
+
+The return journey was accomplished much more slowly, because of
+his precious burden; and as he crossed a field, there, dead in a
+snare, lay a fine coney.
+
+"Now hath Our Lady herself had thought for the poor mother!" cried
+Hilarius joyously, and added it to his store.
+
+When he reached the cottage, and the woman saw the food, she broke
+into loud weeping, for her need had been great; then, as if giving
+up the struggle to another and a stronger, she sank on the bed with
+her fast-failing babe in her arms.
+
+Hilarius fed her carefully with bread and wine - not for nothing
+had he served the Infirmarian when blood-letting had proved too
+severe for some weak Brother - and then turned his attention to the
+little maid who sat patient, eyeing the food.
+
+For her, bread and milk.  He sat down on a low stool, and taking
+the child on his knee slowly supplied the gaping, bird-like mouth.
+At last the little maid heaved a sigh of content, leant her flaxen
+head against her nurse's shoulder, and fell fast asleep.
+
+Hilarius, cradling her carefully in gentle arms, crooned softly to
+her, thrilling with tenderness.  She was his own, his little
+sister, the child he had found and saved.  Surely Our Lady had
+guided him to her, and her great Mother-love would shield this
+little one from a foul and horrid death.  In that dirty, neglected
+room, the child warm against his breast, Hilarius lived the
+happiest moments of his life.
+
+Presently he rose, for there was much to be done, kissed the little
+pale cheek, noted fearfully the violet shadows under the closed
+eyes, and laid his new-found treasure on the bed by her mother.
+
+The woman was half-asleep, but started awake.
+
+"Art thou going?" she said, and despair gazed at him from her eyes.
+
+"Nay, nay, surely not until we all go together," he said
+soothingly.  "I would but kindle a fire, for the cold is bitter."
+
+Wood was plentiful, and soon a bright fire blazed on the hearth.
+The poor woman, heartened by her meal, rose and came to sit by it,
+and stretching out her thin hands to the grateful warmth, told her
+tale.
+
+"'Twas Gammer Harden's son who first heard tell of a strange new
+sickness at Caxton's; and then Jocell had speech with a herd from
+those parts, who was fleeing to a free town, because of some ill he
+had done.  Next day Jocell fell sick with vomitings, and bleeding,
+and breaking out of boils, and in three days he lay dead; and
+Gammer Harden fell sick and died likewise.  Then one cried 'twas
+the Plague, and the wrath of God; and they fled - the women to the
+nuns at Bungay, and the men to seek work or shelter on the Manor;
+but us they left, for I was with child."
+
+"And thy husband?' said Hilarius.
+
+"Nay, he was not my husband, but these are his children, his and
+mine.  Some hold 'tis a sin to live thus, and perhaps because of it
+this evil hath fallen upon me."
+
+She looked at the babe lying on her lap, its waxen face drawn and
+shrunk with the stress of its short life.
+
+Hilarius spoke gently:-
+
+"It is indeed a grievous sin against God and His Church to live
+together out of holy wedlock, and perchance 'tis true that for this
+very thing thou hast been afflicted, even as David the great King.
+But since thou didst sin ignorantly the Lord in His mercy sent me
+to serve thee in thy sore need; ay, and in very truth, Our Lady
+herself showed me where the coney lay snared.  Let us pray God by
+His dear Mother to forgive us our sins and to have mercy on these
+little ones."
+
+And kneeling there in the firelight he besought the great Father
+for his new-found family.
+
+Five days passed, and despite extreme care victuals were short.
+Hilarius dug up roots from the hedgerows, and went hungry, but at
+last the pinch came; the woman was too weak and ill to walk, the
+babe scarce in life - there could be no thought of flight - and the
+little maid grew white, and wan and silent.  Then it came to
+Hilarius that he would once again beg food in the village where he
+had sought help before.
+
+He went slowly, for he had eaten little that his maid might be the
+better fed, and he was very sad.  When he reached the village he
+found his errand like to be vain.  News of the Plague was coming
+from many parts, and each man feared for his own skin.  At every
+house they questioned him:  "Art thou from a hamlet where the
+Plague hath been?" and when he answered "Yea," the door was shut.
+
+Very soon men, angry and afraid, came to drive him from the place.
+He gained the village cross, and prayed them for love of the
+Saviour and His holy Rood to give him bread for his little maid and
+her mother.  Let them set it in the street, he would take it and
+cross no man's threshold.  Surely they could not; for shame, let a
+little child die of want?
+
+"Nay, 'tis better they die, so are we safe," cried a voice; then
+they fell upon him and beat him, and drove him from the village
+with blows and curses.
+
+Bruised and panting, he ran from them, and at last the chase
+ceased; breathless and exhausted he flung himself under a hedge.
+
+A hawk swooped, struck near him, and rose again with its prey.
+Hilarius shuddered; but perhaps the hawk had nestlings waiting
+open-mouthed for food?  His little maid!  His eyes filled with
+tears as he thought of those who awaited him.  He picked up a
+stone, and watched if perchance a coney might show itself.  He had
+never killed, but were not his nestlings agape?
+
+Nothing stirred, but along the road came a waggon of strange shape
+and gaily painted.
+
+He rose to his feet, praying the great Mother to send him help in
+his awful need.
+
+The waggon drew near; the driver sat asleep upon the shaft, the
+horse took his own pace.  It passed him before he could pluck up
+heart to ask an alms, and from the back dangled a small sack and a
+hen.  If he begged and was refused his little maid must die.  A
+minute later the sack and the hen had changed owners - but not
+unobserved; a clear voice called a halt; the waggon stood fast; two
+figures sprang out, a girl and a boy:  and Hilarius stood before
+them on the white highway - a thief.
+
+"Seize the knave!" cried the girl sharply.
+
+Hilarius stared at her and she at him.  It was his dancer, and she
+knew him, ay, despite the change of dress and scene, she knew him.
+
+"What!  The worthy novice turned worldling and thief!  Nay, 'tis a
+rare jest.  What of thy fine sermons now, good preacher?"
+
+But Hilarius answered never a word; overcome by shame, grief, and
+hunger, sudden darkness fell upon him.
+
+When he came to himself he was sitting propped against the hedge;
+the waggon was drawn up by the roadside, and the dancer and her
+brother stood watching him.
+
+"Fetch bread and wine," said the girl, and to Hilarius who tried to
+speak, "Peace, 'til thou hast eaten."
+
+Hilarius ate eagerly, and when he had made an end the dancer said:-
+
+"Now tell thy tale.  Prithee, since when didst thou leave thy
+Saints and thy nursery for such an ill trade as this?"
+
+Hilarius told her all, and when he had finished he wept because of
+his little maid, and his were not the only tears.
+
+The dancer went to the waggon and came back with much food taken
+from her store, to which she added the hen; the sack held but
+fodder.
+
+"But, Gia," grumbled her brother, "there will be naught for us to-
+night."
+
+"Thou canst eat bread, or else go hungry," she retorted, and filled
+a small sack with the victuals.
+
+Hilarius watched her, hardly daring to hope.  She held it out to
+him:  "Now up and off to thy little maid."
+
+Hilarius took the sack, but only to lay it down again.  Kneeling,
+he took both her little brown hands, and his tears fell fast as he
+kissed them.
+
+"Maid, maid, canst forgive my theft, ay, and my hard words in the
+forest?  God help me for a poor, blind fool!"
+
+"Nay," she answered, "there is naught to forgive; and see, thou
+hast learnt to hunger and to love!  Farewell, little brother, we
+pass here again a fortnight hence, and I would fain have word of
+thy little maid.  Ay, and shouldst thou need a home for her, bring
+her to us; my old grandam is in the other waggon and she will care
+for her."
+
+Hilarius ran across the fields, full of sorrow for his sin, and yet
+greatly glad because of the wonderful goodness of God.
+
+When he got back his little maid sat alone by the fire.  He
+hastened to make food ready, but the child was far spent and would
+scarcely eat.  Then he went out to find the woman.
+
+He saw her standing in the doorway of an empty hovel, and she cried
+to him to keep back.
+
+"My babe is dead, and I feel the sickness on me.  I went to the
+houses seeking meal, even to Gammer Harden's; and I must die.  As
+for thee, thou shalt not come near me, but bide with the child; so
+maybe God will spare the innocent."
+
+Hilarius besought her long that she would at least suffer him to
+bring her food, but she would not.
+
+"Nay, I could not eat, the fever burns in my bones; let me alone
+that I may die the sooner."
+
+Hilarius went back with a heavy heart, and lay that night with the
+little maid in his arms on the settle by the hearth.  Despite his
+fear he slept heavily and late:  when he rose the sun was high and
+the child awake.
+
+He fed her, and, bidding her bide within, went out to gain tidings
+of the poor mother.  He called, but no one answered; and the door
+of the hovel in which she had taken shelter stood wide.  Then, as
+he searched the fields, fearing the fever had driven her abroad, he
+saw the flutter of garments in a ditch; and lo! there lay the
+woman, dead, with her dead babe on her breast.  She had lain down
+to die alone with God in the silence, that haply the living might
+escape; and on her face was peace.
+
+Later, Hilarius laid green boughs tenderly over mother and babe,
+and covered them with earth, saying many prayers.  Then he went
+back to his fatherless, motherless maid.
+
+She ailed naught that he could see, and there was food and to
+spare; but each day saw her paler and thinner, until at last she
+could not even sit, but lay white and silent in Hilarius' tender
+arms; and he fought with death for his little maid.
+
+Then on a day she would take no food, and when Hilarius put tiny
+morsels in her mouth she could not swallow; and so he sat through
+the long hours, his little maid in his arms, with no thought
+beside.  The darkness came, and he waited wide-eyed, praying for
+the dawn.  When the new day broke and the east was pale with light
+he carried the child out that he might see her, for a dreadful fear
+possessed him.  And it came to pass that when the light kissed her
+little white face she opened her eyes and smiled at Hilarius, and
+so smiling, died.
+
+The dancer, true to her promise, scanned the road as the waggon
+drew near the place of Hilarius' first and last theft:  he was
+standing by the wayside alone.  The waggon passed on carrying him
+with it; and the dancer looked but once on his face and asked no
+question.
+
+
+
+
+PART III - THE FRUIT
+
+
+
+
+CHAPTER I - HOW LONG, O LORD, HOW LONG!
+
+
+
+THE Monastery by the forest pursued an even existence, with no
+great event to trouble its serenity, for it lay too far west for
+the Plague to be more than a terrible name.
+
+True, there had been dissension when Prior Stephen, summoned to
+Cluny by the Abbat, had perforce left the dominion to the Sub-
+Prior.  For lo! the Sub-Prior, a mild and most amiable man in his
+own estate, had proved harsh and overbearing in government.  Ay,
+and in an irate mood he had fallen upon Brother William, the
+Sacrist, in the Frater, plucked out his hair and beaten him sore;
+whereat the Convent was no little scandalized, and counselled
+Brother William to resign his office.  He flouted the Chamberlain
+also, and Brother Roger the Hospitaller, and so affronted the
+Brethren that when he began to sing the Verba mea on leaving the
+chapter, the Convent - yea, even the novices - were silent, to show
+their displeasure.
+
+When Prior Stephen returned he was exceeding wroth, but said
+little; only he took from the Sub-Prior his office, and all that
+appertained thereto, and made him as one of the other monks; and
+Brother William, who was a gentle and devout servant of God, he
+made Sub-Prior in his stead; and the Convent was at peace.
+
+Brother Ambrose, he to whom the vision was vouchsafed, had slipped
+through the grey veil which once hid Jerusalem from his longing
+gaze; Brother Richard was now in the land where the blind receive
+their sight; and Brother Thomas the Cellarer - but of him let us
+say little and think with charity; for 'tis to be feared that he
+greatly abused his office and is come to judgment.
+
+Two of the older monks, Brother Anselm and Brother Paul, who had
+spent fifty years in the sheltered peace of the Monastery walls,
+sat warming their tired old limbs in the south cloister, for the
+summer sunshine was very pleasant to them.
+
+"Since Brother Thomas died - " began Brother Paul.
+
+"The Lord have mercy on his soul!" ejaculated Brother Anselm.
+
+"Since Brother Thomas died," said Brother Paul again - a little
+impatiently, though he crossed himself piously enough - "methinks
+the provisions have oft been scanty and far from tempting,
+Brother."
+
+"Ay, and the wine," said Brother Anselm.  "Methinks our Cellarer
+draws the half of it from the Convent's well."
+
+They shook their heads sadly.
+
+"No doubt," said Brother Anselm after a short silence, "our
+Cellarer is most worthy, strict, and honest in the performance of
+his office - while Brother Thomas, alack - "
+
+"Methinks Brother Edmund is somewhat remiss also in his duties,"
+said Brother Paul.  "The Prior, holy man, perceives nothing of
+these things.  On Sunday's feast one served him with a most
+unsavoury mess in the refectory, the dish thereof being black and
+broken; yet he ate the meat in great content, and seemingly with
+appetite."
+
+"He is but young, he is but young - sixty come Michaelmas - sixty,
+and twenty-two years Prior - 'tis a long term," and Brother Anselm
+nodded his head.
+
+"Ay, he is still young, and of sound teeth," said Brother Paul,
+"whereas thou and I, Brother, are as babes needing pap-meat.
+Brother Thomas - God rest his soul! - was wont to give savoury mess
+easy of eating to the elder Brethren."
+
+"Ay, he was a kind man with all his faults," said Brother Anselm,
+fingering his toothless gums.  "Think you 'twould be well to speak
+of this matter to the Prior?"
+
+"Nay, nay," said the other, "he is ever against any store being set
+on the things of this world - ''tis well for the greater discipline
+of the flesh,' so saith he ever.  Still he hath forbidden the
+blood-letting to us elder Brethren."
+
+"Methinks there is little to let, since Brother Thomas died," said
+Brother Anselm ruefully.
+
+"Nay, then, let us seek out the Cellarer and admonish him - maybe
+he will hear a word in season," and the two old monks moved slowly
+away to the Cellarer's office as Prior Stephen came down the
+cloister walk.
+
+He looked little older, his carriage was upright as ever, but
+government sat heavy upon him; the keen, ascetic face was weary,
+and the line of the lips showed care.  His thoughts were busy with
+Hilarius.  It was now full six years that the lad had left the
+Monastery, and since the Christmas after his going no news had come
+of him, save that he never reached St Alban's.  Had the Plague
+gathered him as it gathered many another well-beloved son?  Or had
+the awakening proved too sudden for the lad set blind-eyed without
+the gate?
+
+He passed from the cloister into the garth where bloomed the lilies
+that Hilarius had loved so well.  He looked at the row of nameless
+graves with the great Rood for their common memorial; last but one
+lay the resting-place of Brother Richard, and the blind monk's
+dying speech had been of the lad whose face he had strained his
+eyes to see.
+
+Prior Stephen stood by the farmery door, and the scent of Mary's
+flowers came to him as it had come to Hilarius at the gate.  He
+stretched out his hands with the strange pathetic gesture of a
+strong man helpless.  It was all passing fair:  the fields of pale
+young corn trembling in the gentle breeze; the orchards and
+vineyards with fast maturing fruit; the meadows where the sleek
+kine browsed languidly in the warm summer sunshine.  Peace and
+prosperity everywhere; the old Church springing into new beauty as
+the spire rose slowly skywards; peace and prosperity, new glories
+for the House of the Lord; and yet, and yet, his heart ached for
+his own helplessness, and for the exceeding longing that he had for
+the boy whose mother once held that heart in the hollow of her
+little hand.
+
+Ah well, blessed be God who had called him from the things of this
+world to the service of Christ and the Church!  Once again he
+offered himself in the flame of his desires:  he would fast and
+pray and wait.
+
+The Office bell sounded sharp and clear across the still summer air
+calling to Vespers, and the Prior hasted to his place.
+
+"Qui seminant in lachrymis in exultatione metent," chanted the deep
+voices of the monks, and Prior Stephen's voice trembled as he
+joined in the Psalmody.
+
+"Euntes ibant et flebant mittentes semina sua.  Venientes autem
+venient cum exultatione portantes manipulos suos."
+
+He had sown in tears, ay, and was weary of the sowing; but the
+harvesting was not yet.
+
+
+
+CHAPTER II - MARY'S LILIES
+
+
+
+IT came to pass upon a certain day scarce a se'nnight later, that
+Prior Stephen was troubled in his mind by reason of a dream which
+came to him.
+
+It happened on this wise.  He was sitting by his window after the
+noon repast, musing, as he was wont, on his dear son.  The song of
+the bees busy in the herb-garden was very pleasant to his ear, the
+warm, still air overcame him, and he slept.  Suddenly he heard a
+voice calling - a voice he knew in every fibre of his being and yet
+could set no name to, for it was the voice of God.  He arose in
+haste and went out into the garth, and lo! under the lilies
+Hilarius lay sleeping.  The Prior stood fast in great wonder, his
+heart leaping for joy; yet he could not cross the little piece of
+grass that lay between the cloister and the farmery door.
+
+As he watched, a woman, light of foot and of great beauty, came
+swiftly from the gate to where Hilarius slept; and the Prior was
+grieved, and marvelled that the porter had opened to such an one;
+for it was a grave scandal that a woman should set foot within the
+Monastery precincts.  He strove to cry, but his voice died on his
+lips, and his feet were as lead.
+
+The woman stayed when she came to the sleeping lad, and stooped to
+arouse him, but he slept on.  She called him, and her voice was as
+the calling of the summer sea on a shelving beach; but Hilarius
+gave no heed.  Then, in great impatience, she caught at the white
+lilies under which he lay; and, as she broke the flower-crowned
+stems, Hilarius stirred and cried out in his sleep, whereat she
+plucked the faster.  Of a sudden Prior Stephen was as one set free.
+He strode to the woman's side:  there was but one lily left.  He
+laid his hand on her shoulder, for speech was still far from him:
+and she fell back from the one remaining blossom with a cry of fear
+- and Prior Stephen awoke, for behold! it was a dream; but he was
+sore troubled.
+
+"Maybe," said he, "evil threatens the lad, such evil as slew his
+mother, on whom God have mercy!"  And sighing heavily he took his
+way to the great Rood and made supplication for his son.
+
+
+Far away, under a southern sky, in one of the great palaces of
+Florence, there stood a woman of fair stature, with tight-clenched
+hands, whose many jewels bit the tender flesh.  Her russet eyes
+flashed under threatening brows, her teeth held fast the curling
+upper lip.  Great, alack! was her fame:  men crept to her knee like
+spaniels craving favour.  Great was her wealth:  a golden piece for
+every ruddy strand that hung a shimmering mantle to her knee.  Her
+beauty - nay, men had slain themselves gladly to escape the torment
+of her look.  She stood in the curtained doorway, a heavy purple
+hanging at her back; and the man who awaited her paled as he saw
+her vengeful face.
+
+It was Hilarius.  He drew himself up to the full of his slender
+height, and bowed.
+
+Panting a little, the woman came towards him across the many-hued
+marble floors; and, as she passed, a vase of great white lilies
+caught in her draperies of cramoisie and fell.  She gave no heed,
+but swept on, and faced him in the sunny silence.  Across the pause
+the Angelus sounded from a church hard by:  Hilarius crossed
+himself devoutly; and the stillness fled before a woman's scornful
+laugh.
+
+"Nay, then, Signor," she cried mockingly, "is ours to be a war of
+signs and silence?  I have heard thy lips were ready enough with
+judgment, though they halt at a love-phrase.  By Our Lady, if all
+that is said of thee be true, I will e'en have thee whipped at the
+gibbet for thy gibes!  Speak, fool, while thy tongue is left thee;
+'tis a last asking.  Wilt thou paint this face of mine that is, it
+seems, so little to thy liking?  Strain not my patience over much -
+'tis a slender cord at best, and somewhat tried already.  Speak, is
+it yea or nay?"
+
+Hilarius looked away to where Mary's flowers lay bruised and
+scattered on the flag of blood-red marble; his answer came low and
+clear:-
+
+"'It is nay.'"
+
+She thrust her head forward, and looked at him wondering; there was
+a stain where her teeth had been busy.
+
+"'It is nay,'" she repeated after him, and her eyes mocked him.
+"May a poor Princess ask the Signor's reason?"
+
+Hilarius pointed past her to the fallen lilies.
+
+"It lies there."
+
+For an instant the hot colour splashed the angry whiteness of her
+cheek; then, pale to the lips, she turned on him; and she stammered
+in her wrath:-
+
+"And dost thou - dost thou dare, say this to my face - to me, who
+stooped to ask when I had but to command?  I, with my unmatched
+beauty; I, who hold the hearts of men in thrall to the lifting of
+my eyes; I, to whom men kneel as to their God!  Art thou mad, mad,
+that thou canst set aside such a behest as mine?  'Tis small wonder
+men say thy doublet hides a monkish dress; of a truth the tale they
+brought savoured of little else.  Hear me, thou prating, milk-faced
+Modesty, I choose that thou shalt limn this face of mine:  say me
+nay, and I will teach thee a lesson hard of forgetting; for I will
+silence thy preaching for aye, and lend my serving-men to whip thee
+through the streets.  Men, said I?  Nay, thou art too much a cur to
+make fit sport for men:  rather my maids shall wield the rod and
+lace thy shoulders."
+
+She flung herself on a low couch by the open window, where the
+peacocks on the terrace strutted in the sun; and Hilarius waited,
+dumb as the dog to which she had likened him, for he had no word.
+
+There was silence a while.
+
+Then the Princess spoke, and her voice cut Hilarius like the sting
+of a lash:-
+
+"Bring me yon flowers."
+
+He obeyed.
+
+"Set them at my feet."
+
+He bent his knee and did so, wondering.
+
+A moment, and she trod them under; their dying fragrance filled the
+air, as their living breath had flooded the senses of the blind-
+eyed lad at the Monastery gate.
+
+One by one she set her heel upon the blossoms, and the marble was
+yellow with stolen gold.
+
+Hilarius held his breath; it was as if she did to death some living
+thing, and yet he dared not bid her stay her insolent feet.
+
+It was done; and she looked at him under questioning brows.
+
+"So much for thy lilies!  Dost still think that it will soil thy
+brush to limn such an one as I?  I, whom men call the Queen of Love
+- but thy lips, say they, burnt with another name!  Bethink thee,
+faint heart, there is not a man in all this city but would count
+death a small price to pay for my favours; and I ask of thee one
+little service, and thou shalt name thine own reward.  Surely 'tis
+churlish to gainsay!"
+
+Her voice was suddenly sweet.
+
+Stooping, she gathered to her the destruction she had wrought,
+fingering the fallen petals tenderly, with a little sigh.  She
+glanced up at Hilarius through her lashes' net.  "Maybe I was over
+hasty," she said softly, and a sob swelled the round of her
+wonderful throat - "and yet how couldst thou call me wanton?"  Her
+mouth drooped a little - she was very fair.
+
+"Art thou still minded to set these poor pale flowers against the
+roses in love's garden?  For I love thee," she added, and then
+suddenly she was still.
+
+Hilarius looked from the dead flowers to the woman in her over-
+mastering beauty, and all at once the passion that lies hid in the
+heart of every man leapt to his lips.  He desired this woman as he
+had never before desired aught in all the world, and he knew, to
+his shame, that she was his for the asking.  The blood thudded and
+rang in his veins; he feasted his eyes on the curve of her neck and
+the radiance of her sun-swept hair.  He stretched out his hands,
+but ere he could speak she raised a white, terrified face, and
+glanced over her shoulder.
+
+"Who touched me?" she gasped, her voice shrill with fear, "who
+touched me?"  And she sprang to her feet.
+
+There was no one:  the two shared a common pallor as they stared
+into each other's eyes across the dying lilies.  Hilarius shrank
+back and covered his face with his hands.  Clear and distinct he
+heard the Prior's voice:  "A light woman - a light woman."
+
+Then the Princess said hoarsely, "Go, go;" and without word or look
+Hilarius went.
+
+
+The Prior rose from his knees comforted.  He had wrestled with the
+devil for his son's soul, and knew that he had prevailed.
+
+
+
+CHAPTER III - OPEN EYES AT THE GATE
+
+
+
+ANOTHER year wrote its record on forest and field.  The weeks
+passed; summer sped to autumn, the ripe corn bowed to the sickle.
+The Convent's lands were rich and heavy, virgin soil reclaimed; and
+the Prior, watching the last great wain piled high with wealth of
+golden treasure, saw the porter coming to him.
+
+Now the porter was stout, short of breath, and of a hasty spirit;
+and the Prior knew something was amiss by reason of his hurried
+gait and wrathful countenance.
+
+"Domine," he gasped, "Domine, there is a ragged man at the gate, a
+vagabond by his own showing, and he craves speech of thee.  I bade
+him go to the guest-house, but he will not budge, and hath waited
+already an hour despite my - "
+
+The porter stayed, staring; he spoke to the wind; the Prior was
+already halfway to the gate.
+
+"This my son was dead and is alive again," sang his heart.  The
+porter, afraid, hasted after him with the keys, and had scarce time
+to do his office ere the sunburnt vagabond was clasped in the
+Prior's arms.  It was a harvesting indeed.
+
+That night Hilarius went across to the Prior's house to tell the
+tale of his journeyings.  He found him seated in a great oak chair
+by the open window; the sky was ablaze with stars, and the flame of
+the oil lamp jarred like a splash of yellow paint on the moonlight
+which flooded the room; the Prior's eyes smiled measureless
+content, and the murmured "Laus Deo" of his lips voiced the
+gladness of his heart.  Thus, in the shelter of peace and a great
+love, Hilarius told his tale, while the forest waved a welcome to
+him over the Monastery wall, and the late lilies burned white in
+the garth below.
+
+The Prior sat with his chin in his hand, his eyes fixed on the
+lad's face, pale against the dark wainscot; and Hilarius told of
+his journeyings, and all that befell, even as it hath been recorded
+in this chronicle; and the Prior's eyes were wet as he heard of the
+little maid.
+
+"And then, my son?" said the Prior.
+
+"Then, my Father, I companied with the caravan folk as far as the
+sea-coast; and, leaving them there, went overseas in the train of
+my lord Bishop Robert Walter of Norwich, who was hasting to Rome.
+He knew thee, my Father, and bade his people supply my needs."
+
+"Ay, he knows me," said the Prior briefly.  "The Lord reward him
+according to his works, but show him mercy forasmuch as he had
+compassion on my son!"
+
+"Then saw I Rome, my Father, that great and beauteous city full of
+treasure and many wonders; only the Holy Father I did not see,
+being let.  Methinks life in that country is as one long pageant;
+but I marked that great holiness and an evil life, much riches and
+much penury, dwelt there side by side, and men reeked little of
+death but much of pleasure.  Then one bade me go to Florence an I
+would be a limner; therefore I hasted thither, and gave my last
+coin for bread as I entered the city."
+
+The Prior's brows contracted; the lad had seen some schooling.
+
+"But thou didst learn to be a limner, my son?"
+
+"Ay, my Father, in God's time:  at first I must herd goats and sell
+melons in the market-place for a lump of bread.  Day by day I
+strove to gain enough to buy colours, but could not, for the Lord
+sent me ever a neighbour poorer than myself.  Nevertheless I was of
+good courage, knowing the Lord's ways are not as ours; and mindful
+how Brother Ambrose held that inasmuch as the Heavenly City is laid
+with fair colours 'twere no sin to deem that a man may limn perfect
+pictures there, for the gift is from the Lord."
+
+"My son, 'tis a great lesson thou hast learnt," said the Prior,
+"for the Word was made Flesh; and as Blessed John hath it, a man
+cannot love God unseen, if he love not the brother whom He hath
+given him.  What next, dear lad?"
+
+"My Father, the Lord Himself sent a messenger to me.  One day a
+great limner, the Signor Andrea di Cione, whom men call d'Orcagna,
+stayed by me where I stood with my melons in the shadow of the
+Shepherd's Tower, and bade me follow him to his house, for he would
+fain use me for an angel's head in the great Altar-piece he was
+e'en then concerned with for the Church of the White Friars.  Later
+he heard my story; and when he found I had some small skill with
+the brush, he kept me with him, and taught me as only such an one
+can teach:  him I served five years.  And many times Satan desired
+my soul; nay, once I was in peril of hell-fire, but the Lord was
+with me, and plucked my feet out of the pit.  But of that I will
+speak anon, at my shriving, as is meet."
+
+The Prior remembered his dream, but he said no word, and Hilarius
+took up his tale.
+
+"Then one day my master cried there was an end to teaching;
+nevertheless he would have me bide with him in honour for the work.
+But my heart was full of longing for home and the scent of the
+forest; and, above all, for thee, my Father; therefore I set my
+face north, that I might bring back my gift to St Benedict and our
+Church; and should have been here long ere this, but I was let by
+the way."
+
+The Prior looked up a little anxiously, and Hilarius smiled at the
+question in his face.
+
+"Tis a lawless tract, my Father, under the shadow of the great
+mountains beyond Florence; and I was taken by robbers, who bore me
+and others of our company to their fastness in the hills:  there I
+lay in a little cave many days; but what befell the rest I know
+not.  The robbers brought me forth to serve them, and by God's
+mercy handled me kindly, though they thought little of
+bloodshedding.
+
+"Then one of them was troubled in his spirit, and minded to forsake
+this evil manner of life.  Therefore one night he fled, carrying me
+with him, when the others had gone forth; and we made good our way
+to Mantua.  There Pietro, for so was the robber called, left me
+that he might give himself to the service of God and men, inasmuch
+as he had formerly abused them.  Never saw I man so changed, my
+Father; his speech, formerly profane, was all of God and the
+Saints; he did penance and confessed his sins publicly; ay, by the
+Justice's order he received one hundred lashes in the market-place,
+and at every lash he cried with upturned face, 'Deo Gratias!'  And
+I was there, because he besought of me to stand in the crowd and
+pray for him that his courage failed not.  But it came to pass that
+even the people marvelled at his joyful endurance; and indeed 'twas
+more like a scourging of one of the blessed martyrs than of a poor
+sinful robber.  After this the Brothers of the Poor took him, for
+such was his desire; and so I bade him farewell, and craved his
+blessing."
+
+"The Lord fulfil all his mind!" said the Prior with clasped hands.
+
+"Amen," said Hilarius.
+
+"Didst thou not fear to journey further alone, my son?"
+
+"Nay, my Father, I found for the most part good and kindly men by
+the way, despite their somewhat evil seeming; but at Genoa I took
+service with a merchant then beginning his journey, and travelled
+with him through Flanders, a strange, flat country with many canals
+and tall poplar trees; and so we came to Bruges in safety, after a
+most prosperous course.  There he commended me to a good friend of
+his, a wool merchant travelling to Salisbury; and at first all
+things went well with us; but later the winds proved contrary, and
+we were driven hither and thither in great peril of our lives, but
+at last made the Bristol Channel, and so came safe into port.
+Thence I have come hither afoot begging my bread."
+
+When Hilarius had made an end, the Prior took him in his arms and
+blessed him for his dear son; praising God that the lad had come
+back a child at heart, but hungering, loving, open-eyed.
+
+Next morning, being shriven, Hilarius ate the bread and drank the
+wine of the "wayfaring man," his heart merry for the joy of his
+home-coming.  When the Lady-Mass was ended he knelt on in her
+Chapel.
+
+"Great Light of Love, all praise and thanks be thine from thy poor
+son," sang his heart; and then he prayed for his little maid.
+
+
+
+CHAPTER IV - THE PASSING OF PRIOR STEPHEN
+
+
+
+THE Convent welcomed Hilarius gladly, and on the Feast of St
+Michael he made his profession, for the Prior deemed that he had
+served his noviciate and been found faithful; and the Brethren
+assented eagerly, for they were fain to keep this wondrous limner
+for the service of their own Church.
+
+Then, by the Prior's command, Hilarius set himself to limn a great
+picture for the High Altar.  It was a Crucifixion, and all his
+heart and all his love were in it.  When the Brethren first saw the
+fair proportion and fine colours that Hilarius brought to the work,
+they rejoiced in that their Church should be glorified above other
+Churches of the Order; but when the picture was near completing,
+and they gazed up into the wondrous face of the Great King who
+looked down from the throne of His triumphant suffering, with a
+world of hunger and love in His eyes for those who had so enthroned
+Him, they hung their heads for shame because of the emulation in
+their hearts; and lo! the Cellarer, for very love, was careful for
+the needs of the elder Brethren; and the monks, for very love, laid
+hold gladly of suffering, and so the Convent was blessed, and lived
+together in unity.
+
+In one of the groups very near the Cross, Hilarius set a grey-eyed
+girl, a woman with a babe at the breast, and clinging to her
+skirts, a little flaxen-headed maid.  None but the Prior knew the
+meaning of these three, and their names, with that of a poor light-
+o'-love, were ever on his lips when he offered the Holy Sacrifice.
+
+Gentle Brother Hilarius painted and loved, and was beloved of all
+his world.  The years sped, and he became in turn Almoner, Novice-
+master, and Sub-Prior:  and no man envied him, for he reckoned
+himself ever as least of all and servant of all.
+
+Prior Stephen attained his fourscore years, ruling the Convent
+wisely and well to the very end:  ay, and never ailed aught, his
+call coming as it might be straight from the mouth of the Lord.
+
+On the Feast of Blessed Stephen he went into the chapter and said
+as always:  "The souls of the deceased brethren and believers rest
+in peace!" to which the Convent replied, "Amen."  Then with his
+hands raised to bless he cried, "Benedicite," and again with loud
+and joyful voice "Domine," and again, "Domine!" as of one who
+answers to his name - and so passed to his place in the Kingdom of
+Christ.
+
+The Convent elected Hilarius to be Prior in his stead, which
+election the Abbat of Cluny confirmed with good grace.
+
+Time passed, and the fame of the Monastery grew because of the
+exceeding beauty of the Church, for Hilarius, with those whom he
+taught, set fair pictures on the walls, and blazoned the roof with
+the blue of heaven and gold of the wakeful stars.  In the span over
+the High Altar he set Blessed Benedict himself with the face of
+Prior Stephen, and round him the angel virtues; even as one Giotto,
+a shepherd lad, had limned them in the Church of the Little
+Brothers.
+
+Now Prior Hilarius desired greatly to set a picture of Our Lady
+above the Altar in her Chapel.  Long did he pray with ever-
+increasing fervour and much fasting that this boon might be
+vouchsafed him for her glory and the Convent's greater good.  And
+one day - 'twas her Nativity - he set his hand to the work, for it
+seemed to him that she would have it so; and he was greatly humbled
+that such heavenly kindness should attend so vile a sinner.  Day by
+day he set apart some hours for this service; and he limned a face
+so fair and radiant, with woman's love and light of heaven, that it
+was whispered in the cloister walks that the Prior had surely been
+blessed by a vision, else had he never pictured the Maid-Mother in
+so wondrous a fashion:  and of a truth a man might well give
+credence to such a story, for the joy that shone in the Prior's
+eyes and might not be hid.
+
+Many other tales did the Brethren tell of Hilarius, but softly, for
+he would hear no word of his own deeds or the favours vouchsafed
+him.
+
+When he walked in the garth the pigeons circled round him crooning
+their peace-note; and it was told that the kine in the meadows
+ceased browsing when he passed, and needs must company with him a
+little way.
+
+Once it befell that a lay-brother was afflicted with heavy sickness
+by reason of the sun's great heat; and Satan strove with him for
+his undoing, so that the poor soul foamed at the mouth and roared
+out blasphemy; yea, verily, and must be held with cords also, lest
+he do himself or his fellows some grievous hurt.  But when the
+Prior laid his hand between the man's troubled eyes sweet sleep
+came upon him, and his madness forsook him.
+
+The poor also crowded to the Monastery gate and were fed, ay, even
+if the Brethren went hungry; and if any man in all the villages
+round had aught against his neighbour he would come to the Prior
+for a just hearing.
+
+Nevertheless, despite these things the Convent's peace began to be
+troubled.  Men sought the Monastery for its famous name, caring but
+little for religion; there were many young novices within its
+walls, and the strong hand of Prior Stephen was lacking.  Hilarius
+was of gentler build; he would speak ever in love, thinking no
+evil, whereas it is not given to all men to understand that tongue.
+So it came to pass that the younger Brethren waxed fat and kicked,
+and the elder Brethren murmured.
+
+
+
+CHAPTER V - "GABRIEL, MAKE THIS MAN TO UNDERSTAND THE VISION." -
+DAN. viii. 16.
+
+
+
+ONE day the Novice-master, Brother Adam, a most worthy man, came in
+sore trouble to the Prior and would resign his office.
+
+"Surely never before did such an ill-conditioned brood find shelter
+in a monastery!" he cried.  "They grow fat, idle, insolent,
+quarrelsome-never at peace among themselves; never a Pater or an
+Ave too many, or a task fulfilled, save for fear of stripes.  I
+would that the time of blood-letting were here that their high
+stomachs might be brought low.  I am no longer young, my Father,
+and this burden tries me sorely.  Prithee, let it be shifted to
+another and a stronger back."
+
+The Prior listened with many an inward mea culpa.  "'Tis a sad
+hearing, Brother Adam, but young blood is hard of mastering; maybe
+this ill mood will pass.  The lad Robert is surely ever gentle and
+decorous?  He hath a most beauteous voice."
+
+The Novice-master threw up his hands.
+
+"Nay, Father, nay, he hath indeed the voice of an angel, but
+methinks his body is surely the habitation of Satan.  He will sing
+an it please him - or when thou art by, my Father, - but, an it
+please him not, he is silent; ay, even under grievous stripes.  The
+Precentor giveth him as negligent and ill-conditioned; and in
+choir, when he looketh most like to one of God's Saints, he is but
+plotting mischief for the day."
+
+The Prior heard him sadly.
+
+"And Hubert?" he said.  "Hubert methinks hath a great love of
+colour and a fine hand with the brush."
+
+Brother Adam was almost speechless.
+
+"Hubert!  Nay Father, forgive me, Father, but even this very Hubert
+but yesterday slipped a handful of pebbles into Brother Edmund's
+mess, whereby he was like to break his teeth or take some more
+grievous hurt.  And indeed the peace of the Brethren is much
+troubled, wherefore they complain bitterly."
+
+"Young blood, young blood, but not of necessity evil," said the
+Prior.  Then, seeing the Novice-master's aggrieved face, he bade
+him have patience yet a little, for he himself would speak to the
+novices; and with this Brother Adam must fain be content.
+
+
+The next day in the Chapter the Prior spoke.
+
+It comes to pass oftentimes that men seeing a sign are made curious
+by it; and then forgetting, find the clue thereto, it may be, long
+after.  Even thus it happened on this day in the Chapter; and when
+Prior Hilarius was gathered to his rest the Brethren remembered how
+they had marked and marvelled at the strange beauty of his face,
+the beauty as of one who sees the face of the Lord.
+
+"My children," he cried - "for my children ye are, though I see
+among you many it were more fitting I should hail as father, but
+that the ruling of the Lord cannot be gainsaid - my children, I am
+minded to think that I have this day a message on my lips that is
+not mine own.
+
+"Last night a vision came to me as I slept.  Blessed Benedict, our
+Father, stood at my side, and his face was troubled.
+
+"'Arise, my son,' he cried, 'arise, for the Lord is at hand and
+hath need of thee.'
+
+"And I, deeming it was of judgment that he spake, sprang up in
+shame and fear that the Master should find me sleeping.
+
+"Then cried Blessed Benedict again:-
+
+"'If thou wilt serve the Lord, make haste, for He hath called thee
+these many times,' and so saying passed from my sight.
+
+"Brethren, I went forth as one bewildered, and made haste to the
+Church lest peradventure I should find Him; but the lamps burnt dim
+and all was silent.  Then I turned aside and went out into the
+night, and it was very dark, with no sound but the wind in the
+forest trees.
+
+"My heart was a-hungered, and I sought in cloister and garth; and
+as I hasted to the gate I cried aloud, even as she cried who sought
+Him in a garden - 'They have taken away my Lord.'
+
+"At the gate I stayed me, and besought the Lord for a sign; and lo,
+in the darkness one came and led me by the hand away from the gate,
+across the garth and up the dormitory stair, nor loosed me until I
+passed within where the Brethren lay sleeping, and the chamber was
+bright with exceeding radiance.
+
+"I found myself by the pallet of my dear son Robert:  his face was
+wet with tears; and as he lay I saw upon his shoulder the mark of
+many stripes.
+
+"Again, one took my hand and led me from one to another of our
+Brethren, and on every face lay the shadow of a great need, but in
+every face there was somewhat of the Christ; and the lesson burnt
+in my heart.
+
+"Then One came swiftly and laid healing hands on the boy Robert;
+but I fled, for I might not see Him; and I awoke sore troubled -
+ay, and the trouble is on me still.
+
+"My Brethren, I can but tell the vision as it came to me.  Great is
+the rule of Benedict, our Father, and in it stripes, grievous and
+many as our sins, have their rightful place; but mayhap we forget
+that love, and love alone, should strike.  Ay, and I mind me how
+Prior Stephen, my Father, said that to be monk a man must learn
+before all things to hunger and to love.  Love should draw the
+water and build the fire, till the field and attend the sanctuary;
+and hunger we should cherish in our hearts, hunger for
+righteousness and for the souls of our brethren, for this is the
+hunger of God.
+
+"Men come over lightly to the Lord's work; and lo! pride and
+emulation, jealousy and discontent, spring up and thrive, and the
+end is shame and confusion.
+
+"I speak as to my children; it is in my heart that the Lord is at
+hand:  let us see that we love while there is yet time."
+
+Then he turned to the novices and stretched out his hands to where
+they stood amazed, and it may be ashamed - not after this manner
+was Brother Adam wont to rebuke them.
+
+"And ye, who are, as it were, the babes of our Order, give heed to
+your ways, neither bring unwilling hands to this service.  Better
+far go forth, yea, even to death, than mock the Lord with froward
+feet and a heart that is full of vanity.  Remember the sacrifice
+which Cain offered and the Lord rejected, for he gainsayed the
+voice of the Lord and disobeyed His Commandment; wherefore the
+wrath of God fell upon him.
+
+"I who speak now, speak in love; give ear to my words, and let fear
+befriend you; for the coming of the Lord is as a thief in the
+night, and lo! stripes bitter and many await that servant whom the
+Master finds sleeping."
+
+Then the Prior, having made an end of speaking, raised his hand to
+bless, and went forth in silence; and no man stirred in his place,
+for they knew that the Lord had spoken and were afraid.
+
+
+
+CHAPTER VI - THE HUNGER OF DICKON THE WOODMAN
+
+
+
+JUNE was at an end, and men cried aloud for rain.  The hedges were
+white, the fields scorched and brown; the leaves fell from the
+trees as at autumn's touch; the fruits scarce formed hung wry and
+twisted on the bough; the heavens burnt pitiless, without a cloud.
+
+Dickon, the woodman, sat by the wayside gnawing a crust and a scrap
+of mouldy bacon.  There was no sound but the howl of a dog from
+some neighbouring farmstead, and he sat in sullen mood, his bill-
+hook beside him, brooding over his wrongs; for the world had gone
+contrary with him.
+
+His wife was dead; she had died in childbed a month gone, leaving
+six hungry, naked brats on his shoulders; and now a worse thing had
+befallen him; his gold was gone - his gold to which he had no
+right, for 'twas blood-money, the food of his children, ay, and
+something beside; but Dickon loved that gold piece above all the
+world - above Heaven and his own soul - and it was gone.
+
+A neighbour had surely done it; marked the hiding-place which he
+had deemed so safe, and made off with the prize; and i' faith 'twas
+easy carrying.  There was but one piece, and Dickon minded how he
+had changed his petty hoard to gold scarce a month back at the
+fair.  Maybe it was Thomas the charcoal burner had served him this
+ill turn; or William Crookleg, the miller's man; he was a sly,
+prying fellow, and there had been ill blood between them.
+
+He was fain to seek the Monastery that lay the other side the
+forest, and crave justice of the Prior, but that the Prior might
+say 'twas ill-got gain and well rid of.
+
+Dickon rose to his feet and shambled homewards; he was ragged, ill-
+fed, unkempt.  The day's work was done, and on the village green he
+found men and women, for the most part as ill-clad as himself,
+standing about in groups gossiping.  The innkeeper lounged at the
+ale-house door, thin and peaked as his fellows; there was no good
+living for any man in those parts, by reason of the over-lord who
+sore oppressed them.
+
+A little man, keen-eyed and restless, holding a lean and sorry
+horse by the bridle, was talking eagerly.
+
+"Nay, 'tis true eno', and three crows saw I this very day on the
+churchyard wall - it bodes ill to some of us."
+
+"Well, well," said the innkeeper, "have it thine own way.  Methinks
+the ill hath outrun the omen, for there will be naught for man or
+beast shortly - but fine pickings for thy three crows."
+
+The little man scowled at him:  Dickon came up.
+
+"What's to do?" he said curtly.
+
+"Nay," said mine host, "Robin will have it that some further evil
+is upon us - tho' methinks we have got our fill and to spare with
+this drought - ay, and 'twas at thy house, Dickon, he saw the
+corpse-light."
+
+"Better a corpse-light than six open mouths, and naught to fill
+them," said Dickon surlily.  "Whither away, Robin?  'Tis not far
+this beast will travel."
+
+"Right thou art, but my master will turn an honest penny with the
+carcass," answered the little man; "give me my reckoning, friend
+John.  I must needs haste if I would see the Forester's ere
+nightfall."
+
+He pulled out a few small coins and a gold piece.  When Dickon saw
+it his eyes gleamed.  Robin paid the reckoning and put the piece in
+his cheek.
+
+"Hard-earned money - 'tis blood out of a stone to draw wages from
+my master.  Better it should light in my belly than in a rogue's
+pocket.  'Tis as well for me that John o' th' Swift-foot swings at
+the cross-roads.  Godden, my masters!"  And leading his weary
+beast, he took the road that skirted the forest.
+
+The moon was at full, and he had yet a good stretch of lonely way
+before him, when the horse stumbled and fell and would not rise.
+
+"A murrain on the beast!" muttered Robin angrily, tugging in vain
+at the creature on whom death had taken pity.  "I must e'en leave
+him by the wayside and tell Richard what hath befallen."
+
+He stooped to loose the halter, and as he bent to his task a man
+slipped from the shadow of the hedge into the quiet moonlight.
+There was a thud, a dull cry, and Robin fell prone across the
+horse's neck - a pace beyond him in the moonlight shone the gleam
+of gold.
+
+Next day Dickon's child died, ay, and the other five followed with
+scant time between the buryings.  Another had fathered them and
+filled the gaping mouths; but men shuddered at his care, for it was
+the Black Death that they had deemed far from them.
+
+Pale and woebegone they clustered on the green.  News had come of
+Robin - he was dead when they found him - but no man gave heed.
+Death was in the air, death held them safe in walls they might not
+scale.  The heavens were brass, food failed for man and beast, God
+and man alike had forsaken them.  The forest lay one side, the
+river, now but a shallow sluggish stream, lay the other; 'twas a
+cleft stick and the springe tightened.
+
+No evil had as yet befallen Dickon.  He stood with the rest and
+murmured, cursing.  All at once he made for the ale-house.
+
+"Fools that we are to stand like helpless brats when there is
+liquor enough and to spare in yon cellars.  He who is minded to go
+dry throat to Heaven had best make haste; for me I will e'en swill
+a bucket to the devil's health, and so to hell."
+
+Half-a-dozen men followed him, pushing aside mine host who strove
+to bar the door.  Some of the women fell on their knees and
+clamoured in half delirious prayer; the rest slunk dismayed to
+their pestilent homes.
+
+
+
+CHAPTER VII - THE VISION OF THE EVENING AND THE MORNING
+
+
+
+MEANWHILE, news came to the Monastery of the ill case of the
+village, for it lay scarce a league away across the forest; but the
+pine-trees stood as guardian angels in between.
+
+The Prior summoned the whole Convent, according to the ruling of
+Blessed Benedict when the matter is a grave one, and told the
+tidings.
+
+Then he went on to give reason for their assembling.
+
+"My Brethren, it is in my heart that we dare not leave these poor,
+stricken sheep to die alone without shepherding; moreover, in their
+fear and desolation, they may flee to other villages, and so the
+terror and pest spread ever further.  And I deem that, inasmuch as
+Charity is greater than Faith or Hope, so it is greater than
+obedience also.  Wherefore I purpose to set aside the Rule of our
+Order in the letter that I may hold to it in the spirit, and go
+forth to serve these perishing brethren; and I will take with me
+whosoever hears the call of God in this visitation."
+
+When he had made an end, there was silence in the Chapter.  Break
+cloister, the Prior himself urging them thereto?  The Convent might
+scarce credit its ears.
+
+Prior Hilarius watched his children with a tender smile on his
+white face, and a prayer on his lips that love might have its
+triumph.
+
+Five monks stood up, among them the Sub-Prior, and seven novices
+sprang also to their feet.
+
+"Nay, Brother Walter," said Hilarius, turning to the Sub-Prior,
+"this flock must have its shepherd also; thy place is here.  But I
+will take with me Brother Simon and Brother Leo, who will doubtless
+suffice at first for the ministry, and - " smiling at the novices -
+"all these dear lads to tend the sick and bury the dead."
+
+The Sub-Prior ventured on a remonstrance.
+
+"Good Father, it is not fitting that thou should'st go on such an
+errand; send me in thy stead, for my life is a small thing as
+compared with thine.  Moreover these novices, 'tis but the other
+day the Master gave them as lazy and ill-conditioned, and - "
+
+The Prior held up his hand.
+
+"Dear Brother, I thank thee for thy love and care for me; but my
+call has come.  As for these - " he stretched out his hand towards
+the waiting novices - "maybe they are in the wrong school, and the
+Lord hath even opened the door that they may serve Him, perchance
+die for Him, elsewhere.  And shall I count myself wiser than Prior
+Stephen, who set me without the gate to learn my lesson?  Let us go
+in peace, my children, for we are about the Lord's business."
+
+
+Very early next day, having eaten of Heavenly manna, the little
+band embraced their brethren and set out, laden with food and wine
+and herbs from the farmery; and the Prior appointed a place to
+which the Convent should send daily all things needed.
+
+The shade of the forest was very welcome in the hot, breathless
+sunshine, and the scent of the pine-needles, odorous, pungent, rose
+at each footfall from the silent path.  The Brethren chanted the
+Gradual Psalms as they paced two and two through the sun-lit
+aisles, full of the Prior's memories; and he looked up again to see
+Our Lady's robe across the tree-tops.  Then all at once the Psalm
+broke, and Brother Simon, who was leading, stayed suddenly.
+
+Under a bush beside the track lay a man, naked save for filthy
+rags; his hair and beard matted with moss and leaves; his eyes
+sunk, his lips drawn apart in a ghastly grin.  Hilarius made haste
+to kneel beside him, and lo! sudden remembrance lighted the fast-
+glazing eyes, but his own answered not.
+
+"My son, my son," said the Prior, and his voice was very pitiful,
+"thou art indeed in evil case; let me shrive thee ere it be too
+late."
+
+He motioned the others to stand back, and raising the heavy head
+upon his shoulder, bent close to catch the whisper of the parched
+lips.
+
+At first no sound came, and then a hoarse word reached him.
+
+"The Convent's hens!"
+
+The Prior stared amazed; then once more the laboured voice -
+
+"Hast forgot thy theft, and the dancer?"
+
+Hilarius needed no further word; in a moment the years were wiped
+away.
+
+"Lad, lad, to find thee again, and in such sorry plight!  But see,
+stay not thy shriving, for the time is short, and the Lord ever
+ready to pardon."
+
+The man strove in vain to speak.  At last he said quite clearly:
+"I hunger," and so saying died.
+
+The Prior was greatly moved, and for a while he knelt in prayer,
+while the Brethren, amazed, waited his pleasure.  Then he rose, and
+lo! before him lay the open glade where his schooling had begun,
+and he had seen a flower incarnate dance in the wind.
+
+He bade them lift the dead, and lay him in the hollow of the glade
+under fallen branches until they could return and give him burial.
+Then, as they went on their way, he told the tale of his little
+maid; and when the telling was ended, the village they had come to
+succour was in sight, and lo! they saw it through a mist.
+
+
+
+CHAPTER VIII - "BEHOLD THE FIELDS ARE WHITE"
+
+
+
+THE Prior's heart was ready, and it seemed to him as he passed up
+the village and saw the huddled, helpless people, that his little
+maid led him by the hand.
+
+Brother Simon, Brother Leo, and the novices turned aside to speak
+comfort and carry succour to the sick and fearful, and to bury the
+dead; for three unshriven souls had passed to judgment and mercy.
+Hilarius made straight for the ale-house.
+
+As he crossed the green, the door opened and Dickon stumbled
+blindly down the steps.  At sight of a monk he cried out, and
+suddenly sobered, dropped on his knees, while the topers and
+roysterers staring from the open doorway fell into silence.
+
+Hilarius pushed back his cowl and stood bareheaded in the scorching
+sun of that windless day; it came to his mind that he was very
+weary.
+
+"Hear, O my children, the Lord hath sent me to succour you, lest ye
+go down quick into the pit.  Return, every one of you, for the arms
+of His love are still stretched wide upon the Rood, and the very
+hairs of your head are numbered.  Repent ye, therefore, and confess
+each one of you his sins, that I may prepare him for the work of
+the Lord; and take comfort also, for they that are with us are
+mighty."
+
+One by one the men, sobered by the shock of great surprise,
+confessed and were shriven under the summer sun:  only the man
+Dickon was not among them.  Then the Prior bade them get to work as
+he should direct; and he set a watch that no man should flee the
+village; and all obeyed him.
+
+Early and late the Prior toiled with the Brethren and his band of
+workers, nursing the sick, burying the dead, and destroying the
+pestilent dwellings.
+
+Brother Leo was the first to whom the call came:  he answered it
+like a soldier at his post.
+
+As the Prior rose from the pallet of his dead son, one bade him
+come quickly, for a dying man had need of him.  It was Dickon.
+
+The Prior, bearing with him the Body of the Lord, made haste to the
+hovel where he lay, and shrived him though he scarce could hear his
+muttered words; but lo! when he would place the Host he could not,
+for a gold piece lay on the man's tongue.  The Prior drew back
+dismayed, and behold, the Lord's hand struck swiftly, and Dickon
+died with a barren shriving - on whom may Christ take pity!
+
+Next day great grey clouds curtained the arid, staring sky; and at
+even came the rain.  All through the night it fell; and one of the
+novices, who lay a-dying in the Prioir's arms, heard it as he
+passed, and fell back, joy on his lips and a radiant smile on his
+young face.
+
+"'Esurientes implevit bonis,'" said the Prior, as he laid him down,
+blessing God.
+
+A second novice died, then a third, and yet another; but there was
+no need to call further help from the Monastery, for the Plague was
+stayed.  Never had cloistered monks spent such a strange season;
+rarely such a blessed one.
+
+The Feast of the Transfiguration was nigh at hand, and the Prior
+was minded to return on that day to the waiting, anxious Convent,
+for his work was done.
+
+Great was the joy and preparation at the Monastery when the tidings
+reached them; joy too for those who lay not in the shelter of the
+cloister garth, but, as it were, on the battlefield where they had
+given their lives for their brethren.
+
+The holy day dawned without a cloud.  A strong west wind bowed the
+pines in the forest, and they worshipped and sang for joy, because
+of the face of the Lord.  The sun burnt bright in the great blue
+dome, and earth shone with pale reflection of his glory.
+
+The monks paced the cloister walks, and waited and watched to catch
+the signal from the lay-brother posted without.  At last the word
+came that voices were heard in the distance; and monks and novices
+hastened two and two to the gate.  On the wind was borne the sound
+of a chant.
+
+"'Tis a dirge for those that are gone," said Brother Anselm; and
+crossing themselves, the Brothers chanted out the sonorous
+response:
+
+
+"Et lux perpetua luceat eis."
+
+
+As they reached the open gate, the little band they waited for came
+slowly down the forest pathway.
+
+Four Brothers, only four; and lo! on their shoulders they bore a
+rude bier of pine-branches.
+
+This was the gathering of Brother Hilarius.  Sweet-scented boughs
+for his last bed; Mary's lilies aglow for tapers tall; the censer
+of the forest swung by sun and wind; and the glory of the face of
+the Lord.
+
+He had called his children to him in the late night-watches, and
+having kissed and blessed them, he bade them turn him to the east,
+for his time had come; and they obeyed in sore grief and perplexed.
+Prior Hilarius lay and watched for the light, and as dawn parted
+night's veil with the long foregleam of the coming day, he shut his
+eyes like a tired child and went home.
+
+It was his heart, Brother Simon thought; but the Sub-Prior cried
+through his tears:-
+
+"Nay, nay, it was God a-hungered for His dear son."
+
+They bore the Prior into the white-clad Church, and laid him on his
+forest-bed under the great Christ; and the novices, seeing the
+tender smile on the beautiful face, whispered one to another, "The
+Prior hath found his little maid."  And the Convent made Hilarius a
+wondrous fair tomb of alabaster inlaid with gold, and carved him
+lying thereon with Mary's lilies across his breast.
+
+
+
+
+
+End of The Project Gutenberg Etext of The Gathering of Brother Hilarius
+

@@ -1,0 +1,1014 @@
+*The Project Gutenberg Etext of Adventures of Col. Daniel Boone*
+From The Discovery and Settlement of Kentucke [Kentucky]
+#1 in our series by John Filson
+
+
+Copyright laws are changing all over the world, be sure to check
+the copyright laws for your country before posting these files!!
+
+Please take a look at the important information in this header.
+We encourage you to keep this file on your own disk, keeping an
+electronic path open for the next readers.  Do not remove this.
+
+
+**Welcome To The World of Free Plain Vanilla Electronic Texts**
+
+**Etexts Readable By Both Humans and By Computers, Since 1971**
+
+*These Etexts Prepared By Hundreds of Volunteers and Donations*
+
+Information on contacting Project Gutenberg to get Etexts, and
+further information is included below.  We need your donations.
+
+
+The Adventures of Colonel Daniel Boone
+
+by John Filson
+
+May, 1997  [Etext #909
+
+
+*The Project Gutenberg Etext of Adventures of Col. Daniel Boone*
+*****This file should be named 1boon10.txt or 1boon10.zip******
+
+Corrected EDITIONS of our etexts get a new NUMBER, 1boon11.txt.
+VERSIONS based on separate sources get new LETTER, 1boon10a.txt.
+
+
+Etext created by John M. Krafft
+krafftjm@muohio.edu
+
+
+We are now trying to release all our books one month in advance
+of the official release dates, for time for better editing.
+
+Please note:  neither this list nor its contents are final till
+midnight of the last day of the month of any such announcement.
+The official release date of all Project Gutenberg Etexts is at
+Midnight, Central Time, of the last day of the stated month.  A
+preliminary version may often be posted for suggestion, comment
+and editing by those who wish to do so.  To be sure you have an
+up to date first edition [xxxxx10x.xxx] please check file sizes
+in the first week of the next month.  Since our ftp program has
+a bug in it that scrambles the date [tried to fix and failed] a
+look at the file size will have to do, but we will try to see a
+new copy has at least one byte more or less.
+
+
+Information about Project Gutenberg (one page)
+
+We produce about two million dollars for each hour we work.  The
+fifty hours is one conservative estimate for how long it we take
+to get any etext selected, entered, proofread, edited, copyright
+searched and analyzed, the copyright letters written, etc.  This
+projected audience is one hundred million readers.  If our value
+per text is nominally estimated at one dollar then we produce $2
+million dollars per hour this year as we release thirty-two text
+files per month:  or 400 more Etexts in 1996 for a total of 800.
+If these reach just 10% of the computerized population, then the
+total should reach 80 billion Etexts.
+
+The Goal of Project Gutenberg is to Give Away One Trillion Etext
+Files by the December 31, 2001.  [10,000 x 100,000,000=Trillion]
+This is ten thousand titles each to one hundred million readers,
+which is only 10% of the present number of computer users.  2001
+should have at least twice as many computer users as that, so it
+will require us reaching less than 5% of the users in 2001.
+
+
+We need your donations more than ever!
+
+
+All donations should be made to "Project Gutenberg/CMU": and are
+tax deductible to the extent allowable by law.  (CMU = Carnegie-
+Mellon University).
+
+For these and other matters, please mail to:
+
+Project Gutenberg
+P. O. Box  2782
+Champaign, IL 61825
+
+When all other email fails try our Executive Director:
+Michael S. Hart <hart@pobox.com>
+
+We would prefer to send you this information by email
+(Internet, Bitnet, Compuserve, ATTMAIL or MCImail).
+
+******
+If you have an FTP program (or emulator), please
+FTP directly to the Project Gutenberg archives:
+[Mac users, do NOT point and click. . .type]
+
+ftp uiarchive.cso.uiuc.edu
+login:  anonymous
+password:  your@login
+cd etext/etext90 through /etext96
+or cd etext/articles [get suggest gut for more information]
+dir [to see files]
+get or mget [to get files. . .set bin for zip files]
+GET INDEX?00.GUT
+for a list of books
+and
+GET NEW GUT for general information
+and
+MGET GUT* for newsletters.
+
+**Information prepared by the Project Gutenberg legal advisor**
+(Three Pages)
+
+
+***START**THE SMALL PRINT!**FOR PUBLIC DOMAIN ETEXTS**START***
+Why is this "Small Print!" statement here?  You know: lawyers.
+They tell us you might sue us if there is something wrong with
+your copy of this etext, even if you got it for free from
+someone other than us, and even if what's wrong is not our
+fault.  So, among other things, this "Small Print!" statement
+disclaims most of our liability to you.  It also tells you how
+you can distribute copies of this etext if you want to.
+
+*BEFORE!* YOU USE OR READ THIS ETEXT
+By using or reading any part of this PROJECT GUTENBERG-tm
+etext, you indicate that you understand, agree to and accept
+this "Small Print!" statement.  If you do not, you can receive
+a refund of the money (if any) you paid for this etext by
+sending a request within 30 days of receiving it to the person
+you got it from.  If you received this etext on a physical
+medium (such as a disk), you must return it with your request.
+
+ABOUT PROJECT GUTENBERG-TM ETEXTS
+This PROJECT GUTENBERG-tm etext, like most PROJECT GUTENBERG-
+tm etexts, is a "public domain" work distributed by Professor
+Michael S. Hart through the Project Gutenberg Association at
+Carnegie-Mellon University (the "Project").  Among other
+things, this means that no one owns a United States copyright
+on or for this work, so the Project (and you!) can copy and
+distribute it in the United States without permission and
+without paying copyright royalties.  Special rules, set forth
+below, apply if you wish to copy and distribute this etext
+under the Project's "PROJECT GUTENBERG" trademark.
+
+To create these etexts, the Project expends considerable
+efforts to identify, transcribe and proofread public domain
+works.  Despite these efforts, the Project's etexts and any
+medium they may be on may contain "Defects".  Among other
+things, Defects may take the form of incomplete, inaccurate or
+corrupt data, transcription errors, a copyright or other
+intellectual property infringement, a defective or damaged
+disk or other etext medium, a computer virus, or computer
+codes that damage or cannot be read by your equipment.
+
+LIMITED WARRANTY; DISCLAIMER OF DAMAGES
+But for the "Right of Replacement or Refund" described below,
+[1] the Project (and any other party you may receive this
+etext from as a PROJECT GUTENBERG-tm etext) disclaims all
+liability to you for damages, costs and expenses, including
+legal fees, and [2] YOU HAVE NO REMEDIES FOR NEGLIGENCE OR
+UNDER STRICT LIABILITY, OR FOR BREACH OF WARRANTY OR CONTRACT,
+INCLUDING BUT NOT LIMITED TO INDIRECT, CONSEQUENTIAL, PUNITIVE
+OR INCIDENTAL DAMAGES, EVEN IF YOU GIVE NOTICE OF THE
+POSSIBILITY OF SUCH DAMAGES.
+
+If you discover a Defect in this etext within 90 days of
+receiving it, you can receive a refund of the money (if any)
+you paid for it by sending an explanatory note within that
+time to the person you received it from.  If you received it
+on a physical medium, you must return it with your note, and
+such person may choose to alternatively give you a replacement
+copy.  If you received it electronically, such person may
+choose to alternatively give you a second opportunity to
+receive it electronically.
+
+THIS ETEXT IS OTHERWISE PROVIDED TO YOU "AS-IS".  NO OTHER
+WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED, ARE MADE TO YOU AS
+TO THE ETEXT OR ANY MEDIUM IT MAY BE ON, INCLUDING BUT NOT
+LIMITED TO WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A
+PARTICULAR PURPOSE.
+
+Some states do not allow disclaimers of implied warranties or
+the exclusion or limitation of consequential damages, so the
+above disclaimers and exclusions may not apply to you, and you
+may have other legal rights.
+
+INDEMNITY
+You will indemnify and hold the Project, its directors,
+officers, members and agents harmless from all liability, cost
+and expense, including legal fees, that arise directly or
+indirectly from any of the following that you do or cause:
+[1] distribution of this etext, [2] alteration, modification,
+or addition to the etext, or [3] any Defect.
+
+DISTRIBUTION UNDER "PROJECT GUTENBERG-tm"
+You may distribute copies of this etext electronically, or by
+disk, book or any other medium if you either delete this
+"Small Print!" and all other references to Project Gutenberg,
+or:
+
+[1]  Only give exact copies of it.  Among other things, this
+     requires that you do not remove, alter or modify the
+     etext or this "small print!" statement.  You may however,
+     if you wish, distribute this etext in machine readable
+     binary, compressed, mark-up, or proprietary form,
+     including any form resulting from conversion by word pro-
+     cessing or hypertext software, but only so long as
+     *EITHER*:
+
+     [*]  The etext, when displayed, is clearly readable, and
+          does *not* contain characters other than those
+          intended by the author of the work, although tilde
+          (~), asterisk (*) and underline (_) characters may
+          be used to convey punctuation intended by the
+          author, and additional characters may be used to
+          indicate hypertext links; OR
+
+     [*]  The etext may be readily converted by the reader at
+          no expense into plain ASCII, EBCDIC or equivalent
+          form by the program that displays the etext (as is
+          the case, for instance, with most word processors);
+          OR
+
+     [*]  You provide, or agree to also provide on request at
+          no additional cost, fee or expense, a copy of the
+          etext in its original plain ASCII form (or in EBCDIC
+          or other equivalent proprietary form).
+
+[2]  Honor the etext refund and replacement provisions of this
+     "Small Print!" statement.
+
+[3]  Pay a trademark license fee to the Project of 20% of the
+     net profits you derive calculated using the method you
+     already use to calculate your applicable taxes.  If you
+     don't derive profits, no royalty is due.  Royalties are
+     payable to "Project Gutenberg Association/Carnegie-Mellon
+     University" within the 60 days following each
+     date you prepare (or were legally required to prepare)
+     your annual (or equivalent periodic) tax return.
+
+WHAT IF YOU *WANT* TO SEND MONEY EVEN IF YOU DON'T HAVE TO?
+The Project gratefully accepts contributions in money, time,
+scanning machines, OCR software, public domain etexts, royalty
+free copyright licenses, and every other sort of contribution
+you can think of.  Money should be paid to "Project Gutenberg
+Association / Carnegie-Mellon University".
+
+*END*THE SMALL PRINT! FOR PUBLIC DOMAIN ETEXTS*Ver.04.29.93*END*
+
+
+
+
+
+
+Etext created by John M. Krafft
+krafftjm@muohio.edu
+
+
+
+From The Discovery and Settlement of Kentucke
+by John Filson
+
+
+
+The ADVENTURES of Col. DANIEL BOON;
+containing a NARRATIVE of the WARS of Kentucke.
+
+
+Curiosity is natural to the soul of man, and interesting objects
+have a powerful influence on our affections. Let these influencing
+powers actuate, by the permission or disposal of Providence, from
+selfish or social views, yet in time the mysterious will of Heaven
+is unfolded, and we behold our conduct, from whatsoever motives
+excited, operating to answer the important designs of heaven. Thus
+we behold Kentucke, lately an howling wilderness, the habitation of
+savages and wild beasts, become a fruitful field; this region, so
+favourably distinguished by nature, now become the habitation of
+civilization, at a period unparalleled in history, in the midst of
+a raging war, and under all the disadvantages of emigration to a
+country so remote from the inhabited parts of the continent. Here,
+where the hand of violence shed the blood of the innocent; where
+the horrid yells of savages, and the groans of the distressed,
+sounded in our ears, we now hear the praises and adoration of our
+Creator; where wretched wigwams stood, the miserable abodes of
+savages, we behold the foundations of cities laid, that, in all
+probability, will rival the glory of the greatest upon earth. And
+we view Kentucke situated on the fertile banks of the great Ohio,
+rising from obscurity to shine with splendor, equal to any other of
+the stars of the American hemisphere.
+
+The settling of this region well deserves a place in history.
+Most of the memorable events I have myself been exercised in; and,
+for the satisfaction of the public, will briefly relate the
+circumstances of my adventures, and scenes of life, from my first
+movement to this country until this day.
+
+It was on the first of May, in the year 1769, that I resigned my
+domestic happiness for a time, and left my family and peaceable
+habitation on the Yadkin River, in North-Carolina, to wander
+through the wilderness of America, in quest of the country of
+Kentucke, in company with John Finley, John Stewart, Joseph Holden,
+James Monay, and William Cool. We proceeded successfully, and after
+a long and fatiguing journey through a mountainous wilderness, in
+a westward direction, on the seventh day of June following, we
+found ourselves on Red-River, where John Finley had formerly been
+trading with the Indians, and, from the top of an eminence, saw
+with pleasure the beautiful level of Kentucke. Here let me observe,
+that for some time we had experienced the most uncomfortable
+weather as a prelibation of our future sufferings. At this place we
+encamped, and made a shelter to defend us from the inclement
+season, and began to hunt and reconnoitre the country. We found
+every where abundance of wild beasts of all sorts, through this
+vast forest. The buffaloes were more frequent than I have seen
+cattle in the settlements, browzing on the leaves of the cane, or
+croping the herbage on those extensive plains, fearless, because
+ignorant, of the violence of man. Sometimes we saw hundreds in a
+drove, and the numbers about the salt springs were amazing. In this
+forest, the habitation of beasts of every kind natural to America,
+we practised hunting with great success until the twenty-second day
+of December following.
+
+This day John Stewart and I had a pleasing ramble, but fortune
+changed the scene in the close of it. We had passed through a great
+forest on which stood myriads of trees, some gay with blossoms,
+others rich with fruits. Nature was here a series of wonders, and
+a fund of delight. Here she displayed her ingenuity and industry in
+a variety of flowers and fruits, beautifully coloured, elegantly
+shaped, and charmingly flavoured; and we were diverted with
+innumerable animals presenting themselves perpetually to our
+view.--In the decline of the day, near Kentucke river, as we
+ascended the brow of a small hill, a number of Indians rushed out
+of a thick cane-brake upon us, and made us prisoners. The time of
+our sorrow was now arrived, and the scene fully opened. The Indians
+plundered us of what we had, and kept us in confinement seven days,
+treating us with common savage usage. During this time we
+discovered no uneasiness or desire to escape, which made them less
+suspicious of us; but in the dead of night, as we lay in a thick
+cane-brake by a large fire, when sleep had locked up their senses,
+my situation not disposing me for rest, I touched my companion and
+gently awoke him. We improved this favourable opportunity, and
+departed, leaving them to take their rest, and speedily directed
+our course towards our old camp, but found it plundered, and the
+company dispersed and gone home. About this time my brother, Squire
+Boon, with another adventurer, who came to explore the country
+shortly after us, was wandering through the forest, determined to
+find me, if possible, and accidentally found our camp.
+Notwithstanding the unfortunate circumstances of our company, and
+our dangerous situation, as surrounded with hostile savages, our
+meeting so fortunately in the wilderness made us reciprocally
+sensible of the utmost satisfaction. So much does friendship
+triumph over misfortune, that sorrows and sufferings vanish at the
+meeting not only of real friends, but of the most distant
+acquaintances, and substitutes happiness in their room.
+
+Soon after this, my companion in captivity, John Stewart, was
+killed by the savages, and the man that came with my brother
+returned home by himself. We were then in a dangerous, helpless
+situation, exposed daily to perils and death amongst savages and
+wild beasts, not a white man in the country but ourselves.
+
+Thus situated, many hundred miles from our families in the
+howling wilderness, I believe few would have equally enjoyed the
+happiness we experienced. I often observed to my brother, You see
+now how little nature requires to be satisfied. Felicity, the
+companion of content, is rather found in our own breasts than in
+the enjoyment of external things; And I firmly believe it requires
+but a little philosophy to make a man happy in whatsoever state he
+is. This consists in a full resignation to the will of Providence;
+and a resigned soul finds pleasure in a path strewed with briars
+and thorns.
+
+We continued not in a state of indolence, but hunted every day,
+and prepared a little cottage to defend us from the Winter storms.
+We remained there undisturbed during the Winter; and on the first
+day of May, 1770, my brother returned home to the settlement by
+himself, for a new recruit of horses and ammunition, leaving me by
+myself, without bread, salt or sugar, without company of my fellow
+creatures, or even a horse or dog. I confess I never before was
+under greater necessity of exercising philosophy and fortitude. A
+few days I passed uncomfortably. The idea of a beloved wife and
+family, and their anxiety upon the account of my absence and
+exposed situation, made sensible impressions on my heart. A
+thousand dreadful apprehensions presented themselves to my view,
+and had undoubtedly disposed me to melancholy, if further indulged.
+
+One day I undertook a tour through the country, and the diversity
+and beauties of nature I met with in this charming season, expelled
+every gloomy and vexatious thought. Just at the close of day the
+gentle gales retired, and left the place to the disposal of a
+profound calm. Not a breeze shook the most tremulous leaf. I had
+gained the summit of a commanding ridge, and, looking round with
+astonishing delight, beheld the ample plains, the beauteous tracts
+below. On the other hand, I surveyed the famous river Ohio that
+rolled in silent dignity, marking the western boundary of Kentucke
+with inconceivable grandeur. At a vast distance I beheld the
+mountains lift their venerable brows, and penetrate the clouds. All
+things were still. I kindled a fire near a fountain of sweet water,
+and feasted on the loin of a buck, which a few hours before I had
+killed. The sullen shades of night soon overspread the whole
+hemisphere, and the earth seemed to gasp after the hovering
+moisture. My roving excursion this day had fatigued my body, and
+diverted my imagination. I laid me down to sleep, and I awoke not
+until the sun had chased away the night. I continued this tour, and
+in a few days explored a considerable part of the country, each day
+equally pleased as the first. I returned again to my old camp,
+which was not disturbed in my absence. I did not confine my lodging
+to it, but often reposed in thick cane-brakes, to avoid the
+savages, who, I believe, often visited my camp, but fortunately for
+me, in my absence. In this situation I was constantly exposed to
+danger, and death. How unhappy such a situation for a man tormented
+with fear, which is vain if no danger comes, and if it does, only
+augments the pain. It was my happiness to be destitute of this
+afflicting passion, with which I had the greatest reason to be
+affected. The prowling wolves diverted my nocturnal hours with
+perpetual howlings; and the various species of animals in this vast
+forest, in the daytime, were continually in my view.
+Thus I was surrounded with plenty in the midst of want. I was
+happy in the midst of dangers and inconveniences. In such a
+diversity it was impossible I should be disposed to melancholy. No
+populous city, with all the varieties of commerce and stately
+structures, could afford so much pleasure to my mind, as the
+beauties of nature I found here.
+
+Thus, through an uninterrupted scene of sylvan pleasures, I spent
+the time until the 27th day of July following, when my brother, to
+my great felicity, met me, according to appointment, at our old
+camp. Shortly after, we left this place, not thinking it safe to
+stay there longer, and proceeded to Cumberland river, reconnoitring
+that part of the country until March, 1771, and giving names to the
+different waters.
+
+Soon after, I returned home to my family with a determination to
+bring them as soon as possible to live in Kentucke, which I
+esteemed a second paradise, at the risk of my life and fortune.
+
+I returned safe to my old habitation, and found my family in
+happy circumstances. I sold my farm on the Yadkin, and what goods
+we could not carry with us; and on the twenty-fifth day of
+September, 1773, bade a farewel to our friends, and proceeded on
+our journey to Kentucke, in company with five families more, and
+forty men that joined us in Powel's Valley, which is one hundred
+and fifty miles from the now settled parts of Kentucke. This
+promising beginning was soon overcast with a cloud of adversity;
+for upon the tenth day of October, the rear of our company was
+attacked by a number of Indians, who killed six, and wounded one
+man. Of these my eldest son was one that fell in the action. Though
+we defended ourselves, and repulsed the enemy, yet this unhappy
+affair scattered our cattle, brought us into extreme difficulty,
+and so discouraged the whole company, that we retreated forty
+miles, to the settlement on Clench river. We had passed over two
+mountains, viz. Powel's and Walden's, and were approaching
+Cumberland mountain when this adverse fortune overtook us. These
+mountains are in the wilderness, as we pass from the old
+settlements in Virginia to Kentucke, are ranged in a S. west and N.
+east direction, are of a great length and breadth, and not far
+distant from each other. Over these, nature hath formed passes,
+that are less difficult than might be expected from a view of such
+huge piles. The aspect of these cliffs is so wild and horrid, that
+it is impossible to behold them without terror. The spectator is
+apt to imagine that nature had formerly suffered some violent
+convulsion; and that these are the dismembered remains of the
+dreadful shock; the ruins, not of Persepolis or Palmyra, but of the
+world!
+
+I remained with my family on Clench until the sixth of June,
+1774, when I and one Michael Stoner were solicited by Governor
+Dunmore, of Virginia, to go to the Falls of the Ohio, to conduct
+into the settlement a number of surveyors that had been sent
+thither by him some months before; this country having about this
+time drawn the attention of many adventurers. We immediately
+complied with the Governor's request, and conducted in the
+surveyors, compleating a tour of eight hundred miles, through many
+difficulties, in sixty-two days.
+
+Soon after I returned home, I was ordered to take the command of
+three garrisons during the campaign, which Governor Dunmore carried
+on against the Shawanese Indians: After the conclusion of which,
+the Militia was discharged from each garrrison, and I being
+relieved from my post, was solicited by a number of North-Carolina
+gentlemen, that were about purchasing the lands lying on the S.
+side of Kentucke River, from the Cherokee Indians, to attend their
+treaty at Wataga, in March, 1775, to negotiate with them, and,
+mention the boundaries of the purchase. This I accepted, and at the
+request of the same gentlemen, undertook to mark out a road in the
+best passage from the settlement through the wilderness to
+Kentucke, with such assistance as I thought necessary to employ for
+such an important undertaking.
+
+I soon began this work, having collected a number of enterprising
+men, well armed. We proceeded with all possible expedition until we
+came within fifteen miles of where Boonsborough now stands, and
+where we were fired upon by a party of Indians that killed two, and
+wounded two of our number; yet, although surprised and taken at a
+disadvantage, we stood our ground. This was on the twentieth of
+March, 1775. Three days after, we were fired upon again, and had two
+men killed, and three wounded. Afterwards we proceeded on to
+Kentucke river without opposition; and on the first day of April
+began to erect the fort of Boonsborough at a salt lick, about sixty
+yards from the river, on the S. side.
+
+On the fourth day, the Indians killed one of our men.--We were
+busily employed in building this fort, until the fourteenth day of
+June following, without any farther opposition from the Indians;
+and having finished the works, I returned to my family, on Clench.
+
+In a short time, I proceeded to remove my family from Clench to
+this garrison; where we arrived safe without any other difficulties
+than such as are common to this passage, my wife and daughter being
+the first white women that ever stood on the banks of Kentucke
+river.
+
+On the twenty-fourth day of December following we had one man
+killed, and one wounded, by the Indians, who seemed determined to
+persecute us for erecting this fortification.
+
+On the fourteenth day of July, 1776, two of Col. Calaway's
+daughters, and one of mine, were taken prisoners near the fort. I
+immediately pursued the Indians, with only eight men, and on the
+sixteenth overtook them, killed two of the party, and recovered the
+girls. The same day on which this attempt was made, the Indians
+divided themselves into different parties, and attacked several
+forts, which were shortly before this time erected, doing a great
+deal of mischief. This was extremely distressing to the new
+settlers. The innocent husbandman was shot down, while busy
+cultivating the soil for his family's supply. Most of the cattle
+around the stations were destroyed. They continued their
+hostilities in this manner until the fifteenth of April, 1777, when
+they attacked Boonsborough with a party of above one hundred in
+number, killed one man, and wounded four--Their loss in this attack
+was not certainly known to us.
+
+On the fourth day of July following, a party of about two hundred
+Indians attacked Boonsborough, killed one man, and wounded two.
+They besieged us forty-eight hours; during which time seven of them
+were killed, and at last, finding themselves not likely to prevail,
+they raised the siege, and departed.
+
+The Indians had disposed their warriors in different parties at
+this time, and attacked the different garrisons to prevent their
+assisting each other, and did much injury to the distressed
+inhabitants.
+
+On the nineteenth day of this month, Col. Logan's fort was
+besieged by a party of about two hundred Indians. During this
+dreadful siege they did a great deal of mischief, distressed the
+garrison, in which were only fifteen men, killed two, and wounded
+one. The enemies loss was uncertain, from the common practice which
+the Indians have of carrying off their dead in time of battle. Col.
+Harrod's fort was then defended by only sixty-five men, and
+Boonsborough by twenty-two, there being no more forts or white men
+in the country, except at the Falls, a considerable distance from
+these, and all taken collectively, were but a handful to the
+numerous warriors that were every where dispersed through the
+country, intent upon doing all the mischief that savage barbarity
+could invent. Thus we passed through a scene of sufferings that
+exceeds description.
+
+On the twenty-fifth of this month a reinforcement of forty-five
+men arrived from North-Carolina, and about the twentieth of August
+following, Col. Bowman arrived with one hundred men from Virginia.
+Now we began to strengthen, and from hence, for the space of six
+weeks, we had skirmishes with Indians, in one quarter or other,
+almost every day.
+
+The savages now learned the superiority of the Long Knife, as
+they call the Virginians, by experience; being out-generalled in
+almost every battle. Our affairs began to wear a new aspect, and
+the enemy, not daring to venture on open war, practised secret
+mischief at times.
+
+On the first day of January, 1778, I went with a party of thirty
+men to the Blue Licks, on Licking River, to make salt for the
+different garrisons in the country.
+
+On the seventh day of February, as I was hunting, to procure meat
+for the company, I met with a party of one hundred and two Indians,
+and two Frenchmen, on their march against Boonsborough, that place
+being particularly the object of the enemy.
+
+They pursued, and took me; and brought me on the eighth day to
+the Licks, where twenty-seven of my party were, three of them
+having previously returned home with the salt. I knowing it was
+impossible for them to escape, capitulated with the enemy, and, at
+a distance in their view, gave notice to my men of their situation,
+with orders not to resist, but surrender themselves captives.
+
+The generous usage the Indians had promised before in my
+capitulation, was afterwards fully complied with, and we proceeded
+with them as prisoners to old Chelicothe, the principal Indian
+town, on Little Miami, where we arrived, after an uncomfortable
+journey, in very severe weather, on the eighteenth day of February,
+and received as good treatment as prisoners could expect from
+savages.--On the tenth day of March following, I, and ten of my
+men, were conducted by forty Indians to Detroit, where we arrived
+the thirtieth day, and were treated by Governor Hamilton, the
+British commander at that post, with great humanity.
+
+During our travels, the Indians entertained me well; and their
+affection for me was so great, that they utterly refused to leave
+me there with the others, although the Governor offered them one
+hundred pounds Sterling for me, on purpose to give me a parole to
+go home. Several English gentlemen there, being sensible of my
+adverse fortune, and touched with human sympathy, generously
+offered a friendly supply for my wants, which I refused, with many
+thanks for their kindness; adding, that I never expected it would
+be in my power to recompense such unmerited generosity.
+
+The Indians left my men in captivity with the British
+at Detroit, and on the tenth day of April brought me towards
+Old Chelicothe, where we arrived on the twenty-fifth day of the
+same month. This was a long and fatiguing march, through
+an exceeding fertile country, remarkable for fine springs and
+streams of water. At Chelicothe I spent my time as comfortably as
+I could expect; was adopted, accordin to their custom, into a
+family where I became a son, and had a great share in the affection
+of my new parents, brothers, sisters, and friends. I was
+exceedingly familiar and friendly with them, always appearing as
+chearful and satisfied as possible, and they put great confidence
+in me. I often went a hunting with them, and frequently gained
+their applause for my activity at our shooting-matches. I was
+careful not to exceed many of them in shooting; for no people are
+more envious than they in this sport. I could observe, in their
+countenances and gestures, the greatest expressions of joy when
+they exceeded me; and, when the reverse happened, of envy. The
+Shawanese king took great notice of me, and treated me with
+profound respect, and entire friendship, often entrusting me to
+hunt at my liberty. I frequently returned with the spoils of the
+woods, and as often presented some of what I had taken to him,
+expressive of duty to my sovereign. My food and lodging was, in
+common, with them, not so good indeed as I could desire, but
+necessity made every thing acceptable.
+
+I now began to meditate an escape, and carefully avoided their
+suspicions, continuing with them at Old Chelicothe until the first
+day of June following, and then was taken by them to the salt
+springs on Sciotha, and kept there, making salt, ten days. During
+this time I hunted some for them, and found the land, for a great
+extent about this river, to exceed the soil of Kentucke, if
+possible, and remarkably well watered.
+When I returned to Chelicothe, alarmed to see four hundred and
+fifty Indians, of their choicest warriors, painted and armed in a
+fearful manner, ready to march against Boonsborough, I determined
+to escape the first opportunity.
+
+On the sixteenth, before sun-rise, I departed in the most secret
+manner, and arrived at Boonsborough on the twentieth, after a
+journey of one hundred and sixty miles; during which, I had but one
+meal.
+
+I found our fortress in a bad state of defence, but we proceeded
+immediately to repair our flanks, strengthen our gates and
+posterns, and form double bastions, which we compleated in ten
+days. In this time we daily expected the arrival of the Indian
+army; and at length, one of my fellow prisoners, escaping from
+them, arrived, informing us that the enemy had an account of my
+departure, and postponed their expedition three weeks.--The Indians
+had spies out viewing our movements, and were greatly alarmed with
+our increase in number and fortifications. The Grand Councils of
+the nations were held frequently, and with more deliberation than
+usual. They evidently saw the approaching hour when the Long Knife
+would disposess them of their desirable habitations; and anxiously
+concerned for futurity, determined utterly to extirpate the whites
+out of Kentucke. We were not intimidated by their movements, but
+frequently gave them proofs of our courage.
+
+About the first of August, I made an incursion into the Indian
+country, with a party of nineteen men, in order to surprise a small
+town up Sciotha, called Paint-Creek-Town. We advanced within four
+miles thereof, where we met a party of thirty Indians, on their
+march against Boonsborough, intending to join the others
+from Chelicothe. A smart fight ensued betwixt us for some time: At
+length the savages gave way, and fled. We had no loss on our side:
+The enemy had one killed, and two wounded. We took from them three
+horses, and all their baggage; and being informed, by two of our
+number that went to their town, that the Indians had entirely
+evacuated it, we proceeded no further, and returned with all
+possible expedition to assist our garrison against the other party.
+We passed by them on the sixth day, and on the seventh, we arrived
+safe at Boonsborough.
+
+On the eighth, the Indian army arrived, being four hundred and
+forty-four in number, commanded by Capt. Duquesne, eleven other
+Frenchmen, and some of their own chiefs, and marched up within view
+of our fort, with British and French colours flying; and having
+sent a summons to me, in his Britannick Majesty's name, to
+surrender the fort, I requested two days consideration, which was
+granted.
+
+It was now a critical period with us.--We were a small number in
+the garrison.--A powerful army before our walls, whose appearance
+proclaimed inevitable death, fearfully painted, and marking their
+footsteps with desolation. Death was preferable to captivity; and
+if taken by storm, we must inevitably be devoted to destruction. In
+this situation we concluded to maintain our garrison, if possible.
+We immediately proceeded to collect what we could of our horses,
+and other cattle, and bring them through the posterns into the
+fort: And in the evening of the ninth, I returned answer, that we
+were determined to defend our fort while a man was living--Now,
+said I to their commander, who stood attentively hearing my
+sentiments, We laugh at all your formidable preparations: But thank
+you for giving us notice and time to provide for our defence. Your
+efforts will not prevail; for our gates shall for ever deny you
+admittance.--Whether this answer affected their courage, or not, I
+cannot tell; but, contrary to our expectations, they formed a
+scheme to deceive us, declaring it was their orders, from Governor
+Hamilton, to take us captives, and not to destroy us; but if nine
+of us would come out, and treat with them, they would immediatly
+withdraw their forces from our walls, and return home peaceably.
+This sounded grateful in our ears; and we agreed to the proposal.
+
+We held the treaty within sixty yards of the garrison, on purpose
+to divert them from a breach of honour, as we could not avoid
+suspicions of the savages. In this situation the articles were
+formally agreed to, and signed; and the Indians told us it was
+customary with them, on such occasions, for two Indians to shake
+hands with every white-man in the treaty, as an evidence of entire
+friendship. We agreed to this also, but were soon convinced their
+policy was to take us prisoners.--They immediately grappled us;
+but, although surrounded by hundreds of savages, we extricated
+ourselves from them, and escaped all safe into the garrison, except
+one that was wounded, through a heavy fire from their army. They
+immediately attacked us on every side, and a constant heavy fire
+ensued between us day and night for the space of nine days.
+
+In this time the enemy began to undermine our fort, which was
+situated sixty yards from Kentucke river. They began at the water-
+mark and proceeded in the bank some distance, which we understood
+by their making the water muddy with the clay; and we immediately
+proceeded to disappoint their design, by cutting a trench across
+their subterranean passage. The enemy discovering our counter-mine,
+by the clay we threw out of the fort, desisted from that stratagem:
+And experience now fully convincing them that neither their power
+nor policy could effect their purpose, on the twentieth day of
+August they raised the siege, and departed.
+
+During this dreadful siege, which threatened death in every form,
+we had two men killed, and four wounded, besides a number of
+cattle. We killed of the enemy thirty-seven, and wounded a great
+number. After they were gone, we picked up one hundred and twenty-
+five pounds weight of bullets, besides what stuck in the logs of
+our fort; which certainly is a great proof of their industry. Soon
+after this, I went into the settlement, and nothing worthy of a
+place in this account passed in my affairs for some time.
+
+During my absence from Kentucke, Col. Bowman carried on an
+expedition against the Shawanese, at Old Chelicothe, with one
+hundred and sixty men, in July, 1779. Here they arrived
+undiscovered, and a battle ensued, which lasted until ten o'clock,
+A. M. when Col. Bowman, finding he could not succeed at this time,
+retreated about thirty miles. The Indians, in the meantime,
+collecting all their forces, pursued and overtook him, when a smart
+fight continued near two hours, not to the advantage of Col.
+Bowman's party.
+
+Col. Harrod proposed to mount a number of horse, and furiously
+to rush upon the savages, who at this time fought with remarkable
+fury. This desperate step had a happy effect, broke their line of
+battle, and the savages fled on all sides. In these two battles we
+had nine killed, and one wounded. The enemy's loss uncertain, only
+two scalps being taken.
+
+On the twenty-second day of June, 1780, a large party of Indians
+and Canadians, about six hundred in number, commanded by Col. Bird,
+attacked Riddle's and Martin's stations, at the Forks of Licking
+River, with six pieces of artillery. They carried this expedition
+so secretly, that the unwary inhabitants did not discover them,
+until they fired upon the forts; and, not being prepared to oppose
+them, were obliged to surrender themselves miserable captives to
+barbarous savages, who immediately after tomahawked one man and two
+women, and loaded all the others with heavy baggage, forcing them
+along toward their towns, able or unable to march. Such as were
+weak and faint by the way, they tomahawked. The tender women, and
+helpless children, fell victims to their cruelty. This, and the
+savage treatment they received afterwards, is shocking to humanity,
+and too barbarous to relate.
+
+The hostile disposition of the savages, and their allies, caused
+General Clark, the commandant at the Falls of the Ohio, immediately
+to begin an expedition with his own regiment, and the armed force
+of the country, against Pecaway, the principal town of the
+Shawanese, on a branch of Great Miami, which he finished with great
+success, took seventeen scalps, and burnt the town to ashes, with
+the loss of seventeen men.
+
+About this time I returned to Kentucke with my family; and here,
+to avoid an enquiry into my conduct, the reader being before
+informed of my bringing my family to Kentucke, I am under the
+necessity of informing him that, during my captivity with the
+Indians, my wife, who despaired of ever seeing me again, expecting
+the Indians had put a period to my life, oppressed with the
+distresses of the country, and bereaved of me, her only happiness,
+had, before I returned, transported my family and goods, on horses,
+through the wilderness, amidst a multitude of dangers, to her
+father's house, in North-Carolina.
+
+Shortly after the troubles at Boonsborough, I went to them, and
+lived peaceably there until this time. The history of my going
+home, and returning with my family, forms a series of difficulties,
+an account of which would swell a volume, and being foreign to my
+purpose, I shall purposely omit them.
+
+I settled my family in Boonsborough once more; and shortly after,
+on the sixth day of October, 1780, I went in company with my
+brother to the Blue Licks; and, on our return home, we were fired
+upon by a party of Indians. They shot him, and pursued me, by the
+scent of their dog, three miles; but I killed the dog, and escaped.
+The winter soon came on, and was very severe, which confined the
+Indians to their wigwams.
+
+The severity of this Winter caused great difficulties in
+Kentucke. The enemy had destroyed most of the corn, the Summer
+before. This necessary article was scarce, and dear; and the
+inhabitants lived chiefly on the flesh of buffaloes. The
+circumstances of many were very lamentable: However, being a hardy
+race of people, and accustomed to difficulties and necessities,
+they were wonderfully supported through all their sufferings, until
+the ensuing Fall, when we received abundance from the fertile soil.
+
+Towards Spring, we were frequently harassed by Indians; and, in
+May, 1782, a party assaulted Ashton's station, killed one man, and
+took a Negro prisoner. Capt. Ashton, with twenty-five men, pursued,
+and overtook the savages, and a smart fight ensued, which lasted
+two hours; but they being superior in number, obliged Captain
+Ashton's party to retreat, with the loss of eight killed, and four
+mortally wounded; their brave commander himself being numbered
+among the dead.
+
+The Indians continued their hostilities; and, about the tenth of
+August following, two boys were taken from Major Hoy's
+station. This party was pursued by Capt. Holder and seventeen men,
+who were also defeated, with the loss of four men killed, and one
+wounded. Our affairs became more and more alarming. Several
+stations which had lately been erected in the country were
+continually infested with savages, stealing their horses and
+killing the men at every opportunity. In a field, near Lexington,
+an Indian shot a man, and running to scalp him, was himself shot
+from the fort, and fell dead upon his enemy.
+
+Every day we experienced recent mischiefs. The barbarous savage
+nations of Shawanese, Cherokees, Wyandots, Tawas, Delawares, and
+several others near Detroit, united in a war against us, and
+assembled their choicest warriors at old Chelicothe, to go on the
+expedition, in order to destroy us, and entirely depopulate the
+country. Their savage minds were inflamed to mischief by two
+abandoned men, Captains McKee and Girty. These led them to execute
+every diabolical scheme; and, on the fifteenth day of August,
+commanded a party of Indians and Canadians, of about five hundred
+in number, against Briant's station, five miles from Lexington.
+Without demanding a surrender, they furiously assaulted the
+garrison, which was happily prepared to oppose them; and, after
+they had expended much ammunition in vain, and killed the cattle
+round the fort, not being likely to make themselves masters of this
+place, they raised the siege, and departed in the morning of the
+third day after they came, with the loss of about thirty killed,
+and the number of wounded uncertain.--Of the garrison four were
+killed, and three wounded.
+
+On the eighteenth day Col. Todd, Col. Trigg, Major Harland, and
+myself, speedily collected one hundred and seventy-six men, well
+armed, and pursued the savages. They had marched beyond the Blue
+Licks to a remarkable bend of the main fork of Licking River, about
+forty-three miles from Lexington, as it is particularly represented
+in the map, where we overtook them on the nineteenth day. The
+savages observing us, gave way; and we, being ignorant of their
+numbers, passed the river. When the enemy saw our proceedings,
+having greatly the advantage of us in situation, they formed the
+line of battle, represented in the map, from one bend of Licking to
+the other, about a mile from the Blue Licks. An exceeding fierce
+battle immediately began, for about fifteen minutes, when we, being
+over-powered by numbers, were obliged to retreat, with the loss of
+sixty-seven men; seven of whom were taken prisoners. The brave and
+much lamented Colonels Todd and Trigg, Major Harland and my second
+son, were among the dead. We were informed that the Indians,
+numbering their dead, found they had four killed more than we; and
+therefore, four of the prisoners they had taken, were, by general
+consent, ordered to be killed, in a most barbarous manner, by the
+young warriors, in order to train them up to cruelty; and then they
+proceeded to their towns.
+
+On our retreat we were met by Col. Logan, hastening to join us,
+with a number of well armed men: This powerful assistance we
+unfortunately wanted in the battle; for, notwithstanding the
+enemy's superiority of numbers, they acknowledged that, if they had
+received one more fire from us, they should undoubtedly have given
+way. So valiantly did our small party fight, that, to the memory of
+those who unfortunately fell in the battle, enough of honour cannot
+be paid. Had Col. Logan and his party been with us, it is highly
+probable we should have given the savages a total defeat.
+
+I cannot reflect upon this dreadful scene, but sorrow fills my
+heart. A zeal for the defence of their country led these heroes to
+the scene of action, though with a few men to attack a powerful
+army of experienced warriors. When we gave way, they pursued us
+with the utmost eagerness, and in every quarter spread destruction.
+The river was difficult to cross, and many were killed in the
+flight, some just entering the river, some in the water, others
+after crossing in ascending the cliffs. Some escaped on horse-back,
+a few on foot; and, being dispersed every where, in a few hours,
+brought the melancholy news of this unfortunate battle to
+Lexington. Many widows were now made. The reader may guess what
+sorrow filled the hearts of the inhabitants, exceeding any thing
+that I am able to describe. Being reinforced, we returned to bury
+the dead, and found their bodies strewed every where, cut and
+mangled in a dreadful manner. This mournful scene exhibited a
+horror almost unparalleled: Some torn and eaten by wild beasts;
+those in the river eaten by fishes; all in such a putrified
+condition, that no one could be distinguished from another.
+
+As soon as General Clark, then at the Falls of the Ohio, who was
+ever our ready friend, and merits the love and gratitude of all his
+country-men, understood the circumstances of this unfortunate
+action, he ordered an expedition, with all possible haste, to
+pursue the savages, which was so expeditiously effected, that we
+overtook them within two miles of their towns, and probably might
+have obtained a great victory, had not two of their number met us
+about two hundred poles before we come up. These returned quick as
+lightening to their camp with the alarming news of a mighty army in
+view. The savages fled in the utmost disorder, evacuated their
+towns, and reluctantly left their territory to our mercy. We
+immediately took possession of Old Chelicothe without opposition,
+being deserted by its inhabitants. We continued our pursuit through
+five towns on the Miami rivers, Old Chelicothe, Pecaway, New
+Chelicothe, Will's Towns, and Chelicothe, burnt them all to ashes,
+entirely destroyed their corn, and other fruits, and every where
+spread a scene of desolation in the country. In this expedition we
+took seven prisoners and five scalps, with the loss of only four
+men, two of whom were accidentally killed by our own army.
+
+This campaign in some measure damped the spirits of the Indians,
+and made them sensible of our superiority. Their connections were
+dissolved, their armies scattered, and a future invasion put
+entirely out of their power; yet they continued to practise
+mischief secretly upon the inhabitants, in the exposed parts of the
+country.
+
+In October following, a party made an excursion into that
+district called the Crab Orchard, and one of them, being advanced
+some distance before the others, boldly entered the house of a poor
+defenceless family, in which was only a Negro man, a woman and her
+children, terrified with the apprehensions of immediate death. The
+savage, perceiving their defenceless situation, without offering
+violence to the family attempted to captivate the Negro, who,
+happily proved an over-match for him, threw him on the ground, and,
+in the struggle, the mother of the children drew an ax from a
+corner of the cottage, and cut his head off, while her little
+daughter shut the door. The savages instantly appeared, and applied
+their tomahawks to the door. An old rusty gun-barrel, without a
+lock, lay in a corner, which the mother put through a small
+crevice, and the savages, perceiving it, fled. In the mean time,
+the alarm spread through the neighbourhood; the armed men collected
+immediately, and pursued the ravagers into the wilderness. Thus
+Providence, by the means of this Negro, saved the whole of the poor
+family from destruction. From that time, until the happy return of
+peace between the United States and Great-Britain, the Indians did
+us no mischief. Finding the great king beyond the water
+disappointed in his expectations, and conscious of the importance
+of the Long Knife, and their own wretchedness, some of the nations
+immediately desired peace; to which, at present, they seem
+universally disposed, and are sending ambassadors to General Clark,
+at the Falls of the Ohio, with the minutes of their Councils, a
+specimen of which, in the minutes of the Piankashaw Council, is
+subjoined.
+
+To conclude, I can now say that I have verified the saying of an
+old Indian who signed Col. Henderson's deed. Taking me by the hand,
+at the delivery thereof, Brother, says he, we have given you a fine
+land, but I believe you will have much trouble in settling it.--My
+footsteps have often been marked with blood, and therefore I can
+truly subscribe to its original name. Two darling sons, and a
+brother, have I lost by savage hands, which have also taken from me
+forty valuable horses, and abundance of cattle. Many dark and
+sleepless nights have I been a companion for owls, separated from
+the chearful society of men, scorched by the Summer's sun, and
+pinched by the Winter's cold, an instrument ordained to settle the
+wilderness. But now the scene is changed: Peace crowns the sylvan
+shade.
+
+
+What thanks, what ardent and ceaseless thanks are due to that
+all-superintending Providence which has turned a cruel war into
+peace, brought order out of confusion, made the fierce savages
+placid, and turned away their hostile weapons from our country! May
+the same Almighty Goodness banish the accursed monster, war, from
+all lands, with her hated associates, rapine and insatiable
+ambition. Let peace, descending from her native heaven, bid her
+olives spring amidst the joyful nations; and plenty, in league with
+commerce, scatter blessings from her copious hand.
+
+This account of my adventures will inform the reader of the most
+remarkable events of this country.--I now live in peace and safety,
+enjoying the sweets of liberty, and the bounties of Providence,
+with my once fellow-sufferers, in this delightful country, which I
+have seen purchased with a vast expence of blood and treasure,
+delighting in the prospect of its being, in a short time, one of
+the most opulent and powerful states on the continent of North-
+America; which, with the love and gratitude of my country-men, I
+esteem a sufficient reward for all my toil and dangers.
+
+Fayette county, Kentucke.
+
+DANIEL BOON
+
+
+
+
+
+End of The Project Gutenberg Etext of Adventures of Col. Daniel Boone
+

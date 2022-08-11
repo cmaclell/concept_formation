@@ -1,0 +1,907 @@
+***The Project Gutenberg Etext of Yankee Gypsies, by Whittier***
+#1 in our series by John Greenleaf Whittier
+
+
+Copyright laws are changing all over the world, be sure to check
+the copyright laws for your country before posting these files!!
+
+Please take a look at the important information in this header.
+We encourage you to keep this file on your own disk, keeping an
+electronic path open for the next readers.  Do not remove this.
+
+
+**Welcome To The World of Free Plain Vanilla Electronic Texts**
+
+**Etexts Readable By Both Humans and By Computers, Since 1971**
+
+*These Etexts Prepared By Hundreds of Volunteers and Donations*
+
+Information on contacting Project Gutenberg to get Etexts, and
+further information is included below.  We need your donations.
+
+
+Yankee Gypsies
+
+by John Greenleaf Whittier
+
+April, 1997  [Etext #878]
+
+
+***The Project Gutenberg Etext of Yankee Gypsies, by Whittier***
+*****This file should be named ynkgp10.txt or ynkgp10.zip******
+
+Corrected EDITIONS of our etexts get a new NUMBER, ynkgp11.txt.
+VERSIONS based on separate sources get new LETTER, ynkgp10a.txt.
+
+
+Prepared by:
+Anthony J. Adam
+email: anthony-adam@tamu.edu 
+
+
+We are now trying to release all our books one month in advance
+of the official release dates, for time for better editing.
+
+Please note:  neither this list nor its contents are final till
+midnight of the last day of the month of any such announcement.
+The official release date of all Project Gutenberg Etexts is at
+Midnight, Central Time, of the last day of the stated month.  A
+preliminary version may often be posted for suggestion, comment
+and editing by those who wish to do so.  To be sure you have an
+up to date first edition [xxxxx10x.xxx] please check file sizes
+in the first week of the next month.  Since our ftp program has
+a bug in it that scrambles the date [tried to fix and failed] a
+look at the file size will have to do, but we will try to see a
+new copy has at least one byte more or less.
+
+
+Information about Project Gutenberg (one page)
+
+We produce about two million dollars for each hour we work.  The
+fifty hours is one conservative estimate for how long it we take
+to get any etext selected, entered, proofread, edited, copyright
+searched and analyzed, the copyright letters written, etc.  This
+projected audience is one hundred million readers.  If our value
+per text is nominally estimated at one dollar then we produce $2
+million dollars per hour this year as we release thirty-two text
+files per month:  or 400 more Etexts in 1996 for a total of 800.
+If these reach just 10% of the computerized population, then the
+total should reach 80 billion Etexts.  We will try add 800 more,
+during 1997, but it will take all the effort we can manage to do
+the doubling of our library again this year, what with the other
+massive requirements it is going to take to get incorporated and
+establish something that will have some permanence.
+
+The Goal of Project Gutenberg is to Give Away One Trillion Etext
+Files by the December 31, 2001.  [10,000 x 100,000,000=Trillion]
+This is ten thousand titles each to one hundred million readers,
+which is only 10% of the present number of computer users.  2001
+should have at least twice as many computer users as that, so it
+will require us reaching less than 5% of the users in 2001.
+
+
+We need your donations more than ever!
+
+
+All donations should be made to "Project Gutenberg"
+
+
+For these and other matters, please mail to:
+
+Project Gutenberg
+P. O. Box  2782
+Champaign, IL 61825
+
+When all other email fails try our Executive Director:
+Michael S. Hart <hart@pobox.com>
+
+We would prefer to send you this information by email
+(Internet, Bitnet, Compuserve, ATTMAIL or MCImail).
+
+******
+If you have an FTP program (or emulator), please
+FTP directly to the Project Gutenberg archives:
+[Mac users, do NOT point and click. . .type]
+
+ftp uiarchive.cso.uiuc.edu
+login:  anonymous
+password:  your@login
+cd etext/etext90 through /etext97
+or cd etext/articles [get suggest gut for more information]
+dir [to see files]
+get or mget [to get files. . .set bin for zip files]
+GET INDEX?00.GUT
+for a list of books
+and
+GET NEW GUT for general information
+and
+MGET GUT* for newsletters.
+
+**Information prepared by the Project Gutenberg legal advisor**
+(Three Pages)
+
+
+***START**THE SMALL PRINT!**FOR PUBLIC DOMAIN ETEXTS**START***
+Why is this "Small Print!" statement here?  You know: lawyers.
+They tell us you might sue us if there is something wrong with
+your copy of this etext, even if you got it for free from
+someone other than us, and even if what's wrong is not our
+fault.  So, among other things, this "Small Print!" statement
+disclaims most of our liability to you.  It also tells you how
+you can distribute copies of this etext if you want to.
+
+*BEFORE!* YOU USE OR READ THIS ETEXT
+By using or reading any part of this PROJECT GUTENBERG-tm
+etext, you indicate that you understand, agree to and accept
+this "Small Print!" statement.  If you do not, you can receive
+a refund of the money (if any) you paid for this etext by
+sending a request within 30 days of receiving it to the person
+you got it from.  If you received this etext on a physical
+medium (such as a disk), you must return it with your request.
+
+ABOUT PROJECT GUTENBERG-TM ETEXTS
+This PROJECT GUTENBERG-tm etext, like most PROJECT GUTENBERG-
+tm etexts, is a "public domain" work distributed by Professor
+Michael S. Hart through the Project Gutenberg (the "Project").
+Among other things, this means that no one owns a United States
+copyright on or for this work, so the Project (and you!) can copy
+and distribute it in the United States without permission and
+without paying copyright royalties.  Special rules, set forth
+below, apply if you wish to copy and distribute this etext
+under the Project's "PROJECT GUTENBERG" trademark.
+
+To create these etexts, the Project expends considerable
+efforts to identify, transcribe and proofread public domain
+works.  Despite these efforts, the Project's etexts and any
+medium they may be on may contain "Defects".  Among other
+things, Defects may take the form of incomplete, inaccurate or
+corrupt data, transcription errors, a copyright or other
+intellectual property infringement, a defective or damaged
+disk or other etext medium, a computer virus, or computer
+codes that damage or cannot be read by your equipment.
+
+LIMITED WARRANTY; DISCLAIMER OF DAMAGES
+But for the "Right of Replacement or Refund" described below,
+[1] the Project (and any other party you may receive this
+etext from as a PROJECT GUTENBERG-tm etext) disclaims all
+liability to you for damages, costs and expenses, including
+legal fees, and [2] YOU HAVE NO REMEDIES FOR NEGLIGENCE OR
+UNDER STRICT LIABILITY, OR FOR BREACH OF WARRANTY OR CONTRACT,
+INCLUDING BUT NOT LIMITED TO INDIRECT, CONSEQUENTIAL, PUNITIVE
+OR INCIDENTAL DAMAGES, EVEN IF YOU GIVE NOTICE OF THE
+POSSIBILITY OF SUCH DAMAGES.
+
+If you discover a Defect in this etext within 90 days of
+receiving it, you can receive a refund of the money (if any)
+you paid for it by sending an explanatory note within that
+time to the person you received it from.  If you received it
+on a physical medium, you must return it with your note, and
+such person may choose to alternatively give you a replacement
+copy.  If you received it electronically, such person may
+choose to alternatively give you a second opportunity to
+receive it electronically.
+
+THIS ETEXT IS OTHERWISE PROVIDED TO YOU "AS-IS".  NO OTHER
+WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED, ARE MADE TO YOU AS
+TO THE ETEXT OR ANY MEDIUM IT MAY BE ON, INCLUDING BUT NOT
+LIMITED TO WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A
+PARTICULAR PURPOSE.
+
+Some states do not allow disclaimers of implied warranties or
+the exclusion or limitation of consequential damages, so the
+above disclaimers and exclusions may not apply to you, and you
+may have other legal rights.
+
+INDEMNITY
+You will indemnify and hold the Project, its directors,
+officers, members and agents harmless from all liability, cost
+and expense, including legal fees, that arise directly or
+indirectly from any of the following that you do or cause:
+[1] distribution of this etext, [2] alteration, modification,
+or addition to the etext, or [3] any Defect.
+
+DISTRIBUTION UNDER "PROJECT GUTENBERG-tm"
+You may distribute copies of this etext electronically, or by
+disk, book or any other medium if you either delete this
+"Small Print!" and all other references to Project Gutenberg,
+or:
+
+[1]  Only give exact copies of it.  Among other things, this
+     requires that you do not remove, alter or modify the
+     etext or this "small print!" statement.  You may however,
+     if you wish, distribute this etext in machine readable
+     binary, compressed, mark-up, or proprietary form,
+     including any form resulting from conversion by word pro-
+     cessing or hypertext software, but only so long as
+     *EITHER*:
+
+     [*]  The etext, when displayed, is clearly readable, and
+          does *not* contain characters other than those
+          intended by the author of the work, although tilde
+          (~), asterisk (*) and underline (_) characters may
+          be used to convey punctuation intended by the
+          author, and additional characters may be used to
+          indicate hypertext links; OR
+
+     [*]  The etext may be readily converted by the reader at
+          no expense into plain ASCII, EBCDIC or equivalent
+          form by the program that displays the etext (as is
+          the case, for instance, with most word processors);
+          OR
+
+     [*]  You provide, or agree to also provide on request at
+          no additional cost, fee or expense, a copy of the
+          etext in its original plain ASCII form (or in EBCDIC
+          or other equivalent proprietary form).
+
+[2]  Honor the etext refund and replacement provisions of this
+     "Small Print!" statement.
+
+[3]  Pay a trademark license fee to the Project of 20% of the
+     net profits you derive calculated using the method you
+     already use to calculate your applicable taxes.  If you
+     don't derive profits, no royalty is due.  Royalties are
+     payable to "Project Gutenberg Association within the 60
+     days following each date you prepare (or were legally
+     required to prepare) your annual (or equivalent periodic)
+     tax return.
+
+WHAT IF YOU *WANT* TO SEND MONEY EVEN IF YOU DON'T HAVE TO?
+The Project gratefully accepts contributions in money, time,
+scanning machines, OCR software, public domain etexts, royalty
+free copyright licenses, and every other sort of contribution
+you can think of.  Money should be paid to "Project Gutenberg
+Association".
+
+*END*THE SMALL PRINT! FOR PUBLIC DOMAIN ETEXTS*Ver.04.29.93*END*
+
+
+
+
+
+
+
+
+Prepared by:
+Anthony J. Adam
+email: anthony-adam@tamu.edu 
+
+
+Yankee Gypsies
+
+by John Greenleaf Whittier
+
+
+
+
+"Here's to budgets, packs, and wallets;
+Here's to all the wandering train."
+BURNS.(1)
+
+
+
+I CONFESS it, I am keenly sensitive to "skyey influences."
+(2)  I profess no indifference to the movements of that
+capricious old gentleman known as the clerk of the weather.  I
+cannot conceal my interest in the behavior of that patriarchal
+bird whose wooden similitude gyrates on the church spire. 
+Winter proper is well enough.  Let the thermometer go to zero
+if it will; so much the better, if thereby the very winds are
+frozen and unable to flap their stiff wings.  Sounds of bells in
+the keen air, clear, musical, heart-inspiring; quick tripping of
+fair moccasined feet on glittering ice pavements; bright eyes
+glancing above the uplifted muff like a sultana's behind the
+folds of her *yashmak;*(3) schoolboys coasting down street
+like mad Greenlanders; the cold brilliance of oblique sunbeams
+flashing back from wide surfaces of glittering snow, or blazing
+upon ice jewelry of tree and roof: there is nothing in all this to
+complain of.  A storm of summer has its redeeming
+sublimities,--its slow, upheaving mountains of cloud glooming
+in the western horizon like new-created volcanoes, veined
+with fire, shattered by exploding thunders.  Even the wild
+gales of the equinox have their varieties,--sounds of wind-
+shaken woods and waters, creak and clatter of sign and
+casement, hurricane puffs, and down-rushing rain-spouts.  But
+this dull, dark autumn day of thaw and rain, when the very
+clouds seem too spiritless and languid to storm outright or
+take themselves out of the way of fair weather; wet beneath
+and above, reminding one of that rayless atmosphere of
+Dante's Third Circle, where the infernal Priessnitz(4)
+administers his hydropathic torment,--
+
+"A heavy, cursed, and relentless drench,--
+ The land it soaks is putrid;"
+
+or rather, as everything animate and inanimate is seething in
+warm mist, suggesting the idea that Nature, grown old and
+rheumatic, is trying the efficacy of a Thomsonian steam-box(5)
+on a grand scale; no sounds save the heavy plash of muddy
+feet on the pavements; the monotonous, melancholy drip from
+trees and roofs; the distressful gurgling of waterducts,
+swallowing the dirty amalgam of the gutters; a dim, leaden-
+colored horizon of only a few yards in diameter, shutting down
+about one, beyond which nothing is visible save in faint line or
+dark projection; the ghost of a church spire or the eidolon of a
+chimney-pot,--he who can extract pleasurable emotions from
+the alembic of such a day has a trick of alchemy with which I
+am wholly unacquainted.
+
+(1) From the closing air in *The Jolly Beggars,* a cantata.
+(2)                             "A breath thou art
+      Servile to all the skyey influences,
+      That dost this habitation, where thou keep'st
+      Hourly afflict."
+          Shakespeare: *Measure for Measure,* act III. scene 1.
+(3) "She turns and turns again, and carefully glances around
+her on all sides, to see that she is safe from the eyes of
+Mussulmans, and then suddenly withdrawing the yashmak she
+shines upon your heart and soul with all the pomp and might of
+her beauty." Kinglake's *Eothen,* chap. iii.  In a note to
+*Yashmak* Kinglake explains that it is not a mere semi-
+transparent veil, but thoroughly conceals all the features except
+the eyes: it is withdrawn by being pulled down.
+(4) Vincenz Priessnitz was the originator of the water-cure.
+After experimenting upon himself and his neighbors he took up
+the profession of hydropathy and established baths at his native
+place, Grafenberg in Silesia, in 1829.  He died in 1851.
+(5) Dr. Samuel Thomson, a New Hampshire physician,
+advocated the use of the steam bath as a restorer of system
+when diseased.  He died in 1843 and left behind an
+autobiography (*Life and Medical Discoveries*) which
+contains a record of the persecutions he underwent.
+
+Hark! a rap at my door.  Welcome anybody just now.  One
+gains nothing by attempting to shut out the sprites of the
+weather.  They come in at the keyhole; they peer through the
+dripping panes; they insinuate themselves through the crevices
+of the casement, or plump down chimney astride of the
+raindrops.
+
+I rise and throw open the door.  A tall, shambling, loose-
+jointed figure; a pinched, shrewd face, sun-brown and wind-
+dried; small, quick-winking black eyes,--there he stands, the
+water dripping from his pulpy hat and ragged elbows.
+
+I speak to him; but he returns no answer.  With a dumb
+show of misery, quite touching, he hands me a soiled piece of
+parchment, whereon I read what purports to be a melancholy
+account of shipwreck and disaster, to the particular detriment,
+loss, and damnification of one Pietro Frugoni, who is, in
+consequence, sorely in want of the alms of all charitable
+Christian persons, and who is, in short, the bearer of this
+veracious document, duly certified and indorsed by an Italian
+consul in one of our Atlantic cities, of a high-sounding, but to
+Yankee organs unpronounceable, name.
+
+Here commences a struggle.  Every man, the Mahometans
+tell us, has two attendant angels,--the good one on his right
+shoulder, the bad on his left.  "Give," says Benevolence, as
+with some difficulty I fish up a small coin from the depths of
+my pocket.  "Not a cent," says selfish Prudence; and I drop it
+from my fingers.  "Think," says the good angel, "of the poor
+stranger in a strange land, just escaped from the terrors of the
+sea-storm, in which his little property has perished, thrown
+half-naked and helpless on our shores, ignorant of our
+language, and unable to find employment suited to his
+capacity."  "A vile impostor!" replies the left-hand sentinel;
+"his paper purchased from one of those ready-writers in New
+York who manufacture beggar-credentials at the low price of
+one dollar per copy, with earthquakes, fires, or shipwrecks, to
+suit customers."
+
+Amidst this confusion of tongues I take another survey of
+my visitant.  Ha! a light dawns upon me.  That shrewd, old
+face, with its sharp, winking eyes, is no stranger to me.  Pietro
+Frugoni, I have seen thee before.  *Si, signor,* that face of
+thine has looked at me over a dirty white neckcloth, with the
+corners of that cunning mouth drawn downwards, and those
+small eyes turned up in sanctimonious gravity, while thou wast
+offering to a crowd of half-grown boys an extemporaneous
+exhortation in the capacity of a travelling preacher.  Have I
+not seen it peering out from under a blanket, as that of a poor
+Penobscot Indian, who had lost the use of his hands while
+trapping on the Madawaska?  Is it not the face of the forlorn
+father of six small children, whom the "marcury doctors" had
+"pisened" and crippled?  Did it not belong to that down-east
+unfortunate who had been out to the "Genesee country"(1) and
+got the "fevernnager," and whose hand shook so pitifully
+when held out to receive my poor gift?  The same, under all
+disguises,--Stephen Leathers, of Barrington,--him, and none
+other!  Let me conjure him into his own likeness:--
+
+(1) The *Genesee country* is the name by which the western
+part of New York, bordering on Lakes Ontario and Erie, was
+known, when, at the close of the last and beginning of this
+century, it was to people on the Atlantic coast the Great West. 
+In 1792 communication was opened by a road with the
+Pennsylvania settlements, but the early settlers were almost all
+from New England.
+
+"Well, Stephen, what news from old Barrington?"
+
+"Oh, well, I thought I knew ye," he answers, not the least
+disconcerted.  "How do you do? and how's your folks?  All
+well, I hope.  I took this 'ere paper, you see, to help a poor
+furriner, who could n't make himself understood any more
+than a wild goose.  I though I'd just start him for'ard a little. 
+It seemed a marcy to do it."
+
+Well and shiftily answered, thou ragged Proteus.  One cannot
+be angry with such a fellow.  I will just inquire into the present
+state of his Gospel mission and about the condition of his tribe
+on the Penobscot; and it may be not amiss to congratulate him
+on the success of the steam-doctors in sweating the "pisen" of
+the regular faculty out of him.  But he evidently has no wish to
+enter into idle conversation.  Intent upon his benevolent errand
+he is already clattering down stairs.  Involuntarily I glance out
+of the window just in season to catch a single glimpse of him
+ere he is swallowed up in the mist.
+
+He has gone; and, knave as he is, I can hardly help
+exclaiming, "Luck go with him!"  He has broken in upon the
+sombre train of my thoughts and called up before me pleasant
+and grateful recollections.  The old farm-house nestling in its
+valley; hills stretching off to the south and green meadows to
+the east; the small stream which came noisily down its ravine,
+washing the old garden-wall and softly lapping on fallen stones
+and mossy roots of beeches and hemlocks; the tall sentinel
+poplars at the gateway; the oak-forest, sweeping unbroken to
+the northern horizon; the grass-grown carriage-path, with its
+rude and crazy bridge,--the dear old landscape of my boyhood
+lies outstretched before me like a daguerreotype from that
+picture within, which I have borne with me in all my
+wanderings.  I am a boy again, once more conscious of the
+feeling, half terror, half exultation, with which I used to
+announce the approach of this very vagabond and his "kindred
+after the flesh."
+
+The advent of wandering beggars, or "old stragglers," as we
+were wont to call them, was an event of no ordinary interest in
+the generally monotonous quietude of our farm-life.  Many of
+them were well known; they had their periodical revolutions
+and transits; we would calculate them like eclipses or new
+moons.  Some were sturdy knaves, fat and saucy; and,
+whenever they ascertained that the "men folks" were absent,
+would order provisions and cider like men who expected to pay
+for them, seating themselves at the hearth or table with the air
+of Falstaff,--"Shall I not take mine ease in mine inn?"  Others,
+poor, pale, patient, like Sterne's monk,(1) came creeping up to
+the door, hat in hand, standing there in their gray wretchedness
+with a look of heartbreak and forlornness which was never
+without its effect on our juvenile sensibilities.  At times,
+however, we experienced a slight revulsion of feeling when
+even these humblest children of sorrow somewhat petulantly
+rejected our proffered bread and cheese, and demanded instead
+a glass of cider.  Whatever the temperance society might in
+such cases have done, it was not in our hearts to refuse the poor
+creatures a draught of their favorite beverage; and was n't it a
+satisfaction to see their sad, melancholy faces light up as we
+handed them the full pitcher, and, on receiving it back empty
+from their brown, wrinkled hands, to hear them, half breathless
+from their long, delicious draught, thanking us for the favor, as
+"dear, good children"!  Not unfrequently these wandering tests
+of our benevolence made their appearance in interesting groups
+of man, woman, and child, picturesque in their squalidness,
+and manifesting a maudlin affection which would have done
+honor to the revellers at Poosie-Nansie's, immortal in the
+cantata of Burns. (2) I remember some who were evidently the
+victims of monomania,--haunted and hunted by some dark
+thought,--possessed by a fixed idea.  One, a black-eyed, wild-
+haired woman, with a whole tragedy of sin, shame, and
+suffering written in her countenance, used often to visit us,
+warm herself by our winter fire, and supply herself with a stock
+of cakes and cold meat; but was never known to answer a
+question or to ask one.  She never smiled; the cold, stony look
+of her eye never changed; a silent, impassive face, frozen rigid
+by some great wrong or sin.  We used to look with awe upon
+the "still woman," and think of the demoniac of Scripture who
+had a "dumb spirit."
+
+(1) Whom he met at Calais, as described in his *Sentimental
+Journey.*
+(2) The *cantata* is *The Jolly Beggars,* from which the
+motto heading this sketch was taken.  *Poosie-Nansie* was the
+keeper of a tavern in Mauchline, which was the favorite resort
+of the lame sailors, maimed soldiers, travelling ballad-singers,
+and all such loose companions as hang about the skirts of
+society.  The cantata has for its theme the rivalry of a "pigmy
+scraper with his fiddle" and a strolling tinker for a beggar
+woman: hence the *maudlin affection.*
+
+One--I think I see him now, grim, gaunt, and ghastly,
+working his slow way up to our door--used to gather herbs by
+the wayside and called himself doctor.  He was bearded like a
+he-goat, and used to counterfeit lameness; yet, when he
+supposed himself alone, would travel on lustily, as if walking
+for a wager.  At length, as if in punishment of his deceit, he
+met with an accident in his rambles and became lame in
+earnest, hobbling ever after with difficulty on his gnarled
+crutches.  Another used to go stooping, like Bunyan's pilgrim,
+under a pack made of an old bed-sacking, stuffed out into most
+plethoric dimensions, tottering on a pair of small, meagre legs,
+and peering out with his wild, hairy face from under his burden
+like a big-bodied spider.  That "man with the pack" always
+inspired me with awe and reverence.  Huge, almost sublime, in
+its tense rotundity, the father of all packs, never laid aside and
+never opened, what might there not be within it?  With what
+flesh-creeping curiosity I used to walk round about it at a safe
+distance, half expecting to see its striped covering stirred by the
+motions of a mysterious life, or that some evil monsters would
+leap out of it, like robbers from Ali Baba's jars or armed men
+from the Trojan horse!
+
+There was another class of peripatetic philosophers--half
+pedler, half mendicant--who were in the habit of visiting us. 
+One we recollect, a lame, unshaven, sinister-eyed,
+unwholesome fellow, with his basket of old newspapers and
+pamphlets, and his tattered blue umbrella, serving rather as a
+walking-staff than as a protection from the rain.  he told us on
+one occasion, in answer to our inquiring into the cause of his
+lameness, that when a young man he was employed on the
+farm of the chief magistrate of a neighboring State; where, as
+his ill luck would have it, the governor's handsome daughter
+fell in love with him.  He was caught one day in the young
+lady's room by her father; whereupon the irascible old
+gentleman pitched him unceremoniously out of the window,
+laming him for life, on a brick pavement below, like Vulcan on
+the rocks of Lemnos.(1)  As for the lady, he assured us "she
+took on dreadfully about it."  "Did she die?" we inquired,
+anxiously.  There was a cunning twinkle in the old rogue's eye
+as he responded, "Well, no she did n't.  She got married."
+
+(1) It was upon the Isle of Lemnos that Vulcan was flung by
+Jupiter, according to the myth, for attempting to aid his mother
+Juno.
+
+Twice a year, usually in the spring and autumn, we were
+honored with a call from Jonathan Plummer, maker of verses,
+pedler and poet, physician and parson,--a Yankee troubadour,--
+first and last minstrel of the valley of the Merrimac, encircled,
+to my wondering young eyes, with the very nimbus of
+immortality.  He brought with him pins, needles, tape, and
+cotton-thread for my mother; jack-knives, razors, and soap for
+my father; and verses of his own composing, coarsely printed
+and illustrated with rude wood-cuts, for the delectation of the
+younger branches of the family.  No love-sick youth could
+drown himself, no deserted maiden bewail the moon, no rogue
+mount the gallows, without fitting memorial in Plummer's
+verses.  Earthquakes, fires, fevers, and shipwrecks he regarded
+as personal favors from Providence, furnishing the raw material
+of song and ballad.  Welcome to us in our country seclusion, as
+Autolycus to the clown in "Winter's Tale,"(1) we listened with
+infinite satisfaction to his reading of his own verses, or to his
+ready improvisation upon some domestic incident or topic
+suggested by his auditors.   When once fairly over the
+difficulties at the outset of a new subject his rhymes flowed
+freely, "as if he had eaten ballads, and all men's ears grew to
+his tunes."  His productions answered, as nearly as I can
+remember, to Shakespeare's description of a proper ballad,--
+"doleful matter merrily set down, or a very pleasant theme sung
+lamentably."  He was scrupulously conscientious, devout,
+inclined to theological disquisitions, and withal mighty in
+Scripture.  He was thoroughly independent; flattered nobody,
+cared for nobody, trusted nobody.  When invited to sit down at
+our dinner-table he invariably took the precaution to place his
+basket of valuables between his legs for safe keeping.  "Never
+mind they basket, Jonathan," said my father; "we shan't steal
+thy verses."  "I 'm not sure of that," returned the suspicious
+guest.  "It is written, 'Trust ye not in any brother.'"
+
+(1) "He could never come better," says the clown in
+Shakespeare's *The Winter's Tale,* when Autolycus, the
+pedler, is announced; "he shall come in.  I love a ballad but
+even too well, if it be doleful matter merrily set down, or a very
+pleasant thing indeed and sung lamentably."  Act IV. scene 4.
+
+Thou, too, O Parson B.,--with thy pale student's brow and
+rubicund nose, with thy rusty and tattered black coat overswept
+by white, flowing locks, with thy professional white neckcloth
+scrupulously preserved when even a shirt to thy back was
+problematical,--art by no means to be overlooked in the muster-
+roll of vagrant gentlemen possessing the *entree* of our
+farmhouse.  Well do we remember with what grave and
+dignified courtesy he used to step over its threshold, saluting its
+inmates with the same air of gracious condescension and
+patronage with which in better days he had delighted the hearts
+of his parishioners.  Poor old man!  He had once been the
+admired and almost worshipped minister of the largest church
+in the town where he afterwards found support in the winter
+season, as a pauper.  He had early fallen into intemperate
+habits; and at the age of three-score and ten, when I remember
+him, he was only sober when he lacked the means of being
+otherwise.  Drunk or sober, however, he never altogether forgot
+the proprieties of his profession; he was always grave,
+decorous, and gentlemanly; he held fast the form of sound
+words, and the weakness of the flesh abated nothing of the
+rigor of his stringent theology.  He had been a favorite pupil of
+the learned and astute Emmons,(1) and was to the last a sturdy
+defender of the peculiar dogmas of his school.  The last time we
+saw him he was holding a meeting in our district school-house,
+with a vagabond pedler for deacon and travelling companion. 
+The tie which united the ill-assorted couple was doubtless the
+same which endeared Tam O'Shanter to the souter:(2)--
+
+   "They had been fou for weeks thegither."
+
+He took for his text the first seven verses of the concluding
+chapter of Ecclesiastes, furnishing in himself its fitting
+illustration.  The evil days had come; the keepers of the house
+trembled; the windows of life were darkened.  A few months
+later the silver cord was loosed, the golden bowl was broken,
+and between the poor old man and the temptations which beset
+him fell the thick curtains of the grave.
+
+
+(1) Nathaniel Emmons was a New England theologian of
+marked character and power, who for seventy years was
+connected with a church in that part of Wrentham, Mass., now
+called Franklin.  He exercised considerable influence over the
+religious thought of New England, and is still read by
+theologians.  He died in 1840, in his ninety-sixth year.
+(2) Souter (or cobbler) Johnny, in Burns's poetic tale of *Tam
+O'Shanter,* had been *fou* or *full* of drink with Tam for
+weeks together.
+ 
+One day we had a call from a "pawky auld carle"(1) of a
+wandering Scotchman.  To him I owe my first introduction to
+the songs of Burns.  After eating his bread and cheese and
+drinking his mug of cider he gave us Bonny Doon, Highland
+Mary, and Auld Lang Syne.  He had a rich, full voice, and
+entered heartily into the spirit of his lyrics.  I have since
+listened to the same melodies from the lips of Dempster(2)
+(than whom the Scottish bard has had no sweeter or truer
+interpreter), but the skilful performance of the artist lacked the
+novel charm of the gaberlunzie's singing in the old farmhouse
+kitchen.  Another wanderer made us acquainted with the
+humorous old ballad of "Our gude man cam hame at e'en."  He
+applied for supper and lodging, and the next morning was set
+at work splitting stones in the pasture.  While thus engaged the
+village doctor came riding along the highway on his fine,
+spirited horse, and stopped to talk with my father.  The fellow
+eyed the animal attentively, as if familiar with all his good
+points, and hummed over a stanza of the old poem:--
+
+  "Our gude man cam hame at e'en,
+     And hame cam he;
+  And there he saw a saddle horse
+     Where nae horse should be.
+  'How cam this horse here?
+     How can it be?
+  How cam this horse here
+     Without the leave of me?'
+  'A horse?' quo she.
+  'Ay, a horse,' quo he.
+  'Ye auld fool, ye blind fool,--
+     And blinder might ye be,--
+  'T is naething but a milking cow
+     My mamma sent to me.'
+  'A milch cow?' quo he.
+  'Ay, a milch cow,' quo she.
+  'Weel, far hae I ridden,
+     And muckle hae I seen;
+  But milking cows wi' saddles on
+     Saw I never nane.'"(3)
+
+(1) From the first line of *The Gaberlunzie Man,* attributed
+to King James V. of Scotland,--
+  "The pawky auld carle came o'er the lee."
+The original like Whittier's was a sly old fellow, as an English
+phrase would translate the Scottish.  *The Gaberlunzie Man* is
+given in Percy's *Reliques of Ancient Poetry* and in Child's
+*English and Scottish Ballads,* viii. 98.
+(2) William R. Dempster, a Scottish vocalist who had
+recently sung in America, and whose music to Burns's song "A
+man 's a man for a' that" was very popular.
+(3) The whole of this song may be found in Herd's *Ancient
+and Modern Scottish Songs,* ii. 172.
+ 
+That very night the rascal decamped, taking with him the
+doctor's horse, and was never after heard of.
+
+Often, in the gray of the morning, we used to see one or more
+"gaberlunzie men," pack on shoulder and staff in hand,
+emerging from the barn or other outbuildings where they had
+passed the night.  I was once sent to the barn to fodder the
+cattle late in the evening, and, climbing into the mow to pitch
+down hay for that purpose, I was startled by the sudden
+apparition of a man rising up before me, just discernible in the
+dim moonlight streaming through the seams of the boards.  I
+made a rapid retreat down the ladder; and was only reassured
+by hearing the object of my terror calling after me, and
+recognizing his voice as that of a harmless old pilgrim whom I
+had known before.  Our farmhouse was situated in a lonely
+valley, half surrounded with woods, with no neighbors in sight. 
+One dark, cloudy night, when our parents chanced to be absent,
+we were sitting with our aged grandmother in the fading light
+of the kitchen fire, working ourselves into a very satisfactory
+state of excitement and terror by recounting to each other all the
+dismal stories we could remember of ghosts, witches, haunted
+houses, and robbers, when we were suddenly startled by a loud
+rap at the door.  A strippling of fourteen, I was very naturally
+regarded as the head of the household; so, with many
+misgivings, I advanced to the door, which I slowly opened,
+holding the candle tremulously above my head and peering out
+into the darkness.  The feeble glimmer played upon the
+apparition of a gigantic horseman, mounted on a steed of a size
+worthy of such a rider,--colossal, motionless, like images cut
+out of the solid night.  The strange visitant gruffly saluted me;
+and, after making several ineffectual efforts to urge his horse in
+at the door, dismounted and followed me into the room,
+evidently enjoying the terror which his huge presence excited. 
+Announcing himself as the great Indian doctor, he drew
+himself up before the fire, stretched his arms, clinched his fists,
+struck his broad chest, and invited our attention to what he
+called his "mortal frame."  He demanded in succession all
+kinds of intoxicating liquors; and on being assured that we had
+none to give him, he grew angry, threatened to swallow my
+younger brother alive, and, seizing me by the hair of my head
+as the angel did the prophet at Babylon,(1) led me about from
+room to room.  After an ineffectual search, in the course of
+which he mistook a jug of oil for one of brandy, and, contrary
+to my explanations and remonstrances, insisted upon
+swallowing a portion of its contents, he released me, fell to
+crying and sobbing, and confessed that he was so drunk already
+that his horse was ashamed of him.  After bemoaning and
+pitying himself to his satisfaction he wiped his eyes, and sat
+down by the side of my grandmother, giving her to understand
+that he was very much pleased with her appearance; adding
+that, if agreeable to her, he should like the privilege of paying
+his addresses to her.  While vainly endeavoring to make the
+excellent old lady comprehend his very flattering proposition,
+he was interrupted by the return of my father, who, at once
+understanding the matter, turned him out of doors without
+ceremony.
+
+(1) See Ezekiel viii. 3.
+
+On one occasion, a few years ago, on my return from the field
+at evening, I was told that a foreigner had asked for lodgings
+during the night, but that, influenced by his dark, repulsive
+appearance, my mother had very reluctantly refused his request. 
+I found her by no means satisfied with her decision.  "What if a
+son of mine was in a strange land?" she inquired, self-
+reproachfully.  Greatly to her relief, I volunteered to go in
+pursuit of the wanderer, and, taking a cross-path over the
+fields, soon overtook him.  He had just been rejected at the
+house of our nearest neighbor, and was standing in a state of
+dubious perplexity in the street.  He was an olive-
+complexioned, black-bearded Italian, with an eye like a live
+coal, such a face as perchance looks out on the traveller in the
+passes of the Abruzzi,(1)--one of those bandit visages which
+Salvator(2) has painted.  With some difficulty I gave him to
+understand my errand, when he overwhelmed me with thanks,
+and joyfully followed me back.  He took his seat with us at the
+supper-table; and, when we were all gathered around the hearth
+that cold autumnal evening, he told us, partly by words and
+partly by gestures, the story of his life and misfortunes, amused
+us with descriptions of the grape-gatherings and festivals of his
+sunny clime, edified my mother with a recipe for making bread
+of chestnuts; and in the morning, when, after breakfast, his
+dark sullen face lighted up and his fierce eye moistened with
+grateful emotion as in his own silvery Tuscan accent he poured
+out his thanks, we marvelled at the fears which had so nearly
+closed our door against him; and, as he departed, we all felt
+that he had left with us the blessing of the poor.
+
+(1) Provinces into which the old Kingdom of Naples was
+divided.
+(2) Salvator Rosa was a Neapolitan by birth, and was said to
+have been himself a bandit in his youth; his landscapes often
+contain figures drawn from the wild life of the region.
+
+It was not often that, as in the above instance, my mother's
+prudence got the better of her charity.  The regular "old
+stragglers" regarded her as an unfailing friend; and the sight of
+her plain cap was to them an assurance of forthcoming
+creature-comforts.  There was indeed a tribe of lazy strollers,
+having their place of rendezvous in the town of Barrington,
+New Hampshire, whose low vices had placed them beyond
+even the pale of her benevolence.  They were not unconscious
+of their evil reputation; and experience had taught them the
+necessity of concealing, under well-contrived disguises, their
+true character.  They came to us in all shapes and with all
+appearances save the true one, with most miserable stories of
+mishap and sickness and all "the ills which flesh is heir to."  It
+was particularly vexatious to discover, when too late, that our
+sympathies and charities had been expended upon such
+graceless vagabonds as the "Barrington beggars." An old
+withered hag, known by the appellation of Hopping Pat,--the
+wise woman of her tribe,--was in the habit of visiting us, with
+her hopeful grandson, who had "a gift for preaching" as well as
+for many other things not exactly compatible with holy orders. 
+He sometimes brought with him a tame crow, a shrewd,
+knavish-looking bird, who, when in the humor for it, could talk
+like Barnaby Rudge's raven.  He used to say he could "do
+nothin' at exhortin' without a white handkercher on his neck
+and money in his pocket,"--a fact going far to confirm the
+opinions of the Bishop of Exeter and the Puseyites generally,
+that there can be no priest without tithes and surplice.
+
+These people have for several generations lived distinct from
+the great mass of the community, like the gypsies of Europe,
+whom in many respects they closely resemble. They have the
+same settled aversion to labor and the same disposition to avail
+themselves of the fruits of the industry of others.  They love a
+wild, out-of-door life, sing songs, tell fortunes, and have an
+instinctive hatred of "missionaries and cold water."  It has been
+said--I know not upon what grounds--that their ancestors were
+indeed a veritable importation of English gypsyhood; but if so,
+they have undoubtedly lost a good deal of the picturesque
+charm of its unhoused and free condition.  I very much fear that
+my friend Mary Russell Mitford,--sweetest of England's rural
+painters,--who has a poet's eye for the fine points in gypsy
+character, would scarcely allow their claims to fraternity with
+her own vagrant friends, whose camp-fires welcomed her to her
+new home at Swallowfield.(1)
+(1) See in Miss Mitford's *Our Village.*
+
+"The proper study of mankind is man;" and, according to my
+view, no phase of our common humanity is altogether
+unworthy of investigation.  Acting upon this belief two or three
+summers ago, when making, in company with my sister, a little
+excursion into the hill-country of New Hampshire, I turned my
+horse's head towards Barrington for the purpose of seeing these
+semi-civilized strollers in their own home, and returning, once
+for all, their numerous visits.  Taking leave of our hospitable
+cousins in old Lee with about as much solemnity as we may
+suppose Major Laing(1) parted with his friends when he set out
+in search of desert-girdled Timbuctoo, we drove several miles
+over a rough road, passed the Devil's Den unmolested, crossed
+a fretful little streamlet noisily working its way into a valley,
+where it turned a lonely, half-ruinous mill, and, climbing a
+steep hill beyond, saw before us a wide, sandy level, skirted on
+the west and north by low, scraggy hills, and dotted here and
+there with dwarf pitch-pines.  In the centre of this desolate
+region were some twenty or thirty small dwellings, grouped
+together as irregularly as a Hottentot kraal.  Unfenced,
+unguarded, open to all comers and goers, stood that city of the
+beggars,--no wall or paling between the ragged cabins to
+remind one of the jealous distinctions of property.  The great
+idea of its founders seemed visible in its unappropriated
+freedom.  Was not the whole round world their own? and
+should they haggle about boundaries and title-deeds?  For
+them, on distant plains, ripened golden harvests; for them, in
+far-off workshops, busy hands were toiling; for them, if they
+had but the grace to note it, the broad earth put on her garniture
+of beauty, and over them hung the silent mystery of heaven and
+its stars.  That comfortable philosophy which modern
+transcendentalism has but dimly shadowed forth--that poetic
+agrarianism, which gives all to each and each to all--is the real
+life of this city of unwork.  To each of its dingy dwellers might
+be not unaptly applied the language of one who, I trust, will
+pardon me for quoting her beautiful poem in this connection:--
+
+  "Other hands may grasp the field and forest,
+  Proud proprietors in pomp may shine,
+  .     .     .     .     .      .      .
+  Thou art wealthier,--all the world is thine."(2)
+
+(1) Alexander Gordon Laing was a major in the British army,
+who served on the west coast of Africa and made journeys into
+the interior in the attempt to establish commercial relations
+with the natives, and especially to discover the sources of the
+Niger.  He was treacherously murdered in 1826 by the guard
+that was attending him on his return from Timbuctoo to the
+coast.  His travels excited great interest in their day in England
+and America.
+(2) From a poem, *Why Thus Longing?* by Mrs. Harriet
+Winslow Sewall, preserved in Whittier's *Songs of Three
+Centuries.*
+
+But look! the clouds are breaking.  "Fair weather cometh out
+of the north."  The wind has blown away the mists; on the
+gilded spire of John Street glimmers a beam of sunshine; and
+there is the sky again, hard, blue, and cold in its eternal purity,
+not a whit the worse for the storm.  In the beautiful present the
+past is no longer needed.  Reverently and gratefully let its
+volume be laid aside; and when again the shadows of the
+outward world fall upon the spirit may I not lack a good angel
+to remind me of its solace, even if he comes in the shape of a
+Barrington beggar.
+
+
+
+
+
+End of The Project Gutenberg Etext of Yankee Gypsies, by Whittier
+

@@ -1,0 +1,1074 @@
+Project Gutenberg's Etext of The Lamplighter, by Charles Dickens
+#29 in our series by Charles Dickens
+
+
+Copyright laws are changing all over the world, be sure to check
+the copyright laws for your country before posting these files!!
+
+Please take a look at the important information in this header.
+We encourage you to keep this file on your own disk, keeping an
+electronic path open for the next readers.  Do not remove this.
+
+
+**Welcome To The World of Free Plain Vanilla Electronic Texts**
+
+**Etexts Readable By Both Humans and By Computers, Since 1971**
+
+*These Etexts Prepared By Hundreds of Volunteers and Donations*
+
+Information on contacting Project Gutenberg to get Etexts, and
+further information is included below.  We need your donations.
+
+
+The Lamplighter
+
+by Charles Dickens
+
+May, 1997  [Etext #927]
+
+
+Project Gutenberg's Etext of The Lamplighter, by Charles Dickens
+*****This file should be named lmplt10.txt or lmplt10.zip******
+
+Corrected EDITIONS of our etexts get a new NUMBER, lmplt11.txt.
+VERSIONS based on separate sources get new LETTER, lmplt10a.txt.
+
+
+Scanned and proofed by David Price, ccx074@coventry.ac.uk
+
+
+We are now trying to release all our books one month in advance
+of the official release dates, for time for better editing.
+
+Please note:  neither this list nor its contents are final till
+midnight of the last day of the month of any such announcement.
+The official release date of all Project Gutenberg Etexts is at
+Midnight, Central Time, of the last day of the stated month.  A
+preliminary version may often be posted for suggestion, comment
+and editing by those who wish to do so.  To be sure you have an
+up to date first edition [xxxxx10x.xxx] please check file sizes
+in the first week of the next month.  Since our ftp program has
+a bug in it that scrambles the date [tried to fix and failed] a
+look at the file size will have to do, but we will try to see a
+new copy has at least one byte more or less.
+
+
+Information about Project Gutenberg (one page)
+
+We produce about two million dollars for each hour we work.  The
+fifty hours is one conservative estimate for how long it we take
+to get any etext selected, entered, proofread, edited, copyright
+searched and analyzed, the copyright letters written, etc.  This
+projected audience is one hundred million readers.  If our value
+per text is nominally estimated at one dollar then we produce $2
+million dollars per hour this year as we release thirty-two text
+files per month:  or 400 more Etexts in 1996 for a total of 800.
+If these reach just 10% of the computerized population, then the
+total should reach 80 billion Etexts.
+
+The Goal of Project Gutenberg is to Give Away One Trillion Etext
+Files by the December 31, 2001.  [10,000 x 100,000,000=Trillion]
+This is ten thousand titles each to one hundred million readers,
+which is only 10% of the present number of computer users.  2001
+should have at least twice as many computer users as that, so it
+will require us reaching less than 5% of the users in 2001.
+
+
+We need your donations more than ever!
+
+
+All donations should be made to "Project Gutenberg/CMU": and are
+tax deductible to the extent allowable by law.  (CMU = Carnegie-
+Mellon University).
+
+For these and other matters, please mail to:
+
+Project Gutenberg
+P. O. Box  2782
+Champaign, IL 61825
+
+When all other email fails try our Executive Director:
+Michael S. Hart <hart@pobox.com>
+
+We would prefer to send you this information by email
+(Internet, Bitnet, Compuserve, ATTMAIL or MCImail).
+
+******
+If you have an FTP program (or emulator), please
+FTP directly to the Project Gutenberg archives:
+[Mac users, do NOT point and click. . .type]
+
+ftp uiarchive.cso.uiuc.edu
+login:  anonymous
+password:  your@login
+cd etext/etext90 through /etext96
+or cd etext/articles [get suggest gut for more information]
+dir [to see files]
+get or mget [to get files. . .set bin for zip files]
+GET INDEX?00.GUT
+for a list of books
+and
+GET NEW GUT for general information
+and
+MGET GUT* for newsletters.
+
+**Information prepared by the Project Gutenberg legal advisor**
+(Three Pages)
+
+
+***START**THE SMALL PRINT!**FOR PUBLIC DOMAIN ETEXTS**START***
+Why is this "Small Print!" statement here?  You know: lawyers.
+They tell us you might sue us if there is something wrong with
+your copy of this etext, even if you got it for free from
+someone other than us, and even if what's wrong is not our
+fault.  So, among other things, this "Small Print!" statement
+disclaims most of our liability to you.  It also tells you how
+you can distribute copies of this etext if you want to.
+
+*BEFORE!* YOU USE OR READ THIS ETEXT
+By using or reading any part of this PROJECT GUTENBERG-tm
+etext, you indicate that you understand, agree to and accept
+this "Small Print!" statement.  If you do not, you can receive
+a refund of the money (if any) you paid for this etext by
+sending a request within 30 days of receiving it to the person
+you got it from.  If you received this etext on a physical
+medium (such as a disk), you must return it with your request.
+
+ABOUT PROJECT GUTENBERG-TM ETEXTS
+This PROJECT GUTENBERG-tm etext, like most PROJECT GUTENBERG-
+tm etexts, is a "public domain" work distributed by Professor
+Michael S. Hart through the Project Gutenberg Association at
+Carnegie-Mellon University (the "Project").  Among other
+things, this means that no one owns a United States copyright
+on or for this work, so the Project (and you!) can copy and
+distribute it in the United States without permission and
+without paying copyright royalties.  Special rules, set forth
+below, apply if you wish to copy and distribute this etext
+under the Project's "PROJECT GUTENBERG" trademark.
+
+To create these etexts, the Project expends considerable
+efforts to identify, transcribe and proofread public domain
+works.  Despite these efforts, the Project's etexts and any
+medium they may be on may contain "Defects".  Among other
+things, Defects may take the form of incomplete, inaccurate or
+corrupt data, transcription errors, a copyright or other
+intellectual property infringement, a defective or damaged
+disk or other etext medium, a computer virus, or computer
+codes that damage or cannot be read by your equipment.
+
+LIMITED WARRANTY; DISCLAIMER OF DAMAGES
+But for the "Right of Replacement or Refund" described below,
+[1] the Project (and any other party you may receive this
+etext from as a PROJECT GUTENBERG-tm etext) disclaims all
+liability to you for damages, costs and expenses, including
+legal fees, and [2] YOU HAVE NO REMEDIES FOR NEGLIGENCE OR
+UNDER STRICT LIABILITY, OR FOR BREACH OF WARRANTY OR CONTRACT,
+INCLUDING BUT NOT LIMITED TO INDIRECT, CONSEQUENTIAL, PUNITIVE
+OR INCIDENTAL DAMAGES, EVEN IF YOU GIVE NOTICE OF THE
+POSSIBILITY OF SUCH DAMAGES.
+
+If you discover a Defect in this etext within 90 days of
+receiving it, you can receive a refund of the money (if any)
+you paid for it by sending an explanatory note within that
+time to the person you received it from.  If you received it
+on a physical medium, you must return it with your note, and
+such person may choose to alternatively give you a replacement
+copy.  If you received it electronically, such person may
+choose to alternatively give you a second opportunity to
+receive it electronically.
+
+THIS ETEXT IS OTHERWISE PROVIDED TO YOU "AS-IS".  NO OTHER
+WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED, ARE MADE TO YOU AS
+TO THE ETEXT OR ANY MEDIUM IT MAY BE ON, INCLUDING BUT NOT
+LIMITED TO WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A
+PARTICULAR PURPOSE.
+
+Some states do not allow disclaimers of implied warranties or
+the exclusion or limitation of consequential damages, so the
+above disclaimers and exclusions may not apply to you, and you
+may have other legal rights.
+
+INDEMNITY
+You will indemnify and hold the Project, its directors,
+officers, members and agents harmless from all liability, cost
+and expense, including legal fees, that arise directly or
+indirectly from any of the following that you do or cause:
+[1] distribution of this etext, [2] alteration, modification,
+or addition to the etext, or [3] any Defect.
+
+DISTRIBUTION UNDER "PROJECT GUTENBERG-tm"
+You may distribute copies of this etext electronically, or by
+disk, book or any other medium if you either delete this
+"Small Print!" and all other references to Project Gutenberg,
+or:
+
+[1]  Only give exact copies of it.  Among other things, this
+     requires that you do not remove, alter or modify the
+     etext or this "small print!" statement.  You may however,
+     if you wish, distribute this etext in machine readable
+     binary, compressed, mark-up, or proprietary form,
+     including any form resulting from conversion by word pro-
+     cessing or hypertext software, but only so long as
+     *EITHER*:
+
+     [*]  The etext, when displayed, is clearly readable, and
+          does *not* contain characters other than those
+          intended by the author of the work, although tilde
+          (~), asterisk (*) and underline (_) characters may
+          be used to convey punctuation intended by the
+          author, and additional characters may be used to
+          indicate hypertext links; OR
+
+     [*]  The etext may be readily converted by the reader at
+          no expense into plain ASCII, EBCDIC or equivalent
+          form by the program that displays the etext (as is
+          the case, for instance, with most word processors);
+          OR
+
+     [*]  You provide, or agree to also provide on request at
+          no additional cost, fee or expense, a copy of the
+          etext in its original plain ASCII form (or in EBCDIC
+          or other equivalent proprietary form).
+
+[2]  Honor the etext refund and replacement provisions of this
+     "Small Print!" statement.
+
+[3]  Pay a trademark license fee to the Project of 20% of the
+     net profits you derive calculated using the method you
+     already use to calculate your applicable taxes.  If you
+     don't derive profits, no royalty is due.  Royalties are
+     payable to "Project Gutenberg Association/Carnegie-Mellon
+     University" within the 60 days following each
+     date you prepare (or were legally required to prepare)
+     your annual (or equivalent periodic) tax return.
+
+WHAT IF YOU *WANT* TO SEND MONEY EVEN IF YOU DON'T HAVE TO?
+The Project gratefully accepts contributions in money, time,
+scanning machines, OCR software, public domain etexts, royalty
+free copyright licenses, and every other sort of contribution
+you can think of.  Money should be paid to "Project Gutenberg
+Association / Carnegie-Mellon University".
+
+*END*THE SMALL PRINT! FOR PUBLIC DOMAIN ETEXTS*Ver.04.29.93*END*
+
+
+
+
+
+The Lamplighter by Charles Dickens
+Scanned and proofed by David Price, ccx074@coventry.ac.uk
+
+
+
+
+
+THE LAMPLIGHTER
+
+
+
+
+'If you talk of Murphy and Francis Moore, gentlemen,' said the
+lamplighter who was in the chair, 'I mean to say that neither of
+'em ever had any more to do with the stars than Tom Grig had.'
+
+'And what had HE to do with 'em?' asked the lamplighter who
+officiated as vice.
+
+'Nothing at all,' replied the other; 'just exactly nothing at all.'
+
+'Do you mean to say you don't believe in Murphy, then?' demanded
+the lamplighter who had opened the discussion.
+
+'I mean to say I believe in Tom Grig,' replied the chairman.
+'Whether I believe in Murphy, or not, is a matter between me and my
+conscience; and whether Murphy believes in himself, or not, is a
+matter between him and his conscience.  Gentlemen, I drink your
+healths.'
+
+The lamplighter who did the company this honour, was seated in the
+chimney-corner of a certain tavern, which has been, time out of
+mind, the Lamplighters' House of Call.  He sat in the midst of a
+circle of lamplighters, and was the cacique, or chief of the tribe.
+
+If any of our readers have had the good fortune to behold a
+lamplighter's funeral, they will not be surprised to learn that
+lamplighters are a strange and primitive people; that they rigidly
+adhere to old ceremonies and customs which have been handed down
+among them from father to son since the first public lamp was
+lighted out of doors; that they intermarry, and betroth their
+children in infancy; that they enter into no plots or conspiracies
+(for who ever heard of a traitorous lamplighter?); that they commit
+no crimes against the laws of their country (there being no
+instance of a murderous or burglarious lamplighter); that they are,
+in short, notwithstanding their apparently volatile and restless
+character, a highly moral and reflective people:  having among
+themselves as many traditional observances as the Jews, and being,
+as a body, if not as old as the hills, at least as old as the
+streets.  It is an article of their creed that the first faint
+glimmering of true civilisation shone in the first street-light
+maintained at the public expense.  They trace their existence and
+high position in the public esteem, in a direct line to the heathen
+mythology; and hold that the history of Prometheus himself is but a
+pleasant fable, whereof the true hero is a lamplighter.
+
+'Gentlemen,' said the lamplighter in the chair, 'I drink your
+healths.'
+
+'And perhaps, Sir,' said the vice, holding up his glass, and rising
+a little way off his seat and sitting down again, in token that he
+recognised and returned the compliment, 'perhaps you will add to
+that condescension by telling us who Tom Grig was, and how he came
+to be connected in your mind with Francis Moore, Physician.'
+
+'Hear, hear, hear!' cried the lamplighters generally.
+
+'Tom Grig, gentlemen,' said the chairman, 'was one of us; and it
+happened to him, as it don't often happen to a public character in
+our line, that he had his what-you-may-call-it cast.'
+
+'His head?' said the vice.
+
+'No,' replied the chairman, 'not his head.'
+
+'His face, perhaps?' said the vice.  'No, not his face.'  'His
+legs?'  'No, not his legs.'  Nor yet his arms, nor his hands, nor
+his feet, nor his chest, all of which were severally suggested.
+
+'His nativity, perhaps?'
+
+'That's it,' said the chairman, awakening from his thoughtful
+attitude at the suggestion.  'His nativity.  That's what Tom had
+cast, gentlemen.'
+
+'In plaster?' asked the vice.
+
+'I don't rightly know how it's done,' returned the chairman.  'But
+I suppose it was.'
+
+And there he stopped as if that were all he had to say; whereupon
+there arose a murmur among the company, which at length resolved
+itself into a request, conveyed through the vice, that he would go
+on.  This being exactly what the chairman wanted, he mused for a
+little time, performed that agreeable ceremony which is popularly
+termed wetting one's whistle, and went on thus:
+
+'Tom Grig, gentlemen, was, as I have said, one of us; and I may go
+further, and say he was an ornament to us, and such a one as only
+the good old times of oil and cotton could have produced.  Tom's
+family, gentlemen, were all lamplighters.'
+
+'Not the ladies, I hope?' asked the vice.
+
+'They had talent enough for it, Sir,' rejoined the chairman, 'and
+would have been, but for the prejudices of society.  Let women have
+their rights, Sir, and the females of Tom's family would have been
+every one of 'em in office.  But that emancipation hasn't come yet,
+and hadn't then, and consequently they confined themselves to the
+bosoms of their families, cooked the dinners, mended the clothes,
+minded the children, comforted their husbands, and attended to the
+house-keeping generally.  It's a hard thing upon the women,
+gentlemen, that they are limited to such a sphere of action as
+this; very hard.
+
+'I happen to know all about Tom, gentlemen, from the circumstance
+of his uncle by his mother's side, having been my particular
+friend.  His (that's Tom's uncle's) fate was a melancholy one.  Gas
+was the death of him.  When it was first talked of, he laughed.  He
+wasn't angry; he laughed at the credulity of human nature.  "They
+might as well talk," he says, "of laying on an everlasting
+succession of glow-worms;" and then he laughed again, partly at his
+joke, and partly at poor humanity.
+
+'In course of time, however, the thing got ground, the experiment
+was made, and they lighted up Pall Mall.  Tom's uncle went to see
+it.  I've heard that he fell off his ladder fourteen times that
+night, from weakness, and that he would certainly have gone on
+falling till he killed himself, if his last tumble hadn't been into
+a wheelbarrow which was going his way, and humanely took him home.
+"I foresee in this," says Tom's uncle faintly, and taking to his
+bed as he spoke - "I foresee in this," he says, "the breaking up of
+our profession.  There's no more going the rounds to trim by
+daylight, no more dribbling down of the oil on the hats and bonnets
+of ladies and gentlemen when one feels in spirits.  Any low fellow
+can light a gas-lamp.  And it's all up."  In this state of mind, he
+petitioned the government for - I want a word again, gentlemen -
+what do you call that which they give to people when it's found
+out, at last, that they've never been of any use, and have been
+paid too much for doing nothing?'
+
+'Compensation?' suggested the vice.
+
+'That's it,' said the chairman.  'Compensation.  They didn't give
+it him, though, and then he got very fond of his country all at
+once, and went about saying that gas was a death-blow to his native
+land, and that it was a plot of the radicals to ruin the country
+and destroy the oil and cotton trade for ever, and that the whales
+would go and kill themselves privately, out of sheer spite and
+vexation at not being caught.  At last he got right-down cracked;
+called his tobacco-pipe a gas-pipe; thought his tears were lamp-
+oil; and went on with all manner of nonsense of that sort, till one
+night he hung himself on a lamp-iron in Saint Martin's Lane, and
+there was an end of HIM.
+
+'Tom loved him, gentlemen, but he survived it.  He shed a tear over
+his grave, got very drunk, spoke a funeral oration that night in
+the watch-house, and was fined five shillings for it, in the
+morning.  Some men are none the worse for this sort of thing.  Tom
+was one of 'em.  He went that very afternoon on a new beat:  as
+clear in his head, and as free from fever as Father Mathew himself.
+
+'Tom's new beat, gentlemen, was - I can't exactly say where, for
+that he'd never tell; but I know it was in a quiet part of town,
+where there were some queer old houses.  I have always had it in my
+head that it must have been somewhere near Canonbury Tower in
+Islington, but that's a matter of opinion.  Wherever it was, he
+went upon it, with a bran-new ladder, a white hat, a brown holland
+jacket and trousers, a blue neck-kerchief, and a sprig of full-
+blown double wall-flower in his button-hole.  Tom was always
+genteel in his appearance, and I have heard from the best judges,
+that if he had left his ladder at home that afternoon, you might
+have took him for a lord.
+
+'He was always merry, was Tom, and such a singer, that if there was
+any encouragement for native talent, he'd have been at the opera.
+He was on his ladder, lighting his first lamp, and singing to
+himself in a manner more easily to be conceived than described,
+when he hears the clock strike five, and suddenly sees an old
+gentleman with a telescope in his hand, throw up a window and look
+at him very hard.
+
+'Tom didn't know what could be passing in this old gentleman's
+mind.  He thought it likely enough that he might be saying within
+himself, "Here's a new lamplighter - a good-looking young fellow -
+shall I stand something to drink?"  Thinking this possible, he
+keeps quite still, pretending to be very particular about the wick,
+and looks at the old gentleman sideways, seeming to take no notice
+of him.
+
+'Gentlemen, he was one of the strangest and most mysterious-looking
+files that ever Tom clapped his eyes on.  He was dressed all
+slovenly and untidy, in a great gown of a kind of bed-furniture
+pattern, with a cap of the same on his head; and a long old flapped
+waistcoat; with no braces, no strings, very few buttons - in short,
+with hardly any of those artificial contrivances that hold society
+together.  Tom knew by these signs, and by his not being shaved,
+and by his not being over-clean, and by a sort of wisdom not quite
+awake, in his face, that he was a scientific old gentleman.  He
+often told me that if he could have conceived the possibility of
+the whole Royal Society being boiled down into one man, he should
+have said the old gentleman's body was that Body.
+
+'The old gentleman claps the telescope to his eye, looks all round,
+sees nobody else in sight, stares at Tom again, and cries out very
+loud:
+
+'"Hal-loa!"
+
+'"Halloa, Sir," says Tom from the ladder; "and halloa again, if you
+come to that."
+
+'"Here's an extraordinary fulfilment," says the old gentleman, "of
+a prediction of the planets."
+
+'"Is there?" says Tom.  "I'm very glad to hear it."
+
+'"Young man," says the old gentleman, "you don't know me."
+
+'"Sir," says Tom, "I have not that honour; but I shall be happy to
+drink your health, notwithstanding."
+
+'"I read," cries the old gentleman, without taking any notice of
+this politeness on Tom's part - "I read what's going to happen, in
+the stars."
+
+'Tom thanked him for the information, and begged to know if
+anything particular was going to happen in the stars, in the course
+of a week or so; but the old gentleman, correcting him, explained
+that he read in the stars what was going to happen on dry land, and
+that he was acquainted with all the celestial bodies.
+
+'"I hope they're all well, Sir," says Tom, - "everybody."
+
+'"Hush!" cries the old gentleman.  "I have consulted the book of
+Fate with rare and wonderful success.  I am versed in the great
+sciences of astrology and astronomy.  In my house here, I have
+every description of apparatus for observing the course and motion
+of the planets.  Six months ago, I derived from this source, the
+knowledge that precisely as the clock struck five this afternoon a
+stranger would present himself - the destined husband of my young
+and lovely niece - in reality of illustrious and high descent, but
+whose birth would be enveloped in uncertainty and mystery.  Don't
+tell me yours isn't," says the old gentleman, who was in such a
+hurry to speak that he couldn't get the words out fast enough, "for
+I know better."
+
+'Gentlemen, Tom was so astonished when he heard him say this, that
+he could hardly keep his footing on the ladder, and found it
+necessary to hold on by the lamp-post.  There WAS a mystery about
+his birth.  His mother had always admitted it.  Tom had never known
+who was his father, and some people had gone so far as to say that
+even SHE was in doubt.
+
+'While he was in this state of amazement, the old gentleman leaves
+the window, bursts out of the house-door, shakes the ladder, and
+Tom, like a ripe pumpkin, comes sliding down into his arms.
+
+'"Let me embrace you," he says, folding his arms about him, and
+nearly lighting up his old bed-furniture gown at Tom's link.
+"You're a man of noble aspect.  Everything combines to prove the
+accuracy of my observations.  You have had mysterious promptings
+within you," he says; "I know you have had whisperings of
+greatness, eh?" he says.
+
+'"I think I have," says Tom - Tom was one of those who can persuade
+themselves to anything they like - "I've often thought I wasn't the
+small beer I was taken for."
+
+'"You were right," cries the old gentleman, hugging him again.
+"Come in.  My niece awaits us."
+
+'"Is the young lady tolerable good-looking, Sir?" says Tom, hanging
+fire rather, as he thought of her playing the piano, and knowing
+French, and being up to all manner of accomplishments.
+
+'"She's beautiful!" cries the old gentleman, who was in such a
+terrible bustle that he was all in a perspiration.  "She has a
+graceful carriage, an exquisite shape, a sweet voice, a countenance
+beaming with animation and expression; and the eye," he says,
+rubbing his hands, "of a startled fawn."
+
+'Tom supposed this might mean, what was called among his circle of
+acquaintance, "a game eye;" and, with a view to this defect,
+inquired whether the young lady had any cash.
+
+'"She has five thousand pounds," cries the old gentleman.  "But
+what of that? what of that?  A word in your ear.  I'm in search of
+the philosopher's stone.  I have very nearly found it - not quite.
+It turns everything to gold; that's its property."
+
+'Tom naturally thought it must have a deal of property; and said
+that when the old gentleman did get it, he hoped he'd be careful to
+keep it in the family.
+
+'"Certainly," he says, "of course.  Five thousand pounds!  What's
+five thousand pounds to us?  What's five million?" he says.
+"What's five thousand million?  Money will be nothing to us.  We
+shall never be able to spend it fast enough."
+
+'"We'll try what we can do, Sir," says Tom.
+
+'"We will," says the old gentleman.  "Your name?"
+
+'"Grig," says Tom.
+
+'The old gentleman embraced him again, very tight; and without
+speaking another word, dragged him into the house in such an
+excited manner, that it was as much as Tom could do to take his
+link and ladder with him, and put them down in the passage.
+
+'Gentlemen, if Tom hadn't been always remarkable for his love of
+truth, I think you would still have believed him when he said that
+all this was like a dream.  There is no better way for a man to
+find out whether he is really asleep or awake, than calling for
+something to eat.  If he's in a dream, gentlemen, he'll find
+something wanting in flavour, depend upon it.
+
+'Tom explained his doubts to the old gentleman, and said that if
+there was any cold meat in the house, it would ease his mind very
+much to test himself at once.  The old gentleman ordered up a
+venison pie, a small ham, and a bottle of very old Madeira.  At the
+first mouthful of pie and the first glass of wine, Tom smacks his
+lips and cries out, "I'm awake - wide awake;" and to prove that he
+was so, gentlemen, he made an end of 'em both.
+
+'When Tom had finished his meal (which he never spoke of afterwards
+without tears in his eyes), the old gentleman hugs him again, and
+says, "Noble stranger! let us visit my young and lovely niece."
+Tom, who was a little elevated with the wine, replies, "The noble
+stranger is agreeable!"  At which words the old gentleman took him
+by the hand, and led him to the parlour; crying as he opened the
+door, "Here is Mr. Grig, the favourite of the planets!"
+
+'I will not attempt a description of female beauty, gentlemen, for
+every one of us has a model of his own that suits his own taste
+best.  In this parlour that I'm speaking of, there were two young
+ladies; and if every gentleman present, will imagine two models of
+his own in their places, and will be kind enough to polish 'em up
+to the very highest pitch of perfection, he will then have a faint
+conception of their uncommon radiance.
+
+'Besides these two young ladies, there was their waiting-woman,
+that under any other circumstances Tom would have looked upon as a
+Venus; and besides her, there was a tall, thin, dismal-faced young
+gentleman, half man and half boy, dressed in a childish suit of
+clothes very much too short in the legs and arms; and looking,
+according to Tom's comparison, like one of the wax juveniles from a
+tailor's door, grown up and run to seed.  Now, this youngster
+stamped his foot upon the ground and looked very fierce at Tom, and
+Tom looked fierce at him - for to tell the truth, gentlemen, Tom
+more than half suspected that when they entered the room he was
+kissing one of the young ladies; and for anything Tom knew, you
+observe, it might be HIS young lady - which was not pleasant.
+
+'"Sir," says Tom, "before we proceed any further, will you have the
+goodness to inform me who this young Salamander" - Tom called him
+that for aggravation, you perceive, gentlemen - "who this young
+Salamander may be?"
+
+'"That, Mr. Grig," says the old gentleman, "is my little boy.  He
+was christened Galileo Isaac Newton Flamstead.  Don't mind him.
+He's a mere child."
+
+'"And a very fine child too," says Tom - still aggravating, you'll
+observe - "of his age, and as good as fine, I have no doubt.  How
+do you do, my man?" with which kind and patronising expressions,
+Tom reached up to pat him on the head, and quoted two lines about
+little boys, from Doctor Watts's Hymns, which he had learnt at a
+Sunday School.
+
+'It was very easy to see, gentlemen, by this youngster's frowning
+and by the waiting-maid's tossing her head and turning up her nose,
+and by the young ladies turning their backs and talking together at
+the other end of the room, that nobody but the old gentleman took
+very kindly to the noble stranger.  Indeed, Tom plainly heard the
+waiting-woman say of her master, that so far from being able to
+read the stars as he pretended, she didn't believe he knew his
+letters in 'em, or at best that he had got further than words in
+one syllable; but Tom, not minding this (for he was in spirits
+after the Madeira), looks with an agreeable air towards the young
+ladies, and, kissing his hand to both, says to the old gentleman,
+"Which is which?"
+
+'"This," says the old gentleman, leading out the handsomest, if one
+of 'em could possibly be said to be handsomer than the other -
+"this is my niece, Miss Fanny Barker."
+
+'"If you'll permit me, Miss," says Tom, "being a noble stranger and
+a favourite of the planets, I will conduct myself as such."  With
+these words, he kisses the young lady in a very affable way, turns
+to the old gentleman, slaps him on the back, and says, "When's it
+to come off, my buck?"
+
+'The young lady coloured so deep, and her lip trembled so much,
+gentlemen, that Tom really thought she was going to cry.  But she
+kept her feelings down, and turning to the old gentleman, says,
+"Dear uncle, though you have the absolute disposal of my hand and
+fortune, and though you mean well in disposing of 'em thus, I ask
+you whether you don't think this is a mistake?  Don't you think,
+dear uncle," she says, "that the stars must be in error?  Is it not
+possible that the comet may have put 'em out?"
+
+'"The stars," says the old gentleman, "couldn't make a mistake if
+they tried.  Emma," he says to the other young lady.
+
+'"Yes, papa," says she.
+
+'"The same day that makes your cousin Mrs. Grig will unite you to
+the gifted Mooney.  No remonstrance - no tears.  Now, Mr. Grig, let
+me conduct you to that hallowed ground, that philosophical retreat,
+where my friend and partner, the gifted Mooney of whom I have just
+now spoken, is even now pursuing those discoveries which shall
+enrich us with the precious metal, and make us masters of the
+world.  Come, Mr. Grig," he says.
+
+'"With all my heart, Sir," replies Tom; "and luck to the gifted
+Mooney, say I - not so much on his account as for our worthy
+selves!"  With this sentiment, Tom kissed his hand to the ladies
+again, and followed him out; having the gratification to perceive,
+as he looked back, that they were all hanging on by the arms and
+legs of Galileo Isaac Newton Flamstead, to prevent him from
+following the noble stranger, and tearing him to pieces.
+
+'Gentlemen, Tom's father-in-law that was to be, took him by the
+hand, and having lighted a little lamp, led him across a paved
+court-yard at the back of the house, into a very large, dark,
+gloomy room:  filled with all manner of bottles, globes, books,
+telescopes, crocodiles, alligators, and other scientific
+instruments of every kind.  In the centre of this room was a stove
+or furnace, with what Tom called a pot, but which in my opinion was
+a crucible, in full boil.  In one corner was a sort of ladder
+leading through the roof; and up this ladder the old gentleman
+pointed, as he said in a whisper:
+
+'"The observatory.  Mr. Mooney is even now watching for the precise
+time at which we are to come into all the riches of the earth.  It
+will be necessary for he and I, alone in that silent place, to cast
+your nativity before the hour arrives.  Put the day and minute of
+your birth on this piece of paper, and leave the rest to me."
+
+'"You don't mean to say," says Tom, doing as he was told and giving
+him back the paper, "that I'm to wait here long, do you?  It's a
+precious dismal place."
+
+'"Hush!" says the old gentleman.  "It's hallowed ground.
+Farewell!"
+
+'"Stop a minute," says Tom.  "What a hurry you're in!  What's in
+that large bottle yonder?"
+
+'"It's a child with three heads," says the old gentleman; "and
+everything else in proportion."
+
+'"Why don't you throw him away?" says Tom.  "What do you keep such
+unpleasant things here for?"
+
+'"Throw him away!" cries the old gentleman.  "We use him constantly
+in astrology.  He's a charm."
+
+'"I shouldn't have thought it," says Tom, "from his appearance.
+MUST you go, I say?"
+
+'The old gentleman makes him no answer, but climbs up the ladder in
+a greater bustle than ever.  Tom looked after his legs till there
+was nothing of him left, and then sat down to wait; feeling (so he
+used to say) as comfortable as if he was going to be made a
+freemason, and they were heating the pokers.
+
+'Tom waited so long, gentlemen, that he began to think it must be
+getting on for midnight at least, and felt more dismal and lonely
+than ever he had done in all his life.  He tried every means of
+whiling away the time, but it never had seemed to move so slow.
+First, he took a nearer view of the child with three heads, and
+thought what a comfort it must have been to his parents.  Then he
+looked up a long telescope which was pointed out of the window, but
+saw nothing particular, in consequence of the stopper being on at
+the other end.  Then he came to a skeleton in a glass case,
+labelled, "Skeleton of a Gentleman - prepared by Mr. Mooney," -
+which made him hope that Mr. Mooney might not be in the habit of
+preparing gentlemen that way without their own consent.  A hundred
+times, at least, he looked into the pot where they were boiling the
+philosopher's stone down to the proper consistency, and wondered
+whether it was nearly done.  "When it is," thinks Tom, "I'll send
+out for six-penn'orth of sprats, and turn 'em into gold fish for a
+first experiment."  Besides which, he made up his mind, gentlemen,
+to have a country-house and a park; and to plant a bit of it with a
+double row of gas-lamps a mile long, and go out every night with a
+French-polished mahogany ladder, and two servants in livery behind
+him, to light 'em for his own pleasure.
+
+'At length and at last, the old gentleman's legs appeared upon the
+steps leading through the roof, and he came slowly down:  bringing
+along with him, the gifted Mooney.  This Mooney, gentlemen, was
+even more scientific in appearance than his friend; and had, as Tom
+often declared upon his word and honour, the dirtiest face we can
+possibly know of, in this imperfect state of existence.
+
+'Gentlemen, you are all aware that if a scientific man isn't absent
+in his mind, he's of no good at all.  Mr. Mooney was so absent,
+that when the old gentleman said to him, "Shake hands with Mr.
+Grig," he put out his leg.  "Here's a mind, Mr. Grig!" cries the
+old gentleman in a rapture.  "Here's philosophy!  Here's
+rumination!  Don't disturb him," he says, "for this is amazing!"
+
+'Tom had no wish to disturb him, having nothing particular to say;
+but he was so uncommonly amazing, that the old gentleman got
+impatient, and determined to give him an electric shock to bring
+him to - "for you must know, Mr. Grig," he says, "that we always
+keep a strongly charged battery, ready for that purpose."  These
+means being resorted to, gentlemen, the gifted Mooney revived with
+a loud roar, and he no sooner came to himself than both he and the
+old gentleman looked at Tom with compassion, and shed tears
+abundantly.
+
+'"My dear friend," says the old gentleman to the Gifted, "prepare
+him."
+
+'"I say," cries Tom, falling back, "none of that, you know.  No
+preparing by Mr. Mooney if you please."
+
+'"Alas!" replies the old gentleman, "you don't understand us.  My
+friend, inform him of his fate. - I can't."
+
+'The Gifted mustered up his voice, after many efforts, and informed
+Tom that his nativity had been carefully cast, and he would expire
+at exactly thirty-five minutes, twenty-seven seconds, and five-
+sixths of a second past nine o'clock, a.m., on that day two months.
+
+'Gentlemen, I leave you to judge what were Tom's feelings at this
+announcement, on the eve of matrimony and endless riches.  "I
+think," he says in a trembling voice, "there must be a mistake in
+the working of that sum.  Will you do me the favour to cast it up
+again?" - "There is no mistake," replies the old gentleman, "it is
+confirmed by Francis Moore, Physician.  Here is the prediction for
+to-morrow two months."  And he showed him the page, where sure
+enough were these words - "The decease of a great person may be
+looked for, about this time."
+
+'"Which," says the old gentleman, "is clearly you, Mr. Grig."
+
+'"Too clearly," cries Tom, sinking into a chair, and giving one
+hand to the old gentleman, and one to the Gifted.  "The orb of day
+has set on Thomas Grig for ever!"
+
+'At this affecting remark, the Gifted shed tears again, and the
+other two mingled their tears with his, in a kind - if I may use
+the expression - of Mooney and Co.'s entire.  But the old gentleman
+recovering first, observed that this was only a reason for
+hastening the marriage, in order that Tom's distinguished race
+might be transmitted to posterity; and requesting the Gifted to
+console Mr. Grig during his temporary absence, he withdrew to
+settle the preliminaries with his niece immediately.
+
+'And now, gentlemen, a very extraordinary and remarkable occurrence
+took place; for as Tom sat in a melancholy way in one chair, and
+the Gifted sat in a melancholy way in another, a couple of doors
+were thrown violently open, the two young ladies rushed in, and one
+knelt down in a loving attitude at Tom's feet, and the other at the
+Gifted's.  So far, perhaps, as Tom was concerned - as he used to
+say - you will say there was nothing strange in this:  but you will
+be of a different opinion when you understand that Tom's young lady
+was kneeling to the Gifted, and the Gifted's young lady was
+kneeling to Tom.
+
+'"Halloa! stop a minute!" cries Tom; "here's a mistake.  I need
+condoling with by sympathising woman, under my afflicting
+circumstances; but we're out in the figure.  Change partners,
+Mooney."
+
+'"Monster!" cries Tom's young lady, clinging to the Gifted.
+
+'"Miss!" says Tom.  "Is THAT your manners?"
+
+'"I abjure thee!" cries Tom's young lady.  "I renounce thee.  I
+never will be thine.  Thou," she says to the Gifted, "art the
+object of my first and all-engrossing passion.  Wrapt in thy
+sublime visions, thou hast not perceived my love; but, driven to
+despair, I now shake off the woman and avow it.  Oh, cruel, cruel
+man!"  With which reproach she laid her head upon the Gifted's
+breast, and put her arms about him in the tenderest manner
+possible, gentlemen.
+
+'"And I," says the other young lady, in a sort of ecstasy, that
+made Tom start - "I hereby abjure my chosen husband too.  Hear me,
+Goblin!" - this was to the Gifted - "Hear me!  I hold thee in the
+deepest detestation.  The maddening interview of this one night has
+filled my soul with love - but not for thee.  It is for thee, for
+thee, young man," she cries to Tom.  "As Monk Lewis finely
+observes, Thomas, Thomas, I am thine, Thomas, Thomas, thou art
+mine:  thine for ever, mine for ever!" with which words, she became
+very tender likewise.
+
+'Tom and the Gifted, gentlemen, as you may believe, looked at each
+other in a very awkward manner, and with thoughts not at all
+complimentary to the two young ladies.  As to the Gifted, I have
+heard Tom say often, that he was certain he was in a fit, and had
+it inwardly.
+
+'"Speak to me!  Oh, speak to me!" cries Tom's young lady to the
+Gifted.
+
+'"I don't want to speak to anybody," he says, finding his voice at
+last, and trying to push her away.  "I think I had better go.  I'm
+- I'm frightened," he says, looking about as if he had lost
+something.
+
+'"Not one look of love!" she cries.  "Hear me while I declare - "
+
+'"I don't know how to look a look of love," he says, all in a maze.
+"Don't declare anything.  I don't want to hear anybody."
+
+'"That's right!" cries the old gentleman (who it seems had been
+listening).  "That's right!  Don't hear her.  Emma shall marry you
+to-morrow, my friend, whether she likes it or not, and SHE shall
+marry Mr. Grig."
+
+'Gentlemen, these words were no sooner out of his mouth than
+Galileo Isaac Newton Flamstead (who it seems had been listening
+too) darts in, and spinning round and round, like a young giant's
+top, cries, "Let her.  Let her.  I'm fierce; I'm furious.  I give
+her leave.  I'll never marry anybody after this - never.  It isn't
+safe.  She is the falsest of the false," he cries, tearing his hair
+and gnashing his teeth; "and I'll live and die a bachelor!"
+
+'"The little boy," observed the Gifted gravely, "albeit of tender
+years, has spoken wisdom.  I have been led to the contemplation of
+woman-kind, and will not adventure on the troubled waters of
+matrimony."
+
+'"What!" says the old gentleman, "not marry my daughter!  Won't
+you, Mooney?  Not if I make her?  Won't you?  Won't you?"
+
+'"No," says Mooney, "I won't.  And if anybody asks me any more,
+I'll run away, and never come back again."
+
+'"Mr. Grig," says the old gentleman, "the stars must be obeyed.
+You have not changed your mind because of a little girlish folly -
+eh, Mr. Grig?"
+
+'Tom, gentlemen, had had his eyes about him, and was pretty sure
+that all this was a device and trick of the waiting-maid, to put
+him off his inclination.  He had seen her hiding and skipping about
+the two doors, and had observed that a very little whispering from
+her pacified the Salamander directly.  "So," thinks Tom, "this is a
+plot - but it won't fit."
+
+'"Eh, Mr. Grig?" says the old gentleman.
+
+'"Why, Sir," says Tom, pointing to the crucible, "if the soup's
+nearly ready - "
+
+'"Another hour beholds the consummation of our labours," returned
+the old gentleman.
+
+'"Very good," says Tom, with a mournful air.  "It's only for two
+months, but I may as well be the richest man in the world even for
+that time.  I'm not particular, I'll take her, Sir.  I'll take
+her."
+
+'The old gentleman was in a rapture to find Tom still in the same
+mind, and drawing the young lady towards him by little and little,
+was joining their hands by main force, when all of a sudden,
+gentlemen, the crucible blows up, with a great crash; everybody
+screams; the room is filled with smoke; and Tom, not knowing what
+may happen next, throws himself into a Fancy attitude, and says,
+"Come on, if you're a man!" without addressing himself to anybody
+in particular.
+
+'"The labours of fifteen years!" says the old gentleman, clasping
+his hands and looking down upon the Gifted, who was saving the
+pieces, "are destroyed in an instant!" - And I am told, gentlemen,
+by-the-bye, that this same philosopher's stone would have been
+discovered a hundred times at least, to speak within bounds, if it
+wasn't for the one unfortunate circumstance that the apparatus
+always blows up, when it's on the very point of succeeding.
+
+'Tom turns pale when he hears the old gentleman expressing himself
+to this unpleasant effect, and stammers out that if it's quite
+agreeable to all parties, he would like to know exactly what has
+happened, and what change has really taken place in the prospects
+of that company.
+
+'"We have failed for the present, Mr. Grig," says the old
+gentleman, wiping his forehead.  "And I regret it the more, because
+I have in fact invested my niece's five thousand pounds in this
+glorious speculation.  But don't be cast down," he says, anxiously
+- "in another fifteen years, Mr. Grig - "
+
+"Oh!" cries Tom, letting the young lady's hand fall.  "Were the
+stars very positive about this union, Sir?"
+
+'"They were," says the old gentleman.
+
+'"I'm sorry to hear it," Tom makes answer, "for it's no go, Sir."
+
+'"No what!" cries the old gentleman.
+
+'"Go, Sir," says Tom, fiercely.  "I forbid the banns."  And with
+these words - which are the very words he used - he sat himself
+down in a chair, and, laying his head upon the table, thought with
+a secret grief of what was to come to pass on that day two months.
+
+'Tom always said, gentlemen, that that waiting-maid was the
+artfullest minx he had ever seen; and he left it in writing in this
+country when he went to colonize abroad, that he was certain in his
+own mind she and the Salamander had blown up the philosopher's
+stone on purpose, and to cut him out of his property.  I believe
+Tom was in the right, gentlemen; but whether or no, she comes
+forward at this point, and says, "May I speak, Sir?" and the old
+gentleman answering, "Yes, you may," she goes on to say that "the
+stars are no doubt quite right in every respect, but Tom is not the
+man."  And she says, "Don't you remember, Sir, that when the clock
+struck five this afternoon, you gave Master Galileo a rap on the
+head with your telescope, and told him to get out of the way?"
+"Yes, I do," says the old gentleman.  "Then," says the waiting-
+maid, "I say he's the man, and the prophecy is fulfilled."  The old
+gentleman staggers at this, as if somebody had hit him a blow on
+the chest, and cries, "He! why he's a boy!"  Upon that, gentlemen,
+the Salamander cries out that he'll be twenty-one next Lady-day;
+and complains that his father has always been so busy with the sun
+round which the earth revolves, that he has never taken any notice
+of the son that revolves round him; and that he hasn't had a new
+suit of clothes since he was fourteen; and that he wasn't even
+taken out of nankeen frocks and trousers till he was quite
+unpleasant in 'em; and touches on a good many more family matters
+to the same purpose.  To make short of a long story, gentlemen,
+they all talk together, and cry together, and remind the old
+gentleman that as to the noble family, his own grandfather would
+have been lord mayor if he hadn't died at a dinner the year before;
+and they show him by all kinds of arguments that if the cousins are
+married, the prediction comes true every way.  At last, the old
+gentleman being quite convinced, gives in; and joins their hands;
+and leaves his daughter to marry anybody she likes; and they are
+all well pleased; and the Gifted as well as any of them.
+
+'In the middle of this little family party, gentlemen, sits Tom all
+the while, as miserable as you like.  But, when everything else is
+arranged, the old gentleman's daughter says, that their strange
+conduct was a little device of the waiting-maid's to disgust the
+lovers he had chosen for 'em, and will he forgive her? and if he
+will, perhaps he might even find her a husband - and when she says
+that, she looks uncommon hard at Tom.  Then the waiting-maid says
+that, oh dear! she couldn't abear Mr. Grig should think she wanted
+him to marry her; and that she had even gone so far as to refuse
+the last lamplighter, who was now a literary character (having set
+up as a bill-sticker); and that she hoped Mr. Grig would not
+suppose she was on her last legs by any means, for the baker was
+very strong in his attentions at that moment, and as to the
+butcher, he was frantic.  And I don't know how much more she might
+have said, gentlemen (for, as you know, this kind of young women
+are rare ones to talk), if the old gentleman hadn't cut in
+suddenly, and asked Tom if he'd have her, with ten pounds to
+recompense him for his loss of time and disappointment, and as a
+kind of bribe to keep the story secret.
+
+'"It don't much matter, Sir," says Tom, "I ain't long for this
+world.  Eight weeks of marriage, especially with this young woman,
+might reconcile me to my fate.  I think," he says, "I could go off
+easy after that."  With which he embraces her with a very dismal
+face, and groans in a way that might move a heart of stone - even
+of philosopher's stone.
+
+'"Egad," says the old gentleman, "that reminds me - this bustle put
+it out of my head - there was a figure wrong.  He'll live to a
+green old age - eighty-seven at least!"
+
+'"How much, Sir?" cries Tom.
+
+'"Eighty-seven!" says the old gentleman.
+
+'Without another word, Tom flings himself on the old gentleman's
+neck; throws up his hat; cuts a caper; defies the waiting-maid; and
+refers her to the butcher.
+
+'"You won't marry her!" says the old gentleman, angrily.
+
+'"And live after it!" says Tom.  "I'd sooner marry a mermaid with a
+small-tooth comb and looking-glass."
+
+'"Then take the consequences," says the other.
+
+'With those words - I beg your kind attention here, gentlemen, for
+it's worth your notice - the old gentleman wetted the forefinger of
+his right hand in some of the liquor from the crucible that was
+spilt on the floor, and drew a small triangle on Tom's forehead.
+The room swam before his eyes, and he found himself in the watch-
+house.'
+
+'Found himself WHERE?' cried the vice, on behalf of the company
+generally.
+
+'In the watch-house,' said the chairman.  'It was late at night,
+and he found himself in the very watch-house from which he had been
+let out that morning.'
+
+'Did he go home?' asked the vice.
+
+'The watch-house people rather objected to that,' said the
+chairman; 'so he stopped there that night, and went before the
+magistrate in the morning.  "Why, you're here again, are you?" says
+the magistrate, adding insult to injury; "we'll trouble you for
+five shillings more, if you can conveniently spare the money."  Tom
+told him he had been enchanted, but it was of no use.  He told the
+contractors the same, but they wouldn't believe him.  It was very
+hard upon him, gentlemen, as he often said, for was it likely he'd
+go and invent such a tale?  They shook their heads and told him
+he'd say anything but his prayers - as indeed he would; there's no
+doubt about that.  It was the only imputation on his moral
+character that ever I heard of.'
+
+
+
+
+
+End of Project Gutenberg's Etext of The Lamplighter, by Charles Dickens
+

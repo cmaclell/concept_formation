@@ -1,0 +1,1594 @@
+*****The Project Gutenberg Etext of Somebody's Little Girl*****
+#1 in our series by Martha Young
+A short story
+
+
+Copyright laws are changing all over the world, be sure to check
+the copyright laws for your country before posting these files!!
+
+Please take a look at the important information in this header.
+We encourage you to keep this file on your own disk, keeping an
+electronic path open for the next readers.  Do not remove this.
+
+
+**Welcome To The World of Free Plain Vanilla Electronic Texts**
+
+**Etexts Readable By Both Humans and By Computers, Since 1971**
+
+*These Etexts Prepared By Hundreds of Volunteers and Donations*
+
+Information on contacting Project Gutenberg to get Etexts, and
+further information is included below.  We need your donations.
+
+
+
+Somebody's Little Girl
+
+by Martha Young
+
+October, 1996  [Etext #702]
+
+
+
+*****The Project Gutenberg Etext of Somebody's Little Girl*****
+*****This file should be named slgrl10.txt or slgrl10.zip******
+
+Corrected EDITIONS of our etexts get a new NUMBER, slgrl11.txt.
+VERSIONS based on separate sources get new LETTER, slgrl10a.txt.
+
+
+We are now trying to release all our books one month in advance
+of the official release dates, for time for better editing.
+
+Please note:  neither this list nor its contents are final till
+midnight of the last day of the month of any such announcement.
+The official release date of all Project Gutenberg Etexts is at
+Midnight, Central Time, of the last day of the stated month.  A
+preliminary version may often be posted for suggestion, comment
+and editing by those who wish to do so.  To be sure you have an
+up to date first edition [xxxxx10x.xxx] please check file sizes
+in the first week of the next month.  Since our ftp program has
+a bug in it that scrambles the date [tried to fix and failed] a
+look at the file size will have to do, but we will try to see a
+new copy has at least one byte more or less.
+
+
+Information about Project Gutenberg (one page)
+
+We produce about two million dollars for each hour we work.  The
+fifty hours is one conservative estimate for how long it we take
+to get any etext selected, entered, proofread, edited, copyright
+searched and analyzed, the copyright letters written, etc.  This
+projected audience is one hundred million readers.  If our value
+per text is nominally estimated at one dollar then we produce $2
+million dollars per hour this year as we release thirty-two text
+files per month:  or 400 more Etexts in 1996 for a total of 800.
+If these reach just 10% of the computerized population, then the
+total should reach 80 billion Etexts.
+
+The Goal of Project Gutenberg is to Give Away One Trillion Etext
+Files by the December 31, 2001.  [10,000 x 100,000,000=Trillion]
+This is ten thousand titles each to one hundred million readers,
+which is only 10% of the present number of computer users.  2001
+should have at least twice as many computer users as that, so it
+will require us reaching less than 5% of the users in 2001.
+
+
+We need your donations more than ever!
+
+
+All donations should be made to "Project Gutenberg/BU":  and are
+tax deductible to the extent allowable by law. (BU = Benedictine
+University).  (Subscriptions to our paper newsletter go to BU.)
+
+For these and other matters, please mail to:
+
+Project Gutenberg
+P. O. Box  2782
+Champaign, IL 61825
+
+When all other email fails try our Executive Director:
+Michael S. Hart <hart@pobox.com>
+
+We would prefer to send you this information by email
+(Internet, Bitnet, Compuserve, ATTMAIL or MCImail).
+
+******
+If you have an FTP program (or emulator), please
+FTP directly to the Project Gutenberg archives:
+[Mac users, do NOT point and click. . .type]
+
+ftp uiarchive.cso.uiuc.edu
+login:  anonymous
+password:  your@login
+cd etext/etext90 through /etext96
+or cd etext/articles [get suggest gut for more information]
+dir [to see files]
+get or mget [to get files. . .set bin for zip files]
+GET INDEX?00.GUT
+for a list of books
+and
+GET NEW GUT for general information
+and
+MGET GUT* for newsletters.
+
+**Information prepared by the Project Gutenberg legal advisor**
+(Three Pages)
+
+
+***START**THE SMALL PRINT!**FOR PUBLIC DOMAIN ETEXTS**START***
+Why is this "Small Print!" statement here?  You know: lawyers.
+They tell us you might sue us if there is something wrong with
+your copy of this etext, even if you got it for free from
+someone other than us, and even if what's wrong is not our
+fault.  So, among other things, this "Small Print!" statement
+disclaims most of our liability to you.  It also tells you how
+you can distribute copies of this etext if you want to.
+
+*BEFORE!* YOU USE OR READ THIS ETEXT
+By using or reading any part of this PROJECT GUTENBERG-tm
+etext, you indicate that you understand, agree to and accept
+this "Small Print!" statement.  If you do not, you can receive
+a refund of the money (if any) you paid for this etext by
+sending a request within 30 days of receiving it to the person
+you got it from.  If you received this etext on a physical
+medium (such as a disk), you must return it with your request.
+
+ABOUT PROJECT GUTENBERG-TM ETEXTS
+This PROJECT GUTENBERG-tm etext, like most PROJECT GUTENBERG-
+tm etexts, is a "public domain" work distributed by Professor
+Michael S. Hart through the Project Gutenberg Association at
+Benedictine University (the "Project").  Among other
+things, this means that no one owns a United States copyright
+on or for this work, so the Project (and you!) can copy and
+distribute it in the United States without permission and
+without paying copyright royalties.  Special rules, set forth
+below, apply if you wish to copy and distribute this etext
+under the Project's "PROJECT GUTENBERG" trademark.
+
+To create these etexts, the Project expends considerable
+efforts to identify, transcribe and proofread public domain
+works.  Despite these efforts, the Project's etexts and any
+medium they may be on may contain "Defects".  Among other
+things, Defects may take the form of incomplete, inaccurate or
+corrupt data, transcription errors, a copyright or other
+intellectual property infringement, a defective or damaged
+disk or other etext medium, a computer virus, or computer
+codes that damage or cannot be read by your equipment.
+
+LIMITED WARRANTY; DISCLAIMER OF DAMAGES
+But for the "Right of Replacement or Refund" described below,
+[1] the Project (and any other party you may receive this
+etext from as a PROJECT GUTENBERG-tm etext) disclaims all
+liability to you for damages, costs and expenses, including
+legal fees, and [2] YOU HAVE NO REMEDIES FOR NEGLIGENCE OR
+UNDER STRICT LIABILITY, OR FOR BREACH OF WARRANTY OR CONTRACT,
+INCLUDING BUT NOT LIMITED TO INDIRECT, CONSEQUENTIAL, PUNITIVE
+OR INCIDENTAL DAMAGES, EVEN IF YOU GIVE NOTICE OF THE
+POSSIBILITY OF SUCH DAMAGES.
+
+If you discover a Defect in this etext within 90 days of
+receiving it, you can receive a refund of the money (if any)
+you paid for it by sending an explanatory note within that
+time to the person you received it from.  If you received it
+on a physical medium, you must return it with your note, and
+such person may choose to alternatively give you a replacement
+copy.  If you received it electronically, such person may
+choose to alternatively give you a second opportunity to
+receive it electronically.
+
+THIS ETEXT IS OTHERWISE PROVIDED TO YOU "AS-IS".  NO OTHER
+WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED, ARE MADE TO YOU AS
+TO THE ETEXT OR ANY MEDIUM IT MAY BE ON, INCLUDING BUT NOT
+LIMITED TO WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A
+PARTICULAR PURPOSE.
+
+Some states do not allow disclaimers of implied warranties or
+the exclusion or limitation of consequential damages, so the
+above disclaimers and exclusions may not apply to you, and you
+may have other legal rights.
+
+INDEMNITY
+You will indemnify and hold the Project, its directors,
+officers, members and agents harmless from all liability, cost
+and expense, including legal fees, that arise directly or
+indirectly from any of the following that you do or cause:
+[1] distribution of this etext, [2] alteration, modification,
+or addition to the etext, or [3] any Defect.
+
+DISTRIBUTION UNDER "PROJECT GUTENBERG-tm"
+You may distribute copies of this etext electronically, or by
+disk, book or any other medium if you either delete this
+"Small Print!" and all other references to Project Gutenberg,
+or:
+
+[1]  Only give exact copies of it.  Among other things, this
+     requires that you do not remove, alter or modify the
+     etext or this "small print!" statement.  You may however,
+     if you wish, distribute this etext in machine readable
+     binary, compressed, mark-up, or proprietary form,
+     including any form resulting from conversion by word pro-
+     cessing or hypertext software, but only so long as
+     *EITHER*:
+
+     [*]  The etext, when displayed, is clearly readable, and
+          does *not* contain characters other than those
+          intended by the author of the work, although tilde
+          (~), asterisk (*) and underline (_) characters may
+          be used to convey punctuation intended by the
+          author, and additional characters may be used to
+          indicate hypertext links; OR
+
+     [*]  The etext may be readily converted by the reader at
+          no expense into plain ASCII, EBCDIC or equivalent
+          form by the program that displays the etext (as is
+          the case, for instance, with most word processors);
+          OR
+
+     [*]  You provide, or agree to also provide on request at
+          no additional cost, fee or expense, a copy of the
+          etext in its original plain ASCII form (or in EBCDIC
+          or other equivalent proprietary form).
+
+[2]  Honor the etext refund and replacement provisions of this
+     "Small Print!" statement.
+
+[3]  Pay a trademark license fee to the Project of 20% of the
+     net profits you derive calculated using the method you
+     already use to calculate your applicable taxes.  If you
+     don't derive profits, no royalty is due.  Royalties are
+     payable to "Project Gutenberg Association / Benedictine
+     University" within the 60 days following each
+     date you prepare (or were legally required to prepare)
+     your annual (or equivalent periodic) tax return.
+
+WHAT IF YOU *WANT* TO SEND MONEY EVEN IF YOU DON'T HAVE TO?
+The Project gratefully accepts contributions in money, time,
+scanning machines, OCR software, public domain etexts, royalty
+free copyright licenses, and every other sort of contribution
+you can think of.  Money should be paid to "Project Gutenberg
+Association / Benedictine University".
+
+*END*THE SMALL PRINT! FOR PUBLIC DOMAIN ETEXTS*Ver.04.29.93*END*
+
+
+
+
+
+SOMEBODY'S LITTLE GIRL
+by Martha Young
+
+
+
+
+
+
+Dedication
+
+To
+Two Little Elizabeths:
+Elizabeth Young
+and
+Elizabeth Magruder
+
+
+
+
+
+SOMEBODY'S LITTLE GIRL
+
+
+
+If I were just to tell the things that Bessie Bell remembered I
+should tell you some very strange things.  Bessie Bell did not know
+whether she remembered them, or just knew them, or whether they just
+grew, those strange things in some strange country that never was
+wnywhere in the world; for when Bessie Bell tried to tell about
+those strange things great grown wise people said: ``No, no, Bessie
+Bell, there is nothing in the world like that.''
+
+So Bessie Bell just remembered and wondered.
+
+She remembered how somewhere, sometime, there was a window where you
+could look out and see everything green, little and green, and
+always changing and moving, away, away--beyond everything little,
+and green, and moving all the time.  But great grown wise folks
+said: ``No, there is no window in all the world like that.''
+
+And once when some one gave Bessie Bell a little round red apple she
+caught her breath very quickly and her little heart jumped and then
+thumped very loudly (that is the way it seemed to her) and she
+remembered: Little apple trees all just alike, and little apple
+trees in rows all just alike on top of those and again on top of
+those until they came to a great row of big round red apples on top
+of all.
+
+Rut great grown people said: ``No, no, Bessie Bell, there are no
+apple trees in all the world like that.''
+
+And one time Bessie Bell was at a pretty house and somebody sat her
+on a little low chair and said: `` Keep still, Bessie Bell.''
+
+She kept still so long that at last she began to be afraid to move
+at all, and she got afraid even to crook up her little finger for
+fear it would pop off loud,--she had kept still so long that all her
+round little fingers and her round little legs felt so stiff.
+
+Then one, great grown person said: ``She seems a very quiet child.''
+And the other said: ``She is a very quiet child--sometimes.''
+
+But just then Bessie Bell turned her head, and though her round
+little neck felt stiff it did not pop!--and she saw--something in
+a corner that was blue, green, and brown, and soft, and she forgot
+how afraid to move she was, and she forgot how stiff she thought she
+was, and she forgot how still she was told to be, and she jumped up
+and ran to the corner and cried out: ``Pretty! Pretty! Pretty!''
+
+One grown person took up the Thing that was blue, and green, and
+brown, and soft, and waved it to and fro, to and fro in front of
+Bessie Bell.
+
+And Bessie Bell clapped her hands, and jumped for joy, and laughed,
+and cried: ``Boo! boo! boo!''
+
+And Bessie Bell ran right into the Thing that was blue, and green,
+and brown, and soft, and she threw out her round little arms and
+clasped them about the Thing that was blue, and green, and brown,
+and soft!
+
+And she pulled it over her face, and she laughed and cried for joy--
+because she remembered--
+
+But the great grown person who had brought Bessie Bell to the pretty
+house said: ``Oh, Bessie Bell! Why, Bessie Bell!  For shame, Bessie
+Bell! How could you do so to the beautiful peacock-feather-fly-
+brush!''
+
+So Bessie Bell could only cry--and that very softly--and feel
+ashamed as she was bid, and forget what it was that she remembered.
+
+Bessie Bell might have remembered one time when a great house was
+all desolate, and when nobody or nothing at all breathed in the
+whole great big house, but one little tiny girl and one great big
+white cat, with just one black spot on its tail.
+
+The nurse that always had played so nicely with the tiny little girl
+was lying with her cheek in her hand over yonder.
+
+The Grandmother who had always talked so much to the tiny little
+girl was not talking any more.
+
+The tiny little girl was so sick that she only just could breathe
+quickly, just so--and just so--.
+
+If Bessie Bell could remember that, it was only that she remembered
+the big white cat like a big soft dream.  And she might have
+remembered how, now and then, the big cat put out a paw and touched
+the little girl's cheek, like a soft white dream-touch.
+
+And that little girl had on a night-gown that was long, and soft,
+and white, and on that little white night-gown was worked, oh so
+carefully, in linen thread: ``Bessie Bell.''
+
+Then the few people who walked about the world in Fever-time came in
+to that big house, and they took up that little tiny girl that
+breathed so softly and so quickly--just so!
+
+And they read on her little white night-gown the words written with
+the linen thread: ``Bessie Bell.''
+
+And they said: ``Let us take this little girl with us.''
+
+They put a big soft white blanket around the little girl and walked
+out of the big house with her, someone carrying her in strong arms.
+
+And the big white cat got down off the big white bed and rubbed
+himself against the bedpost, and went round and round the bed-post,
+and rubbed himself round and round the bed-post.
+
+And the tiny little girl never saw the big house, or the big soft
+white cat any more.
+
+And now when it happened that she remembered something, great grown
+people said: ``No, no, Bessie Bell, there is nothing in the world
+like that.''
+
+So she just wondered and remembered, and almost forgot what it was
+that she did remember.
+
+* * *
+* *
+*
+
+
+
+Sister Mary Felice had all the little tiny girls playing in the
+sand: that was the place that was meant for the little girls to play
+in.
+
+All the little girls had on blue checked aprons.  All the aprons had
+straps and buttons behind.
+
+For just one hour every day all the little tiny girls played in the
+sand, and while they played Sister Mary Felice sat on a willow-
+wrought bench and watched them play.
+
+Then when that hour was exactly passed Sister Angela always came
+with a basket of netted canes, an Indian basket, on her arm.  In the
+Indian basket were little cakes--such nice little cakes--always they
+had caraway seeds in them.
+
+One day Sister Mary Felice said: ``Sister Angela, did Sister
+Ignatius put too many caraway seeds in the cakes this time?''
+
+Sister Angela said: ``I think not, Sister Mary Felice.  Will you try
+one?''
+
+Sister Mary Felice said: ``I thank you, Sister Angela.''
+
+Then Sister Mary Felice took one to try.
+
+Then always Sister Angela, with the Indian basket on her arm, took
+all the little girls to the long back gallery that was latticed in.
+
+On a low shelf close against the lattice sat a row of white basins.
+
+Then all the little tiny girls washed their little tiny hands in the
+white basins.  And while they washed their little tiny hands by twos
+and by threes together, two little girls washing their hands in one
+basin together, three little girls washing their hands together,
+they all oftentimes laughed together and said:
+
+``Wash together!
+And be friends forever!
+Wash together!
+And be friends forever!''
+
+Then Sister Angela held a long pink checked towel in her hands while
+the little tiny girls came as their tiny hands were washed and wiped
+them on the pink checked towel.
+
+Then if two little girls took hold of the pink checked towel at once
+they both laughed and sang:
+
+``Don't wipe together,
+Or we'll fight
+Before night.''
+
+And the other little girls that were still washing their hands in
+the white basins on the low shelf by the back-gallery lattice sang
+over and over again:
+
+``Wash together! We'll wash together!
+And we'll be happy forever!''
+
+When all the pink clean tiny hands were wiped dry, or as nearly dry
+as little girls do wipe tiny pink hands, on the pink checked towel
+held for them by Sister Angela, then Sister Angela hung the pink
+checked towel on the lowest limb of the arbor-vita tree.  Then the
+little girls all ran to sit down in a row on the lowest step of the
+back gallery, with their little feet on the gravel below.  Sister
+Angela walked the length of the row, and gave to each little girl in
+the row a sweet tiny cake, or maybe Sister Angela walked twice down
+the row and gave to each little girl two cakes, or sometimes maybe
+she walked three times down the row, and then each little girl had
+three cakes; but no one little girl ever had more than every other
+little girl.
+
+Always Sister Angela sat a little way off from the row of the little
+girls.  She always sat on a bench under the great magnoliatree and
+watched the tiny girls as they ate their tiny cakes.
+
+And always the pink checked towel waved itself ever so softly to and
+fro on the lowest limb of the arbor-vitae-tree, for that was the way
+that pink checked towels did to help to dry themselves after helping
+to dry so many little pink fingers.  Often, so often, little brown
+sparrows came hopping to the gravel to pick up any tiny crumbs of
+cake that the little girls dropped, but you may be sure that they
+did not drop so very many, many little brown crumbs for little brown
+birds to find.
+
+But if they were dropped, even if by rare chance were the crumbs so
+large as to be nearly as large as half of a cake--why then, that
+crumb had to stay for those little birds.  It was the law! The law
+that the little girls had made for themselves, and nobody but
+themselves knew about that law--for the good of the birds.  But no
+little girl cared to disobey that law of their own that nobody but
+themselves knew about, for if one had--how dreadful it would have
+been--no little girl would have played with her until--oh, so long,
+so long--until she might at last have been forgiven!
+
+So all the little brown crumbs that the tiny little girls did drop,
+why the tiny little brown birds did pick up,--and they never said
+whether they liked caraway seeds or not!
+
+* * *
+* *
+*
+
+
+
+One day when the tiny little girls were all in a row eating cakes,
+Sister Angela, sitting on a bench under the magnolia, said quite
+suddenly: ``Good morning!''
+
+She rose up from her seat under the great magnolia.
+
+Then the little brown birds fluttered up from the gravel.
+
+Then all the little girls looked up.
+
+There stood two pretty grown-up people.
+
+And these two grown-up people had no soft white around their faces
+like the soft white around the face that Sister Angela wore, and
+they had no black veils, soft and long like the black veil that
+Sister Angela wore.  And they had no little white crosses like the
+small white cross that Sister Angela wore on the breast of her soft
+black dress.
+
+One of the pretty-grown up folks looked at one of the little tiny
+girls and said: ``And what is her name?''
+
+Sister Angela said: ``Bessie Bell was written on her little white
+night-gown, done in linen thread.''
+
+And Sister Angela said: ``Yes, we have always kept the little white
+night-gown.''
+
+And one of the pretty grown-up people said: ``Yes, that was right.
+Always to keep the little white night-gown.''
+
+And the other grown-up person said: ``And how comes that to be all
+that you know?''
+
+Sister Angela said: ``Because of the fever.''
+
+And the pretty one said: ``The dreadful fever!''
+
+Sister Angela said: ``Yes.  The dreadful fever.  It often leaves
+none in a house, and even sometimes none in a whole neighborhood to
+tell the story.''
+
+If, as Sister Angela and the pretty grown person talked, there came
+to Bessie Bell any thought of a great silent house, and a big white
+cat, with just one bit of black spot on its tail, why if such a
+thought came to Bessie Bell it came only to float away, away like
+white thistle seed--drifting away as dreams drift.
+
+When the two pretty grown ones had gone away, then Sister Angela had
+nodded her head at the row of little girls, so that they might know
+that they might go on eating their cakes, for of course the little
+girls knew that they must hold their cakes in their hands and wait,
+and not eat, when Sister Angela had shaken her head gently at them
+while she talked to the two pretty ones.  The little brown birds
+seemed to know, too, that they could come back to the gravel to look
+for crumbs again.
+
+Then, as the little girls were again eating their cakes, one little
+girl said: ``Sister Angela, were they Sisters?''
+
+Sister Angela said: ``No, they are not Sisters.''
+
+Then another little girl asked: ``Sister Angela, what were they,
+then?''
+
+Sister Angela said: ``They are only just ladies.''
+
+Then always after that Bessie Bell and the other little girls were
+glad when Only-Just-Ladies came to see them.
+
+The sun shone nearly always, or it seemed to the little girls that
+it nearly always shone, out in that large garden where they could
+play the hour in the sand, and where they could spend one hour
+eating their cakes with their feet on the gravel, and where they
+could walk behind Sister Justina on all the shell-bordered walks
+around the beds (but they must not step on the beds)--just one hour.
+If a rain came it always did surprise them: those little girls were
+always surprised when it rained! and they did not know exactly what
+to do when it rained, though they knew almost always what to do when
+the sun shone.  One day when it rained it happened that the little
+girls were all left over the one hour in the long room where all the
+rows and rows of the little arm-chairs sat, and where all the little
+girls learned to Count, and to say Their Prayers, and to Tell the
+Time, and to sing ``Angels Bright,'' and to know the A B C blocks.
+Sister Theckla, who always stayed the one hour in that room, had
+gone to say to the Sisters that the one hour was over, and that it
+was raining, and what must the little girls do now?
+
+While Sister Theckla was gone, all the little girls went to the
+windows, and all the tiny girls looked at the rain coming down,
+coming down in drops, so many drops; and so fast the drops came that
+they seemed to come in long strings of drops straight from the sky.
+
+Then one little girl laughed and began to beat on the window by
+which she stood, to beat all over it as far as her little damp pink
+fingers could reach, and to say:
+
+``Rain! Rain!
+Go to Spain!
+Rain! Rain!
+Go to Spain!
+Rain! Rain!
+Go to Spain!''
+
+And all the little girls thought that was so beautiful that they
+began to beat all over the windows, too, just as high and just as
+far as their little damp pink fingers could reach, and to sing as
+loud and as gaily as they could sing:
+
+``Rain! Rain!
+Go to Spain!''
+
+Sister Theckla and Sister Angela came to the door of the room,--and
+they were so astonished that they could only look at one another and
+say to one another: ``What do they mean?  Where did they learn
+that?''
+
+And the little girl who had taught the other little girls that much
+of the song remembered some more; and so she beat louder than ever
+on the window pane and said:
+
+``Rain, rain, rain,
+Go away!
+And come another day!''
+
+All the little girls laughed more than ever and sang louder than
+ever:
+
+``Rain, rain, rain,
+Go away!
+Come again another day!''
+
+Then Sister Angela looked at Sister Theckla and said: ``Where did
+the child learn that, do you suppose?''
+
+And Sister Theckla said: ``She is older than the others.  She must
+have learned it at home!''
+
+And Sister Angela and Sister Theckla came into the room and they
+said: ``See, now, what you have done to the windows!''
+
+Sure enough, when the little girls looked at the windows the glass
+was all dim and blurred with little damp finger-prints!
+
+* * *
+* *
+*
+
+
+
+It was one day as the sun shone as it did shine most days, that the
+same little girl who knew how to sing that song when it rained was
+running on the shell-bordered walk, holding Bessie Bell's hand and
+running, when her little foot tripped up against Bessie Bell's
+foot,--and over Bessie Bell rolled on the walk with the shell
+border.
+
+Then Bessie Bell cried and cried.
+
+And Sister Mary Felice said: ``Bessie Bell, where are you hurt?''
+
+Bessie Bell did not know where she was hurt: she only knew that she
+was so sorry to have been so happy to be running, and then to roll
+so suddenly on the walk.
+
+Then the little girl said: ``She isn't hurt at all.  She is just
+crying.''
+
+Sister Mary Felice said: ``But you threw her down.  You must tell
+her you are sorry.''
+
+Then the little girl said: ``But I didn't mean to throw her down.''
+
+``But,'' Sister Mary Felice said, ``you did trip her up, and you must
+beg her pardon.''
+
+Then Sister Theckla came to take all the little girls to the room
+where so many chairs sat in so many rows, and she too said: ``Yes,
+you must beg her pardon.''
+
+Bessie Bell was listening so that she had almost stopped crying, but
+now when Sister Story Felice and Sister Theckla both said to the
+little girl, ``Yes, you must beg pardon,'' then the little girl began
+to cry, too.
+
+Then Bessie Bell grew so sorry again, she hardly knew why, or for
+what, that she began to cry again.
+
+So then both Sisters said again: ``Yes, you should beg pardon.''
+
+But the little girl still cried, and said, ``But I didn't mean to
+trip her.''  Then she shook her head at Bessie Bell and said--because
+she just had to say it:
+
+``I beg your pardon!
+Grant me grace!
+I hope the cat will scratch your face! ''
+
+Oh! Sister Mary Felice looked at Sister Theckla, and Sister Theckla
+looked at Sister Mary Felice--and they both said: ``Where did she
+learn that?''
+
+But Bessie Bell knew that the little girl did not mean to throw her
+down, so she said, ``No, you didn't mean to do it.''
+
+She had thought she ought to say that, and she had been getting
+ready to say that before the little girl had been made to beg her
+pardon, and now that she had gotten ready she said: ``No, you didn't
+mean to do it.''
+
+Then the little girl stopped crying, too, and ran and caught Bessie
+Bell's hand again and said to her again:
+
+``I beg your pardon!
+Grant me grace!
+I hope the cat won't scratch your face!''
+
+So they went skipping down the walk together just as they had gone
+before.  Then Sister Mary Felice and Sister Theckla both said:
+``Well! Well!''
+
+* * *
+* *
+*
+
+
+
+One time it came about that Bessie Bell lay a long time in her
+little white crib-bed, and she did not know why, and she did not
+care much why.  She did not get up and play in the sand while Sister
+Mary Felice looked one hour at the little girls playing in the sand.
+
+She scarcely wondered why she did not leave the crib-bed to sit on
+the long gallery-step in a row with all the other little girls, all
+with their feet on the gravel, and all eating the tiny cakes that
+Sister Ignatius made, while Sister Angela sat on the bench under the
+magnolia-tree and looked at the row of little girls.
+
+If sometimes just at waking from fitful sleep in her crib-bed there
+came to her just a thought, or a remembrance, of a great big soft
+white cat that reached its paw out and softly touched her cheek, it
+came to her only like the touch of fancy in a big soft white dream.
+
+Often Only-Just-Ladies came and talked over her little white crib
+with Sister Helen Vincula.
+
+Bessie Bell's little fingers were no longer pink and round now; they
+lay just white, so white and small, on the white spread.  And Bessie
+Bell did not mind how quiet she was told to be, for she was too
+tired to want to make any noise at all.
+
+One day it happened that an Only-Just-Lady came and said: ``Sister
+Helen Vincula, I want to give you a ticket to carry you away to the
+high mountain, and I want you to go to stay a month in my house on
+the mountain, and I want you to carry this little sick girl with
+you.  And when you are there, Sister Helen Vincula, my bread-man
+will bring you bread, and my milk-man will bring you milk, and my
+market-man from the cove will bring you apples and eggs, and all the
+rest of the good things that come up the mountain from the warm
+caves.''
+
+``For,'' the Only-Just-Lady said, ``I want this little sick girl to
+grow well again, and I want her little arms and legs and fingers to
+get round and pink again.''
+
+Bessie Bell thought that that was a very pretty tale that the Lady
+was telling, but she did not know or understand that that tale was
+about her.  Then the Only-Just-Lady said, ``Sister Helen Vincula, it
+will do you good, too, as well as this little girl to stay in the
+high mountains.
+
+Not until all of Bessie Bell's little blue checked aprons, and all
+of her little blue dresses, and all of her little white petticoats,
+and all of her little white night-gowns, and even the tiny old
+night-gown with the linen thread name worked on it, had been put
+with all the rest of her small belongings into the old trunk with
+brass tacks in the leather, the old, old trunk that had belonged to
+Sister Helen Vincula, did Bessie Bell know that it was herself,
+little Bessie Bell, who was going away Somewhere.
+
+* * *
+* *
+*
+
+
+
+It was a very strange new world to Bessie Bell, that new world up on
+the High Mountain.
+
+She did not think the grand views off the edge of the high mountain
+so strange.  But she loved to look out on those views as she stood
+by Sister Helen Vincula on the graycliff; Sister Helen Vincula
+holding her hand very fast while they both looked down into the
+valleys and coves.  As the shadows of evening crept up to the cliff
+whereon they stood, and as those shadows folded round and round the
+points and coves, those points and caves lying below and beyond fold
+over fold, everything grew purple and violet.
+
+Everything grew so purple, and so violet, and so great, and so wide
+that it seemed sometimes to the little girl, standing on the cliff
+by Sister Helen Vincula, that she was looking right down into the
+heart of a violet as great, as wide--as great, as wide--as the whole
+world.
+
+But this did not seem so strange to Bessie Bell, for she yet
+remembered that window out of which one could see just small, green,
+moving things, and of which great grown people had told her, ``No,
+Bessie Bell, there is no such window in all the world.''
+
+So in her own way she thought that maybe after awhile that the big,
+big violet might drift away, away, and great grown people might say,
+``No, Bessie Bell, there never was a violet in all the world like
+that.''
+
+It was the people--and all the people--of that new world that seemed
+so strange to Bessie Bell.
+
+There were children, and children in all the summer cabins on that
+high mountain.
+
+And those children did not walk in rows.
+
+And those children did not do things by one hours.
+
+And those children did not wash their hands in little white basins
+sitting in rows on long back gallery benches.
+
+It was strange to Bessie Bell that those children did not sit in
+rows to eat tiny cakes with caraway seeds in them while Sister
+Angela sat on the bench under the great magnolia-tree and looked at
+the row of little girls.
+
+It was so very strange to Bessie Bell that these children wore all
+sorts of clothes--all sorts! Not just blue dresses, and blue checked
+aprons.
+
+And Bessie Bell knew, too, that those little girls in all sorts of
+clothes could not float away into that strange country of No-where
+and Never-was, where, too, the things that she remembered seemed to
+drift away--and to so nearly get lost, living only in dimming
+memory.
+
+These little girls in all sorts of clothes were real, and sure-
+enough, and nobody could ever say of them, ``There are no such
+little girls in the world,'' because sometimes when Bessie Bell would
+get to thinking, and thinking about the strangeness of them, she
+would almost wonder if she did not just remember them.  When she
+would give one just a little pinch to see if that one was a real
+sure-enough little girl, why that little girl would say, ``Don't.''
+She would say ``Don't!'' just the same as a little girl in the row of
+little girls all with blue checked aprons would say ``Don't,'' if you
+pinched one of them ever so little.
+
+There were no Sisters on that high mountain.  Sister Helen Vincula
+was the only Sister there.  That seemed very strange to Bessie Bell.
+
+One day the strangest thing of all so far happened.
+
+One little girl called another little girl with whom she was
+playing, ``Sister.''
+
+Bessie Bell laughed at that.
+
+``Oh, she is not a Sister!'' said Bessie Bell.
+
+``Yes, she is; she is my sister!'' said the little girl.
+
+``No,'' said Bessie Bell, just as great grown people said to her when
+she remembered strange things, ``No, there never was in the world a
+Sister like that!''
+
+Then the smaller of the little girls who were playing together ran
+to the larger one, and caught hold of her hand, and they stood
+together in front of Bessie Bell--they both had long black curls,
+but Bessie Bell had short golden curls--and the smaller girl said:
+``Yes, she is my sister!''
+
+And the larger girl said: ``Yes, she is, too.  She is my-own-dear-
+sister!''
+
+The smaller little girl shook her black curls and said: ``She is my
+own-dear-owny-downy-dear-sister!''
+
+In all of her life Bessie Bell had never heard anything like that.
+
+And all the other little girls who were playing joined in and said:
+``Bessie Bell doesn't know what she is talking about.  Of course you
+are sisters.  Everybody knows you are sisters!''
+
+Bessie Bell was distressed to be told that she did not know what she
+was talking about--and she knew so much about Sisters.
+
+So she began to cry, very softly.
+
+Then she stopped crying long enough to say: ``But I never saw
+Sisters like that before!''
+
+Then she took up her crying again right where she left off.
+
+Then a little boy--but he seemed a very large boy to Bessie Bell
+with his long-striped-stocking-legs--said to Bessie Bell: ``No,
+Bessie Bell, they are not Sisters like Sister Helen Vincula and the
+Sisters that you know, but they are just what they say they are--
+just own dear sisters.''
+
+Then came to Bessie Bell that knowledge that we are often times slow
+in getting: she knew all of a sudden--that she did not know
+everything.  She did not know all, even about Sisters.
+
+Because, in all that she knew or remembered or wondered about, there
+was nothing at all about that strange thing that all the little
+children, but herself, knew so well about--''Own-dear-sisters.''
+
+Another strange thing came into her mind, brought into her mind
+partly by her ears, but mostly by her eyes: There were not in this
+new world on the high mountain--perhaps there were not after all so
+many anywhere as she had thought--there were not so many Sisters
+like Sister Helen Vincula (for was not Sister Helen Vincula the only
+Sister she had seen on the mountain?).  There were not after all so
+many Sisters like Sister Angela; and Sister Mary Felice, who watched
+the little blue-checked-apron girls playing in the sand; and Sister
+Ignatius, who cooked the cakes with the caraway seeds in them; and
+Sister Theckla, who taught the little girls to Count and to Sing.
+
+Why, the whole world, surely the up-on-the mountain-world, seemed
+full of Only-Just-Ladies.
+
+Not just a Lady here and there, coming to visit with hats on, to
+talk a little to the Sisters, to look at the little girls with blue
+checked aprons on.  But here they were coming and going all the
+time, moving about, and living in the cabins, walking everywhere
+with or without hats on, standing on the gray cliffs, and looking
+down--maybe into the heart of a worldwide violet there, off the edge
+of the cliff, such as Bessie Bell saw or fancied she saw.
+
+So many Ladies.
+
+Bessie Bell leaned against the little fluted post of the gallery to
+the cabin that she and Sister Helen Vincula lived in, and decided to
+herself that, strange as it was, yet was it true that the whole
+world was full of--Ladies.
+
+There were yet stranger things for Bessie Bell to learn.
+
+She had not for long played with those many little girls in all
+sorts of clothes, and with larger girls, and with boys,--some with
+short-striped-stocking-legs and some with long-striped-stocking-
+legs,--before she heard one child say: ``Mama says she will take me
+to Sweet Fern Cave to-morrow.''
+
+Or perhaps it was another child who said: ``Mama won't let me wade
+in the branch.''
+
+Or another child said: ``Mama says I can have a party for all the
+little girls and boys on the mountain next Friday!''
+
+Then another little child said: ``My Mama has made me a beautiful
+pink dress, and I will wear that to your party.''
+
+Mama?  My Mama?
+
+Bessie Bell leaned against the little fluted post of the gallery to
+the cabin where she and Sister Helen Vincula lived, and thought a
+great deal about that.
+
+And Bessie Bell wondered a great deal what that could mean: Mama?
+My Mama?
+
+There were strange new things in this world.
+
+Bessie Bell almost forgot to remember now, because every day was so
+full of such strange new things to know.
+
+Mama?  My Mama?
+
+Bessie Bell did a great deal of thinking about that.
+
+One day the little children were playing at building rock chimneys.
+
+There was not much sand there for little children to play in, so
+that the children often built rock chimneys, and rock tables, and
+rock fences.
+
+As they were playing one little girl suddenly left the playground
+and ran, calling: ``Mama! Mama! Come here; come this way, and see
+the chimney we have built!''
+
+Bessie Bell turned quickly from play and looked after the little
+girl who was running across the playground to where three ladies
+were standing.
+
+The little girl caught the dress of one of the ladies, and came
+pulling at her dress and bringing her across the ground to see the
+stone chimney, and the little girl kept saying:
+
+``Look, Mama! See, Mama! Isn't it a grand chimney? Won't it 'most
+hold smoke?''
+
+Bessie Bell stood still with her little hands--they were beginning
+to be round pink little hands again, now--clasped in front of her
+and wondered.
+
+``See, Mama! Look, Mama!'' cried the little girl.
+
+``Why does she say: Mama?'' asked Bessie Bell, because she just
+wondered, and wondered--and she did not know.
+
+``Because it is her Mama,'' said a child who had just brought two
+more rocks to put on the chimney.
+
+``Oh,'' said Bessie Bell.
+
+That lady who was the little girl's Mama looked much as all the
+ladies looked.
+
+``Are all Ladies Mamas?'' asked Bessie Bell.
+
+She hoped the child who had brought the two rocks would not laugh,
+for Bessie Bell knew she would cry if she did.
+
+The little girl did not laugh at all.  She was trying so carefully
+to put the last rock on top of the stone chimney, she said: ``No,
+Bessie Bell: some are Mamas, and some are only just Ladies.''
+
+There.  There it was again: Only-Just-Ladies.
+
+Bessie Bell wondered how to tell which were Mamas, and which were
+Ladies--just Ladies.
+
+Very often after that day she watched those who passed the cabin
+where she and Sister Helen Vincula lived, and wondered which were
+Mamas--
+
+And which were Ladies.
+
+There was no rule of old or young by which Bessie Bell could tell.
+
+Nor was it as one could tell Sisters from Just-Ladies by a way of
+dress.  For Sisters, like Sister Helen Vincula, wore a soft white
+around the face, and soft long black veils, and a small cross on the
+breast of the dress: so that even had any not known the difference
+one could easily have guessed.
+
+But for Ladies and Mamas there were none of these differences.
+
+But Bessie Bell looked and looked and wondered, but her eyes brought
+to her no way of knowing.
+
+Bessie Bell could at length think of only one way to find out the
+difference, and that was to ask--to let her ears help her eyes to
+bring to her some way of knowing.
+
+One day, a dear old lady with white curls all around under her
+bonnet stopped near the playground and called Bessie Bell to her and
+gave her some chocolate candy, every piece of candy folded up in its
+own white paper.
+
+Bessie Bell said: ``Thank you, ma'am.''
+
+Then as the lady still stood by the playground Bessie Bell asked
+her: ``Are you a Lady, ma'am ?''
+
+``I have been called so,'' said the lady, smiling down at Bessie
+Bell.
+
+``Or are you a Mama?'' asked Bessie Bell.
+
+``Ah, said the lady; ``I am a Mama, too, but all my little girls
+have grown up and left me.''
+
+Bessie Bell wondered how they could have done that, those little
+girls.  But she saw, and was so glad to see, that this lady was very
+wise, and that she understood all the things that little girls
+wonder about.
+
+But though there was a difference, a very great difference, between
+Mamas and Ladies it was very hard to tell--unless you asked.
+
+One day a large fat lady took Bessie Bell on her lap.  That was very
+strange to Bessie Bell--to sit on top of anybody.
+
+And the lady made a rabbit, and a pony, and a preacher, all out of a
+handkerchief and her nice fat fingers.  And then she made with the
+same handkerchief and fingers a Mama holding a Baby.
+
+Then Bessie Bell looked up at her with her wondering eyes and asked:
+``Are you a Lady--''
+
+``Bless my soul!'' cried the lady. ``Do you hear this child?  And
+now, come to think of it, I don't know whether I am a lady or not--''
+
+And the lady laughed until Bessie Bell felt quite shaken up.
+
+``Or are you a Mama?'' asked Bessie Bell, when it seemed that the
+lady was about to stop laughing.
+
+``So that is it?'' asked the lady, and she seemed about to begin
+laughing again.
+
+``Yes, I am a Mama, and I have three little girls about as funny as
+you are.''
+
+Another time a lady passed by the cabin where Bessie Bell stood
+leaning against the little fluted white post of the gallery, and
+said:
+
+``Good morning, Bessie Bell.  I am Alice's Mama.''
+
+That made things so simple, thought Bessie Bell.  This lady was a
+Mama.  And she was Alice's Mama.
+
+Bessie Bell wished that all would tell in that nice way at once
+whether they were Mamas or Just-Ladies.
+
+The next lady who passed by the cabin also stopped to talk to Bessie
+Bell.
+
+And Bessie Bell asked: ``Are you a Mama or Only-Just-A-Lady?''
+
+``I am only just a lady,'' the lady said, patting Bessie Bell's
+little tiny hand.  And it was easy to see that, in Bessie Bell's
+mind, though Only-Just-Ladies were kind and sweet, Mamas were far
+greater and more important beings.
+
+One night, when Sister Helen Vincula had put Bessie Bell to bed in
+the small bed that was not a crib-bed, though like that she had
+slept in before she had come to the high mountain, Bessie Bell still
+lay wide awake.
+
+Her blue eyes were wide open and both of her pink little hands were
+above her head on the pillow.  She was thinking, and thinking, and
+she forgot that she was thinking her thinking aloud, and she said:
+
+``Alice has a mama.  Robbie has a mama.  Katie has a mama.  Where is
+Bessie Bell's mama?  Never mind: Bessie Bell will find a mama.''
+
+Then Sister Helen Vincula, who was wide awake, too, said:
+
+``Ah me, ah me.''
+
+Bessie Bell said: ``Sister Helen Vincula, did you call me?''
+
+Sister Helen Vincula said:
+
+``No, child: go to sleep.''
+
+* * *
+* *
+*
+
+
+
+The next day was the day for Sister Helen Vincula and Bessie Bell to
+leave the high, cool mountain.  They were to leave the little cabin
+where the lady had told them to live until they had gotten well
+again.
+
+So when their leaving day came Sister Helen Vincula put a clean
+stiff-starched blue-checked apron on Bessie Bell, and they walked
+together to the Mall where the band was playing.
+
+Bessie Bell was always so glad when Sister Helen Vincula took her to
+the Mall in the afternoon when the band played.
+
+All the little children went every afternoon in their prettiest
+dresses to the Mall where the band played.
+
+Because in the afternoon the band played just the sort of music that
+little girls liked to hear.
+
+Every afternoon all the nurses came to the Mall and brought all the
+babies, and the nurses rolled the babies up and down the sawdust
+walks in the pretty baby-carriages, with nice white, and pink, and
+blue parasols over the babies' heads.
+
+That afternoon Sister Helen Vincula stayed a long time with Bessie
+Bell, on the Mall, sitting by her on the stone bench and listening
+to the gay music, and looking at the children in their prettiest
+clothes, and at the nurses rolling the babies in the pretty
+carriages with the beautiful pink, and white, and blue parasols over
+the babies' heads.
+
+Then Sister Helen Vincula said: ``Bessie Bell, I am going across the
+long bridge to see some ladies and to tell them Good-bye, because we
+are going away tomorrow.
+
+And Sister Helen Vincula said: ``Now, will you stay right here on
+this stone bench till I come back for you?''
+
+Bessie Bell said, ``Yes, Sister Helen Vincula.''
+
+So Sister Helen Vincula went away across the long bridge to see the
+ladies and to tell them Good-bye.
+
+Bessie Bell did not know much about going away, and she did not
+understand about it at all, so she did not care at all about it.
+
+She just sat on the stone bench with her little pink hands folded on
+her blue checked apron, and looked at the children in their
+prettiest clothes, and at the babies, and at the parasols.
+
+She loved so to look, and she loved so to listen to the pretty gay
+music that she did not notice that a lady had come to the stone
+bench, and had seated herself just where Sister Helen Vincula had
+sat before she went to see the ladies and to tell them Good-bye.
+
+There were many other ladies on the Mall, and many ladies passed in
+their walk by the stone bench where Bessie Bell and the lady sat.
+
+Everybody loved to come to the Mall in the afternoon when the band
+played. Everybody loved to hear the gay music.  Everybody loved to
+see the children in their prettiest clothes, and to see all the
+nurses rolling the babies in the carriages with the pretty parasols.
+
+And one of the ladies passing by looked over to the stone bench
+where Bessie Bell sat with her hands folded on her blue checked
+apron, and where the lady had seated herself just as Sister Helen
+Vincula had sat before she went across the long bridge.
+
+And the lady said, as she passed by and looked: ``Striking
+likeness.''
+
+Another lady with her said: ``Wonderful!''
+
+And another one with them said: ``Impossible! But strange indeed--''
+
+Bessie Bell did not notice what the ladies said, but because they
+looked so attentively to where she sat on the stone bench her
+attention was turned the way their eyes turned as they talked in low
+tones and looked attentively passing by.
+
+So when they had passed by, Bessie Bell turned and looked to the
+other end of the bench where the lady sat.
+
+Bessie Bell was so surprised at the first look that she hardly knew
+what to think.
+
+The lady did not look like Sister Helen Vincula, oh, not at all; but
+the veil that she wore was soft and black like that that Sister
+Helen Vincula wore.  The dress that the lady wore was black also,
+but it looked as if it were stiff and very crisp, and not soft like
+the dress that Sister Helen Vincula wore.  Bessie Bell did not mean
+to be rude, but she reached out one tiny hand and took hold of the
+lady's dress, just a tiny pinch of it.
+
+Yes, it was very crisp.
+
+Then the lady turned and looked at Bessie Bell.
+
+Then Bessie Bell was still more surprised, for there was something
+white under her veil.  Not white all round the face like that Sister
+Helen Vincula wore, but soft crinkly white just over the lady's soft
+yellow hair.
+
+Also on the breast of her black dress was a cross, but not white
+like the cross that Sister Helen Vincula wore.  No, this cross was
+shining very brightly, and it was very golden in the sunlight,--and--
+somehow, somehow,--Bessie Bell knew just how that cross felt,--she
+knew without feeling it.  She did not have to feel it as she had
+felt the dress.
+
+Bessie Bell looked and thought.  She thought this lady looked like a
+Sister--and yet there was a difference.  She looked also like Just-
+A-Lady, and she also looked grand and important enough for a Mama.
+
+Bessie Bell looked and thought, but she could not tell just exactly
+what this lady was.
+
+It was best that she should ask, and then she would surely know.
+
+So she asked: ``Are vou a Lady, ma'am?''
+
+``I hope so, little girl,'' the lady said.
+
+``I thought, maybe, you were a Sister,'' said Bessie Bell.
+
+``No,'' said the lady.
+
+``Like Sister Mary Felice, and Sister Angela, and Sister Helen
+Vincula,'' said Bessie Bell.
+
+``No,'' said the lady.
+
+``Are you a Mama, then?'' asked Bessie Bell.
+
+The lady looked as if she were going to cry.
+
+But Bessie Bell could see nothing to cry about.  The band was still
+playing ever so gaily, and all the little children looked so
+beautiful and so happy, all playing and running hither and thither
+on the sawdust walks, that it was good just to look at them.
+
+But on the instant Bessie Bell remembered how sorrowful it was to
+cry when you could not understand things, so she quickly reached out
+her little pink hand and laid it on the lady's hand--just because
+she knew how sorrowful it felt to feel like crying and not to know.
+
+``You see,'' said Bessie Bell gently, as she softly patted the lady's
+hand, ``you see, you do look something like a Sister,--but,'' said
+Bessie Bell, ``I believe you do look more like a Mama.''
+
+``Little girl,'' said the lady, ``what do you mean?''
+
+And she still looked as if she might cry.
+
+``Yes,'' said Bessie Bell, for she had begun to think very hard,
+``Alice has a mama.  Robbie has a mama.  Lucy has a mama.  Everybody
+has a mama.  Never mind, Bessie Bell will find a mama--''
+
+``Little girl,'' said the lady, ``why do you say, Bessie Bell--?''
+
+When the lady said that it seemed to Bessie Bell that she heard
+something sweet--something away off beyond what the band was
+playing, so she just clapped her hands and laughed out loud, and
+said over and over as if it were a little song:
+
+``Bessie Bell! Bessie, Bessie, Bessie Bell!''
+
+But the lady at her side looked down at the child as if she were
+afraid.  Bessie Bell knew how sorrowful it was to be afraid, so she
+stopped patting her hands and laughing,--for she didn't know why she
+had begun to do it--and she laid her hand again on the lady's hand,
+just because she knew how sorrowful it was to be afraid.
+
+But Bessie Bell could not see anything to be afraid of: the band was
+playing just as gaily as ever, and the children, and the nurses, and
+the babies, and the parasols were as gay as ever.
+
+``Whereis your mama?'' asked the lady, taking fast hold of the little
+hand that patted her hand.
+
+``Everybody has a mama--never mind--''
+
+``But where is your mama?'' asked the lady again.
+
+Bessie Bell had begun to wonder and so had forgotten to answer.
+
+``Child, where is your mama?'' said the lady again, still holding
+fast to Bessie Bell's hand.
+
+``But--I don't know,'' said Bessie Bell.
+
+Then the lady looked as if she had begun to wonder, too, and she
+seemed to be looking away off; away off, but how closely she held
+Bessie Bell's hand--closer than Sister Angela, or Sister Theckla, or
+even Sister Helen Vincula, or Sister Justina--
+
+Then Bessie Bell began to wonder still more, and to remember, as the
+lady held fast to her little fingers.  She began to talk her
+thinking out loud, and she said: ``Yes, there was a window--where
+everything was green, and, small, and moving--but Sister Justina
+said there was not any window like that in the whole world--''
+
+The lady held Bessie Bell's hand very hard, and she said--softly, as
+if she, too, was talking her thinking aloud:
+
+``Yes, there was a window like that in the world, for just outside
+the nursery-window there grew a Pride of China Tree, and it filled
+all the window with small, green, moving leaves--''
+
+Then Bessie Bell just let the lady draw her up close, and she leaned
+up against the lady.
+
+She felt so happy now, for she knew she had found the Wisest Woman
+in the world, for this lady knew the things that little girls only
+could remember.  If she had thought about it she would have told the
+lady about the tiny apple-trees with the very, very small apples on
+them, and other rows of apple-trees over those, and other rows on
+top of those, and on top of all a row of big round red apples.
+
+Then the lady might have said: Yes, there were apple-trees like that
+in the world, for all the nursery walls were papered like that, with
+a row of big round red apples at the top.
+
+But Bessie Bell did not think of or remember that then; she just
+leaned up against the lady and swung one of her little feet up and
+down, back and forth, as she sat on the stone bench: she was so
+happy to have met the Wisest Woman in the world.
+
+The people who passed by looked, and turned to look again, at the
+little girl in the stiff-starched, faded blue checked apron leaning
+up against the lady in the crisp, dull silk.
+
+But Bessie Bell did not look at anybody who passed.
+
+And the lady did not look at anybody who passed.
+
+And the band kept on playing gay music.
+
+It was not very long before Sister Helen Vincula came back from
+seeing the ladies across the long bridge, and from telling them
+Good-bye.  As soon as she saw Bessie Bell leaning up against the
+lady she cried:
+
+``Why, Bessie Bell! ''
+
+Bessie Bell said, ``Sister Helen Vincula,'' and she knew she had done
+something wrong, but she could only wonder what.
+
+But the lady said very quickly,- and she held Bessie Bell's hand
+even harder than before,--she said:
+
+``Sister Helen Vincula, I must ask you something--''
+
+Sister Helen Vincula and the lady talked a long time.
+
+Bessie Bell did not listen very much to what they said.
+
+She did not lean up against the lady now, but she sat close.  Sister
+Helen Vincula did not seem to mind that.
+
+She did not swing her foot to and fro now, but she still felt very
+contented and happy to have met the very Wisest Woman.
+
+When she did listen a little she heard the lady say:
+
+``There came news that my husband was ill in Mobile, and I feared
+that it was of the Dreadful Fever, and I hurried there so that I
+could get to him before the Dreadful Quarantines were put on.  I
+felt all safe about the baby, for I left her with my mother and the
+faithful nurse who had been my nurse, too.  But when the worst had
+come and was over,--and it was the Dreadful Fever,--then I tried to
+get back to my home; but I could not for many, many days, because
+the Dreadful Quarantines were on.  Then at last I did get there--I
+slipped up secretly by water.  All were gone. I could find no one
+who could tell me anything.  I could find no one who knew anything.
+The house was wide open.  There was no sign of life, but that the
+cat came and rubbed up against me, and walked round and round me.
+The Dreadful Fever was everywhere, and nobody could tell me
+anything; and I searched everywhere, always and always alone--there
+was no one to help me: everyone was trying to save from the Dreadful
+Fever--''
+
+Bessie Bell did not know what all that was about, but she felt so
+sorry for the lady that she squeezed down ever so softly on her hand
+that held her own still so tightly.
+
+Sister Helen Vincula wiped her eyes.
+
+The lady kept looking away off, but still held Bessie Bell's hand in
+hers.
+
+Then Sister Helen Vincula said: ``We are going away to-morrow.''
+
+But the lady held fast to Bessie Bell's hand and said: ``Not this
+little girl.''
+
+``Oh,'' said Sister Helen Vincula, ``but she is in my charge, and so
+what can I do!''
+
+And the lady said: ``I cannot let her leave me--not ever.''
+
+But Sister Helen Vincula said: ``Oh, madam, you do not know.  No
+matter what we hope, we do not know--''
+
+But the lady held still faster to Bessie Bell's hand.
+
+``Oh,'' said Sister Helen Vincula, ``I have a thought! Come to our
+cabin with me.''
+
+So they went.
+
+And Bessie Bell walked between Sister Helen Vincula and the lady.
+
+And they each held one of her little pink hands.
+
+When they were at the cabin Sister Helen Vincula opened the old
+trunk with the brass tacks on it, and she went down to the very
+bottom of it, unpacking as she went.  For the old trunk was almost
+entirely packed for the going away to-morrow.  Then Sister Helen
+Vincula took out, from almost the bottom of the trunk, the little
+white night-gown that had ``Bessie Bell'' written on it with linen
+thread.
+
+And Sister Helen Vincula laid the little white night-gown across the
+lady's lap.
+
+Then the lady read the name written with the linen thread.
+
+The lady said: ``I worked this name with my own hands.''
+
+She drew Bessie Bell closer to her, and she said: ``Sister Helen
+Vincula, can you doubt?''
+
+Bessie Bell stood contentedly where the lady held her, and she
+looked first at the night-gown and then at the lady, then at Sister
+Helen Vincula.  She did not know or care what it was all about--she
+scarcely wondered.
+
+``Sister Helen Vincula,'' said the lady, ``I know past all doubting
+that I worked this name.  You believe that.  Much more past all
+doubting do you not know--You must know--''
+
+``Ah,'' said Sister Helen Vincula, ``I hope with you.'' She reached
+for the little night-gown, and she smoothed it in her fingers.
+``Ah,'' she said, ``the child has grown since she has been with us,
+so much, but the little gown--it looks--really smaller to me--
+
+But the lady was not listening to Sister Helen Vincula.  She had her
+arms about Bessie Bell's shoulders and was looking into her face.
+
+``I am glad I brought the little gown,'' Sister Helen Vincula was
+saying; ``the child was so ill, so fearfully thin, I feared--it was
+only a fancy--I feared--''
+
+``No, no, no,'' cried the lady, drawing Bessie Bell closer.
+
+``Now nearly two years she has been with us,'' said Sister Helen
+Vincula.
+
+``She was just old enough to be put to the table in a high chair,''
+said the lady.  ``Ah, how she did laugh and crow and jump when her
+father took the peacock-feather-fly-brush from the maid, and waved
+it in front of her!  She would seize the ends of the feathers, and
+laugh and crow louder than ever, and hide her laughing little face
+deep into the feathers--Ah me--''
+
+But Bessie Bell said nothing, nor remembered anything.  For she did
+not know that the lady was talking of something green, and blue, and
+soft, and brown.
+
+And it was Sister Justina, and not Sister Helen Vincula, who had
+told her to be ashamed when she had cried: Pretty! Pretty! Pretty!
+as the something green, and blue, and soft, and brown was waved to
+and fro in front of her until she seized it and buried her little
+face in it for the joy--of remembering--
+
+So Sister Helen Vincula did not know, and Bessie Bell did not
+remember, while the lady talked.
+
+Only long after, when Bessie Bell grew much larger, it happened that
+whenever she saw an old-fashioned peacock-feather-fly-brush--at
+first, just for a second, she felt very glad; and then, just for a
+second, she felt very sorry; and she never knew or could remember
+why.  She forgot after awhile how she had been so full of sorrow
+when Sister Justina said, Be Ashamed, and she could no longer
+remember why she was glad; only a feeling of both was left--and she
+could not tell how or why.
+
+But the lady would not let Bessie Bell get far from her, and Bessie
+did not care to go far from her.  She stood with her little pink
+hands folded, and looked up at the lady who held to her so closely.
+
+Sister Helen Vincula said: ``It was Sister Theckla who spent that
+summer with the sick, and it was Sister Theckla who brought the
+child to us.  Can you not go home with us?  Or I could write to you
+at once--''
+
+``No,'' said the lady. ``I will go.  The child shall not leave me--'
+
+``And we will talk to Sister Theckla, and she will tell us all that
+she knows, and then--God willing--we shall know all.''
+
+The lady said: ``Yes, we will all go together.  We will go at once.''
+
+And so it was that when Sister Theckla had told all that she knew,
+then the lady knew (as she always had said she had known), past all
+doubting, that Bessie Bell had really found what she most wished
+for.
+
+But we do not know how long it was before Bessie Bell really
+understood that the Wisest Woman in the world, who knew what little
+girls had almost forgotten how to remember, was her own Mother.
+
+* * *
+* *
+*
+
+
+
+When all the people on the high, cool mountains heard about all that
+the lady knew, and all that Sister Theckla told, and all that Bessie
+Bell had found, they were all as glad as they could be.
+
+And when the boy with the long-striped-stocking-legs heard all about
+it he said: ``That is fine!  Bessie Bell said that she would find a
+Mama--and she has!''
+
+
+
+
+
+End of The Project Gutenberg Etext of Somebody's Little Girl
+
