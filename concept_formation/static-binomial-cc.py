@@ -18,7 +18,7 @@ from preprocess_text import load_text, stop_words
 MODEL_SAVE_PATH = join(dirname(__file__), 'saved_model')
 SAVE = True
 LOAD = False
-TREE_RECURSION = 9000
+TREE_RECURSION = 90000000
 ca_key = '#Ctxt#'
 
 
@@ -89,7 +89,7 @@ class ContextualCobwebTree(CobwebTree):
     def fit_to_text(self, text):
         ctxt_nodes = []
 
-        for anchor_idx, anchor_wd in tqdm(enumerate(text)):
+        for anchor_idx, anchor_wd in tqdm(list(enumerate(text))):
             if self.log_times:
                 start = timeit.default_timer()
             while ((len(ctxt_nodes) < anchor_idx + self.window + 1) and
@@ -252,6 +252,8 @@ class ContextualCobwebTree(CobwebTree):
         while sum([(option in self.__get_anchor_counts(concept))
                    for option in options]) < options_needed:
             concept = concept.parent
+            if concept is None:
+                raise ValueError('None of the options have been seen')
 
         return max(options,
                    key=lambda opt: self.__get_anchor_counts(concept)[opt])
@@ -278,10 +280,24 @@ class ContextualCobwebNode(CobwebNode):
         if other_node:
             self.tree = other_node.tree
             self.parent = other_node.parent
-            self.update_counts_from_node(other_node, track)
+            self.set_counts_from_node(other_node, track)
 
             self.children.extend(
                 self.__class__(child) for child in other_node.children)
+
+    def shallow_copy(self):
+        """
+        Create a shallow copy of the current node (and not its children)
+        This can be used to copy only the information relevant to the node's
+        probability table without maintaining reference to other elements of
+        the tree, except for the root which is necessary to calculate category
+        utility.
+        """
+        temp = self.__class__()
+        temp.tree = self.tree
+        temp.parent = self.parent
+        temp.set_counts_from_node(self)
+        return temp
 
     def create_new_child(self, instance, track=False):
         """
@@ -363,9 +379,7 @@ class ContextualCobwebNode(CobwebNode):
             if attr == ca_key:
                 self.av_counts.setdefault(ca_key, Counter())
                 for concept in instance[ca_key]:
-                    self.av_counts[ca_key][concept] = (
-                        self.av_counts[ca_key].get(concept, 0) + instance[ca_key][concept])
-
+                    self.av_counts[ca_key][concept] += instance[ca_key][concept]
                     # only count if it is a terminal, don't count nonterminals
                     if not concept.children:
                         self.n_context_elements += instance[ca_key][concept]
@@ -389,9 +403,9 @@ class ContextualCobwebNode(CobwebNode):
         for attr in node.attrs('all'):
             if attr == ca_key:
                 self.av_counts.setdefault(ca_key, Counter())
+                # self.av_counts[ca_key] += node.av_counts[ca_key]
                 for concept in node.av_counts[ca_key]:
-                    self.av_counts[ca_key][concept] = (self.av_counts[ca_key].get(concept, 0)
-                                    + node.av_counts[ca_key][concept])
+                    self.av_counts[ca_key][concept] += node.av_counts[ca_key][concept]
 
                     if track:
                         concept.register(self)
@@ -403,6 +417,17 @@ class ContextualCobwebNode(CobwebNode):
                 counts[val] = counts.get(val, 0)+node.av_counts[attr][val]
 
         # self.prune_low_probability()
+
+    def set_counts_from_node(self, node, track=False):
+        self.count = node.count
+        self.n_context_elements = node.n_context_elements
+        if track:
+            ctxt = Counter(node.av_counts[ca_key])
+            for concept in node.av_counts[ca_key]:
+                concept.register(self)
+        else:
+            ctxt = Counter(node.av_counts[ca_key])
+        self.av_counts = {attr: (dict(val) if attr != ca_key else ctxt) for attr, val in node.av_counts.items()}
 
     def prune(self):
         del_nodes = []
@@ -455,9 +480,6 @@ class ContextualCobwebNode(CobwebNode):
     def __str__(self):
         return "Concept-{}".format(self.concept_id)
 
-    def __getitem__(self, indices):
-        return True
-
     def register(self, other):
         self.registered.add(other)
 
@@ -476,8 +498,8 @@ class ContextualCobwebNode(CobwebNode):
 
         for attr in self.attrs():
             if attr == ca_key:
-                for concept in self.av_counts[ca_key]:
-                    prob = self.av_counts[ca_key][concept] / self.n_context_elements
+                for concept_count in self.av_counts[ca_key].values():
+                    prob = concept_count / self.n_context_elements
                     # context_guesses += (prob * prob)
                     # context_guesses += ((1-prob) * (1-prob))
                     context_guesses -= 2 * prob * (1-prob)
@@ -576,9 +598,9 @@ if __name__ == "__main__":
 
     for text_num in range(1):
         text = [word for word in load_text(text_num) if word not in
-                stop_words][:500]
-        run("tree.fit_to_text(text)", sort='tottime')
-        # tree.fit_to_text(text)
+                stop_words][:10000]
+
+        tree.fit_to_text(text)
     visualize(tree)
 
     # valid_concepts = tree.root.get_concepts()

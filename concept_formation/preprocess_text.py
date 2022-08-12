@@ -30,8 +30,8 @@ def load_microsoft_qa():
 
 
 def load_text(file_num):
-    with open(join(module_path, 'data_files',
-                   'texts', '%s.txt' % file_num)) as f:
+    with open(join(module_path, 'data_files', 'texts',
+                   'Holmes_Training_Data', '%s.txt' % file_num)) as f:
         for word in _preprocess(f.read()):
             yield word
 
