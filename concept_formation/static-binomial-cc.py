@@ -47,7 +47,7 @@ class ContextualCobwebTree(CobwebTree):
     def fit_to_text(self, text):
         context_nodes = []
 
-        for anchor_idx, anchor_wd in tqdm(enumerate(text)):
+        for anchor_idx, anchor_wd in enumerate(tqdm(text)):
             if self.log_times:
                 start = timeit.default_timer()
             while ((len(context_nodes) < anchor_idx + self.window + 1) and
