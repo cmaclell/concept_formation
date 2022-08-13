@@ -21,8 +21,8 @@ TREE_RECURSION = 0x10000
 
 # May segfault without this line. 0x100 is a guess at the size of stack frame.
 try:
-    resource.setrlimit(
-        resource.RLIMIT_STACK, [0x100 * TREE_RECURSION, resource.RLIM_INFINITY])
+    resource.setrlimit(resource.RLIMIT_STACK,
+                       [0x100 * TREE_RECURSION, resource.RLIM_INFINITY])
 except ValueError:
     print(Warning("Warning: Saving this model may result in a segfault"))
 setrecursionlimit(TREE_RECURSION)
@@ -113,7 +113,7 @@ class ContextualCobwebTree(CobwebTree):
             while ((len(ctxt_nodes) < anchor_idx + self.window + 1) and
                    len(ctxt_nodes) < len(text)):
                 ctxt_nodes.append(
-                    self.categorize({'anchor': text[len(ctxt_nodes)]}))
+                    self.categorize(self.create_instance(len(ctxt_nodes), text[len(ctxt_nodes)], ctxt_nodes)))
 
             for _ in range(2):
                 for i in range(self.window + 1):
@@ -285,7 +285,6 @@ class ContextualCobwebTree(CobwebTree):
                    key=lambda opt: __get_anchor_counts(concept)[opt])
 
 
-
 class ContextualCobwebNode(CobwebNode):
     def __init__(self, other_node=None, track=False):
         self.n_context_elements = 0
@@ -423,10 +422,10 @@ class ContextualCobwebNode(CobwebNode):
 
         for attr in node.attrs('all'):
             if attr == ca_key:
-                self.av_counts.setdefault(ca_key, Counter())
+                ctxt_counts = self.av_counts.setdefault(ca_key, Counter())
                 # self.av_counts[ca_key] += node.av_counts[ca_key]
                 for concept in node.av_counts[ca_key]:
-                    self.av_counts[ca_key][concept] += node.av_counts[ca_key][concept]
+                    ctxt_counts[concept] += node.av_counts[ca_key][concept]
 
                     if track:
                         concept.register(self)
@@ -484,7 +483,8 @@ class ContextualCobwebNode(CobwebNode):
         for c in self.registered:
             del c.av_counts[ca_key][self]
 
-        if (self.tree.instance is not None and self in self.tree.instance[ca_key]):
+        if (self.tree.instance is not None
+                and self in self.tree.instance[ca_key]):
             del self.tree.instance[ca_key][self]
 
     def register_new_parent(self, parent):
@@ -495,10 +495,11 @@ class ContextualCobwebNode(CobwebNode):
                 context_dict.get(parent, 0)
                 + context_dict[self])
 
-        if (self.tree.instance is not None and self in self.tree.instance[ca_key]):
+        if (self.tree.instance is not None
+                and self in self.tree.instance[ca_key]):
             context_dict = self.tree.instance[ca_key]
             context_dict[parent] = (context_dict.get(parent, 0)
-                                          + context_dict[self])
+                                    + context_dict[self])
 
     def __str__(self):
         return "Concept-{}".format(self.concept_id)
@@ -525,7 +526,7 @@ class ContextualCobwebNode(CobwebNode):
                     # context_guesses += (prob * prob)
                     # context_guesses += ((1-prob) * (1-prob))
                     context_guesses -= 2 * prob * (1-prob)
-                    # Should add 1, but it's accounted for in the final processing
+                    # Should add 1, but it's accounted for in final processing
 
                 continue
 
@@ -592,7 +593,7 @@ class ContextualCobwebNode(CobwebNode):
                 for concept in self.av_counts[ca_key]:
                     temp['aa-context-aa'][
                         str(concept)] = (self.av_counts[ca_key][concept] /
-                                    self.n_context_elements * self.count)
+                                         self.n_context_elements * self.count)
 
                     continue
 
@@ -632,7 +633,7 @@ if __name__ == "__main__":
 
     for text_num in range(1):
         text = [word for word in load_text(text_num) if word not in
-                stop_words][:10000]
+                stop_words][:5000]
 
         tree.fit_to_text(text)
         correct = 0
@@ -644,9 +645,9 @@ if __name__ == "__main__":
             # print(question)
             if guess == answer:
                 correct += 1
-                ... # print('correct')
+                ...  # print('correct')
             else:
-                ... # print('incorrect. guessed "{}" when "{}" was correct'.format(guess, answer))
+                ...  # print('incorrect. guessed "{}" when "{}" was correct'.format(guess, answer))
         print(correct/200, 'answers needed: ', answers_needed)
         correct = 0
         answers_needed = 1
@@ -656,9 +657,9 @@ if __name__ == "__main__":
             # print(question)
             if guess == answer:
                 correct += 1
-                ... # print('correct')
+                ...  # print('correct')
             else:
-                ... # print('incorrect. guessed "{}" when "{}" was correct'.format(guess, answer))
+                ...  # print('incorrect. guessed "{}" when "{}" was correct'.format(guess, answer))
         print(correct/200, 'answers needed: ', answers_needed)
     visualize(tree)
 
