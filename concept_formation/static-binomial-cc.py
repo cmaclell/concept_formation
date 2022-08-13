@@ -1,5 +1,5 @@
 from cProfile import run
-from functools import partial
+from functools import lru_cache
 from collections import Counter
 # from multiprocess import Pool
 from tqdm import tqdm
@@ -7,18 +7,36 @@ import timeit
 import pickle
 from os.path import dirname, join
 from sys import setrecursionlimit
-from copy import deepcopy
+from os import listdir
+import resource
+from time import time
+import random
 
 from concept_formation.cobweb import CobwebNode
 from concept_formation.cobweb import CobwebTree
 from visualize import visualize
 from preprocess_text import load_text, stop_words
 
+TREE_RECURSION = 0x10000
 
-MODEL_SAVE_PATH = join(dirname(__file__), 'saved_model')
-SAVE = True
+# May segfault without this line. 0x100 is a guess at the size of stack frame.
+try:
+    resource.setrlimit(
+        resource.RLIMIT_STACK, [0x100 * TREE_RECURSION, resource.RLIM_INFINITY])
+except ValueError:
+    print(Warning("Warning: Saving this model may result in a segfault"))
+setrecursionlimit(TREE_RECURSION)
+
+SAVE = False
+TREE_RECURSION = 900000
 LOAD = False
-TREE_RECURSION = 90000000
+MODELS_PATH = join(dirname(__file__), 'saved_models')
+MODEL_SAVE_LOCATION = join(MODELS_PATH, 'saved_model_%s' % time())
+if LOAD:
+    MODEL_LOAD_LOCATION = join(MODELS_PATH, listdir(MODELS_PATH)[0])
+print(listdir(MODELS_PATH)[0])
+
+random.seed(17)
 ca_key = '#Ctxt#'
 
 
@@ -46,7 +64,7 @@ class ContextualCobwebTree(CobwebTree):
         self.n_concepts = 1
         self.window = window
         self.instance = None
-        self.prune_threshold = 0.1
+        self.prune_threshold = 0.0
         self.anchor_weight = 1
         self.context_weight = 2
 
@@ -248,21 +266,24 @@ class ContextualCobwebTree(CobwebTree):
             missing_idx, anchor_wd, ctxt_nodes)
         del missing_instance['anchor']
 
+        # Defined here so as to clear the cache after each run
+        @lru_cache(maxsize=None)
+        def __get_anchor_counts(node):
+            if not node.children:
+                return Counter(node.av_counts['anchor'])
+            return sum([__get_anchor_counts(child)
+                        for child in node.children], start=Counter())
+
         concept = self.categorize(missing_instance)
-        while sum([(option in self.__get_anchor_counts(concept))
+        while sum([(option in __get_anchor_counts(concept))
                    for option in options]) < options_needed:
             concept = concept.parent
             if concept is None:
                 raise ValueError('None of the options have been seen')
 
         return max(options,
-                   key=lambda opt: self.__get_anchor_counts(concept)[opt])
+                   key=lambda opt: __get_anchor_counts(concept)[opt])
 
-    def __get_anchor_counts(self, node):
-        if not node.children:
-            return Counter(node.av_counts['anchor'])
-        return sum([self.__get_anchor_counts(child)
-                    for child in node.children], start=Counter())
 
 
 class ContextualCobwebNode(CobwebNode):
@@ -468,14 +489,16 @@ class ContextualCobwebNode(CobwebNode):
 
     def register_new_parent(self, parent):
         for c in self.registered:
+            context_dict = c.av_counts[ca_key]
             parent.register(c)
-            c.av_counts[ca_key][parent] = (
-                c.av_counts[ca_key].get(parent, 0)
-                + c.av_counts[ca_key][self])
+            context_dict[parent] = (
+                context_dict.get(parent, 0)
+                + context_dict[self])
 
         if (self.tree.instance is not None and self in self.tree.instance[ca_key]):
-            self.tree.instance[ca_key][parent] = (self.tree.instance[ca_key].get(parent, 0)
-                                          + self.tree.instance[ca_key][self])
+            context_dict = self.tree.instance[ca_key]
+            context_dict[parent] = (context_dict.get(parent, 0)
+                                          + context_dict[self])
 
     def __str__(self):
         return "Concept-{}".format(self.concept_id)
@@ -484,8 +507,7 @@ class ContextualCobwebNode(CobwebNode):
         self.registered.add(other)
 
     def unregister(self, other):
-        if other in self.registered:
-            self.registered.remove(other)
+        self.registered.discard(other)
 
     def expected_correct_guesses(self):
         """
@@ -589,27 +611,60 @@ class ContextualCobwebNode(CobwebNode):
         return output
 
 
+def create_questions(text, question_length, num_answers, n):
+    questions = []
+    for _ in range(n):
+        pos = random.randint(0, len(text)-question_length-1)
+        blank = random.randint(2, question_length-3)
+        question = text[pos:pos+question_length]
+        answer = question[blank]
+        question[blank] = None
+        questions.append((question, [answer, *(random.choice(text) for _ in range(num_answers - 1))]))
+    return questions
+
+
 if __name__ == "__main__":
 
     if LOAD:
-        tree = pickle.load(open(MODEL_SAVE_PATH, mode='rb'))
+        tree = pickle.load(open(MODEL_LOAD_LOCATION, mode='rb'))
     else:
-        tree = ContextualCobwebTree(window=2)
+        tree = ContextualCobwebTree(window=4)
 
     for text_num in range(1):
         text = [word for word in load_text(text_num) if word not in
                 stop_words][:10000]
 
         tree.fit_to_text(text)
+        correct = 0
+        answers_needed = 5
+        questions = create_questions(text, 10, 5, 200)
+        for question in questions:
+            guess = tree.guess_missing(*question, answers_needed)
+            answer = question[1][0]
+            # print(question)
+            if guess == answer:
+                correct += 1
+                ... # print('correct')
+            else:
+                ... # print('incorrect. guessed "{}" when "{}" was correct'.format(guess, answer))
+        print(correct/200, 'answers needed: ', answers_needed)
+        correct = 0
+        answers_needed = 1
+        for question in questions:
+            guess = tree.guess_missing(*question, answers_needed)
+            answer = question[1][0]
+            # print(question)
+            if guess == answer:
+                correct += 1
+                ... # print('correct')
+            else:
+                ... # print('incorrect. guessed "{}" when "{}" was correct'.format(guess, answer))
+        print(correct/200, 'answers needed: ', answers_needed)
     visualize(tree)
 
     # valid_concepts = tree.root.get_concepts()
     # tree.root.test_valid(valid_concepts)
 
-    print(tree.guess_missing(
-        ['correct', 'view', 'probably', None, 'two', 'extremes'],
-        ['lies', 'admittedly', 'religious', 'opinions', 'worship'], 1))
-
     if SAVE:
         setrecursionlimit(TREE_RECURSION)
-        pickle.dump(tree, open(MODEL_SAVE_PATH, mode='wb'))
+        pickle.dump(tree, open(MODEL_SAVE_LOCATION, mode='xb'))
