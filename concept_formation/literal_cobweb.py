@@ -14,7 +14,7 @@ import random
 from concept_formation.cobweb import CobwebNode
 from concept_formation.cobweb import CobwebTree
 from visualize import visualize
-from preprocess_text import load_text, stop_words
+from preprocess_text import load_text, stop_words, load_microsoft_qa
 
 TREE_RECURSION = 0x10000
 
@@ -112,7 +112,7 @@ class ContextualCobwebTree(CobwebTree):
     def surrounding(self, sequence, center, dist):
         return sequence[max(0, center-dist): center] + sequence[center+1:center+dist+1]
 
-    def guess_missing(self, text, options, options_needed,
+    def guess_missing(self, text, options, options_needed=1,
                       filter_stop_for_minor=False):
         text = [word for word in text if word not in stop_words]
         index = text.index(None)
@@ -127,6 +127,8 @@ class ContextualCobwebTree(CobwebTree):
                    for option in options]) < options_needed:
             concept = concept.parent
             if concept is None:
+                print('Words not seen')
+                return random.choice(options)
                 raise ValueError('None of the options have been seen')
 
         return max(options,
@@ -168,7 +170,7 @@ class ContextualCobwebNode(CobwebNode):
                 counts[val] = counts.get(val, 0)+node.av_counts[attr][val]
 
     def set_counts_from_node(self, node):
-        ...
+        raise NotImplementedError()
 
     def __str__(self):
         return "Concept-{}".format(self.concept_id)
@@ -246,6 +248,15 @@ def create_questions(text, question_length, num_answers, n):
     return questions
 
 
+def test_microsoft(model):
+    correct = 0
+    for total, (question, answers, answer) in enumerate(load_microsoft_qa()):
+        if model.guess_missing(question, answers, 1) == answers[answer]:
+            correct += 1
+    total += 1
+    return correct / total
+
+
 if __name__ == "__main__":
 
     if LOAD:
@@ -254,10 +265,12 @@ if __name__ == "__main__":
         tree = ContextualCobwebTree(1, 4)
 
     for text_num in range(1):
-        text = list(load_text(text_num))[:]
+        text = list(load_text(text_num))[:5000]
 
         tree.fit_to_text_wo_stopwords(text)
-        text = [word for word in text[:] if word not in stop_words]
+        text = [word for word in text[:5000] if word not in stop_words]
+
+        print(test_microsoft(tree))
 
         questions = create_questions(text, 10, 5, 200)
 

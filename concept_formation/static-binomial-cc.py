@@ -14,10 +14,11 @@ import random
 
 from concept_formation.cobweb import CobwebNode
 from concept_formation.cobweb import CobwebTree
+from concept_formation.utils import skip_slice, oslice
 from visualize import visualize
 from preprocess_text import load_text, stop_words
 
-TREE_RECURSION = 0x10000
+TREE_RECURSION = 0x1000
 
 # May segfault without this line. 0x100 is a guess at the size of stack frame.
 try:
@@ -120,7 +121,7 @@ class ContextualCobwebTree(CobwebTree):
                     idx = anchor_idx + i
                     if idx < 0 or idx >= len(text):
                         continue
-                    instance = self.create_instance(idx, anchor_wd, ctxt_nodes)
+                    instance = self.create_instance(idx, anchor_wd, ctxt_nodes, ignore=(anchor_idx,))
                     ctxt_nodes[idx] = self.categorize(instance)
 
             instance = self.create_instance(anchor_idx, anchor_wd, ctxt_nodes)
@@ -132,9 +133,13 @@ class ContextualCobwebTree(CobwebTree):
                 with open('out.csv', 'a') as fout:
                     fout.write("{},{:.8f}\n".format(anchor_idx, stop - start))
 
-    def create_instance(self, anchor_idx, word, context_nodes):
-        context = context_nodes[max(0, anchor_idx-self.window): anchor_idx]
-        context += context_nodes[anchor_idx+1:anchor_idx+self.window+1]
+    def create_instance(self, anchor_idx, word, context_nodes, ignore=()):
+        """ignore must be in sorted order"""
+        assert max(ignore, default=float('-inf')) <= anchor_idx
+        if ignore:
+            context = oslice(context_nodes, max(0, anchor_idx-self.window), *ignore, anchor_idx, anchor_idx+self.window+1)
+        else:
+            context = skip_slice(context_nodes, max(0, anchor_idx-self.window), anchor_idx+self.window+1, anchor_idx)
 
         instance = {ca_key: Counter(), 'anchor': word}
         for n in context:
@@ -220,8 +225,7 @@ class ContextualCobwebTree(CobwebTree):
         return current
 
     def create_categorization_instance(self, anchor_idx, word, context_nodes):
-        context = context_nodes[max(0, anchor_idx-self.window): anchor_idx]
-        context += context_nodes[anchor_idx+1:anchor_idx+self.window+1]
+        context = skip_slice(context_nodes, max(0, anchor_idx-self.window), anchor_idx+self.window+1, anchor_idx)
 
         instance = {ca_key: Counter(), 'anchor': word}
         for n in filter(None, context):
@@ -517,7 +521,6 @@ class ContextualCobwebNode(CobwebNode):
         """
         correct_guesses = 0.0
         context_guesses = 0.0
-        n_concepts = self.tree.n_concepts
 
         for attr in self.attrs():
             if attr == ca_key:
@@ -531,15 +534,18 @@ class ContextualCobwebNode(CobwebNode):
                 continue
 
             correct_guesses += sum(
-                [(prob * prob) for prob in self.av_counts[attr].values()])
+                (prob * prob) for prob in self.av_counts[attr].values())
 
-        # Weight and convert counts to probabilities
-        correct_guesses *= self.tree.anchor_weight / (self.count * self.count)
+        # context_guesses += n_concepts
+        # context_guesses *= self.tree.context_weight / n_concepts
+        context_guesses /= self.tree.n_concepts
+        context_guesses += 1
 
-        context_guesses += n_concepts
-        context_guesses *= self.tree.context_weight / n_concepts
+        # Convert counts to probabilities
+        correct_guesses /= (self.count * self.count)
 
-        return correct_guesses + context_guesses
+        return (self.tree.anchor_weight * correct_guesses
+                + self.tree.context_weight * context_guesses)
 
     def is_exact_match(self, instance):
         """
@@ -633,13 +639,14 @@ if __name__ == "__main__":
 
     for text_num in range(1):
         text = [word for word in load_text(text_num) if word not in
-                stop_words][:5000]
+                stop_words][:2000]
 
-        tree.fit_to_text(text)
+        run('tree.fit_to_text(text)')
         correct = 0
         answers_needed = 5
         questions = create_questions(text, 10, 5, 200)
         for question in questions:
+            print(question)
             guess = tree.guess_missing(*question, answers_needed)
             answer = question[1][0]
             # print(question)

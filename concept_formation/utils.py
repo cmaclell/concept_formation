@@ -140,6 +140,7 @@ def weighted_choice(choices):
         upto += w
     raise ValueError("Choices cannot be an empty list")
 
+
 def oslice(iterable, start, *omits):
     """returns an iterable without the indices specified in omits,
     ending with the final omit
@@ -148,6 +149,7 @@ def oslice(iterable, start, *omits):
     # Sorry about the crazy itertools shenanigans...
     return chain(islice(itr, start, omits[0]), *(islice(itr, 1, cur_omit - prev_omit) for prev_omit, cur_omit in pairwise(omits)))
 
+
 def skip_slice(iterable, start, end, skip):
     """skip is index of skipped element"""
     # Credit: https://stackoverflow.com/questions/22279809/
@@ -155,11 +157,13 @@ def skip_slice(iterable, start, end, skip):
     itr = iter(iterable)
     return chain(islice(itr, start, skip), islice(itr, 1, end))
 
+
 def pairwise(iterable):
     "s -> (s0,s1), (s1,s2), (s2, s3), ..."
     a, b = tee(iterable)
     next(b, None)
     return zip(a, b)
+
 
 def most_likely_choice(choices):
     """

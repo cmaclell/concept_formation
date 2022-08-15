@@ -257,6 +257,10 @@ class CobwebTree(object):
         return self._cobweb_categorize(instance)
 
 
+def unhidden_attr(s):
+    return s[0] != '_'
+
+
 class CobwebNode(object):
     """
     A CobwebNode represents a concept within the knoweldge base of a particular
@@ -307,7 +311,7 @@ class CobwebNode(object):
         temp.update_counts_from_node(self)
         return temp
 
-    def attrs(self, attr_filter=None):
+    def attrs(self, attr_filter=unhidden_attr):
         """
         Iterates over the attributes present in the node's attribute-value
         table with the option to filter certain types. By default the filter
@@ -316,9 +320,7 @@ class CobwebNode(object):
         cases the filter will be interpreted as a function that returns true if
         an attribute should be yielded and false otherwise.
         """
-        if attr_filter is None:
-            return (x for x in self.av_counts if x[0] != '_')
-        elif attr_filter == 'all':
+        if attr_filter == 'all':
             return self.av_counts
         else:
             return filter(attr_filter, self.av_counts)
@@ -333,8 +335,7 @@ class CobwebNode(object):
         self.count += 1
         for attr in instance:
             self.av_counts.setdefault(attr, {})
-            if instance[attr] not in self.av_counts[attr]:
-                self.av_counts[attr][instance[attr]] = 0
+            self.av_counts[attr].setdefault(instance[attr], 0)
             self.av_counts[attr][instance[attr]] += 1
 
     def update_counts_from_node(self, node):
@@ -349,8 +350,7 @@ class CobwebNode(object):
         for attr in node.attrs('all'):
             self.av_counts.setdefault(attr, {})
             for val in node.av_counts[attr]:
-                if val not in self.av_counts[attr]:
-                    self.av_counts[attr][val] = 0
+                self.av_counts[attr].setdefault(val, 0)
                 self.av_counts[attr][val] += node.av_counts[attr][val]
 
     def expected_correct_guesses(self):
