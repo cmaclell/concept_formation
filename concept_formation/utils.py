@@ -142,12 +142,15 @@ def weighted_choice(choices):
 
 
 def oslice(iterable, start, *omits):
-    """returns an iterable without the indices specified in omits,
+    """omit_slice
+    returns an iterable without the indices specified in omits,
     ending with the final omit
     **omits must be sorted!**"""
     itr = iter(iterable)
     # Sorry about the crazy itertools shenanigans...
-    return chain(islice(itr, start, omits[0]), *(islice(itr, 1, cur_omit - prev_omit) for prev_omit, cur_omit in pairwise(omits)))
+    return chain(islice(itr, start, omits[0]),
+                 *(islice(itr, 1, cur_omit - prev_omit)
+                   for prev_omit, cur_omit in pairwise(omits)))
 
 
 def skip_slice(iterable, start, end, skip):

@@ -36,8 +36,9 @@ MODEL_SAVE_LOCATION = join(MODELS_PATH, 'saved_model_%s' % time())
 if LOAD:
     MODEL_LOAD_LOCATION = join(MODELS_PATH, listdir(MODELS_PATH)[0])
 print(listdir(MODELS_PATH)[0])
+run
 
-random.seed(17)
+random.seed(16)
 ca_key = '#Ctxt#'
 
 
@@ -113,15 +114,17 @@ class ContextualCobwebTree(CobwebTree):
                 start = timeit.default_timer()
             while ((len(ctxt_nodes) < anchor_idx + self.window + 1) and
                    len(ctxt_nodes) < len(text)):
-                ctxt_nodes.append(
-                    self.categorize(self.create_instance(len(ctxt_nodes), text[len(ctxt_nodes)], ctxt_nodes)))
+                ctxt_nodes.append(self.categorize(
+                    self.create_instance(len(ctxt_nodes),
+                                         text[len(ctxt_nodes)], ctxt_nodes)))
 
             for _ in range(2):
                 for i in range(self.window + 1):
                     idx = anchor_idx + i
                     if idx < 0 or idx >= len(text):
                         continue
-                    instance = self.create_instance(idx, anchor_wd, ctxt_nodes, ignore=(anchor_idx,))
+                    instance = self.create_instance(
+                        idx, anchor_wd, ctxt_nodes, ignore=(anchor_idx,))
                     ctxt_nodes[idx] = self.categorize(instance)
 
             instance = self.create_instance(anchor_idx, anchor_wd, ctxt_nodes)
@@ -137,9 +140,11 @@ class ContextualCobwebTree(CobwebTree):
         """ignore must be in sorted order"""
         assert max(ignore, default=float('-inf')) <= anchor_idx
         if ignore:
-            context = oslice(context_nodes, max(0, anchor_idx-self.window), *ignore, anchor_idx, anchor_idx+self.window+1)
+            context = oslice(context_nodes, max(0, anchor_idx-self.window),
+                             *ignore, anchor_idx, anchor_idx+self.window+1)
         else:
-            context = skip_slice(context_nodes, max(0, anchor_idx-self.window), anchor_idx+self.window+1, anchor_idx)
+            context = skip_slice(context_nodes, max(0, anchor_idx-self.window),
+                                 anchor_idx+self.window+1, anchor_idx)
 
         instance = {ca_key: Counter(), 'anchor': word}
         for n in context:
@@ -225,7 +230,8 @@ class ContextualCobwebTree(CobwebTree):
         return current
 
     def create_categorization_instance(self, anchor_idx, word, context_nodes):
-        context = skip_slice(context_nodes, max(0, anchor_idx-self.window), anchor_idx+self.window+1, anchor_idx)
+        context = skip_slice(context_nodes, max(0, anchor_idx-self.window),
+                             anchor_idx+self.window+1, anchor_idx)
 
         instance = {ca_key: Counter(), 'anchor': word}
         for n in filter(None, context):
@@ -392,21 +398,21 @@ class ContextualCobwebNode(CobwebNode):
         for c in self.children:
             c.test_valid(valid_concepts)
 
-    def increment_counts(self, instance, track=False):
+    def increment_counts(self, inst, track=False):
         """
         Adds binomial distribution for estimating concept counts
         """
         self.count += 1
 
-        for attr in instance:
+        for attr in inst:
 
             if attr == ca_key:
                 self.av_counts.setdefault(ca_key, Counter())
-                for concept in instance[ca_key]:
-                    self.av_counts[ca_key][concept] += instance[ca_key][concept]
+                for concept in inst[ca_key]:
+                    self.av_counts[ca_key][concept] += inst[ca_key][concept]
                     # only count if it is a terminal, don't count nonterminals
                     if not concept.children:
-                        self.n_context_elements += instance[ca_key][concept]
+                        self.n_context_elements += inst[ca_key][concept]
 
                     if track:
                         concept.register(self)
@@ -414,8 +420,8 @@ class ContextualCobwebNode(CobwebNode):
                 continue
 
             self.av_counts.setdefault(attr, {})
-            prior_count = self.av_counts[attr].get(instance[attr], 0)
-            self.av_counts[attr][instance[attr]] = prior_count + 1
+            prior_count = self.av_counts[attr].get(inst[attr], 0)
+            self.av_counts[attr][inst[attr]] = prior_count + 1
 
     def update_counts_from_node(self, node, track=False):
         """
@@ -451,7 +457,8 @@ class ContextualCobwebNode(CobwebNode):
                 concept.register(self)
         else:
             ctxt = Counter(node.av_counts[ca_key])
-        self.av_counts = {attr: (dict(val) if attr != ca_key else ctxt) for attr, val in node.av_counts.items()}
+        self.av_counts = {attr: (dict(val) if attr != ca_key else ctxt)
+                          for attr, val in node.av_counts.items()}
 
     def prune(self):
         del_nodes = []
@@ -460,7 +467,8 @@ class ContextualCobwebNode(CobwebNode):
         for attr in self.attrs('all'):
             if attr == ca_key:
                 for concept in self.av_counts[ca_key]:
-                    if ((self.av_counts[ca_key][concept] / self.n_context_elements)
+                    if ((self.av_counts[ca_key][concept]
+                         / self.n_context_elements)
                             < self.tree.prune_threshold):
                         del_nodes.append(concept)
 
@@ -618,7 +626,7 @@ class ContextualCobwebNode(CobwebNode):
         return output
 
 
-def create_questions(text, question_length, num_answers, n):
+def create_questions(text, question_length, nimposters, n):
     questions = []
     for _ in range(n):
         pos = random.randint(0, len(text)-question_length-1)
@@ -626,7 +634,9 @@ def create_questions(text, question_length, num_answers, n):
         question = text[pos:pos+question_length]
         answer = question[blank]
         question[blank] = None
-        questions.append((question, [answer, *(random.choice(text) for _ in range(num_answers - 1))]))
+        questions.append((question,
+                         [answer, *(random.choice(text)
+                          for _ in range(nimposters))]))
     return questions
 
 
@@ -639,23 +649,10 @@ if __name__ == "__main__":
 
     for text_num in range(1):
         text = [word for word in load_text(text_num) if word not in
-                stop_words][:2000]
+                stop_words][:5000]
 
-        run('tree.fit_to_text(text)')
-        correct = 0
-        answers_needed = 5
-        questions = create_questions(text, 10, 5, 200)
-        for question in questions:
-            print(question)
-            guess = tree.guess_missing(*question, answers_needed)
-            answer = question[1][0]
-            # print(question)
-            if guess == answer:
-                correct += 1
-                ...  # print('correct')
-            else:
-                ...  # print('incorrect. guessed "{}" when "{}" was correct'.format(guess, answer))
-        print(correct/200, 'answers needed: ', answers_needed)
+        tree.fit_to_text(text)
+        questions = create_questions(text, 10, 4, 200)
         correct = 0
         answers_needed = 1
         for question in questions:

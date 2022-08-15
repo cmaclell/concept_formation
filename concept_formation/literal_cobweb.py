@@ -2,7 +2,6 @@ from cProfile import run
 from collections import Counter
 # from multiprocess import Pool
 from tqdm import tqdm
-import timeit
 import pickle
 from os.path import dirname, join
 from sys import setrecursionlimit
@@ -13,6 +12,7 @@ import random
 
 from concept_formation.cobweb import CobwebNode
 from concept_formation.cobweb import CobwebTree
+from concept_formation.utils import skip_slice
 from visualize import visualize
 from preprocess_text import load_text, stop_words, load_microsoft_qa
 
@@ -34,8 +34,9 @@ MODEL_SAVE_LOCATION = join(MODELS_PATH, 'saved_model_%s' % time())
 if LOAD:
     MODEL_LOAD_LOCATION = join(MODELS_PATH, listdir(MODELS_PATH)[0])
 print(listdir(MODELS_PATH)[0])
+run
 
-random.seed(17)
+random.seed(16)
 minor_key = '#MinorCtxt#'
 major_key = '#MajorCtxt#'
 anchor_key = 'anchor'
@@ -107,10 +108,13 @@ class ContextualCobwebTree(CobwebTree):
             minor_context = self.surrounding(
                 text, anchor_idx, self.minor_window)
 
-        return {minor_key: minor_context, major_key: major_context, anchor_key: anchor_word}
+        return {minor_key: minor_context,
+                major_key: major_context,
+                anchor_key: anchor_word}
 
     def surrounding(self, sequence, center, dist):
-        return sequence[max(0, center-dist): center] + sequence[center+1:center+dist+1]
+        return list(
+            skip_slice(sequence, max(0, center-dist), center+dist+1, center))
 
     def guess_missing(self, text, options, options_needed=1,
                       filter_stop_for_minor=False):
@@ -122,7 +126,8 @@ class ContextualCobwebTree(CobwebTree):
         else:
             minor_context = self.surrounding(text, index, self.minor_window)
 
-        concept = self.categorize({minor_key: minor_context, major_key: major_context})
+        concept = self.categorize({minor_key: minor_context,
+                                   major_key: major_context})
         while sum([(option in concept.av_counts[anchor_key])
                    for option in options]) < options_needed:
             concept = concept.parent
@@ -146,7 +151,8 @@ class ContextualCobwebNode(CobwebNode):
         self.count += 1
         for attr in instance:
             if attr == minor_key or attr == major_key:
-                self.av_counts.setdefault(attr, Counter()).update(instance[attr])
+                self.av_counts.setdefault(
+                    attr, Counter()).update(instance[attr])
                 continue
 
             self.av_counts.setdefault(attr, {})
@@ -236,7 +242,7 @@ class ContextualCobwebNode(CobwebNode):
         return True
 
 
-def create_questions(text, question_length, num_answers, n):
+def create_questions(text, question_length, nimposters, n):
     questions = []
     for _ in range(n):
         pos = random.randint(0, len(text)-question_length-1)
@@ -244,7 +250,9 @@ def create_questions(text, question_length, num_answers, n):
         question = text[pos:pos+question_length]
         answer = question[blank]
         question[blank] = None
-        questions.append((question, [answer, *(random.choice(text) for _ in range(num_answers - 1))]))
+        questions.append((question,
+                         [answer, *(random.choice(text)
+                          for _ in range(nimposters))]))
     return questions
 
 
@@ -272,7 +280,7 @@ if __name__ == "__main__":
 
         print(test_microsoft(tree))
 
-        questions = create_questions(text, 10, 5, 200)
+        questions = create_questions(text, 10, 4, 200)
 
         correct = 0
         answers_needed = 1
