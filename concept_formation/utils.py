@@ -9,6 +9,7 @@ from __future__ import division
 from numbers import Number
 from random import uniform
 from random import choice, sample
+from itertools import chain, islice, tee
 from math import sqrt
 from math import isnan
 
@@ -139,6 +140,26 @@ def weighted_choice(choices):
         upto += w
     raise ValueError("Choices cannot be an empty list")
 
+def oslice(iterable, start, *omits):
+    """returns an iterable without the indices specified in omits,
+    ending with the final omit
+    **omits must be sorted!**"""
+    itr = iter(iterable)
+    # Sorry about the crazy itertools shenanigans...
+    return chain(islice(itr, start, omits[0]), *(islice(itr, 1, cur_omit - prev_omit) for prev_omit, cur_omit in pairwise(omits)))
+
+def skip_slice(iterable, start, end, skip):
+    """skip is index of skipped element"""
+    # Credit: https://stackoverflow.com/questions/22279809/
+    # can-python-slicing-be-used-to-skip-one-specific-element-by-index
+    itr = iter(iterable)
+    return chain(islice(itr, start, skip), islice(itr, 1, end))
+
+def pairwise(iterable):
+    "s -> (s0,s1), (s1,s2), (s2, s3), ..."
+    a, b = tee(iterable)
+    next(b, None)
+    return zip(a, b)
 
 def most_likely_choice(choices):
     """
@@ -159,7 +180,7 @@ def most_likely_choice(choices):
     if len(choices) == 0:
         raise ValueError("Choices cannot be an empty list")
 
-    if any(map(lambda x: x < 0)):
+    if any(weight < 0 for _, weight in choices):
         raise ValueError('All weights must be greater than or equal to 0')
 
     # Sorts based on the weights (lambda x: x[1]),

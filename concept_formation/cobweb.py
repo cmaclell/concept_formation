@@ -276,7 +276,7 @@ class CobwebNode(object):
     # a counter used to generate unique concept names.
     _counter = 0
 
-    def __init__(self, otherNode=None):
+    def __init__(self, other_node=None):
         """Create a new CobwebNode"""
         self.concept_id = self.gensym()
         self.count = 0.0
@@ -285,13 +285,13 @@ class CobwebNode(object):
         self.parent = None
         self.tree = None
 
-        if otherNode:
-            self.tree = otherNode.tree
-            self.parent = otherNode.parent
-            self.update_counts_from_node(otherNode)
+        if other_node:
+            self.tree = other_node.tree
+            self.parent = other_node.parent
+            self.update_counts_from_node(other_node)
 
-            for child in otherNode.children:
-                self.children.append(self.__class__(child))
+            self.children.extend(
+                self.__class__(child) for child in other_node.children)
 
     def shallow_copy(self):
         """
@@ -332,8 +332,7 @@ class CobwebNode(object):
         """
         self.count += 1
         for attr in instance:
-            if attr not in self.av_counts:
-                self.av_counts[attr] = {}
+            self.av_counts.setdefault(attr, {})
             if instance[attr] not in self.av_counts[attr]:
                 self.av_counts[attr][instance[attr]] = 0
             self.av_counts[attr][instance[attr]] += 1
@@ -348,8 +347,7 @@ class CobwebNode(object):
         """
         self.count += node.count
         for attr in node.attrs('all'):
-            if attr not in self.av_counts:
-                self.av_counts[attr] = {}
+            self.av_counts.setdefault(attr, {})
             for val in node.av_counts[attr]:
                 if val not in self.av_counts[attr]:
                     self.av_counts[attr][val] = 0
