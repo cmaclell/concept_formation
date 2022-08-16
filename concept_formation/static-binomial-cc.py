@@ -119,8 +119,8 @@ class ContextualCobwebTree(CobwebTree):
                                          text[len(ctxt_nodes)], ctxt_nodes)))
 
             for _ in range(2):
-                for i in range(self.window + 1):
-                    idx = anchor_idx + i
+                for i in range(2 * self.window + 1):
+                    idx = anchor_idx + i - self.window
                     if idx < 0 or idx >= len(text):
                         continue
                     instance = self.create_instance(
@@ -137,11 +137,9 @@ class ContextualCobwebTree(CobwebTree):
                     fout.write("{},{:.8f}\n".format(anchor_idx, stop - start))
 
     def create_instance(self, anchor_idx, word, context_nodes, ignore=()):
-        """ignore must be in sorted order"""
-        assert max(ignore, default=float('-inf')) <= anchor_idx
         if ignore:
             context = oslice(context_nodes, max(0, anchor_idx-self.window),
-                             *ignore, anchor_idx, anchor_idx+self.window+1)
+                             *sorted((*ignore, anchor_idx)), anchor_idx+self.window+1)
         else:
             context = skip_slice(context_nodes, max(0, anchor_idx-self.window),
                                  anchor_idx+self.window+1, anchor_idx)

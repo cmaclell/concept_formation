@@ -278,7 +278,7 @@ if __name__ == "__main__":
         tree.fit_to_text_wo_stopwords(text)
         text = [word for word in text[:5000] if word not in stop_words]
 
-        print(test_microsoft(tree))
+        # print(test_microsoft(tree))
 
         questions = create_questions(text, 10, 4, 200)
 

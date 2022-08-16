@@ -158,7 +158,7 @@ def skip_slice(iterable, start, end, skip):
     # Credit: https://stackoverflow.com/questions/22279809/
     # can-python-slicing-be-used-to-skip-one-specific-element-by-index
     itr = iter(iterable)
-    return chain(islice(itr, start, skip), islice(itr, 1, end))
+    return chain(islice(itr, start, skip), islice(itr, 1, end - skip))
 
 
 def pairwise(iterable):
