@@ -283,7 +283,7 @@ class CobwebNode(object):
     def __init__(self, other_node=None):
         """Create a new CobwebNode"""
         self.concept_id = self.gensym()
-        self.count = 0.0
+        self.count = 0
         self.av_counts = {}
         self.children = []
         self.parent = None

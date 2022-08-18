@@ -27,7 +27,6 @@ except ValueError:
 setrecursionlimit(TREE_RECURSION)
 
 SAVE = False
-TREE_RECURSION = 900000
 LOAD = False
 MODELS_PATH = join(dirname(__file__), 'saved_models')
 MODEL_SAVE_LOCATION = join(MODELS_PATH, 'saved_model_%s' % time())
@@ -76,7 +75,7 @@ class ContextualCobwebTree(CobwebTree):
                                  'and subscriptable attributes' +
                                  ' (e.g., strings).')
             try:
-                if not isinstance(instance[attr], str):
+                if not isinstance(instance[attr], str) and not isinstance(instance[attr], int):
                     map(hash, instance[attr])
             except Exception:
                 raise ValueError('Invalid value: '+str(instance[attr]) +
@@ -110,7 +109,8 @@ class ContextualCobwebTree(CobwebTree):
 
         return {minor_key: minor_context,
                 major_key: major_context,
-                anchor_key: anchor_word}
+                anchor_key: anchor_word,
+                '_idx': anchor_idx}
 
     def surrounding(self, sequence, center, dist):
         return list(
