@@ -14,7 +14,7 @@ from itertools import chain
 from concept_formation.utils import random_tiebreaker
 from concept_formation.cobweb import CobwebNode
 from concept_formation.cobweb import CobwebTree
-from concept_formation.utils import skip_slice
+from concept_formation.utils import skip_slice, oslice
 from visualize import visualize
 from preprocess_text import load_text, stop_words, load_microsoft_qa
 
@@ -71,9 +71,16 @@ class ContextualCobwebTree(CobwebTree):
 
         self.minor_window = minor_window
         self.major_window = major_window
-        self.anchor_weight = 16
-        self.minor_weight = 0
-        self.major_weight = 2
+        self.anchor_weight = 25
+        self.minor_weight = 5
+        self.major_weight = 1
+
+    def clear(self):
+        """
+        Clears the concepts of the tree.
+        """
+        self.root = ContextualCobwebNode()
+        self.root.tree = self
 
     def _sanity_check_instance(self, instance):
         for attr in instance:
@@ -103,36 +110,54 @@ class ContextualCobwebTree(CobwebTree):
 
     def fit_to_text_wo_stopwords(self, text):
         """filters stop words here"""
-        output_nodes = []
+        ctxt_nodes = []
         text = [word for word in text if word not in stop_words]
 
         for anchor_idx, anchor_wd in enumerate(tqdm(text)):
-            output_nodes.append(self.ifit(
-                self.create_instance(anchor_idx, anchor_wd, text)))
+            while ((len(ctxt_nodes) < anchor_idx + self.major_window + 1) and
+                   len(ctxt_nodes) < len(text)):
+                ctxt_nodes.append(self.categorize(
+                    self.create_instance(len(ctxt_nodes),
+                                         text[len(ctxt_nodes)], ctxt_nodes, ignore=(anchor_idx,))))
+
+            for _ in range(2):
+                for i in range(2 * self.major_window + 1):
+                    idx = anchor_idx + i - self.major_window
+                    if idx < 0 or idx >= len(text):
+                        continue
+                    instance = self.create_instance(
+                        idx, anchor_wd, ctxt_nodes, ignore=(anchor_idx,))
+                    ctxt_nodes[idx] = self.categorize(instance)
+
+            instance = self.create_instance(anchor_idx, anchor_wd, ctxt_nodes)
+
+            ctxt_nodes[anchor_idx] = self.ifit(instance)
+
             word_to_leaf.setdefault(anchor_wd, [])
-            word_to_leaf[anchor_wd].append(output_nodes[-1])
+            word_to_leaf[anchor_wd].append(ctxt_nodes[-1])
 
-        return output_nodes
+        return ctxt_nodes
 
-    def create_instance(self, anchor_idx, anchor_word, text,
+    def create_instance(self, anchor_idx, anchor_word, ctxts, ignore=(),
                         filter_stop_for_minor=False):
-        major_context = self.categorize_window(
-            text, anchor_idx, self.major_window)
+        major_context = self.surrounding(
+            ctxts, anchor_idx, self.major_window, ignore=ignore)
         if filter_stop_for_minor:
             raise NotImplementedError
         else:
-            minor_context = self.categorize_window(
-                text, anchor_idx, self.minor_window)
+            minor_context = self.surrounding(
+                ctxts, anchor_idx, self.minor_window, ignore=ignore)
 
         return {minor_key: minor_context,
                 major_key: major_context,
                 anchor_key: anchor_word,
                 '_idx': anchor_idx}
 
-    def categorize_window(self, text, anchor_idx, window_size):
-        return list(map(self.similarity_categorize, map(
-            self.anchor_only_inst, self.surrounding(
-                text, anchor_idx, window_size))))
+    def delete_instance(self, instance, location):
+        
+        cur = location
+        while cur:
+            location
 
     def similarity_categorize(self, instance):
         current = self.root
@@ -162,27 +187,53 @@ class ContextualCobwebTree(CobwebTree):
             current = best
         return current
 
-    def anchor_only_inst(self, word):
-        return {anchor_key: word}
-
-    def surrounding(self, sequence, center, dist):
+    def surrounding(self, sequence, center, dist, ignore=()):
+        if ignore:
+            return list(
+                oslice(sequence, max(0, center-dist), *sorted((*(x for x in ignore if x < center+dist+1), center)), center+dist+1))
         return list(
-            # Observe that we use trailing window since ahead nodes don't have leaves yet
-            skip_slice(sequence, max(0, center-dist-dist), center+1, center))  # TODO
+            skip_slice(sequence, max(0, center-dist), center+dist+1, center))
 
     def guess_missing(self, text, options, options_needed=1,
                       filter_stop_for_minor=False):
         text = [word for word in text if word not in stop_words]
-        index = text.index(None)
-        major_context = self.categorize_window(text, index, self.major_window)
-        if filter_stop_for_minor:
-            raise NotImplementedError
-        else:
-            minor_context = self.categorize_window(
-                text, index, self.minor_window)
 
-        concept = self.similarity_categorize(
-            {minor_key: minor_context, major_key: major_context})
+        assert len(options) >= options_needed and not filter_stop_for_minor
+        missing_idx = text.index(None)
+        ctxt_nodes = []
+
+        for anchor_idx, anchor_wd in enumerate(text):
+            while ((len(ctxt_nodes) < anchor_idx + self.major_window + 1) and
+                    len(ctxt_nodes) < len(text)):
+                if len(ctxt_nodes) == missing_idx:
+                    ctxt_nodes.append(None)
+                    continue
+                ctxt_nodes.append(self.categorize(
+                    self.create_instance(len(ctxt_nodes),
+                                         text[len(ctxt_nodes)], ctxt_nodes, ignore=(missing_idx,))))
+
+            if anchor_idx == missing_idx:
+                continue
+
+            for _ in range(2):
+                for i in range(2 * self.major_window + 1):
+                    idx = anchor_idx + i - self.major_window
+                    if idx < 0 or idx >= len(text) or idx == missing_idx:
+                        continue
+
+                    instance = self.create_instance(
+                        idx, anchor_wd, ctxt_nodes, ignore=(missing_idx,))
+                    ctxt_nodes[idx] = self.categorize(instance)
+
+            instance = self.create_instance(
+                anchor_idx, anchor_wd, ctxt_nodes, ignore=(missing_idx,))
+            ctxt_nodes[anchor_idx] = self.categorize(instance)
+
+        missing_instance = self.create_instance(
+            missing_idx, None, ctxt_nodes)
+        del missing_instance['anchor']
+
+        concept = self.similarity_categorize(missing_instance)
         path = [concept]
         while sum([(option in concept.av_counts[anchor_key])
                    for option in options]) < options_needed:
@@ -194,7 +245,7 @@ class ContextualCobwebTree(CobwebTree):
                 raise ValueError('None of the options have been seen')
 
         return max(options,
-                   key=lambda opt: concept.av_counts[anchor_key].get(opt, 0)), path, minor_context
+                   key=lambda opt: concept.av_counts[anchor_key].get(opt, 0)), path
 
 
 class ContextualCobwebNode(CobwebNode):
@@ -215,6 +266,31 @@ class ContextualCobwebNode(CobwebNode):
             self.av_counts.setdefault(attr, {})
             self.av_counts[attr][instance[attr]] = (
                 self.av_counts[attr].get(instance[attr], 0) + 1)
+
+    def decrement_counts(self, instance):
+        """Decrements counts and deletes self (and parent if fringe split) if self is a leaf"""
+        if self.count == 1:
+            parent = self.parent
+            if parent is not None:
+                parent.children.remove(self)
+                # undo fringe split
+                if len(parent.children) == 1:
+                    sibling = parent.children[0]
+                    sibling.parent = parent.parent
+                    grand_par_children = parent.parent.children
+                    grand_par_children[grand_par_children.index(parent)] = sibling
+            else:
+                self.tree.clear()
+            return
+        self.count += 1
+        for attr in instance:
+            if attr == minor_key or attr == major_key:
+                self.av_counts[attr] -= Counter(instance[attr])
+                continue
+
+            self.av_counts[attr][instance[attr]] -= 1
+            if self.av_counts[attr][instance[attr]] == 0:
+                del self.av_counts[attr][instance[attr]]
 
     def update_counts_from_node(self, node):
         """
@@ -637,7 +713,7 @@ if __name__ == "__main__":
         text = list(load_text(text_num))[:5000]
 
         tree.fit_to_text_wo_stopwords(text)
-        text = [word for word in text[:5000] if word not in stop_words]
+        text = [word for word in text if word not in stop_words]
         text_counts = Counter(text)
 
         print(overlaps)
@@ -648,8 +724,8 @@ if __name__ == "__main__":
 
         correct = 0
         answers_needed = 1
-        for question in questions:
-            guess, path, minctxt = tree.guess_missing(
+        for question in tqdm(questions):
+            guess, path = tree.guess_missing(
                 *question, answers_needed)
             answer = question[1][0]
             # print(question)
