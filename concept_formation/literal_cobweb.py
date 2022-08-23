@@ -57,8 +57,8 @@ class ContextualCobwebTree(CobwebTree):
 
         self.minor_window = minor_window
         self.major_window = major_window
-        self.anchor_weight = 4
-        self.minor_weight = 2
+        self.anchor_weight = 10
+        self.minor_weight = 3
         self.major_weight = 1
 
     def _sanity_check_instance(self, instance):
@@ -276,7 +276,7 @@ if __name__ == "__main__":
         text = list(load_text(text_num))[:5000]
 
         tree.fit_to_text_wo_stopwords(text)
-        text = [word for word in text[:5000] if word not in stop_words]
+        text = [word for word in text if word not in stop_words]
 
         # print(test_microsoft(tree))
 

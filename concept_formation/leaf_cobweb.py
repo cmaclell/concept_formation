@@ -71,9 +71,10 @@ class ContextualCobwebTree(CobwebTree):
 
         self.minor_window = minor_window
         self.major_window = major_window
-        self.anchor_weight = 25
+        self.anchor_weight = 35
         self.minor_weight = 5
         self.major_weight = 1
+        print(self.anchor_weight, self.minor_weight, self.major_weight)
 
     def clear(self):
         """
@@ -111,32 +112,121 @@ class ContextualCobwebTree(CobwebTree):
     def fit_to_text_wo_stopwords(self, text):
         """filters stop words here"""
         ctxt_nodes = []
+        instance_cache = []
         text = [word for word in text if word not in stop_words]
 
         for anchor_idx, anchor_wd in enumerate(tqdm(text)):
             while ((len(ctxt_nodes) < anchor_idx + self.major_window + 1) and
                    len(ctxt_nodes) < len(text)):
-                ctxt_nodes.append(self.categorize(
-                    self.create_instance(len(ctxt_nodes),
-                                         text[len(ctxt_nodes)], ctxt_nodes, ignore=(anchor_idx,))))
+                instance_cache.append(self.create_instance(len(ctxt_nodes),
+                                                           text[len(ctxt_nodes)], ctxt_nodes, ignore=(anchor_idx,)))
+                ctxt_nodes.append(self.ifit(instance_cache[-1]))
 
             for _ in range(2):
-                for i in range(2 * self.major_window + 1):
-                    idx = anchor_idx + i - self.major_window
-                    if idx < 0 or idx >= len(text):
+                for i in range(self.major_window + 1):
+                    idx = anchor_idx + i
+                    if not (0 <= idx < len(text)):
                         continue
-                    instance = self.create_instance(
-                        idx, anchor_wd, ctxt_nodes, ignore=(anchor_idx,))
-                    ctxt_nodes[idx] = self.categorize(instance)
 
-            instance = self.create_instance(anchor_idx, anchor_wd, ctxt_nodes)
+                    self.resort(idx, text[idx], ctxt_nodes, instance_cache, ignore=(anchor_idx,))
 
-            ctxt_nodes[anchor_idx] = self.ifit(instance)
+            self.resort(anchor_idx, anchor_wd, ctxt_nodes, instance_cache, ignore=())
 
             word_to_leaf.setdefault(anchor_wd, [])
             word_to_leaf[anchor_wd].append(ctxt_nodes[-1])
 
         return ctxt_nodes
+
+    def resort(self, idx, word, ctxt_nodes, instance_cache, ignore=()):
+        # verify_structure(self.root)
+        # if not all(map(in_tree, ctxt_nodes)):
+        #     print(ctxt_nodes)
+        #     assert False
+        self.delete_node(ctxt_nodes[idx])
+        new_instance = self.create_instance(
+            idx, word, ctxt_nodes, ignore=ignore)
+        leaf = ctxt_nodes[idx]
+        leaf.decrement_counts(instance_cache[idx])
+        leaf.increment_counts(new_instance)
+
+        ctxt_nodes[idx] = self.ifit_leaf(leaf, new_instance, ctxt_nodes)
+        instance_cache[idx] = new_instance
+        # assert in_tree(ctxt_nodes[idx])
+
+    def ifit_leaf(self, leaf, instance, ctxt_nodes):
+        """Categorizes instances, incrementing counts from the leaf"""
+        current = self.root
+
+        while current:
+            # the current.count == 0 here is for the initially empty tree.
+            if not current.children and (current.is_exact_match(instance) or
+                                         current.count == 0):
+                print("leaf match")
+                self.root.replace_node_as_context(leaf, current)
+                for i, node in enumerate(ctxt_nodes):
+                    if node == leaf:
+                        ctxt_nodes[i] = current
+                word = next(iter(leaf.av_counts[anchor_key]))
+                if word in word_to_leaf:  # Might not be here since words are only added when solidified
+                    for i, node in enumerate(word_to_leaf[word]):
+                        if node == leaf:
+                            ctxt_nodes[i] = current
+                current.update_counts_from_node(leaf)
+                break
+
+            elif not current.children:
+                # print("fringe split")
+                new = current.__class__(current)
+                current.parent = new
+                new.children.append(current)
+
+                if new.parent:
+                    new.parent.children.remove(current)
+                    new.parent.children.append(new)
+                else:
+                    self.root = new
+
+                new.update_counts_from_node(leaf)
+                new.children.append(leaf)
+                leaf.parent = new
+                current = leaf
+                break
+
+            else:
+                best1_cu, best1, best2 = current.two_best_children(instance)
+                _, best_action = current.get_best_operation(instance, best1,
+                                                            best2, best1_cu)
+
+                # print(best_action)
+                if best_action == 'best':
+                    current.update_counts_from_node(leaf)
+                    current = best1
+                elif best_action == 'new':
+                    current.update_counts_from_node(leaf)
+                    current.children.append(leaf)
+                    leaf.parent = current
+                    current = leaf
+                    break
+                elif best_action == 'merge':
+                    current.update_counts_from_node(leaf)
+                    new_child = current.merge(best1, best2)
+                    current = new_child
+                elif best_action == 'split':
+                    current.split(best1)
+                else:
+                    raise Exception('Best action choice "' + best_action +
+                                    '" not a recognized option. This should be'
+                                    ' impossible...')
+
+        return current
+
+    def delete_node(self, node):
+        # TODO Slight incorrect structure when deleting 2-leaf tree
+        node.parent.decrement_all_counts(node)
+        node.parent.children.remove(node)
+        if len(node.parent.children) == 1 and node.parent.parent is not None:
+            # Undo fringe split
+            node.parent.parent.split(node.parent)
 
     def create_instance(self, anchor_idx, anchor_word, ctxts, ignore=(),
                         filter_stop_for_minor=False):
@@ -152,12 +242,6 @@ class ContextualCobwebTree(CobwebTree):
                 major_key: major_context,
                 anchor_key: anchor_word,
                 '_idx': anchor_idx}
-
-    def delete_instance(self, instance, location):
-        
-        cur = location
-        while cur:
-            location
 
     def similarity_categorize(self, instance):
         current = self.root
@@ -190,7 +274,7 @@ class ContextualCobwebTree(CobwebTree):
     def surrounding(self, sequence, center, dist, ignore=()):
         if ignore:
             return list(
-                oslice(sequence, max(0, center-dist), *sorted((*(x for x in ignore if x < center+dist+1), center)), center+dist+1))
+                oslice(sequence, max(0, center-dist), *sorted((*(x for x in ignore if 0 < x < center+dist+1), center)), center+dist+1))
         return list(
             skip_slice(sequence, max(0, center-dist), center+dist+1, center))
 
@@ -203,6 +287,9 @@ class ContextualCobwebTree(CobwebTree):
         ctxt_nodes = []
 
         for anchor_idx, anchor_wd in enumerate(text):
+            if anchor_idx > missing_idx:
+                break
+
             while ((len(ctxt_nodes) < anchor_idx + self.major_window + 1) and
                     len(ctxt_nodes) < len(text)):
                 if len(ctxt_nodes) == missing_idx:
@@ -210,19 +297,19 @@ class ContextualCobwebTree(CobwebTree):
                     continue
                 ctxt_nodes.append(self.categorize(
                     self.create_instance(len(ctxt_nodes),
-                                         text[len(ctxt_nodes)], ctxt_nodes, ignore=(missing_idx,))))
+                                         text[len(ctxt_nodes)], ctxt_nodes, ignore=(missing_idx, anchor_idx))))
 
             if anchor_idx == missing_idx:
                 continue
 
             for _ in range(2):
-                for i in range(2 * self.major_window + 1):
-                    idx = anchor_idx + i - self.major_window
+                for i in range(self.major_window + 1):
+                    idx = anchor_idx + i
                     if idx < 0 or idx >= len(text) or idx == missing_idx:
                         continue
 
                     instance = self.create_instance(
-                        idx, anchor_wd, ctxt_nodes, ignore=(missing_idx,))
+                        idx, text[idx], ctxt_nodes, ignore=(missing_idx, anchor_idx))
                     ctxt_nodes[idx] = self.categorize(instance)
 
             instance = self.create_instance(
@@ -245,10 +332,22 @@ class ContextualCobwebTree(CobwebTree):
                 raise ValueError('None of the options have been seen')
 
         return max(options,
-                   key=lambda opt: concept.av_counts[anchor_key].get(opt, 0)), path
+                   key=lambda opt: concept.av_counts[anchor_key].get(opt, 0)), path, missing_instance[minor_key]
 
 
 class ContextualCobwebNode(CobwebNode):
+    def replace_node_as_context(self, node, new_node):
+        """cur_node in iteration, node to be replace"""
+        major_ctxt = self.av_counts[major_key]
+        if node in major_ctxt:
+            minor_ctxt = self.av_counts[minor_key]
+            major_ctxt[new_node] += major_ctxt[node]
+            minor_ctxt[new_node] += minor_ctxt[node]
+            del major_ctxt[node]
+            del minor_ctxt[node]
+            for child in self.children:
+                child.replace_node_as_context(node, new_node)
+
     def increment_counts(self, instance):
         """
         Increment the counts at the current node according to the specified
@@ -268,33 +367,42 @@ class ContextualCobwebNode(CobwebNode):
                 self.av_counts[attr].get(instance[attr], 0) + 1)
 
     def decrement_counts(self, instance):
-        """Decrements counts and deletes self (and parent if fringe split) if self is a leaf"""
-        if self.count == 1:
-            parent = self.parent
-            if parent is not None:
-                parent.children.remove(self)
-                # undo fringe split
-                if len(parent.children) == 1:
-                    sibling = parent.children[0]
-                    sibling.parent = parent.parent
-                    grand_par_children = parent.parent.children
-                    grand_par_children[grand_par_children.index(parent)] = sibling
-            else:
-                self.tree.clear()
-            return
-        self.count += 1
+        self.count -= 1
         for attr in instance:
             if attr == minor_key or attr == major_key:
                 self.av_counts[attr] -= Counter(instance[attr])
                 continue
 
             self.av_counts[attr][instance[attr]] -= 1
-            if self.av_counts[attr][instance[attr]] == 0:
-                del self.av_counts[attr][instance[attr]]
+
+    def update_all_counts(self, node):
+        cur = self
+        while cur:
+            cur.update_counts_from_node(node)
+            cur = cur.parent
+
+    def decrement_all_counts(self, node):
+        cur = self
+        while cur:
+            cur.decrement_counts_from_node(node)
+            cur = cur.parent
+
+    def decrement_counts_from_node(self, node):
+        """
+        Decrements counts but does not restructure tree
+        """
+        self.count -= node.count
+
+        for attr in node.attrs('all'):
+            if attr == minor_key or attr == major_key:
+                self.av_counts[attr] -= node.av_counts[attr]
+                continue
+
+            for val in node.av_counts[attr]:
+                self.av_counts[attr][val] -= node.av_counts[attr][val]
 
     def update_counts_from_node(self, node):
         """
-        Adds binomial distribution for estimating concept counts
         """
         self.count += node.count
 
@@ -693,6 +801,19 @@ def create_questions(text, question_length, nimposters, n):
     return questions
 
 
+def verify_structure(node):
+    assert all(child.parent == node for child in node.children)
+    [verify_structure(child) for child in node.children]
+
+def in_tree(node):
+    if node == node.tree.root:
+        return True
+    result = node in node.parent.children and in_tree(node.parent)
+    if not result:
+        print(node)
+    return result
+
+
 def test_microsoft(model):
     correct = 0
     for total, (question, answers, answer) in enumerate(load_microsoft_qa()):
@@ -712,6 +833,7 @@ if __name__ == "__main__":
     for text_num in range(1):
         text = list(load_text(text_num))[:5000]
 
+        # run('tree.fit_to_text_wo_stopwords(text)')
         tree.fit_to_text_wo_stopwords(text)
         text = [word for word in text if word not in stop_words]
         text_counts = Counter(text)
@@ -725,7 +847,7 @@ if __name__ == "__main__":
         correct = 0
         answers_needed = 1
         for question in tqdm(questions):
-            guess, path = tree.guess_missing(
+            guess, path, minctxt = tree.guess_missing(
                 *question, answers_needed)
             answer = question[1][0]
             # print(question)
@@ -733,7 +855,7 @@ if __name__ == "__main__":
                 correct += 1
                 ...  # print('correct')
             else:
-                '''print()
+                print()
                 print('question', question[0])
                 print('minor ctxt', minctxt)
                 ctxt_words = [next(iter(concept.av_counts[anchor_key])) for concept in minctxt]
@@ -748,7 +870,7 @@ if __name__ == "__main__":
                 print('id', path[-1].concept_id)
                 print('counts', [(answer, path[-1].av_counts[anchor_key].get(answer, 0)) for answer in question[1]])
                 print('answer', answer)
-                print()'''
+                print()
                 ...  # print('incorrect. guessed "{}" when "{}" was correct'.format(guess, answer))
         print(correct/len(questions), 'answers needed: ', answers_needed)
     visualize(tree)
