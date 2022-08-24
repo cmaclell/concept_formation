@@ -40,12 +40,31 @@ def test_microsoft(model):
     return correct / total
 
 
-def generate_ms_sentence_variant_synonyms():
-    ...
+def full_ms_sentences():
+    for sent, quest, ans in load_microsoft_qa():
+        sent[sent.index(None)] = quest[ans]
+        yield sent
+        break
 
 
-def generate_ms_sentence_variant_homographs():
-    ...
+def generate_ms_sentence_variant_synonyms(nsynonyms=2, ncopies=5):
+    """
+    args:
+        nsynonyms (int): number of possible synonyms
+        ncopies (int): number of times each sentence appears"""
+    sentences = list(full_ms_sentences())
+    for _ in range(ncopies):
+        for sentence in sentences:
+            yield [word+'-%s' % random.randint(1, nsynonyms) for word in sentence]
+
+
+def generate_ms_sentence_variant_homographs(homographs=[], nsenses=2):
+    """
+    homographs (Seq): List of words to be turned into homographs
+    nsenses (int): Number of senses for each homographs"""
+    for sentence in full_ms_sentences():
+        for i in range(nsenses):
+            yield [(word if word in homographs else word+'-%s' % i) for word in sentence]
 
 
 def create_questions(text, question_length, nimposters, n):

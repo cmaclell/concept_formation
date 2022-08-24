@@ -74,7 +74,7 @@ class ContextualCobwebTree(CobwebTree):
 
         self.minor_window = minor_window
         self.major_window = major_window
-        self.anchor_weight = 13
+        self.anchor_weight = 10
         self.minor_weight = 3
         self.major_weight = 1
         print(self.anchor_weight, self.minor_weight, self.major_weight)
@@ -303,7 +303,7 @@ class ContextualCobwebTree(CobwebTree):
                     continue
                 ctxt_nodes.append(self.categorize(
                     self.create_instance(len(ctxt_nodes),
-                                         text[len(ctxt_nodes)], ctxt_nodes, ignore=(missing_idx, anchor_idx))))
+                                         text[len(ctxt_nodes)], ctxt_nodes, ignore=(missing_idx, anchor_idx,))))
 
             if anchor_idx == missing_idx:
                 continue
@@ -315,7 +315,7 @@ class ContextualCobwebTree(CobwebTree):
                         continue
 
                     instance = self.create_instance(
-                        idx, text[idx], ctxt_nodes, ignore=(missing_idx, anchor_idx))
+                        idx, text[idx], ctxt_nodes, ignore=(missing_idx, anchor_idx,))
                     ctxt_nodes[idx] = self.categorize(instance)
 
             instance = self.create_instance(
