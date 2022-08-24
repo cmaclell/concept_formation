@@ -16,7 +16,8 @@ from concept_formation.cobweb import CobwebNode
 from concept_formation.cobweb import CobwebTree
 from concept_formation.utils import skip_slice, oslice
 from visualize import visualize
-from preprocess_text import load_text, stop_words, load_microsoft_qa
+from concept_formation.preprocess_text import load_text, stop_words
+from concept_formation.training_and_testing import create_questions
 
 TREE_RECURSION = 0x10000
 
@@ -71,8 +72,8 @@ class ContextualCobwebTree(CobwebTree):
 
         self.minor_window = minor_window
         self.major_window = major_window
-        self.anchor_weight = 35
-        self.minor_weight = 5
+        self.anchor_weight = 13
+        self.minor_weight = 3
         self.major_weight = 1
         print(self.anchor_weight, self.minor_weight, self.major_weight)
 
@@ -133,7 +134,7 @@ class ContextualCobwebTree(CobwebTree):
             self.resort(anchor_idx, anchor_wd, ctxt_nodes, instance_cache, ignore=())
 
             word_to_leaf.setdefault(anchor_wd, [])
-            word_to_leaf[anchor_wd].append(ctxt_nodes[-1])
+            word_to_leaf[anchor_wd].append(ctxt_nodes[anchor_idx])
 
         return ctxt_nodes
 
@@ -240,8 +241,8 @@ class ContextualCobwebTree(CobwebTree):
 
         return {minor_key: minor_context,
                 major_key: major_context,
-                anchor_key: anchor_word,
-                '_idx': anchor_idx}
+                anchor_key: anchor_word, }
+        # '_idx': anchor_idx} DOES NOT HANDLE HIDDEN ATTRS
 
     def similarity_categorize(self, instance):
         current = self.root
@@ -287,8 +288,8 @@ class ContextualCobwebTree(CobwebTree):
         ctxt_nodes = []
 
         for anchor_idx, anchor_wd in enumerate(text):
-            if anchor_idx > missing_idx:
-                break
+            # if anchor_idx > missing_idx:
+            #     break
 
             while ((len(ctxt_nodes) < anchor_idx + self.major_window + 1) and
                     len(ctxt_nodes) < len(text)):
@@ -335,7 +336,39 @@ class ContextualCobwebTree(CobwebTree):
                    key=lambda opt: concept.av_counts[anchor_key].get(opt, 0)), path, missing_instance[minor_key]
 
 
+def unhidden_attr_val(pair):
+    return pair[0][0] != '_'
+
+
 class ContextualCobwebNode(CobwebNode):
+    def shallow_copy(self):
+        """
+        Create a shallow copy of the current node (and not its children)
+        This can be used to copy only the information relevant to the node's
+        probability table without maintaining reference to other elements of
+        the tree, except for the root which is necessary to calculate category
+        utility.
+        """
+        temp = self.__class__()
+        temp.tree = self.tree
+        temp.parent = self.parent
+        temp.set_counts_from_node(self)
+        return temp
+
+    def attr_values(self, attr_filter=unhidden_attr_val):
+        """
+        Iterates over the attributes-value pairs in the node's attribute-value
+        table with the option to filter certain types. By default the filter
+        will ignore hidden attributes and yield all others. If the string 'all'
+        is provided then all attributes will be yielded. In neither of those
+        cases the filter will be interpreted as a function that returns true if
+        an attribute should be yielded and false otherwise.
+        """
+        if attr_filter == 'all':
+            return self.av_counts.items()
+        else:
+            return filter(attr_filter, self.av_counts.items())
+
     def replace_node_as_context(self, node, new_node):
         """cur_node in iteration, node to be replace"""
         major_ctxt = self.av_counts[major_key]
@@ -417,7 +450,13 @@ class ContextualCobwebNode(CobwebNode):
                 counts[val] = counts.get(val, 0)+node.av_counts[attr][val]
 
     def set_counts_from_node(self, node):
-        raise NotImplementedError()
+        self.count = node.count
+        for attr, counts in node.attr_values('all'):
+            if attr == minor_key or attr == major_key:
+                self.av_counts[attr] = Counter(counts)
+                continue
+
+            self.av_counts[attr] = dict(counts)
 
     def __str__(self):
         return "Concept-{}".format(self.concept_id)
@@ -439,15 +478,15 @@ class ContextualCobwebNode(CobwebNode):
         if instance is None:
             attrs = self.attrs()
         else:
-            attrs = self.attrs(attr_filter=lambda x: x in instance)
+            attrs = self.attrs(attr_filter=lambda x: x in instance and x[0] != '_')
         for attr in attrs:
-            if attr[0] == '_':
-                continue
             temp = 0
             counts = self.av_counts[attr]
             for val in counts:
-                prob = counts[val] / self.count
-                temp += (prob * prob)
+                count = counts[val]
+                temp += (count * count)
+            # Turns counts into probabilities
+            temp /= (self.count * self.count)
 
             if attr == major_key:
                 correct_guesses += temp * self.tree.major_weight
@@ -778,32 +817,20 @@ class ContextualCobwebNode(CobwebNode):
         .. seealso:: :meth:`CobwebNode.get_best_operation`
         """
         anchors = self.av_counts.get(anchor_key, ())
-        if len(anchors) == 1 and instance[anchor_key] in anchors:
+        result = len(anchors) == 1 and instance[anchor_key] in anchors
+        if result:
             global overlaps
             overlaps += 1
-        return len(anchors) == 1 and instance[anchor_key] in anchors
+        return result
 
 
 overlaps = 0
 
 
-def create_questions(text, question_length, nimposters, n):
-    questions = []
-    for _ in range(n):
-        pos = random.randint(0, len(text)-question_length-1)
-        blank = random.randint(2, question_length-3)
-        question = text[pos:pos+question_length]
-        answer = question[blank]
-        question[blank] = None
-        questions.append((question,
-                         [answer, *(random.choice(text)
-                          for _ in range(nimposters))]))
-    return questions
-
-
 def verify_structure(node):
     assert all(child.parent == node for child in node.children)
     [verify_structure(child) for child in node.children]
+
 
 def in_tree(node):
     if node == node.tree.root:
@@ -814,15 +841,6 @@ def in_tree(node):
     return result
 
 
-def test_microsoft(model):
-    correct = 0
-    for total, (question, answers, answer) in enumerate(load_microsoft_qa()):
-        if model.guess_missing(question, answers, 1) == answers[answer]:
-            correct += 1
-    total += 1
-    return correct / total
-
-
 if __name__ == "__main__":
 
     if LOAD:
@@ -831,9 +849,9 @@ if __name__ == "__main__":
         tree = ContextualCobwebTree(1, 4)
 
     for text_num in range(1):
-        text = list(load_text(text_num))[:5000]
+        text = list(load_text(text_num))[:500]
 
-        # run('tree.fit_to_text_wo_stopwords(text)')
+        # run('tree.fit_to_text_wo_stopwords(text)', sort='calls')
         tree.fit_to_text_wo_stopwords(text)
         text = [word for word in text if word not in stop_words]
         text_counts = Counter(text)

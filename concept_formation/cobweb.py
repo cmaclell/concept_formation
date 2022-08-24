@@ -487,7 +487,6 @@ class CobwebNode(object):
             operations.append((self.cu_for_split(best1), 'split'))
 
         operations.sort(reverse=True)
-
         return random_tiebreaker(operations, key=lambda x: x[0])
 
     def two_best_children(self, instance):

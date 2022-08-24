@@ -109,8 +109,8 @@ class ContextualCobwebTree(CobwebTree):
 
         return {minor_key: minor_context,
                 major_key: major_context,
-                anchor_key: anchor_word,
-                '_idx': anchor_idx}
+                anchor_key: anchor_word,}
+                # '_idx': anchor_idx}
 
     def surrounding(self, sequence, center, dist):
         return list(
@@ -273,14 +273,14 @@ if __name__ == "__main__":
         tree = ContextualCobwebTree(1, 4)
 
     for text_num in range(1):
-        text = list(load_text(text_num))[:5000]
+        text = list(load_text(text_num))[:10000]
 
-        tree.fit_to_text_wo_stopwords(text)
         text = [word for word in text if word not in stop_words]
 
         # print(test_microsoft(tree))
 
         questions = create_questions(text, 10, 4, 200)
+        tree.fit_to_text_wo_stopwords(text)
 
         correct = 0
         answers_needed = 1
