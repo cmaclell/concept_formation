@@ -19,7 +19,7 @@ from concept_formation.utils import skip_slice, oslice
 from concept_formation.utils import tiebreak_top_2
 from visualize import visualize
 from concept_formation.preprocess_text import load_text, stop_words
-from concept_formation.training_and_testing import create_questions
+from concept_formation.training_and_testing import create_questions, generate_ms_sentence_variant_synonyms
 
 TREE_RECURSION = 0x10000
 
@@ -118,7 +118,7 @@ class ContextualCobwebTree(CobwebTree):
         instance_cache = []
         text = [word for word in text if word not in stop_words]
 
-        for anchor_idx, anchor_wd in enumerate(tqdm(text)):
+        for anchor_idx, anchor_wd in enumerate(text):#tqdm(text)):
             while ((len(ctxt_nodes) < anchor_idx + self.major_window + 1) and
                    len(ctxt_nodes) < len(text)):
                 instance_cache.append(self.create_instance(len(ctxt_nodes),
@@ -854,6 +854,49 @@ class ContextualCobwebNode(CobwebNode):
 
         return temp.category_utility(instance)
 
+    def merge(self, best1, best2):
+        """
+        Merge the two specified nodes.
+        A merge operation introduces a new node to be the merger of the the two
+        given nodes. This new node becomes a child of the current node and the
+        two given nodes become children of the new node.
+        :param best1: The child of the current node with the best category
+            utility
+        :type best1: CobwebNode
+        :param best2: The child of the current node with the second best
+            category utility
+        :type best2: CobwebNode
+        :return: The new child node that was created by the merge
+        :rtype: CobwebNode
+        """
+        # Anchor pruning
+        if (len(best1.av_counts[anchor_key]) == 1
+                and len(best2.av_counts[anchor_key]) == 1
+                and (next(iter(best1.av_counts[anchor_key]))
+                     == next(iter(best2.av_counts[anchor_key])))):
+            assert not (best1.children or best2.children)
+            self.tree.root.replace_node_as_context(best2, best1)
+            best1.update_counts_from_node(best2)
+            self.tree.delete_node(best2)
+            return best1
+        new_child = self.__class__()
+        new_child.parent = self
+        new_child.tree = self.tree
+
+        best1.parent = new_child
+        # best1.tree = new_child.tree
+        best2.parent = new_child
+        # best2.tree = new_child.tree
+        new_child.children.append(best1)
+        new_child.children.append(best2)
+        self.children.remove(best1)
+        self.children.remove(best2)
+        self.children.append(new_child)
+        new_child.update_counts_from_node(best1)
+        new_child.update_counts_from_node(best2)
+
+        return new_child
+
     def cu_for_split(self, best, instance):
         """
         Return the category utility for splitting the best child.
@@ -912,6 +955,14 @@ def in_tree(node):
         print(node)
     return result
 
+
+'''tree = ContextualCobwebTree(1, 4)
+data = list(generate_ms_sentence_variant_synonyms(3, 10, 50))
+random.shuffle(data)
+for sent in tqdm(data):
+    tree.fit_to_text_wo_stopwords([word for word in sent if word[:-2] not in stop_words])
+visualize(tree)
+1/0'''
 
 if __name__ == "__main__":
 
