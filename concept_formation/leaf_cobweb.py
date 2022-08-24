@@ -1,5 +1,6 @@
 from cProfile import run
 from collections import Counter
+from tkinter import N
 # from multiprocess import Pool
 from tqdm import tqdm
 import pickle
@@ -15,6 +16,7 @@ from concept_formation.utils import random_tiebreaker
 from concept_formation.cobweb import CobwebNode
 from concept_formation.cobweb import CobwebTree
 from concept_formation.utils import skip_slice, oslice
+from concept_formation.utils import tiebreak_top_2
 from visualize import visualize
 from concept_formation.preprocess_text import load_text, stop_words
 from concept_formation.training_and_testing import create_questions
@@ -121,20 +123,23 @@ class ContextualCobwebTree(CobwebTree):
                    len(ctxt_nodes) < len(text)):
                 instance_cache.append(self.create_instance(len(ctxt_nodes),
                                                            text[len(ctxt_nodes)], ctxt_nodes, ignore=(anchor_idx,)))
-                ctxt_nodes.append(self.ifit(instance_cache[-1]))
+                ctxt_nodes.append(self.categorize(instance_cache[-1]))
 
             for _ in range(2):
-                for i in range(self.major_window + 1):
-                    idx = anchor_idx + i
+                for i in range(2 * self.major_window + 1):
+                    idx = anchor_idx + i - self.major_window
                     if not (0 <= idx < len(text)):
                         continue
 
-                    self.resort(idx, text[idx], ctxt_nodes, instance_cache, ignore=(anchor_idx,))
+                    new_instance = self.create_instance(
+                        idx, text[idx], ctxt_nodes, ignore=(anchor_idx,))
+                    ctxt_nodes[idx] = self.categorize(new_instance)
 
-            self.resort(anchor_idx, anchor_wd, ctxt_nodes, instance_cache, ignore=())
+            ctxt_nodes[anchor_idx] = self.ifit(self.create_instance(
+                anchor_idx, anchor_wd, ctxt_nodes, ignore=()))
 
-            word_to_leaf.setdefault(anchor_wd, [])
-            word_to_leaf[anchor_wd].append(ctxt_nodes[anchor_idx])
+            word_to_leaf.setdefault(anchor_wd, set())
+            word_to_leaf[anchor_wd].add(ctxt_nodes[anchor_idx])
 
         return ctxt_nodes
 
@@ -231,13 +236,13 @@ class ContextualCobwebTree(CobwebTree):
 
     def create_instance(self, anchor_idx, anchor_word, ctxts, ignore=(),
                         filter_stop_for_minor=False):
-        major_context = self.surrounding(
-            ctxts, anchor_idx, self.major_window, ignore=ignore)
+        major_context = list(filter(None, self.surrounding(
+            ctxts, anchor_idx, self.major_window, ignore=ignore)))
         if filter_stop_for_minor:
             raise NotImplementedError
         else:
-            minor_context = self.surrounding(
-                ctxts, anchor_idx, self.minor_window, ignore=ignore)
+            minor_context = list(filter(None, self.surrounding(
+                ctxts, anchor_idx, self.minor_window, ignore=ignore)))
 
         return {minor_key: minor_context,
                 major_key: major_context,
@@ -304,8 +309,8 @@ class ContextualCobwebTree(CobwebTree):
                 continue
 
             for _ in range(2):
-                for i in range(self.major_window + 1):
-                    idx = anchor_idx + i
+                for i in range(2 * self.major_window + 1):
+                    idx = anchor_idx + i - self.major_window
                     if idx < 0 or idx >= len(text) or idx == missing_idx:
                         continue
 
@@ -334,6 +339,29 @@ class ContextualCobwebTree(CobwebTree):
 
         return max(options,
                    key=lambda opt: concept.av_counts[anchor_key].get(opt, 0)), path, missing_instance[minor_key]
+
+    def _cobweb_categorize(self, instance):
+        """
+        A cobweb specific version of categorize, not intended to be
+        externally called.
+        .. seealso:: :meth:`CobwebTree.categorize`
+        """
+        if anchor_key not in instance:
+            return super()._cobweb_categorize(instance)
+        try:
+            paths = [list(reversed(list(get_path(word)))) for word in word_to_leaf[instance[anchor_key]]]
+        except KeyError:
+            return None
+
+        current = self.root
+        while current:
+            if not current.children:
+                return current
+            paths = [option[1:] for option in paths if option[0] == current]
+            options = list({option[0] for option in paths})
+
+            _, best1, best2 = current.two_best_children(instance, options=options)
+            current = best1
 
 
 def unhidden_attr_val(pair):
@@ -614,6 +642,50 @@ class ContextualCobwebNode(CobwebNode):
 
         return random_tiebreaker(operations, key=lambda x: x[0])
 
+    def two_best_children(self, instance, options=None):
+        """
+        Calculates the category utility of inserting the instance into each of
+        this node's children and returns the best two. In the event of ties
+        children are sorted first by category utility, then by their size, then
+        by a random value.
+        :param instance: The instance currently being categorized
+        :type instance: :ref:`Instance<instance-rep>`
+        :return: the category utility and indices for the two best children
+            (the second tuple will be ``None`` if there is only 1 child).
+        :rtype: ((cu_best1,index_best1),(cu_best2,index_best2))
+        """
+        if options is None:
+            options = self.children
+        if len(options) == 0:
+            raise Exception("No children!")
+
+        # Convert the relative CU's of the two best children into CU scores
+        # that can be compared with the other operations.
+        const = self.compute_relative_CU_const(instance)
+
+        # If there's only one child, simply calculate the relevant utility
+        if len(options) == 1:
+            best1 = options[0]
+            best1_relative_cu = self.relative_cu_for_insert(best1, instance)
+            best1_cu = (best1_relative_cu / (self.count+1) / len(options)
+                        + const)
+            return best1_cu, best1, None
+
+        children_relative_cu = [(self.relative_cu_for_insert(child, instance),
+                                 child.count, child) for child in
+                                options]
+        children_relative_cu.sort(reverse=True, key=lambda x: x[:-1])
+
+        best1_data, best2_data = tiebreak_top_2(
+            children_relative_cu, key=lambda x: x[:-1])
+
+        best1_relative_cu, _, best1 = best1_data
+        best1_cu = (best1_relative_cu / (self.count+1) / len(options)
+                    + const)
+        best2 = best2_data[2]
+
+        return best1_cu, best1, best2
+
     def compute_relative_CU_const(self, instance):
         """
         Computes the constant value that is used to convert between CU and
@@ -849,7 +921,7 @@ if __name__ == "__main__":
         tree = ContextualCobwebTree(1, 4)
 
     for text_num in range(1):
-        text = list(load_text(text_num))[:500]
+        text = list(load_text(text_num))[:5000]
 
         # run('tree.fit_to_text_wo_stopwords(text)', sort='calls')
         tree.fit_to_text_wo_stopwords(text)

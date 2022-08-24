@@ -40,6 +40,14 @@ def test_microsoft(model):
     return correct / total
 
 
+def generate_ms_sentence_variant_synonyms():
+    ...
+
+
+def generate_ms_sentence_variant_homographs():
+    ...
+
+
 def create_questions(text, question_length, nimposters, n):
     questions = []
     for _ in range(n):
