@@ -41,22 +41,32 @@ def test_microsoft(model):
 
 
 def full_ms_sentences():
-    for sent, quest, ans in load_microsoft_qa():
-        sent[sent.index(None)] = quest[ans]
-        yield sent
+    return map(question_to_sentence, load_microsoft_qa())
 
 
-def generate_ms_sentence_variant_synonyms(nsynonyms=2, ncopies=5, nms_sentences='all'):
+def question_to_sentence(question):
+    sent, quest, ans = question
+    sent[sent.index(None)] = quest[ans]
+    return sent
+
+
+def generate_ms_sentence_variant_synonyms(nsynonyms=2, ncopies=5, nms_sentences=1500):
     """
     args:
         nsynonyms (int): number of possible synonyms
         ncopies (int): number of times each sentence appears"""
-    sentences = list(full_ms_sentences())
-    if nms_sentences != 'all':
-        sentences = sentences[:nms_sentences]
+    sentences = list(full_ms_sentences())[:nms_sentences]
     for _ in range(ncopies):
         for sentence in sentences:
-            yield [word+'-%s' % random.randint(1, nsynonyms) for word in sentence]
+            yield synonymize(sentence, nsynonyms)
+
+
+def synonymize(sentence, nsynonyms=2):
+    return [(word+'-%s' % random.randint(1, nsynonyms) if word else None) for word in sentence]
+
+
+def synonymize_question(question, nsynonyms=2):
+    return (synonymize(question[0], nsynonyms), synonymize(question[1], nsynonyms), question[2])
 
 
 def generate_ms_sentence_variant_homographs(homographs=[], nsenses=2):

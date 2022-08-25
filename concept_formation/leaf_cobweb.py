@@ -10,7 +10,7 @@ from os import listdir
 import resource
 from time import time
 import random
-from itertools import chain
+from itertools import chain, combinations_with_replacement, permutations
 
 from concept_formation.utils import random_tiebreaker
 from concept_formation.cobweb import CobwebNode
@@ -19,7 +19,7 @@ from concept_formation.utils import skip_slice, oslice
 from concept_formation.utils import tiebreak_top_2
 from visualize import visualize
 from concept_formation.preprocess_text import load_text, stop_words
-from concept_formation.training_and_testing import create_questions, generate_ms_sentence_variant_synonyms
+from concept_formation.training_and_testing import create_questions, generate_ms_sentence_variant_synonyms, synonymize_question, load_microsoft_qa
 
 TREE_RECURSION = 0x10000
 
@@ -877,7 +877,8 @@ class ContextualCobwebNode(CobwebNode):
             assert not (best1.children or best2.children)
             self.tree.root.replace_node_as_context(best2, best1)
             best1.update_counts_from_node(best2)
-            self.tree.delete_node(best2)
+            best2.parent.children.remove(best2)
+            word_to_leaf[next(iter(best1.av_counts[anchor_key]))].remove(best2)
             return best1
         new_child = self.__class__()
         new_child.parent = self
@@ -956,12 +957,36 @@ def in_tree(node):
     return result
 
 
+def word_to_base(word):
+    return word.split('-')[0]
+
+
+def synonym_similarity(cutoff):
+    """cutoff: maximum number of levels above before leaves are considered to far apart"""
+    # The base of a word to the variants of that base
+    base_to_variants = {}
+    # The base of a word to the number of occurances
+    base_to_counts = Counter()
+    for variant, leaves in word_to_leaf.items():
+        base = word_to_base(variant)
+        base_to_variants.setdefault(base, set()).add(variant)
+        base_to_counts[base] += sum(leaf.count for leaf in leaves)
+    result = 0
+    for base, variants in base_to_variants.items():
+        for node_1, node_2 in permutations(sum((list(word_to_leaf[variant]) for variant in variants), start=[]), repeat=2):
+            first_path = list(get_path(node_1))[:cutoff]
+            if any(node in first_path for node in list(get_path(node_2))[:cutoff]):
+                result += node_1.count * node_2.count / (base_to_counts[base] * base_to_counts[base])
+    return result / len(base_to_variants)
+
+
 '''tree = ContextualCobwebTree(1, 4)
 data = list(generate_ms_sentence_variant_synonyms(3, 10, 50))
 random.shuffle(data)
 for sent in tqdm(data):
-    tree.fit_to_text_wo_stopwords([word for word in sent if word[:-2] not in stop_words])
+    tree.fit_to_text_wo_stopwords([word for word in sent if word_to_base(word) not in stop_words])
 visualize(tree)
+synonym_similarity(500)
 1/0'''
 
 if __name__ == "__main__":

@@ -14,7 +14,8 @@ from concept_formation.cobweb import CobwebNode
 from concept_formation.cobweb import CobwebTree
 from concept_formation.utils import skip_slice
 from visualize import visualize
-from preprocess_text import load_text, stop_words, load_microsoft_qa
+from preprocess_text import load_text, stop_words
+from concept_formation.training_and_testing import load_microsoft_qa, create_questions, generate_ms_sentence_variant_synonyms, synonymize_question, load_microsoft_qa
 
 TREE_RECURSION = 0x10000
 
@@ -58,7 +59,7 @@ class ContextualCobwebTree(CobwebTree):
         self.minor_window = minor_window
         self.major_window = major_window
         self.anchor_weight = 10
-        self.minor_weight = 3
+        self.minor_weight = 0
         self.major_weight = 1
 
     def _sanity_check_instance(self, instance):
@@ -263,6 +264,14 @@ def test_microsoft(model):
             correct += 1
     total += 1
     return correct / total
+
+
+tree = ContextualCobwebTree(1, 4)
+data = list(generate_ms_sentence_variant_synonyms(3, 10, 50))
+random.shuffle(data)
+for sent in tqdm(data):
+    tree.fit_to_text_wo_stopwords([word for word in sent if word[:-2] not in stop_words])
+visualize(tree)
 
 
 if __name__ == "__main__":
