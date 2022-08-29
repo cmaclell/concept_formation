@@ -137,7 +137,7 @@ class ContextualCobwebTree(CobwebTree):
                         idx, text[idx], ctxt_nodes, ignore=())
                     ctxt_nodes[idx] = self.categorize(new_instance)
 
-            ctxt_nodes[anchor_idx] = super().ifit(self.create_instance(
+            ctxt_nodes[anchor_idx] = self.ifit(self.create_instance(
                 anchor_idx, anchor_wd, ctxt_nodes, ignore=()))
 
             word_to_leaf.setdefault(anchor_wd, set())
