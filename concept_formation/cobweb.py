@@ -181,8 +181,7 @@ class CobwebTree(object):
                     break
                 elif best_action == 'merge':
                     current.increment_counts(instance)
-                    new_child = current.merge(best1, best2)
-                    current = new_child
+                    current = current.merge(best1, best2)
                 elif best_action == 'split':
                     current.split(best1)
                 else:

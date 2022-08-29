@@ -1,6 +1,7 @@
 from cProfile import run
 from functools import lru_cache
 from collections import Counter
+from math import log2
 # from multiprocess import Pool
 from tqdm import tqdm
 import timeit
@@ -15,6 +16,7 @@ import random
 from concept_formation.cobweb import CobwebNode
 from concept_formation.cobweb import CobwebTree
 from concept_formation.utils import skip_slice, oslice
+from concept_formation.utils import tiebreak_top_2
 from visualize import visualize
 from preprocess_text import load_text, stop_words
 
@@ -40,13 +42,16 @@ run
 
 random.seed(16)
 ca_key = '#Ctxt#'
+anchor_key = 'anchor'
+overlaps = 0
+
+word_to_leaf = {}
 
 
 def get_path(node):
-    cur = node
-    while cur:
-        yield cur
-        cur = cur.parent
+    while node:
+        yield node
+        node = node.parent
 
 
 class ContextualCobwebTree(CobwebTree):
@@ -67,10 +72,11 @@ class ContextualCobwebTree(CobwebTree):
         self.window = window
         self.instance = None
         self.prune_threshold = 0.0
-        self.anchor_weight = 1
-        self.context_weight = 1
+        self.anchor_weight = 2
+        self.context_weight = 5
 
         self.log_times = False
+        print(self.anchor_weight, self.context_weight)
 
     def _sanity_check_instance(self, instance):
         for attr in instance:
@@ -116,7 +122,7 @@ class ContextualCobwebTree(CobwebTree):
                    len(ctxt_nodes) < len(text)):
                 ctxt_nodes.append(self.categorize(
                     self.create_instance(len(ctxt_nodes),
-                                         text[len(ctxt_nodes)], ctxt_nodes)))
+                                         text[len(ctxt_nodes)], ctxt_nodes, ignore=(anchor_idx,))))
 
             for _ in range(2):
                 for i in range(2 * self.window + 1):
@@ -131,24 +137,30 @@ class ContextualCobwebTree(CobwebTree):
 
             ctxt_nodes[anchor_idx] = self.ifit(instance)
 
+            word_to_leaf.setdefault(anchor_wd, set())
+            word_to_leaf[anchor_wd].add(ctxt_nodes[anchor_idx])
+
             if self.log_times:
                 stop = timeit.default_timer()
                 with open('out.csv', 'a') as fout:
                     fout.write("{},{:.8f}\n".format(anchor_idx, stop - start))
 
     def create_instance(self, anchor_idx, word, context_nodes, ignore=()):
-        if ignore:
-            context = oslice(context_nodes, max(0, anchor_idx-self.window),
-                             *sorted((*ignore, anchor_idx)), anchor_idx+self.window+1)
-        else:
-            context = skip_slice(context_nodes, max(0, anchor_idx-self.window),
-                                 anchor_idx+self.window+1, anchor_idx)
+        context = filter(None, self.surrounding(
+            context_nodes, anchor_idx, self.window, ignore=ignore))
 
         instance = {ca_key: Counter(), 'anchor': word}
         for n in context:
             instance[ca_key].update(get_path(n))
 
         return instance
+
+    def surrounding(self, sequence, center, dist, ignore=()):
+        if ignore:
+            return list(
+                oslice(sequence, max(0, center-dist), *sorted((*(x for x in ignore if 0 < x < center+dist+1), center)), center+dist+1))
+        return list(
+            skip_slice(sequence, max(0, center-dist), center+dist+1, center))
 
     def cobweb(self, instance):
         """
@@ -227,47 +239,64 @@ class ContextualCobwebTree(CobwebTree):
 
         return current
 
-    def create_categorization_instance(self, anchor_idx, word, context_nodes):
-        context = skip_slice(context_nodes, max(0, anchor_idx-self.window),
-                             anchor_idx+self.window+1, anchor_idx)
+    def similarity_categorize(self, instance):
+        current = self.root
 
-        instance = {ca_key: Counter(), 'anchor': word}
-        for n in filter(None, context):
-            instance[ca_key].update(get_path(n))
+        def similarity(node):
+            """Average probability"""
+            correct_guesses = 0
+            if anchor_key in instance:
+                correct_guesses += node.av_counts[anchor_key].get(
+                    instance[anchor_key], 0) * self.anchor_weight
+            if ca_key in instance:
+                correct_guesses += sum(
+                    node.av_counts[ca_key].get(ctxt, 0)
+                    for ctxt in instance[ca_key]) * self.context_weight
 
-        return instance
+            return correct_guesses  # / node.count
+
+        while current:
+            if not current.children:
+                return current
+
+            best = max(current.children, key=similarity)
+            current = best
+        return current
 
     def guess_missing(self, text, options, options_needed):
         """
         None used to represent missing words
         """
-        assert len(options) >= options_needed
+        text = [word for word in text if word not in stop_words]
+
         missing_idx = text.index(None)
         ctxt_nodes = []
 
-        for anchor_idx, anchor_wd in tqdm(enumerate(text)):
+        for anchor_idx, anchor_wd in enumerate(text):
             while ((len(ctxt_nodes) < anchor_idx + self.window + 1) and
                     len(ctxt_nodes) < len(text)):
                 if len(ctxt_nodes) == missing_idx:
                     ctxt_nodes.append(None)
                     continue
-                ctxt_nodes.append(
-                    self.categorize({'anchor': text[len(ctxt_nodes)]}))
+                ctxt_nodes.append(self.categorize(
+                    self.create_instance(len(ctxt_nodes),
+                                         text[len(ctxt_nodes)], ctxt_nodes, ignore=(missing_idx, anchor_idx,))))
 
             if anchor_idx == missing_idx:
                 continue
 
             for _ in range(2):
-                for i in range(self.window + 1):
-                    idx = anchor_idx + i
+                for i in range(2 * self.window + 1):
+                    idx = anchor_idx + i - self.window
                     if idx < 0 or idx >= len(text) or idx == missing_idx:
                         continue
-                    instance = self.create_categorization_instance(
-                        idx, anchor_wd, ctxt_nodes)
+
+                    instance = self.create_instance(
+                        idx, text[idx], ctxt_nodes, ignore=(missing_idx, anchor_idx,))
                     ctxt_nodes[idx] = self.categorize(instance)
 
-            instance = self.create_categorization_instance(
-                anchor_idx, anchor_wd, ctxt_nodes)
+            instance = self.create_instance(
+                anchor_idx, anchor_wd, ctxt_nodes, ignore=(missing_idx,))
             ctxt_nodes[anchor_idx] = self.categorize(instance)
 
         missing_instance = self.create_instance(
@@ -282,7 +311,7 @@ class ContextualCobwebTree(CobwebTree):
             return sum([__get_anchor_counts(child)
                         for child in node.children], start=Counter())
 
-        concept = self.categorize(missing_instance)
+        concept = self.similarity_categorize(missing_instance)
         while sum([(option in __get_anchor_counts(concept))
                    for option in options]) < options_needed:
             concept = concept.parent
@@ -291,6 +320,29 @@ class ContextualCobwebTree(CobwebTree):
 
         return max(options,
                    key=lambda opt: __get_anchor_counts(concept)[opt])
+
+    def _cobweb_categorize(self, instance):
+        """
+        A cobweb specific version of categorize, not intended to be
+        externally called.
+        .. seealso:: :meth:`CobwebTree.categorize`
+        """
+        if anchor_key not in instance:
+            return super()._cobweb_categorize(instance)
+        try:
+            paths = [list(reversed(list(get_path(word)))) for word in word_to_leaf[instance[anchor_key]]]
+        except KeyError:
+            return None
+
+        current = self.root
+        while current:
+            if not current.children:
+                return current
+            paths = [option[1:] for option in paths if option[0] == current]
+            options = list({option[0] for option in paths})
+
+            _, best1, best2 = current.two_best_children(instance, options=options)
+            current = best1
 
 
 class ContextualCobwebNode(CobwebNode):
@@ -312,6 +364,50 @@ class ContextualCobwebNode(CobwebNode):
 
             self.children.extend(
                 self.__class__(child) for child in other_node.children)
+
+    def two_best_children(self, instance, options=None):
+        """
+        Calculates the category utility of inserting the instance into each of
+        this node's children and returns the best two. In the event of ties
+        children are sorted first by category utility, then by their size, then
+        by a random value.
+        :param instance: The instance currently being categorized
+        :type instance: :ref:`Instance<instance-rep>`
+        :return: the category utility and indices for the two best children
+            (the second tuple will be ``None`` if there is only 1 child).
+        :rtype: ((cu_best1,index_best1),(cu_best2,index_best2))
+        """
+        if options is None:
+            options = self.children
+        if len(options) == 0:
+            raise Exception("No children!")
+
+        # Convert the relative CU's of the two best children into CU scores
+        # that can be compared with the other operations.
+        const = self.compute_relative_CU_const(instance)
+
+        # If there's only one child, simply calculate the relevant utility
+        if len(options) == 1:
+            best1 = options[0]
+            best1_relative_cu = self.relative_cu_for_insert(best1, instance)
+            best1_cu = (best1_relative_cu / (self.count+1) / len(options)
+                        + const)
+            return best1_cu, best1, None
+
+        children_relative_cu = [(self.relative_cu_for_insert(child, instance),
+                                 child.count, child) for child in
+                                options]
+        children_relative_cu.sort(reverse=True, key=lambda x: x[:-1])
+
+        best1_data, best2_data = tiebreak_top_2(
+            children_relative_cu, key=lambda x: x[:-1])
+
+        best1_relative_cu, _, best1 = best1_data
+        best1_cu = (best1_relative_cu / (self.count+1) / len(options)
+                    + const)
+        best2 = best2_data[2]
+
+        return best1_cu, best1, best2
 
     def shallow_copy(self):
         """
@@ -530,7 +626,7 @@ class ContextualCobwebNode(CobwebNode):
 
         for attr in self.attrs():
             if attr == ca_key:
-                for concept_count in self.av_counts[ca_key].values():
+                for concept, concept_count in self.av_counts[ca_key].items():
                     prob = concept_count / self.n_context_elements
                     # context_guesses += (prob * prob)
                     # context_guesses += ((1-prob) * (1-prob))
@@ -562,6 +658,12 @@ class ContextualCobwebNode(CobwebNode):
         :rtype: boolean
         .. seealso:: :meth:`CobwebNode.get_best_operation`
         """
+        anchors = self.av_counts.get(anchor_key, ())
+        result = len(anchors) == 1 and instance[anchor_key] in anchors
+        if result:
+            global overlaps
+            overlaps += 1
+        return result
         instance_attrs = set(filter(lambda x: x[0] != "_", instance))
         self_attrs = set(self.attrs())
 

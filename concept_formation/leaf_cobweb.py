@@ -10,7 +10,7 @@ from os import listdir
 import resource
 from time import time
 import random
-from itertools import chain, combinations_with_replacement, permutations
+from itertools import chain, combinations_with_replacement, permutations, product
 
 from concept_formation.utils import random_tiebreaker
 from concept_formation.cobweb import CobwebNode
@@ -19,7 +19,9 @@ from concept_formation.utils import skip_slice, oslice
 from concept_formation.utils import tiebreak_top_2
 from visualize import visualize
 from concept_formation.preprocess_text import load_text, stop_words
-from concept_formation.training_and_testing import create_questions, generate_ms_sentence_variant_synonyms, synonymize_question, load_microsoft_qa
+from concept_formation.training_and_testing import (
+    create_questions, generate_ms_sentence_variant_synonyms, homograph_difference,
+    load_microsoft_qa, synonym_similarity, generate_ms_sentence_variant_homographs)
 
 TREE_RECURSION = 0x10000
 
@@ -48,7 +50,6 @@ minor_key = '#MinorCtxt#'
 major_key = '#MajorCtxt#'
 anchor_key = 'anchor'
 
-# Debugging output:
 word_to_leaf = {}
 
 
@@ -75,8 +76,8 @@ class ContextualCobwebTree(CobwebTree):
         self.minor_window = minor_window
         self.major_window = major_window
         self.anchor_weight = 10
-        self.minor_weight = 3
-        self.major_weight = 1
+        self.minor_weight = 0
+        self.major_weight = 2
         print(self.anchor_weight, self.minor_weight, self.major_weight)
 
     def clear(self):
@@ -118,24 +119,25 @@ class ContextualCobwebTree(CobwebTree):
         instance_cache = []
         text = [word for word in text if word not in stop_words]
 
-        for anchor_idx, anchor_wd in enumerate(text):#tqdm(text)):
+        for anchor_idx, anchor_wd in enumerate(tqdm(text)):
+        # for anchor_idx, anchor_wd in enumerate(text):
             while ((len(ctxt_nodes) < anchor_idx + self.major_window + 1) and
                    len(ctxt_nodes) < len(text)):
                 instance_cache.append(self.create_instance(len(ctxt_nodes),
-                                                           text[len(ctxt_nodes)], ctxt_nodes, ignore=(anchor_idx,)))
+                                                           text[len(ctxt_nodes)], ctxt_nodes, ignore=()))
                 ctxt_nodes.append(self.categorize(instance_cache[-1]))
 
             for _ in range(2):
-                for i in range(2 * self.major_window + 1):
-                    idx = anchor_idx + i - self.major_window
+                for i in range(self.major_window + 1):
+                    idx = anchor_idx + i  # - self.major_window
                     if not (0 <= idx < len(text)):
                         continue
 
                     new_instance = self.create_instance(
-                        idx, text[idx], ctxt_nodes, ignore=(anchor_idx,))
+                        idx, text[idx], ctxt_nodes, ignore=())
                     ctxt_nodes[idx] = self.categorize(new_instance)
 
-            ctxt_nodes[anchor_idx] = self.ifit(self.create_instance(
+            ctxt_nodes[anchor_idx] = super().ifit(self.create_instance(
                 anchor_idx, anchor_wd, ctxt_nodes, ignore=()))
 
             word_to_leaf.setdefault(anchor_wd, set())
@@ -249,6 +251,13 @@ class ContextualCobwebTree(CobwebTree):
                 anchor_key: anchor_word, }
         # '_idx': anchor_idx} DOES NOT HANDLE HIDDEN ATTRS
 
+    def surrounding(self, sequence, center, dist, ignore=()):
+        if ignore:
+            return list(
+                oslice(sequence, max(0, center-dist), *sorted((*(x for x in ignore if 0 < x < center+dist+1), center)), center+dist+1))
+        return list(
+            skip_slice(sequence, max(0, center-dist), center+dist+1, center))
+
     def similarity_categorize(self, instance):
         current = self.root
 
@@ -277,12 +286,123 @@ class ContextualCobwebTree(CobwebTree):
             current = best
         return current
 
-    def surrounding(self, sequence, center, dist, ignore=()):
-        if ignore:
-            return list(
-                oslice(sequence, max(0, center-dist), *sorted((*(x for x in ignore if 0 < x < center+dist+1), center)), center+dist+1))
-        return list(
-            skip_slice(sequence, max(0, center-dist), center+dist+1, center))
+    def cobweb(self, instance):
+        """
+        The core cobweb algorithm used in fitting and categorization.
+        In the general case, the cobweb algorithm entertains a number of
+        sorting operations for the instance and then commits to the operation
+        that maximizes the :meth:`category utility
+        <CobwebNode.category_utility>` of the tree at the current node and then
+        recurses.
+        At each node the alogrithm first calculates the category utility of
+        inserting the instance at each of the node's children, keeping the best
+        two (see: :meth:`CobwebNode.two_best_children
+        <CobwebNode.two_best_children>`), and then calculates the
+        category_utility of performing other operations using the best two
+        children (see: :meth:`CobwebNode.get_best_operation
+        <CobwebNode.get_best_operation>`), commiting to whichever operation
+        results in the highest category utility. In the case of ties an
+        operation is chosen at random.
+        In the base case, i.e. a leaf node, the algorithm checks to see if
+        the current leaf is an exact match to the current node. If it is, then
+        the instance is inserted and the leaf is returned. Otherwise, a new
+        leaf is created.
+        .. note:: This function is equivalent to calling
+            :meth:`CobwebTree.ifit` but its better to call ifit because it is
+            the polymorphic method siganture between the different cobweb
+            family algorithms.
+        :param instance: an instance to incorporate into the tree
+        :type instance: :ref:`Instance<instance-rep>`
+        :return: a concept describing the instance
+        :rtype: CobwebNode
+        .. seealso:: :meth:`CobwebTree.ifit`, :meth:`CobwebTree.categorize`
+        """
+        if anchor_key not in instance:
+            return super().cobweb(instance)
+        try:
+            paths = [list(get_path(word))[::-1] for word in word_to_leaf[instance[anchor_key]]]
+            option_index = 0
+        except KeyError:
+            return super().cobweb(instance)
+        except IndexError:
+            assert not self.root.children
+            self.root.increment_counts(instance)
+            return self.root
+        current = self.root
+
+        while current:
+            option_index += 1
+
+            # the current.count == 0 here is for the initially empty tree.
+            if not current.children and (current.is_exact_match(instance) or
+                                         current.count == 0):
+                # print("leaf match")
+                current.increment_counts(instance)
+                break
+
+            elif not current.children:
+                # print("fringe split")
+                new = current.__class__(current)
+                current.parent = new
+                new.children.append(current)
+
+                if new.parent:
+                    new.parent.children.remove(current)
+                    new.parent.children.append(new)
+                else:
+                    self.root = new
+
+                new.increment_counts(instance)
+                current = new.create_new_child(instance)
+                break
+
+            if paths:
+                options = list({option[option_index] for option in paths})
+                best1_cu, best1, best2 = current.two_best_children(instance, options=options)
+            else:
+                best1_cu, best1, best2 = current.two_best_children(instance)
+
+            _, best_action = current.get_best_operation(instance, best1,
+                                                        best2, best1_cu)
+
+            # print(best_action)
+            if best_action == 'best':
+                current.increment_counts(instance)
+                current = best1
+            elif best_action == 'new':
+                if paths:
+                    paths = None
+                    continue
+                current.increment_counts(instance)
+                current = current.create_new_child(instance)
+                break
+            elif best_action == 'merge':
+                # print('merge')
+                current.increment_counts(instance)
+                current = current.merge(best1, best2)
+                if paths:
+                    for path in paths:
+                        if path[option_index] == best1 or path[option_index] == best2:
+                            path.insert(option_index, current)
+            elif best_action == 'split':
+                # print('split')
+                if paths:
+                    for path in paths:
+                        if path[option_index] == best1:
+                            del path[option_index]
+                    # Since current is not changing, we subtract 1 to negate the +1 from later
+                    option_index -= 1
+                current.split(best1)
+                continue
+            else:
+                raise Exception('Best action choice "' + best_action +
+                                '" not a recognized option. This should be'
+                                ' impossible...')
+
+            if paths:
+                paths = [path for path in paths if path[option_index] == current]
+
+        return current
 
     def guess_missing(self, text, options, options_needed=1,
                       filter_stop_for_minor=False):
@@ -293,8 +413,6 @@ class ContextualCobwebTree(CobwebTree):
         ctxt_nodes = []
 
         for anchor_idx, anchor_wd in enumerate(text):
-            # if anchor_idx > missing_idx:
-            #     break
 
             while ((len(ctxt_nodes) < anchor_idx + self.major_window + 1) and
                     len(ctxt_nodes) < len(text)):
@@ -303,19 +421,19 @@ class ContextualCobwebTree(CobwebTree):
                     continue
                 ctxt_nodes.append(self.categorize(
                     self.create_instance(len(ctxt_nodes),
-                                         text[len(ctxt_nodes)], ctxt_nodes, ignore=(missing_idx, anchor_idx,))))
+                                         text[len(ctxt_nodes)], ctxt_nodes, ignore=(missing_idx,))))
 
             if anchor_idx == missing_idx:
                 continue
 
             for _ in range(2):
-                for i in range(2 * self.major_window + 1):
-                    idx = anchor_idx + i - self.major_window
+                for i in range(self.major_window + 1):
+                    idx = anchor_idx + i  # - self.major_window
                     if idx < 0 or idx >= len(text) or idx == missing_idx:
                         continue
 
                     instance = self.create_instance(
-                        idx, text[idx], ctxt_nodes, ignore=(missing_idx, anchor_idx,))
+                        idx, text[idx], ctxt_nodes, ignore=(missing_idx,))
                     ctxt_nodes[idx] = self.categorize(instance)
 
             instance = self.create_instance(
@@ -326,7 +444,7 @@ class ContextualCobwebTree(CobwebTree):
             missing_idx, None, ctxt_nodes)
         del missing_instance['anchor']
 
-        concept = self.similarity_categorize(missing_instance)
+        concept = self.categorize(missing_instance)
         path = [concept]
         while sum([(option in concept.av_counts[anchor_key])
                    for option in options]) < options_needed:
@@ -349,19 +467,29 @@ class ContextualCobwebTree(CobwebTree):
         if anchor_key not in instance:
             return super()._cobweb_categorize(instance)
         try:
-            paths = [list(reversed(list(get_path(word)))) for word in word_to_leaf[instance[anchor_key]]]
+            paths = [list(get_path(word))[::-1] for word in word_to_leaf[instance[anchor_key]]]
+            option_index = 0
         except KeyError:
             return None
 
         current = self.root
         while current:
+            option_index += 1
             if not current.children:
                 return current
-            paths = [option[1:] for option in paths if option[0] == current]
-            options = list({option[0] for option in paths})
+            options = list({option[option_index] for option in paths})
 
-            _, best1, best2 = current.two_best_children(instance, options=options)
+            best1_cu, best1, best2 = current.two_best_children(instance, options=options)
+            if current.get_best_operation(instance, best1, best2, best1_cu,
+                                          possible_ops=("best", "new")) == 'new':
+                while current:
+                    if not current.children:
+                        return current
+
+                    _, best1, best2 = current.two_best_children(instance)
+                    current = best1
             current = best1
+            paths = [option for option in paths if option[option_index] == current]
 
 
 def unhidden_attr_val(pair):
@@ -961,32 +1089,16 @@ def word_to_base(word):
     return word.split('-')[0]
 
 
-def synonym_similarity(cutoff):
-    """cutoff: maximum number of levels above before leaves are considered to far apart"""
-    # The base of a word to the variants of that base
-    base_to_variants = {}
-    # The base of a word to the number of occurances
-    base_to_counts = Counter()
-    for variant, leaves in word_to_leaf.items():
-        base = word_to_base(variant)
-        base_to_variants.setdefault(base, set()).add(variant)
-        base_to_counts[base] += sum(leaf.count for leaf in leaves)
-    result = 0
-    for base, variants in base_to_variants.items():
-        for node_1, node_2 in permutations(sum((list(word_to_leaf[variant]) for variant in variants), start=[]), repeat=2):
-            first_path = list(get_path(node_1))[:cutoff]
-            if any(node in first_path for node in list(get_path(node_2))[:cutoff]):
-                result += node_1.count * node_2.count / (base_to_counts[base] * base_to_counts[base])
-    return result / len(base_to_variants)
-
-
 '''tree = ContextualCobwebTree(1, 4)
-data = list(generate_ms_sentence_variant_synonyms(3, 10, 50))
+# data = list(generate_ms_sentence_variant_homographs(['the'], 2, 5, 50))
+data = list(generate_ms_sentence_variant_synonyms(3, 5, 50))
 random.shuffle(data)
 for sent in tqdm(data):
-    tree.fit_to_text_wo_stopwords([word for word in sent if word_to_base(word) not in stop_words])
+    tree.fit_to_text_wo_stopwords(sent) # [word for word in sent if word_to_base(word) not in stop_words])
 visualize(tree)
-synonym_similarity(500)
+#print(homograph_difference(['#the#'], 0, word_to_leaf, anchor_key, major_key))
+#print(homograph_difference(['#the#'], 1, word_to_leaf, anchor_key, major_key))
+print(synonym_similarity(2, word_to_leaf))
 1/0'''
 
 if __name__ == "__main__":
