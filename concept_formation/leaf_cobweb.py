@@ -21,6 +21,7 @@ from visualize import visualize
 from concept_formation.preprocess_text import load_text, stop_words
 from concept_formation.training_and_testing import (
     create_questions, generate_ms_sentence_variant_synonyms, homograph_difference,
+    word_to_suffix, word_to_hidden_homograph_attr,
     load_microsoft_qa, synonym_similarity, generate_ms_sentence_variant_homographs)
 
 TREE_RECURSION = 0x10000
@@ -113,14 +114,22 @@ class ContextualCobwebTree(CobwebTree):
                 raise ValueError("Attributes with value None should"
                                  " be manually removed.")
 
-    def fit_to_text_wo_stopwords(self, text):
+    def fit_to_text_wo_stopwords(self, text, homographs=False):
         """filters stop words here"""
         ctxt_nodes = []
         instance_cache = []
         text = [word for word in text if word not in stop_words]
 
-        for anchor_idx, anchor_wd in enumerate(tqdm(text)):
-        # for anchor_idx, anchor_wd in enumerate(text):
+        if homographs:
+            for word in text:
+                if word_to_suffix(word):
+                    homograph_type = word_to_suffix(word)
+                    break
+        else:
+            homograph_type = None
+
+        # for anchor_idx, anchor_wd in enumerate(tqdm(text)):
+        for anchor_idx, anchor_wd in enumerate(text):
             while ((len(ctxt_nodes) < anchor_idx + self.major_window + 1) and
                    len(ctxt_nodes) < len(text)):
                 instance_cache.append(self.create_instance(len(ctxt_nodes),
@@ -138,7 +147,7 @@ class ContextualCobwebTree(CobwebTree):
                     ctxt_nodes[idx] = self.categorize(new_instance)
 
             ctxt_nodes[anchor_idx] = self.ifit(self.create_instance(
-                anchor_idx, anchor_wd, ctxt_nodes, ignore=()))
+                anchor_idx, anchor_wd, ctxt_nodes, ignore=(), homograph_type=homograph_type))
 
             word_to_leaf.setdefault(anchor_wd, set())
             word_to_leaf[anchor_wd].add(ctxt_nodes[anchor_idx])
@@ -159,7 +168,6 @@ class ContextualCobwebTree(CobwebTree):
 
         ctxt_nodes[idx] = self.ifit_leaf(leaf, new_instance, ctxt_nodes)
         instance_cache[idx] = new_instance
-        # assert in_tree(ctxt_nodes[idx])
 
     def ifit_leaf(self, leaf, instance, ctxt_nodes):
         """Categorizes instances, incrementing counts from the leaf"""
@@ -237,7 +245,7 @@ class ContextualCobwebTree(CobwebTree):
             node.parent.parent.split(node.parent)
 
     def create_instance(self, anchor_idx, anchor_word, ctxts, ignore=(),
-                        filter_stop_for_minor=False):
+                        filter_stop_for_minor=False, homograph_type=None):
         major_context = list(filter(None, self.surrounding(
             ctxts, anchor_idx, self.major_window, ignore=ignore)))
         if filter_stop_for_minor:
@@ -246,10 +254,15 @@ class ContextualCobwebTree(CobwebTree):
             minor_context = list(filter(None, self.surrounding(
                 ctxts, anchor_idx, self.minor_window, ignore=ignore)))
 
-        return {minor_key: minor_context,
-                major_key: major_context,
-                anchor_key: anchor_word, }
-        # '_idx': anchor_idx} DOES NOT HANDLE HIDDEN ATTRS
+        instance = {minor_key: minor_context,
+                    major_key: major_context,
+                    anchor_key: anchor_word,
+                    '_idx': anchor_idx}
+        # If the word is a homograph...
+        if homograph_type and not word_to_suffix(anchor_word):
+            instance['_homograph'] = word_to_hidden_homograph_attr(anchor_word, homograph_type)
+
+        return instance
 
     def surrounding(self, sequence, center, dist, ignore=()):
         if ignore:
@@ -1090,15 +1103,15 @@ def word_to_base(word):
 
 
 '''tree = ContextualCobwebTree(1, 4)
-# data = list(generate_ms_sentence_variant_homographs(['the'], 2, 5, 50))
-data = list(generate_ms_sentence_variant_synonyms(3, 5, 50))
+data = list(generate_ms_sentence_variant_homographs(['the'], 2, 5, 50))
+# data = list(generate_ms_sentence_variant_synonyms(3, 5, 50))
 random.shuffle(data)
 for sent in tqdm(data):
-    tree.fit_to_text_wo_stopwords(sent) # [word for word in sent if word_to_base(word) not in stop_words])
+    tree.fit_to_text_wo_stopwords(sent, homographs=True) # [word for word in sent if word_to_base(word) not in stop_words])
 visualize(tree)
-#print(homograph_difference(['#the#'], 0, word_to_leaf, anchor_key, major_key))
-#print(homograph_difference(['#the#'], 1, word_to_leaf, anchor_key, major_key))
-print(synonym_similarity(2, word_to_leaf))
+print(homograph_difference(['#the#'], 0, word_to_leaf, anchor_key, major_key))
+print(homograph_difference(['#the#'], 1, word_to_leaf, anchor_key, major_key))
+# print(synonym_similarity(2, word_to_leaf))
 1/0'''
 
 if __name__ == "__main__":

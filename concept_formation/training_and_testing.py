@@ -106,6 +106,10 @@ def word_to_suffix(word):
     return word.split('-')[1]
 
 
+def word_to_hidden_homograph_attr(word, homo_type):
+    return word[1:-1] + '-' + homo_type
+
+
 def get_path(node):
     while node:
         yield node
@@ -139,9 +143,9 @@ def synonym_similarity(cutoff, word_to_leaf):
 
 
 def leaf_to_homograph_counts(leaf, anch_key, maj_key):
-    result = Counter(word_to_suffix(next(iter(ctxt_leaf.av_counts[anch_key]))) for ctxt_leaf in leaf.av_counts[maj_key].elements())
-    del result[None]
-    return result
+    # result = Counter(word_to_suffix(next(iter(ctxt_leaf.av_counts[anch_key]))) for ctxt_leaf in leaf.av_counts[maj_key].elements())
+    # del result[None]
+    return Counter(leaf.av_counts['_homograph'])
 
 
 def homograph_difference(homographs, cutoff, word_to_leaf, anch_key, maj_key):
