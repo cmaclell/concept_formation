@@ -72,8 +72,8 @@ class ContextualCobwebTree(CobwebTree):
         self.window = window
         self.instance = None
         self.prune_threshold = 0.0
-        self.anchor_weight = 2
-        self.context_weight = 5
+        self.anchor_weight = 10
+        self.context_weight = 2
 
         self.log_times = False
         print(self.anchor_weight, self.context_weight)

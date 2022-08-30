@@ -128,8 +128,8 @@ class ContextualCobwebTree(CobwebTree):
         else:
             homograph_type = None
 
-        # for anchor_idx, anchor_wd in enumerate(tqdm(text)):
-        for anchor_idx, anchor_wd in enumerate(text):
+        for anchor_idx, anchor_wd in enumerate(tqdm(text)):
+        # for anchor_idx, anchor_wd in enumerate(text):
             while ((len(ctxt_nodes) < anchor_idx + self.major_window + 1) and
                    len(ctxt_nodes) < len(text)):
                 instance_cache.append(self.create_instance(len(ctxt_nodes),
@@ -299,7 +299,7 @@ class ContextualCobwebTree(CobwebTree):
             current = best
         return current
 
-    def cobweb(self, instance):
+    '''def cobweb(self, instance):
         """
         The core cobweb algorithm used in fitting and categorization.
         In the general case, the cobweb algorithm entertains a number of
@@ -415,7 +415,7 @@ class ContextualCobwebTree(CobwebTree):
             if paths:
                 paths = [path for path in paths if path[option_index] == current]
 
-        return current
+        return current'''
 
     def guess_missing(self, text, options, options_needed=1,
                       filter_stop_for_minor=False):
@@ -457,7 +457,7 @@ class ContextualCobwebTree(CobwebTree):
             missing_idx, None, ctxt_nodes)
         del missing_instance['anchor']
 
-        concept = self.categorize(missing_instance)
+        concept = self.similarity_categorize(missing_instance)
         path = [concept]
         while sum([(option in concept.av_counts[anchor_key])
                    for option in options]) < options_needed:
@@ -493,14 +493,14 @@ class ContextualCobwebTree(CobwebTree):
             options = list({option[option_index] for option in paths})
 
             best1_cu, best1, best2 = current.two_best_children(instance, options=options)
-            if current.get_best_operation(instance, best1, best2, best1_cu,
-                                          possible_ops=("best", "new")) == 'new':
-                while current:
-                    if not current.children:
-                        return current
+            # if current.get_best_operation(instance, best1, best2, best1_cu,
+            #                               possible_ops=("best", "new")) == 'new':
+            #     while current:
+            #         if not current.children:
+            #             return current
 
-                    _, best1, best2 = current.two_best_children(instance)
-                    current = best1
+            #         _, best1, best2 = current.two_best_children(instance)
+            #         current = best1
             current = best1
             paths = [option for option in paths if option[option_index] == current]
 
