@@ -19,10 +19,11 @@ from concept_formation.utils import skip_slice, oslice
 from concept_formation.utils import tiebreak_top_2
 from visualize import visualize
 from concept_formation.preprocess_text import load_text, stop_words
-from concept_formation.training_and_testing import (
-    create_questions, generate_ms_sentence_variant_synonyms, homograph_difference,
-    word_to_suffix, word_to_hidden_homograph_attr,
-    load_microsoft_qa, synonym_similarity, generate_ms_sentence_variant_homographs)
+
+
+def word_to_base(word):
+    return word.split('-')[0]
+
 
 TREE_RECURSION = 0x10000
 
@@ -51,8 +52,6 @@ minor_key = '#MinorCtxt#'
 major_key = '#MajorCtxt#'
 anchor_key = 'anchor'
 
-word_to_leaf = {}
-
 
 def get_path(node):
     while node:
@@ -62,7 +61,7 @@ def get_path(node):
 
 class ContextualCobwebTree(CobwebTree):
 
-    def __init__(self, minor_window, major_window):
+    def __init__(self, major_window, minor_window=0):
         """
         Note window only specifies how much context to add to each side,
         doesn't include the anchor word.
@@ -78,8 +77,9 @@ class ContextualCobwebTree(CobwebTree):
         self.major_window = major_window
         self.anchor_weight = 10
         self.minor_weight = 0
-        self.major_weight = 2
-        print(self.anchor_weight, self.minor_weight, self.major_weight)
+        self.major_weight = 3
+        self.word_to_leaf = {}
+        # print(self.anchor_weight, self.minor_weight, self.major_weight)
 
     def clear(self):
         """
@@ -114,11 +114,11 @@ class ContextualCobwebTree(CobwebTree):
                 raise ValueError("Attributes with value None should"
                                  " be manually removed.")
 
-    def fit_to_text_wo_stopwords(self, text, homographs=False):
+    def ifit_text(self, text, homographs=False, track=None):
         """filters stop words here"""
+        """track {syn base: []}"""
         ctxt_nodes = []
         instance_cache = []
-        text = [word for word in text if word not in stop_words]
 
         if homographs:
             for word in text:
@@ -128,13 +128,61 @@ class ContextualCobwebTree(CobwebTree):
         else:
             homograph_type = None
 
-        for anchor_idx, anchor_wd in enumerate(tqdm(text)):
-        # for anchor_idx, anchor_wd in enumerate(text):
+        # for anchor_idx, anchor_wd in enumerate(tqdm(text)):
+        for anchor_idx, anchor_wd in enumerate(text):
             while ((len(ctxt_nodes) < anchor_idx + self.major_window + 1) and
                    len(ctxt_nodes) < len(text)):
                 instance_cache.append(self.create_instance(len(ctxt_nodes),
                                                            text[len(ctxt_nodes)], ctxt_nodes, ignore=()))
-                ctxt_nodes.append(self.categorize(instance_cache[-1]))
+                if text[len(ctxt_nodes)] is None:
+                    ctxt_nodes.append(None)
+                else:
+                    ctxt_nodes.append(self.categorize(instance_cache[-1]))
+            if anchor_wd is None:
+                continue
+
+            for _ in range(2):
+                for i in range(self.major_window + 1):
+                    idx = anchor_idx + i  # - self.major_window
+                    if not (0 <= idx < len(text)) or text[idx] is None:
+                        continue
+
+                    new_instance = self.create_instance(
+                        idx, text[idx], ctxt_nodes, ignore=())
+                    ctxt_nodes[idx] = self.categorize(new_instance)
+
+            instance = self.create_instance(
+                anchor_idx, anchor_wd, ctxt_nodes, ignore=(), homograph_type=homograph_type)
+
+            base = word_to_base(anchor_wd)
+            if track and base in track:
+                try:
+                    concept = self.terminating_categorize(instance)
+                    total = 0
+                    syn_count = 0
+                    for word, count in concept.av_counts[anchor_key].items():
+                        total += count
+                        if base == word_to_base(word):
+                            syn_count += count
+                    track[base].append(syn_count/count)
+                except KeyError:
+                    track[base].append(0.0)
+
+            ctxt_nodes[anchor_idx] = self.ifit(instance)
+
+            self.word_to_leaf.setdefault(anchor_wd, set()).add(ctxt_nodes[anchor_idx])
+
+        return ctxt_nodes
+
+    def categorize_text(self, text):
+        ctxt_nodes = []
+
+        for anchor_idx, anchor_wd in enumerate(text):
+        # for anchor_idx, anchor_wd in enumerate(text):
+            while ((len(ctxt_nodes) < anchor_idx + self.major_window + 1) and
+                   len(ctxt_nodes) < len(text)):
+                ctxt_nodes.append(self.categorize(
+                    self.create_instance(len(ctxt_nodes), text[len(ctxt_nodes)], ctxt_nodes, ignore=())))
 
             for _ in range(2):
                 for i in range(self.major_window + 1):
@@ -146,11 +194,9 @@ class ContextualCobwebTree(CobwebTree):
                         idx, text[idx], ctxt_nodes, ignore=())
                     ctxt_nodes[idx] = self.categorize(new_instance)
 
-            ctxt_nodes[anchor_idx] = self.ifit(self.create_instance(
-                anchor_idx, anchor_wd, ctxt_nodes, ignore=(), homograph_type=homograph_type))
-
-            word_to_leaf.setdefault(anchor_wd, set())
-            word_to_leaf[anchor_wd].add(ctxt_nodes[anchor_idx])
+            instance = self.create_instance(
+                anchor_idx, anchor_wd, ctxt_nodes, ignore=())
+            ctxt_nodes[anchor_idx] = super()._cobweb_categorize(instance)
 
         return ctxt_nodes
 
@@ -183,8 +229,8 @@ class ContextualCobwebTree(CobwebTree):
                     if node == leaf:
                         ctxt_nodes[i] = current
                 word = next(iter(leaf.av_counts[anchor_key]))
-                if word in word_to_leaf:  # Might not be here since words are only added when solidified
-                    for i, node in enumerate(word_to_leaf[word]):
+                if word in self.word_to_leaf:  # Might not be here since words are only added when solidified
+                    for i, node in enumerate(self.word_to_leaf[word]):
                         if node == leaf:
                             ctxt_nodes[i] = current
                 current.update_counts_from_node(leaf)
@@ -333,7 +379,7 @@ class ContextualCobwebTree(CobwebTree):
         if anchor_key not in instance:
             return super().cobweb(instance)
         try:
-            paths = [list(get_path(word))[::-1] for word in word_to_leaf[instance[anchor_key]]]
+            paths = [list(get_path(word))[::-1] for word in self.word_to_leaf[instance[anchor_key]]]
             option_index = 0
         except KeyError:
             return super().cobweb(instance)
@@ -480,7 +526,7 @@ class ContextualCobwebTree(CobwebTree):
         if anchor_key not in instance:
             return super()._cobweb_categorize(instance)
         try:
-            paths = [list(get_path(word))[::-1] for word in word_to_leaf[instance[anchor_key]]]
+            paths = [list(get_path(word))[::-1] for word in self.word_to_leaf[instance[anchor_key]]]
             option_index = 0
         except KeyError:
             return None
@@ -1019,7 +1065,7 @@ class ContextualCobwebNode(CobwebNode):
             self.tree.root.replace_node_as_context(best2, best1)
             best1.update_counts_from_node(best2)
             best2.parent.children.remove(best2)
-            word_to_leaf[next(iter(best1.av_counts[anchor_key]))].remove(best2)
+            self.tree.word_to_leaf[next(iter(best1.av_counts[anchor_key]))].remove(best2)
             return best1
         new_child = self.__class__()
         new_child.parent = self
@@ -1109,9 +1155,9 @@ random.shuffle(data)
 for sent in tqdm(data):
     tree.fit_to_text_wo_stopwords(sent, homographs=True) # [word for word in sent if word_to_base(word) not in stop_words])
 visualize(tree)
-print(homograph_difference(['#the#'], 0, word_to_leaf, anchor_key, major_key))
-print(homograph_difference(['#the#'], 1, word_to_leaf, anchor_key, major_key))
-# print(synonym_similarity(2, word_to_leaf))
+print(homograph_difference(['#the#'], 0, tree.word_to_leaf, anchor_key, major_key))
+print(homograph_difference(['#the#'], 1, tree.word_to_leaf, anchor_key, major_key))
+# print(synonym_similarity(2, tree.word_to_leaf))
 1/0'''
 
 if __name__ == "__main__":
@@ -1153,7 +1199,7 @@ if __name__ == "__main__":
                 print('ctxt_words', ctxt_words)
                 print('ctxt_counts', [text_counts[word] for word in ctxt_words])
                 for word in ctxt_words:
-                    for leaf in word_to_leaf[word]:
+                    for leaf in tree.word_to_leaf[word]:
                         print(word, list(get_path(leaf)),)
                 print('-'*90)
                 print('path', [concept.concept_id for concept in path])

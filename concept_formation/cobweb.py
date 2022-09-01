@@ -205,6 +205,20 @@ class CobwebTree(object):
             _, best1, best2 = current.two_best_children(instance)
             current = best1
 
+    def terminating_categorize(self, instance):
+        current = self.root
+        while current:
+            if not current.children:
+                return current
+
+            best1_cu, best1, best2 = current.two_best_children(instance)
+            if current.get_best_operation(instance, best1, best2, best1_cu,
+                                          possible_ops=("best", "new")) == 'new':
+                return current
+
+            current = best1
+
+
     def infer_missing(self, instance, choice_fn="most likely",
                       allow_none=True):
         """

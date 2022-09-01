@@ -1,5 +1,6 @@
 from cProfile import run
 from collections import Counter
+from email.errors import NonPrintableDefect
 # from multiprocess import Pool
 from tqdm import tqdm
 import pickle
@@ -15,7 +16,11 @@ from concept_formation.cobweb import CobwebTree
 from concept_formation.utils import skip_slice
 from visualize import visualize
 from preprocess_text import load_text, stop_words
-from concept_formation.training_and_testing import load_microsoft_qa, create_questions, generate_ms_sentence_variant_synonyms, synonymize_question, load_microsoft_qa
+
+
+def word_to_base(word):
+    return word.split('-')[0]
+
 
 TREE_RECURSION = 0x10000
 
@@ -44,7 +49,7 @@ anchor_key = 'anchor'
 
 class ContextualCobwebTree(CobwebTree):
 
-    def __init__(self, minor_window, major_window):
+    def __init__(self, major_window, minor_window=0):
         """
         Note window only specifies how much context to add to each side,
         doesn't include the anchor word.
@@ -60,7 +65,8 @@ class ContextualCobwebTree(CobwebTree):
         self.major_window = major_window
         self.anchor_weight = 10
         self.minor_weight = 0
-        self.major_weight = 1
+        self.major_weight = 2
+        self.word_to_leaf = {}
 
     def _sanity_check_instance(self, instance):
         for attr in instance:
@@ -88,13 +94,40 @@ class ContextualCobwebTree(CobwebTree):
                 raise ValueError("Attributes with value None should"
                                  " be manually removed.")
 
-    def fit_to_text_wo_stopwords(self, text):
-        """filters stop words here"""
+    def ifit_text(self, text, track=None):
         output_nodes = []
-        text = [word for word in text if word not in stop_words]
 
-        for anchor_idx, anchor_wd in enumerate(tqdm(text)):
-            output_nodes.append(self.ifit(
+        for anchor_idx, anchor_wd in enumerate(text):
+            if anchor_wd is None:
+                output_nodes.append(None)
+                continue
+            instance = self.create_instance(anchor_idx, anchor_wd, text)
+
+            base = word_to_base(anchor_wd)
+            if track and base in track:
+                try:
+                    concept = self.terminating_categorize(instance)
+                    total = 0
+                    syn_count = 0
+                    for word, count in concept.av_counts[anchor_key].items():
+                        total += count
+                        if base == word_to_base(word):
+                            syn_count += count
+                    track[base].append(syn_count/count)
+                except KeyError:
+                    track[base].append(0.0)
+
+            output_nodes.append(self.ifit(instance))
+
+            self.word_to_leaf.setdefault(anchor_wd, set()).add(output_nodes[-1])
+
+        return output_nodes
+
+    def categorize_text(self, text):
+        output_nodes = []
+
+        for anchor_idx, anchor_wd in enumerate(text):
+            output_nodes.append(self.categorize(
                 self.create_instance(anchor_idx, anchor_wd, text)))
 
         return output_nodes
@@ -266,12 +299,12 @@ def test_microsoft(model):
     return correct / total
 
 
-tree = ContextualCobwebTree(1, 4)
+'''tree = ContextualCobwebTree(1, 4)
 data = list(generate_ms_sentence_variant_synonyms(3, 10, 50))
 random.shuffle(data)
 for sent in tqdm(data):
     tree.fit_to_text_wo_stopwords([word for word in sent if word[:-2] not in stop_words])
-visualize(tree)
+visualize(tree)'''
 
 
 if __name__ == "__main__":
