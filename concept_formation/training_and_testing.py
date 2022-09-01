@@ -18,6 +18,7 @@ from concept_formation.static_binomial_cc import ContextualCobwebTree as StaticT
 from concept_formation.literal_cobweb import ContextualCobwebTree as LiteralTree
 from itertools import chain, product, islice
 from collections import Counter
+import multiprocessing
 
 
 module_path = dirname(__file__)
@@ -270,10 +271,10 @@ def run_test_1(CobwebTree):
     tree = CobwebTree(WINDOW_SIZE)
     fold_total = 0
     for fold_num in range(FOLDS):
-        print('fold %s' % fold_num)
+        # print('fold %s' % fold_num)
         withheld_synonyms = [word_to_variant(word, fold_num) for word in SYNONYMS]
         fold_data, withheld_instances = withhold(data, withheld_synonyms)
-        for sent in tqdm(fold_data):
+        for sent in fold_data:
             tree.ifit_text(sent)
         total_distance = 0
         for (instance, index) in withheld_instances:
@@ -300,10 +301,10 @@ def run_test_2(CobwebTree):
     tree = CobwebTree(WINDOW_SIZE)
     fold_total = 0
     for fold_num in range(FOLDS):
-        print('fold %s' % fold_num)
+        # print('fold %s' % fold_num)
         fold_data, withheld_instances = withhold_word_by_number(data, HOMONYMS, fold_num)
         assert withheld_instances
-        for sent in tqdm(fold_data):
+        for sent in fold_data:
             tree.ifit_text(sent)
         total_distance = 0
         for (instance, index) in withheld_instances:
@@ -328,21 +329,28 @@ def run_test_3(CobwebTree):
     random.shuffle(data)
     tree = CobwebTree(WINDOW_SIZE)
     track = {word: [] for word in SYNONYMS}
-    for sent in tqdm(data):
+    for sent in data:
         tree.ifit_text(sent, track=track)
 
     return track
 
 
+def run(tup):
+    s, f, t = tup
+    print(s, f(t))
+
+
 if __name__ == "__main__":
     (LeafTree, StaticTree, LiteralTree)
-    NUM_SENTENCES = 100
-    print('Leaf Cobweb Syno. Test:', run_test_1(LeafTree))
-    print('Static Cobweb Syno. Test:', run_test_1(StaticTree))
-    print('Literal Cobweb Syno. Test:', run_test_1(LiteralTree))
-    print('Leaf Cobweb Homo. Test:', run_test_2(LeafTree))
-    print('Static Cobweb Homo. Test:', run_test_2(StaticTree))
-    print('Literal Cobweb Homo. Test:', run_test_2(LiteralTree))
-    print('Leaf Cobweb Syno. Prediction Test:', run_test_3(LeafTree))
-    print('Static Cobweb Syno. Prediction Test:', run_test_3(StaticTree))
-    print('Literal Cobweb Syno. Prediction Test:', run_test_3(LiteralTree))
+    NUM_SENTENCES = 500
+    with multiprocessing.Pool(5) as p:
+        p.map(run,
+              (('Leaf Cobweb Syno. Test:', run_test_1, LeafTree),
+               ('Static Cobweb Syno. Test:', run_test_1, StaticTree),
+               ('Literal Cobweb Syno. Test:', run_test_1, LiteralTree),
+               ('Leaf Cobweb Homo. Test:', run_test_2, LeafTree),
+               ('Static Cobweb Homo. Test:', run_test_2, StaticTree),
+               ('Literal Cobweb Homo. Test:', run_test_2, LiteralTree),
+               ('Leaf Cobweb Syno. Prediction Test:', run_test_3, LeafTree),
+               ('Static Cobweb Syno. Prediction Test:', run_test_3, StaticTree),
+               ('Literal Cobweb Syno. Prediction Test:', run_test_3, LiteralTree)))
