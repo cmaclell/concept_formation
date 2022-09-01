@@ -336,7 +336,7 @@ def run_test_3(CobwebTree):
 
 if __name__ == "__main__":
     (LeafTree, StaticTree, LiteralTree)
-    NUM_SENTENCES = 10
+    NUM_SENTENCES = 100
     print('Leaf Cobweb Syno. Test:', run_test_1(LeafTree))
     print('Static Cobweb Syno. Test:', run_test_1(StaticTree))
     print('Literal Cobweb Syno. Test:', run_test_1(LiteralTree))
