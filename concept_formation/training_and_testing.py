@@ -352,7 +352,7 @@ if __name__ == "__main__":
                ('Literal Cobweb Syno. Test:', run_test_1, LiteralTree),
                ('Leaf Cobweb Homo. Test:', run_test_2, LeafTree),
                ('Static Cobweb Homo. Test:', run_test_2, StaticTree),
-               ('Literal Cobweb Homo. Test:', run_test_2, LiteralTree),
-               ('Leaf Cobweb Syno. Prediction Test:', run_test_3, LeafTree),
-               ('Static Cobweb Syno. Prediction Test:', run_test_3, StaticTree),
-               ('Literal Cobweb Syno. Prediction Test:', run_test_3, LiteralTree)))
+               ('Literal Cobweb Homo. Test:', run_test_2, LiteralTree)))#,
+               #('Leaf Cobweb Syno. Prediction Test:', run_test_3, LeafTree),
+               #('Static Cobweb Syno. Prediction Test:', run_test_3, StaticTree),
+               #('Literal Cobweb Syno. Prediction Test:', run_test_3, LiteralTree)))
