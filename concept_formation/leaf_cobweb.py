@@ -75,9 +75,9 @@ class ContextualCobwebTree(CobwebTree):
 
         self.minor_window = minor_window
         self.major_window = major_window
-        self.anchor_weight = 10
+        self.anchor_weight = 1
         self.minor_weight = 0
-        self.major_weight = 3
+        self.major_weight = 1
         self.word_to_leaf = {}
         # print(self.anchor_weight, self.minor_weight, self.major_weight)
 

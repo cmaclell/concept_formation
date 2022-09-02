@@ -63,9 +63,9 @@ class ContextualCobwebTree(CobwebTree):
 
         self.minor_window = minor_window
         self.major_window = major_window
-        self.anchor_weight = 10
+        self.anchor_weight = 1
         self.minor_weight = 0
-        self.major_weight = 2
+        self.major_weight = 1
         self.word_to_leaf = {}
 
     def _sanity_check_instance(self, instance):
@@ -232,9 +232,10 @@ class ContextualCobwebNode(CobwebNode):
 
         for attr in self.attrs():
             temp = 0
-            counts = self.av_counts[attr]
-            for val in counts:
-                prob = counts[val] / self.count
+            counts = self.av_counts[attr].values()
+            total = sum(counts)
+            for count in counts:
+                prob = count / total
                 temp += (prob * prob)
 
             if attr == anchor_key:

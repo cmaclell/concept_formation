@@ -268,6 +268,7 @@ def run_test_1(CobwebTree):
     data = list(synonymize(SYNONYMS, NSYNONYMS, ncopies=1,
                            data=length_filter(filter_stop_words(text), 10)))
     random.shuffle(data)
+    result = []
     fold_total = 0
     for fold_num in range(FOLDS):
         tree = CobwebTree(WINDOW_SIZE)
@@ -284,8 +285,9 @@ def run_test_1(CobwebTree):
                 tree.word_to_leaf.get(word_to_variant(base, var_num), ())
                 for var_num in range(FOLDS)))
             total_distance += min(distance(concept, node) for node in synonym_nodes)
+            result.append(min(distance(concept, node) for node in synonym_nodes))
         fold_total += total_distance / len(withheld_instances)
-    return fold_total / FOLDS
+    return result
 
 
 def run_test_2(CobwebTree):
@@ -298,6 +300,7 @@ def run_test_2(CobwebTree):
     data = list(homonymize(HOMONYMS, NHOMONYMS, ncopies=1,
                            data=length_filter(filter_stop_words(text), 10)))
     random.shuffle(data)
+    result = []
     fold_total = 0
     for fold_num in range(FOLDS):
         tree = CobwebTree(WINDOW_SIZE)
@@ -311,12 +314,13 @@ def run_test_2(CobwebTree):
         total_distance = 0
         for (instance, index) in withheld_instances:
             concept = tree.categorize_text(instance)[index]
-            total_distance += min(
+            to_add = min(
                 distance(concept, node)
                 for node in tree.word_to_leaf[instance[index]])
-
+            total_distance += to_add
+            result.append(to_add)
         fold_total += total_distance / len(withheld_instances)
-    return fold_total / FOLDS
+    return result
 
 
 def run_test_3(CobwebTree):
@@ -339,20 +343,22 @@ def run_test_3(CobwebTree):
 
 def run(tup):
     s, f, t = tup
-    print(s, f(t))
+    res = f(t)
+    print(s, res)
+    return res
 
 
 if __name__ == "__main__":
     (LeafTree, StaticTree, LiteralTree)
     NUM_SENTENCES = 500
     with multiprocessing.Pool(5) as p:
-        p.map(run,
+        print(list(p.map(run,
               (('Leaf Cobweb Syno. Test:', run_test_1, LeafTree),
                ('Static Cobweb Syno. Test:', run_test_1, StaticTree),
                ('Literal Cobweb Syno. Test:', run_test_1, LiteralTree),
                ('Leaf Cobweb Homo. Test:', run_test_2, LeafTree),
                ('Static Cobweb Homo. Test:', run_test_2, StaticTree),
-               ('Literal Cobweb Homo. Test:', run_test_2, LiteralTree)))#,
-               #('Leaf Cobweb Syno. Prediction Test:', run_test_3, LeafTree),
-               #('Static Cobweb Syno. Prediction Test:', run_test_3, StaticTree),
-               #('Literal Cobweb Syno. Prediction Test:', run_test_3, LiteralTree)))
+               ('Literal Cobweb Homo. Test:', run_test_2, LiteralTree),
+               ('Leaf Cobweb Syno. Prediction Test:', run_test_3, LeafTree),
+               ('Static Cobweb Syno. Prediction Test:', run_test_3, StaticTree),
+               ('Literal Cobweb Syno. Prediction Test:', run_test_3, LiteralTree)))))

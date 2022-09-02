@@ -76,7 +76,7 @@ class ContextualCobwebTree(CobwebTree):
         self.instance = None
         self.prune_threshold = 0.0
         self.anchor_weight = 1
-        self.context_weight = 100
+        self.context_weight = 1
 
         self.log_times = False
         self.word_to_leaf = {}
