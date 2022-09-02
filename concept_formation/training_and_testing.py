@@ -268,9 +268,9 @@ def run_test_1(CobwebTree):
     data = list(synonymize(SYNONYMS, NSYNONYMS, ncopies=1,
                            data=length_filter(filter_stop_words(text), 10)))
     random.shuffle(data)
-    tree = CobwebTree(WINDOW_SIZE)
     fold_total = 0
     for fold_num in range(FOLDS):
+        tree = CobwebTree(WINDOW_SIZE)
         # print('fold %s' % fold_num)
         withheld_synonyms = [word_to_variant(word, fold_num) for word in SYNONYMS]
         fold_data, withheld_instances = withhold(data, withheld_synonyms)
@@ -298,13 +298,13 @@ def run_test_2(CobwebTree):
     data = list(homonymize(HOMONYMS, NHOMONYMS, ncopies=1,
                            data=length_filter(filter_stop_words(text), 10)))
     random.shuffle(data)
-    tree = CobwebTree(WINDOW_SIZE)
     fold_total = 0
     for fold_num in range(FOLDS):
+        tree = CobwebTree(WINDOW_SIZE)
         # print('fold %s' % fold_num)
         fold_data, withheld_instances = withhold_word_by_number(data, HOMONYMS, fold_num)
         assert withheld_instances
-        for sent in fold_data:
+        for sent in tqdm(fold_data):
             tree.ifit_text(sent)
         total_distance = 0
         for (instance, index) in withheld_instances:
@@ -343,7 +343,8 @@ def run(tup):
 if __name__ == "__main__":
     (LeafTree, StaticTree, LiteralTree)
     NUM_SENTENCES = 500
-    with multiprocessing.Pool(5) as p:
+    print('Leaf Cobweb Homo. Test:', run_test_2(LeafTree))
+    '''with multiprocessing.Pool(5) as p:
         p.map(run,
               (('Leaf Cobweb Syno. Test:', run_test_1, LeafTree),
                ('Static Cobweb Syno. Test:', run_test_1, StaticTree),
@@ -353,4 +354,4 @@ if __name__ == "__main__":
                ('Literal Cobweb Homo. Test:', run_test_2, LiteralTree),
                ('Leaf Cobweb Syno. Prediction Test:', run_test_3, LeafTree),
                ('Static Cobweb Syno. Prediction Test:', run_test_3, StaticTree),
-               ('Literal Cobweb Syno. Prediction Test:', run_test_3, LiteralTree)))
+               ('Literal Cobweb Syno. Prediction Test:', run_test_3, LiteralTree)))'''
