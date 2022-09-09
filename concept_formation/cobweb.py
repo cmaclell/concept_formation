@@ -23,7 +23,7 @@ class CobwebTree(object):
     cobweb algorithm and can be used to fit and categorize instances.
     """
 
-    def __init__(self, alpha=1):
+    def __init__(self, alpha=0):
         """
         The tree constructor.
         """
@@ -171,7 +171,6 @@ class CobwebTree(object):
 
                 if new.parent:
                     new.parent.children.remove(current)
-                    new.parent.children.append(new)
                     new.parent.children.append(new)
                 else:
                     self.root = new
@@ -358,7 +357,7 @@ class CobwebNode(object):
         self.count += 1
         for attr in instance:
             if attr not in self.av_counts:
-                self.av_counts[attr] = {}
+                self.av_counts[attr] = Counter()
             if instance[attr] not in self.av_counts[attr]:
                 self.av_counts[attr][instance[attr]] = 0
             self.av_counts[attr][instance[attr]] += 1
@@ -376,7 +375,7 @@ class CobwebNode(object):
         self.count += node.count
         for attr in node.attrs('all'):
             if attr not in self.av_counts:
-                self.av_counts[attr] = {}
+                self.av_counts[attr] = Counter()
             for val in node.av_counts[attr]:
                 if val not in self.av_counts[attr]:
                     self.av_counts[attr][val] = 0
@@ -396,13 +395,10 @@ class CobwebNode(object):
         """
         correct_guesses = 0.0
 
-        # Get attributes from the root (root contains all attributes seen)
-        attrs = list(self.tree.root.attrs())
-        # Count of attributes found at the root
-        attr_count = len(attrs)
-        for attr in attrs:
-            for val in self.av_counts[attr]:
-                prob = (self.av_counts[attr][val] + self.tree.alpha) / (self.count + (self.tree.alpha * attr_count))
+        for attr in self.tree.root.attrs():
+            num_vals = len(self.tree.root.av_counts[attr])
+            for val in self.tree.root.av_counts[attr]:
+                prob = (self.av_counts[attr][val] + self.tree.alpha) / (self.count + (self.tree.alpha * num_vals))
                 correct_guesses += (prob * prob)
 
         return correct_guesses
