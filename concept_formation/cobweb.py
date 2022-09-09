@@ -13,18 +13,22 @@ from math import log
 
 from concept_formation.utils import weighted_choice
 from concept_formation.utils import most_likely_choice
+from collections import Counter
+from collections import defaultdict
 
 
 class CobwebTree(object):
     """
-    The CobwebTree contains the knoweldge base of a partiucluar instance of the
+    The CobwebTree contains the knowledge base of a particular instance of the
     cobweb algorithm and can be used to fit and categorize instances.
     """
 
-    def __init__(self):
+    def __init__(self, alpha=1):
         """
         The tree constructor.
         """
+        # Additive smoothing alpha value
+        self.alpha = alpha
         self.root = CobwebNode()
         self.root.tree = self
 
@@ -122,13 +126,13 @@ class CobwebTree(object):
         <CobwebNode.category_utility>` of the tree at the current node and then
         recurses.
 
-        At each node the alogrithm first calculates the category utility of
+        At each node the algorithm first calculates the category utility of
         inserting the instance at each of the node's children, keeping the best
         two (see: :meth:`CobwebNode.two_best_children
         <CobwebNode.two_best_children>`), and then calculates the
         category_utility of performing other operations using the best two
         children (see: :meth:`CobwebNode.get_best_operation
-        <CobwebNode.get_best_operation>`), commiting to whichever operation
+        <CobwebNode.get_best_operation>`), committing to whichever operation
         results in the highest category utility. In the case of ties an
         operation is chosen at random.
 
@@ -139,7 +143,7 @@ class CobwebTree(object):
 
         .. note:: This function is equivalent to calling
             :meth:`CobwebTree.ifit` but its better to call ifit because it is
-            the polymorphic method siganture between the different cobweb
+            the polymorphic method signature between the different cobweb
             family algorithms.
 
         :param instance: an instance to incorporate into the tree
@@ -167,6 +171,7 @@ class CobwebTree(object):
 
                 if new.parent:
                     new.parent.children.remove(current)
+                    new.parent.children.append(new)
                     new.parent.children.append(new)
                 else:
                     self.root = new
@@ -298,7 +303,7 @@ class CobwebNode(object):
         """Create a new CobwebNode"""
         self.concept_id = self.gensym()
         self.count = 0.0
-        self.av_counts = {}
+        self.av_counts = defaultdict(Counter)
         self.children = []
         self.parent = None
         self.tree = None
@@ -332,7 +337,7 @@ class CobwebNode(object):
         table with the option to filter certain types. By default the filter
         will ignore hidden attributes and yield all others. If the string 'all'
         is provided then all attributes will be yielded. In neither of those
-        cases the filter will be interpreted as a function that returns true if
+        cases, the filter will be interpreted as a function that returns true if
         an attribute should be yielded and false otherwise.
         """
         if attr_filter is None:
@@ -390,16 +395,17 @@ class CobwebNode(object):
         :rtype: float
         """
         correct_guesses = 0.0
-        attr_count = 0
 
-        for attr in self.attrs():
-            attr_count += 1
-            if attr in self.av_counts:
-                for val in self.av_counts[attr]:
-                    prob = (self.av_counts[attr][val]) / self.count
-                    correct_guesses += (prob * prob)
+        # Get attributes from the root (root contains all attributes seen)
+        attrs = list(self.tree.root.attrs())
+        # Count of attributes found at the root
+        attr_count = len(attrs)
+        for attr in attrs:
+            for val in self.av_counts[attr]:
+                prob = (self.av_counts[attr][val] + self.tree.alpha) / (self.count + (self.tree.alpha * attr_count))
+                correct_guesses += (prob * prob)
 
-        return correct_guesses / attr_count
+        return correct_guesses
 
     def category_utility(self):
         """
@@ -416,7 +422,7 @@ class CobwebNode(object):
             P(C_k) \\left[ \\sum_i \\sum_j P(A_i = V_{ij} | C_k)^2 \\right] -
             \\sum_i \\sum_j P(A_i = V_{ij})^2
 
-        where :math:`n` is the numer of children concepts to the current node,
+        where :math:`n` is the number of children concepts to the current node,
         :math:`P(C_k)` is the probability of a concept given the current node,
         :math:`P(A_i = V_{ij} | C_k)` is the probability of a particular
         attribute value given the concept :math:`C_k`, and :math:`P(A_i =
@@ -441,8 +447,7 @@ class CobwebNode(object):
             child_correct_guesses += (p_of_child *
                                       child.expected_correct_guesses())
 
-        return ((child_correct_guesses - self.expected_correct_guesses()) /
-                len(self.children))
+        return child_correct_guesses - self.expected_correct_guesses()
 
     def get_best_operation(self, instance, best1, best2, best1_cu,
                            possible_ops=["best", "new", "merge", "split"]):
