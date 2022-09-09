@@ -25,28 +25,28 @@ def word_to_base(word):
     return word.split('-')[0]
 
 
-TREE_RECURSION = 0x1000
+# TREE_RECURSION = 0x1000
+# 
+# # May segfault without this line. 0x100 is a guess at the size of stack frame.
+# try:
+#     resource.setrlimit(resource.RLIMIT_STACK,
+#                        [0x100 * TREE_RECURSION, resource.RLIM_INFINITY])
+# except ValueError:
+#     print(Warning("Warning: Saving this model may result in a segfault"))
+# setrecursionlimit(TREE_RECURSION)
+# 
+# SAVE = False
+# TREE_RECURSION = 900000
+# LOAD = False
+# MODELS_PATH = join(dirname(__file__), 'saved_models')
+# MODEL_SAVE_LOCATION = join(MODELS_PATH, 'saved_model_%s' % time())
+# if LOAD:
+#     MODEL_LOAD_LOCATION = join(MODELS_PATH, listdir(MODELS_PATH)[0])
+# print(listdir(MODELS_PATH)[0])
+# run
 
-# May segfault without this line. 0x100 is a guess at the size of stack frame.
-try:
-    resource.setrlimit(resource.RLIMIT_STACK,
-                       [0x100 * TREE_RECURSION, resource.RLIM_INFINITY])
-except ValueError:
-    print(Warning("Warning: Saving this model may result in a segfault"))
-setrecursionlimit(TREE_RECURSION)
-
-SAVE = False
-TREE_RECURSION = 900000
-LOAD = False
-MODELS_PATH = join(dirname(__file__), 'saved_models')
-MODEL_SAVE_LOCATION = join(MODELS_PATH, 'saved_model_%s' % time())
-if LOAD:
-    MODEL_LOAD_LOCATION = join(MODELS_PATH, listdir(MODELS_PATH)[0])
-print(listdir(MODELS_PATH)[0])
-run
-
-random.seed(16)
-ca_key = '#Ctxt#'
+# random.seed(16)
+ca_key = 'context'
 anchor_key = 'anchor'
 overlaps = 0
 
