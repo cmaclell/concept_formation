@@ -356,10 +356,6 @@ class CobwebNode(object):
         """
         self.count += 1
         for attr in instance:
-            if attr not in self.av_counts:
-                self.av_counts[attr] = Counter()
-            if instance[attr] not in self.av_counts[attr]:
-                self.av_counts[attr][instance[attr]] = 0
             self.av_counts[attr][instance[attr]] += 1
 
     def update_counts_from_node(self, node):
@@ -374,11 +370,7 @@ class CobwebNode(object):
         """
         self.count += node.count
         for attr in node.attrs('all'):
-            if attr not in self.av_counts:
-                self.av_counts[attr] = Counter()
             for val in node.av_counts[attr]:
-                if val not in self.av_counts[attr]:
-                    self.av_counts[attr][val] = 0
                 self.av_counts[attr][val] += node.av_counts[attr][val]
 
     def expected_correct_guesses(self):
