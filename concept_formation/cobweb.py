@@ -564,23 +564,34 @@ class CobwebNode(object):
         if len(self.children) == 0:
             raise Exception("No children!")
 
-        children_relative_cu = [(self.relative_cu_for_insert(child, instance),
-                                 child.count, random(), child) for child in
-                                self.children]
-        children_relative_cu.sort(reverse=True)
+        children_cu = [(self.cu_for_insert(child, instance), child.count,
+            random(), child) for child in self.children]
+        children_cu.sort(reverse=True)
 
-        # Convert the relative CU's of the two best children into CU scores
-        # that can be compared with the other operations.
-        const = self.compute_relative_CU_const(instance)
-
-        best1 = children_relative_cu[0][3]
-        best1_relative_cu = children_relative_cu[0][0]
-        best1_cu = (best1_relative_cu / (self.count+1) / len(self.children)
-                    + const)
+        best1 = children_cu[0][3]
+        best1_cu = children_cu[0][0]
 
         best2 = None
-        if len(children_relative_cu) > 1:
-            best2 = children_relative_cu[1][3]
+        if len(children_cu) > 1:
+            best2 = children_cu[1][3]
+
+        # children_relative_cu = [(self.relative_cu_for_insert(child, instance),
+        #                          child.count, random(), child) for child in
+        #                         self.children]
+        # children_relative_cu.sort(reverse=True)
+
+        # # Convert the relative CU's of the two best children into CU scores
+        # # that can be compared with the other operations.
+        # const = self.compute_relative_CU_const(instance)
+
+        # best1 = children_relative_cu[0][3]
+        # best1_relative_cu = children_relative_cu[0][0]
+        # best1_cu = (best1_relative_cu / (self.count+1) / len(self.children)
+        #             + const)
+
+        # best2 = None
+        # if len(children_relative_cu) > 1:
+        #     best2 = children_relative_cu[1][3]
 
         return best1_cu, best1, best2
 
