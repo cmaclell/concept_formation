@@ -13,6 +13,9 @@ from sklearn.metrics import adjusted_rand_score
 from concept_formation.cobweb import CobwebTree
 from concept_formation.cluster import cluster
 from concept_formation.datasets import load_mushroom
+import time
+
+s = time.time()
 
 seed(0)
 mushrooms = load_mushroom()
@@ -48,6 +51,8 @@ for class_idx, class_label in enumerate(class_set):
          mushroom_class[i] == class_label]
     plt.scatter(x, y, color=c, marker=r"$ {} $".format(
         class_label[0]), label=class_label)
+
+print(time.time() - s)
 
 plt.title("COBWEB Mushroom Clustering (ARI w/ Hidden Edibility Labels = %0.2f)"
           % (ari))
