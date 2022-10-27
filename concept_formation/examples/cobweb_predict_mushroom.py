@@ -17,13 +17,18 @@ num_runs = 30
 num_examples = 30
 mushrooms = load_mushroom()
 
-naive_data = incremental_evaluation(DummyTree(), mushrooms,
+dt = DummyTree()
+ct = CobwebTree()
+
+naive_data = incremental_evaluation(dt, mushrooms,
                                     run_length=num_examples,
                                     runs=num_runs, attr="classification")
-cobweb_data = incremental_evaluation(CobwebTree(), mushrooms,
+cobweb_data = incremental_evaluation(ct, mushrooms,
                                      run_length=num_examples,
                                      runs=num_runs, attr="classification")
 
+print(ct.root.av_counts)
+print(ct.root.num_concepts())
 cobweb_x, cobweb_y = [], []
 naive_x, naive_y = [], []
 
