@@ -1053,6 +1053,11 @@ class CobwebNode(object):
                 temp[str(attr)] = {str(value): self.av_counts[attr][value] for
                                    value in self.av_counts[attr]}
                 # temp[attr + " = " + str(value)] = self.av_counts[attr][value]
+        temp['Category Utility'] = {"#ContinuousValue#": {
+            'mean': self.category_utility(),
+            'std': 1.0,
+            'n': 1.0
+            }}
 
         for child in self.children:
             output["children"].append(child.output_json())
