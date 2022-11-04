@@ -23,7 +23,7 @@ class CobwebTree(object):
     cobweb algorithm and can be used to fit and categorize instances.
     """
 
-    def __init__(self, alpha=0):
+    def __init__(self, alpha=0, pruning=False):
         """
         The tree constructor.
         """
@@ -31,6 +31,7 @@ class CobwebTree(object):
         self.alpha = alpha
         self.root = CobwebNode()
         self.root.tree = self
+        self.pruning = pruning
 
     def clear(self):
         """
@@ -85,7 +86,10 @@ class CobwebTree(object):
         .. seealso:: :meth:`CobwebTree.cobweb`
         """
         self._sanity_check_instance(instance)
-        return self.cobweb(instance)
+        cobweb_node = self.cobweb(instance)
+        if self.pruning:
+            self.prune()
+        return cobweb_node
 
     def fit(self, instances, iterations=1, randomize_first=True):
         """
@@ -114,6 +118,8 @@ class CobwebTree(object):
                 shuffle(instances)
             for i in instances:
                 self.ifit(i)
+            if self.pruning:
+                self.prune()
             shuffle(instances)
 
     def cobweb(self, instance):
@@ -205,6 +211,9 @@ class CobwebTree(object):
 
         return current
 
+    def prune(self):
+        pass
+
     def _cobweb_categorize(self, instance):
         """
         A cobweb specific version of categorize, not intended to be
@@ -213,12 +222,20 @@ class CobwebTree(object):
         .. seealso:: :meth:`CobwebTree.categorize`
         """
         current = self.root
+        depth = 1
         while current:
             if not current.children:
+                #return current, depth
                 return current
 
-            _, best1, best2 = current.two_best_children(instance)
+            best1_cu, best1, best2 = current.two_best_children(instance)
+            if self.pruning:
+                # If best CU of children is 0 or negative, then return current node
+                if best1_cu <= 0:
+                    #return current, depth
+                    return current
             current = best1
+            depth += 1
 
     def infer_missing(self, instance, choice_fn="most likely",
                       allow_none=True):
@@ -306,6 +323,7 @@ class CobwebNode(object):
         self.children = []
         self.parent = None
         self.tree = None
+        self.deleted = False
 
         if otherNode:
             self.tree = otherNode.tree
@@ -618,7 +636,7 @@ class CobwebNode(object):
         """
         Computes a relative CU score for each insert operation. The relative CU
         score is more efficient to calculate for each insert operation and is
-        guranteed to have the same rank ordering as the CU score so it can be
+        guaranteed to have the same rank ordering as the CU score so it can be
         used to determine which insert operation is best. The relative CU can
         be computed from the CU using the following transformation.
 
@@ -635,7 +653,7 @@ class CobwebNode(object):
         of the relative cu scores for each insert operation efficient. When
         computing the CU for inserting the instance into a particular child,
         the terms in the formula above can be expanded and many of the
-        intermediate calculations cancel out. After these cancelations,
+        intermediate calculations cancel out. After these cancellations,
         computing the relative CU for inserting into a particular child
         :math:`C_i` reduces to:
 
@@ -930,9 +948,11 @@ class CobwebNode(object):
                 continue
             if attr in instance and attr not in self.av_counts:
                 return False
+            # Otherwise, in node or in both
             if attr in self.av_counts and attr not in instance:
                 return False
             if attr in self.av_counts and attr in instance:
+                # If value at attr for instance is not in list of values for attr in node
                 if instance[attr] not in self.av_counts[attr]:
                     return False
                 if not self.av_counts[attr][instance[attr]] == self.count:
