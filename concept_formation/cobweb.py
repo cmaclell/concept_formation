@@ -153,16 +153,15 @@ class CobwebTree(object):
 
         while current:
 
-            print(current.count)
             # the current.count == 0 here is for the initially empty tree.
             if not current.children and (current.is_exact_match(instance) or
                                          current.count == 0):
-                print("leaf match")
+                # print("leaf match")
                 current.increment_counts(instance)
                 break
 
             elif not current.children:
-                print("fringe split")
+                # print("fringe split")
                 new = current.__class__(current)
                 current.parent = new
                 new.children.append(current)
@@ -181,8 +180,8 @@ class CobwebTree(object):
                 best1_cu, best1, best2 = current.two_best_children(instance)
                 _, best_action = current.get_best_operation(instance, best1,
                                                             best2, best1_cu)
-
-                print(best_action)
+                
+                # print(best_action)
                 if best_action == 'best':
                     current.increment_counts(instance)
                     current = best1
@@ -454,6 +453,64 @@ class CobwebNode(object):
         return ((child_correct_guesses - self.expected_correct_guesses()) /
                 len(self.children))
 
+    def create_new_child(self, instance, i = None):
+        """
+        Create a new child (to the current node) with the counts initialized by
+        the *given instance*.
+
+        This is the operation used for creating a new child to a node and
+        adding the instance to it.
+
+        :param instance: The instance currently being categorized
+        :type instance: :ref:`Instance<instance-rep>`
+        :return: The new child
+        :rtype: CobwebNode
+        """
+        new_child = self.__class__()
+        new_child.parent = self
+        new_child.tree = self.tree
+        new_child.increment_counts(instance)
+
+        if(i == None):
+            self.children.append(new_child)
+        else:
+            self.children.insert(i, new_child)
+
+        return new_child
+    
+    def delete_new_child(self, child):
+
+        ind = None
+        l = []
+        
+        for i, c in enumerate(self.children):
+            if(c == child):
+                ind = i
+                continue
+            l.append(c)
+        
+        self.children = l
+        
+        return ind
+
+    def create_child_with_current_counts(self):
+        """
+        Create a new child (to the current node) with the counts initialized by
+        the *current node's counts*.
+
+        This operation is used in the speical case of a fringe split when a new
+        node is created at a leaf.
+
+        :return: The new child
+        :rtype: CobwebNode
+        """
+        if self.count > 0:
+            new = self.__class__(self)
+            new.parent = self
+            new.tree = self.tree
+            self.children.append(new)
+            return new
+
     def get_best_operation(self, instance, best1, best2, best1_cu,
                            possible_ops=["best", "new", "merge", "split"]):
         """
@@ -542,9 +599,7 @@ class CobwebNode(object):
             operations.append((self.cu_for_split(best1), random(), 'split'))
 
         operations.sort(reverse=True)
-        # print(operations)
         best_op = (operations[0][0], operations[0][2])
-        # print(best_op)
         return best_op
 
     def two_best_children(self, instance):
@@ -671,28 +726,19 @@ class CobwebNode(object):
         :rtype: float
         """
 
-        temp = child.shallow_copy()
-        # print(self.count, child.count, temp.count)
-        temp.increment_counts(instance)
+        # temp = child.shallow_copy()
+        # # print(self.count, child.count, temp.count)
+        # temp.increment_counts(instance)
 
-        return ((child.count + 1) * temp.expected_correct_guesses() -
-                child.count * child.expected_correct_guesses())
+        # return ((child.count + 1) * temp.expected_correct_guesses() -
+        #         child.count * child.expected_correct_guesses())
         
-        # s = self.count
-        # c1 = child.count
-        # o = child.count * child.expected_correct_guesses()
-        # child.increment_counts(instance)
-        # c2 = child.count
-        # o = (child.count * child.expected_correct_guesses()) - o
-        # child.decrement_counts(instance)
-        # if(self.count - s != 0 or c2 - c1 != 1 or child.count - c1 != 0 or c2 - child.count != 1):
-        #     print("Discrepansy Found")
+        o = child.count * child.expected_correct_guesses()
+        child.increment_counts(instance)
+        o = (child.count * child.expected_correct_guesses()) - o
+        child.decrement_counts(instance)
 
-        # return o
-
-
-
-
+        return o
 
     def cu_for_insert(self, child, instance):
         """
@@ -716,58 +762,28 @@ class CobwebNode(object):
             :meth:`CobwebNode.get_best_operation`
 
         """
-        temp = self.shallow_copy()
-        temp.increment_counts(instance)
 
-        for c in self.children:
-            temp_child = c.shallow_copy()
-            temp.children.append(temp_child)
-            temp_child.parent = temp
-            if c == child:
-                temp_child.increment_counts(instance)
-        return temp.category_utility()
 
-    def create_new_child(self, instance):
-        """
-        Create a new child (to the current node) with the counts initialized by
-        the *given instance*.
+        # temp = self.shallow_copy()
+        # temp.increment_counts(instance)
 
-        This is the operation used for creating a new child to a node and
-        adding the instance to it.
+        # for c in self.children:
+        #     temp_child = c.shallow_copy()
+        #     temp.children.append(temp_child)
+        #     temp_child.parent = temp
+        #     if c == child:
+        #         temp_child.increment_counts(instance)
+        # return temp.category_utility()
 
-        :param instance: The instance currently being categorized
-        :type instance: :ref:`Instance<instance-rep>`
-        :return: The new child
-        :rtype: CobwebNode
-        """
-        new_child = self.__class__()
-        new_child.parent = self
-        new_child.tree = self.tree
-        new_child.increment_counts(instance)
-        self.children.append(new_child)
-        return new_child
-    
-    def delete_new_child(self, child):
+        self.increment_counts(instance)
+        i = self.delete_new_child(child)
+        o = self.category_utility()
+        self.children.insert(i, child)
+        self.decrement_counts(instance)
+        
+        return o
 
-        self.children = [c for c in self.children if c != child] 
 
-    def create_child_with_current_counts(self):
-        """
-        Create a new child (to the current node) with the counts initialized by
-        the *current node's counts*.
-
-        This operation is used in the speical case of a fringe split when a new
-        node is created at a leaf.
-
-        :return: The new child
-        :rtype: CobwebNode
-        """
-        if self.count > 0:
-            new = self.__class__(self)
-            new.parent = self
-            new.tree = self.tree
-            self.children.append(new)
-            return new
 
     def cu_for_new_child(self, instance):
         """
@@ -851,47 +867,47 @@ class CobwebNode(object):
 
         .. seealso:: :meth:`CobwebNode.get_best_operation`
         """
-        temp = self.shallow_copy()
-        temp.increment_counts(instance)
-
-        new_child = self.__class__()
-        new_child.tree = self.tree
-        new_child.parent = temp
-        new_child.update_counts_from_node(best1)
-        new_child.update_counts_from_node(best2)
-        new_child.increment_counts(instance)
-        temp.children.append(new_child)
-
-        for c in self.children:
-            if c == best1 or c == best2:
-                continue
-            temp_child = c.shallow_copy()
-            temp.children.append(temp_child)
-
-        return temp.category_utility()
+        # temp = self.shallow_copy()
+        # temp.increment_counts(instance)
 
         # new_child = self.__class__()
         # new_child.tree = self.tree
-
-        # self.increment_counts(instance)
-
-        # new_child.parent = self
+        # new_child.parent = temp
         # new_child.update_counts_from_node(best1)
         # new_child.update_counts_from_node(best2)
         # new_child.increment_counts(instance)
+        # temp.children.append(new_child)
 
-        # self.children.append(new_child)
+        # for c in self.children:
+        #     if c == best1 or c == best2:
+        #         continue
+        #     temp_child = c.shallow_copy()
+        #     temp.children.append(temp_child)
 
-        # self.delete_new_child(best1)
-        # self.delete_new_child(best2)
+        # return temp.category_utility()
+
+        new_child = self.__class__()
+        new_child.tree = self.tree
+
+        self.increment_counts(instance)
+
+        new_child.parent = self
+        new_child.update_counts_from_node(best1)
+        new_child.update_counts_from_node(best2)
+        new_child.increment_counts(instance)
+
+        self.children.append(new_child)
+
+        self.delete_new_child(best1)
+        self.delete_new_child(best2)
         
-        # out = self.category_utility()
-        # self.children.append(best1)
-        # self.children.append(best2)
-        # self.decrement_counts(instance)
-        # self.delete_new_child(new_child)
+        o = self.category_utility()
+        self.children.append(best1)
+        self.children.append(best2)
+        self.decrement_counts(instance)
+        self.delete_new_child(new_child)
 
-        return out
+        return o
 
     def split(self, best):
         """
@@ -930,13 +946,22 @@ class CobwebNode(object):
 
         .. seealso:: :meth:`CobwebNode.get_best_operation`
         """
-        temp = self.shallow_copy()
+        # temp = self.shallow_copy()
 
-        temp.create_child_with_current_counts()
-        temp.increment_counts(instance)
-        temp.create_new_child(instance)
+        # temp.create_child_with_current_counts()
+        # temp.increment_counts(instance)
+        # temp.create_new_child(instance)
 
-        return temp.category_utility()
+        # return temp.category_utility()
+
+        c = self.create_child_with_current_counts()
+        self.increment_counts(instance)
+        oc = self.create_new_child(instance)
+        o = self.category_utility()
+        self.delete_new_child(oc)
+        self.delete_new_child(c)
+
+        return o
 
     def cu_for_split(self, best):
         """
@@ -965,6 +990,7 @@ class CobwebNode(object):
             temp.children.append(temp_child)
 
         return temp.category_utility()
+
 
     def is_exact_match(self, instance):
         """
