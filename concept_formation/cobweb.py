@@ -152,15 +152,17 @@ class CobwebTree(object):
         current = self.root
 
         while current:
+
+            print(current.count)
             # the current.count == 0 here is for the initially empty tree.
             if not current.children and (current.is_exact_match(instance) or
                                          current.count == 0):
-                # print("leaf match")
+                print("leaf match")
                 current.increment_counts(instance)
                 break
 
             elif not current.children:
-                # print("fringe split")
+                print("fringe split")
                 new = current.__class__(current)
                 current.parent = new
                 new.children.append(current)
@@ -180,7 +182,7 @@ class CobwebTree(object):
                 _, best_action = current.get_best_operation(instance, best1,
                                                             best2, best1_cu)
 
-                # print(best_action)
+                print(best_action)
                 if best_action == 'best':
                     current.increment_counts(instance)
                     current = best1
@@ -363,8 +365,8 @@ class CobwebNode(object):
         self.count -= 1
         for attr in instance:
             self.av_counts[attr][instance[attr]] -= 1
-            # if(self.av_counts[attr][instance[attr]] == 0):
-            #     del self.av_counts[attr][instance[attr]]
+            if(self.av_counts[attr][instance[attr]] == 0):
+                del self.av_counts[attr][instance[attr]]
 
     def update_counts_from_node(self, node):
         """
@@ -668,11 +670,26 @@ class CobwebNode(object):
         :return: the category utility of adding the instance to the given node
         :rtype: float
         """
+
         temp = child.shallow_copy()
+        # print(self.count, child.count, temp.count)
         temp.increment_counts(instance)
 
         return ((child.count + 1) * temp.expected_correct_guesses() -
                 child.count * child.expected_correct_guesses())
+        
+        # s = self.count
+        # c1 = child.count
+        # o = child.count * child.expected_correct_guesses()
+        # child.increment_counts(instance)
+        # c2 = child.count
+        # o = (child.count * child.expected_correct_guesses()) - o
+        # child.decrement_counts(instance)
+        # if(self.count - s != 0 or c2 - c1 != 1 or child.count - c1 != 0 or c2 - child.count != 1):
+        #     print("Discrepansy Found")
+
+        # return o
+
 
 
 
@@ -732,7 +749,6 @@ class CobwebNode(object):
     
     def delete_new_child(self, child):
 
-        old_c = self.children
         self.children = [c for c in self.children if c != child] 
 
     def create_child_with_current_counts(self):
@@ -866,9 +882,8 @@ class CobwebNode(object):
 
         # self.children.append(new_child)
 
-        # for c in self.children:
-        #     if c == best1 or c == best2:
-        #         del c
+        # self.delete_new_child(best1)
+        # self.delete_new_child(best2)
         
         # out = self.category_utility()
         # self.children.append(best1)
@@ -876,7 +891,7 @@ class CobwebNode(object):
         # self.decrement_counts(instance)
         # self.delete_new_child(new_child)
 
-        # return out
+        return out
 
     def split(self, best):
         """
