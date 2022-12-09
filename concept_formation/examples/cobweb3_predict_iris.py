@@ -15,7 +15,7 @@ from concept_formation.datasets import load_iris
 
 seed(0)
 num_runs = 30
-num_examples = 20
+num_examples = 200
 irises = load_iris()
 
 naive_data = incremental_evaluation(DummyTree(), irises,
