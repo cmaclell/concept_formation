@@ -24,10 +24,23 @@ def time(n_inst, n_attr, n_val):
                                                                n_val)),
                   number=1)
 
+def viz(n_inst, n_attr, n_val):
+    from concept_formation.cobweb import CobwebTree
+    from concept_formation.visualize import visualize
+
+    tree = CobwebTree()
+    x = generate_dataset(n_inst, n_attr, n_val)
+    tree.fit(x)
+
+    visualize(tree)
+
 
 if __name__ == "__main__":
+
+    viz(500, 10, 5) 
+
     # 5 attributes
-    sizes = [10, 30, 60, 120, 180, 220]
+    sizes = [10, 30, 60, 120, 180, 220, 500]
     times = [time(i, 5, 5) for i in sizes]
     plt.plot(sizes, times, 'ro')
     plt.plot(sizes, times, 'r-')
