@@ -416,19 +416,61 @@ class CobwebNode(object):
         squared_counts = self.squared_counts
 
         for attr in instance:
-            val = instance[attr]
+            if attr[0] == "_":
+                continue
 
-            if attr in self.av_counts:
-                if val in self.av_counts[attr]:
-                    squared_counts -= self.av_counts[attr][val]**2
-                    squared_counts += (self.av_counts[attr][val]+1)**2
-                else:
-                    squared_counts += 1
-            else:
+            if attr not in self.av_counts:
                 attr_count += 1
-                squared_counts += 1
+
+            val = instance[attr]
+            squared_counts -= self.av_counts[attr][val]**2
+            squared_counts += (self.av_counts[attr][val]+1)**2
 
         return squared_counts / (self.count+1)**2 / attr_count
+
+    def expected_correct_guesses_merge(self, other, instance):
+        """
+        Returns the expected correct guesses that would result from merging the
+        current concept with the other concept and inserting the instance.
+
+        This operation can be used instead of inplace and copying because it
+        only looks at the attr values used in the instance and reduces iteration.
+        """
+        # use the larger concept as the base
+        big = self
+        small = other
+
+        if self.count < other.count:
+            small = self
+            big = other
+
+        attr_count = big.attr_count
+        squared_counts = big.squared_counts
+
+        for attr in small.av_counts:
+            if attr[0] == "_":
+                continue
+
+            if attr not in big.av_counts:
+                attr_count += 1
+
+            for val in small.av_counts[attr]:
+                squared_counts -= big.av_counts[attr][val]**2
+                squared_counts += (big.av_counts[attr][val]+small.av_counts[attr][val])**2
+
+        for attr in instance:
+            if attr[0] == "_":
+                continue
+
+            if attr not in big.av_counts and attr not in small.av_counts:
+                attr_count += 1
+
+            val = instance[attr]
+            squared_counts -= (big.av_counts[attr][val]+small.av_counts[attr][val])**2
+            squared_counts += (big.av_counts[attr][val]+small.av_counts[attr][val]+1)**2
+
+        return squared_counts / (big.count + small.count + 1)**2 / attr_count
+
 
     def expected_correct_guesses(self):
         """
@@ -925,28 +967,23 @@ class CobwebNode(object):
 
         .. seealso:: :meth:`CobwebNode.get_best_operation`
         """
-        new_child = self.__class__()
-        new_child.tree = self.tree
+        child_correct_guesses = 0.0
 
-        self.increment_counts(instance)
+        for c in self.children:
+            if c == best1 or c == best2:
+                continue
 
-        new_child.parent = self
-        new_child.update_counts_from_node(best1)
-        new_child.update_counts_from_node(best2)
-        new_child.increment_counts(instance)
+            child_correct_guesses += (c.count *
+                                      c.expected_correct_guesses())
 
-        self.children.append(new_child)
-        self.children.remove(best1)
-        self.children.remove(best2)
+        child_correct_guesses += ((best1.count + best2.count + 1) *
+                                  best1.expected_correct_guesses_merge(best2, instance))
 
-        o = self.category_utility()
+        child_correct_guesses /= (self.count + 1)
+        parent_correct_guesses = self.expected_correct_guesses_insert(instance)
 
-        self.children.append(best1)
-        self.children.append(best2)
-        self.decrement_counts(instance)
-        self.children.remove(new_child)
-
-        return o
+        return ((child_correct_guesses - parent_correct_guesses) / (len(self.children)-1))
+    
 
     def split(self, best):
         """
