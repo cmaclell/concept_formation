@@ -1009,33 +1009,6 @@ class CobwebNode(object):
             child.tree = self.tree
             self.children.append(child)
 
-    def cu_for_fringe_split(self, instance):
-        """
-        Return the category utility of performing a fringe split (i.e.,
-        adding a leaf to a leaf).
-
-        A "fringe split" is essentially a new operation performed at a leaf. It
-        is necessary to have the distinction because unlike a normal split a
-        fringe split must also push the parent down to maintain a proper tree
-        structure. This is useful for identifying unnecessary fringe splits,
-        when the two leaves are essentially identical. It can be used to keep
-        the tree from growing and to increase the tree's predictive accuracy.
-
-        :param instance: The instance currently being categorized
-        :type instance: :ref:`Instance<instance-rep>`
-        :return: the category utility of fringe splitting at the current node.
-        :rtype: float
-
-        .. seealso:: :meth:`CobwebNode.get_best_operation`
-        """
-        temp = self.shallow_copy()
-
-        temp.create_child_with_current_counts()
-        temp.increment_counts(instance)
-        temp.create_new_child(instance)
-
-        return temp.category_utility()
-
     def cu_for_split(self, best):
         """
         Return the category utility for splitting the best child.
@@ -1054,14 +1027,21 @@ class CobwebNode(object):
 
         .. seealso:: :meth:`CobwebNode.get_best_operation`
         """
-        n_children = len(self.children)
-        self.children.remove(best)
-        self.children.extend(best.children)
-        o = self.category_utility()
-        self.children = self.children[:n_children-1]
-        self.children.append(best)
+        child_correct_guesses = 0.0
 
-        return o
+        for c in self.children:
+            if c == best:
+                continue
+            child_correct_guesses += (c.count * c.expected_correct_guesses())
+
+        for c in best.children:
+            child_correct_guesses += (c.count * c.expected_correct_guesses())
+
+        child_correct_guesses /= self.count
+        parent_correct_guesses = self.expected_correct_guesses()
+
+        return ((child_correct_guesses - parent_correct_guesses) /
+                (len(self.children) - 1 + len(best.children)))
 
     def is_exact_match(self, instance):
         """
