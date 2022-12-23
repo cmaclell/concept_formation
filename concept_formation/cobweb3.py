@@ -3,11 +3,6 @@ The Cobweb3 module contains the :class:`Cobweb3Tree` and :class:`Cobweb3Node`
 classes, which extend the traditional Cobweb capabilities to support numeric
 values on attributes.
 """
-
-from __future__ import print_function
-from __future__ import unicode_literals
-from __future__ import absolute_import
-from __future__ import division
 from random import normalvariate
 from math import sqrt
 from math import pi
@@ -195,7 +190,7 @@ class Cobweb3Node(CobwebNode):
         :type node: Cobweb3Node
         """
         self.count += node.count
-        for attr in node.attrs('all'):
+        for attr in node.av_counts:
             self.av_counts[attr] = self.av_counts.setdefault(attr, {})
             for val in node.av_counts[attr]:
                 if val == cv_key:
@@ -257,7 +252,9 @@ class Cobweb3Node(CobwebNode):
         correct_guesses = 0.0
         attr_count = 0
 
-        for attr in self.attrs():
+        for attr in self.av_counts:
+            if attr[0] == "_":
+                continue
             attr_count += 1
 
             for val in self.av_counts[attr]:
@@ -304,7 +301,7 @@ class Cobweb3Node(CobwebNode):
 
         attributes = []
 
-        for attr in self.attrs('all'):
+        for attr in self.av_counts:
             values = []
             for val in self.av_counts[attr]:
                 values.append("'" + str(val) + "': " +
@@ -486,7 +483,9 @@ class Cobweb3Node(CobwebNode):
         just called multiple times for each instance in the leaf).
         """
         ll = 0
-        for attr in set(self.attrs()).union(set(child_leaf.attrs())):
+        for attr in set(self.av_counts).union(set(child_leaf.av_counts)):
+            if attr[0] == "_":
+                continue
             vals = set([None])
             if attr in self.av_counts:
                 vals.update(self.av_counts[attr])
@@ -530,7 +529,7 @@ class Cobweb3Node(CobwebNode):
 
         .. seealso:: :meth:`CobwebNode.get_best_operation`
         """
-        for attr in set(instance).union(set(self.attrs())):
+        for attr in set(instance).union(set(self.av_counts)):
             if attr[0] == '_':
                 continue
             if attr in instance and attr not in self.av_counts:
@@ -579,7 +578,7 @@ class Cobweb3Node(CobwebNode):
         output["children"] = []
 
         temp = {}
-        for attr in self.attrs('all'):
+        for attr in self.av_counts:
             temp[str(attr)] = {}
 
             for val in self.av_counts[attr]:
