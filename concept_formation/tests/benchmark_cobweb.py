@@ -27,7 +27,7 @@ def time(n_inst, n_attr, n_val):
 
 if __name__ == "__main__":
     # 5 attributes
-    sizes = [10, 30, 60, 120, 180, 220]
+    sizes = [10, 30, 60, 120, 180, 220, 500]
     times = [time(i, 5, 5) for i in sizes]
     plt.plot(sizes, times, 'ro')
     plt.plot(sizes, times, 'r-')
