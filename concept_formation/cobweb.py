@@ -5,6 +5,7 @@ classes which are used to achieve the basic Cobweb functionality.
 from random import shuffle
 from random import random
 from math import log
+from math import isclose
 from collections import defaultdict
 from collections import Counter
 
@@ -325,22 +326,6 @@ class CobwebNode(object):
         temp.update_counts_from_node(self)
         return temp
 
-    def attrs(self, attr_filter=None):
-        """
-        Iterates over the attributes present in the node's attribute-value
-        table with the option to filter certain types. By default the filter
-        will ignore hidden attributes and yield all others. If the string 'all'
-        is provided then all attributes will be yielded. In neither of those
-        cases the filter will be interpreted as a function that returns true if
-        an attribute should be yielded and false otherwise.
-        """
-        if attr_filter is None:
-            return filter(lambda x: x[0] != "_", self.av_counts)
-        elif attr_filter == 'all':
-            return self.av_counts
-        else:
-            return filter(attr_filter, self.av_counts)
-
     def increment_counts(self, instance):
         """
         Increment the counts at the current node according to the specified
@@ -419,6 +404,13 @@ class CobwebNode(object):
                     self.squared_counts += self.av_counts[attr][val]**2
 
     def expected_correct_guesses_insert(self, instance):
+        """
+        Returns the expected correct guesses that would result from inserting
+        the instance into the current node. 
+
+        This operation can be used instead of inplace and copying because it
+        only looks at the attr values used in the instance and reduces iteration.
+        """
 
         attr_count = self.attr_count
         squared_counts = self.squared_counts
@@ -801,13 +793,20 @@ class CobwebNode(object):
             :meth:`CobwebNode.get_best_operation`
 
         """
-        self.increment_counts(instance)
-        child.increment_counts(instance)
-        o = self.category_utility()
-        child.decrement_counts(instance)
-        self.decrement_counts(instance)
+        child_correct_guesses = 0.0
 
-        return o
+        for c in self.children:
+            if c == child:
+                child_correct_guesses += ((c.count+1) *
+                                          c.expected_correct_guesses_insert(instance))
+            else:
+                child_correct_guesses += (c.count *
+                                          c.expected_correct_guesses())
+
+        child_correct_guesses /= (self.count + 1)
+        parent_correct_guesses = self.expected_correct_guesses_insert(instance)
+
+        return ((child_correct_guesses - parent_correct_guesses) / len(self.children))
 
     def create_new_child(self, instance):
         """
@@ -1032,7 +1031,7 @@ class CobwebNode(object):
 
         .. seealso:: :meth:`CobwebNode.get_best_operation`
         """
-        for attr in set(instance).union(set(self.attrs())):
+        for attr in set(instance).union(set(self.av_counts)):
             if attr[0] == '_':
                 continue
             if attr in instance and attr not in self.av_counts:
@@ -1152,7 +1151,7 @@ class CobwebNode(object):
         output['children'] = []
 
         temp = {}
-        for attr in self.attrs('all'):
+        for attr in self.av_counts:
             for value in self.av_counts[attr]:
                 temp[str(attr)] = {str(value): self.av_counts[attr][value] for
                                    value in self.av_counts[attr]}
@@ -1270,7 +1269,9 @@ class CobwebNode(object):
         """
         ll = 0
 
-        for attr in set(self.attrs()).union(set(child_leaf.attrs())):
+        for attr in set(self.av_counts).union(set(child_leaf.av_counts)):
+            if attr[0] == "_":
+                continue
             vals = set([None])
             if attr in self.av_counts:
                 vals.update(self.av_counts[attr])
