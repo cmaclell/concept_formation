@@ -904,13 +904,19 @@ class CobwebNode(object):
 
         .. seealso:: :meth:`CobwebNode.get_best_operation`
         """
-        self.increment_counts(instance)
-        new_child = self.create_new_child(instance)
-        out = self.category_utility()
-        self.decrement_counts(instance)
-        self.children.remove(new_child)
+        child_correct_guesses = 0.0
 
-        return out
+        for c in self.children:
+            child_correct_guesses += (c.count * c.expected_correct_guesses())
+
+        # sum over all attr (at 100% prob) divided by num attr should be 1.
+        child_correct_guesses += 1
+
+        child_correct_guesses /= (self.count + 1)
+        parent_correct_guesses = self.expected_correct_guesses_insert(instance)
+
+        return ((child_correct_guesses - parent_correct_guesses) / (len(self.children)+1))
+
 
     def merge(self, best1, best2):
         """
