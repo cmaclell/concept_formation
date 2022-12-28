@@ -37,8 +37,6 @@ def viz(n_inst, n_attr, n_val):
 
 if __name__ == "__main__":
 
-    viz(500, 10, 5) 
-
     # 5 attributes
     sizes = [10, 30, 60, 120, 180, 220, 500]
     times = [time(i, 5, 5) for i in sizes]
@@ -63,3 +61,5 @@ if __name__ == "__main__":
     plt.xlabel('Number of training instances (5 possible values / attr)')
     plt.ylabel('Runtime in Seconds')
     plt.show()
+
+    viz(500, 10, 5)
