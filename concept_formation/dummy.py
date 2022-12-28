@@ -26,11 +26,14 @@ class DummyTree(TrestleTree):
     other respects it is effectively a tree that consists of only a root.
     """
 
-    def __init__(self):
+    def __init__(self, scaling=0.5, inner_attr_scaling=True):
         self.root = Cobweb3Node()
         self.root.tree = self
         self.gensym_counter = 0
         self.structure_map_internally = False
+        self.scaling = scaling
+        self.inner_attr_scaling = inner_attr_scaling
+        self.attr_scales = {}
 
     def gensym(self):
         """
