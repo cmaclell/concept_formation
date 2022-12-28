@@ -163,17 +163,50 @@ class Cobweb3Node(CobwebNode):
 
         """
         self.count += 1
-
         for attr in instance:
-            self.av_counts[attr] = self.av_counts.setdefault(attr, {})
+            val = instance[attr]
+            hidden = attr[0] == "_"
 
-            if isNumber(instance[attr]):
+            if not hidden and attr not in self.av_counts:
+                self.attr_count += 1
+
+            if isNumber(val):
                 if cv_key not in self.av_counts[attr]:
                     self.av_counts[attr][cv_key] = ContinuousValue()
-                self.av_counts[attr][cv_key].update(instance[attr])
+
+                scale = 1.0
+                if self.tree is not None and self.tree.scaling:
+                    inner_attr = self.tree.get_inner_attr(attr)
+                    if inner_attr in self.tree.attr_scales:
+                        inner = self.tree.attr_scales[inner_attr]
+                        scale = ((1/self.tree.scaling) *
+                                 inner.unbiased_std())
+
+                cv = self.av_counts[attr][cv_key]
+
+                if not hidden:
+                    std = sqrt(cv.scaled_unbiased_std(scale) *
+                               cv.scaled_unbiased_std(scale) +
+                               (1 / (4 * pi)))
+                    self.squared_counts -= ((cv.num * cv.num) * (1/(2 * sqrt(pi) * std)))
+
+                cv.update(instance[attr])
+
+                if not hidden:
+                    std = sqrt(cv.scaled_unbiased_std(scale) *
+                               cv.scaled_unbiased_std(scale) +
+                               (1 / (4 * pi)))
+                    self.squared_counts += ((cv.num * cv.num) * (1/(2 * sqrt(pi) * std)))
+
             else:
-                prior_count = self.av_counts[attr].get(instance[attr], 0)
-                self.av_counts[attr][instance[attr]] = prior_count + 1
+                if not hidden:
+                    self.squared_counts -= self.av_counts[attr][val]**2
+
+                self.av_counts[attr][val] += 1
+
+                if not hidden:
+                    self.squared_counts += self.av_counts[attr][val]**2
+
 
     def update_counts_from_node(self, node):
         """
@@ -191,74 +224,16 @@ class Cobweb3Node(CobwebNode):
         """
         self.count += node.count
         for attr in node.av_counts:
-            self.av_counts[attr] = self.av_counts.setdefault(attr, {})
+            hidden = attr[0] == "_"
+
+            if not hidden and attr not in self.av_counts:
+                self.attr_count += 1
+
             for val in node.av_counts[attr]:
                 if val == cv_key:
-                    self.av_counts[attr][val] = self.av_counts[attr].get(
-                        val, ContinuousValue())
-                    self.av_counts[attr][val].combine(
-                        node.av_counts[attr][val])
-                else:
-                    self.av_counts[attr][val] = (self.av_counts[attr].get(val,
-                                                                          0) +
-                                                 node.av_counts[attr][val])
+                    if cv_key not in self.av_counts[attr]:
+                        self.av_counts[attr][cv_key] = ContinuousValue()
 
-    def expected_correct_guesses(self):
-        """
-        Returns the number of attribute values that would be correctly guessed
-        in the current concept. This extension supports both nominal and
-        numeric attribute values.
-
-        The typical Cobweb/3 calculation for correct guesses is:
-
-        .. math::
-
-            P(A_i = V_{ij})^2 = \\frac{1}{2 * \\sqrt{\\pi} * \\sigma}
-
-        However, this does not take into account situations when
-        :math:`P(A_i) < 1.0`. Additionally, the original formulation set
-        :math:`\\sigma` to have a user specified minimum value. However, for
-        small lower bounds, this lets cobweb achieve more than 1 expected
-        correct guess per attribute, which is impossible for nominal attributes
-        (and does not really make sense for continuous either). This causes
-        problems when both nominal and continuous values are being used
-        together; i.e., continuous attributes will get higher preference.
-
-        To account for this we use a modified equation:
-
-        .. math::
-
-            P(A_i = V_{ij})^2 = P(A_i)^2 * \\frac{1}{2 * \\sqrt{\\pi} *
-                \\sigma}
-
-        The key change here is that we multiply by :math:`P(A_i)^2`.
-        Further, instead of bounding :math:`\\sigma` by a user specified lower
-        bound (often called acuity), we add some independent, normally
-        distributed noise to sigma:
-        :math:`\\sigma = \\sqrt{\\sigma^2 + \\sigma_{noise}^2}`, where
-        :math:`\\sigma_{noise} = \\frac{1}{2 * \\sqrt{\\pi}}`.
-        This ensures the expected correct guesses never exceeds 1. From a
-        theoretical point of view, it basically is an assumption that there is
-        some independent, normally distributed measurement error that is added
-        to the estimated error of the attribute (`<https://en.wikipedia.org/wi
-        ki/Sum_of_normally_distributed_random_variables>`_). It is possible
-        that there is additional measurement error, but the value is chosen so
-        as to yield a sensical upper bound on the expected correct guesses.
-
-        :return: The number of attribute values that would be correctly guessed
-            in the current concept.
-        :rtype: float
-        """
-        correct_guesses = 0.0
-        attr_count = 0
-
-        for attr in self.av_counts:
-            if attr[0] == "_":
-                continue
-            attr_count += 1
-
-            for val in self.av_counts[attr]:
-                if val == cv_key:
                     scale = 1.0
                     if self.tree is not None and self.tree.scaling:
                         inner_attr = self.tree.get_inner_attr(attr)
@@ -267,21 +242,195 @@ class Cobweb3Node(CobwebNode):
                             scale = ((1/self.tree.scaling) *
                                      inner.unbiased_std())
 
-                    # we basically add noise to the std and adjust the
-                    # normalizing constant to ensure the probability of a
-                    # particular value never exceeds 1.
                     cv = self.av_counts[attr][cv_key]
-                    std = sqrt(cv.scaled_unbiased_std(scale) *
-                               cv.scaled_unbiased_std(scale) +
-                               (1 / (4 * pi)))
-                    prob_attr = cv.num / self.count
-                    correct_guesses += ((prob_attr * prob_attr) *
-                                        (1/(2 * sqrt(pi) * std)))
-                else:
-                    prob = (self.av_counts[attr][val]) / self.count
-                    correct_guesses += (prob * prob)
 
-        return correct_guesses / attr_count
+                    if not hidden:
+                        std = sqrt(cv.scaled_unbiased_std(scale) *
+                                   cv.scaled_unbiased_std(scale) +
+                                   (1 / (4 * pi)))
+                        self.squared_counts -= ((cv.num * cv.num) * (1/(2 * sqrt(pi) * std)))
+
+                    cv.combine(node.av_counts[attr][val])
+
+                    if not hidden:
+                        std = sqrt(cv.scaled_unbiased_std(scale) *
+                                   cv.scaled_unbiased_std(scale) +
+                                   (1 / (4 * pi)))
+                        self.squared_counts += ((cv.num * cv.num) * (1/(2 * sqrt(pi) * std)))
+
+                else:
+                    if not hidden:
+                        self.squared_counts -= self.av_counts[attr][val]**2
+
+                    self.av_counts[attr][val] += node.av_counts[attr][val]
+
+                    if not hidden:
+                        self.squared_counts += self.av_counts[attr][val]**2
+
+    def expected_correct_guesses_insert(self, instance):
+        """
+        Returns the expected correct guesses that would result from inserting
+        the instance into the current node. 
+
+        This operation can be used instead of inplace and copying because it
+        only looks at the attr values used in the instance and reduces iteration.
+        """
+
+        attr_count = self.attr_count
+        squared_counts = self.squared_counts
+
+        for attr in instance:
+            if attr[0] == "_":
+                continue
+
+            if attr not in self.av_counts:
+                attr_count += 1
+
+            val = instance[attr]
+
+            if isNumber(val):
+                if cv_key in self.av_counts[attr]:
+                    cv = self.av_counts[attr][cv_key].copy()
+                else:
+                    cv = ContinuousValue()
+
+                scale = 1.0
+                if self.tree is not None and self.tree.scaling:
+                    inner_attr = self.tree.get_inner_attr(attr)
+                    if inner_attr in self.tree.attr_scales:
+                        inner = self.tree.attr_scales[inner_attr]
+                        scale = ((1/self.tree.scaling) *
+                                 inner.unbiased_std())
+
+                std = sqrt(cv.scaled_unbiased_std(scale) *
+                           cv.scaled_unbiased_std(scale) +
+                           (1 / (4 * pi)))
+                squared_counts -= ((cv.num * cv.num) * (1/(2 * sqrt(pi) * std)))
+
+                cv.update(instance[attr])
+
+                std = sqrt(cv.scaled_unbiased_std(scale) *
+                           cv.scaled_unbiased_std(scale) +
+                           (1 / (4 * pi)))
+                squared_counts += ((cv.num * cv.num) * (1/(2 * sqrt(pi) * std)))
+
+            else:
+                squared_counts -= self.av_counts[attr][val]**2
+                squared_counts += (self.av_counts[attr][val]+1)**2
+
+        return squared_counts / (self.count+1)**2 / attr_count
+
+    def expected_correct_guesses_merge(self, other, instance):
+        """
+        Returns the expected correct guesses that would result from merging the
+        current concept with the other concept and inserting the instance.
+
+        This operation can be used instead of inplace and copying because it
+        only looks at the attr values used in the instance and reduces iteration.
+        """
+        # use the larger concept as the base
+        big = self
+        small = other
+
+        if self.count < other.count:
+            small = self
+            big = other
+
+        attr_count = big.attr_count
+        squared_counts = big.squared_counts
+
+        for attr in small.av_counts:
+            if attr[0] == "_":
+                continue
+
+            if attr not in big.av_counts:
+                attr_count += 1
+
+            for val in small.av_counts[attr]:
+                if val == cv_key:
+                    if cv_key in big.av_counts[attr]:
+                        big_cv = big.av_counts[attr][cv_key].copy()
+                    else:
+                        big_cv = ContinuousValue()
+
+                    if cv_key in small.av_counts[attr]:
+                        small_cv = small.av_counts[attr][cv_key].copy()
+                    else:
+                        # if small cv is 0, then nothing to update.
+                        continue
+
+                    scale = 1.0
+                    if self.tree is not None and self.tree.scaling:
+                        inner_attr = self.tree.get_inner_attr(attr)
+                        if inner_attr in self.tree.attr_scales:
+                            inner = self.tree.attr_scales[inner_attr]
+                            scale = ((1/self.tree.scaling) *
+                                     inner.unbiased_std())
+
+                    std = sqrt(big_cv.scaled_unbiased_std(scale) *
+                               big_cv.scaled_unbiased_std(scale) +
+                               (1 / (4 * pi)))
+                    squared_counts -= ((big_cv.num * big_cv.num) * (1/(2 * sqrt(pi) * std)))
+
+                    big_cv.combine(small_cv)
+
+                    std = sqrt(big_cv.scaled_unbiased_std(scale) *
+                               big_cv.scaled_unbiased_std(scale) +
+                               (1 / (4 * pi)))
+                    squared_counts += ((big_cv.num * big_cv.num) * (1/(2 * sqrt(pi) * std)))
+
+                else:
+                    squared_counts -= big.av_counts[attr][val]**2
+                    squared_counts += (big.av_counts[attr][val]+small.av_counts[attr][val])**2
+
+        for attr in instance:
+            if attr[0] == "_":
+                continue
+
+            if attr not in big.av_counts and attr not in small.av_counts:
+                attr_count += 1
+
+            val = instance[attr]
+
+            if isNumber(val):
+                if cv_key in big.av_counts[attr]:
+                    big_cv = big.av_counts[attr][cv_key].copy()
+                else:
+                    big_cv = ContinuousValue()
+
+                if cv_key in small.av_counts[attr]:
+                    small_cv = small.av_counts[attr][cv_key].copy()
+                else:
+                    small_cv = ContinuousValue()
+
+                scale = 1.0
+                if self.tree is not None and self.tree.scaling:
+                    inner_attr = self.tree.get_inner_attr(attr)
+                    if inner_attr in self.tree.attr_scales:
+                        inner = self.tree.attr_scales[inner_attr]
+                        scale = ((1/self.tree.scaling) *
+                                 inner.unbiased_std())
+
+                std = sqrt(big_cv.scaled_unbiased_std(scale) *
+                           big_cv.scaled_unbiased_std(scale) +
+                           (1 / (4 * pi)))
+                squared_counts -= ((big_cv.num * big_cv.num) * (1/(2 * sqrt(pi) * std)))
+
+                if small_cv.num > 0:
+                    big_cv.combine(small_cv)
+
+                big_cv.update(instance[attr])
+
+                std = sqrt(big_cv.scaled_unbiased_std(scale) *
+                           big_cv.scaled_unbiased_std(scale) +
+                           (1 / (4 * pi)))
+                squared_counts += ((big_cv.num * big_cv.num) * (1/(2 * sqrt(pi) * std)))
+
+            else:
+                squared_counts -= (big.av_counts[attr][val]+small.av_counts[attr][val])**2
+                squared_counts += (big.av_counts[attr][val]+small.av_counts[attr][val]+1)**2
+
+        return squared_counts / (big.count + small.count + 1)**2 / attr_count
 
     def pretty_print(self, depth=0):
         """
