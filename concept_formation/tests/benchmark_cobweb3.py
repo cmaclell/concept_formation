@@ -11,7 +11,7 @@ def generate_dataset(n_inst, n_attr, n_val):
     for i in range(n_inst):
         i = {}
         for j in range(n_attr):
-            i[str(j)] = normalvariate(randint(1, n_val), 0.5)
+            i[str(j)] = normalvariate(randint(1, n_val), 0.0000001)
         instances.append(i)
     return instances
 
@@ -24,6 +24,16 @@ def time(n_inst, n_attr, n_val):
                          'x = generate_dataset(%i, %i, %i)' % (n_inst, n_attr,
                                                                n_val)),
                   number=1)
+
+def viz(n_inst, n_attr, n_val):
+    from concept_formation.cobweb3 import Cobweb3Tree
+    from concept_formation.visualize import visualize
+
+    tree = Cobweb3Tree(scaling=None)
+    x = generate_dataset(n_inst, n_attr, n_val)
+    tree.fit(x)
+
+    visualize(tree)
 
 
 if __name__ == "__main__":
@@ -51,3 +61,5 @@ if __name__ == "__main__":
     plt.xlabel('Number of training instances (5 possible mean values / attr)')
     plt.ylabel('Runtime in Seconds')
     plt.show()
+
+    viz(35, 1, 5)

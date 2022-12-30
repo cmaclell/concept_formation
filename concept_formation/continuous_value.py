@@ -26,6 +26,9 @@ class ContinuousValue():
         self.mean = 0.0
         self.meanSq = 0.0
 
+    def is_cpp(self):
+        return False
+
     def __len__(self):
         return 1
 
@@ -139,13 +142,15 @@ class ContinuousValue():
         all lookups of a continuous value in a dictionary get mapped to the
         same entry.
         """
-        return hash("#ContinuousValue#")
+        # for simplicity just return a specific value.
+        return 8636487271284131744
+        # return hash("#ContinuousValue#")
 
     def __repr__(self):
         """
         The textual representation of a continuous value."
         """
-        return "%0.4f (%0.4f) [%i]" % (self.unbiased_mean(),
+        return "%0.6f (%0.6f) [%i]" % (self.unbiased_mean(),
                                        self.unbiased_std(), self.num)
 
     def update_batch(self, data):
@@ -187,7 +192,7 @@ class ContinuousValue():
         :type other: ContinuousValue
         """
         if not isinstance(other, ContinuousValue):
-            raise ValueError("Can only merge 2 continuous values.")
+            raise TypeError("Can only merge 2 continuous values.")
         delta = other.mean - self.mean
         self.meanSq = (self.meanSq + other.meanSq + delta * delta *
                        ((self.num * other.num) / (self.num + other.num)))
