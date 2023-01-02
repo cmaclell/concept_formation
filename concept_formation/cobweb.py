@@ -297,7 +297,7 @@ class CobwebNode(object):
         self.concept_id = self.gensym()
         self.count = 0.0
         self.squared_counts = 0.0
-        self.attr_count = 0.0
+        self.attr_counts = 0.0
         self.av_counts = defaultdict(Counter)
         self.children = []
         self.parent = None
@@ -325,7 +325,7 @@ class CobwebNode(object):
             hidden = attr[0] == "_"
 
             if not hidden and attr not in self.av_counts:
-                self.attr_count += 1
+                self.attr_counts += 1
 
             if not hidden:
                 self.squared_counts -= self.av_counts[attr][val]**2
@@ -350,7 +350,7 @@ class CobwebNode(object):
             hidden = attr[0] == "_"
 
             if not hidden and attr not in self.av_counts:
-                self.attr_count += 1
+                self.attr_counts += 1
 
             for val in node.av_counts[attr]:
                 if not hidden:
@@ -370,7 +370,7 @@ class CobwebNode(object):
         only looks at the attr values used in the instance and reduces iteration.
         """
 
-        attr_count = self.attr_count
+        attr_counts = self.attr_counts
         squared_counts = self.squared_counts
 
         for attr in instance:
@@ -378,13 +378,13 @@ class CobwebNode(object):
                 continue
 
             if attr not in self.av_counts:
-                attr_count += 1
+                attr_counts += 1
 
             val = instance[attr]
             squared_counts -= self.av_counts[attr][val]**2
             squared_counts += (self.av_counts[attr][val]+1)**2
 
-        return squared_counts / (self.count+1)**2 / attr_count
+        return squared_counts / (self.count+1)**2 / attr_counts
 
     def expected_correct_guesses_merge(self, other, instance):
         """
@@ -402,7 +402,7 @@ class CobwebNode(object):
             small = self
             big = other
 
-        attr_count = big.attr_count
+        attr_counts = big.attr_counts
         squared_counts = big.squared_counts
 
         for attr in small.av_counts:
@@ -410,7 +410,7 @@ class CobwebNode(object):
                 continue
 
             if attr not in big.av_counts:
-                attr_count += 1
+                attr_counts += 1
 
             for val in small.av_counts[attr]:
                 squared_counts -= big.av_counts[attr][val]**2
@@ -421,13 +421,13 @@ class CobwebNode(object):
                 continue
 
             if attr not in big.av_counts and attr not in small.av_counts:
-                attr_count += 1
+                attr_counts += 1
 
             val = instance[attr]
             squared_counts -= (big.av_counts[attr][val]+small.av_counts[attr][val])**2
             squared_counts += (big.av_counts[attr][val]+small.av_counts[attr][val]+1)**2
 
-        return squared_counts / (big.count + small.count + 1)**2 / attr_count
+        return squared_counts / (big.count + small.count + 1)**2 / attr_counts
 
 
     def expected_correct_guesses(self):
@@ -442,7 +442,7 @@ class CobwebNode(object):
                  concept.
         :rtype: float
         """
-        return self.squared_counts / self.count**2 / self.attr_count
+        return self.squared_counts / self.count**2 / self.attr_counts
 
     def category_utility(self):
         """
