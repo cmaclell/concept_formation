@@ -71,7 +71,7 @@ VALUE_TYPE weightedChoice(vector<tuple<VALUE_TYPE, double>> choices) {
 class CobwebNode {
 
     static int counter;
-    int conceptId;
+    int concept_id;
     double count;
     double squared_counts;
     double attr_counts;
@@ -87,12 +87,23 @@ private:
      */
     string av_countsToString() {
         string ret = "{";
+        int count = 0;
         for (auto &[attr, vAttr]: av_counts) {
             ret += "\"" + attr + "\": {";
+            int inner_count = 0;
             for (auto &[val, cnt]: vAttr) {
-                ret += "\"" + val + "\": " + to_string(cnt) + ", ";
+                ret += "\"" + val + "\": " + to_string(cnt);
+                if (inner_count != vAttr.size() - 1){
+                    ret += ", ";
+                }
+                inner_count++;
             }
-            ret += "}, ";
+            ret += "}";
+
+            if (count != av_counts.size()-1){
+                ret += ", ";
+            }
+            count++;
         }
         ret += "}";
         return ret;
@@ -100,7 +111,7 @@ private:
 
 public:
     CobwebNode() {
-        conceptId = genSym();
+        concept_id = genSym();
         count = 0.0;
         squared_counts = 0.0;
         attr_counts = 0.0;
@@ -110,7 +121,7 @@ public:
     }
 
     CobwebNode(CobwebNode *otherNode) {
-        conceptId = genSym();
+        concept_id = genSym();
         count = 0.0;
         tree = otherNode->tree;
         parent = otherNode->parent;
@@ -119,6 +130,21 @@ public:
             children.push_back(new CobwebNode(child));
         }
 
+    }
+
+    string pretty_print(int depth=0){
+        string ret = "";
+        for (int i = 0; i < depth; i++){
+            ret += "\t";
+        }
+        ret += "|-" + this->av_countsToString() + ": " + to_string(int(this->count)) + "\n";
+
+        for (auto child: this->children) {
+            ret += child->pretty_print(depth+1);
+        }
+
+        return ret;
+        
     }
 
     CobwebNode *shallowCopy() {
@@ -313,7 +339,7 @@ public:
         }
         double childCorrectGuesses = 0.0;
         for (auto &child: children) {
-            double pOfChild = 1.0 * child->count / this->count;
+            double pOfChild = child->count / this->count;
             childCorrectGuesses += pOfChild * child->expected_correct_guesses();
         }
         return ((childCorrectGuesses - this->expected_correct_guesses()) / children.size());
@@ -513,7 +539,7 @@ public:
     }
     long _hash() {
         hash<string> hash_obj;
-        return hash_obj("CobwebNode" + to_string(conceptId));
+        return hash_obj("CobwebNode" + to_string(concept_id));
     }
 
     int genSym() {
@@ -567,12 +593,6 @@ public:
             childrenCount += c->numConcepts();
         }
         return 1 + childrenCount;
-    }
-
-    map<string, string> outputJson() {
-        cout << "outputJson: not supported!" << endl;
-        map<string, string> tmp;
-        return tmp;
     }
 
     vector<tuple<VALUE_TYPE, double>> getWeightedValues(ATTR_TYPE attr, bool allowNone = true) {
@@ -660,11 +680,11 @@ public:
     }
 
     int getConceptId() const {
-        return conceptId;
+        return concept_id;
     }
 
-    void setConceptId(int conceptId) {
-        CobwebNode::conceptId = conceptId;
+    void setConceptId(int concept_id) {
+        CobwebNode::concept_id = concept_id;
     }
 
     double getCount() const {
@@ -716,6 +736,10 @@ public:
     CobwebTree() {
         this->root = new CobwebNode();
         this->root->setTree(this);
+    }
+
+    string __str__(){
+        return this->root->pretty_print(0);
     }
 
     void clear() {
@@ -771,7 +795,7 @@ public:
             } else if (current->getChildren().empty()) {
                 CobwebNode *newNode = new CobwebNode(current);
                 current->setParent(newNode);
-                newNode->getChildren().push_back(newNode);
+                newNode->getChildren().push_back(current);
                 if (newNode->getParent() != NULL) {
                     newNode->getParent()->getChildren().erase(remove(newNode->getParent()->getChildren().begin(),
                                                                      newNode->getParent()->getChildren().end(),
@@ -861,12 +885,14 @@ PYBIND11_MODULE(cobweb, m) {
     m.doc() = "pybind11 example plugin"; // optional module docstring
 
     py::class_<CobwebNode>(m, "CobwebNode")
-        .def(py::init());
+        .def(py::init())
+        .def("pretty_print", &CobwebNode::pretty_print);
 
     py::class_<CobwebTree>(m, "CobwebTree")
         .def(py::init())
-        .def("ifit", &CobwebTree::ifit);
-//         .def_readonly("num", &ContinuousValue::num)
+        .def("ifit", &CobwebTree::ifit, py::return_value_policy::copy)
+        .def("fit", &CobwebTree::fit)
+        .def("__str__", &CobwebTree::__str__);
 //         .def_readonly("mean", &ContinuousValue::mean)
 //         .def_readonly("meanSq", &ContinuousValue::meanSq);
 }

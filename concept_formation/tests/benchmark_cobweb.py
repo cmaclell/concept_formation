@@ -10,13 +10,13 @@ def generate_dataset(n_inst, n_attr, n_val):
     for i in range(n_inst):
         i = {}
         for j in range(n_attr):
-            i[str(j)] = randint(1, n_val)
+            i[str(j)] = "{}".format(randint(1, n_val))
         instances.append(i)
     return instances
 
 
 def time(n_inst, n_attr, n_val):
-    return timeit('tree.fit(x)',
+    return timeit('tree.fit(x, 1, True)',
                   setup=('from __main__ import generate_dataset; '
                          'from concept_formation.cobweb import CobwebTree; '
                          'tree = CobwebTree(); '
@@ -30,8 +30,10 @@ def viz(n_inst, n_attr, n_val):
 
     tree = CobwebTree()
     x = generate_dataset(n_inst, n_attr, n_val)
-    tree.fit(x)
+    tree.fit(x, 1, True)
 
+    print(tree)
+    
     visualize(tree)
 
 
