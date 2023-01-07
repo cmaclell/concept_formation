@@ -27,15 +27,19 @@ typedef pair<double, string> OPERATION_TYPE;
 class CobwebTree;
 class CobwebNode;
 
+random_device rd;
+mt19937_64 gen(rd());
+uniform_real_distribution<double> unif(0, 1);
+
 //utils functions
 /**
  *
  * @return a number in range [0, 1)
  */
 double custom_rand() {
-    random_device rd;
-    mt19937_64 gen(rd());
-    uniform_real_distribution<double> unif(0, 1);
+    // random_device rd;
+    // mt19937_64 gen(rd());
+    // uniform_real_distribution<double> unif(0, 1);
     return unif(gen);
 }
 
@@ -67,11 +71,11 @@ VALUE_TYPE weighted_choice(vector<tuple<VALUE_TYPE, double>> choices) {
 
 class CobwebNode {
 
-    static unsigned long counter;
+    static COUNT_TYPE counter;
     int concept_id;
-    unsigned long count;
-    unsigned long long squared_counts;
-    unsigned long attr_count;
+    COUNT_TYPE count;
+    COUNT_TYPE squared_counts;
+    COUNT_TYPE attr_count;
     vector<CobwebNode *> children;
     CobwebNode *parent;
     CobwebTree *tree;
@@ -183,23 +187,21 @@ public:
     }
 
     double expected_correct_guesses_insert(const INSTANCE_TYPE &instance){
-        unsigned long attr_count = this->attr_count;
-        unsigned long long squared_counts = this->squared_counts;
+        COUNT_TYPE attr_count = this->attr_count;
+        COUNT_TYPE squared_counts = this->squared_counts;
 
         for (auto &[attr, val]: instance) {
             if (attr[0] == '_'){
                 continue;    
             }
 
+            int av_count = 0;
             if (!av_counts.count(attr)){
                 attr_count += 1;
             }
-
-            int av_count = 0;
-            try{
+            else if (av_counts.at(attr).count(val)){
                 av_count = av_counts.at(attr).at(val);
             }
-            catch (const out_of_range& e) { }
 
             squared_counts -= pow(av_count, 2);
             squared_counts += pow(av_count + 1, 2);
@@ -218,8 +220,8 @@ public:
             big = other;
         }
 
-        unsigned long attr_count = big->attr_count;
-        unsigned long long squared_counts = big->squared_counts;
+        COUNT_TYPE attr_count = big->attr_count;
+        COUNT_TYPE squared_counts = big->squared_counts;
 
         for (auto &[attr, tmp]: small->av_counts) {
             if (attr[0] == '_'){
@@ -232,10 +234,9 @@ public:
 
             for (auto&[val, tmp2]: small->av_counts.at(attr)) {
                 int big_count = 0;
-                try{
+                if (big->av_counts.count(attr) && big->av_counts.at(attr).count(val)){
                     big_count = big->av_counts.at(attr).at(val);
                 }
-                catch (const out_of_range& e) { }
 
                 squared_counts -= pow(big_count, 2); 
                 squared_counts += pow(big_count + small->av_counts.at(attr).at(val), 2); 
@@ -252,16 +253,14 @@ public:
             }
 
             int big_count = 0;
-            try{
+            if (big->av_counts.count(attr) && big->av_counts.at(attr).count(val)){
                 big_count = big->av_counts.at(attr).at(val);
             }
-            catch (const out_of_range& e) { }
 
             int small_count = 0;
-            try{
+            if (small->av_counts.count(attr) && small->av_counts.at(attr).count(val)){
                 small_count = small->av_counts.at(attr).at(val);
             }
-            catch (const out_of_range& e) { }
 
             squared_counts -= pow(big_count + small_count, 2);
             squared_counts += pow(big_count + small_count + 1, 2);
@@ -639,11 +638,11 @@ public:
         CobwebNode::concept_id = concept_id;
     }
 
-    unsigned long getCount() const {
+    COUNT_TYPE getCount() const {
         return count;
     }
 
-    void setCount(unsigned long count) {
+    void setCount(COUNT_TYPE count) {
         CobwebNode::count = count;
     }
 
@@ -705,6 +704,7 @@ public:
     }
 
     void _sanity_check_instance(const INSTANCE_TYPE &instance) {
+        /*
         for (auto&[attr, v]: instance) {
             try {
 //                hash(attr); todo:
@@ -719,9 +719,10 @@ public:
             }
 
         }
+        */
     }
 
-    CobwebNode *ifit(const INSTANCE_TYPE &instance) {
+    CobwebNode *ifit(INSTANCE_TYPE instance) {
         this->_sanity_check_instance(instance);
         return this->cobweb(instance);
     }
@@ -826,7 +827,7 @@ public:
 };
 
 
-unsigned long CobwebNode::counter = 0;
+COUNT_TYPE CobwebNode::counter = 0;
 
 /*
 int main() {
