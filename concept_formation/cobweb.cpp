@@ -5,7 +5,7 @@ namespace py = pybind11;
 
 #include <iostream>
 #include <vector>
-#include <map>
+#include <unordered_map>
 #include <algorithm>
 #include <functional>
 #include <random>
@@ -19,27 +19,24 @@ using namespace std;
 
 typedef string ATTR_TYPE;
 typedef string VALUE_TYPE;
-typedef int COUNT_TYPE;
-typedef map<ATTR_TYPE, map<VALUE_TYPE, COUNT_TYPE> > AV_COUNT_TYPE;
-typedef map<ATTR_TYPE, VALUE_TYPE> INSTANCE_TYPE;
+typedef unsigned long COUNT_TYPE;
+typedef unordered_map<ATTR_TYPE, unordered_map<VALUE_TYPE, COUNT_TYPE> > AV_COUNT_TYPE;
+typedef unordered_map<ATTR_TYPE, VALUE_TYPE> INSTANCE_TYPE;
 typedef pair<double, string> OPERATION_TYPE;
 
 class CobwebTree;
-
 class CobwebNode;
 
-
-vector<string> DEFAULT_OPERATIONS = {"best", "new", "merge",
-                                     "split"};
 //utils functions
 /**
  *
  * @return a number in range [0, 1)
  */
-double customRand() {
-    mt19937_64 rng;
+double custom_rand() {
+    random_device rd;
+    mt19937_64 gen(rd());
     uniform_real_distribution<double> unif(0, 1);
-    return unif(rng);
+    return unif(gen);
 }
 
 /**
@@ -57,13 +54,13 @@ string repeat(string s, int n) {
 }
 
 
-VALUE_TYPE mostLikelyChoice(vector<tuple<VALUE_TYPE, double>> choices) {
-    cout << "mostLikelyChoice: Not implemented yet" << endl;
+VALUE_TYPE most_likely_choice(vector<tuple<VALUE_TYPE, double>> choices) {
+    cout << "most_likely_choice: Not implemented yet" << endl;
     return get<0>(choices[0]);
 }
 
-VALUE_TYPE weightedChoice(vector<tuple<VALUE_TYPE, double>> choices) {
-    cout << "weightedChoice: Not implemented yet" << endl;
+VALUE_TYPE weighted_choice(vector<tuple<VALUE_TYPE, double>> choices) {
+    cout << "weighted_choice: Not implemented yet" << endl;
     return get<0>(choices[0]);
 }
 
@@ -72,10 +69,9 @@ class CobwebNode {
 
     static int counter;
     int concept_id;
-    double count;
-    double squared_counts;
-    double attr_counts;
-    AV_COUNT_TYPE av_counts;
+    unsigned long count;
+    unsigned long long squared_counts;
+    unsigned long attr_count;
     vector<CobwebNode *> children;
     CobwebNode *parent;
     CobwebTree *tree;
@@ -87,34 +83,36 @@ private:
      */
     string av_countsToString() {
         string ret = "{";
-        int count = 0;
+        int c = 0;
         for (auto &[attr, vAttr]: av_counts) {
             ret += "\"" + attr + "\": {";
             int inner_count = 0;
             for (auto &[val, cnt]: vAttr) {
                 ret += "\"" + val + "\": " + to_string(cnt);
-                if (inner_count != vAttr.size() - 1){
+                if (inner_count != int(vAttr.size()) - 1){
                     ret += ", ";
                 }
                 inner_count++;
             }
             ret += "}";
 
-            if (count != av_counts.size()-1){
+            if (c != int(av_counts.size())-1){
                 ret += ", ";
             }
-            count++;
+            c++;
         }
         ret += "}";
         return ret;
     }
 
 public:
+    AV_COUNT_TYPE av_counts;
+
     CobwebNode() {
         concept_id = genSym();
-        count = 0.0;
-        squared_counts = 0.0;
-        attr_counts = 0.0;
+        count = 0;
+        squared_counts = 0;
+        attr_count = 0;
         parent = NULL;
         tree = NULL;
 
@@ -122,84 +120,28 @@ public:
 
     CobwebNode(CobwebNode *otherNode) {
         concept_id = genSym();
-        count = 0.0;
-        tree = otherNode->tree;
-        parent = otherNode->parent;
+        count = 0;
+        squared_counts = 0;
+        attr_count = 0;
+        parent = NULL;
+        tree = NULL;
+
         update_counts_from_node(otherNode);
+
         for (auto child: otherNode->children) {
             children.push_back(new CobwebNode(child));
         }
 
     }
 
-    string pretty_print(int depth=0){
-        string ret = "";
-        for (int i = 0; i < depth; i++){
-            ret += "\t";
-        }
-        ret += "|-" + this->av_countsToString() + ": " + to_string(int(this->count)) + "\n";
-
-        for (auto child: this->children) {
-            ret += child->pretty_print(depth+1);
-        }
-
-        return ret;
-        
-    }
-
-    CobwebNode *shallowCopy() {
-        CobwebNode *temp = new CobwebNode();
-        temp->tree = tree;
-        temp->parent = parent;
-        temp->update_counts_from_node(this);
-        return temp;
-    };
-
-
-    vector<string> attrs() {
-        vector<string> res;
-        for (auto &[attr, v]: av_counts) {
-            if (attr.length() == 0 || attr[0] != '_') {
-                res.push_back(attr);
-            }
-        }
-        return res;
-    }
-
-    vector<string> attrs(string attr_filter) {
-        vector<string> res;
-        if (attr_filter == "all") {
-            for (auto &[attr, v]: av_counts) {
-                res.push_back(attr);
-            }
-        }
-        return res;
-    }
-
-    vector<string> attrs(function<bool(string)> const &attr_filter) {
-        vector<string> res;
-        for (auto &[attr, v]: av_counts) {
-            if (attr_filter(attr)) res.push_back(attr);
-        }
-        return res;
-    }
-
     void increment_counts(INSTANCE_TYPE instance) {
-        count++;
+        count += 1;
 
         for (auto &[attr, val]: instance) {
             bool hidden = attr[0] == '_';
 
             if (!hidden & !av_counts.count(attr)){
-                attr_counts += 1;
-            }
-
-            if (!av_counts.count(attr)) {
-                av_counts[attr] = {};
-            }
-
-            if (!av_counts[attr].count(instance[attr])) {
-                av_counts[attr][instance[attr]] = 0;
+                attr_count += 1;
             }
 
             if (!hidden){
@@ -221,23 +163,16 @@ public:
             bool hidden = attr[0] == '_';
 
             if (!hidden & !av_counts.count(attr)){
-                attr_counts += 1;
+                attr_count += 1;
             }
 
-            if (!av_counts.count(attr)) {
-                av_counts[attr] = {};
-            }
-
-            for (auto&[val, tmp2]: node->av_counts[attr]) {
-                if (!av_counts[attr].count(val)) {
-                    av_counts[attr][val] = 0;
-                }
+            for (auto&[val, tmp2]: node->av_counts.at(attr)) {
 
                 if (!hidden){
                     squared_counts -= pow(av_counts[attr][val], 2);
                 }
 
-                av_counts[attr][val] += node->av_counts[attr][val];
+                av_counts[attr][val] += node->av_counts.at(attr).at(val);
 
                 if (!hidden){
                     squared_counts += pow(av_counts[attr][val], 2);
@@ -246,13 +181,9 @@ public:
         }
     }
 
-    double expected_correct_guesses() {
-        return squared_counts / pow(count, 2) / attr_counts;
-    }
-
     double expected_correct_guesses_insert(INSTANCE_TYPE instance){
-        double attr_counts = this->attr_counts;
-        double squared_counts = this->squared_counts;
+        unsigned long attr_count = this->attr_count;
+        unsigned long long squared_counts = this->squared_counts;
 
         for (auto &[attr, val]: instance) {
             if (attr[0] == '_'){
@@ -260,14 +191,20 @@ public:
             }
 
             if (!av_counts.count(attr)){
-                attr_counts += 1;
+                attr_count += 1;
             }
 
-            squared_counts -= pow(av_counts[attr][val], 2);
-            squared_counts += pow(av_counts[attr][val] + 1, 2);
+            int av_count = 0;
+            try{
+                av_count = av_counts.at(attr).at(val);
+            }
+            catch (const out_of_range& e) { }
+
+            squared_counts -= pow(av_count, 2);
+            squared_counts += pow(av_count + 1, 2);
         }
 
-        return squared_counts / pow(count+1, 2) / attr_counts;
+        return squared_counts / pow(count + 1, 2) / attr_count;
     }
 
     double expected_correct_guesses_merge(CobwebNode *other, INSTANCE_TYPE instance) {
@@ -280,7 +217,7 @@ public:
             big = other;
         }
 
-        attr_counts = big->attr_counts;
+        attr_count = big->attr_count;
         squared_counts = big->squared_counts;
 
         for (auto &[attr, tmp]: small->av_counts) {
@@ -289,13 +226,18 @@ public:
             }
 
             if (!big->av_counts.count(attr)){
-                attr_counts += 1;
+                attr_count += 1;
             }
 
-            for (auto&[val, tmp2]: small->av_counts[attr]) {
-                squared_counts -= pow(big->av_counts[attr][val], 2); 
-                squared_counts += pow(big->av_counts[attr][val] +
-                                      small->av_counts[attr][val], 2); 
+            for (auto&[val, tmp2]: small->av_counts.at(attr)) {
+                int big_count = 0;
+                try{
+                    big_count = big->av_counts.at(attr).at(val);
+                }
+                catch (const out_of_range& e) { }
+
+                squared_counts -= pow(big_count, 2); 
+                squared_counts += pow(big_count + small->av_counts.at(attr).at(val), 2); 
             }
         }
 
@@ -305,35 +247,34 @@ public:
             }
 
             if (!big->av_counts.count(attr) && !small->av_counts.count(attr)){
-                attr_counts += 1;
+                attr_count += 1;
             }
 
-            squared_counts -= pow(big->av_counts[attr][val] +
-                                  small->av_counts[attr][val], 2); 
-            squared_counts += pow(big->av_counts[attr][val] +
-                                  small->av_counts[attr][val] + 1, 2); 
+            int big_count = 0;
+            try{
+                big_count = big->av_counts.at(attr).at(val);
+            }
+            catch (const out_of_range& e) { }
+
+            int small_count = 0;
+            try{
+                small_count = small->av_counts.at(attr).at(val);
+            }
+            catch (const out_of_range& e) { }
+
+            squared_counts -= pow(big_count + small_count, 2);
+            squared_counts += pow(big_count + small_count + 1, 2);
         }
 
-        return squared_counts / pow(count+1, 2) / attr_counts;
+        return squared_counts / pow(big->count + small->count + 1, 2) / attr_count;
 
     }
 
-    double expectedCorrectGuesses() {
-        double correctGuesses = 0.0;
-        int attrCount = 0;
-        for (auto &attr: attrs()) {
-            attrCount++;
-            if (av_counts.count(attr)) {
-                for (auto&[val, tmp]: av_counts[attr]) {
-                    double prob = av_counts[attr][val] / count;
-                    correctGuesses += prob * prob;
-                }
-            }
-        }
-        return 1.0 * correctGuesses / attrCount;
+    double expected_correct_guesses() {
+        return squared_counts / pow(count, 2) / attr_count;
     }
 
-    double categoryUtility() {
+    double category_utility() {
         if (children.empty()) {
             return 0.0;
         }
@@ -345,27 +286,31 @@ public:
         return ((childCorrectGuesses - this->expected_correct_guesses()) / children.size());
     }
 
-    tuple<double, string>
-    getBestOperation(INSTANCE_TYPE instance, CobwebNode *best1, CobwebNode *best2, double best1Cu,
-                     vector<string> possibleOps = DEFAULT_OPERATIONS) {
+    tuple<double, string> get_best_operation(INSTANCE_TYPE instance, CobwebNode *best1,
+                                             CobwebNode *best2, double best1Cu,
+                                             bool best_op=true, bool new_op=true,
+                                             bool merge_op=true, bool split_op=true) {
+
         if (best1 == NULL) {
             throw "Need at least one best child.";
         }
         vector<tuple<double, double, string>> operations;
-        if (find(possibleOps.begin(), possibleOps.end(), "best") != possibleOps.end()) {
-            operations.push_back(make_tuple(best1Cu, customRand(), "best"));
+        if (best_op){
+            operations.push_back(make_tuple(best1Cu, custom_rand(), "best"));
         }
-        if (find(possibleOps.begin(), possibleOps.end(), "new") != possibleOps.end()) {
-            operations.push_back(make_tuple(cu_for_new_child(instance), customRand(), "new"));
+        if (new_op){
+            operations.push_back(make_tuple(cu_for_new_child(instance),
+                        custom_rand(), "new"));
         }
-        if (find(possibleOps.begin(), possibleOps.end(), "merge") != possibleOps.end() && children.size() > 2 &&
-            best2 != NULL) {
-            operations.push_back(make_tuple(cu_for_merge(best1, best2, instance), customRand(), "merge"));
+        if (merge_op && children.size() > 2 && best2 != NULL) {
+            operations.push_back(make_tuple(cu_for_merge(best1, best2,
+                            instance), custom_rand(), "merge"));
         }
-        if (find(possibleOps.begin(), possibleOps.end(), "split") != possibleOps.end() && best1->children.size() > 0) {
-            operations.push_back(make_tuple(cu_for_split(best1), customRand(), "split"));
+        if (split_op && best1->children.size() > 0) {
+            operations.push_back(make_tuple(cu_for_split(best1), custom_rand(), "split"));
         }
         sort(operations.rbegin(), operations.rend());
+
         OPERATION_TYPE bestOp = make_pair(get<0>(operations[0]), get<2>(operations[0]));
         return bestOp;
     };
@@ -381,7 +326,7 @@ public:
                     ((child->count + 1) * child->expected_correct_guesses_insert(instance)) - 
                     (child->count * child->expected_correct_guesses()),
                     child->count,
-                    customRand(),
+                    custom_rand(),
                     child));
         }
         sort(relative_cus.rbegin(), relative_cus.rend());
@@ -412,7 +357,7 @@ public:
         return ((child_correct_guesses - parent_correct_guesses) / children.size());
     }
 
-    CobwebNode *createNewChild(INSTANCE_TYPE instance) {
+    CobwebNode *create_new_child(INSTANCE_TYPE instance) {
         CobwebNode *newChild = new CobwebNode();
         newChild->parent = this;
         newChild->tree = this->tree;
@@ -420,17 +365,6 @@ public:
         this->children.push_back(newChild);
         return newChild;
     };
-
-    CobwebNode *createChildWithCurrentCounts() {
-        if (this->count > 0) {
-            CobwebNode *newChild = new CobwebNode();
-            newChild->parent = this;
-            newChild->tree = this->tree;
-            this->children.push_back(newChild);
-            return newChild;
-        }
-        return NULL;
-    }
 
     double cu_for_new_child(INSTANCE_TYPE instance) {
         double child_correct_guesses = 0.0;
@@ -452,6 +386,7 @@ public:
         CobwebNode *newChild = new CobwebNode();
         newChild->parent = this;
         newChild->tree = this->tree;
+
         newChild->update_counts_from_node(best1);
         newChild->update_counts_from_node(best2);
         best1->parent = newChild;
@@ -461,6 +396,7 @@ public:
         children.erase(remove(this->children.begin(), this->children.end(), best1), children.end());
         children.erase(remove(this->children.begin(), this->children.end(), best2), children.end());
         children.push_back(newChild);
+
         return newChild;
     }
 
@@ -514,10 +450,11 @@ public:
 
     }
 
-    bool isExactMatch(INSTANCE_TYPE instance) {
+    bool is_exact_match(INSTANCE_TYPE instance) {
         set<ATTR_TYPE> allAttrs;
-        for (auto &[attr, v]: instance) allAttrs.insert(attr);
-        for (auto &attr: this->attrs()) allAttrs.insert(attr);
+        for (auto &[attr, tmp]: instance) allAttrs.insert(attr);
+        for (auto &[attr, tmp]: this->av_counts) allAttrs.insert(attr);
+
         for (auto &attr: allAttrs) {
             if (attr[0] == '_') continue;
             if (instance.count(attr) && !this->av_counts.count(attr)) {
@@ -527,10 +464,10 @@ public:
                 return false;
             }
             if (this->av_counts.count(attr) && instance.count(attr)) {
-                if (!this->av_counts[attr].count(instance[attr])) {
+                if (!this->av_counts.at(attr).count(instance[attr])) {
                     return false;
                 }
-                if (this->av_counts[attr][instance[attr]] != this->count) {
+                if (this->av_counts.at(attr).at(instance[attr]) != this->count) {
                     return false;
                 }
             }
@@ -547,20 +484,20 @@ public:
         return counter;
     }
 
-    string prettyPrint(int depth = 0) {
+    friend ostream &operator<<(ostream &os, CobwebNode *node) {
+        os << node->pretty_print();
+        return os;
+    }
+
+    string pretty_print(int depth = 0) {
         string ret = repeat("\t", depth) + "|-" + av_countsToString() + ":" +
-                     (to_string(this->count)) + '\n';
+                     (to_string(this->count)) + " (" + to_string(attr_count) + ", " + to_string(this->expected_correct_guesses()) + ")\n";
 
         for (auto &c: children) {
-            ret = ret + c->prettyPrint(depth + 1);
+            ret += c->pretty_print(depth + 1);
         }
 
         return ret;
-    }
-
-    friend ostream &operator<<(ostream &os, CobwebNode *node) {
-        os << node->prettyPrint();
-        return os;
     }
 
 
@@ -571,7 +508,7 @@ public:
         return 0;
     }
 
-    bool isParent(CobwebNode *otherConcept) {
+    bool is_parent(CobwebNode *otherConcept) {
         CobwebNode *temp = otherConcept;
         while (temp != NULL) {
             if (temp == this) {
@@ -587,22 +524,24 @@ public:
         return false;
     }
 
-    int numConcepts() {
+    int num_concepts() {
         int childrenCount = 0;
         for (auto &c: children) {
-            childrenCount += c->numConcepts();
+            childrenCount += c->num_concepts();
         }
         return 1 + childrenCount;
     }
 
-    vector<tuple<VALUE_TYPE, double>> getWeightedValues(ATTR_TYPE attr, bool allowNone = true) {
+    // TODO output_json()
+
+    vector<tuple<VALUE_TYPE, double>> get_weighted_values(ATTR_TYPE attr, bool allowNone = true) {
         vector<tuple<VALUE_TYPE, double>> choices;
         if (!this->av_counts.count(attr)) {
             choices.push_back(make_tuple(NULL_STRING, 1.0));
         }
         double valCount = 0;
-        for (auto &[val, tmp]: this->av_counts) {
-            COUNT_TYPE count = this->av_counts[attr][val];
+        for (auto &[val, tmp]: this->av_counts.at(attr)) {
+            COUNT_TYPE count = this->av_counts.at(attr).at(val);
             choices.push_back(make_tuple(val, 1.0 * count / this->count));
             valCount += count;
         }
@@ -615,14 +554,14 @@ public:
     VALUE_TYPE predict(ATTR_TYPE attr, string choiceFn = "most likely", bool allowNone = true) {
         function<ATTR_TYPE(vector<tuple<VALUE_TYPE, double>>)> choose;
         if (choiceFn == "most likely" || choiceFn == "m") {
-            choose = mostLikelyChoice;
+            choose = most_likely_choice;
         } else if (choiceFn == "sampled" || choiceFn == "s") {
-            choose = weightedChoice;
+            choose = weighted_choice;
         } else throw "Unknown choice_fn";
         if (!this->av_counts.count(attr)) {
             return NULL_STRING;
         }
-        vector<tuple<VALUE_TYPE, double>> choices = this->getWeightedValues(attr, allowNone);
+        vector<tuple<VALUE_TYPE, double>> choices = this->get_weighted_values(attr, allowNone);
         return choose(choices);
     }
 
@@ -638,25 +577,28 @@ public:
                 return 1.0 * (this->count - c) / this->count;
             }
         }
-        if (this->av_counts.count(attr) && this->av_counts[attr].count(val)) {
-            return 1.0 * this->av_counts[attr][val] / this->count;
+        if (this->av_counts.count(attr) && this->av_counts.at(attr).count(val)) {
+            return 1.0 * this->av_counts.at(attr).at(val) / this->count;
         }
         return 0.0;
     }
 
-    double logLikelihood(CobwebNode *childLeaf) {
+    double log_likelihood(CobwebNode *childLeaf) {
         set<ATTR_TYPE> allAttrs;
-        for (auto &attr: this->attrs()) allAttrs.insert(attr);
-        for (auto &attr: childLeaf->attrs()) allAttrs.insert(attr);
+        for (auto &[attr, tmp]: this->av_counts) allAttrs.insert(attr);
+        for (auto &[attr, tmp]: childLeaf->av_counts) allAttrs.insert(attr);
+
         double ll = 0;
+
         for (auto &attr: allAttrs) {
+            if (attr[0] == '_') continue;
             set<VALUE_TYPE> vals;
             vals.insert(NULL_STRING);
             if (this->av_counts.count(attr)) {
-                for (auto &[val, tmp]: this->av_counts[attr]) vals.insert(val);
+                for (auto &[val, tmp]: this->av_counts.at(attr)) vals.insert(val);
             }
             if (childLeaf->av_counts.count(attr)) {
-                for (auto &[val, tmp]: childLeaf->av_counts[attr]) vals.insert(val);
+                for (auto &[val, tmp]: childLeaf->av_counts.at(attr)) vals.insert(val);
             }
             for (auto &val: vals) {
                 double op = childLeaf->probability(attr, val);
@@ -687,11 +629,11 @@ public:
         CobwebNode::concept_id = concept_id;
     }
 
-    double getCount() const {
+    unsigned long getCount() const {
         return count;
     }
 
-    void setCount(double count) {
+    void setCount(unsigned long count) {
         CobwebNode::count = count;
     }
 
@@ -752,7 +694,7 @@ public:
         return os;
     }
 
-    void _sanityCheckInstance(INSTANCE_TYPE instance) {
+    void _sanity_check_instance(INSTANCE_TYPE instance) {
         for (auto&[attr, v]: instance) {
             try {
 //                hash(attr); todo:
@@ -770,7 +712,7 @@ public:
     }
 
     CobwebNode *ifit(INSTANCE_TYPE instance) {
-        this->_sanityCheckInstance(instance);
+        this->_sanity_check_instance(instance);
         return this->cobweb(instance);
     }
 
@@ -789,7 +731,7 @@ public:
     CobwebNode *cobweb(INSTANCE_TYPE instance) {
         CobwebNode *current = this->root;
         while (current != NULL) {
-            if (current->getChildren().empty() && (current->isExactMatch(instance)) || current->getCount() == 0) {
+            if (current->getChildren().empty() && (current->is_exact_match(instance) || current->getCount() == 0)) {
                 current->increment_counts(instance);
                 break;
             } else if (current->getChildren().empty()) {
@@ -806,17 +748,17 @@ public:
                     this->root = newNode;
                 }
                 newNode->increment_counts(instance);
-                current = newNode->createNewChild(instance);
+                current = newNode->create_new_child(instance);
                 break;
             } else {
                 auto[best1_cu, best1, best2] = current->two_best_children(instance);
-                auto[_, bestAction] = current->getBestOperation(instance, best1, best2, best1_cu);
+                auto[_, bestAction] = current->get_best_operation(instance, best1, best2, best1_cu);
                 if (bestAction == "best") {
                     current->increment_counts(instance);
                     current = best1;
                 } else if (bestAction == "new") {
                     current->increment_counts(instance);
-                    current = current->createNewChild(instance);
+                    current = current->create_new_child(instance);
                     break;
                 } else if (bestAction == "merge") {
                     current->increment_counts(instance);
@@ -833,7 +775,7 @@ public:
         return current;
     }
 
-    CobwebNode *_cobwebCategorize(INSTANCE_TYPE instance) {
+    CobwebNode *_cobweb_categorize(INSTANCE_TYPE instance) {
         auto current = this->root;
         while (current != NULL) {
             if (current->getChildren().empty()) {
@@ -842,16 +784,18 @@ public:
             auto[_, best1, best2] = current->two_best_children(instance);
             current = best1;
         }
+
+        return current;
     }
 
-    INSTANCE_TYPE inferMissing(INSTANCE_TYPE instance, string choiceFn = "most likely", bool allowNone = true) {
-        this->_sanityCheckInstance(instance);
+    INSTANCE_TYPE infer_missing(INSTANCE_TYPE instance, string choiceFn = "most likely", bool allowNone = true) {
+        this->_sanity_check_instance(instance);
         INSTANCE_TYPE tempInstance;
         for (auto&[attr, v]: instance) {
             tempInstance[attr] = v;
         }
-        auto concept = this->_cobwebCategorize(tempInstance);
-        for (auto attr: concept->attrs("all")) {
+        auto concept = this->_cobweb_categorize(tempInstance);
+        for (auto &[attr, tmp]: concept->av_counts) {
             if (tempInstance.count(attr)) {
                 continue;
             }
@@ -864,10 +808,13 @@ public:
     }
 
     CobwebNode *categorize(INSTANCE_TYPE instance) {
-        this->_sanityCheckInstance(instance);
-        return this->_cobwebCategorize(instance);
+        this->_sanity_check_instance(instance);
+        return this->_cobweb_categorize(instance);
     }
 };
+
+
+
 
 int CobwebNode::counter = 0;
 
