@@ -135,7 +135,7 @@ public:
 
     }
 
-    void increment_counts(INSTANCE_TYPE instance) {
+    void increment_counts(const INSTANCE_TYPE &instance) {
         count += 1;
 
         for (auto &[attr, val]: instance) {
@@ -149,7 +149,7 @@ public:
                 squared_counts -= pow(av_counts[attr][val], 2);
             }
 
-            av_counts[attr][instance[attr]]++;
+            av_counts[attr][instance.at(attr)]++;
 
             if (!hidden){
                 squared_counts += pow(av_counts[attr][val], 2);
@@ -182,7 +182,7 @@ public:
         }
     }
 
-    double expected_correct_guesses_insert(INSTANCE_TYPE instance){
+    double expected_correct_guesses_insert(const INSTANCE_TYPE &instance){
         unsigned long attr_count = this->attr_count;
         unsigned long long squared_counts = this->squared_counts;
 
@@ -208,7 +208,7 @@ public:
         return squared_counts / pow(count + 1, 2) / attr_count;
     }
 
-    double expected_correct_guesses_merge(CobwebNode *other, INSTANCE_TYPE instance) {
+    double expected_correct_guesses_merge(CobwebNode *other, const INSTANCE_TYPE &instance) {
 
         CobwebNode* big = this;
         CobwebNode* small = other;
@@ -287,7 +287,7 @@ public:
         return ((childCorrectGuesses - this->expected_correct_guesses()) / children.size());
     }
 
-    tuple<double, string> get_best_operation(INSTANCE_TYPE instance, CobwebNode *best1,
+    tuple<double, string> get_best_operation(const INSTANCE_TYPE &instance, CobwebNode *best1,
                                              CobwebNode *best2, double best1Cu,
                                              bool best_op=true, bool new_op=true,
                                              bool merge_op=true, bool split_op=true) {
@@ -323,7 +323,7 @@ public:
         return bestOp;
     };
 
-    tuple<double, CobwebNode *, CobwebNode *> two_best_children(INSTANCE_TYPE instance) {
+    tuple<double, CobwebNode *, CobwebNode *> two_best_children(const INSTANCE_TYPE &instance) {
         if (children.empty()) {
             throw "No children!";
         }
@@ -345,7 +345,7 @@ public:
         return make_tuple(best1_cu, best1, best2);
     }
 
-    double cu_for_insert(CobwebNode *child, INSTANCE_TYPE instance) {
+    double cu_for_insert(CobwebNode *child, const INSTANCE_TYPE &instance) {
         double child_correct_guesses = 0.0;
 
         for (auto &c: children) {
@@ -365,7 +365,7 @@ public:
         return ((child_correct_guesses - parent_correct_guesses) / children.size());
     }
 
-    CobwebNode *create_new_child(INSTANCE_TYPE instance) {
+    CobwebNode *create_new_child(const INSTANCE_TYPE &instance) {
         CobwebNode *newChild = new CobwebNode();
         newChild->parent = this;
         newChild->tree = this->tree;
@@ -374,7 +374,7 @@ public:
         return newChild;
     };
 
-    double cu_for_new_child(INSTANCE_TYPE instance) {
+    double cu_for_new_child(const INSTANCE_TYPE &instance) {
         double child_correct_guesses = 0.0;
 
         for (auto &c: children) {
@@ -408,7 +408,7 @@ public:
         return newChild;
     }
 
-    double cu_for_merge(CobwebNode *best1, CobwebNode *best2, INSTANCE_TYPE instance) {
+    double cu_for_merge(CobwebNode *best1, CobwebNode *best2, const INSTANCE_TYPE &instance) {
         double child_correct_guesses = 0.0;
 
         for (auto &c: children) {
@@ -459,7 +459,7 @@ public:
 
     }
 
-    bool is_exact_match(INSTANCE_TYPE instance) {
+    bool is_exact_match(const INSTANCE_TYPE &instance) {
         set<ATTR_TYPE> allAttrs;
         for (auto &[attr, tmp]: instance) allAttrs.insert(attr);
         for (auto &[attr, tmp]: this->av_counts) allAttrs.insert(attr);
@@ -473,10 +473,10 @@ public:
                 return false;
             }
             if (this->av_counts.count(attr) && instance.count(attr)) {
-                if (!this->av_counts.at(attr).count(instance[attr])) {
+                if (!this->av_counts.at(attr).count(instance.at(attr))) {
                     return false;
                 }
-                if (this->av_counts.at(attr).at(instance[attr]) != this->count) {
+                if (this->av_counts.at(attr).at(instance.at(attr)) != this->count) {
                     return false;
                 }
             }
@@ -704,7 +704,7 @@ public:
         return os;
     }
 
-    void _sanity_check_instance(INSTANCE_TYPE instance) {
+    void _sanity_check_instance(const INSTANCE_TYPE &instance) {
         for (auto&[attr, v]: instance) {
             try {
 //                hash(attr); todo:
@@ -721,7 +721,7 @@ public:
         }
     }
 
-    CobwebNode *ifit(INSTANCE_TYPE instance) {
+    CobwebNode *ifit(const INSTANCE_TYPE &instance) {
         this->_sanity_check_instance(instance);
         return this->cobweb(instance);
     }
@@ -738,7 +738,7 @@ public:
         }
     }
 
-    CobwebNode *cobweb(INSTANCE_TYPE instance) {
+    CobwebNode *cobweb(const INSTANCE_TYPE &instance) {
         CobwebNode *current = this->root;
         while (current != NULL) {
             if (current->getChildren().empty() && (current->is_exact_match(instance) || current->getCount() == 0)) {
@@ -787,7 +787,7 @@ public:
         return current;
     }
 
-    CobwebNode *_cobweb_categorize(INSTANCE_TYPE instance) {
+    CobwebNode *_cobweb_categorize(const INSTANCE_TYPE &instance) {
         auto current = this->root;
         while (current != NULL) {
             if (current->getChildren().empty()) {
@@ -800,7 +800,7 @@ public:
         return current;
     }
 
-    INSTANCE_TYPE infer_missing(INSTANCE_TYPE instance, string choiceFn = "most likely", bool allowNone = true) {
+    INSTANCE_TYPE infer_missing(const INSTANCE_TYPE &instance, string choiceFn = "most likely", bool allowNone = true) {
         this->_sanity_check_instance(instance);
         INSTANCE_TYPE tempInstance;
         for (auto&[attr, v]: instance) {
@@ -819,7 +819,7 @@ public:
         return tempInstance;
     }
 
-    CobwebNode *categorize(INSTANCE_TYPE instance) {
+    CobwebNode *categorize(const INSTANCE_TYPE &instance) {
         this->_sanity_check_instance(instance);
         return this->_cobweb_categorize(instance);
     }
