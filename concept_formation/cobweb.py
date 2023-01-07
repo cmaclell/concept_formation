@@ -239,7 +239,7 @@ class CobwebTree(object):
         temp_instance = {a: instance[a] for a in instance}
         concept = self._cobweb_categorize(temp_instance)
 
-        for attr in concept.attrs('all'):
+        for attr in concept.av_counts:
             if attr in temp_instance:
                 continue
             val = concept.predict(attr, choice_fn, allow_none)
@@ -488,7 +488,7 @@ class CobwebNode(object):
                 len(self.children))
 
     def get_best_operation(self, instance, best1, best2, best1_cu,
-                           possible_ops=["best", "new", "merge", "split"]):
+                           best_op=True, new_op=True, merge_op=True, split_op=True):
         """
         Given an instance, the two best children based on category utility and
         a set of possible operations, find the operation that produces the
@@ -563,15 +563,15 @@ class CobwebNode(object):
 
         operations = []
 
-        if "best" in possible_ops:
+        if best_op:
             operations.append((best1_cu, random(), "best"))
-        if "new" in possible_ops:
+        if new_op:
             operations.append((self.cu_for_new_child(instance), random(),
                                'new'))
-        if "merge" in possible_ops and len(self.children) > 2 and best2:
+        if merge_op and len(self.children) > 2 and best2:
             operations.append((self.cu_for_merge(best1, best2, instance),
                                random(), 'merge'))
-        if "split" in possible_ops and len(best1.children) > 0:
+        if split_op and len(best1.children) > 0:
             operations.append((self.cu_for_split(best1), random(), 'split'))
 
         operations.sort(reverse=True)
@@ -598,8 +598,8 @@ class CobwebNode(object):
 
         relative_cus = [(((child.count + 1) * child.expected_correct_guesses_insert(instance)) - 
                           (child.count * child.expected_correct_guesses()),
-                         child.count, random(), child, i) for i, child in
-                        enumerate(self.children)]
+                         child.count, random(), child) for child in
+                        self.children]
         relative_cus.sort(reverse=True)
 
         best1 = relative_cus[0][3]
@@ -667,24 +667,6 @@ class CobwebNode(object):
         new_child.increment_counts(instance)
         self.children.append(new_child)
         return new_child
-
-    def create_child_with_current_counts(self):
-        """
-        Create a new child (to the current node) with the counts initialized by
-        the *current node's counts*.
-
-        This operation is used in the speical case of a fringe split when a new
-        node is created at a leaf.
-
-        :return: The new child
-        :rtype: CobwebNode
-        """
-        if self.count > 0:
-            new = self.__class__(self)
-            new.parent = self
-            new.tree = self.tree
-            self.children.append(new)
-            return new
 
     def cu_for_new_child(self, instance):
         """
