@@ -67,7 +67,7 @@ VALUE_TYPE weighted_choice(vector<tuple<VALUE_TYPE, double>> choices) {
 
 class CobwebNode {
 
-    static int counter;
+    static unsigned long counter;
     int concept_id;
     unsigned long count;
     unsigned long long squared_counts;
@@ -123,8 +123,9 @@ public:
         count = 0;
         squared_counts = 0;
         attr_count = 0;
-        parent = NULL;
-        tree = NULL;
+
+        parent = otherNode->parent;
+        tree = otherNode->tree;
 
         update_counts_from_node(otherNode);
 
@@ -217,8 +218,8 @@ public:
             big = other;
         }
 
-        attr_count = big->attr_count;
-        squared_counts = big->squared_counts;
+        unsigned long attr_count = big->attr_count;
+        unsigned long long squared_counts = big->squared_counts;
 
         for (auto &[attr, tmp]: small->av_counts) {
             if (attr[0] == '_'){
@@ -310,6 +311,13 @@ public:
             operations.push_back(make_tuple(cu_for_split(best1), custom_rand(), "split"));
         }
         sort(operations.rbegin(), operations.rend());
+
+        /*
+        cout << endl;
+        for (auto &[cu, rand, op]: operations){
+            cout << cu << ", " << rand << ", " << op << endl;
+        }
+        */
 
         OPERATION_TYPE bestOp = make_pair(get<0>(operations[0]), get<2>(operations[0]));
         return bestOp;
@@ -428,6 +436,7 @@ public:
             c->tree = this->tree;
             children.push_back(c);
         }
+        delete best;
     }
 
     double cu_for_split(CobwebNode *best){
@@ -474,6 +483,7 @@ public:
         }
         return true;
     }
+
     long _hash() {
         hash<string> hash_obj;
         return hash_obj("CobwebNode" + to_string(concept_id));
@@ -491,7 +501,7 @@ public:
 
     string pretty_print(int depth = 0) {
         string ret = repeat("\t", depth) + "|-" + av_countsToString() + ":" +
-                     (to_string(this->count)) + " (" + to_string(attr_count) + ", " + to_string(this->expected_correct_guesses()) + ")\n";
+                     (to_string(this->count)) + " (" + to_string(concept_id) + ", " + to_string(attr_count) + ", " + to_string(this->squared_counts) + ", " + to_string(this->expected_correct_guesses()) + ")\n";
 
         for (auto &c: children) {
             ret += c->pretty_print(depth + 1);
@@ -738,6 +748,7 @@ public:
                 CobwebNode *newNode = new CobwebNode(current);
                 current->setParent(newNode);
                 newNode->getChildren().push_back(current);
+
                 if (newNode->getParent() != NULL) {
                     newNode->getParent()->getChildren().erase(remove(newNode->getParent()->getChildren().begin(),
                                                                      newNode->getParent()->getChildren().end(),
@@ -750,6 +761,7 @@ public:
                 newNode->increment_counts(instance);
                 current = newNode->create_new_child(instance);
                 break;
+
             } else {
                 auto[best1_cu, best1, best2] = current->two_best_children(instance);
                 auto[_, bestAction] = current->get_best_operation(instance, best1, best2, best1_cu);
@@ -814,9 +826,7 @@ public:
 };
 
 
-
-
-int CobwebNode::counter = 0;
+unsigned long CobwebNode::counter = 0;
 
 /*
 int main() {
