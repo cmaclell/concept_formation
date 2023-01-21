@@ -26,7 +26,7 @@ def _copy_file(filename, target_dir):
 
 
 def _gen_output_file(js_ob):
-    return '(function (){ window.trestle_output='+json.dumps(js_ob)+'; })();'
+    return '(function (){ window.trestle_output='+js_ob+'; })();'
 
 
 def _gen_viz(js_ob, dst, recreate_html):

@@ -2,6 +2,7 @@
 The Cobweb module contains the :class:`CobwebTree` and :class:`CobwebNode`
 classes which are used to achieve the basic Cobweb functionality.
 """
+import json
 from random import shuffle
 from random import random
 from math import log
@@ -868,6 +869,7 @@ class CobwebNode(object):
         return self.__class__._counter
 
     def __str__(self):
+
         """
         Call :meth:`CobwebNode.pretty_print`
         """
@@ -941,6 +943,9 @@ class CobwebNode(object):
         return 1 + children_count
 
     def output_json(self):
+        return json.dumps(self.output_dict())
+
+    def output_dict(self):
         """
         Outputs the categorization tree in JSON form
 
@@ -960,7 +965,7 @@ class CobwebNode(object):
                                    value in self.av_counts[attr]}
 
         for child in self.children:
-            output["children"].append(child.output_json())
+            output["children"].append(child.output_dict())
 
         output['counts'] = temp
 

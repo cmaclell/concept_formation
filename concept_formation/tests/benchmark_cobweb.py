@@ -32,7 +32,7 @@ def viz(n_inst, n_attr, n_val):
     x = generate_dataset(n_inst, n_attr, n_val)
     tree.fit(x, 1, True)
 
-    print(tree)
+    # print(tree)
     
     visualize(tree)
 

@@ -76,22 +76,6 @@ def test_cobweb_str():
     assert str(tree) == str(tree.root)
 
 
-def test_cobweb_sanity_check():
-    tree = CobwebTree()
-
-    with pytest.raises(ValueError):
-        tree._sanity_check_instance([set()])
-
-    with pytest.raises(ValueError):
-        tree._sanity_check_instance({1: 'a'})
-
-    with pytest.raises(ValueError):
-        tree._sanity_check_instance({'a': set([])})
-
-    with pytest.raises(ValueError):
-        tree._sanity_check_instance({'a': None})
-
-
 def test_cobweb_ifit():
     tree = CobwebTree()
     tree.ifit({'a': 'b'})
@@ -122,6 +106,6 @@ def test_cobweb():
 
 def test_empty_instance():
     t = CobwebTree()
-    t.ifit({'x': 1})
-    t.ifit({'x': 2})
+    t.ifit({'x': '1'})
+    t.ifit({'x': '2'})
     t.categorize({})
