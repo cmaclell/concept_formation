@@ -45,8 +45,29 @@ string repeat(string s, int n) {
 
 
 VALUE_TYPE most_likely_choice(vector<tuple<VALUE_TYPE, double>> choices) {
-    cout << "most_likely_choice: Not implemented yet" << endl;
-    return get<0>(choices[0]);
+    vector<tuple<double, double, string>> vals;
+
+    for (auto &[val, prob]: choices){
+        if (prob < 0){
+            cout << "most_likely_choice: all weights must be greater than or equal to 0" << endl;
+        }
+        vals.push_back(make_tuple(prob, custom_rand(), val));
+    }
+
+    sort(vals.rbegin(), vals.rend());
+
+    // cout << "###############" << endl;
+    // for (auto &[v, p]: choices){
+    //     cout << p << " " << v << " " << endl;
+    // }
+    // cout << endl;
+    // for (auto &[p, w, v]: vals){
+    //     cout << p << " " << w << " " << v << " " << endl;
+    // }
+
+    // cout << "CHOICE: " << get<2>(vals[0]) << endl;
+
+    return get<2>(vals[0]);
 }
 
 VALUE_TYPE weighted_choice(vector<tuple<VALUE_TYPE, double>> choices) {
@@ -225,6 +246,28 @@ public:
         return squared_counts / pow(big->count + small->count + 1, 2) / attr_count;
 
     }
+
+    CobwebNode* get_basic_level(){
+        CobwebNode* curr = this;
+        CobwebNode* best = this;
+        double best_cu = this->basic_cu();
+
+        while (curr->parent != NULL) {
+            curr = curr->parent;
+            double curr_cu = curr->basic_cu();
+
+            if (curr_cu > best_cu) {
+                best = curr;
+                best_cu = curr_cu;
+            }
+        }
+
+        return best;
+    }
+
+    // Forward declaration, it references attribute of tree (see declaration
+    // below)
+    double basic_cu();
 
     double expected_correct_guesses() {
         return squared_counts / pow(count, 2) / attr_count;
@@ -507,6 +550,14 @@ public:
      */
     string avcounts_to_json() {
         string ret = "{";
+
+        ret += "\"_basic_cu\": {\n";
+        ret += "\"#ContinuousValue#\": {\n";
+        ret += "\"mean\": " + to_string(this->basic_cu()) + ",\n";
+        ret += "\"std\": 1,\n";
+        ret += "\"n\": 1,\n";
+        ret += "}},\n";
+
         int c = 0;
         for (auto &[attr, vAttr]: av_counts) {
             ret += "\"" + attr + "\": {";
@@ -756,6 +807,14 @@ public:
 };
 
 
+inline double CobwebNode::basic_cu(){
+    double p_of_c = 1.0 * this->count / this->tree->root->count;
+    return (p_of_c * (this->expected_correct_guesses() -
+                this->tree->root->expected_correct_guesses()));
+}
+
+
+
 COUNT_TYPE CobwebNode::counter = 0;
 
 
@@ -766,6 +825,10 @@ PYBIND11_MODULE(cobweb, m) {
         .def(py::init())
         .def("pretty_print", &CobwebNode::pretty_print)
         .def("output_json", &CobwebNode::output_json)
+        .def("predict", &CobwebNode::predict, py::arg("attr") = "",
+                py::arg("choiceFn") = "most likely",
+                py::arg("allowNone") = true )
+        .def("get_basic_level", &CobwebNode::get_basic_level, py::return_value_policy::copy)
         .def("__str__", &CobwebNode::__str__)
         .def_readonly("count", &CobwebNode::count)
         .def_readonly("children", &CobwebNode::children)
@@ -776,7 +839,7 @@ PYBIND11_MODULE(cobweb, m) {
         .def(py::init())
         .def("ifit", &CobwebTree::ifit, py::return_value_policy::copy)
         .def("fit", &CobwebTree::fit, py::arg("instances") = vector<INSTANCE_TYPE>(), py::arg("iterations") = 1, py::arg("randomizeFirst") = true)
-        .def("categorize", &CobwebTree::categorize)
+        .def("categorize", &CobwebTree::categorize, py::return_value_policy::copy)
         .def("clear", &CobwebTree::clear)
         .def("__str__", &CobwebTree::__str__)
         .def_readonly("root", &CobwebTree::root);

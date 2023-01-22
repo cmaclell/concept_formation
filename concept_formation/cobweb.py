@@ -430,6 +430,24 @@ class CobwebNode(object):
 
         return squared_counts / (big.count + small.count + 1)**2 / attr_counts
 
+    def get_basic_level(self):
+        curr = self
+        best = self
+        best_cu = self.basic_cu()
+
+        while curr.parent:
+            curr = curr.parent
+            curr_cu = curr.basic_cu()
+            if curr_cu > best_cu:
+                best = curr
+                best_cu = curr_cu
+
+        return best
+
+    def basic_cu(self):
+        p_of_c = self.count / self.tree.root.count
+        return (p_of_c * (self.expected_correct_guesses() -
+                          self.tree.root.expected_correct_guesses()))
 
     def expected_correct_guesses(self):
         """
@@ -959,6 +977,8 @@ class CobwebNode(object):
         output['children'] = []
 
         temp = {}
+        temp['_basic_cu'] = {"#ContinuousValue#": {'mean': self.basic_cu(),
+                                                   'std': 1, 'n': 1}}
         for attr in self.av_counts:
             for value in self.av_counts[attr]:
                 temp[str(attr)] = {str(value): self.av_counts[attr][value] for
