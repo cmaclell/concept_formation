@@ -239,13 +239,13 @@
       .attr("y", function(d) { return d.y - (d.r/2); })
       .on("click", function(d) { return zoom(node == d ? root : d); });
 
-    var text = g.selectAll("text")
-      .data(nodes)
-      .enter().append("text")
-        .attr("class","label")
-        .style("fill-opacity", function(d) { return d.parent === root ? 1 : 0; })
-        .style("display", function(d) { return d.parent === root ? "inline" : "none"; })
-        .text(function(d) { return d.data.name; });
+    // var text = g.selectAll("text")
+    //   .data(nodes)
+    //   .enter().append("text")
+    //     .attr("class","label")
+    //     .style("fill-opacity", function(d) { return d.parent === root ? 1 : 0; })
+    //     .style("display", function(d) { return d.parent === root ? "inline" : "none"; })
+    //     .text(function(d) { return d.data.name; });
 
     var node = g.selectAll("circle,text");
 
@@ -265,11 +265,11 @@
             return function(t) { zoomTo(i(t)); };
           });
 
-      transition.selectAll("text")
-        .filter(function(d) { return d.parent === focus || this.style.display === "inline"; })
-          .style("fill-opacity", function(d) { return d.parent === focus ? 1 : 0; })
-          .on("start", function(d) { if (d.parent === focus) this.style.display = "inline"; })
-          .on("end", function(d) { if (d.parent !== focus) this.style.display = "none"; });
+      // transition.selectAll("text")
+      //   .filter(function(d) { return d.parent === focus || this.style.display === "inline"; })
+      //     .style("fill-opacity", function(d) { return d.parent === focus ? 1 : 0; })
+      //     .on("start", function(d) { if (d.parent === focus) this.style.display = "inline"; })
+      //     .on("end", function(d) { if (d.parent !== focus) this.style.display = "none"; });
     }
 
     function zoomTo(v) {
@@ -338,7 +338,7 @@
     }
     var circle = $("#"+d.name);
     // If the concept doesn't have the target attribute make it grey
-    if (targetAttr !== "none" && !d['counts'][targetAttr]) {
+    if (targetAttr == "none" || (targetAttr !== "none" && !d['counts'][targetAttr])) {
       circle.css("fill",defaultGrey);
     }
     else {
