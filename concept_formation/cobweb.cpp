@@ -184,7 +184,7 @@ public:
             squared_counts += pow(av_count + 1, 2);
         }
 
-        return squared_counts / pow(count + 1, 2) / attr_count;
+        return squared_counts / pow(count + 1, 2); // / attr_count;
     }
 
     double expected_correct_guesses_merge(CobwebNode *other, const INSTANCE_TYPE &instance) {
@@ -243,7 +243,7 @@ public:
             squared_counts += pow(big_count + small_count + 1, 2);
         }
 
-        return squared_counts / pow(big->count + small->count + 1, 2) / attr_count;
+        return squared_counts / pow(big->count + small->count + 1, 2); // / attr_count;
 
     }
 
@@ -270,7 +270,7 @@ public:
     double basic_cu();
 
     double expected_correct_guesses() {
-        return squared_counts / pow(count, 2) / attr_count;
+        return squared_counts / pow(count, 2); //  / attr_count;
     }
 
     double category_utility() {
