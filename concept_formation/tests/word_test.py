@@ -1,3 +1,4 @@
+import json
 import sys
 import os
 import re
@@ -10,6 +11,11 @@ from spacy.lang.en import English
 # from concept_formation.word_cobweb import CobwebWordTree
 from concept_formation.cobweb import CobwebTree
 from concept_formation.visualize import visualize
+
+from os.path import dirname
+from os.path import join
+
+serialization_filename = 'serialization.json'
 
 nlp = English()
 # Create a Tokenizer with the default settings for English
@@ -189,6 +195,20 @@ if __name__ == "__main__":
             tree.ifit(example)
 
         # visualize(tree)
+
+        js = tree.root.save_json()
+        with open(join(dirname(__file__), serialization_filename), 'w+') as f:
+            f.write(js)
+
+        # The code below just serves as a test/demo for JSON saving and loading
+        # tree.clear()
+        # tree.load_json(js)
+        # new_js = tree.root.save_json()
+
+        # js_norm = json.dumps(json.loads(js), sort_keys=True)
+        # new_js_norm = json.dumps(json.loads(new_js), sort_keys=True)
+
+        # print('same JS? %s' % (js_norm == new_js_norm))
 
     # from pprint import pprint
     # pprint(tree.root.av_counts['##anchor##'])

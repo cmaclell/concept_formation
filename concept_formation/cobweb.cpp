@@ -1,5 +1,6 @@
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
+#include "json.cpp"
 
 namespace py = pybind11;
 
@@ -114,6 +115,12 @@ public:
             children.push_back(new CobwebNode(child));
         }
 
+    }
+
+    static void maybe_update_counter(int concept_id) {
+        if(concept_id > counter) {
+            counter = concept_id + 1;
+        }
     }
 
     void increment_counts(const INSTANCE_TYPE &instance) {
@@ -580,6 +587,55 @@ public:
         return ret;
     }
 
+    string ser_avcounts() {
+        string ret = "{";
+
+        int c = 0;
+        for (auto &[attr, vAttr]: av_counts) {
+            ret += "\"" + attr + "\": {";
+            int inner_count = 0;
+            for (auto &[val, cnt]: vAttr) {
+                ret += "\"" + val + "\": " + to_string(cnt);
+                if (inner_count != int(vAttr.size()) - 1){
+                    ret += ", ";
+                }
+                inner_count++;
+            }
+            ret += "}";
+
+            if (c != int(av_counts.size())-1){
+                ret += ", ";
+            }
+            c++;
+        }
+        ret += "}";
+        return ret;
+    }
+
+    string save_json() {
+        string output = "{";
+
+        output += "\"concept_id\": " + to_string(this->concept_id) + ",\n";
+        output += "\"count\": " + to_string(this->count) + ",\n";
+        output += "\"squared_counts\": " + to_string(this->squared_counts) + ",\n";
+        output += "\"attr_count\": " + to_string(this->attr_count) + ",\n";
+
+        output += "\"counts\": " + this->ser_avcounts() + ",\n";
+
+        output += "\"children\": [\n";
+        bool first = true;
+        for (auto &c: children) {
+            if(!first) output += ",";
+            else first = false;
+            output += c->save_json();
+        }
+        output += "]\n";
+
+        output += "}\n";
+
+        return output;
+    }
+
     string output_json(){
         string output = "{";
 
@@ -692,6 +748,90 @@ public:
 
     string __str__(){
         return this->root->__str__();
+    }
+
+    CobwebNode *load_json_helper(json_object_s* object) {
+        CobwebNode *new_node = new CobwebNode();
+        new_node->tree = this;
+
+        // Get concept_id
+        struct json_object_element_s* concept_id_obj = object->start;
+        int concept_id_val = atoi(json_value_as_number(concept_id_obj->value)->number);
+        new_node->concept_id = concept_id_val;
+
+        // Get count
+        struct json_object_element_s* count_obj = concept_id_obj->next;
+        int count_val = atoi(json_value_as_number(count_obj->value)->number);
+        new_node->count = count_val;
+
+        // Get squared_counts
+        struct json_object_element_s* squared_counts_obj = count_obj->next;
+        int squared_counts_val = atoi(json_value_as_number(squared_counts_obj->value)->number);
+        new_node->squared_counts = squared_counts_val;
+
+        // Get attr_count
+        struct json_object_element_s* attr_count_obj = squared_counts_obj->next;
+        int attr_count_val = atoi(json_value_as_number(attr_count_obj->value)->number);
+        new_node->attr_count = attr_count_val;
+
+        // Get counts
+        struct json_object_element_s* counts_obj = attr_count_obj->next;
+        struct json_object_s* counts_dict = json_value_as_object(counts_obj->value);
+        struct json_object_element_s* counts_cursor = counts_dict->start;
+        while(counts_cursor != NULL) {
+            // Get attr name
+            string count_attr_name = string(counts_cursor->name->string);
+
+            // The attr val is a dict of strings to ints
+            struct json_object_s* attr_val_dict = json_value_as_object(counts_cursor->value);
+            struct json_object_element_s* inner_counts_cursor = attr_val_dict->start;
+            while(inner_counts_cursor != NULL) {
+                // This will be "T" in the case of attrs,
+                // or a word in the case of an anchor
+                string inner_attr_name = string(inner_counts_cursor->name->string);
+                // This will always be a number
+                int inner_attr_count = atoi(json_value_as_number(inner_counts_cursor->value)->number);
+
+                // Update the new node's counts
+                new_node->av_counts[count_attr_name][inner_attr_name] = inner_attr_count;
+
+                inner_counts_cursor = inner_counts_cursor->next;
+            }
+
+            counts_cursor = counts_cursor->next;
+        }
+
+        // At this point in the coding, I am supremely annoyed at
+        // myself for choosing this approach.
+
+        // Get children
+        struct json_object_element_s* children_obj = counts_obj->next;
+        struct json_array_s* children_array = json_value_as_array(children_obj->value);
+        struct json_array_element_s* child_cursor = children_array->start;
+        vector<CobwebNode*> new_children;
+        while(child_cursor != NULL) {
+            struct json_object_s* json_child = json_value_as_object(child_cursor->value);
+            CobwebNode *child = load_json_helper(json_child);
+            child->parent = new_node;
+            new_children.push_back(child);
+            child_cursor = child_cursor->next;
+        }
+        new_node->children = new_children;
+
+        return new_node;
+
+        // It's important to me that you know that this code
+        // worked on the first try.
+    }
+
+    void load_json(string json) {
+        struct json_value_s* root = json_parse(json.c_str(), strlen(json.c_str()));
+        struct json_object_s* object = (struct json_object_s*)root->payload;
+
+        CobwebNode *new_node = this->load_json_helper(object);
+
+        delete this->root;
+        this->root = new_node;
     }
 
     void clear() {
@@ -829,6 +969,7 @@ PYBIND11_MODULE(cobweb, m) {
                 py::arg("choiceFn") = "most likely",
                 py::arg("allowNone") = true )
         .def("get_basic_level", &CobwebNode::get_basic_level, py::return_value_policy::copy)
+        .def("save_json", &CobwebNode::save_json)
         .def("__str__", &CobwebNode::__str__)
         .def_readonly("count", &CobwebNode::count)
         .def_readonly("children", &CobwebNode::children)
@@ -837,6 +978,7 @@ PYBIND11_MODULE(cobweb, m) {
 
     py::class_<CobwebTree>(m, "CobwebTree")
         .def(py::init())
+        .def("load_json", &CobwebTree::load_json)
         .def("ifit", &CobwebTree::ifit, py::return_value_policy::copy)
         .def("fit", &CobwebTree::fit, py::arg("instances") = vector<INSTANCE_TYPE>(), py::arg("iterations") = 1, py::arg("randomizeFirst") = true)
         .def("categorize", &CobwebTree::categorize, py::return_value_policy::copy)
