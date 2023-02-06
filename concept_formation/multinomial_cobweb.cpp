@@ -1,8 +1,5 @@
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
-
-namespace py = pybind11;
-
 #include <iostream>
 #include <vector>
 #include <unordered_map>
@@ -12,14 +9,16 @@ namespace py = pybind11;
 #include <tuple>
 #include <set>
 #include "assert.h"
+#include "json.cpp"
+
+namespace py = pybind11;
+using namespace std;
 
 #define NULL_STRING "\0"
 
-using namespace std;
-
 typedef string ATTR_TYPE;
 typedef string VALUE_TYPE;
-typedef double COUNT_TYPE;
+typedef int COUNT_TYPE;
 typedef unordered_map<ATTR_TYPE, unordered_map<VALUE_TYPE, COUNT_TYPE>> AV_COUNT_TYPE;
 typedef pair<double, string> OPERATION_TYPE;
 
@@ -66,7 +65,7 @@ VALUE_TYPE weighted_choice(vector<tuple<VALUE_TYPE, double>> choices) {
 class MultinomialCobwebNode {
 
 public:
-    static COUNT_TYPE counter;
+    static int counter;
     int concept_id;
     COUNT_TYPE count;
     unordered_map<ATTR_TYPE, COUNT_TYPE> counts;
@@ -78,10 +77,18 @@ public:
 
     MultinomialCobwebNode();
     MultinomialCobwebNode(MultinomialCobwebNode *otherNode);
+
+    static void update_counter(int concept_id) {
+        if(concept_id > counter) {
+            counter = concept_id + 1;
+        }
+    }
+
     void increment_counts(const AV_COUNT_TYPE &instance);
     void update_counts_from_node(MultinomialCobwebNode *node);
     double expected_correct_guesses_insert(const AV_COUNT_TYPE &instance);
     double expected_correct_guesses_merge(MultinomialCobwebNode *other, const AV_COUNT_TYPE &instance);
+    MultinomialCobwebNode* get_best_level(const AV_COUNT_TYPE &instance);
     MultinomialCobwebNode* get_basic_level();
     double basic_cu();
     double expected_correct_guesses();
@@ -108,6 +115,10 @@ public:
     bool is_parent(MultinomialCobwebNode *otherConcept);
     int num_concepts();
     string avcounts_to_json();
+    string ser_avcounts();
+    string counts_to_json();
+    string squared_counts_to_json();
+    string dump_json();
     string output_json();
     vector<tuple<VALUE_TYPE, double>> get_weighted_values(ATTR_TYPE attr, bool allowNone = true);
     VALUE_TYPE predict(ATTR_TYPE attr, string choiceFn = "most likely", bool allowNone = true);
@@ -132,6 +143,113 @@ public:
     string __str__(){
         return this->root->__str__();
     }
+
+    MultinomialCobwebNode* load_json_helper(json_object_s* object) {
+        MultinomialCobwebNode *new_node = new MultinomialCobwebNode();
+        new_node->tree = this;
+
+        // Get concept_id
+        struct json_object_element_s* concept_id_obj = object->start;
+        int concept_id_val = atoi(json_value_as_number(concept_id_obj->value)->number);
+        new_node->concept_id = concept_id_val;
+        new_node->update_counter(concept_id_val);
+
+        // Get count
+        struct json_object_element_s* count_obj = concept_id_obj->next;
+        int count_val = atoi(json_value_as_number(count_obj->value)->number);
+        new_node->count = count_val;
+
+        // Get counts
+        struct json_object_element_s* counts_obj = count_obj->next;
+        struct json_object_s* counts_dict = json_value_as_object(counts_obj->value);
+        struct json_object_element_s* counts_cursor = counts_dict->start;
+        while(counts_cursor != NULL) {
+            // Get attr name
+            string count_attr_name = string(counts_cursor->name->string);
+
+            // A count is stored with each attribute
+            int count_value = atoi(json_value_as_number(counts_cursor->value)->number);
+            new_node->counts[count_attr_name] = count_value;
+
+            counts_cursor = counts_cursor->next;
+        }
+
+        // Get squared counts
+        struct json_object_element_s* squared_counts_obj = counts_obj->next;
+        struct json_object_s* squared_counts_dict = json_value_as_object(squared_counts_obj->value);
+        struct json_object_element_s* squared_counts_cursor = squared_counts_dict->start;
+        while(squared_counts_cursor != NULL) {
+            // Get attr name
+            string squared_count_attr_name = string(squared_counts_cursor->name->string);
+
+            // A count is stored with each attribute
+            int squared_count_value = atoi(json_value_as_number(squared_counts_cursor->value)->number);
+            new_node->squared_counts[squared_count_attr_name] = squared_count_value;
+
+            squared_counts_cursor = squared_counts_cursor->next;
+        }
+
+        // Get counts
+        struct json_object_element_s* av_counts_obj = squared_counts_obj->next;
+        struct json_object_s* av_counts_dict = json_value_as_object(av_counts_obj->value);
+        struct json_object_element_s* av_counts_cursor = av_counts_dict->start;
+        while(av_counts_cursor != NULL) {
+            // Get attr name
+            string attr_name = string(av_counts_cursor->name->string);
+
+            // The attr val is a dict of strings to ints
+            struct json_object_s* attr_val_dict = json_value_as_object(av_counts_cursor->value);
+            struct json_object_element_s* inner_counts_cursor = attr_val_dict->start;
+            while(inner_counts_cursor != NULL) {
+                // this will be a word
+                string val_name = string(inner_counts_cursor->name->string);
+                // This will always be a number
+                int attr_val_count = atoi(json_value_as_number(inner_counts_cursor->value)->number);
+
+                // Update the new node's counts
+                new_node->av_counts[attr_name][val_name] = attr_val_count;
+
+                inner_counts_cursor = inner_counts_cursor->next;
+            }
+
+            av_counts_cursor = av_counts_cursor->next;
+        }
+
+        // At this point in the coding, I am supremely annoyed at
+        // myself for choosing this approach.
+
+        // Get children
+        struct json_object_element_s* children_obj = av_counts_obj->next;
+        struct json_array_s* children_array = json_value_as_array(children_obj->value);
+        struct json_array_element_s* child_cursor = children_array->start;
+        vector<MultinomialCobwebNode*> new_children;
+        while(child_cursor != NULL) {
+            struct json_object_s* json_child = json_value_as_object(child_cursor->value);
+            MultinomialCobwebNode *child = load_json_helper(json_child);
+            child->parent = new_node;
+            new_children.push_back(child);
+            child_cursor = child_cursor->next;
+        }
+        new_node->children = new_children;
+
+        return new_node;
+
+        // It's important to me that you know that this code
+        // worked on the first try.
+    }
+
+    string dump_json(){
+        return this->root->dump_json();
+    }
+
+    void load_json(string json) {
+        struct json_value_s* root = json_parse(json.c_str(), strlen(json.c_str()));
+        struct json_object_s* object = (struct json_object_s*)root->payload;
+        delete this->root;
+        this->root = this->load_json_helper(object);
+    }
+
+
 
     void clear() {
         delete this->root;
@@ -333,7 +451,8 @@ inline double MultinomialCobwebNode::expected_correct_guesses_insert(const AV_CO
     double expected_correct_guesses = 0.0;
     for (auto &[attr, cnt]: squared_counts) {
         if (attr[0] != '_'){
-            expected_correct_guesses += squared_counts[attr] / pow(counts[attr], 2);
+            double multiplier = pow(this->counts[attr] / this->count, 2);
+            expected_correct_guesses += (multiplier * squared_counts[attr]) / pow(counts[attr], 2);
         }
     }
 
@@ -405,12 +524,31 @@ inline double MultinomialCobwebNode::expected_correct_guesses_merge(MultinomialC
     double expected_correct_guesses = 0.0;
     for (auto &[attr, cnt]: squared_counts) {
         if (attr[0] != '_'){
-            expected_correct_guesses += squared_counts[attr] / pow(counts[attr], 2);
+            double multiplier = pow(this->counts[attr] / this->count, 2);
+            expected_correct_guesses += (multiplier * squared_counts[attr]) / pow(counts[attr], 2);
         }
     }
 
     return expected_correct_guesses;
 
+}
+
+inline MultinomialCobwebNode* MultinomialCobwebNode::get_best_level(const AV_COUNT_TYPE &instance){
+    MultinomialCobwebNode* curr = this;
+    MultinomialCobwebNode* best = this;
+    double best_cu = this->log_prob_class_given_instance(instance);
+
+    while (curr->parent != NULL) {
+        curr = curr->parent;
+        double curr_cu = curr->log_prob_class_given_instance(instance);
+
+        if (curr_cu > best_cu) {
+            best = curr;
+            best_cu = curr_cu;
+        }
+    }
+
+    return best;
 }
 
 inline MultinomialCobwebNode* MultinomialCobwebNode::get_basic_level(){
@@ -435,7 +573,8 @@ inline double MultinomialCobwebNode::expected_correct_guesses() {
     double expected_correct_guesses = 0.0;
     for (auto &[attr, cnt]: this->squared_counts) {
         if (attr[0] != '_'){
-            expected_correct_guesses += this->squared_counts[attr] / pow(this->counts[attr], 2);
+            double multiplier = pow(this->counts[attr] / this->count, 2);
+            expected_correct_guesses += (multiplier * this->squared_counts[attr]) / pow(this->counts[attr], 2);
         }
     }
 
@@ -448,7 +587,7 @@ inline double MultinomialCobwebNode::category_utility() {
     }
     double childCorrectGuesses = 0.0;
     for (auto &child: children) {
-        double pOfChild = child->count / this->count;
+        double pOfChild = (1.0 * child->count) / this->count;
         childCorrectGuesses += pOfChild * child->expected_correct_guesses();
     }
     return ((childCorrectGuesses - this->expected_correct_guesses()) / children.size());
@@ -753,6 +892,84 @@ inline string MultinomialCobwebNode::avcounts_to_json() {
     return ret;
 }
 
+inline string MultinomialCobwebNode::ser_avcounts() {
+    string ret = "{";
+
+    int c = 0;
+    for (auto &[attr, vAttr]: av_counts) {
+        ret += "\"" + attr + "\": {";
+        int inner_count = 0;
+        for (auto &[val, cnt]: vAttr) {
+            ret += "\"" + val + "\": " + to_string(cnt);
+            if (inner_count != int(vAttr.size()) - 1){
+                ret += ", ";
+            }
+            inner_count++;
+        }
+        ret += "}";
+
+        if (c != int(av_counts.size())-1){
+            ret += ", ";
+        }
+        c++;
+    }
+    ret += "}";
+    return ret;
+}
+
+inline string MultinomialCobwebNode::counts_to_json() {
+    string ret = "{";
+
+    bool first =true;
+    for (auto &[attr, cnt]: this->counts) {
+        if (!first) ret += ",\n";
+        else first = false;
+        ret += "\"" + attr + "\": " + to_string(cnt);
+    }
+
+    ret += "}";
+    return ret;
+}
+
+inline string MultinomialCobwebNode::squared_counts_to_json() {
+    string ret = "{";
+
+    bool first =true;
+    for (auto &[attr, cnt]: this->squared_counts) {
+        if (!first) ret += ",\n";
+        else first = false;
+        ret += "\"" + attr + "\": " + to_string(cnt);
+    }
+
+    ret += "}";
+    return ret;
+}
+
+
+
+inline string MultinomialCobwebNode::dump_json() {
+    string output = "{";
+
+    output += "\"concept_id\": " + to_string(this->concept_id) + ",\n";
+    output += "\"count\": " + to_string(this->count) + ",\n";
+    output += "\"counts\": " + this->counts_to_json() + ",\n";
+    output += "\"squared_counts\": " + this->squared_counts_to_json() + ",\n";
+    output += "\"av_counts\": " + this->ser_avcounts() + ",\n";
+
+    output += "\"children\": [\n";
+    bool first = true;
+    for (auto &c: children) {
+        if(!first) output += ",";
+        else first = false;
+        output += c->dump_json();
+    }
+    output += "]\n";
+
+    output += "}\n";
+
+    return output;
+}
+
 inline string MultinomialCobwebNode::output_json(){
     string output = "{";
 
@@ -782,11 +999,11 @@ inline vector<tuple<VALUE_TYPE, double>> MultinomialCobwebNode::get_weighted_val
     double valCount = 0;
     for (auto &[val, tmp]: this->av_counts.at(attr)) {
         COUNT_TYPE count = this->av_counts.at(attr).at(val);
-        choices.push_back(make_tuple(val, 1.0 * count / this->count));
+        choices.push_back(make_tuple(val, (1.0 * count) / this->count));
         valCount += count;
     }
     if (allowNone) {
-        choices.push_back(make_tuple(NULL_STRING, ((this->count - valCount) / this->count)));
+        choices.push_back(make_tuple(NULL_STRING, ((1.0 * (this->count - valCount)) / this->count)));
     }
     return choices;
 }
@@ -814,11 +1031,11 @@ inline double MultinomialCobwebNode::probability(ATTR_TYPE attr, VALUE_TYPE val)
                     c += cnt;
                 }
             }
-            return 1.0 * (this->count - c) / this->count;
+            return (1.0 * (this->count - c)) / this->count;
         }
     }
     if (this->av_counts.count(attr) && this->av_counts.at(attr).count(val)) {
-        return 1.0 * this->av_counts.at(attr).at(val) / this->count;
+        return (1.0 * this->av_counts.at(attr).at(val)) / this->count;
     }
     return 0.0;
 }
@@ -854,7 +1071,7 @@ inline double MultinomialCobwebNode::log_likelihood(MultinomialCobwebNode *child
 }
 
 inline double MultinomialCobwebNode::basic_cu(){
-    double p_of_c = 1.0 * this->count / this->tree->root->count;
+    double p_of_c = (1.0 * this->count) / this->tree->root->count;
     return (p_of_c * (this->expected_correct_guesses() -
                 this->tree->root->expected_correct_guesses()));
 }
@@ -883,7 +1100,7 @@ inline double MultinomialCobwebNode::log_prob_class_given_instance(const AV_COUN
                 // cout << val << "(" << this->av_counts.at(attr).at(val) << ") ";
             }
 
-            log_prob += cnt * log(av_count / (this->counts[attr] + num_vals * this->tree->alpha));
+            log_prob += cnt * log((1.0 * av_count) / (this->counts[attr] + num_vals * this->tree->alpha));
         }
 
         // cout << endl;
@@ -895,15 +1112,12 @@ inline double MultinomialCobwebNode::log_prob_class_given_instance(const AV_COUN
 
     // cout << endl;
     
-    log_prob += log(this->count / this->tree->root->count);
+    log_prob += log((1.0 * this->count) / this->tree->root->count);
 
     return log_prob;
 }
 
-
-
-
-COUNT_TYPE MultinomialCobwebNode::counter = 0;
+int MultinomialCobwebNode::counter = 0;
 
 
 PYBIND11_MODULE(multinomial_cobweb, m) {
@@ -916,6 +1130,7 @@ PYBIND11_MODULE(multinomial_cobweb, m) {
         .def("predict", &MultinomialCobwebNode::predict, py::arg("attr") = "",
                 py::arg("choiceFn") = "most likely",
                 py::arg("allowNone") = true )
+        .def("get_best_level", &MultinomialCobwebNode::get_best_level, py::return_value_policy::copy)
         .def("get_basic_level", &MultinomialCobwebNode::get_basic_level, py::return_value_policy::copy)
         .def("log_prob_class_given_instance", &MultinomialCobwebNode::log_prob_class_given_instance)
         .def("expected_correct_guesses", &MultinomialCobwebNode::expected_correct_guesses)
@@ -936,6 +1151,8 @@ PYBIND11_MODULE(multinomial_cobweb, m) {
         .def("categorize", &MultinomialCobwebTree::categorize, py::return_value_policy::copy)
         .def("clear", &MultinomialCobwebTree::clear)
         .def("__str__", &MultinomialCobwebTree::__str__)
+        .def("dump_json", &MultinomialCobwebTree::dump_json)
+        .def("load_json", &MultinomialCobwebTree::load_json)
         .def_readonly("root", &MultinomialCobwebTree::root);
 //         .def_readonly("meanSq", &ContinuousValue::meanSq);
 }
