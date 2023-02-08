@@ -20,6 +20,7 @@ typedef string ATTR_TYPE;
 typedef string VALUE_TYPE;
 typedef int COUNT_TYPE;
 typedef unordered_map<ATTR_TYPE, unordered_map<VALUE_TYPE, COUNT_TYPE>> AV_COUNT_TYPE;
+typedef unordered_map<ATTR_TYPE, set<VALUE_TYPE>> AV_KEY_TYPE;
 typedef pair<double, string> OPERATION_TYPE;
 
 class MultinomialCobwebTree;
@@ -133,6 +134,7 @@ class MultinomialCobwebTree {
 public:
     float alpha;
     MultinomialCobwebNode *root;
+    // AV_KEY_TYPE av_key;
 
     MultinomialCobwebTree() {
         this->alpha = 1.0;
@@ -258,6 +260,14 @@ public:
     }
 
     MultinomialCobwebNode *ifit(AV_COUNT_TYPE instance) {
+        // for (auto &[attr, val_map]: instance) {
+        //     if (attr[0] == '_') continue;
+
+        //     for (auto &[val, cnt]: val_map) {
+        //         this->av_key[attr].insert(val);
+        //     }
+        // }
+
         return this->cobweb(instance);
     }
 
@@ -387,6 +397,7 @@ inline void MultinomialCobwebNode::increment_counts(const AV_COUNT_TYPE &instanc
 
         for (auto &[val, cnt]: val_map) {
             if (!hidden and this->av_counts.count(attr) and this->av_counts.at(attr).count(val)){
+                // this->squared_counts[attr] -= pow(this->av_counts[attr][val] + this->tree->alpha, 2);
                 this->squared_counts[attr] -= pow(this->av_counts[attr][val], 2);
             }
 
@@ -394,6 +405,7 @@ inline void MultinomialCobwebNode::increment_counts(const AV_COUNT_TYPE &instanc
             this->av_counts[attr][val] += cnt;
 
             if (!hidden){
+                // this->squared_counts[attr] += pow(this->av_counts[attr][val] + this->tree->alpha, 2);
                 this->squared_counts[attr] += pow(this->av_counts[attr][val], 2);
             }
         }
@@ -410,12 +422,14 @@ inline void MultinomialCobwebNode::update_counts_from_node(MultinomialCobwebNode
 
         for (auto&[val, tmp2]: node->av_counts.at(attr)) {
             if (!hidden and this->av_counts.count(attr) and this->av_counts.at(attr).count(val)){
+                // this->squared_counts[attr] -= pow(this->av_counts[attr][val] + this->tree->alpha, 2);
                 this->squared_counts[attr] -= pow(this->av_counts[attr][val], 2);
             }
 
             this->av_counts[attr][val] += node->av_counts.at(attr).at(val);
 
             if (!hidden){
+                // this->squared_counts[attr] += pow(this->av_counts[attr][val] + this->tree->alpha, 2);
                 this->squared_counts[attr] += pow(this->av_counts[attr][val], 2);
             }
         }
@@ -425,10 +439,12 @@ inline void MultinomialCobwebNode::update_counts_from_node(MultinomialCobwebNode
 inline double MultinomialCobwebNode::expected_correct_guesses_insert(const AV_COUNT_TYPE &instance){
     unordered_map<ATTR_TYPE, COUNT_TYPE> squared_counts = unordered_map<ATTR_TYPE, COUNT_TYPE>();
     unordered_map<ATTR_TYPE, COUNT_TYPE> counts = unordered_map<ATTR_TYPE, COUNT_TYPE>();
+    unordered_map<ATTR_TYPE, COUNT_TYPE> val_counts = unordered_map<ATTR_TYPE, COUNT_TYPE>();
 
     for (auto &[attr, cnt]: this->squared_counts) {
         squared_counts[attr] = cnt;
         counts[attr] = this->counts[attr];
+        val_counts[attr] = this->av_counts.at(attr).size();
     } 
 
     for (auto &[attr, val_map]: instance) {
@@ -440,22 +456,33 @@ inline double MultinomialCobwebNode::expected_correct_guesses_insert(const AV_CO
             COUNT_TYPE av_count = 0;
             if (this->av_counts.count(attr) and this->av_counts.at(attr).count(val)){
                 av_count = this->av_counts.at(attr).at(val);
+                // squared_counts[attr] -= pow(av_count + this->tree->alpha, 2);
                 squared_counts[attr] -= pow(av_count, 2);
             }
+            else{
+                val_counts[attr] += 1;
+            }
 
+            // squared_counts[attr] += pow(av_count + cnt + this->tree->alpha, 2);
             squared_counts[attr] += pow(av_count + cnt, 2);
             counts[attr] += cnt;
         }
     }
 
-    double expected_correct_guesses = 0.0;
+    double expected_correct_guesses = 1.0;
     for (auto &[attr, cnt]: squared_counts) {
         if (attr[0] != '_'){
-            double multiplier = pow(this->counts[attr] / this->count, 2);
-            expected_correct_guesses += (multiplier * squared_counts[attr]) / pow(counts[attr], 2);
+            double multiplier = 1.0;
+            // double multiplier = this->counts[attr] / this->count;
+            expected_correct_guesses *= (multiplier * (squared_counts[attr])) / pow(counts[attr], 2);
+            
+            // double num_vals = this->tree->av_key.at(attr).size();
+            // double num_missing = num_vals - val_counts.at(attr);
+            // double missing_counts = num_missing * pow(this->tree->alpha, 2);
+            // expected_correct_guesses += (multiplier * (squared_counts[attr] + missing_counts)) /
+            //     pow(counts[attr] + num_vals * this->tree->alpha, 2);
         }
     }
-
 
     return expected_correct_guesses;
 
@@ -488,9 +515,11 @@ inline double MultinomialCobwebNode::expected_correct_guesses_merge(MultinomialC
             int big_count = 0;
             if (big->av_counts.count(attr) && big->av_counts.at(attr).count(val)){
                 big_count = big->av_counts.at(attr).at(val);
+                // squared_counts[attr] -= pow(big_count + this->tree->alpha, 2);
                 squared_counts[attr] -= pow(big_count, 2);
             }
 
+            // squared_counts[attr] += pow(big_count + small->av_counts.at(attr).at(val) + this->tree->alpha, 2); 
             squared_counts[attr] += pow(big_count + small->av_counts.at(attr).at(val), 2); 
             counts[attr] += small->av_counts.at(attr).at(val);
         }
@@ -513,19 +542,28 @@ inline double MultinomialCobwebNode::expected_correct_guesses_merge(MultinomialC
             }
 
             if ((big_count + small_count) > 0){
+                // squared_counts[attr] -= pow(big_count + small_count + this->tree->alpha, 2);
                 squared_counts[attr] -= pow(big_count + small_count, 2);
             }
 
+            // squared_counts[attr] += pow(big_count + small_count + cnt + this->tree->alpha, 2);
             squared_counts[attr] += pow(big_count + small_count + cnt, 2);
             counts[attr] += cnt;
         }
     }
 
-    double expected_correct_guesses = 0.0;
+    double expected_correct_guesses = 1.0;
     for (auto &[attr, cnt]: squared_counts) {
         if (attr[0] != '_'){
-            double multiplier = pow(this->counts[attr] / this->count, 2);
-            expected_correct_guesses += (multiplier * squared_counts[attr]) / pow(counts[attr], 2);
+            double multiplier = 1.0;
+            // double multiplier = this->counts[attr] / this->count;
+            expected_correct_guesses *= (multiplier * squared_counts[attr]) / pow(counts[attr], 2);
+
+            // double num_vals = this->tree->av_key.at(attr).size();
+            // double num_missing = num_vals - this->av_counts.at(attr).size();
+            // double missing_counts = num_missing * pow(this->tree->alpha, 2);
+            // expected_correct_guesses += (multiplier * (squared_counts[attr] + missing_counts)) /
+            //     pow(counts[attr] + num_vals * this->tree->alpha, 2);
         }
     }
 
@@ -570,11 +608,18 @@ inline MultinomialCobwebNode* MultinomialCobwebNode::get_basic_level(){
 }
 
 inline double MultinomialCobwebNode::expected_correct_guesses() {
-    double expected_correct_guesses = 0.0;
+    double expected_correct_guesses = 1.0;
     for (auto &[attr, cnt]: this->squared_counts) {
         if (attr[0] != '_'){
-            double multiplier = pow(this->counts[attr] / this->count, 2);
-            expected_correct_guesses += (multiplier * this->squared_counts[attr]) / pow(this->counts[attr], 2);
+            double multiplier = 1.0;
+            // double multiplier = this->counts[attr] / this->count;
+            expected_correct_guesses *= (multiplier * squared_counts[attr]) / pow(counts[attr], 2);
+
+            // double num_vals = this->tree->av_key.at(attr).size();
+            // double num_missing = num_vals - this->av_counts.at(attr).size();
+            // double missing_counts = num_missing * pow(this->tree->alpha, 2);
+            // expected_correct_guesses += (multiplier * (squared_counts[attr] + missing_counts)) /
+            //     pow(counts[attr] + num_vals * this->tree->alpha, 2);
         }
     }
 
@@ -663,7 +708,6 @@ inline double MultinomialCobwebNode::cu_for_insert(MultinomialCobwebNode *child,
 
     child_correct_guesses /= (count + 1);
     double parent_correct_guesses = this->expected_correct_guesses_insert(instance);
-
     return ((child_correct_guesses - parent_correct_guesses) / children.size());
 }
 
@@ -683,8 +727,12 @@ inline double MultinomialCobwebNode::cu_for_new_child(const AV_COUNT_TYPE &insta
         child_correct_guesses += (c->count * c->expected_correct_guesses()); 
     }
 
-    // sum over all attr (at 100% prob) divided by num attr should be 1.
-    child_correct_guesses += 1;
+    // Create node and compute EC over it (we can't just say 1 because of multinomial)
+    MultinomialCobwebNode new_child = MultinomialCobwebNode();
+    new_child.parent = this;
+    new_child.tree = this->tree;
+    new_child.increment_counts(instance);
+    child_correct_guesses += new_child.expected_correct_guesses();
 
     child_correct_guesses /= (count + 1);
     double parent_correct_guesses = expected_correct_guesses_insert(instance);
@@ -1087,6 +1135,7 @@ inline double MultinomialCobwebNode::log_prob_class_given_instance(const AV_COUN
             continue;
         }
 
+        // double num_vals = this->tree->av_key.at(attr).size();
         double num_vals = this->tree->root->av_counts.at(attr).size();
 
         for (auto &[val, cnt]: vAttr){
