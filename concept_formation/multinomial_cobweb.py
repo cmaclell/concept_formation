@@ -5,7 +5,7 @@ classes which are used to achieve the basic Cobweb functionality.
 import json
 from random import shuffle
 from random import random
-from math import log2 as log
+from math import log
 from math import isclose
 from collections import defaultdict
 from collections import Counter
@@ -26,8 +26,16 @@ class MultinomialCobwebTree(object):
         """
         self.root = MultinomialCobwebNode()
         self.root.tree = self
-        self.alpha = 0.01
+        self.alpha_weight = 10
+        # self.alpha = 0.01
         self.attr_vals = defaultdict(set)
+
+    def alpha(self, attr):
+        n_vals = len(self.attr_vals[attr])
+        if n_vals == 0:
+            return 1.0
+        else:
+            return self.alpha_weight / n_vals
 
     def clear(self):
         """
@@ -310,13 +318,14 @@ class MultinomialCobwebNode(object):
 
     def log_prob_class_given_instance(self, instance):
 
-        alpha = 1.0
         log_prob = 0;
 
         for attr in instance:
             hidden = attr[0] == '_';
             if hidden or attr not in self.tree.root.av_counts:
                 continue
+
+            alpha = self.tree.alpha(attr)
 
             num_vals = len(self.tree.attr_vals[attr])
             # num_vals = len(self.tree.root.av_counts[attr])
@@ -366,7 +375,7 @@ class MultinomialCobwebNode(object):
             for val in node.av_counts[attr]:
                 self.av_counts[attr][val] += node.av_counts[attr][val]
 
-    def expected_correct_guesses_insert(self, instance):
+    def entropy_insert(self, instance):
         """
         Returns the expected correct guesses that would result from inserting
         the instance into the current node. 
@@ -374,40 +383,35 @@ class MultinomialCobwebNode(object):
         This operation can be used instead of inplace and copying because it
         only looks at the attr values used in the instance and reduces iteration.
         """
-
-        av_counts = defaultdict(Counter)
-        attr_counts = Counter()
-        for attr in self.av_counts:
-            attr_counts[attr] = self.attr_counts[attr]
-
-            for val in self.av_counts[attr]:
-                av_counts[attr][val] = self.av_counts[attr][val]
-
-        for attr in instance:
-            for val in instance[attr]:
-                av_counts[attr][val] += instance[attr][val]
-                attr_counts[attr] += instance[attr][val]
-
         info = 0
-        for attr in av_counts:
-            for val in av_counts[attr]:
-                # p = av_counts[attr][val] / attr_counts[attr]
-                p = ((av_counts[attr][val] + self.tree.alpha)/
-                     (attr_counts[attr] + len(self.tree.attr_vals[attr]) *
-                      self.tree.alpha))
-                info += p * log(p)
-                # info += p * p
+        for attr in set(self.av_counts).union(set(instance)):
+            a_count = self.attr_counts[attr]
+            if attr in instance:
+                a_count += sum(instance[attr].values())
 
-            num_missing = len(self.tree.attr_vals[attr]) - len(av_counts[attr])
-            if num_missing > 0 and self.tree.alpha > 0:
-                p = (self.tree.alpha / (attr_counts[attr] +
-                                        len(self.tree.attr_vals[attr]) *
-                                        self.tree.alpha))
+            vals = set(self.av_counts[attr])
+            if attr in instance:
+                vals = vals.union(set(instance[attr]))
+
+            for val in vals:
+                av_count = self.av_counts[attr][val]
+
+                if attr in instance and val in instance[attr]:
+                    av_count += instance[attr][val]
+
+                p = ((av_count + self.tree.alpha(attr))/
+                     (a_count + len(self.tree.attr_vals[attr]) * self.tree.alpha(attr)))
+                info += p * log(p)
+
+            num_missing = len(self.tree.attr_vals[attr]) - len(vals)
+            if num_missing > 0 and self.tree.alpha(attr) > 0:
+                p = (self.tree.alpha(attr) /
+                     (a_count + len(self.tree.attr_vals[attr]) * self.tree.alpha(attr)))
                 info += num_missing * p * log(p)
         
         return info
 
-    def expected_correct_guesses_merge(self, other, instance):
+    def entropy_merge(self, other, instance):
         """
         Returns the expected correct guesses that would result from merging the
         current concept with the other concept and inserting the instance.
@@ -439,50 +443,43 @@ class MultinomialCobwebNode(object):
         for attr in av_counts:
             for val in av_counts[attr]:
                 # p = av_counts[attr][val] / attr_counts[attr]
-                p = ((av_counts[attr][val] + self.tree.alpha)/
+                p = ((av_counts[attr][val] + self.tree.alpha(attr))/
                      (attr_counts[attr] + len(self.tree.attr_vals[attr]) *
-                      self.tree.alpha))
+                      self.tree.alpha(attr)))
                 info += p * log(p)
                 # info += p * p
 
             num_missing = len(self.tree.attr_vals[attr]) - len(av_counts[attr])
-            if num_missing > 0 and self.tree.alpha > 0:
-                p = (self.tree.alpha / (attr_counts[attr] +
+            if num_missing > 0 and self.tree.alpha(attr) > 0:
+                p = (self.tree.alpha(attr) / (attr_counts[attr] +
                                         len(self.tree.attr_vals[attr]) *
-                                        self.tree.alpha))
+                                        self.tree.alpha(attr)))
                 info += num_missing * p * log(p)
         
         return info
 
 
-    def expected_correct_guesses(self):
+    def entropy(self):
         """
-        Returns the number of correct guesses that are expected from the given
-        concept.
+        Returns the entropy or the amount of information needed to encode distributions.
 
-        This is the sum of the probability of each attribute value squared.
-        This function is used in calculating category utility.
-
-        :return: the number of correct guesses that are expected from the given
-                 concept.
-        :rtype: float
+        This formula contains a smoothing capability that ensures all
+        experienced attribute values have some probability mass.
         """
         info = 0
         for attr in self.av_counts:
             for val in self.av_counts[attr]:
-                # p = self.av_counts[attr][val] / self.attr_counts[attr]
-                p = ((self.av_counts[attr][val] + self.tree.alpha)/
+                p = ((self.av_counts[attr][val] + self.tree.alpha(attr))/
                      (self.attr_counts[attr] + len(self.tree.attr_vals[attr]) *
-                      self.tree.alpha))
+                      self.tree.alpha(attr)))
                 info += p * log(p)
 
             num_missing = len(self.tree.attr_vals[attr]) - len(self.av_counts[attr])
-            if num_missing > 0 and self.tree.alpha > 0:
-                p = (self.tree.alpha / (self.attr_counts[attr] +
+            if num_missing > 0 and self.tree.alpha(attr) > 0:
+                p = (self.tree.alpha(attr) / (self.attr_counts[attr] +
                                         len(self.tree.attr_vals[attr]) *
-                                        self.tree.alpha))
+                                        self.tree.alpha(attr)))
                 info += num_missing * p * log(p)
-                # info += p * p
         
         return info
 
@@ -526,11 +523,11 @@ class MultinomialCobwebNode(object):
             p_of_child = child.count / self.count
             info_c -= p_of_child * log(p_of_child)
             child_correct_guesses += (p_of_child *
-                                      child.expected_correct_guesses())
+                                      child.entropy())
 
-        return ((child_correct_guesses - self.expected_correct_guesses()) 
-                - 2 * info_c)
-                # / len(self.children))
+        return ((child_correct_guesses - self.entropy()) 
+                # - info_c)
+                / len(self.children))
 
     def get_best_operation(self, instance, best1, best2, best1_cu,
                            best_op=True, new_op=True, merge_op=True, split_op=True):
@@ -641,7 +638,8 @@ class MultinomialCobwebNode(object):
         if len(self.children) == 0:
             raise Exception("No children!")
 
-        relative_cus = [(((child.count + 1) * child.expected_correct_guesses_insert(instance)) - (child.count * child.expected_correct_guesses()),
+        relative_cus = [(((child.count + 1) * child.entropy_insert(instance)) -
+                         (child.count * child.entropy()),
                          child.count, random(), child) for child in
                         self.children]
         relative_cus.sort(reverse=True)
@@ -685,20 +683,20 @@ class MultinomialCobwebNode(object):
                 p_of_child = (c.count+1) / (self.count + 1)
                 info_c -= p_of_child * log(p_of_child)
                 child_correct_guesses += ((c.count+1) *
-                                          c.expected_correct_guesses_insert(instance))
+                                          c.entropy_insert(instance))
             else:
                 p_of_child = (c.count) / (self.count + 1)
                 info_c -= p_of_child * log(p_of_child)
                 child_correct_guesses += (c.count *
-                                          c.expected_correct_guesses())
+                                          c.entropy())
 
         child_correct_guesses /= (self.count + 1)
-        parent_correct_guesses = self.expected_correct_guesses_insert(instance)
+        parent_correct_guesses = self.entropy_insert(instance)
 
         return ((child_correct_guesses - parent_correct_guesses) 
-                - info_c)
+                # - info_c)
                 # / 1)
-                # / len(self.children))
+                / len(self.children))
 
     def create_new_child(self, instance):
         """
@@ -742,7 +740,7 @@ class MultinomialCobwebNode(object):
         for c in self.children:
             p_of_child = c.count / (self.count + 1)
             info_c -= p_of_child * log(p_of_child)
-            child_correct_guesses += (c.count * c.expected_correct_guesses())
+            child_correct_guesses += (c.count * c.entropy())
 
         # sum over all attr (at 100% prob) divided by num attr should be 1.
         # child_correct_guesses += 1
@@ -750,17 +748,17 @@ class MultinomialCobwebNode(object):
         new_child.parent = self
         new_child.tree = self.tree
         new_child.increment_counts(instance)
-        child_correct_guesses += new_child.expected_correct_guesses()
+        child_correct_guesses += new_child.entropy()
         p_of_child = 1 / (self.count + 1)
         info_c -= p_of_child * log(p_of_child)
 
         child_correct_guesses /= (self.count + 1)
-        parent_correct_guesses = self.expected_correct_guesses_insert(instance)
+        parent_correct_guesses = self.entropy_insert(instance)
 
         return ((child_correct_guesses - parent_correct_guesses)
-                - info_c)
+                # - info_c)
                 # / 1)
-                # / (len(self.children)+1))
+                / (len(self.children)+1))
 
 
     def merge(self, best1, best2):
@@ -829,20 +827,20 @@ class MultinomialCobwebNode(object):
             info_c -= p_of_child * log(p_of_child)
 
             child_correct_guesses += (c.count *
-                                      c.expected_correct_guesses())
+                                      c.entropy())
 
         p_of_child = (best1.count + best2.count + 1) / (self.count + 1)
         info_c -= p_of_child * log(p_of_child)
         child_correct_guesses += ((best1.count + best2.count + 1) *
-                                  best1.expected_correct_guesses_merge(best2, instance))
+                                  best1.entropy_merge(best2, instance))
 
         child_correct_guesses /= (self.count + 1)
-        parent_correct_guesses = self.expected_correct_guesses_insert(instance)
+        parent_correct_guesses = self.entropy_insert(instance)
 
         return ((child_correct_guesses - parent_correct_guesses)
-                - info_c)
+                # - info_c)
                 # / 1)
-                # (len(self.children)-1))
+                / (len(self.children)-1))
     
 
     def split(self, best):
@@ -891,20 +889,20 @@ class MultinomialCobwebNode(object):
             p_of_child = c.count / self.count
             info_c -= p_of_child * log(p_of_child)
 
-            child_correct_guesses += (c.count * c.expected_correct_guesses())
+            child_correct_guesses += (c.count * c.entropy())
 
         for c in best.children:
             p_of_child = c.count / self.count
             info_c -= p_of_child * log(p_of_child)
-            child_correct_guesses += (c.count * c.expected_correct_guesses())
+            child_correct_guesses += (c.count * c.entropy())
 
         child_correct_guesses /= self.count
-        parent_correct_guesses = self.expected_correct_guesses()
+        parent_correct_guesses = self.entropy()
 
         return ((child_correct_guesses - parent_correct_guesses)
-                - info_c)
+                # - info_c)
                 # / 1)
-                # (len(self.children) - 1 + len(best.children)))
+                / (len(self.children) - 1 + len(best.children)))
 
     def is_exact_match(self, instance):
         """
@@ -1044,7 +1042,7 @@ class MultinomialCobwebNode(object):
         output['children'] = []
 
         temp = {}
-        temp['_basic_cu'] = {"#ContinuousValue#": {'mean': self.expected_correct_guesses(),
+        temp['_basic_cu'] = {"#ContinuousValue#": {'mean': self.entropy(),
                                                    'std': 1, 'n': 1}}
         temp['_basic_cu2'] = {"#ContinuousValue#": {'mean': self.category_utility(),
                                                    'std': 1, 'n': 1}}
