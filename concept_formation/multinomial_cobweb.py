@@ -10,8 +10,11 @@ from math import isclose
 from collections import defaultdict
 from collections import Counter
 
+import torch
+
 from concept_formation.utils import weighted_choice
 from concept_formation.utils import most_likely_choice
+from concept_formation.utils import OnlineDictVectorizer
 
 
 class MultinomialCobwebTree(object):
@@ -20,18 +23,17 @@ class MultinomialCobwebTree(object):
     cobweb algorithm and can be used to fit and categorize instances.
     """
 
-    def __init__(self):
+    def __init__(self, sizes, device=None):
         """
         The tree constructor.
         """
-        self.root = MultinomialCobwebNode()
-        self.root.tree = self
-        self.alpha_weight = 10
-        # self.alpha = 0.01
-        self.attr_vals = defaultdict(set)
+        self.sizes = sizes
+        self.device = device
+        self.alpha_weight = 1
+        self.clear()
 
     def alpha(self, attr):
-        n_vals = len(self.attr_vals[attr])
+        n_vals = len(self.dict_vectorizer[attr].key)
         if n_vals == 0:
             return 1.0
         else:
@@ -44,11 +46,12 @@ class MultinomialCobwebTree(object):
         self.root = MultinomialCobwebNode()
         self.root.tree = self
 
+        self.dict_vectorizer = {}
+        for attr in self.sizes:
+            self.dict_vectorizer[attr] = OnlineDictVectorizer(self.sizes[attr], device=self.device)
+
     def __str__(self):
         return str(self.root)
-
-    def _sanity_check_instance(self, instance):
-        return True
 
     def ifit(self, instance):
         """
@@ -67,12 +70,12 @@ class MultinomialCobwebTree(object):
 
         .. seealso:: :meth:`CobwebTree.cobweb`
         """
-        self._sanity_check_instance(instance)
+        transformed_instance = {}
         for attr in instance:
-            for val in instance[attr]:
-                self.attr_vals[attr].add(val)
+            transformed_instance[attr] = self.dict_vectorizer[attr].fit_transform(
+                    instance[attr])
 
-        return self.cobweb(instance)
+        return self.cobweb(transformed_instance)
 
     def fit(self, instances, iterations=1, randomize_first=True):
         """
@@ -239,7 +242,6 @@ class MultinomialCobwebTree(object):
         :return: A completed instance
         :rtype: :ref:`Instance<instance-rep>`
         """
-        self._sanity_check_instance(instance)
         temp_instance = {a: instance[a] for a in instance}
         concept = self._cobweb_categorize(temp_instance)
 
@@ -270,7 +272,6 @@ class MultinomialCobwebTree(object):
 
         .. seealso:: :meth:`CobwebTree.cobweb`
         """
-        self._sanity_check_instance(instance)
         return self._cobweb_categorize(instance)
 
 
@@ -303,7 +304,7 @@ class MultinomialCobwebNode(object):
         # self.squared_counts = 0.0
         # self.attr_counts = 0.0
         self.attr_counts = Counter()
-        self.av_counts = defaultdict(Counter)
+        self.av_counts = {} 
         self.children = []
         self.parent = None
         self.tree = None
@@ -327,18 +328,20 @@ class MultinomialCobwebNode(object):
 
             alpha = self.tree.alpha(attr)
 
-            num_vals = len(self.tree.attr_vals[attr])
+            num_vals = len(self.tree.dict_vectorizer[attr].key)
             # num_vals = len(self.tree.root.av_counts[attr])
 
             for val in instance[attr]:
-                if val not in self.tree.root.av_counts[attr]:
+                if val not in self.tree.dict_vectorizer[attr].key:
                     continue
             
                 av_count = alpha
-                if attr in self.av_counts and val in self.av_counts[attr]:
-                    av_count += self.av_counts[attr][val]
+                if attr in self.av_counts:
+                    av_count += self.av_counts[attr][self.tree.dict_vectorizer[attr].key[val]]
 
-                log_prob += instance[attr][val] * log((1.0 * av_count) / (self.attr_counts[attr] + num_vals * alpha))
+                log_prob += instance[attr][val] * log((1.0 * av_count) /
+                                                      (self.av_counts[attr].sum() +
+                                                       num_vals * alpha))
 
         log_prob += log((1.0 * self.count) / self.tree.root.count)
 
@@ -354,9 +357,12 @@ class MultinomialCobwebNode(object):
         """
         self.count += 1
         for attr in instance:
-            for val in instance[attr]:
-                self.attr_counts[attr] += instance[attr][val]
-                self.av_counts[attr][val] += instance[attr][val]
+            if attr not in self.av_counts:
+                self.av_counts[attr] = instance[attr].detach().clone()
+            else:
+                self.av_counts[attr] += instance[attr]
+
+            self.attr_counts[attr] += instance[attr].sum()
 
     def update_counts_from_node(self, node):
         """
@@ -370,10 +376,12 @@ class MultinomialCobwebNode(object):
         """
         self.count += node.count
         for attr in node.av_counts:
+            if attr not in self.av_counts:
+                self.av_counts[attr] = node.av_counts[attr].clone()
+            else:
+                self.av_counts[attr] += node.av_counts[attr]
+
             self.attr_counts[attr] += node.attr_counts[attr]
-            
-            for val in node.av_counts[attr]:
-                self.av_counts[attr][val] += node.av_counts[attr][val]
 
     def entropy_insert(self, instance):
         """
@@ -385,30 +393,17 @@ class MultinomialCobwebNode(object):
         """
         info = 0
         for attr in set(self.av_counts).union(set(instance)):
-            a_count = self.attr_counts[attr]
-            if attr in instance:
-                a_count += sum(instance[attr].values())
+            if attr in self.av_counts:
+                c = self.av_counts[attr] + instance[attr]
+            else:
+                c = instance[attr].clone()
 
-            vals = set(self.av_counts[attr])
-            if attr in instance:
-                vals = vals.union(set(instance[attr]))
-
-            for val in vals:
-                av_count = self.av_counts[attr][val]
-
-                if attr in instance and val in instance[attr]:
-                    av_count += instance[attr][val]
-
-                p = ((av_count + self.tree.alpha(attr))/
-                     (a_count + len(self.tree.attr_vals[attr]) * self.tree.alpha(attr)))
-                info += p * log(p)
-
-            num_missing = len(self.tree.attr_vals[attr]) - len(vals)
-            if num_missing > 0 and self.tree.alpha(attr) > 0:
-                p = (self.tree.alpha(attr) /
-                     (a_count + len(self.tree.attr_vals[attr]) * self.tree.alpha(attr)))
-                info += num_missing * p * log(p)
-        
+            c = c[:len(self.tree.dict_vectorizer[attr].key)]
+            c += self.tree.alpha(attr)
+            c = c[c > 0]
+            p = c / c.sum()
+            info += (p * torch.log(p)).sum()
+            
         return info
 
     def entropy_merge(self, other, instance):
@@ -419,43 +414,25 @@ class MultinomialCobwebNode(object):
         This operation can be used instead of inplace and copying because it
         only looks at the attr values used in the instance and reduces iteration.
         """
-        av_counts = defaultdict(Counter)
-        attr_counts = Counter()
-        for attr in self.av_counts:
-            attr_counts[attr] += self.attr_counts[attr]
-
-            for val in self.av_counts[attr]:
-                av_counts[attr][val] += self.av_counts[attr][val]
-
-        for attr in other.av_counts:
-            attr_counts[attr] += other.attr_counts[attr]
-
-            for val in other.av_counts[attr]:
-                av_counts[attr][val] += other.av_counts[attr][val]
-
-
-        for attr in instance:
-            for val in instance[attr]:
-                av_counts[attr][val] += instance[attr][val]
-                attr_counts[attr] += instance[attr][val]
-
         info = 0
-        for attr in av_counts:
-            for val in av_counts[attr]:
-                # p = av_counts[attr][val] / attr_counts[attr]
-                p = ((av_counts[attr][val] + self.tree.alpha(attr))/
-                     (attr_counts[attr] + len(self.tree.attr_vals[attr]) *
-                      self.tree.alpha(attr)))
-                info += p * log(p)
-                # info += p * p
-
-            num_missing = len(self.tree.attr_vals[attr]) - len(av_counts[attr])
-            if num_missing > 0 and self.tree.alpha(attr) > 0:
-                p = (self.tree.alpha(attr) / (attr_counts[attr] +
-                                        len(self.tree.attr_vals[attr]) *
-                                        self.tree.alpha(attr)))
-                info += num_missing * p * log(p)
         
+        for attr in set(self.av_counts).union(set(instance)).union(set(other.av_counts)):
+
+            c = instance[attr].detach().clone()
+
+            if attr in self.av_counts:
+                c += self.av_counts[attr]
+
+            if attr in other.av_counts:
+                c += other.av_counts[attr]
+
+            c = c[:len(self.tree.dict_vectorizer[attr].key)]
+
+            c += self.tree.alpha(attr)
+            c = c[c > 0]
+            p = c / c.sum()
+            info += (p * torch.log(p)).sum()
+            
         return info
 
 
@@ -468,18 +445,18 @@ class MultinomialCobwebNode(object):
         """
         info = 0
         for attr in self.av_counts:
-            for val in self.av_counts[attr]:
-                p = ((self.av_counts[attr][val] + self.tree.alpha(attr))/
-                     (self.attr_counts[attr] + len(self.tree.attr_vals[attr]) *
-                      self.tree.alpha(attr)))
-                info += p * log(p)
-
-            num_missing = len(self.tree.attr_vals[attr]) - len(self.av_counts[attr])
-            if num_missing > 0 and self.tree.alpha(attr) > 0:
-                p = (self.tree.alpha(attr) / (self.attr_counts[attr] +
-                                        len(self.tree.attr_vals[attr]) *
-                                        self.tree.alpha(attr)))
-                info += num_missing * p * log(p)
+            c = self.av_counts[attr].detach().clone()[:len(self.tree.dict_vectorizer[attr].key)]
+            c += self.tree.alpha(attr)
+            c = c[c > 0]
+            # print(c)
+            p = c / c.sum()
+            # print(p)
+            # print(p.sum())
+            infos = p * torch.log(p)
+            # print(infos)
+            info += infos.sum()
+            # print(info)
+            # print()
         
         return info
 
@@ -923,13 +900,12 @@ class MultinomialCobwebNode(object):
             if attr in self.av_counts and attr not in instance:
                 return False
             if attr in self.av_counts and attr in instance:
-                for val in set(instance[attr]).union(set(self.av_counts[attr])):
-                    if val in instance[attr] and val not in self.av_counts[attr]:
-                        return False
-                    if val in self.av_counts[attr] and val not in instance[attr]:
-                        return False
-                    if not instance[attr][val] == self.av_counts[attr][val]:
-                        return False
+                p_concept = self.av_counts[attr] / self.av_counts[attr].sum()
+                p_instance = instance[attr] / instance[attr].sum()
+
+                if not torch.isclose(p_concept, p_instance).all():
+                    return False
+                
         return True
 
     def __hash__(self):
@@ -1042,14 +1018,17 @@ class MultinomialCobwebNode(object):
         output['children'] = []
 
         temp = {}
-        temp['_basic_cu'] = {"#ContinuousValue#": {'mean': self.entropy(),
+        temp['_basic_cu'] = {"#ContinuousValue#": {'mean': float(self.entropy()),
                                                    'std': 1, 'n': 1}}
-        temp['_basic_cu2'] = {"#ContinuousValue#": {'mean': self.category_utility(),
+        temp['_basic_cu2'] = {"#ContinuousValue#": {'mean': float(self.category_utility()),
                                                    'std': 1, 'n': 1}}
         for attr in self.av_counts:
-            for value in self.av_counts[attr]:
-                temp[str(attr)] = {str(value): self.av_counts[attr][value] for
-                                   value in self.av_counts[attr]}
+            temp[str(attr)] = {str(value): float(self.av_counts[attr][
+                self.tree.dict_vectorizer[attr].key[value]]) for value in
+                               self.tree.dict_vectorizer[attr].key if
+                               float(self.av_counts[attr][
+                                   self.tree.dict_vectorizer[attr].key[value]])
+                               > 0}
 
         for child in self.children:
             output["children"].append(child.output_dict())

@@ -12,6 +12,8 @@ from random import random
 from math import sqrt
 from math import isnan
 
+import torch
+
 
 # A hashtable of values to use in the c4(n) function to apply corrections to
 # estimates of std.
@@ -44,6 +46,73 @@ c4n_table = {2: 0.7978845608028654,
              28: 0.9907855696217323,
              29: 0.9911130482419843}
 
+class OnlineDictVectorizer():
+
+    def __init__(self, n_features, dtype=None, device=None):
+        self.n_features = n_features
+
+        if dtype is None:
+            dtype = torch.float
+
+        self.device = device
+        self.dtype = dtype
+        self.reset()
+
+    def reset(self):
+        self.key = {}
+
+    def fit(self, X):
+        """
+        Given a set of X, it updates the key with any new values.
+        """
+
+        for x in X:
+            for f, v in x.items():
+                if f not in self.key:
+                    if len(self.key) < self.n_features:
+                        self.key[f] = len(self.key)
+                    else:
+                        print("Exceeded available features")
+
+        return self
+
+    def transform(self, X):
+        """
+        Transforms the data using existing key mappings.
+        """
+        new_X = torch.zeros((len(X), self.n_features), dtype=self.dtype,
+                            device=self.device, requires_grad=False)
+
+        for i, x in enumerate(X):
+            for f, v in x.items():
+                try:
+                    new_X[i, self.key[f]] = v
+                except KeyError:
+                    pass
+
+        return new_X
+
+    def fit_transform(self, x):
+        """
+        Similar to two calls of fit and transform, but does it all in
+        one iteration rather than two through the data.
+        """
+        new_x = torch.zeros(self.n_features, dtype=self.dtype,
+                            device=self.device, requires_grad=False)
+
+        for f, v in x.items():
+            if f not in self.key:
+                if len(self.key) < self.n_features:
+                    self.key[f] = len(self.key)
+                else:
+                    print("Exceeded available features")
+
+            try:
+                new_x[self.key[f]] = v
+            except KeyError:
+                pass
+
+        return new_x
 
 def c4(n):
     """
