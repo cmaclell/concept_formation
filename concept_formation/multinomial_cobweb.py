@@ -401,13 +401,13 @@ class MultinomialCobwebNode(object):
 
                 p = ((av_count + self.tree.alpha(attr))/
                      (a_count + len(self.tree.attr_vals[attr]) * self.tree.alpha(attr)))
-                info += p * log(p)
+                info -= p * log(p)
 
             num_missing = len(self.tree.attr_vals[attr]) - len(vals)
             if num_missing > 0 and self.tree.alpha(attr) > 0:
                 p = (self.tree.alpha(attr) /
                      (a_count + len(self.tree.attr_vals[attr]) * self.tree.alpha(attr)))
-                info += num_missing * p * log(p)
+                info -= num_missing * p * log(p)
         
         return info
 
@@ -442,19 +442,17 @@ class MultinomialCobwebNode(object):
         info = 0
         for attr in av_counts:
             for val in av_counts[attr]:
-                # p = av_counts[attr][val] / attr_counts[attr]
                 p = ((av_counts[attr][val] + self.tree.alpha(attr))/
                      (attr_counts[attr] + len(self.tree.attr_vals[attr]) *
                       self.tree.alpha(attr)))
-                info += p * log(p)
-                # info += p * p
+                info -= p * log(p)
 
             num_missing = len(self.tree.attr_vals[attr]) - len(av_counts[attr])
             if num_missing > 0 and self.tree.alpha(attr) > 0:
                 p = (self.tree.alpha(attr) / (attr_counts[attr] +
                                         len(self.tree.attr_vals[attr]) *
                                         self.tree.alpha(attr)))
-                info += num_missing * p * log(p)
+                info -= num_missing * p * log(p)
         
         return info
 
@@ -472,14 +470,14 @@ class MultinomialCobwebNode(object):
                 p = ((self.av_counts[attr][val] + self.tree.alpha(attr))/
                      (self.attr_counts[attr] + len(self.tree.attr_vals[attr]) *
                       self.tree.alpha(attr)))
-                info += p * log(p)
+                info -= p * log(p)
 
             num_missing = len(self.tree.attr_vals[attr]) - len(self.av_counts[attr])
             if num_missing > 0 and self.tree.alpha(attr) > 0:
                 p = (self.tree.alpha(attr) / (self.attr_counts[attr] +
                                         len(self.tree.attr_vals[attr]) *
                                         self.tree.alpha(attr)))
-                info += num_missing * p * log(p)
+                info -= num_missing * p * log(p)
         
         return info
 
@@ -516,18 +514,17 @@ class MultinomialCobwebNode(object):
         if len(self.children) == 0:
             return 0.0
 
-        child_correct_guesses = 0.0
+        children_entropy = 0.0
 
         info_c = 0.0
         for child in self.children:
             p_of_child = child.count / self.count
             info_c -= p_of_child * log(p_of_child)
-            child_correct_guesses += (p_of_child *
-                                      child.entropy())
+            children_entropy += (p_of_child * child.entropy())
 
-        return ((child_correct_guesses - self.entropy()) 
-                # - info_c)
-                / len(self.children))
+        return ((self.entropy() - children_entropy) 
+                - info_c)
+                # / len(self.children))
 
     def get_best_operation(self, instance, best1, best2, best1_cu,
                            best_op=True, new_op=True, merge_op=True, split_op=True):
@@ -638,8 +635,8 @@ class MultinomialCobwebNode(object):
         if len(self.children) == 0:
             raise Exception("No children!")
 
-        relative_cus = [(((child.count + 1) * child.entropy_insert(instance)) -
-                         (child.count * child.entropy()),
+        relative_cus = [((child.count * child.entropy()) -
+                         ((child.count + 1) * child.entropy_insert(instance)),
                          child.count, random(), child) for child in
                         self.children]
         relative_cus.sort(reverse=True)
@@ -675,28 +672,23 @@ class MultinomialCobwebNode(object):
             :meth:`CobwebNode.get_best_operation`
 
         """
-        child_correct_guesses = 0.0
+        children_entropy = 0.0
 
         info_c = 0.0
         for c in self.children:
             if c == child:
                 p_of_child = (c.count+1) / (self.count + 1)
                 info_c -= p_of_child * log(p_of_child)
-                child_correct_guesses += ((c.count+1) *
-                                          c.entropy_insert(instance))
+                children_entropy += p_of_child * c.entropy_insert(instance)
             else:
                 p_of_child = (c.count) / (self.count + 1)
                 info_c -= p_of_child * log(p_of_child)
-                child_correct_guesses += (c.count *
-                                          c.entropy())
+                children_entropy += p_of_child * c.entropy()
 
-        child_correct_guesses /= (self.count + 1)
-        parent_correct_guesses = self.entropy_insert(instance)
-
-        return ((child_correct_guesses - parent_correct_guesses) 
-                # - info_c)
+        return ((self.entropy_insert(instance) - children_entropy) 
+                - info_c)
                 # / 1)
-                / len(self.children))
+                # / len(self.children))
 
     def create_new_child(self, instance):
         """
@@ -734,31 +726,26 @@ class MultinomialCobwebNode(object):
 
         .. seealso:: :meth:`CobwebNode.get_best_operation`
         """
-        child_correct_guesses = 0.0
+        children_entropy = 0.0
 
         info_c = 0.0
         for c in self.children:
             p_of_child = c.count / (self.count + 1)
             info_c -= p_of_child * log(p_of_child)
-            child_correct_guesses += (c.count * c.entropy())
+            children_entropy += p_of_child * c.entropy()
 
-        # sum over all attr (at 100% prob) divided by num attr should be 1.
-        # child_correct_guesses += 1
         new_child = self.__class__()
         new_child.parent = self
         new_child.tree = self.tree
         new_child.increment_counts(instance)
-        child_correct_guesses += new_child.entropy()
         p_of_child = 1 / (self.count + 1)
+        children_entropy += p_of_child * new_child.entropy()
         info_c -= p_of_child * log(p_of_child)
 
-        child_correct_guesses /= (self.count + 1)
-        parent_correct_guesses = self.entropy_insert(instance)
-
-        return ((child_correct_guesses - parent_correct_guesses)
-                # - info_c)
+        return ((self.entropy_insert(instance) - children_entropy)
+                - info_c)
                 # / 1)
-                / (len(self.children)+1))
+                # / (len(self.children)+1))
 
 
     def merge(self, best1, best2):
@@ -816,7 +803,7 @@ class MultinomialCobwebNode(object):
 
         .. seealso:: :meth:`CobwebNode.get_best_operation`
         """
-        child_correct_guesses = 0.0
+        children_entropy = 0.0
 
         info_c = 0.0
         for c in self.children:
@@ -825,22 +812,16 @@ class MultinomialCobwebNode(object):
 
             p_of_child = c.count / (self.count + 1)
             info_c -= p_of_child * log(p_of_child)
-
-            child_correct_guesses += (c.count *
-                                      c.entropy())
+            children_entropy += p_of_child * c.entropy()
 
         p_of_child = (best1.count + best2.count + 1) / (self.count + 1)
         info_c -= p_of_child * log(p_of_child)
-        child_correct_guesses += ((best1.count + best2.count + 1) *
-                                  best1.entropy_merge(best2, instance))
+        children_entropy += p_of_child * best1.entropy_merge(best2, instance)
 
-        child_correct_guesses /= (self.count + 1)
-        parent_correct_guesses = self.entropy_insert(instance)
-
-        return ((child_correct_guesses - parent_correct_guesses)
-                # - info_c)
+        return ((self.entropy_insert(instance) - children_entropy)
+                - info_c)
                 # / 1)
-                / (len(self.children)-1))
+                # / (len(self.children)-1))
     
 
     def split(self, best):
@@ -879,30 +860,26 @@ class MultinomialCobwebNode(object):
 
         .. seealso:: :meth:`CobwebNode.get_best_operation`
         """
-        child_correct_guesses = 0.0
-
+        children_entropy = 0.0
         info_c = 0.0
+
         for c in self.children:
             if c == best:
                 continue
 
             p_of_child = c.count / self.count
             info_c -= p_of_child * log(p_of_child)
-
-            child_correct_guesses += (c.count * c.entropy())
+            children_entropy += p_of_child * c.entropy()
 
         for c in best.children:
             p_of_child = c.count / self.count
             info_c -= p_of_child * log(p_of_child)
-            child_correct_guesses += (c.count * c.entropy())
+            children_entropy += p_of_child * c.entropy()
 
-        child_correct_guesses /= self.count
-        parent_correct_guesses = self.entropy()
-
-        return ((child_correct_guesses - parent_correct_guesses)
-                # - info_c)
+        return ((self.entropy() - children_entropy)
+                - info_c)
                 # / 1)
-                / (len(self.children) - 1 + len(best.children)))
+                # / (len(self.children) - 1 + len(best.children)))
 
     def is_exact_match(self, instance):
         """

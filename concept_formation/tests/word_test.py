@@ -2,12 +2,14 @@ import json
 import sys
 import os
 import re
+import itertools
 from collections import Counter
 from random import shuffle
 from random import random
+from time import sleep
 
 from tqdm import tqdm
-from spacy.lang.en import English
+import spacy
 
 from concept_formation.multinomial_cobweb import MultinomialCobwebTree
 from concept_formation.visualize import visualize
@@ -19,11 +21,15 @@ from os.path import join
 
 serialization_filename = 'serialization.json'
 
-nlp = English()
+nlp = spacy.load("en_core_web_sm", disable = ['parser'])
+# nlp = spacy.load('en_core_web_trf')
 nlp.add_pipe("sentencizer")
 nlp.max_length = float('inf')
-nlp.add_pipe("lemmatizer")
-nlp.initialize()
+# nlp.add_pipe("lemmatizer")
+# nlp.initialize()
+
+print(nlp.pipe_names)
+ 
 # Create a Tokenizer with the default settings for English
 # including punctuation rules and exceptions
 # tokenizer = nlp.tokenizer
@@ -89,9 +95,9 @@ def get_text_instances(text, window=8):
 
 def preprocess_text(text, test=False):
     if test:
-        punc = re.compile(r"[^_a-zA-Z.!,?:;\s]")
+        punc = re.compile(r"[^_a-zA-Z,.!?:;\s]")
     else:
-        punc = re.compile(r"[^a-zA-Z.!,?:;\s]")
+        punc = re.compile(r"[^a-zA-Z,.!?:;\s]")
     whitespace = re.compile(r"\s+")
     text = punc.sub("", text)
     text = whitespace.sub(" ", text)
@@ -100,6 +106,7 @@ def preprocess_text(text, test=False):
 
 
 def process_text(text, test=False):
+
     text = preprocess_text(text, test=test)
     doc = nlp(text)
 
@@ -110,7 +117,7 @@ def process_text(text, test=False):
 
     output = []
     for sent in doc.sents:
-        out = [char_only.sub("", token.text) for token in sent if (test and token.text == "_") or
+        out = [char_only.sub("", token.lemma_) if token.text not in answers else token.text for token in sent if (test and token.text == "_") or
                (not token.is_punct and not token.is_stop)]
         out = [w for w in out if w not in remove_words]
         output.append(out)
@@ -121,14 +128,10 @@ def training_texts():
 
     training_dir = "/Users/cmaclellan3/Projects/Microsoft-Sentence-Completion-Challenge/data/raw_data/Holmes_Training_Data"
 
-    file_counts = []
-    ranked_names = [(57686, 'LESMS10.TXT'), (38594, '1DONQ10.TXT'), (35690, 'VFAIR10.TXT'), (33805, '2DFRE10.TXT'), (33052, 'DOMBY10.TXT'), (31256, 'CPRFD10.TXT'), (30900, '4DFRE10.TXT'), (30193, 'LDORT10.TXT'), (30181, '1DFRE10.TXT'), (30131, 'CHUZZ10.TXT')]
-
     for path, subdirs, files in os.walk(training_dir):
 
         shuffle(files)
 
-        # for idx, (_, name) in enumerate(ranked_names[:1]):
         for idx, name in enumerate(files):
             print("Processing file {} of {}".format(idx, len(files)))
             if not re.search(r'^[A-Z0-9]*.TXT$', name):
@@ -143,33 +146,9 @@ def training_texts():
                     elif "*END*THE SMALL PRINT! FOR PUBLIC DOMAIN ETEXTS" in line:
                         skip = False
 
-                # print(text)
-                        
-                
                 output = process_text(text)
 
-                # text = [token.text for token in doc if not token.is_stop]
-
-                # for finding good stop word candidates
-                # from pprint import pprint
-                # print("Most Frequent Words")
-                # pprint(Counter([w for s in output for w in s]).most_common()[:100])
-
                 yield output
-                # yield text
-
-
-                # counter = Counter(text)
-                # answer_count = sum([counter[a] for a in answers])
-                # file_counts.append((answer_count, name))
-
-                # for answer in answers:
-                #     if answer in text:
-                #         print("answer contained", answer)
-                #         yield text
-                #         break
-                # for token in doc:
-                #     print(token.text, token.pos_, token.dep_)
 
 def get_microsoft_test_items():
     question_file = "/Users/cmaclellan3/Projects/Microsoft-Sentence-Completion-Challenge/data/raw_data/testing_data.csv"
@@ -189,9 +168,6 @@ def get_microsoft_test_items():
             question = ",".join(line[1:-5])
             answers = line[-5:]
 
-            # print(line)
-            # print(answers)
-            # print()
             items[item] = {'question': question,
                            'answers': answers}
 
@@ -216,110 +192,91 @@ def evaluate_tree_on_test(tree, test_items):
         item = test_items[item]
         sent = item['question'].replace('"', '').replace("_____", "_")
 
-        # punc = re.compile(r"[^_a-zA-Z0-9\s]")
-        # whitespace = re.compile(r"\s+")
-        # text = punc.sub("", sent)
-        # text = whitespace.sub(" ", text)
-        # text = text.strip().lower()
-
-        # doc = nlp(text)
-        # text = [token.text for token in doc if not token.is_stop]
-
         punc = re.compile(r"[^_a-zA-Z\s]")
         sent = punc.sub("", sent)
         output = process_text(sent, test=True)
 
-        # print(sent)
-        # print(output)
-        # print("CHOICES", item['answers'])
-        # print("ANSWER", item['answer'])
-        # print()
-
+        assert len(output) == 1
         text = output[0]
 
         idx = text.index('_')
         instance = get_instance(text, idx, None)
 
-        leaf = tree.categorize(instance)
-        basic = leaf.get_best_level(instance)
+        basic = tree.categorize(instance)
+        # basic = tree.categorize.get_best_level(instance)
 
         from pprint import pprint
         has_pred = False
         while not has_pred and basic.parent:
             for w in item['answers']:
-                if w in basic.av_counts['anchor']:
+                if (w in basic.av_counts['anchor']):
                     has_pred = True
                     break
             else:
                 basic = basic.parent
 
-        preds = sorted([(basic.av_counts['anchor'][w]/basic.counts['anchor'] if w in basic.av_counts['anchor'] else 0.0, random(), w) for w in item['answers']], reverse=True)
-
-        # pprint(preds)
-
-        # leaf_pred = leaf.predict("anchor")
-        # basic_pred = basic.predict("anchor")
-
-        # root_weights = sorted([(tree.root.av_counts['anchor'][w]/tree.root.count if w in tree.root.av_counts['anchor'] else 0.0, w) for w in item['answers']], reverse=True)
-        # leaf_weights = sorted([(leaf.av_counts['anchor'][w]/leaf.count if w in leaf.av_counts['anchor'] else 0.0, w) for w in item['answers']], reverse=True)
-        # basic_weights = sorted([(basic.av_counts['anchor'][w]/basic.count if w in basic.av_counts['anchor'] else 0.0, w) for w in item['answers']], reverse=True)
-
-        # print(text)
-        # print(item['answers'])
-        # print(instance)
-        # print('preds', preds)
-        # print('actual', item['answer'])
-        # print()
+        preds = sorted([(basic.av_counts['anchor'][w]/basic.attr_counts['anchor'] if (w in basic.av_counts['anchor']) else 0.0, random(), w) for w in item['answers']], reverse=True)
 
         accuracy.append(int(preds[0][2] == item['answer']))
 
-    # print("Scores", accuracy)
     print("Accuracy", sum(accuracy) / len(accuracy))
     print()
 
+def generate_frequency_json():
+    x = Counter([w for sentences in training_texts() for s in sentences for w in s])
+    from pprint import pprint
+    pprint(x.most_common())
+    
+    freq = dict(x)
+    with open('frequency.json', 'w') as fout:
+        json.dump(freq, fout, indent=4)
+
+def generate_answers_json():
+    test_items = get_microsoft_test_items()
+    answers = list(set([a for idx in test_items for a in test_items[idx]['answers']]))
+
+    with open('answers.json', 'w') as fout:
+        json.dump(answers, fout, indent=4)
+
 if __name__ == "__main__":
+    # generate_frequency_json()
+    # generate_answers_json()
 
     test_items = get_microsoft_test_items()
 
-    answers = set([a for idx in test_items for a in test_items[idx]['answers']])
-    # print(answers)
-
     tree = MultinomialCobwebTree()
-
-
-    # x = Counter([w for sentences in training_texts() for s in sentences for w in s])
-    # from pprint import pprint
-    # pprint(x.most_common())
-    
-    # freq = dict(x)
-    # with open('frequency.json', 'w') as fout:
-    #     json.dump(freq, fout, indent=4)
-
-    # raise Exception("B")
 
 
     for sentences in training_texts():
         examples = [e for s in sentences for e in get_text_instances(s) if list(e['anchor'])[0] in answers]
         shuffle(examples)
-        # examples = examples[:1000]
+        examples = examples[:500]
         
         for i, example in enumerate(tqdm(examples)):
-            if sum(example['context'][w] for w in example['context']) > 5:
+            if sum(example['context'][w] for w in example['context']) > 0:
                 # print(example)
                 # subset = {}
-                # subset['_anchor'] = example['anchor']
+                # subset['anchor'] = example['anchor']
                 # subset['context'] = example['context']
                 # tree.ifit(subset)
                 tree.ifit(example)
+                # if i % 3000 == 0:
+                #     visualize(tree)
+                #     sleep(0.25)
+                # input("Press Enter to continue...")
+                # sleep(1)
 
-        visualize(tree)
+
+        print("Anchor vocab size: ", len(tree.root.av_counts['anchor']))
+        print("Context vocab size: ", len(tree.root.av_counts['context']))
+        # visualize(tree)
         # break
 
         evaluate_tree_on_test(tree, test_items)
         # break
 
-        with open('checkpoint.json', 'w') as fout:
-            fout.write(tree.dump_json());
+        # with open('checkpoint.json', 'w') as fout:
+        #     fout.write(tree.dump_json());
 
         # js = tree.root.save_json()
         # with open(join(dirname(__file__), serialization_filename), 'w+') as f:
