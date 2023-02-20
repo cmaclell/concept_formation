@@ -7,7 +7,6 @@ from pybind11.setup_helpers import build_ext
 ext_modules = intree_extensions(glob('concept_formation/*.cpp'))
 
 for module in ext_modules:
-    module.cxx_std = "2a"
     module.extra_link_args.append("-ltbb")
 
 setup(
@@ -35,7 +34,7 @@ setup(
     packages=["concept_formation"],
     ext_modules=ext_modules,
     extras_require={"test": "pytest"},
-    # cmdclass={"build_ext": build_ext},
+    cmdclass={"build_ext": build_ext},
     zip_safe=False,
     python_requires=">=3.7",
 )
