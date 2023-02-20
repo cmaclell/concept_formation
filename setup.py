@@ -6,8 +6,8 @@ from pybind11.setup_helpers import build_ext
 
 ext_modules = intree_extensions(glob('concept_formation/*.cpp'))
 
-for module in ext_modules:
-    module.extra_link_args.append("-ltbb")
+# for module in ext_modules:
+#     module.extra_link_args.append("-ltbb")
 
 setup(
     name="concept_formation",

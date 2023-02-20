@@ -14,9 +14,9 @@
 #include <atomic>
 
 #include <execution>
-#define PAR std::execution::par_unseq,
+// #define PAR std::execution::par_unseq,
 // #define PAR std::execution::seq, 
-// #define PAR
+#define PAR
 
 // #if PARALLEL
 // #include <execution>
@@ -424,8 +424,6 @@ inline void MultinomialCobwebNode::update_counts_from_node(MultinomialCobwebNode
 }
 
 inline double MultinomialCobwebNode::entropy_insert(const AV_COUNT_TYPE &instance){
-    // double info = 0;
-
     unordered_set<ATTR_TYPE> all_attrs;
     for (auto &[attr, tmp]: instance){
         if (attr[0] == '_') continue;
@@ -436,10 +434,8 @@ inline double MultinomialCobwebNode::entropy_insert(const AV_COUNT_TYPE &instanc
         all_attrs.insert(attr);
     }
 
-
     return transform_reduce(PAR this->av_counts.begin(), this->av_counts.end(), 0.0,
                 plus<>(), [&](const auto& attr_it){
-    // for (auto &attr: all_attrs) {
         COUNT_TYPE attr_count = 0;
         unordered_set<VALUE_TYPE> all_vals;
         float alpha = this->tree->alpha(attr_it.first);
@@ -471,22 +467,6 @@ inline double MultinomialCobwebNode::entropy_insert(const AV_COUNT_TYPE &instanc
             return -p * log(p);
         });
 
-        /*
-        for (auto &val: all_vals) {
-            COUNT_TYPE av_count = 0;
-
-            if (this->av_counts.count(attr) and this->av_counts.at(attr).count(val)){
-                av_count += this->av_counts.at(attr).at(val);
-            }
-            if (instance.count(attr) and instance.at(attr).count(val)){
-                av_count += instance.at(attr).at(val);
-            }
-
-            double p = ((av_count + alpha) / (attr_count + num_vals * alpha));
-            info -= p * log(p);
-        }
-        */
-
         COUNT_TYPE num_missing = num_vals - all_vals.size();
         if (num_missing > 0 and alpha > 0){
             double p = (alpha / (attr_count + num_vals * alpha));
@@ -500,7 +480,6 @@ inline double MultinomialCobwebNode::entropy_insert(const AV_COUNT_TYPE &instanc
 }
 
 inline double MultinomialCobwebNode::entropy_merge(MultinomialCobwebNode *other, const AV_COUNT_TYPE &instance) {
-    // double info = 0.0;
 
     unordered_set<ATTR_TYPE> all_attrs;
     for (auto &[attr, tmp]: instance){
@@ -518,7 +497,6 @@ inline double MultinomialCobwebNode::entropy_merge(MultinomialCobwebNode *other,
 
     return transform_reduce(PAR this->av_counts.begin(), this->av_counts.end(), 0.0,
                 plus<>(), [&](const auto& attr_it){
-    // for (auto &attr: all_attrs) {
         COUNT_TYPE attr_count = 0;
         unordered_set<ATTR_TYPE> all_vals;
         float alpha = this->tree->alpha(attr_it.first);
@@ -655,12 +633,9 @@ inline double MultinomialCobwebNode::original_entropy() {
 }
 
 inline double MultinomialCobwebNode::entropy() {
-    // double info = 0;
 
     return transform_reduce(PAR this->av_counts.begin(), this->av_counts.end(), 0.0,
                 plus<>(), [&](const auto& attr_it){
-    // for (auto &[attr, val_map]: this->av_counts) {
-        // if (attr[0] == '_') return 0.0;
         if (attr_it.first[0] == '_') return 0.0;
 
         COUNT_TYPE attr_count = this->attr_counts.at(attr_it.first);
@@ -673,13 +648,6 @@ inline double MultinomialCobwebNode::entropy() {
             return -p * log(p);
         });
 
-        /*
-        for (auto &[val, cnt]: val_map) {
-            double p = ((cnt + alpha) / (attr_count + num_vals * alpha));
-            info += -p * log(p);
-        }
-        */
-
         COUNT_TYPE num_missing = num_vals - attr_it.second.size();
         if (num_missing > 0 and alpha > 0){
             double p = (alpha / (attr_count + num_vals * alpha));
@@ -688,8 +656,6 @@ inline double MultinomialCobwebNode::entropy() {
         
         return info;
     });
-
-    // return info;
 }
 
 inline double MultinomialCobwebNode::mutual_information() {
