@@ -126,7 +126,7 @@ def process_text(text, test=False):
 
 def training_texts():
 
-    training_dir = "/Users/cmaclellan3/Projects/Microsoft-Sentence-Completion-Challenge/data/raw_data/Holmes_Training_Data"
+    training_dir = "/home/cmaclellan3/Microsoft-Sentence-Completion-Challenge/data/raw_data/Holmes_Training_Data"
 
     for path, subdirs, files in os.walk(training_dir):
 
@@ -151,8 +151,8 @@ def training_texts():
                 yield output
 
 def get_microsoft_test_items():
-    question_file = "/Users/cmaclellan3/Projects/Microsoft-Sentence-Completion-Challenge/data/raw_data/testing_data.csv"
-    answer_file = "/Users/cmaclellan3/Projects/Microsoft-Sentence-Completion-Challenge/data/raw_data/test_answer.csv"
+    question_file = "/home/cmaclellan3/Microsoft-Sentence-Completion-Challenge/data/raw_data/testing_data.csv"
+    answer_file = "/home/cmaclellan3/Microsoft-Sentence-Completion-Challenge/data/raw_data/test_answer.csv"
 
     items = {}
     with open(question_file, 'r') as fin:
@@ -250,7 +250,7 @@ if __name__ == "__main__":
     for sentences in training_texts():
         examples = [e for s in sentences for e in get_text_instances(s) if list(e['anchor'])[0] in answers]
         shuffle(examples)
-        examples = examples[:500]
+        # examples = examples[:500]
         
         for i, example in enumerate(tqdm(examples)):
             if sum(example['context'][w] for w in example['context']) > 0:
