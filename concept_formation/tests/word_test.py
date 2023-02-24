@@ -126,7 +126,7 @@ def process_text(text, test=False):
 
 def training_texts():
 
-    training_dir = "/home/cmaclellan3/Microsoft-Sentence-Completion-Challenge/data/raw_data/Holmes_Training_Data"
+    training_dir = "/Users/cmaclellan3/Projects/Microsoft-Sentence-Completion-Challenge/data/raw_data/Holmes_Training_Data"
 
     for path, subdirs, files in os.walk(training_dir):
 
@@ -151,8 +151,8 @@ def training_texts():
                 yield output
 
 def get_microsoft_test_items():
-    question_file = "/home/cmaclellan3/Microsoft-Sentence-Completion-Challenge/data/raw_data/testing_data.csv"
-    answer_file = "/home/cmaclellan3/Microsoft-Sentence-Completion-Challenge/data/raw_data/test_answer.csv"
+    question_file = "/Users/cmaclellan3/Projects/Microsoft-Sentence-Completion-Challenge/data/raw_data/testing_data.csv"
+    answer_file = "/Users/cmaclellan3/Projects/Microsoft-Sentence-Completion-Challenge/data/raw_data/test_answer.csv"
 
     items = {}
     with open(question_file, 'r') as fin:
@@ -202,20 +202,22 @@ def evaluate_tree_on_test(tree, test_items):
         idx = text.index('_')
         instance = get_instance(text, idx, None)
 
-        basic = tree.categorize(instance)
-        # basic = tree.categorize.get_best_level(instance)
+        # basic = tree.categorize(instance)
+        # # basic = tree.categorize.get_best_level(instance)
 
-        from pprint import pprint
-        has_pred = False
-        while not has_pred and basic.parent:
-            for w in item['answers']:
-                if (w in basic.av_counts['anchor']):
-                    has_pred = True
-                    break
-            else:
-                basic = basic.parent
+        # from pprint import pprint
+        # has_pred = False
+        # while not has_pred and basic.parent:
+        #     for w in item['answers']:
+        #         if (w in basic.av_counts['anchor']):
+        #             has_pred = True
+        #             break
+        #     else:
+        #         basic = basic.parent
+        # preds = sorted([(basic.av_counts['anchor'][w]/basic.attr_counts['anchor'] if (w in basic.av_counts['anchor']) else 0.0, random(), w) for w in item['answers']], reverse=True)
 
-        preds = sorted([(basic.av_counts['anchor'][w]/basic.attr_counts['anchor'] if (w in basic.av_counts['anchor']) else 0.0, random(), w) for w in item['answers']], reverse=True)
+        probs = tree.predict(instance)
+        preds = sorted([(probs['anchor'][w] if w in probs['anchor'] else 0.0, random(), w) for w in item['answers']], reverse=True)
 
         accuracy.append(int(preds[0][2] == item['answer']))
 
@@ -244,13 +246,28 @@ if __name__ == "__main__":
 
     test_items = get_microsoft_test_items()
 
-    tree = MultinomialCobwebTree()
+    # tree = MultinomialCobwebTree()
+    # tree = MultinomialCobwebTree(opt_info=True, reg_info=True,
+    #                              alpha_weight=1.0, dynamic_alpha=True,
+    #                              weighted_alpha=True, weight_attr=True,
+    #                              cat_basic=True, cu_for_basic=True,
+    #                              predict_mixture=True)
+
+    tree = MultinomialCobwebTree(True, # optimize info vs. ec
+                                 False, # regularize using concept encoding cost
+                                 1.0, # alpha weight
+                                 True, # dynamically compute alpha
+                                 True, # weight alpha by avg occurance of attr
+                                 True, # weight attr by avg occurance of attr
+                                 True, # categorize to basic level (true)? or leaf (false)?
+                                 False, # use category utility to identify basic (True)? or prob (false)?
+                                 False) # predict using mixture at root (true)? or single best (false)?
 
 
     for sentences in training_texts():
         examples = [e for s in sentences for e in get_text_instances(s) if list(e['anchor'])[0] in answers]
         shuffle(examples)
-        # examples = examples[:500]
+        examples = examples[:1500]
         
         for i, example in enumerate(tqdm(examples)):
             if sum(example['context'][w] for w in example['context']) > 0:
@@ -269,7 +286,7 @@ if __name__ == "__main__":
 
         print("Anchor vocab size: ", len(tree.root.av_counts['anchor']))
         print("Context vocab size: ", len(tree.root.av_counts['context']))
-        # visualize(tree)
+        visualize(tree)
         # break
 
         evaluate_tree_on_test(tree, test_items)

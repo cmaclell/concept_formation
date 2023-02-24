@@ -107,7 +107,6 @@ public:
     MultinomialCobwebNode* get_basic_level();
     double basic_mi();
     double entropy();
-    double original_entropy();
     double mutual_information();
     tuple<double, string> get_best_operation(const AV_COUNT_TYPE &instance, MultinomialCobwebNode *best1,
                                              MultinomialCobwebNode *best2, double best1Cu,
@@ -150,9 +149,29 @@ public:
     MultinomialCobwebNode *root;
     AV_KEY_TYPE attr_vals;
     float alpha_weight;
+    bool opt_info;
+    bool reg_info;
+    bool dynamic_alpha;
+    bool weighted_alpha;
+    bool weight_attr;
+    bool cat_basic;
+    bool cu_for_basic;
+    bool predict_mixture;
 
-    MultinomialCobwebTree() {
-        this->alpha_weight = 1.0;
+    MultinomialCobwebTree(bool opt_info, bool reg_info, float alpha_weight, 
+            bool dynamic_alpha, bool weighted_alpha, bool weight_attr, bool
+            cat_basic, bool cu_for_basic, bool predict_mixture) {
+        this->opt_info = opt_info;
+        this->reg_info = reg_info;
+        this->alpha_weight = alpha_weight;
+        this->dynamic_alpha = dynamic_alpha;
+        this->weighted_alpha = weighted_alpha;
+        this->weight_attr = weight_attr;
+        this->cat_basic = cat_basic;
+        this->cu_for_basic = cu_for_basic;
+        this->predict_mixture = predict_mixture;
+
+        // this->alpha_weight = 1.0;
         this->root = new MultinomialCobwebNode();
         this->root->tree = this;
         this->attr_vals = AV_KEY_TYPE();
@@ -163,9 +182,22 @@ public:
     }
 
     float alpha(string attr){
+        if (!this->dynamic_alpha){
+            return this->alpha_weight;
+        }
+
         COUNT_TYPE n_vals = this->attr_vals.at(attr).size();
+
         if (n_vals == 0){
             return 1.0;
+        } else if (this->weighted_alpha) {
+
+            float ratio = 1.0;
+            if (this->root->attr_counts.count(attr)){
+                ratio = (1.0 * this->root->attr_counts.at(attr)) / this->root->count;
+            }
+
+            return ratio * this->alpha_weight / n_vals;
         } else {
             return this->alpha_weight / n_vals;
         }
@@ -272,7 +304,7 @@ public:
 
     MultinomialCobwebNode *ifit(AV_COUNT_TYPE instance) {
         for (auto &[attr, val_map]: instance) {
-            if (attr[0] == '_') continue;
+            // if (attr[0] == '_') continue;
 
             for (auto &[val, cnt]: val_map) {
                 this->attr_vals[attr].insert(val);
@@ -345,28 +377,44 @@ public:
 
     MultinomialCobwebNode *_cobweb_categorize(const AV_COUNT_TYPE &instance) {
         auto current = this->root;
-        double best_logp = current->log_prob_class_given_instance(instance);
+
+        auto best_concept = current;
+        double best_score = 0.0;
+
+        if (this->cu_for_basic){
+            best_score = best_concept->basic_mi();
+        } else {
+            best_score = best_concept->log_prob_class_given_instance(instance);
+        }
 
         while (true) {
             if (current->children.empty()) {
+                if (this->cat_basic) return best_concept;
                 return current;
             }
 
             auto parent = current;
             current = NULL;
+            double best_logp = 0.0;
 
-            bool found = false;
             for (auto &child: parent->children) {
                 double logp = child->log_prob_class_given_instance(instance);
                 if (current == NULL || logp > best_logp){
-                // if (logp > best_logp){
-                    found = true;
                     best_logp = logp;
                     current = child;
+    
+                    double score = 0.0;
+                    if (this->cu_for_basic){
+                        score = current->basic_mi();
+                    } else {
+                        score = logp;
+                    }
+
+                    if (score > best_score){
+                        best_score = score;
+                        best_concept = current;
+                    }
                 }
-            }
-            if (!found){
-                return current;
             }
         }
     }
@@ -374,6 +422,78 @@ public:
     MultinomialCobwebNode *categorize(const AV_COUNT_TYPE &instance) {
         return this->_cobweb_categorize(instance);
     }
+
+    unordered_map<string, unordered_map<string, double>> predict(const AV_COUNT_TYPE &instance){
+        unordered_map<string, unordered_map<string, double>> out = unordered_map<string, unordered_map<string, double>>();
+
+        if (this->root->children.empty()){
+            return out;
+        }
+
+        if (this->predict_mixture){
+            for (auto &child: this->root->children) {
+                double log_p_class = child->log_prob_class_given_instance(instance);
+                double p_class = exp(log_p_class);
+
+                for (auto &[attr, val_set]: this->attr_vals) {
+                    float alpha = this->alpha(attr);
+                    COUNT_TYPE attr_count = 0;
+                    int num_vals = this->attr_vals.at(attr).size();
+
+                    if (child->attr_counts.count(attr)){
+                        attr_count = child->attr_counts.at(attr);
+                    }
+
+                    for (auto val: val_set) {
+                        COUNT_TYPE av_count = 0;
+                        if (child->av_counts.count(attr) and child->av_counts.at(attr).count(val)){
+                            av_count = child->av_counts.at(attr).at(val);
+                        }
+
+                        double p = ((av_count + alpha) / (attr_count + num_vals * alpha));
+                        out[attr][val] += p * p_class;
+                    }
+                }
+            }
+
+            for (auto &[attr, val_set]: this->attr_vals) {
+                double attr_sum = 0.0;
+                for (auto val: val_set) {
+                    attr_sum += out[attr][val];
+                }
+                for (auto val: val_set) {
+                    out[attr][val] /= attr_sum;
+                }
+            }
+
+        } else {
+            auto best = this->categorize(instance);
+
+            for (auto &[attr, val_set]: this->attr_vals) {
+                float alpha = this->alpha(attr);
+                int num_vals = this->attr_vals.at(attr).size();
+                COUNT_TYPE attr_count = 0;
+
+                if (best->attr_counts.count(attr)){
+                    attr_count = best->attr_counts.at(attr);
+                }
+
+                for (auto val: val_set) {
+                    COUNT_TYPE av_count = 0;
+                    if (best->av_counts.count(attr) and best->av_counts.at(attr).count(val)){
+                        av_count = best->av_counts.at(attr).at(val);
+                    }
+
+                    double p = ((av_count + alpha) / (attr_count + num_vals * alpha));
+                    out[attr][val] += p;
+                }
+            }
+        }
+
+        return out;
+
+    }
+
 };
 
 
@@ -434,43 +554,58 @@ inline double MultinomialCobwebNode::entropy_insert(const AV_COUNT_TYPE &instanc
         all_attrs.insert(attr);
     }
 
-    return transform_reduce(PAR this->av_counts.begin(), this->av_counts.end(), 0.0,
+    return transform_reduce(PAR all_attrs.begin(), all_attrs.end(), 0.0,
                 plus<>(), [&](const auto& attr_it){
         COUNT_TYPE attr_count = 0;
         unordered_set<VALUE_TYPE> all_vals;
-        float alpha = this->tree->alpha(attr_it.first);
-        int num_vals = this->tree->attr_vals.at(attr_it.first).size();
+        float alpha = this->tree->alpha(attr_it);
+        int num_vals = this->tree->attr_vals.at(attr_it).size();
 
-        if (this->av_counts.count(attr_it.first)){
-            attr_count += this->attr_counts.at(attr_it.first);
-            for (auto &[val, cnt]: this->av_counts.at(attr_it.first)) all_vals.insert(val);
+        if (this->av_counts.count(attr_it)){
+            attr_count += this->attr_counts.at(attr_it);
+            for (auto &[val, cnt]: this->av_counts.at(attr_it)) all_vals.insert(val);
         }
-        if (instance.count(attr_it.first)){
-            for (auto &[val, cnt]: instance.at(attr_it.first)){
+        if (instance.count(attr_it)){
+            for (auto &[val, cnt]: instance.at(attr_it)){
                 attr_count += cnt;
                 all_vals.insert(val);
             }
+        }
+
+        double ratio = 1.0;
+
+        if (this->tree->weight_attr){
+            ratio = (1.0 * attr_count) / (this->count + 1);
         }
 
         double info = transform_reduce(PAR all_vals.begin(), all_vals.end(), 0.0,
                 plus<>(), [&](const auto &val){
             COUNT_TYPE av_count = 0;
 
-            if (this->av_counts.count(attr_it.first) and this->av_counts.at(attr_it.first).count(val)){
-                av_count += this->av_counts.at(attr_it.first).at(val);
+            if (this->av_counts.count(attr_it) and this->av_counts.at(attr_it).count(val)){
+                av_count += this->av_counts.at(attr_it).at(val);
             }
-            if (instance.count(attr_it.first) and instance.at(attr_it.first).count(val)){
-                av_count += instance.at(attr_it.first).at(val);
+            if (instance.count(attr_it) and instance.at(attr_it).count(val)){
+                av_count += instance.at(attr_it).at(val);
             }
 
             double p = ((av_count + alpha) / (attr_count + num_vals * alpha));
-            return -p * log(p);
+
+            if (this->tree->opt_info){
+                return ratio * -p * log(p);
+            } else{
+                return ratio * -p * p;
+            }
         });
 
         COUNT_TYPE num_missing = num_vals - all_vals.size();
         if (num_missing > 0 and alpha > 0){
             double p = (alpha / (attr_count + num_vals * alpha));
-            info -= num_missing * p * log(p);
+            if (this->tree->opt_info){
+                info += num_missing * ratio * -p * log(p);
+            } else {
+                info += num_missing * ratio * -p * p;
+            }
         }
 
         return info;
@@ -495,79 +630,69 @@ inline double MultinomialCobwebNode::entropy_merge(MultinomialCobwebNode *other,
         all_attrs.insert(attr);
     }
 
-    return transform_reduce(PAR this->av_counts.begin(), this->av_counts.end(), 0.0,
+    return transform_reduce(PAR all_attrs.begin(), all_attrs.end(), 0.0,
                 plus<>(), [&](const auto& attr_it){
         COUNT_TYPE attr_count = 0;
         unordered_set<ATTR_TYPE> all_vals;
-        float alpha = this->tree->alpha(attr_it.first);
-        int num_vals = this->tree->attr_vals.at(attr_it.first).size();
+        float alpha = this->tree->alpha(attr_it);
+        int num_vals = this->tree->attr_vals.at(attr_it).size();
 
-        if (this->av_counts.count(attr_it.first)){
-            attr_count += this->attr_counts.at(attr_it.first);
-            for (auto &[val, cnt]: this->av_counts.at(attr_it.first)) all_vals.insert(val);
+        if (this->av_counts.count(attr_it)){
+            attr_count += this->attr_counts.at(attr_it);
+            for (auto &[val, cnt]: this->av_counts.at(attr_it)) all_vals.insert(val);
         }
-        if (other->av_counts.count(attr_it.first)){
-            attr_count += other->attr_counts.at(attr_it.first);
-            for (auto &[val, cnt]: other->av_counts.at(attr_it.first)) all_vals.insert(val);
+        if (other->av_counts.count(attr_it)){
+            attr_count += other->attr_counts.at(attr_it);
+            for (auto &[val, cnt]: other->av_counts.at(attr_it)) all_vals.insert(val);
         }
-        if (instance.count(attr_it.first)){
-            for (auto &[val, cnt]: instance.at(attr_it.first)){
+        if (instance.count(attr_it)){
+            for (auto &[val, cnt]: instance.at(attr_it)){
                 attr_count += cnt;
                 all_vals.insert(val);
             }
+        }
+
+        double ratio = 1.0;
+
+        if (this->tree->weight_attr){
+            ratio = (1.0 * attr_count) / (this->count + other->count + 1);
         }
 
         double info = transform_reduce(PAR all_vals.begin(), all_vals.end(), 0.0,
                 plus<>(), [&](const auto &val){
             COUNT_TYPE av_count = 0;
 
-            if (this->av_counts.count(attr_it.first) and this->av_counts.at(attr_it.first).count(val)){
-                av_count += this->av_counts.at(attr_it.first).at(val);
+            if (this->av_counts.count(attr_it) and this->av_counts.at(attr_it).count(val)){
+                av_count += this->av_counts.at(attr_it).at(val);
             }
-            if (other->av_counts.count(attr_it.first) and other->av_counts.at(attr_it.first).count(val)){
-                av_count += other->av_counts.at(attr_it.first).at(val);
+            if (other->av_counts.count(attr_it) and other->av_counts.at(attr_it).count(val)){
+                av_count += other->av_counts.at(attr_it).at(val);
             }
-            if (instance.count(attr_it.first) and instance.at(attr_it.first).count(val)){
-                av_count += instance.at(attr_it.first).at(val);
+            if (instance.count(attr_it) and instance.at(attr_it).count(val)){
+                av_count += instance.at(attr_it).at(val);
             }
 
             double p = ((av_count + alpha) / (attr_count + num_vals * alpha));
-            return -p * log(p);
 
+            if (this->tree->opt_info){
+                return ratio * -p * log(p);
+            } else {
+                return ratio * -p * p;
+            }
         });
-
-        /*
-        for (auto &val: all_vals) {
-            COUNT_TYPE av_count = 0;
-
-            if (this->av_counts.count(attr) and this->av_counts.at(attr).count(val)){
-                av_count += this->av_counts.at(attr).at(val);
-            }
-            if (other->av_counts.count(attr) and other->av_counts.at(attr).count(val)){
-                av_count += other->av_counts.at(attr).at(val);
-            }
-            if (instance.count(attr) and instance.at(attr).count(val)){
-                av_count += instance.at(attr).at(val);
-            }
-
-            double p = ((av_count + this->tree->alpha(attr)) / (attr_counts +
-                        this->tree->attr_vals.at(attr).size() *
-                        this->tree->alpha(attr)));
-            info -= p * log(p);
-        }
-        */
 
         COUNT_TYPE num_missing = num_vals - all_vals.size();
         if (num_missing > 0 and alpha > 0){
             double p = (alpha / (attr_count + num_vals * alpha));
-            info += num_missing * -p * log(p);
+            if (this->tree->opt_info){
+                info += num_missing * ratio * -p * log(p);
+            } else {
+                info += num_missing * ratio * -p * p;
+            }
         }
 
         return info;
     });
-
-    // return info;
-
 }
 
 inline MultinomialCobwebNode* MultinomialCobwebNode::get_best_level(const AV_COUNT_TYPE &instance){
@@ -606,32 +731,6 @@ inline MultinomialCobwebNode* MultinomialCobwebNode::get_basic_level(){
     return best;
 }
 
-inline double MultinomialCobwebNode::original_entropy() {
-    double info = 0;
-
-    for (auto &[attr, val_map]: this->av_counts) {
-        if (attr[0] == '_') continue;
-
-        COUNT_TYPE attr_count = this->attr_counts.at(attr);
-        int num_vals = this->tree->attr_vals.at(attr).size();
-        float alpha = this->tree->alpha(attr);
-           
-        for (auto &[val, cnt]: val_map) {
-            double p = ((cnt + alpha) / (attr_count + num_vals * alpha));
-            info -= p * log(p);
-        }
-
-        COUNT_TYPE num_missing = num_vals - val_map.size();
-        if (num_missing > 0 and alpha > 0){
-            double p = (alpha / (attr_count + num_vals * alpha));
-            info -= num_missing * p * log(p);
-        }
-        
-    }
-
-    return info;
-}
-
 inline double MultinomialCobwebNode::entropy() {
 
     return transform_reduce(PAR this->av_counts.begin(), this->av_counts.end(), 0.0,
@@ -642,16 +741,30 @@ inline double MultinomialCobwebNode::entropy() {
         int num_vals = this->tree->attr_vals.at(attr_it.first).size();
         float alpha = this->tree->alpha(attr_it.first);
 
+        double ratio = 1.0;
+
+        if (this->tree->weight_attr){
+            ratio = (1.0 * attr_count) / this->count;
+        }
+
         double info = transform_reduce(PAR attr_it.second.begin(), attr_it.second.end(), 0.0,
                 plus<>(), [&](const auto& val_it){
             double p = ((val_it.second + alpha) / (attr_count + num_vals * alpha));
-            return -p * log(p);
+            if (this->tree->opt_info){
+                return ratio * -p * log(p);
+            } else {
+                return ratio * -p * p;
+            }
         });
 
         COUNT_TYPE num_missing = num_vals - attr_it.second.size();
         if (num_missing > 0 and alpha > 0){
             double p = (alpha / (attr_count + num_vals * alpha));
-            info += num_missing * -p * log(p);
+            if (this->tree->opt_info){
+                info += num_missing * ratio * -p * log(p);
+            } else {
+                info += num_missing * ratio * -p * p;
+            }
         }
         
         return info;
@@ -672,9 +785,12 @@ inline double MultinomialCobwebNode::mutual_information() {
         children_entropy += p_of_child * child->entropy();
     }
 
-    return ((this->entropy() - children_entropy)
-            // - info_c);
-            / children.size());
+    if (this->tree->reg_info){
+        return ((this->entropy() - children_entropy) - info_c);
+    } else {
+        return ((this->entropy() - children_entropy) / children.size());
+    }
+
 }
 
 inline tuple<double, string> MultinomialCobwebNode::get_best_operation(
@@ -705,16 +821,6 @@ inline tuple<double, string> MultinomialCobwebNode::get_best_operation(
                     custom_rand(),
                     // 2,
                     "merge"));
-        // for (auto &child1: children) {
-        //     for (auto &child2: children) {
-        //         if (child1 == child2) continue;
-        //         operations.push_back(make_tuple(mi_for_merge(child1, child2,
-        //                         instance),
-        //                     custom_rand(),
-        //                     // 2,
-        //                     "merge"));
-        //     }
-        // }
     }
 
     if (split_op && best1->children.size() > 0) {
@@ -722,12 +828,6 @@ inline tuple<double, string> MultinomialCobwebNode::get_best_operation(
                     custom_rand(),
                     // 4,
                     "split"));
-        // for (auto &child: children) {
-        //     operations.push_back(make_tuple(mi_for_split(child),
-        //                 custom_rand(),
-        //                 // 4,
-        //                 "split"));
-        // }
     }
     sort(operations.rbegin(), operations.rend());
 
@@ -791,9 +891,11 @@ inline double MultinomialCobwebNode::mi_for_insert(MultinomialCobwebNode *child,
         }
     }
 
-    return ((this->entropy_insert(instance) - children_entropy)
-            // - info_c);
-            / this->children.size());
+    if (this->tree->reg_info){
+        return ((this->entropy_insert(instance) - children_entropy) - info_c);
+    } else {
+        return ((this->entropy_insert(instance) - children_entropy) / this->children.size());
+    }
 }
 
 inline MultinomialCobwebNode* MultinomialCobwebNode::create_new_child(const AV_COUNT_TYPE &instance) {
@@ -823,9 +925,12 @@ inline double MultinomialCobwebNode::mi_for_new_child(const AV_COUNT_TYPE &insta
     children_entropy += p_of_child * new_child.entropy();
     info_c -= p_of_child * log(p_of_child);
 
-    return ((this->entropy_insert(instance) - children_entropy)
-            // - info_c);
-            / (children.size()+1));
+    if (this->tree->reg_info){
+        return ((this->entropy_insert(instance) - children_entropy) - info_c);
+    } else {
+        return ((this->entropy_insert(instance) - children_entropy) /
+                (children.size()+1));
+    }
 }
 
 inline MultinomialCobwebNode* MultinomialCobwebNode::merge(MultinomialCobwebNode *best1, MultinomialCobwebNode *best2) {
@@ -866,9 +971,11 @@ inline double MultinomialCobwebNode::mi_for_merge(MultinomialCobwebNode *best1,
     info_c -= p_of_child * log(p_of_child);
     children_entropy += p_of_child * best1->entropy_merge(best2, instance);
 
-    return ((this->entropy_insert(instance) - children_entropy)
-            // - info_c);
-            / (children.size()-1));
+    if (this->tree->reg_info){
+        return ((this->entropy_insert(instance) - children_entropy) - info_c);
+    } else {
+        return ((this->entropy_insert(instance) - children_entropy) / (children.size()-1));
+    }
 }
 
 inline void MultinomialCobwebNode::split(MultinomialCobwebNode *best) {
@@ -899,9 +1006,11 @@ inline double MultinomialCobwebNode::mi_for_split(MultinomialCobwebNode *best){
         children_entropy += p_of_child * c->entropy();
     }
 
-    return ((this->entropy() - children_entropy)
-            // - info_c);
-            / (children.size() - 1 + best->children.size()));
+    if (this->tree->reg_info){
+        return ((this->entropy() - children_entropy) - info_c);
+    } else{
+        return ((this->entropy() - children_entropy) / (children.size() - 1 + best->children.size()));
+    }
 }
 
 inline bool MultinomialCobwebNode::is_exact_match(const AV_COUNT_TYPE &instance) {
@@ -1258,7 +1367,7 @@ PYBIND11_MODULE(multinomial_cobweb, m) {
     m.doc() = "pybind11 example plugin"; // optional module docstring
 
     py::class_<MultinomialCobwebNode>(m, "MultinomialCobwebNode")
-        .def(py::init())
+        .def(py::init<>())
         .def("pretty_print", &MultinomialCobwebNode::pretty_print)
         .def("output_json", &MultinomialCobwebNode::output_json)
         .def("predict", &MultinomialCobwebNode::predict, py::arg("attr") = "",
@@ -1268,7 +1377,6 @@ PYBIND11_MODULE(multinomial_cobweb, m) {
         .def("get_basic_level", &MultinomialCobwebNode::get_basic_level, py::return_value_policy::copy)
         .def("log_prob_class_given_instance", &MultinomialCobwebNode::log_prob_class_given_instance)
         .def("entropy", &MultinomialCobwebNode::entropy)
-        .def("original_entropy", &MultinomialCobwebNode::original_entropy)
         .def("mutual_information", &MultinomialCobwebNode::mutual_information)
         .def("__str__", &MultinomialCobwebNode::__str__)
         .def_readonly("count", &MultinomialCobwebNode::count)
@@ -1280,10 +1388,12 @@ PYBIND11_MODULE(multinomial_cobweb, m) {
         .def_readonly("tree", &MultinomialCobwebNode::tree);
 
     py::class_<MultinomialCobwebTree>(m, "MultinomialCobwebTree")
-        .def(py::init())
+        // .def(py::init())
+        .def(py::init<bool, bool, float, bool, bool, bool, bool, bool, bool>())
         .def("ifit", &MultinomialCobwebTree::ifit, py::return_value_policy::copy)
         .def("fit", &MultinomialCobwebTree::fit, py::arg("instances") = vector<AV_COUNT_TYPE>(), py::arg("iterations") = 1, py::arg("randomizeFirst") = true)
         .def("categorize", &MultinomialCobwebTree::categorize, py::return_value_policy::copy)
+        .def("predict", &MultinomialCobwebTree::predict, py::return_value_policy::copy)
         .def("clear", &MultinomialCobwebTree::clear)
         .def("__str__", &MultinomialCobwebTree::__str__)
         .def("dump_json", &MultinomialCobwebTree::dump_json)
