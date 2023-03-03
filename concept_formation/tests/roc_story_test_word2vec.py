@@ -127,9 +127,9 @@ if __name__ == "__main__":
         for test_story in tqdm(stories[i+1:i+1+train_freq]):
             for anchor_idx, instance in get_instances(test_story, window=window):
                 actual_anchor = list(instance['anchor'].keys())[0]
-                text = " ".join([w for w in test_story[max(0, anchor_idx-window):anchor_idx]])
+                text = " ".join([w for w in story[max(0, anchor_idx-window):anchor_idx]])
                 text += " _ "
-                text += " ".join([w for w in test_story[max(0, anchor_idx+1):anchor_idx+window]])
+                text += " ".join([w for w in story[max(0, anchor_idx+1):anchor_idx+window+1]])
 
                 ## word2vec
                 context_word_list = [w for w in instance['context']]
