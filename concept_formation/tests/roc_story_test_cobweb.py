@@ -104,7 +104,7 @@ if __name__ == "__main__":
 
     for story_idx, story in enumerate(tqdm(stories)):
 
-        n_training_words += len(story)
+        # n_training_words += len(story)
 
         for anchor_idx, instance in get_instances(story, window=window):
             actual_anchor = list(instance['anchor'].keys())[0]
@@ -147,3 +147,4 @@ if __name__ == "__main__":
                 tree.ifit(old_inst)
                 old_anchor = list(old_inst['anchor'].keys())[0]
                 occurances[old_anchor] += 1
+                n_training_words += 1
