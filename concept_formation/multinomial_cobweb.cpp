@@ -291,6 +291,13 @@ public:
         struct json_object_s* object = (struct json_object_s*)root->payload;
         delete this->root;
         this->root = this->load_json_helper(object);
+
+        for (auto &[attr, val_map]: this->root->av_counts) {
+            // if (attr[0] == '_') continue;
+            for (auto &[val, cnt]: val_map) {
+                this->attr_vals[attr].insert(val);
+            }
+        }
     }
 
 
@@ -305,7 +312,6 @@ public:
     MultinomialCobwebNode *ifit(AV_COUNT_TYPE instance) {
         for (auto &[attr, val_map]: instance) {
             // if (attr[0] == '_') continue;
-
             for (auto &[val, cnt]: val_map) {
                 this->attr_vals[attr].insert(val);
             }
