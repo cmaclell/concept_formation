@@ -5,6 +5,7 @@ from matplotlib import pyplot as plt
 import os
 import json
 from tqdm import tqdm
+import pymc.sampling.jax
 # import theano.tensor as tt
 
 from roc_story_test_cobweb import get_instances
@@ -24,7 +25,7 @@ if __name__ == "__main__":
             stories = json.load(fin)
         print("done.")
 
-    window = 1
+    window = 3
 
     word_key = {}
     anchor_word = []
@@ -33,8 +34,10 @@ if __name__ == "__main__":
     context_word = []
     context_inst = []
 
+    instances = []
+
     instance_id = 0
-    for story_idx, story in enumerate(tqdm(stories[:1])):
+    for story_idx, story in enumerate(tqdm(stories[:1000])):
         for anchor_idx, instance in get_instances(story, window=window):
             anchor = list(instance['anchor'])[0]
             if anchor not in word_key:
@@ -50,10 +53,12 @@ if __name__ == "__main__":
                 context_inst.append(instance_id)
                 context_word.append(word_key[context_w])
 
+            instances.append("{}: {}".format(anchor, " ".join([w for w in instance['context']])))
+
             instance_id += 1
 
 
-    k = 3
+    k = 10
     data = {"K": k,
             "V": len(word_key),
             "M": instance_id,
@@ -66,6 +71,15 @@ if __name__ == "__main__":
             "alpha": np.ones((k,)) * 0.01,
             "beta": np.ones((len(word_key),)) * 0.01
             }
+
+    words = sorted([(word_key[w], w) for w in word_key])
+    print(words)
+
+
+    coords = {
+        "word": [w for i, w in words],
+        "instance": instances
+    }
 
     print(data)
 
@@ -95,17 +109,17 @@ if __name__ == "__main__":
 
     # print(pm.summary(trace))
 
-    with pm.Model() as model_marg:
+    with pm.Model(coords=coords) as model_marg:
         # Word distributions for K topics
-        anchor_phi = pm.Dirichlet("anchor_phi", a=data['beta'], shape=(data['K'], data['V']))
-        context_phi = pm.Dirichlet("context_phi", a=data['beta'], shape=(data['K'], data['V']))
-        
+        anchor_phi = pm.Dirichlet("anchor_phi", a=data['beta'], shape=(data['K'], data['V']), dims=('cluster', 'word'))
+        context_phi = pm.Dirichlet("context_phi", a=data['beta'], shape=(data['K'], data['V']), dims=('cluster', 'word'))
+                                        
         # Topic of documents
-        z = pm.Dirichlet("z", a=data['alpha'], shape=(data['M'], data['K']))
-        
+        z = pm.Dirichlet("z", a=data['alpha'], shape=(data['M'], data['K']), dims=('instance', 'cluster'))
+                                                                
         # Global topic distribution
-        theta = pm.Deterministic("theta", z.mean(axis=0))
-        
+        theta = pm.Deterministic("theta", z.mean(axis=0), dims="cluster")
+
         # Words in documents
         anchor_comp_dists = pm.Categorical.dist(anchor_phi)
         context_comp_dists = pm.Categorical.dist(context_phi)
@@ -118,11 +132,16 @@ if __name__ == "__main__":
                        comp_dists=context_comp_dists,
                        observed=data['c'])
 
-        trace_marg = pm.sample(1000, tune=1000)
+        # trace_marg = pm.sample(1000, tune=1000)
+        trace_marg = pm.sampling.jax.sample_numpyro_nuts(1000, tune=1000, chains=4)
 
     # az.plot_trace(trace_marg, var_names=['anchor_phi', 'theta', 'z']);
     # plt.show()
     # az.plot_forest(trace_marg, var_names=["theta"], combined=True, hdi_prob=0.95, r_hat=True);
     # plt.show()
     print(pm.summary(trace_marg))
+    pm.summary(trace_marg).to_csv('bayescat.csv')
+
+    filepath = 'bayescat.nc'
+    trace_marg.to_netcdf(filepath)
 
