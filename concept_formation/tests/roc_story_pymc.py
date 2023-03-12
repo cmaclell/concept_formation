@@ -1,13 +1,11 @@
+import numpy as np
+import pymc as pm
+import arviz as az
+from matplotlib import pyplot as plt
 import os
 import json
-
-from matplotlib import pyplot as plt
-
-import arviz as az
-import numpy as np
 from tqdm import tqdm
-import pymc as pm
-from sklearn.feature_extraction import DictVectorizer
+# import theano.tensor as tt
 
 from roc_story_test_cobweb import get_instances
 
@@ -26,88 +24,105 @@ if __name__ == "__main__":
             stories = json.load(fin)
         print("done.")
 
-    window = 3
+    window = 1
 
-    anchor_key = {}
-    anchors = []
-    contexts = []
-    context_counts = []
+    word_key = {}
+    anchor_word = []
+    anchor_inst = []
 
-    for story_idx, story in enumerate(tqdm(stories[:100])):
+    context_word = []
+    context_inst = []
+
+    instance_id = 0
+    for story_idx, story in enumerate(tqdm(stories[:1])):
         for anchor_idx, instance in get_instances(story, window=window):
             anchor = list(instance['anchor'])[0]
-            if anchor not in anchor_key:
-                anchor_key[anchor] = len(anchor_key)
-            anchors.append(anchor_key[anchor])
-            contexts.append(instance['context'])
-            context_counts.append(sum([instance['context'][w] for w in instance['context']]))
+            if anchor not in word_key:
+                word_key[anchor] = len(word_key)
 
-    dv_context = DictVectorizer(sparse=False)
-    context_words = dv_context.fit_transform(contexts)
-    context_counts = np.array(context_counts)
-    anchors = np.array(anchors)
+            anchor_inst.append(instance_id)
+            anchor_word.append(word_key[anchor])
 
-    print(anchors)
-    print(context_words)
-    print(context_counts)
+            for context_w in instance['context']:
+                if context_w not in word_key:
+                    word_key[context_w] = len(word_key)
 
-    bayes_cat = pm.Model()
+                context_inst.append(instance_id)
+                context_word.append(word_key[context_w])
 
-    K = 3
-    D = anchors.shape[0]
-    V = len(anchor_key)
-
-    alpha = np.ones((1, K))
-    beta = np.ones((1, V))
-    with pm.Model() as model:
-        thetas = pm.Dirichlet("thetas", a=alpha, shape=(D, K))
-        phis = pm.Dirichlet("phis", a=beta, shape=(K, V))
-        z = pm.Categorical("zx", p=thetas, shape=(D,))
-        w = pm.Categorical("wx", 
-                           p=phis[z], 
-                           observed=anchors)
-        trace = pm.sample(200)
-
-    # with pm.Model() as m:
-    #     w = pm.Dirichlet('w', a=np.ones(n, k))
-    #     anchor_p = pm.Dirchlet('anchor_p', a=np.ones(k, V))
-    #     d = pm.Categorical('d', p=anchor_p)
+            instance_id += 1
 
 
-    #     d1 = pm.Categorical.dist(p=a)
-    #     d2 = pm.Categorical.dist(p=b)
-    #     mix  = pm.Mixture('mix', w=w, comp_dists=[d1, d2], observed=[0, 1, 9])
-    #     trace = pm.sample(200)
+    k = 3
+    data = {"K": k,
+            "V": len(word_key),
+            "M": instance_id,
+            "AN": len(anchor_word),
+            "CN": len(context_word),
+            "w": np.array(anchor_word),
+            "c": np.array(context_word),
+            "anchor_instance": np.array(anchor_inst),
+            "context_instance": np.array(context_inst),
+            "alpha": np.ones((k,)) * 0.01,
+            "beta": np.ones((len(word_key),)) * 0.01
+            }
 
-    # with pm.Model() as bayes_cat:
+    print(data)
 
-    #     # priors
-    #     p = pm.Dirichlet('p', a=np.ones(V))
+    # with pm.Model() as model:
+    #     # Global topic distribution
+    #     theta = pm.Dirichlet("theta", a=data['alpha'])
     #     
-    #     # likelihood of observation
-    #     anchor_obs = pm.Categorical("anchor_obs", p, observed=anchors)
-    #     # context_obs = pm.Multinomial(n=n_context_words, p, observed=context_counts)
+    #     # Word distributions for K topics
+    #     anchor_phi = pm.Dirichlet("anchor_phi", a=data['beta'], shape=(data['K'], data['V']))
+    #     context_phi = pm.Dirichlet("context_phi", a=data['beta'], shape=(data['K'], data['V']))
+    #     
+    #     # Topic of documents
+    #     z = pm.Categorical("z", p=theta, shape=data['M'])
+    #     
+    #     # Words in documents
+    #     anchor_p = anchor_phi[z][data['anchor_instance']]
+    #     context_p = context_phi[z][data['context_instance']]
+    #     w = pm.Categorical("w", p=anchor_p, observed=data['w'])
+    #     c = pm.Categorical("c", p=context_p, observed=data['c'])
+    #     trace = pm.sample(1000, tune=1000)
 
-    #     trace = pm.sample(200, target_accept=0.9)
+    # # az.plot_trace(trace, var_names=['phi', 'theta', 'z'])
+    # # plt.show()
 
-    az.plot_trace(trace)
-    plt.show()
-
-
-    # az.plot_forest(trace, var_names=["w"])
+    # az.plot_forest(trace, var_names=["z"], combined=True, hdi_prob=0.95, r_hat=True);
     # plt.show()
-    
 
-    # y = np.random.normal(1, 3, 1000)
-    # with pm.Model() as pooled:
-    #     # Latent pooled effect size
-    #     mu = pm.Normal("mu", 0, sigma=100)
-    #     sigma = pm.HalfNormal("sigma", sigma=100)
+    # print(pm.summary(trace))
 
-    #     obs = pm.Normal("obs", mu, sigma, observed=y)
+    with pm.Model() as model_marg:
+        # Word distributions for K topics
+        anchor_phi = pm.Dirichlet("anchor_phi", a=data['beta'], shape=(data['K'], data['V']))
+        context_phi = pm.Dirichlet("context_phi", a=data['beta'], shape=(data['K'], data['V']))
+        
+        # Topic of documents
+        z = pm.Dirichlet("z", a=data['alpha'], shape=(data['M'], data['K']))
+        
+        # Global topic distribution
+        theta = pm.Deterministic("theta", z.mean(axis=0))
+        
+        # Words in documents
+        anchor_comp_dists = pm.Categorical.dist(anchor_phi)
+        context_comp_dists = pm.Categorical.dist(context_phi)
+        w = pm.Mixture("w",
+                       w=z[data['anchor_instance'], :],
+                       comp_dists=anchor_comp_dists,
+                       observed=data['w'])
+        c = pm.Mixture("c",
+                       w=z[data['context_instance'], :],
+                       comp_dists=context_comp_dists,
+                       observed=data['c'])
 
-    #     trace = pm.sample(3000)
+        trace_marg = pm.sample(1000, tune=1000)
 
-    # az.plot_trace(trace)
+    # az.plot_trace(trace_marg, var_names=['anchor_phi', 'theta', 'z']);
     # plt.show()
+    # az.plot_forest(trace_marg, var_names=["theta"], combined=True, hdi_prob=0.95, r_hat=True);
+    # plt.show()
+    print(pm.summary(trace_marg))
 
