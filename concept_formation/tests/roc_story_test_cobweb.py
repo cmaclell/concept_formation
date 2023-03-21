@@ -70,7 +70,7 @@ def get_roc_stories(limit=None):
 if __name__ == "__main__":
 
     tree = MultinomialCobwebTree(True, # optimize info vs. ec
-                             False, # regularize using concept encoding cost
+                             True, # regularize using concept encoding cost
                              1.0, # alpha weight
                              True, # dynamically compute alpha
                              True, # weight alpha by avg occurance of attr
@@ -97,14 +97,17 @@ if __name__ == "__main__":
 
     overall_freq = Counter([w for s in stories for w in s])
 
-    with open('cobweb_rocstories_out.csv', 'w') as fout:
+    outfile = 'cobweb_w_freq_5_inforeg_rocstories_out.csv'
+
+    with open(outfile, 'w') as fout:
         fout.write("n_training_words,n_training_stories,model,word,word_freq,word_obs_count,vocab_size,pred_word,prob_word,correct,story\n")
 
     training_queue = []
 
     for story_idx, story in enumerate(tqdm(stories)):
 
-        # n_training_words += len(story)
+        # drop low frequency words
+        story = [w for w in story if overall_freq[w] >= 5]
 
         for anchor_idx, instance in get_instances(story, window=window):
             actual_anchor = list(instance['anchor'].keys())[0]
@@ -130,7 +133,7 @@ if __name__ == "__main__":
 
             # tree.ifit(instance)
 
-            with open('cobweb_rocstories_out.csv', 'a') as fout:
+            with open(outfile, 'a') as fout:
                 fout.write("{},{},cobweb,{},{},{},{},{},{},{},{}\n".format(n_training_words,
                                                                  story_idx,
                                                                  actual_anchor,
@@ -148,3 +151,7 @@ if __name__ == "__main__":
                 old_anchor = list(old_inst['anchor'].keys())[0]
                 occurances[old_anchor] += 1
                 n_training_words += 1
+
+        if story_idx % 100 == 99:
+            with open('cobweb_w_freq_5_inforeg_rocstories_tree.json', 'w') as fout:
+                fout.write(tree.dump_json())
