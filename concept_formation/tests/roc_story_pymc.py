@@ -7,6 +7,7 @@ import json
 from tqdm import tqdm
 import pymc.sampling.jax
 # import theano.tensor as tt
+from collections import Counter
 
 from roc_story_test_cobweb import get_instances
 
@@ -25,6 +26,9 @@ if __name__ == "__main__":
             stories = json.load(fin)
         print("done.")
 
+    overall_freq = Counter([w for s in stories for w in s])
+    stories = [[w for w in s if overall_freq[w] > 5] for s in stories]
+
     window = 3
 
     word_key = {}
@@ -40,6 +44,10 @@ if __name__ == "__main__":
     for story_idx, story in enumerate(tqdm(stories[:1000])):
         for anchor_idx, instance in get_instances(story, window=window):
             anchor = list(instance['anchor'])[0]
+            text = " ".join([w for w in story[max(0, anchor_idx-window):anchor_idx]])
+            text += " _ "
+            text += " ".join([w for w in story[max(0, anchor_idx+1):anchor_idx+window+1]])
+
             if anchor not in word_key:
                 word_key[anchor] = len(word_key)
 
@@ -53,7 +61,7 @@ if __name__ == "__main__":
                 context_inst.append(instance_id)
                 context_word.append(word_key[context_w])
 
-            instances.append("{}: {}".format(anchor, " ".join([w for w in instance['context']])))
+            instances.append("{}: {}".format(anchor, text))
 
             instance_id += 1
 
@@ -132,8 +140,8 @@ if __name__ == "__main__":
                        comp_dists=context_comp_dists,
                        observed=data['c'])
 
-        # trace_marg = pm.sample(1000, tune=1000)
-        trace_marg = pm.sampling.jax.sample_numpyro_nuts(1000, tune=1000, chains=4)
+        trace_marg = pm.sample(1000, tune=1000)
+        # trace_marg = pm.sampling.jax.sample_numpyro_nuts(1000, tune=1000, chains=2)
 
     # az.plot_trace(trace_marg, var_names=['anchor_phi', 'theta', 'z']);
     # plt.show()

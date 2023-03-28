@@ -89,7 +89,7 @@ if __name__ == "__main__":
 
     overall_freq = Counter([w for s in stories for w in s])
 
-    train_freq = 100
+    train_freq = 10
 
     with open('word2vec_rocstories_out.csv', 'w') as fout:
         fout.write("n_training_words,n_training_stories,model,word,word_freq,word_obs_count,vocab_size,pred_word,prob_word,correct,story\n")

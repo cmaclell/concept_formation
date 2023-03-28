@@ -27,26 +27,29 @@ if __name__ == "__main__":
     window = 3
 
     word_key = {}
-    anchor_n = []
     anchor_word = []
     anchor_inst = []
 
-    # contexts = []
-    # context_counts = []
+    context_word = []
+    context_inst = []
 
-    n = 1
     instance_id = 1
-    for story_idx, story in enumerate(tqdm(stories[:1])):
+    for story_idx, story in enumerate(tqdm(stories[:100])):
         for anchor_idx, instance in get_instances(story, window=window):
             anchor = list(instance['anchor'])[0]
             if anchor not in word_key:
-                word_key[anchor] = len(word_key)
+                word_key[anchor] = len(word_key)+1
 
-            anchor_n.append(n)
             anchor_inst.append(instance_id)
             anchor_word.append(word_key[anchor])
 
-            n += 1
+            for context_w in instance['context']:
+                if context_w not in word_key:
+                    word_key[context_w] = len(word_key)+1
+
+                context_inst.append(instance_id)
+                context_word.append(word_key[context_w])
+
             instance_id += 1
 
     stan_code = """
@@ -54,7 +57,7 @@ if __name__ == "__main__":
       // training data
       int<lower=1> K;               // num topics
       int<lower=1> V;               // num words
-      int<lower=0> M;               // num docs
+      int<lower=0> M;               // num instances
       int<lower=0> N;               // total word instances
       int<lower=1,upper=V> w[N];    // word n
       int<lower=1,upper=M> instance[N];  // instance ID for word n
@@ -73,11 +76,11 @@ if __name__ == "__main__":
         phi[k] ~ dirichlet(beta);
       for (m in 1:M)
         for (k in 1:K)
-          gamma[m, k] = categorical_lpmf(k \mid theta);
+          gamma[m, k] = categorical_lpmf(k | theta);
       for (n in 1:N)
         for (k in 1:K)
           gamma[instance[n], k] = gamma[instance[n], k]
-                             + categorical_lpmf(w[n] \mid phi[k]);
+                             + categorical_lpmf(w[n] | phi[k]);
       for (m in 1:M)
         target += log_sum_exp(gamma[m]);
     }
@@ -88,11 +91,13 @@ if __name__ == "__main__":
             "V": len(word_key),
             "M": instance_id-1,
             "N": n-1,
-            "w": anchor_word,
-            "instance": anchor_inst,
+            "w": np.array(anchor_word),
+            "instance": np.array(anchor_inst),
             "alpha": np.ones((k,)),
             "beta": np.ones((len(word_key),))
             }
+
+    print(data)
 
     posterior = stan.build(stan_code, data=data)
     fit = posterior.sample(num_chains=4, num_samples=1000)
