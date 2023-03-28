@@ -70,7 +70,7 @@ def get_roc_stories(limit=None):
 if __name__ == "__main__":
 
     tree = MultinomialCobwebTree(True, # optimize info vs. ec
-                             True, # regularize using concept encoding cost
+                             False, # regularize using concept encoding cost
                              1.0, # alpha weight
                              True, # dynamically compute alpha
                              True, # weight alpha by avg occurance of attr
@@ -98,7 +98,7 @@ if __name__ == "__main__":
     overall_freq = Counter([w for s in stories for w in s])
 
     # TODO PICK OUTFILE NAME
-    outfile = 'cobweb_w_freq_5_inforeg_rocstories_out'
+    outfile = 'cobweb_freq_5_rocstories_out'
 
     with open(outfile + ".csv", 'w') as fout:
         fout.write("n_training_words,n_training_stories,model,word,word_freq,word_obs_count,vocab_size,pred_word,prob_word,correct,story\n")
@@ -126,7 +126,7 @@ if __name__ == "__main__":
             if 'anchor' in probs and actual_anchor in probs['anchor']:
                 p = probs['anchor'][actual_anchor]
 
-            if len(probs['anchor']) > 0:
+            if 'anchor' in probs and len(probs['anchor']) > 0:
                 best_word = sorted([(probs['anchor'][w], random(), w) for w in probs['anchor']], reverse=True)[0][2]
 
             # Append to training queue so we only predict on things that are
