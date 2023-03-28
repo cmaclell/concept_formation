@@ -97,9 +97,10 @@ if __name__ == "__main__":
 
     overall_freq = Counter([w for s in stories for w in s])
 
-    outfile = 'cobweb_w_freq_5_inforeg_rocstories_out.csv'
+    # TODO PICK OUTFILE NAME
+    outfile = 'cobweb_w_freq_5_inforeg_rocstories_out'
 
-    with open(outfile, 'w') as fout:
+    with open(outfile + ".csv", 'w') as fout:
         fout.write("n_training_words,n_training_stories,model,word,word_freq,word_obs_count,vocab_size,pred_word,prob_word,correct,story\n")
 
     training_queue = []
@@ -155,5 +156,5 @@ if __name__ == "__main__":
                 n_training_words += 1
 
         if story_idx % 100 == 99:
-            with open('cobweb_w_freq_5_inforeg_rocstories_tree.json', 'w') as fout:
+            with open(outfile + '.json', 'w') as fout:
                 fout.write(tree.dump_json())
