@@ -121,6 +121,8 @@ if __name__ == "__main__":
 
             if 'anchor' in probs and actual_anchor in probs['anchor']:
                 p = probs['anchor'][actual_anchor]
+
+            if len(probs['anchor']) > 0:
                 best_word = sorted([(probs['anchor'][w], random(), w) for w in probs['anchor']], reverse=True)[0][2]
 
             # Append to training queue so we only predict on things that are
