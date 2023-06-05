@@ -69,15 +69,12 @@ def get_roc_stories(limit=None):
 
 if __name__ == "__main__":
 
-    tree = MultinomialCobwebTree(True, # optimize info vs. ec
-                             False, # regularize using concept encoding cost
-                             1.0, # alpha weight
-                             True, # dynamically compute alpha
-                             True, # weight alpha by avg occurance of attr
-                             True, # weight attr by avg occurance of attr
-                             True, # categorize to basic level (true)? or leaf (false)?
-                             False, # use category utility to identify basic (True)? or prob (false)?
-                             False) # predict using mixture at root (true)? or single best (false)?
+    tree = MultinomialCobwebTree(3, # 1=CU, 2=MI, 3=NMI
+                                 1.0, # alpha weight
+                                 True, # dynamically compute alpha
+                                 True, # weight attr by avg occurance of attr
+                                 True, # categorize to basic level (true)? or leaf (false)?
+                                 False) # predict using mixture at root (true)? or single best (false)?
 
     occurances = Counter()
     n_training_words = 0
@@ -98,14 +95,14 @@ if __name__ == "__main__":
     overall_freq = Counter([w for s in stories for w in s])
 
     # TODO PICK OUTFILE NAME
-    outfile = 'cobweb_freq_5_rocstories_out'
+    outfile = 'cobweb_nmi_freq_5_rocstories_out'
 
     with open(outfile + ".csv", 'w') as fout:
         fout.write("n_training_words,n_training_stories,model,word,word_freq,word_obs_count,vocab_size,pred_word,prob_word,correct,story\n")
 
     training_queue = []
 
-    for story_idx, story in enumerate(tqdm(stories)):
+    for story_idx, story in enumerate(tqdm(stories[:101])):
 
         # drop low frequency words
         story = [w for w in story if overall_freq[w] >= 5]
@@ -158,3 +155,5 @@ if __name__ == "__main__":
         if story_idx % 100 == 99:
             with open(outfile + '.json', 'w') as fout:
                 fout.write(tree.dump_json())
+
+    visualize(tree)
