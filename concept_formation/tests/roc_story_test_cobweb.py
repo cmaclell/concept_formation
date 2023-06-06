@@ -15,6 +15,8 @@ from matplotlib import pyplot as plt
 from gensim.models import Word2Vec
 from gensim.models.word2vec import LineSentence
 import multiprocessing
+from time import time
+from datetime import datetime
 
 nlp = spacy.load("en_core_web_sm", disable = ['parser'])
 # nlp = spacy.load('en_core_web_trf')
@@ -101,6 +103,7 @@ if __name__ == "__main__":
         fout.write("n_training_words,n_training_stories,model,word,word_freq,word_obs_count,vocab_size,pred_word,prob_word,correct,story\n")
 
     training_queue = []
+    last_checkpoint_time = time()
 
     # for story_idx, story in enumerate(tqdm(stories[:101])):
     for story_idx, story in enumerate(tqdm(stories)):
@@ -153,8 +156,11 @@ if __name__ == "__main__":
                 occurances[old_anchor] += 1
                 n_training_words += 1
 
-        if story_idx % 100 == 99:
-            with open(outfile + '.json', 'w') as fout:
+        # save checkpoint every 1 hour
+        if (time() - last_checkpoint_time) > 3600:
+            timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+            with open('{}-{}-{}.json'.format(outfile, story_idx, timestamp), 'w') as fout:
                 fout.write(tree.dump_json())
+            last_checkpoint_time = time()
 
-    visualize(tree)
+    # visualize(tree)
