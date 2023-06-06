@@ -102,7 +102,8 @@ if __name__ == "__main__":
 
     training_queue = []
 
-    for story_idx, story in enumerate(tqdm(stories[:101])):
+    # for story_idx, story in enumerate(tqdm(stories[:101])):
+    for story_idx, story in enumerate(tqdm(stories)):
 
         # drop low frequency words
         story = [w for w in story if overall_freq[w] >= 5]
@@ -133,7 +134,7 @@ if __name__ == "__main__":
 
             # tree.ifit(instance)
 
-            with open(outfile, 'a') as fout:
+            with open(outfile + ".csv", 'a') as fout:
                 fout.write("{},{},cobweb,{},{},{},{},{},{},{},{}\n".format(n_training_words,
                                                                  story_idx,
                                                                  actual_anchor,
