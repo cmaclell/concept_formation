@@ -195,14 +195,14 @@ class MultinomialCobwebTree {
             new_node->tree = this;
 
             // // Get concept_id
-            // struct json_object_element_s* concept_id_obj = object->start;
+            struct json_object_element_s* concept_id_obj = object->start;
             // unsigned long long concept_id_val = stoull(json_value_as_number(concept_id_obj->value)->number);
             // new_node->concept_id = concept_id_val;
             // new_node->update_counter(concept_id_val);
 
             // Get count
-            // struct json_object_element_s* count_obj = concept_id_obj->next;
-            struct json_object_element_s* count_obj = object->start;
+            struct json_object_element_s* count_obj = concept_id_obj->next;
+            // struct json_object_element_s* count_obj = object->start;
             int count_val = atoi(json_value_as_number(count_obj->value)->number);
             new_node->count = count_val;
 
