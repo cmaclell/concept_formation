@@ -15,6 +15,8 @@ from matplotlib import pyplot as plt
 from gensim.models import Word2Vec
 from gensim.models.word2vec import LineSentence
 import multiprocessing
+from time import time
+from datetime import datetime
 
 nlp = spacy.load("en_core_web_sm", disable = ['parser'])
 # nlp = spacy.load('en_core_web_trf')
@@ -69,15 +71,10 @@ def get_roc_stories(limit=None):
 
 if __name__ == "__main__":
 
-    tree = MultinomialCobwebTree(True, # optimize info vs. ec
-                             False, # regularize using concept encoding cost
-                             1.0, # alpha weight
-                             True, # dynamically compute alpha
-                             True, # weight alpha by avg occurance of attr
-                             True, # weight attr by avg occurance of attr
-                             True, # categorize to basic level (true)? or leaf (false)?
-                             False, # use category utility to identify basic (True)? or prob (false)?
-                             False) # predict using mixture at root (true)? or single best (false)?
+    tree = MultinomialCobwebTree(True, # Use mutual information (rather than expected correct guesses)
+                                 1, # alpha weight
+                                 True, # dynamically compute alpha
+                                 True) # weight attr by avg occurance of attr
 
     occurances = Counter()
     n_training_words = 0
@@ -104,6 +101,7 @@ if __name__ == "__main__":
         fout.write("n_training_words,n_training_stories,model,word,word_freq,word_obs_count,vocab_size,pred_word,prob_word,correct,story\n")
 
     training_queue = []
+    last_checkpoint_time = time()
 
     for story_idx, story in enumerate(tqdm(stories)):
 
@@ -134,9 +132,7 @@ if __name__ == "__main__":
             # cheating that cobweb might do that word2vec can't.
             training_queue.append(instance)
 
-            # tree.ifit(instance)
-
-            with open(outfile, 'a') as fout:
+            with open(outfile + ".csv", 'a') as fout:
                 fout.write("{},{},cobweb,{},{},{},{},{},{},{},{}\n".format(n_training_words,
                                                                  story_idx,
                                                                  actual_anchor,
@@ -155,6 +151,8 @@ if __name__ == "__main__":
                 occurances[old_anchor] += 1
                 n_training_words += 1
 
-        if story_idx % 100 == 99:
-            with open(outfile + '.json', 'w') as fout:
+        if (time() - last_checkpoint_time) > 3600:
+            timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+            with open('{}-{}-{}.json'.format(outfile, story_idx, timestamp), 'w') as fout:
                 fout.write(tree.dump_json())
+                last_checkpoint_time = time()
