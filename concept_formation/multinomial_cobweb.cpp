@@ -4,14 +4,15 @@
 #include <vector>
 #include <unordered_map>
 #include <algorithm>
-#include <mutex>
 #include <functional>
 #include <random>
 #include <tuple>
 #include <unordered_set>
+#include <shared_mutex>
+#include <future>
+
 #include "assert.h"
 #include "json.cpp"
-#include <atomic>
 
 #include <execution>
 // #define PAR std::execution::par_unseq,
@@ -26,63 +27,64 @@
 // #endif
 
 namespace py = pybind11;
-using namespace std;
 
 #define NULL_STRING "\0"
 
-typedef string ATTR_TYPE;
-typedef string VALUE_TYPE;
+typedef std::string ATTR_TYPE;
+typedef std::string VALUE_TYPE;
 typedef int COUNT_TYPE;
-typedef unordered_map<VALUE_TYPE, COUNT_TYPE> VAL_COUNT_TYPE;
-typedef unordered_map<ATTR_TYPE, VAL_COUNT_TYPE> AV_COUNT_TYPE;
-typedef unordered_map<ATTR_TYPE, unordered_set<VALUE_TYPE>> AV_KEY_TYPE;
-typedef pair<double, string> OPERATION_TYPE;
+typedef std::unordered_map<VALUE_TYPE, COUNT_TYPE> VAL_COUNT_TYPE;
+typedef std::unordered_map<ATTR_TYPE, VAL_COUNT_TYPE> AV_COUNT_TYPE;
+typedef std::unordered_map<ATTR_TYPE, std::unordered_set<VALUE_TYPE>> AV_KEY_TYPE;
+typedef std::pair<double, std::string> OPERATION_TYPE;
 
 class MultinomialCobwebTree;
 class MultinomialCobwebNode;
 
-random_device rd;
-mt19937_64 gen(rd());
-uniform_real_distribution<double> unif(0, 1);
+std::random_device rd;
+std::mt19937_64 gen(rd());
+std::uniform_real_distribution<double> unif(0, 1);
 
 double custom_rand() {
     return unif(gen);
 }
 
-string repeat(string s, int n) {
-    string res = "";
+std::string repeat(std::string s, int n) {
+    std::string res = "";
     for (int i = 0; i < n; i++) {
         res += s;
     }
     return res;
 }
 
-VALUE_TYPE most_likely_choice(vector<tuple<VALUE_TYPE, double>> choices) {
-    vector<tuple<double, double, VALUE_TYPE>> vals;
+VALUE_TYPE most_likely_choice(std::vector<std::tuple<VALUE_TYPE, double>> choices) {
+    std::vector<std::tuple<double, double, VALUE_TYPE>> vals;
 
     for (auto &[val, prob]: choices){
         if (prob < 0){
-            cout << "most_likely_choice: all weights must be greater than or equal to 0" << endl;
+            std::cout << "most_likely_choice: all weights must be greater than or equal to 0" << std::endl;
         }
-        vals.push_back(make_tuple(prob, custom_rand(), val));
+        vals.push_back(std::make_tuple(prob, custom_rand(), val));
     }
     sort(vals.rbegin(), vals.rend());
 
-    return get<2>(vals[0]);
+    return std::get<2>(vals[0]);
 }
 
-VALUE_TYPE weighted_choice(vector<tuple<VALUE_TYPE, double>> choices) {
-    cout << "weighted_choice: Not implemented yet" << endl;
-    return get<0>(choices[0]);
+VALUE_TYPE weighted_choice(std::vector<std::tuple<VALUE_TYPE, double>> choices) {
+    std::cout << "weighted_choice: Not implemented yet" << std::endl;
+    return std::get<0>(choices[0]);
 }
 
 
 class MultinomialCobwebNode {
+    private:
+        std::shared_mutex mtx;
 
     public:
         COUNT_TYPE count;
-        unordered_map<ATTR_TYPE, COUNT_TYPE> attr_counts;
-        vector<MultinomialCobwebNode *> children;
+        std::unordered_map<ATTR_TYPE, COUNT_TYPE> attr_counts;
+        std::vector<MultinomialCobwebNode *> children;
         MultinomialCobwebNode *parent;
         MultinomialCobwebTree *tree;
         AV_COUNT_TYPE av_counts;
@@ -90,6 +92,10 @@ class MultinomialCobwebNode {
         MultinomialCobwebNode();
         MultinomialCobwebNode(MultinomialCobwebNode *otherNode);
 
+        void read_lock();
+        void read_unlock();
+        void write_lock();
+        void write_unlock();
         void increment_counts(const AV_COUNT_TYPE &instance);
         void update_counts_from_node(MultinomialCobwebNode *node);
         double score_insert(const AV_COUNT_TYPE &instance);
@@ -99,11 +105,11 @@ class MultinomialCobwebNode {
         double category_utility();
         double score();
         double partition_utility();
-        tuple<double, string> get_best_operation(const AV_COUNT_TYPE &instance, MultinomialCobwebNode *best1,
+        std::tuple<double, std::string> get_best_operation(const AV_COUNT_TYPE &instance, MultinomialCobwebNode *best1,
                 MultinomialCobwebNode *best2, double best1Cu,
                 bool best_op=true, bool new_op=true,
                 bool merge_op=true, bool split_op=true);
-        tuple<double, MultinomialCobwebNode *, MultinomialCobwebNode *> two_best_children(const AV_COUNT_TYPE &instance);
+        std::tuple<double, MultinomialCobwebNode *, MultinomialCobwebNode *> two_best_children(const AV_COUNT_TYPE &instance);
         double log_prob_class_given_instance(const AV_COUNT_TYPE &instance);
         double pu_for_insert(MultinomialCobwebNode *child, const AV_COUNT_TYPE &instance);
         MultinomialCobwebNode *create_new_child(const AV_COUNT_TYPE &instance);
@@ -114,18 +120,18 @@ class MultinomialCobwebNode {
         double pu_for_split(MultinomialCobwebNode *best);
         bool is_exact_match(const AV_COUNT_TYPE &instance);
         size_t _hash();
-        string __str__();
-        string pretty_print(int depth = 0);
+        std::string __str__();
+        std::string pretty_print(int depth = 0);
         int depth();
         bool is_parent(MultinomialCobwebNode *otherConcept);
         int num_concepts();
-        string avcounts_to_json();
-        string ser_avcounts();
-        string attr_counts_to_json();
-        string dump_json();
-        string output_json();
-        vector<tuple<VALUE_TYPE, double>> get_weighted_values(ATTR_TYPE attr, bool allowNone = true);
-        VALUE_TYPE predict(ATTR_TYPE attr, string choiceFn = "most likely", bool allowNone = true);
+        std::string avcounts_to_json();
+        std::string ser_avcounts();
+        std::string attr_counts_to_json();
+        std::string dump_json();
+        std::string output_json();
+        std::vector<std::tuple<VALUE_TYPE, double>> get_weighted_values(ATTR_TYPE attr, bool allowNone = true);
+        VALUE_TYPE predict(ATTR_TYPE attr, std::string choiceFn = "most likely", bool allowNone = true);
         double probability(ATTR_TYPE attr, VALUE_TYPE val);
         double log_likelihood(MultinomialCobwebNode *childLeaf);
 
@@ -133,6 +139,8 @@ class MultinomialCobwebNode {
 
 
 class MultinomialCobwebTree {
+    private:
+        std::shared_mutex attr_vals_mtx;
 
     public:
         MultinomialCobwebNode *root;
@@ -141,6 +149,7 @@ class MultinomialCobwebTree {
         float alpha_weight;
         bool dynamic_alpha;
         bool weight_attr;
+        std::vector<std::future<MultinomialCobwebNode*>> async_ifit_results;        
 
         MultinomialCobwebTree(bool use_mutual_info, float alpha_weight, bool
                 dynamic_alpha, bool weight_attr) {
@@ -148,17 +157,18 @@ class MultinomialCobwebTree {
             this->alpha_weight = alpha_weight;
             this->dynamic_alpha = dynamic_alpha;
             this->weight_attr = weight_attr;
+            async_ifit_results = std::vector<std::future<MultinomialCobwebNode*>>();
 
             this->root = new MultinomialCobwebNode();
             this->root->tree = this;
             this->attr_vals = AV_KEY_TYPE();
         }
 
-        string __str__(){
+        std::string __str__(){
             return this->root->__str__();
         }
 
-        float alpha(string attr){
+        float alpha(std::string attr){
             if (!this->dynamic_alpha){
                 return this->alpha_weight;
             }
@@ -198,7 +208,7 @@ class MultinomialCobwebTree {
             struct json_object_element_s* attr_counts_cursor = attr_counts_dict->start;
             while(attr_counts_cursor != NULL) {
                 // Get attr name
-                string attr_name = string(attr_counts_cursor->name->string);
+                std::string attr_name = std::string(attr_counts_cursor->name->string);
 
                 // A count is stored with each attribute
                 int count_value = atoi(json_value_as_number(attr_counts_cursor->value)->number);
@@ -213,14 +223,14 @@ class MultinomialCobwebTree {
             struct json_object_element_s* av_counts_cursor = av_counts_dict->start;
             while(av_counts_cursor != NULL) {
                 // Get attr name
-                string attr_name = string(av_counts_cursor->name->string);
+                std::string attr_name = std::string(av_counts_cursor->name->string);
 
                 // The attr val is a dict of strings to ints
                 struct json_object_s* attr_val_dict = json_value_as_object(av_counts_cursor->value);
                 struct json_object_element_s* inner_counts_cursor = attr_val_dict->start;
                 while(inner_counts_cursor != NULL) {
                     // this will be a word
-                    string val_name = string(inner_counts_cursor->name->string);
+                    std::string val_name = std::string(inner_counts_cursor->name->string);
                     // This will always be a number
                     int attr_val_count = atoi(json_value_as_number(inner_counts_cursor->value)->number);
 
@@ -240,7 +250,7 @@ class MultinomialCobwebTree {
             struct json_object_element_s* children_obj = av_counts_obj->next;
             struct json_array_s* children_array = json_value_as_array(children_obj->value);
             struct json_array_element_s* child_cursor = children_array->start;
-            vector<MultinomialCobwebNode*> new_children;
+            std::vector<MultinomialCobwebNode*> new_children;
             while(child_cursor != NULL) {
                 struct json_object_s* json_child = json_value_as_object(child_cursor->value);
                 MultinomialCobwebNode *child = load_json_helper(json_child);
@@ -256,11 +266,11 @@ class MultinomialCobwebTree {
             // worked on the first try.
         }
 
-        string dump_json(){
+        std::string dump_json(){
             return this->root->dump_json();
         }
 
-        void load_json(string json) {
+        void load_json(std::string json) {
             struct json_value_s* root = json_parse(json.c_str(), strlen(json.c_str()));
             struct json_object_s* object = (struct json_object_s*)root->payload;
             delete this->root;
@@ -281,6 +291,20 @@ class MultinomialCobwebTree {
             this->attr_vals = AV_KEY_TYPE();
         }
 
+        void async_ifit(AV_COUNT_TYPE instance) {
+            auto fut_result = std::async(std::launch::async, [this, &instance]() {
+                return this->ifit(instance);
+            });
+            this->async_ifit_results.push_back(std::move(fut_result));
+        }
+
+        void async_join(){
+            while (!async_ifit_results.empty()){
+                async_ifit_results.back().get();
+                async_ifit_results.pop_back();
+            }
+        }
+
         MultinomialCobwebNode *ifit(AV_COUNT_TYPE instance) {
             for (auto &[attr, val_map]: instance) {
                 // if (attr[0] == '_') continue;
@@ -292,26 +316,28 @@ class MultinomialCobwebTree {
             return this->cobweb(instance);
         }
 
-        void fit(vector<AV_COUNT_TYPE> instances, int iterations = 1, bool randomizeFirst = true) {
+        void fit(std::vector<AV_COUNT_TYPE> instances, int iterations = 1, bool randomizeFirst = true) {
             for (int i = 0; i < iterations; i++) {
                 if (i == 0 && randomizeFirst) {
-                    shuffle(instances.begin(), instances.end(), default_random_engine());
+                    shuffle(instances.begin(), instances.end(), std::default_random_engine());
                 }
                 for (auto &instance: instances) {
                     this->ifit(instance);
                 }
-                shuffle(instances.begin(), instances.end(), default_random_engine());
+                shuffle(instances.begin(), instances.end(), std::default_random_engine());
             }
         }
 
+        // We need to lock two nodes up because of split.
         MultinomialCobwebNode *cobweb(const AV_COUNT_TYPE &instance) {
-            MultinomialCobwebNode *current = this->root;
+            MultinomialCobwebNode* current = this->root;
+
             while (current != NULL) {
                 if (current->children.empty() && (current->is_exact_match(instance) || current->count == 0)) {
                     current->increment_counts(instance);
                     break;
                 } else if (current->children.empty()) {
-                    MultinomialCobwebNode *newNode = new MultinomialCobwebNode(current);
+                    MultinomialCobwebNode* newNode = new MultinomialCobwebNode(current);
                     current->parent = newNode;
                     newNode->children.push_back(current);
 
@@ -340,7 +366,7 @@ class MultinomialCobwebTree {
                         break;
                     } else if (bestAction == "merge") {
                         current->increment_counts(instance);
-                        MultinomialCobwebNode *newChild = current->merge(best1, best2);
+                        MultinomialCobwebNode* newChild = current->merge(best1, best2);
                         current = newChild;
                     } else if (bestAction == "split") {
                         current->split(best1);
@@ -353,9 +379,13 @@ class MultinomialCobwebTree {
             return current;
         }
 
+        // NOT modifying so only need to lock one node up rather than two; this is because
+        // split might bump the node up higher, but when getting considered for splitting 
+        // there will be no changes to the node as a result of categorize, so we're good.
         MultinomialCobwebNode* _cobweb_categorize(const AV_COUNT_TYPE &instance, bool get_best_concept) {
             auto current = this->root;
 
+            // TODO the best node might get deleted, not threadsafe!!!
             auto best_concept = current;
             double best_score = best_concept->log_prob_class_given_instance(instance);
 
@@ -391,8 +421,8 @@ class MultinomialCobwebTree {
             return this->_cobweb_categorize(instance, get_best_concept);
         }
 
-        unordered_map<string, unordered_map<string, double>> predict(const AV_COUNT_TYPE &instance){
-            unordered_map<string, unordered_map<string, double>> out = unordered_map<string, unordered_map<string, double>>();
+        std::unordered_map<std::string, std::unordered_map<std::string, double>> predict(const AV_COUNT_TYPE &instance){
+            std::unordered_map<std::string, std::unordered_map<std::string, double>> out = std::unordered_map<std::string, std::unordered_map<std::string, double>>();
 
             if (this->root->children.empty()){
                 return out;
@@ -427,14 +457,14 @@ class MultinomialCobwebTree {
 
 inline MultinomialCobwebNode::MultinomialCobwebNode() {
     count = 0;
-    attr_counts = unordered_map<ATTR_TYPE, COUNT_TYPE>();
+    attr_counts = std::unordered_map<ATTR_TYPE, COUNT_TYPE>();
     parent = NULL;
     tree = NULL;
 }
 
 inline MultinomialCobwebNode::MultinomialCobwebNode(MultinomialCobwebNode *otherNode) {
     count = 0;
-    attr_counts = unordered_map<ATTR_TYPE, COUNT_TYPE>();
+    attr_counts = std::unordered_map<ATTR_TYPE, COUNT_TYPE>();
 
     parent = otherNode->parent;
     tree = otherNode->tree;
@@ -446,6 +476,24 @@ inline MultinomialCobwebNode::MultinomialCobwebNode(MultinomialCobwebNode *other
     }
 
 }
+
+inline void MultinomialCobwebNode::read_lock(){
+    mtx.lock_shared();
+}
+
+inline void MultinomialCobwebNode::read_unlock(){
+    mtx.unlock_shared();
+}
+
+inline void MultinomialCobwebNode::write_lock(){
+    mtx.lock();
+}
+
+inline void MultinomialCobwebNode::write_unlock(){
+    mtx.unlock();
+}
+
+
 
 inline void MultinomialCobwebNode::increment_counts(const AV_COUNT_TYPE &instance) {
     this->count += 1;
@@ -470,7 +518,7 @@ inline void MultinomialCobwebNode::update_counts_from_node(MultinomialCobwebNode
 }
 
 inline double MultinomialCobwebNode::score_insert(const AV_COUNT_TYPE &instance){
-    unordered_set<ATTR_TYPE> all_attrs;
+    std::unordered_set<ATTR_TYPE> all_attrs;
     for (auto &[attr, tmp]: instance){
         if (attr[0] == '_') continue;
         all_attrs.insert(attr);
@@ -481,9 +529,9 @@ inline double MultinomialCobwebNode::score_insert(const AV_COUNT_TYPE &instance)
     }
 
     return transform_reduce(PAR all_attrs.begin(), all_attrs.end(), 0.0,
-            plus<>(), [&](const auto& attr_it){
+            std::plus<>(), [&](const auto& attr_it){
                 COUNT_TYPE attr_count = 0;
-                unordered_set<VALUE_TYPE> all_vals;
+                std::unordered_set<VALUE_TYPE> all_vals;
                 float alpha = this->tree->alpha(attr_it);
                 int num_vals = this->tree->attr_vals.at(attr_it).size();
 
@@ -505,7 +553,7 @@ inline double MultinomialCobwebNode::score_insert(const AV_COUNT_TYPE &instance)
                 }
 
                 double info = transform_reduce(PAR all_vals.begin(), all_vals.end(), 0.0,
-                        plus<>(), [&](const auto &val){
+                        std::plus<>(), [&](const auto &val){
                             COUNT_TYPE av_count = 0;
 
                             if (this->av_counts.count(attr_it) and this->av_counts.at(attr_it).count(val)){
@@ -540,7 +588,7 @@ inline double MultinomialCobwebNode::score_insert(const AV_COUNT_TYPE &instance)
 
 inline double MultinomialCobwebNode::score_merge(MultinomialCobwebNode *other, const AV_COUNT_TYPE &instance) {
 
-    unordered_set<ATTR_TYPE> all_attrs;
+    std::unordered_set<ATTR_TYPE> all_attrs;
     for (auto &[attr, tmp]: instance){
         if (attr[0] == '_') continue;
         all_attrs.insert(attr);
@@ -555,9 +603,9 @@ inline double MultinomialCobwebNode::score_merge(MultinomialCobwebNode *other, c
     }
 
     return transform_reduce(PAR all_attrs.begin(), all_attrs.end(), 0.0,
-            plus<>(), [&](const auto& attr_it){
+            std::plus<>(), [&](const auto& attr_it){
                 COUNT_TYPE attr_count = 0;
-                unordered_set<ATTR_TYPE> all_vals;
+                std::unordered_set<ATTR_TYPE> all_vals;
                 float alpha = this->tree->alpha(attr_it);
                 int num_vals = this->tree->attr_vals.at(attr_it).size();
 
@@ -583,7 +631,7 @@ inline double MultinomialCobwebNode::score_merge(MultinomialCobwebNode *other, c
                 }
 
                 double info = transform_reduce(PAR all_vals.begin(), all_vals.end(), 0.0,
-                        plus<>(), [&](const auto &val){
+                        std::plus<>(), [&](const auto &val){
                             COUNT_TYPE av_count = 0;
 
                             if (this->av_counts.count(attr_it) and this->av_counts.at(attr_it).count(val)){
@@ -658,7 +706,7 @@ inline MultinomialCobwebNode* MultinomialCobwebNode::get_basic_level(){
 inline double MultinomialCobwebNode::score() {
 
     return transform_reduce(PAR this->av_counts.begin(), this->av_counts.end(), 0.0,
-            plus<>(), [&](const auto& attr_it){
+            std::plus<>(), [&](const auto& attr_it){
                 if (attr_it.first[0] == '_') return 0.0;
 
                 COUNT_TYPE attr_count = this->attr_counts.at(attr_it.first);
@@ -672,7 +720,7 @@ inline double MultinomialCobwebNode::score() {
                 }
 
                 double info = transform_reduce(PAR attr_it.second.begin(), attr_it.second.end(), 0.0,
-                        plus<>(), [&](const auto& val_it){
+                        std::plus<>(), [&](const auto& val_it){
                             double p = ((val_it.second + alpha) / (attr_count + num_vals * alpha));
                             if (this->tree->use_mutual_info){
                                 return ratio * -p * log(p);
@@ -711,7 +759,7 @@ inline double MultinomialCobwebNode::partition_utility() {
 
 }
 
-inline tuple<double, string> MultinomialCobwebNode::get_best_operation(
+inline std::tuple<double, std::string> MultinomialCobwebNode::get_best_operation(
         const AV_COUNT_TYPE &instance, MultinomialCobwebNode *best1,
         MultinomialCobwebNode *best2, double best1_pu,
         bool best_op, bool new_op,
@@ -720,46 +768,46 @@ inline tuple<double, string> MultinomialCobwebNode::get_best_operation(
     if (best1 == NULL) {
         throw "Need at least one best child.";
     }
-    vector<tuple<double, double, string>> operations;
+    std::vector<std::tuple<double, double, std::string>> operations;
     if (best_op){
-        operations.push_back(make_tuple(best1_pu,
+        operations.push_back(std::make_tuple(best1_pu,
                     custom_rand(),
                     "best"));
     }
     if (new_op){
-        operations.push_back(make_tuple(pu_for_new_child(instance),
+        operations.push_back(std::make_tuple(pu_for_new_child(instance),
                     custom_rand(),
                     "new"));
     }
     if (merge_op && children.size() > 2 && best2 != NULL) {
-        operations.push_back(make_tuple(pu_for_merge(best1, best2,
+        operations.push_back(std::make_tuple(pu_for_merge(best1, best2,
                         instance),
                     custom_rand(),
                     "merge"));
     }
 
     if (split_op && best1->children.size() > 0) {
-        operations.push_back(make_tuple(pu_for_split(best1),
+        operations.push_back(std::make_tuple(pu_for_split(best1),
                     custom_rand(),
                     "split"));
     }
     sort(operations.rbegin(), operations.rend());
 
-    OPERATION_TYPE bestOp = make_pair(get<0>(operations[0]), get<2>(operations[0]));
+    OPERATION_TYPE bestOp = make_pair(std::get<0>(operations[0]), std::get<2>(operations[0]));
     return bestOp;
 }
 
-inline tuple<double, MultinomialCobwebNode *, MultinomialCobwebNode *> MultinomialCobwebNode::two_best_children(
+inline std::tuple<double, MultinomialCobwebNode *, MultinomialCobwebNode *> MultinomialCobwebNode::two_best_children(
         const AV_COUNT_TYPE &instance) {
 
     if (children.empty()) {
         throw "No children!";
     }
 
-    vector<tuple<double, double, double, MultinomialCobwebNode *>> relative_pu;
+    std::vector<std::tuple<double, double, double, MultinomialCobwebNode *>> relative_pu;
     for (auto &child: this->children) {
         relative_pu.push_back(
-                make_tuple(
+                std::make_tuple(
                     (child->count * child->score()) -
                     ((child->count + 1) * child->score_insert(instance)),
                     child->count,
@@ -769,10 +817,10 @@ inline tuple<double, MultinomialCobwebNode *, MultinomialCobwebNode *> Multinomi
 
     sort(relative_pu.rbegin(), relative_pu.rend());
 
-    MultinomialCobwebNode *best1 = get<3>(relative_pu[0]);
+    MultinomialCobwebNode *best1 = std::get<3>(relative_pu[0]);
     double best1_pu = pu_for_insert(best1, instance);
-    MultinomialCobwebNode *best2 = relative_pu.size() > 1 ? get<3>(relative_pu[1]) : NULL;
-    return make_tuple(best1_pu, best1, best2);
+    MultinomialCobwebNode *best2 = relative_pu.size() > 1 ? std::get<3>(relative_pu[1]) : NULL;
+    return std::make_tuple(best1_pu, best1, best2);
 }
 
 inline double MultinomialCobwebNode::pu_for_insert(MultinomialCobwebNode *child, const AV_COUNT_TYPE &instance) {
@@ -887,7 +935,7 @@ inline double MultinomialCobwebNode::pu_for_split(MultinomialCobwebNode *best){
 }
 
 inline bool MultinomialCobwebNode::is_exact_match(const AV_COUNT_TYPE &instance) {
-    unordered_set<ATTR_TYPE> all_attrs;
+    std::unordered_set<ATTR_TYPE> all_attrs;
     for (auto &[attr, tmp]: instance) all_attrs.insert(attr);
     for (auto &[attr, tmp]: this->av_counts) all_attrs.insert(attr);
 
@@ -901,7 +949,7 @@ inline bool MultinomialCobwebNode::is_exact_match(const AV_COUNT_TYPE &instance)
         }
         if (this->av_counts.count(attr) && instance.count(attr)) {
             double instance_attr_count = 0.0;
-            unordered_set<VALUE_TYPE> all_vals;
+            std::unordered_set<VALUE_TYPE> all_vals;
             for (auto &[val, tmp]: this->av_counts.at(attr)) all_vals.insert(val);
             for (auto &[val, cnt]: instance.at(attr)){
                 all_vals.insert(val);
@@ -929,15 +977,15 @@ inline bool MultinomialCobwebNode::is_exact_match(const AV_COUNT_TYPE &instance)
 }
 
 inline size_t MultinomialCobwebNode::_hash() {
-    return hash<uintptr_t>()(reinterpret_cast<uintptr_t>(this));
+    return std::hash<uintptr_t>()(reinterpret_cast<uintptr_t>(this));
 }
 
-inline string MultinomialCobwebNode::__str__(){
+inline std::string MultinomialCobwebNode::__str__(){
     return this->pretty_print();
 }
 
-inline string MultinomialCobwebNode::pretty_print(int depth) {
-    string ret = repeat("\t", depth) + "|-" + avcounts_to_json() + "\n";
+inline std::string MultinomialCobwebNode::pretty_print(int depth) {
+    std::string ret = repeat("\t", depth) + "|-" + avcounts_to_json() + "\n";
 
     for (auto &c: children) {
         ret += c->pretty_print(depth + 1);
@@ -962,8 +1010,8 @@ inline bool MultinomialCobwebNode::is_parent(MultinomialCobwebNode *otherConcept
         }
         try {
             temp = temp->parent;
-        } catch (string e) {
-            cout << temp;
+        } catch (std::string e) {
+            std::cout << temp;
             assert(false);
         }
     }
@@ -978,20 +1026,20 @@ inline int MultinomialCobwebNode::num_concepts() {
     return 1 + childrenCount;
 }
 
-inline string MultinomialCobwebNode::avcounts_to_json() {
-    string ret = "{";
+inline std::string MultinomialCobwebNode::avcounts_to_json() {
+    std::string ret = "{";
 
     // // ret += "\"_expected_guesses\": {\n";
     // ret += "\"_entropy\": {\n";
     // ret += "\"#ContinuousValue#\": {\n";
-    // ret += "\"mean\": " + to_string(this->score()) + ",\n";
+    // ret += "\"mean\": " + std::to_string(this->score()) + ",\n";
     // ret += "\"std\": 1,\n";
     // ret += "\"n\": 1,\n";
     // ret += "}},\n";
 
     // ret += "\"_mutual_info\": {\n";
     // ret += "\"#ContinuousValue#\": {\n";
-    // ret += "\"mean\": " + to_string(this->mutual_information()) + ",\n";
+    // ret += "\"mean\": " + std::to_string(this->mutual_information()) + ",\n";
     // ret += "\"std\": 1,\n";
     // ret += "\"n\": 1,\n";
     // ret += "}},\n";
@@ -1001,7 +1049,7 @@ inline string MultinomialCobwebNode::avcounts_to_json() {
         ret += "\"" + attr + "\": {";
         int inner_count = 0;
         for (auto &[val, cnt]: vAttr) {
-            ret += "\"" + val + "\": " + to_string(cnt);
+            ret += "\"" + val + "\": " + std::to_string(cnt);
             if (inner_count != int(vAttr.size()) - 1){
                 ret += ", ";
             }
@@ -1018,15 +1066,15 @@ inline string MultinomialCobwebNode::avcounts_to_json() {
     return ret;
 }
 
-inline string MultinomialCobwebNode::ser_avcounts() {
-    string ret = "{";
+inline std::string MultinomialCobwebNode::ser_avcounts() {
+    std::string ret = "{";
 
     int c = 0;
     for (auto &[attr, vAttr]: av_counts) {
         ret += "\"" + attr + "\": {";
         int inner_count = 0;
         for (auto &[val, cnt]: vAttr) {
-            ret += "\"" + val + "\": " + to_string(cnt);
+            ret += "\"" + val + "\": " + std::to_string(cnt);
             if (inner_count != int(vAttr.size()) - 1){
                 ret += ", ";
             }
@@ -1043,25 +1091,25 @@ inline string MultinomialCobwebNode::ser_avcounts() {
     return ret;
 }
 
-inline string MultinomialCobwebNode::attr_counts_to_json() {
-    string ret = "{";
+inline std::string MultinomialCobwebNode::attr_counts_to_json() {
+    std::string ret = "{";
 
     bool first = true;
     for (auto &[attr, cnt]: this->attr_counts) {
         if (!first) ret += ",\n";
         else first = false;
-        ret += "\"" + attr + "\": " + to_string(cnt);
+        ret += "\"" + attr + "\": " + std::to_string(cnt);
     }
 
     ret += "}";
     return ret;
 }
 
-inline string MultinomialCobwebNode::dump_json() {
-    string output = "{";
+inline std::string MultinomialCobwebNode::dump_json() {
+    std::string output = "{";
 
-    output += "\"concept_id\": " + to_string(this->_hash()) + ",\n";
-    output += "\"count\": " + to_string(this->count) + ",\n";
+    output += "\"concept_id\": " + std::to_string(this->_hash()) + ",\n";
+    output += "\"count\": " + std::to_string(this->count) + ",\n";
     output += "\"attr_counts\": " + this->attr_counts_to_json() + ",\n";
     output += "\"av_counts\": " + this->ser_avcounts() + ",\n";
 
@@ -1079,11 +1127,11 @@ inline string MultinomialCobwebNode::dump_json() {
     return output;
 }
 
-inline string MultinomialCobwebNode::output_json(){
-    string output = "{";
+inline std::string MultinomialCobwebNode::output_json(){
+    std::string output = "{";
 
-    output += "\"name\": \"Concept" + to_string(this->_hash()) + "\",\n";
-    output += "\"size\": " + to_string(this->count) + ",\n";
+    output += "\"name\": \"Concept" + std::to_string(this->_hash()) + "\",\n";
+    output += "\"size\": " + std::to_string(this->count) + ",\n";
     output += "\"children\": [\n";
 
     for (auto &c: children) {
@@ -1098,27 +1146,27 @@ inline string MultinomialCobwebNode::output_json(){
     return output;
 }
 
-inline vector<tuple<VALUE_TYPE, double>> MultinomialCobwebNode::get_weighted_values(
+inline std::vector<std::tuple<VALUE_TYPE, double>> MultinomialCobwebNode::get_weighted_values(
         ATTR_TYPE attr, bool allowNone) {
 
-    vector<tuple<VALUE_TYPE, double>> choices;
+    std::vector<std::tuple<VALUE_TYPE, double>> choices;
     if (!this->av_counts.count(attr)) {
-        choices.push_back(make_tuple(NULL_STRING, 1.0));
+        choices.push_back(std::make_tuple(NULL_STRING, 1.0));
     }
     double valCount = 0;
     for (auto &[val, tmp]: this->av_counts.at(attr)) {
         COUNT_TYPE count = this->av_counts.at(attr).at(val);
-        choices.push_back(make_tuple(val, (1.0 * count) / this->count));
+        choices.push_back(std::make_tuple(val, (1.0 * count) / this->count));
         valCount += count;
     }
     if (allowNone) {
-        choices.push_back(make_tuple(NULL_STRING, ((1.0 * (this->count - valCount)) / this->count)));
+        choices.push_back(std::make_tuple(NULL_STRING, ((1.0 * (this->count - valCount)) / this->count)));
     }
     return choices;
 }
 
-inline VALUE_TYPE MultinomialCobwebNode::predict(ATTR_TYPE attr, string choiceFn, bool allowNone) {
-    function<ATTR_TYPE(vector<tuple<VALUE_TYPE, double>>)> choose;
+inline VALUE_TYPE MultinomialCobwebNode::predict(ATTR_TYPE attr, std::string choiceFn, bool allowNone) {
+    std::function<ATTR_TYPE(std::vector<std::tuple<VALUE_TYPE, double>>)> choose;
     if (choiceFn == "most likely" || choiceFn == "m") {
         choose = most_likely_choice;
     } else if (choiceFn == "sampled" || choiceFn == "s") {
@@ -1127,7 +1175,7 @@ inline VALUE_TYPE MultinomialCobwebNode::predict(ATTR_TYPE attr, string choiceFn
     if (!this->av_counts.count(attr)) {
         return NULL_STRING;
     }
-    vector<tuple<VALUE_TYPE, double>> choices = this->get_weighted_values(attr, allowNone);
+    std::vector<std::tuple<VALUE_TYPE, double>> choices = this->get_weighted_values(attr, allowNone);
     return choose(choices);
 }
 
@@ -1150,7 +1198,7 @@ inline double MultinomialCobwebNode::probability(ATTR_TYPE attr, VALUE_TYPE val)
 }
 
 inline double MultinomialCobwebNode::log_likelihood(MultinomialCobwebNode *childLeaf) {
-    unordered_set<ATTR_TYPE> allAttrs;
+    std::unordered_set<ATTR_TYPE> allAttrs;
     for (auto &[attr, tmp]: this->av_counts) allAttrs.insert(attr);
     for (auto &[attr, tmp]: childLeaf->av_counts) allAttrs.insert(attr);
 
@@ -1158,7 +1206,7 @@ inline double MultinomialCobwebNode::log_likelihood(MultinomialCobwebNode *child
 
     for (auto &attr: allAttrs) {
         if (attr[0] == '_') continue;
-        unordered_set<VALUE_TYPE> vals;
+        std::unordered_set<VALUE_TYPE> vals;
         vals.insert(NULL_STRING);
         if (this->av_counts.count(attr)) {
             for (auto &[val, tmp]: this->av_counts.at(attr)) vals.insert(val);
@@ -1206,21 +1254,21 @@ inline double MultinomialCobwebNode::log_prob_class_given_instance(const AV_COUN
             float av_count = this->tree->alpha(attr);
             if (this->av_counts.count(attr) && this->av_counts.at(attr).count(val)){
                 av_count += this->av_counts.at(attr).at(val);
-                // cout << val << "(" << this->av_counts.at(attr).at(val) << ") ";
+                // std::cout << val << "(" << this->av_counts.at(attr).at(val) << ") ";
             }
 
             // the cnt here is because we have to compute probability over all context words.
             log_prob += cnt * log((1.0 * av_count) / (this->attr_counts[attr] + num_vals * this->tree->alpha(attr)));
         }
 
-        // cout << endl;
-        // cout << "denom: " << to_string(this->counts[attr] + num_vals * this->tree->alpha) << endl;
-        // cout << "denom (no alpha): " << to_string(this->counts[attr]) << endl;
-        // cout << "node count: " << to_string(this->count) << endl;
-        // cout << "num vals: " << to_string(num_vals) << endl;
+        // std::cout << std::endl;
+        // std::cout << "denom: " << std::to_string(this->counts[attr] + num_vals * this->tree->alpha) << std::endl;
+        // std::cout << "denom (no alpha): " << std::to_string(this->counts[attr]) << std::endl;
+        // std::cout << "node count: " << std::to_string(this->count) << std::endl;
+        // std::cout << "num vals: " << std::to_string(num_vals) << std::endl;
     }
 
-    // cout << endl;
+    // std::cout << std::endl;
 
     log_prob += log((1.0 * this->count) / this->tree->root->count);
 
@@ -1257,13 +1305,15 @@ PYBIND11_MODULE(multinomial_cobweb, m) {
                 py::arg("alpha_weight") = 1.0,
                 py::arg("dynamic_alpha") = true,
                 py::arg("weight_attr") = true)
+        .def("async_ifit", &MultinomialCobwebTree::async_ifit)
+        .def("async_join", &MultinomialCobwebTree::async_join)
         .def("ifit", &MultinomialCobwebTree::ifit, py::return_value_policy::copy)
         .def("fit", &MultinomialCobwebTree::fit,
-                py::arg("instances") = vector<AV_COUNT_TYPE>(),
+                py::arg("instances") = std::vector<AV_COUNT_TYPE>(),
                 py::arg("iterations") = 1,
                 py::arg("randomizeFirst") = true)
         .def("categorize", &MultinomialCobwebTree::categorize,
-                py::arg("instance") = vector<AV_COUNT_TYPE>(),
+                py::arg("instance") = std::vector<AV_COUNT_TYPE>(),
                 py::arg("get_best_concept") = true,
                 py::return_value_policy::copy)
         .def("predict", &MultinomialCobwebTree::predict, py::return_value_policy::copy)
