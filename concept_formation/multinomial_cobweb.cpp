@@ -13,6 +13,7 @@
 
 #include "assert.h"
 #include "json.cpp"
+#include "BS_thread_pool.hpp"
 
 #include <execution>
 // #define PAR std::execution::par_unseq,
@@ -158,6 +159,7 @@ class MultinomialCobwebTree {
         std::shared_mutex av_keys_mtx;
         std::shared_mutex root_ptr_mtx;
         AV_KEY_TYPE attr_vals;
+        BS::thread_pool pool{std::thread::hardware_concurrency() - 1};
 
     public:
         bool use_mutual_info;
@@ -309,10 +311,14 @@ class MultinomialCobwebTree {
         }
 
         CategorizationFuture* async_ifit(AV_COUNT_TYPE &instance) {
-            auto fut_result = std::async(std::launch::async, [this, instance]() {
+            auto fut_result = pool.submit([this, instance]() {
                 auto* result = this->ifit_helper(instance);
                 return result;
             });
+            // auto fut_result = std::async(std::launch::async | std::launch::deferred, [this, instance]() {
+            //     auto* result = this->ifit_helper(instance);
+            //     return result;
+            // });
 
             return new CategorizationFuture(std::move(fut_result), instance);
         }
@@ -385,25 +391,25 @@ class MultinomialCobwebTree {
         }
 
         MultinomialCobwebNode *cobweb(const AV_COUNT_TYPE &instance) {
-            std::cout << "cobweb top level" << std::endl;
+            // std::cout << "cobweb top level" << std::endl;
             root_ptr_mtx.lock();
-            std::cout << "locked root ptr" << std::endl;
+            // std::cout << "locked root ptr" << std::endl;
 
             MultinomialCobwebNode* current = root;
-            std::cout << "locking root concept" << std::endl;
+            // std::cout << "locking root concept" << std::endl;
             current->write_lock();
 
-            std::cout << "cobweb entering loop" << std::endl;
+            // std::cout << "cobweb entering loop" << std::endl;
 
             while (true) {
                 // each loop starts with a write lock on current and
                 // current->parent (in the case of root, root_ptr_mtx is write
                 // locked instead of current->parent).
                 if (current->children.empty() && (current->is_exact_match(instance) || current->count == 0)) {
-                    std::cout << "empty / exact match" << std::endl;
+                    // std::cout << "empty / exact match" << std::endl;
                     if (current->parent == nullptr) {
                         root_ptr_mtx.unlock();
-                        std::cout << "unlocked root ptr" << std::endl;
+                        // std::cout << "unlocked root ptr" << std::endl;
                     } else {
                         current->parent->write_unlock();
                     }
@@ -411,7 +417,7 @@ class MultinomialCobwebTree {
                     current->write_unlock();
                     break;
                 } else if (current->children.empty()) {
-                    std::cout << "fringe split" << std::endl;
+                    // std::cout << "fringe split" << std::endl;
                     MultinomialCobwebNode* new_node = new MultinomialCobwebNode(current);
                     new_node->write_lock();
                     current->parent = new_node;
@@ -420,7 +426,7 @@ class MultinomialCobwebTree {
                     if (new_node->parent == nullptr) {
                         root = new_node;
                         root_ptr_mtx.unlock();
-                        std::cout << "unlocked root ptr" << std::endl;
+                        // std::cout << "unlocked root ptr" << std::endl;
                     }
                     else{
                         new_node->parent->children.erase(remove(new_node->parent->children.begin(),
@@ -465,7 +471,7 @@ class MultinomialCobwebTree {
                     if (bestAction != "split"){
                         if (current->parent == nullptr){
                             root_ptr_mtx.unlock();
-                            std::cout << "unlocked root ptr" << std::endl;
+                            // std::cout << "unlocked root ptr" << std::endl;
                         }
                         else{
                             current->parent->write_unlock();
@@ -473,13 +479,13 @@ class MultinomialCobwebTree {
                     }
 
                     if (bestAction == "best") {
-                        std::cout << "best" << std::endl;
+                        // std::cout << "best" << std::endl;
                         current->increment_counts(instance);
                         // TODO should explore an "upgrade lock" on best1
                         best1->write_lock();
                         current = best1;
                     } else if (bestAction == "new") {
-                        std::cout << "new" << std::endl;
+                        // std::cout << "new" << std::endl;
                         current->increment_counts(instance);
 
                         // current = current->create_new_child(instance);
@@ -492,7 +498,7 @@ class MultinomialCobwebTree {
                         current = new_child;
                         break;
                     } else if (bestAction == "merge") {
-                        std::cout << "merge" << std::endl;
+                        // std::cout << "merge" << std::endl;
                         current->increment_counts(instance);
                         // MultinomialCobwebNode* new_child = current->merge(best1, best2);
 
@@ -519,7 +525,7 @@ class MultinomialCobwebTree {
                         current->children.push_back(new_child);
                         current = new_child;
                     } else if (bestAction == "split") {
-                        std::cout << "split" << std::endl;
+                        // std::cout << "split" << std::endl;
                         // current->split(best1);
                         current->children.erase(remove(current->children.begin(),
                             current->children.end(), best1), current->children.end());
@@ -656,22 +662,22 @@ inline MultinomialCobwebNode::MultinomialCobwebNode(MultinomialCobwebNode *other
 
 inline void MultinomialCobwebNode::read_lock(){
     node_mtx.lock_shared();
-    std::cout << "read locked: " << this << std::endl;
+    // std::cout << "read locked: " << this << std::endl;
 }
 
 inline void MultinomialCobwebNode::read_unlock(){
     node_mtx.unlock_shared();
-    std::cout << "read unlocked: " << this << std::endl;
+    // std::cout << "read unlocked: " << this << std::endl;
 }
 
 inline void MultinomialCobwebNode::write_lock(){
     node_mtx.lock();
-    std::cout << "write locked: " << this << std::endl;
+    // std::cout << "write locked: " << this << std::endl;
 }
 
 inline void MultinomialCobwebNode::write_unlock(){
     node_mtx.unlock();
-    std::cout << "write unlocked: " << this << std::endl;
+    // std::cout << "write unlocked: " << this << std::endl;
 }
 
 
