@@ -15,7 +15,7 @@ if __name__ == "__main__":
 
     mushrooms = load_mushroom()
     shuffle(mushrooms)
-    mushrooms = mushrooms[:5000]
+    mushrooms = mushrooms[:12800]
 
     tree1 = MultinomialCobwebTree(True, # Use mutual information (rather than expected correct guesses)
                                  0.1, # alpha weight
@@ -37,14 +37,14 @@ if __name__ == "__main__":
     print("Starting sync")
     start1 = time.perf_counter()
     fut1 = [tree1.ifit(m) for m in tqdm(mushrooms_multi)]
-    results1 = [f.predict() for f in tqdm(fut1)]
+    results1 = [f.wait() for f in tqdm(fut1)]
     end1 = time.perf_counter()
     print("Done in {}".format(end1 - start1))
 
     print("Starting async")
     start2 = time.perf_counter()
     fut2 = [tree2.async_ifit(m) for m in tqdm(mushrooms_multi)]
-    results2 = [f.predict() for f in tqdm(fut2)]
+    results2 = [f.wait() for f in tqdm(fut2)]
     end2 = time.perf_counter()
     print("Done in {}".format(end2 - start2))
 
