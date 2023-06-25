@@ -39,6 +39,8 @@ if __name__ == "__main__":
     fut1 = [tree1.ifit(m) for m in tqdm(mushrooms_multi)]
     results1 = [f.wait() for f in tqdm(fut1)]
     end1 = time.perf_counter()
+    print("Write wait time: {}".format(tree1.write_wait_time))
+    print("Root write wait time: {}".format(tree1.root.write_wait_time))
     print("Done in {}".format(end1 - start1))
 
     print("Starting async")
@@ -46,6 +48,8 @@ if __name__ == "__main__":
     fut2 = [tree2.async_ifit(m) for m in tqdm(mushrooms_multi)]
     results2 = [f.wait() for f in tqdm(fut2)]
     end2 = time.perf_counter()
+    print("Tree write wait time: {}".format(tree2.write_wait_time))
+    print("Root write wait time: {}".format(tree2.root.write_wait_time))
     print("Done in {}".format(end2 - start2))
 
     # acc = []
@@ -63,5 +67,5 @@ if __name__ == "__main__":
     #     tree.ifit(m)
     # print(acc)
     # print(sum(acc)/len(acc))
-    visualize(tree2)
+    # visualize(tree2)
 
