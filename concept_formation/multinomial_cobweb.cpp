@@ -1554,6 +1554,9 @@ int main(int argc, char* argv[]) {
     for (int i = 0; i < 1000; i++){
         AV_COUNT_TYPE inst;
         inst["anchor"]["word" + std::to_string(i)] = 1;
+        inst["anchor2"]["word" + std::to_string(i % 10)] = 1;
+        inst["anchor3"]["word" + std::to_string(i % 20)] = 1;
+        inst["anchor4"]["word" + std::to_string(i % 100)] = 1;
         cfs.push_back(tree.async_ifit(inst));
     }
     for (int i = 0; i < 1000; i++){
