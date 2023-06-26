@@ -15,6 +15,7 @@
 #include "assert.h"
 #include "json.hpp"
 #include "BS_thread_pool.hpp"
+#include "cached_string.hpp"
 
 #include <execution>
 // #define PAR std::execution::par_unseq,
@@ -30,11 +31,12 @@
 
 namespace py = pybind11;
 
-#define NULL_STRING "\0"
+#define NULL_STRING CachedString("\0")
 
-typedef std::string ATTR_TYPE;
-typedef std::string VALUE_TYPE;
+typedef CachedString ATTR_TYPE;
+typedef CachedString VALUE_TYPE;
 typedef int COUNT_TYPE;
+typedef std::unordered_map<std::string, std::unordered_map<std::string, COUNT_TYPE>> INSTANCE_TYPE;
 typedef std::unordered_map<VALUE_TYPE, COUNT_TYPE> VAL_COUNT_TYPE;
 typedef std::unordered_map<ATTR_TYPE, VAL_COUNT_TYPE> AV_COUNT_TYPE;
 typedef std::unordered_map<ATTR_TYPE, std::unordered_set<VALUE_TYPE>> AV_KEY_TYPE;
@@ -367,13 +369,23 @@ class MultinomialCobwebTree {
             root = node; 
         }
 
-        CategorizationFuture* ifit(AV_COUNT_TYPE instance) {
-            return new CategorizationFuture(this->cobweb(instance));
+        MultinomialCobwebNode* ifit_helper(const INSTANCE_TYPE &instance){
+            AV_COUNT_TYPE cached_instance;
+            for (auto &[attr, val_map]: instance) {
+                for (auto &[val, cnt]: val_map) {
+                    cached_instance[CachedString(attr)][CachedString(val)] = instance.at(attr).at(val);
+                }
+            }
+            return this->cobweb(cached_instance);
         }
 
-        CategorizationFuture* async_ifit(AV_COUNT_TYPE &instance) {
+        CategorizationFuture* ifit(INSTANCE_TYPE instance) {
+            return new CategorizationFuture(this->ifit_helper(instance));
+        }
+
+        CategorizationFuture* async_ifit(INSTANCE_TYPE &instance) {
             auto fut_result = pool.submit([this, instance]() {
-                auto* result = this->cobweb(instance);
+                auto* result = this->ifit_helper(instance);
                 return result;
             });
 
@@ -381,7 +393,7 @@ class MultinomialCobwebTree {
         }
 
 
-        void fit(std::vector<AV_COUNT_TYPE> instances, int iterations = 1, bool randomizeFirst = true) {
+        void fit(std::vector<INSTANCE_TYPE> instances, int iterations = 1, bool randomizeFirst = true) {
             for (int i = 0; i < iterations; i++) {
                 if (i == 0 && randomizeFirst) {
                     shuffle(instances.begin(), instances.end(), std::default_random_engine());
@@ -630,13 +642,23 @@ class MultinomialCobwebTree {
             }
         }
 
-        CategorizationFuture* categorize(const AV_COUNT_TYPE instance, bool get_best_concept) {
-            return new CategorizationFuture(this->_cobweb_categorize(instance, get_best_concept));
+        MultinomialCobwebNode* categorize_helper(const INSTANCE_TYPE &instance, bool get_best_concept){
+            AV_COUNT_TYPE cached_instance;
+            for (auto &[attr, val_map]: instance) {
+                for (auto &[val, cnt]: val_map) {
+                    cached_instance[CachedString(attr)][CachedString(val)] = instance.at(attr).at(val);
+                }
+            }
+            return this->_cobweb_categorize(cached_instance, get_best_concept);
         }
 
-        CategorizationFuture* async_categorize(const AV_COUNT_TYPE &instance, bool get_best_concept) {
+        CategorizationFuture* categorize(const INSTANCE_TYPE instance, bool get_best_concept) {
+            return new CategorizationFuture(this->categorize_helper(instance, get_best_concept));
+        }
+
+        CategorizationFuture* async_categorize(const INSTANCE_TYPE &instance, bool get_best_concept) {
             auto fut_result = pool.submit([this, instance, get_best_concept]() {
-                auto* result = this->_cobweb_categorize(instance, get_best_concept);
+                auto* result = this->categorize_helper(instance, get_best_concept);
                 return result;
             });
             return new CategorizationFuture(std::move(fut_result));
@@ -771,11 +793,13 @@ inline double MultinomialCobwebNode::score_insert(const AV_COUNT_TYPE &instance,
         const VAL_COUNTS_TYPE &val_counts){
     std::unordered_set<ATTR_TYPE> all_attrs;
     for (auto &[attr, tmp]: instance){
-        if (attr[0] == '_') continue;
+        //if (attr[0] == '_') continue;
+        if (attr.is_hidden()) continue;
         all_attrs.insert(attr);
     }
     for (auto &[attr, tmp]: this->av_counts){
-        if (attr[0] == '_') continue;
+        //if (attr[0] == '_') continue;
+        if (attr.is_hidden()) continue;
         all_attrs.insert(attr);
     }
 
@@ -843,15 +867,18 @@ inline double MultinomialCobwebNode::score_merge(MultinomialCobwebNode *other, c
 
     std::unordered_set<ATTR_TYPE> all_attrs;
     for (auto &[attr, tmp]: instance){
-        if (attr[0] == '_') continue;
+        // if (attr[0] == '_') continue;
+        if (attr.is_hidden()) continue;
         all_attrs.insert(attr);
     }
     for (auto &[attr, tmp]: this->av_counts){
-        if (attr[0] == '_') continue;
+        // if (attr[0] == '_') continue;
+        if (attr.is_hidden()) continue;
         all_attrs.insert(attr);
     }
     for (auto &[attr, tmp]: other->av_counts){
-        if (attr[0] == '_') continue;
+        // if (attr[0] == '_') continue;
+        if (attr.is_hidden()) continue;
         all_attrs.insert(attr);
     }
 
@@ -961,7 +988,8 @@ inline double MultinomialCobwebNode::score(const VAL_COUNTS_TYPE &val_counts) {
 
     return transform_reduce(PAR this->av_counts.begin(), this->av_counts.end(), 0.0,
             std::plus<>(), [&](const auto& attr_it){
-                if (attr_it.first[0] == '_') return 0.0;
+                // if (attr_it.first[0] == '_') return 0.0;
+                if (attr_it.first.is_hidden()) return 0.0;
 
                 COUNT_TYPE attr_count = this->attr_counts.at(attr_it.first);
                 int num_vals = val_counts.at(attr_it.first);
@@ -1207,7 +1235,8 @@ inline bool MultinomialCobwebNode::is_exact_match(const AV_COUNT_TYPE &instance)
     for (auto &[attr, tmp]: this->av_counts) all_attrs.insert(attr);
 
     for (auto &attr: all_attrs) {
-        if (attr[0] == '_') continue;
+        // if (attr[0] == '_') continue;
+        if (attr.is_hidden()) continue;
         if (instance.count(attr) && !this->av_counts.count(attr)) {
             return false;
         }
@@ -1313,10 +1342,10 @@ inline std::string MultinomialCobwebNode::avcounts_to_json() {
 
     int c = 0;
     for (auto &[attr, vAttr]: av_counts) {
-        ret += "\"" + attr + "\": {";
+        ret += "\"" + attr.get_string() + "\": {";
         int inner_count = 0;
         for (auto &[val, cnt]: vAttr) {
-            ret += "\"" + val + "\": " + std::to_string(cnt);
+            ret += "\"" + val.get_string() + "\": " + std::to_string(cnt);
             if (inner_count != int(vAttr.size()) - 1){
                 ret += ", ";
             }
@@ -1338,10 +1367,10 @@ inline std::string MultinomialCobwebNode::ser_avcounts() {
 
     int c = 0;
     for (auto &[attr, vAttr]: av_counts) {
-        ret += "\"" + attr + "\": {";
+        ret += "\"" + attr.get_string() + "\": {";
         int inner_count = 0;
         for (auto &[val, cnt]: vAttr) {
-            ret += "\"" + val + "\": " + std::to_string(cnt);
+            ret += "\"" + val.get_string() + "\": " + std::to_string(cnt);
             if (inner_count != int(vAttr.size()) - 1){
                 ret += ", ";
             }
@@ -1365,7 +1394,7 @@ inline std::string MultinomialCobwebNode::attr_counts_to_json() {
     for (auto &[attr, cnt]: this->attr_counts) {
         if (!first) ret += ",\n";
         else first = false;
-        ret += "\"" + attr + "\": " + std::to_string(cnt);
+        ret += "\"" + attr.get_string() + "\": " + std::to_string(cnt);
     }
 
     ret += "}";
@@ -1472,7 +1501,8 @@ inline double MultinomialCobwebNode::log_likelihood(MultinomialCobwebNode *child
     double ll = 0;
 
     for (auto &attr: allAttrs) {
-        if (attr[0] == '_') continue;
+        // if (attr[0] == '_') continue;
+        if (attr.is_hidden()) continue;
         std::unordered_set<VALUE_TYPE> vals;
         vals.insert(NULL_STRING);
         if (this->av_counts.count(attr)) {
@@ -1504,7 +1534,8 @@ inline double MultinomialCobwebNode::log_prob_class_given_instance(const AV_COUN
     double log_prob = 0;
 
     for (auto &[attr, vAttr]: instance) {
-        bool hidden = attr[0] == '_';
+        // bool hidden = attr[0] == '_';
+        bool hidden = attr.is_hidden();
         // if (hidden || !this->tree->root->av_counts.count(attr)){
         if (hidden || !av_keys.count(attr)){
             continue;
@@ -1552,7 +1583,7 @@ int main(int argc, char* argv[]) {
     auto tree = MultinomialCobwebTree(true, 1.0, true, true);
 
     for (int i = 0; i < 1000; i++){
-        AV_COUNT_TYPE inst;
+        INSTANCE_TYPE inst;
         inst["anchor"]["word" + std::to_string(i)] = 1;
         inst["anchor2"]["word" + std::to_string(i % 10)] = 1;
         inst["anchor3"]["word" + std::to_string(i % 20)] = 1;
