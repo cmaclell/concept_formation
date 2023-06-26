@@ -119,14 +119,14 @@ if __name__ == "__main__":
         # pprint(story_instances[:4])
         instances = [i for si in story_instances for _, i in si]
 
-    instances = instances[:5000]
+    instances = instances[:3000]
     shuffle(instances)
 
     # instances = [instance for story in get_raw_roc_stories()
     #         for _, instance in get_instances(story, window=window)]
 
     print("training synchronously")
-    fut1t = [tree.ifit(i) for i in tqdm(instances[:len(instances)//2])]
+    fut1t = [tree.ifit(i) for i in tqdm(instances[:len(instances)])]
     result1t = [f.wait() for f in tqdm(fut1t)]
     print("AV key write wait time: {}".format(tree.av_key_wait_time))
     print("Tree write wait time: {}".format(tree.write_wait_time))
@@ -136,13 +136,15 @@ if __name__ == "__main__":
     # fut1c = [tree.categorize(i) for i in tqdm(instances[len(instances)//2:])]
     # result1c = [f.wait() for f in tqdm(fut1c)]
 
+    visualize(tree)
+
     tree2 = MultinomialCobwebTree(True, # Use mutual information (rather than expected correct guesses)
                                  1, # alpha weight
                                  True, # dynamically compute alpha
                                  True) # weight attr by avg occurance of attr
 
     print("training asynchronously")
-    fut2t = [tree2.async_ifit(i) for i in tqdm(instances[:len(instances)//2])]
+    fut2t = [tree2.async_ifit(i) for i in tqdm(instances[:len(instances)])]
     result2t = [f.wait() for f in tqdm(fut2t)]
     print("AV key write wait time: {}".format(tree2.av_key_wait_time))
     print("Tree write wait time: {}".format(tree2.write_wait_time))
@@ -151,3 +153,5 @@ if __name__ == "__main__":
     # print("categorize asynchronously")
     # fut2c = [tree2.async_categorize(i) for i in tqdm(instances[len(instances)//2:])]
     # result2c = [f.wait() for f in tqdm(fut2c)]
+
+    # visualize(tree)
