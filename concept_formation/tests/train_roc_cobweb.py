@@ -112,14 +112,14 @@ if __name__ == "__main__":
 
     print("Loading ROC stories")
     with Pool(processes=os.cpu_count()-2) as p:
-        stories = list(get_raw_roc_stories())
+        stories = list(get_raw_roc_stories())[:1000]
         f = partial(get_instance_list, window=window)
         # print(stories[:5])
         story_instances = p.map(f, tqdm(stories))
         # pprint(story_instances[:4])
         instances = [i for si in story_instances for _, i in si]
 
-    instances = instances[:10000]
+    instances = instances[:5000]
     shuffle(instances)
 
     # instances = [instance for story in get_raw_roc_stories()
@@ -128,10 +128,13 @@ if __name__ == "__main__":
     print("training synchronously")
     fut1t = [tree.ifit(i) for i in tqdm(instances[:len(instances)//2])]
     result1t = [f.wait() for f in tqdm(fut1t)]
+    print("AV key write wait time: {}".format(tree.av_key_wait_time))
+    print("Tree write wait time: {}".format(tree.write_wait_time))
+    print("Root write wait time: {}".format(tree.root.write_wait_time))
 
-    print("catgorize synchronously")
-    fut1c = [tree.categorize(i) for i in tqdm(instances[len(instances)//2:])]
-    result1c = [f.wait() for f in tqdm(fut1c)]
+    # print("catgorize synchronously")
+    # fut1c = [tree.categorize(i) for i in tqdm(instances[len(instances)//2:])]
+    # result1c = [f.wait() for f in tqdm(fut1c)]
 
     tree2 = MultinomialCobwebTree(True, # Use mutual information (rather than expected correct guesses)
                                  1, # alpha weight
@@ -141,7 +144,10 @@ if __name__ == "__main__":
     print("training asynchronously")
     fut2t = [tree2.async_ifit(i) for i in tqdm(instances[:len(instances)//2])]
     result2t = [f.wait() for f in tqdm(fut2t)]
+    print("AV key write wait time: {}".format(tree2.av_key_wait_time))
+    print("Tree write wait time: {}".format(tree2.write_wait_time))
+    print("Root write wait time: {}".format(tree2.root.write_wait_time))
 
-    print("categorize asynchronously")
-    fut2c = [tree2.async_categorize(i) for i in tqdm(instances[len(instances)//2:])]
-    result2c = [f.wait() for f in tqdm(fut2c)]
+    # print("categorize asynchronously")
+    # fut2c = [tree2.async_categorize(i) for i in tqdm(instances[len(instances)//2:])]
+    # result2c = [f.wait() for f in tqdm(fut2c)]

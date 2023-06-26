@@ -40,7 +40,9 @@ if __name__ == "__main__":
     results1 = [f.wait() for f in tqdm(fut1)]
     end1 = time.perf_counter()
     print("Write wait time: {}".format(tree1.write_wait_time))
+    # print("Tree write count: {}".format(tree1.write_count))
     print("Root write wait time: {}".format(tree1.root.write_wait_time))
+    # print("Root write count: {}".format(tree1.root.write_count))
     print("Done in {}".format(end1 - start1))
 
     print("Starting async")
@@ -49,7 +51,9 @@ if __name__ == "__main__":
     results2 = [f.wait() for f in tqdm(fut2)]
     end2 = time.perf_counter()
     print("Tree write wait time: {}".format(tree2.write_wait_time))
+    # print("Tree write count: {}".format(tree2.write_count))
     print("Root write wait time: {}".format(tree2.root.write_wait_time))
+    # print("Root write count: {}".format(tree2.root.write_count))
     print("Done in {}".format(end2 - start2))
 
     # acc = []

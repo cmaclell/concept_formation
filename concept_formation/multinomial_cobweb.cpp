@@ -161,7 +161,9 @@ class CategorizationFuture {
 class MultinomialCobwebTree {
     private:
         std::shared_mutex tree_mtx;
-        BS::thread_pool pool{std::thread::hardware_concurrency() - 1};
+        std::shared_mutex av_key_mtx;
+        BS::thread_pool pool{(std::thread::hardware_concurrency() - 1)};
+        // BS::thread_pool pool{3};
 
     public:
         bool use_mutual_info;
@@ -170,7 +172,7 @@ class MultinomialCobwebTree {
         bool weight_attr;
         MultinomialCobwebNode *root;
         AV_KEY_TYPE attr_vals;
-        double read_wait_time = 0.0;
+        double av_key_wait_time = 0.0;
         double write_wait_time = 0.0;
 
         MultinomialCobwebTree(bool use_mutual_info, float alpha_weight, bool
@@ -186,28 +188,46 @@ class MultinomialCobwebTree {
             this->attr_vals = AV_KEY_TYPE();
         }
 
-        void read_lock(){
-            auto start_time = std::chrono::high_resolution_clock::now();
-            tree_mtx.lock_shared(); 
-            auto stop_time = std::chrono::high_resolution_clock::now();
-            auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(stop_time - start_time).count();
-            read_wait_time += duration;
+        void read_lock_av_key(){
+            av_key_mtx.lock_shared();
         }
 
-        void read_unlock(){
+        void read_unlock_av_key(){
+            av_key_mtx.unlock_shared();
+        }
+
+        void write_lock_av_key(){
+            auto start_time = std::chrono::high_resolution_clock::now();
+            av_key_mtx.lock();
+            auto stop_time = std::chrono::high_resolution_clock::now();
+            auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(stop_time - start_time).count();
+            av_key_wait_time += duration;
+        }
+
+        void write_unlock_av_key(){
+            av_key_mtx.unlock();
+        }
+
+        void read_lock_tree_ptr(){
+            tree_mtx.lock_shared();
+        }
+
+        void read_unlock_tree_ptr(){
             tree_mtx.unlock_shared();
         }
 
-        void write_lock(){
+        void write_lock_tree_ptr(){
             auto start_time = std::chrono::high_resolution_clock::now();
             tree_mtx.lock(); 
+            // std::cout << "write tree locked" << std::endl;
             auto stop_time = std::chrono::high_resolution_clock::now();
             auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(stop_time - start_time).count();
             write_wait_time += duration;
         }
 
-        void write_unlock(){
+        void write_unlock_tree_ptr(){
             tree_mtx.unlock();
+            // std::cout << "write tree unlocked" << std::endl;
         }
 
         std::string __str__(){
@@ -375,53 +395,60 @@ class MultinomialCobwebTree {
 
         MultinomialCobwebNode *cobweb(const AV_COUNT_TYPE &instance) {
             // std::cout << "cobweb top level" << std::endl;
-            this->write_lock();
 
             for (auto &[attr, val_map]: instance) {
                 // if (attr[0] == '_') continue;
                 for (auto &[val, cnt]: val_map) {
-                    attr_vals[attr].insert(val);
+                    this->read_lock_av_key();
+                    bool needs_write = !attr_vals.count(attr) or !attr_vals.at(attr).count(val);
+                    this->read_unlock_av_key();
+
+                    if (needs_write){
+                        this->write_lock_av_key();
+                        attr_vals[attr].insert(val);
+                        this->write_unlock_av_key();
+                    }
                 }
             }
 
+            this->write_lock_tree_ptr();
+
+            this->read_lock_av_key();
             VAL_COUNTS_TYPE val_counts;
             for (auto &[attr, val_map]: attr_vals) {
                 val_counts[attr] = val_map.size();
             }
-            // std::cout << "locked root ptr" << std::endl;
+            this->read_unlock_av_key();
 
             MultinomialCobwebNode* current = root;
-            // std::cout << "locking root concept" << std::endl;
             current->write_lock();
 
-            // std::cout << "cobweb entering loop" << std::endl;
+            // look ahead to detect fringe split, this is the only case we need to retain parent lock.
+            if (!current->children.empty() || current->count == 0 || current->is_exact_match(instance)) {
+                this->write_unlock_tree_ptr(); 
+            }
 
             while (true) {
                 // each loop starts with a write lock on current and
                 // current->parent (in the case of root, root_ptr_mtx is write
                 // locked instead of current->parent).
-                if (current->children.empty() && (current->is_exact_match(instance) || current->count == 0)) {
+                if (current->children.empty() && (current->count == 0 || current->is_exact_match(instance))) {
                     // std::cout << "empty / exact match" << std::endl;
-                    if (current->parent == nullptr) {
-                        this->write_unlock();
-                        // std::cout << "unlocked root ptr" << std::endl;
-                    } else {
-                        current->parent->write_unlock();
-                    }
                     current->increment_counts(instance);
                     current->write_unlock();
                     break;
                 } else if (current->children.empty()) {
+                    //for this case both current and its parent/root is locked.
                     // std::cout << "fringe split" << std::endl;
                     MultinomialCobwebNode* new_node = new MultinomialCobwebNode(current);
                     new_node->write_lock();
                     current->parent = new_node;
+                    current->write_unlock();
                     new_node->children.push_back(current);
 
                     if (new_node->parent == nullptr) {
                         root = new_node;
-                        this->write_unlock();
-                        // std::cout << "unlocked root ptr" << std::endl;
+                        this->write_unlock_tree_ptr();
                     }
                     else{
                         new_node->parent->children.erase(remove(new_node->parent->children.begin(),
@@ -429,7 +456,6 @@ class MultinomialCobwebTree {
                         new_node->parent->children.push_back(new_node);
                         new_node->parent->write_unlock();
                     }
-                    current->write_unlock();
                     new_node->increment_counts(instance);
                     
                     current = new MultinomialCobwebNode();
@@ -463,21 +489,17 @@ class MultinomialCobwebTree {
                         c->read_unlock();
                     }
 
-                    if (bestAction != "split"){
-                        if (current->parent == nullptr){
-                            this->write_unlock();
-                            // std::cout << "unlocked root ptr" << std::endl;
-                        }
-                        else{
-                            current->parent->write_unlock();
-                        } 
-                    }
-
                     if (bestAction == "best") {
                         // std::cout << "best" << std::endl;
                         current->increment_counts(instance);
                         // TODO should explore an "upgrade lock" on best1
                         best1->write_lock();
+
+                        // look ahead to detect fringe split, which is the only case we need to retain parent lock.
+                        if (!best1->children.empty() || best1->count == 0 || best1->is_exact_match(instance)) {
+                            current->write_unlock(); 
+                        }
+
                         current = best1;
                     } else if (bestAction == "new") {
                         // std::cout << "new" << std::endl;
@@ -518,10 +540,10 @@ class MultinomialCobwebTree {
                         current->children.erase(remove(current->children.begin(),
                                     current->children.end(), best2), current->children.end());
                         current->children.push_back(new_child);
+                        current->write_unlock();
                         current = new_child;
                     } else if (bestAction == "split") {
                         // std::cout << "split" << std::endl;
-                        // current->split(best1);
                         current->children.erase(remove(current->children.begin(),
                             current->children.end(), best1), current->children.end());
                         for (auto &c: best1->children) {
@@ -548,7 +570,7 @@ class MultinomialCobwebTree {
         // there will be no changes to the node as a result of categorize, so we're good.
         MultinomialCobwebNode* _cobweb_categorize(const AV_COUNT_TYPE &instance, bool get_best_concept) {
 
-            this->read_lock();
+            this->read_lock_tree_ptr();
 
             AV_KEY_TYPE av_keys = attr_vals;
 
@@ -562,7 +584,7 @@ class MultinomialCobwebTree {
             while (true) {
                 if (current->children.empty()) {
                     if (current->parent == nullptr){
-                        this->read_unlock();
+                        this->read_unlock_tree_ptr();
                     }
                     else{
                         current->parent->read_unlock();
@@ -573,7 +595,7 @@ class MultinomialCobwebTree {
                 }
 
                 if (current->parent == nullptr){
-                    this->read_unlock();
+                    this->read_unlock_tree_ptr();
                 }
                 else{
                     current->parent->read_unlock();
@@ -712,6 +734,7 @@ inline void MultinomialCobwebNode::read_unlock(){
 inline void MultinomialCobwebNode::write_lock(){
     auto start_time = std::chrono::high_resolution_clock::now();
     node_mtx.lock();
+    // std::cout << "write locked: " << this << std::endl;
     auto stop_time = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(stop_time - start_time).count();
     write_wait_time += duration;
@@ -721,8 +744,6 @@ inline void MultinomialCobwebNode::write_unlock(){
     node_mtx.unlock();
     // std::cout << "write unlocked: " << this << std::endl;
 }
-
-
 
 inline void MultinomialCobwebNode::increment_counts(const AV_COUNT_TYPE &instance) {
     this->count += 1;
@@ -1595,7 +1616,7 @@ PYBIND11_MODULE(multinomial_cobweb, m) {
         .def("__str__", &MultinomialCobwebTree::__str__)
         .def("dump_json", &MultinomialCobwebTree::dump_json)
         .def("load_json", &MultinomialCobwebTree::load_json)
-        .def_readonly("read_wait_time", &MultinomialCobwebTree::read_wait_time)
+        .def_readonly("av_key_wait_time", &MultinomialCobwebTree::av_key_wait_time)
         .def_readonly("write_wait_time", &MultinomialCobwebTree::write_wait_time)
         .def_readonly("root", &MultinomialCobwebTree::root, py::return_value_policy::reference);
 }
