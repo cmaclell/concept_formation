@@ -13,7 +13,7 @@
 #include <chrono>
 
 #include "assert.h"
-#include "json.cpp"
+#include "json.hpp"
 #include "BS_thread_pool.hpp"
 
 #include <execution>
@@ -190,7 +190,7 @@ class MultinomialCobwebTree {
             auto start_time = std::chrono::high_resolution_clock::now();
             tree_mtx.lock_shared(); 
             auto stop_time = std::chrono::high_resolution_clock::now();
-            auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(stop_time - start_time).count();
+            auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(stop_time - start_time).count();
             read_wait_time += duration;
         }
 
@@ -202,9 +202,8 @@ class MultinomialCobwebTree {
             auto start_time = std::chrono::high_resolution_clock::now();
             tree_mtx.lock(); 
             auto stop_time = std::chrono::high_resolution_clock::now();
-            auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(stop_time - start_time).count();
-            // write_wait_time += duration;
-            write_wait_time += 1;
+            auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(stop_time - start_time).count();
+            write_wait_time += duration;
         }
 
         void write_unlock(){
@@ -700,7 +699,7 @@ inline void MultinomialCobwebNode::read_lock(){
     auto start_time = std::chrono::high_resolution_clock::now();
     node_mtx.lock_shared();
     auto stop_time = std::chrono::high_resolution_clock::now();
-    auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(stop_time - start_time).count();
+    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(stop_time - start_time).count();
     read_wait_time += duration;
     // std::cout << "read locked: " << this << std::endl;
 }
@@ -714,10 +713,8 @@ inline void MultinomialCobwebNode::write_lock(){
     auto start_time = std::chrono::high_resolution_clock::now();
     node_mtx.lock();
     auto stop_time = std::chrono::high_resolution_clock::now();
-    auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(stop_time - start_time).count();
-    // write_wait_time += duration;
-    write_wait_time += 1;
-    // std::cout << "write locked: " << this << std::endl;
+    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(stop_time - start_time).count();
+    write_wait_time += duration;
 }
 
 inline void MultinomialCobwebNode::write_unlock(){
@@ -1527,6 +1524,25 @@ inline double MultinomialCobwebNode::log_prob_class_given_instance(const AV_COUN
 }
 
 
+
+int main(int argc, char* argv[]) {
+    std::vector<AV_COUNT_TYPE> instances;
+    std::vector<CategorizationFuture*> cfs;
+    auto tree = MultinomialCobwebTree(true, 1.0, true, true);
+
+    for (int i = 0; i < 1000; i++){
+        AV_COUNT_TYPE inst;
+        inst["anchor"]["word" + std::to_string(i)] = 1;
+        cfs.push_back(tree.async_ifit(inst));
+    }
+    for (int i = 0; i < 1000; i++){
+        cfs.at(i)->wait();
+    }
+     
+    return 0;
+}
+
+
 PYBIND11_MODULE(multinomial_cobweb, m) {
     m.doc() = "concept_formation.multinomial_cobweb plugin"; // optional module docstring
 
@@ -1549,7 +1565,7 @@ PYBIND11_MODULE(multinomial_cobweb, m) {
         .def("partition_utility", &MultinomialCobwebNode::partition_utility)
         .def("__str__", &MultinomialCobwebNode::__str__)
         .def_readonly("read_wait_time", &MultinomialCobwebNode::read_wait_time)
-        .def_readonly("write_wait_time", &MultinomialCobwebNode::read_wait_time)
+        .def_readonly("write_wait_time", &MultinomialCobwebNode::write_wait_time)
         .def_readonly("count", &MultinomialCobwebNode::count)
         .def_readonly("children", &MultinomialCobwebNode::children, py::return_value_policy::reference)
         .def_readonly("parent", &MultinomialCobwebNode::parent, py::return_value_policy::reference)
@@ -1580,6 +1596,6 @@ PYBIND11_MODULE(multinomial_cobweb, m) {
         .def("dump_json", &MultinomialCobwebTree::dump_json)
         .def("load_json", &MultinomialCobwebTree::load_json)
         .def_readonly("read_wait_time", &MultinomialCobwebTree::read_wait_time)
-        .def_readonly("write_wait_time", &MultinomialCobwebTree::read_wait_time)
+        .def_readonly("write_wait_time", &MultinomialCobwebTree::write_wait_time)
         .def_readonly("root", &MultinomialCobwebTree::root, py::return_value_policy::reference);
 }
