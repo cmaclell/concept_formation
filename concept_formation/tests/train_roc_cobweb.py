@@ -17,6 +17,7 @@ from gensim.models import Word2Vec
 from gensim.models.word2vec import LineSentence
 from multiprocessing import Pool
 from time import time
+from time import perf_counter
 from datetime import datetime
 from functools import partial
 import itertools
@@ -112,22 +113,25 @@ if __name__ == "__main__":
 
     print("Loading ROC stories")
     with Pool(processes=os.cpu_count()-2) as p:
-        stories = list(get_raw_roc_stories())[:1000]
+        stories = list(get_raw_roc_stories())[:5000]
         f = partial(get_instance_list, window=window)
         # print(stories[:5])
         story_instances = p.map(f, tqdm(stories))
         # pprint(story_instances[:4])
         instances = [i for si in story_instances for _, i in si]
 
-    instances = instances[:3000]
+    instances = instances[:200000]
     shuffle(instances)
 
     # instances = [instance for story in get_raw_roc_stories()
     #         for _, instance in get_instances(story, window=window)]
 
     print("training synchronously")
+    start = perf_counter()
     fut1t = [tree.ifit(i) for i in tqdm(instances[:len(instances)])]
     result1t = [f.wait() for f in tqdm(fut1t)]
+    end = perf_counter()
+    print("Done in {}".format(end - start))
     print("AV key write wait time: {}".format(tree.av_key_wait_time))
     print("Tree write wait time: {}".format(tree.write_wait_time))
     print("Root write wait time: {}".format(tree.root.write_wait_time))
@@ -136,7 +140,7 @@ if __name__ == "__main__":
     # fut1c = [tree.categorize(i) for i in tqdm(instances[len(instances)//2:])]
     # result1c = [f.wait() for f in tqdm(fut1c)]
 
-    visualize(tree)
+    # visualize(tree)
 
     tree2 = MultinomialCobwebTree(True, # Use mutual information (rather than expected correct guesses)
                                  1, # alpha weight
@@ -144,8 +148,11 @@ if __name__ == "__main__":
                                  True) # weight attr by avg occurance of attr
 
     print("training asynchronously")
+    start = perf_counter()
     fut2t = [tree2.async_ifit(i) for i in tqdm(instances[:len(instances)])]
     result2t = [f.wait() for f in tqdm(fut2t)]
+    end = perf_counter()
+    print("Done in {}".format(end - start))
     print("AV key write wait time: {}".format(tree2.av_key_wait_time))
     print("Tree write wait time: {}".format(tree2.write_wait_time))
     print("Root write wait time: {}".format(tree2.root.write_wait_time))
