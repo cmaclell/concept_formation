@@ -3,7 +3,6 @@
 #include <iostream>
 #include <vector>
 #include <unordered_map>
-#include <algorithm>
 #include <functional>
 #include <random>
 #include <tuple>
@@ -16,18 +15,6 @@
 #include "json.hpp"
 #include "BS_thread_pool.hpp"
 #include "cached_string.hpp"
-
-#include <execution>
-// #define PAR std::execution::par_unseq,
-// #define PAR std::execution::seq,
-#define PAR
-
-// #if PARALLEL
-// #include <execution>
-// #define PAR std::execution::par,
-// #else
-// #define PAR
-// #endif
 
 namespace py = pybind11;
 
@@ -99,8 +86,8 @@ class MultinomialCobwebNode {
         MultinomialCobwebNode *parent;
         MultinomialCobwebTree *tree;
         AV_COUNT_TYPE av_counts;
-        double read_wait_time = 0.0;
-        double write_wait_time = 0.0;
+        // double read_wait_time = 0.0;
+        // double write_wait_time = 0.0;
 
         MultinomialCobwebNode();
         MultinomialCobwebNode(MultinomialCobwebNode *otherNode);
@@ -112,14 +99,11 @@ class MultinomialCobwebNode {
         void increment_counts(const AV_COUNT_TYPE &instance);
         void update_counts_from_node(MultinomialCobwebNode *node);
         double score_insert(const AV_COUNT_TYPE &instance, const VAL_COUNTS_TYPE &val_counts);
-        double score_insert_old(const AV_COUNT_TYPE &instance, const VAL_COUNTS_TYPE &val_counts);
         double score_merge(MultinomialCobwebNode *other, const AV_COUNT_TYPE &instance, const VAL_COUNTS_TYPE &val_counts);
-        double score_merge_old(MultinomialCobwebNode *other, const AV_COUNT_TYPE &instance, const VAL_COUNTS_TYPE &val_counts);
         MultinomialCobwebNode* get_best_level(const AV_COUNT_TYPE &instance, const AV_KEY_TYPE &av_keys);
         MultinomialCobwebNode* get_basic_level(const VAL_COUNTS_TYPE &val_counts);
         double category_utility(const VAL_COUNTS_TYPE &val_counts);
         double score(const VAL_COUNTS_TYPE &val_counts);
-        double score_old(const VAL_COUNTS_TYPE &val_counts);
         double partition_utility(const VAL_COUNTS_TYPE &val_counts);
         std::tuple<double, int> get_best_operation(const AV_COUNT_TYPE &instance, MultinomialCobwebNode *best1,
                 MultinomialCobwebNode *best2, double best1Cu, const VAL_COUNTS_TYPE &val_counts);
@@ -127,12 +111,9 @@ class MultinomialCobwebNode {
                 const VAL_COUNTS_TYPE &val_counts);
         double log_prob_class_given_instance(const AV_COUNT_TYPE &instance, const AV_KEY_TYPE &av_keys);
         double pu_for_insert(MultinomialCobwebNode *child, const AV_COUNT_TYPE &instance, const VAL_COUNTS_TYPE &val_counts);
-        // MultinomialCobwebNode *create_new_child(const AV_COUNT_TYPE &instance);
         double pu_for_new_child(const AV_COUNT_TYPE &instance, const VAL_COUNTS_TYPE &val_counts);
-        // MultinomialCobwebNode *merge(MultinomialCobwebNode *best1, MultinomialCobwebNode *best2);
         double pu_for_merge(MultinomialCobwebNode *best1, MultinomialCobwebNode *best2, const AV_COUNT_TYPE &instance, 
                 const VAL_COUNTS_TYPE &val_counts);
-        // void split(MultinomialCobwebNode *best);
         double pu_for_split(MultinomialCobwebNode *best, const VAL_COUNTS_TYPE &val_counts);
         bool is_exact_match(const AV_COUNT_TYPE &instance);
         size_t _hash();
@@ -181,8 +162,8 @@ class MultinomialCobwebTree {
         bool weight_attr;
         MultinomialCobwebNode *root;
         AV_KEY_TYPE attr_vals;
-        double av_key_wait_time = 0.0;
-        double write_wait_time = 0.0;
+        // double av_key_wait_time = 0.0;
+        // double write_wait_time = 0.0;
 
         MultinomialCobwebTree(bool use_mutual_info, float alpha_weight, bool
                 dynamic_alpha, bool weight_attr) {
@@ -206,11 +187,11 @@ class MultinomialCobwebTree {
         }
 
         void write_lock_av_key(){
-            auto start_time = std::chrono::high_resolution_clock::now();
+            // auto start_time = std::chrono::high_resolution_clock::now();
             av_key_mtx.lock();
-            auto stop_time = std::chrono::high_resolution_clock::now();
-            auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(stop_time - start_time).count();
-            av_key_wait_time += duration;
+            // auto stop_time = std::chrono::high_resolution_clock::now();
+            // auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(stop_time - start_time).count();
+            // av_key_wait_time += duration;
         }
 
         void write_unlock_av_key(){
@@ -226,12 +207,12 @@ class MultinomialCobwebTree {
         }
 
         void write_lock_tree_ptr(){
-            auto start_time = std::chrono::high_resolution_clock::now();
+            // auto start_time = std::chrono::high_resolution_clock::now();
             tree_mtx.lock(); 
             // std::cout << "write tree locked" << std::endl;
-            auto stop_time = std::chrono::high_resolution_clock::now();
-            auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(stop_time - start_time).count();
-            write_wait_time += duration;
+            // auto stop_time = std::chrono::high_resolution_clock::now();
+            // auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(stop_time - start_time).count();
+            // write_wait_time += duration;
         }
 
         void write_unlock_tree_ptr(){
@@ -254,12 +235,6 @@ class MultinomialCobwebTree {
                 return this->alpha_weight / n_vals;
             }
         }
-
-        /*
-        float attr_weight(ATTR_TYPE attr){
-            return (1.0 * get_root()->attr_counts.at(attr)) / get_root()->count;
-        }
-        */
 
         MultinomialCobwebNode* load_json_helper(json_object_s* object) {
             MultinomialCobwebNode *new_node = new MultinomialCobwebNode();
@@ -416,7 +391,6 @@ class MultinomialCobwebTree {
             // std::cout << "cobweb top level" << std::endl;
 
             for (auto &[attr, val_map]: instance) {
-                // if (attr[0] == '_') continue;
                 for (auto &[val, cnt]: val_map) {
                     this->read_lock_av_key();
                     bool needs_write = !attr_vals.count(attr) or !attr_vals.at(attr).count(val);
@@ -747,11 +721,11 @@ inline MultinomialCobwebNode::MultinomialCobwebNode(MultinomialCobwebNode *other
 }
 
 inline void MultinomialCobwebNode::read_lock(){
-    auto start_time = std::chrono::high_resolution_clock::now();
+    // auto start_time = std::chrono::high_resolution_clock::now();
     node_mtx.lock_shared();
-    auto stop_time = std::chrono::high_resolution_clock::now();
-    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(stop_time - start_time).count();
-    read_wait_time += duration;
+    // auto stop_time = std::chrono::high_resolution_clock::now();
+    // auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(stop_time - start_time).count();
+    // read_wait_time += duration;
     // std::cout << "read locked: " << this << std::endl;
 }
 
@@ -761,12 +735,12 @@ inline void MultinomialCobwebNode::read_unlock(){
 }
 
 inline void MultinomialCobwebNode::write_lock(){
-    auto start_time = std::chrono::high_resolution_clock::now();
+    // auto start_time = std::chrono::high_resolution_clock::now();
     node_mtx.lock();
     // std::cout << "write locked: " << this << std::endl;
-    auto stop_time = std::chrono::high_resolution_clock::now();
-    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(stop_time - start_time).count();
-    write_wait_time += duration;
+    // auto stop_time = std::chrono::high_resolution_clock::now();
+    // auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(stop_time - start_time).count();
+    // write_wait_time += duration;
 }
 
 inline void MultinomialCobwebNode::write_unlock(){
@@ -904,165 +878,6 @@ inline double MultinomialCobwebNode::score_insert(const AV_COUNT_TYPE &instance,
 
     return info;
 }
-
-inline double MultinomialCobwebNode::score_insert_old(const AV_COUNT_TYPE &instance,
-        const VAL_COUNTS_TYPE &val_counts){
-    std::unordered_set<ATTR_TYPE> all_attrs;
-    for (auto &[attr, tmp]: instance){
-        //if (attr[0] == '_') continue;
-        if (attr.is_hidden()) continue;
-        all_attrs.insert(attr);
-    }
-    for (auto &[attr, tmp]: this->av_counts){
-        //if (attr[0] == '_') continue;
-        if (attr.is_hidden()) continue;
-        all_attrs.insert(attr);
-    }
-
-    return transform_reduce(PAR all_attrs.begin(), all_attrs.end(), 0.0,
-            std::plus<>(), [&](const auto& attr_it){
-                COUNT_TYPE attr_count = 0;
-                std::unordered_set<VALUE_TYPE> all_vals;
-                int num_vals = val_counts.at(attr_it);
-                float alpha = this->tree->alpha(num_vals);
-                // int num_vals = this->tree->num_vals_for_attr(attr_it);
-
-                if (this->av_counts.count(attr_it)){
-                    attr_count += this->attr_counts.at(attr_it);
-                    for (auto &[val, cnt]: this->av_counts.at(attr_it)) all_vals.insert(val);
-                }
-                if (instance.count(attr_it)){
-                    for (auto &[val, cnt]: instance.at(attr_it)){
-                    attr_count += cnt;
-                    all_vals.insert(val);
-                    }
-                }
-
-                double ratio = 1.0;
-
-                if (this->tree->weight_attr){
-                    ratio = (1.0 * attr_count) / (this->count + 1);
-                }
-
-                double info = transform_reduce(PAR all_vals.begin(), all_vals.end(), 0.0,
-                        std::plus<>(), [&](const auto &val){
-                            COUNT_TYPE av_count = 0;
-
-                            if (this->av_counts.count(attr_it) and this->av_counts.at(attr_it).count(val)){
-                                av_count += this->av_counts.at(attr_it).at(val);
-                            }
-                            if (instance.count(attr_it) and instance.at(attr_it).count(val)){
-                                av_count += instance.at(attr_it).at(val);
-                            }
-
-                            double p = ((av_count + alpha) / (attr_count + num_vals * alpha));
-
-                            if (this->tree->use_mutual_info){
-                                return ratio * -p * log(p);
-                            } else{
-                                return ratio * -p * p;
-                            }
-                        });
-
-                COUNT_TYPE num_missing = num_vals - all_vals.size();
-                if (num_missing > 0 and alpha > 0){
-                    double p = (alpha / (attr_count + num_vals * alpha));
-                    if (this->tree->use_mutual_info){
-                        info += num_missing * ratio * -p * log(p);
-                    } else {
-                        info += num_missing * ratio * -p * p;
-                    }
-                }
-
-                return info;
-            });
-}
-
-inline double MultinomialCobwebNode::score_merge_old(MultinomialCobwebNode *other,
-        const AV_COUNT_TYPE &instance, const VAL_COUNTS_TYPE &val_counts) {
-
-    std::unordered_set<ATTR_TYPE> all_attrs;
-    for (auto &[attr, tmp]: instance){
-        // if (attr[0] == '_') continue;
-        if (attr.is_hidden()) continue;
-        all_attrs.insert(attr);
-    }
-    for (auto &[attr, tmp]: this->av_counts){
-        // if (attr[0] == '_') continue;
-        if (attr.is_hidden()) continue;
-        all_attrs.insert(attr);
-    }
-    for (auto &[attr, tmp]: other->av_counts){
-        // if (attr[0] == '_') continue;
-        if (attr.is_hidden()) continue;
-        all_attrs.insert(attr);
-    }
-
-    return transform_reduce(PAR all_attrs.begin(), all_attrs.end(), 0.0,
-            std::plus<>(), [&](const auto& attr_it){
-                COUNT_TYPE attr_count = 0;
-                std::unordered_set<ATTR_TYPE> all_vals;
-                int num_vals = val_counts.at(attr_it);
-                float alpha = this->tree->alpha(num_vals);
-
-                if (this->av_counts.count(attr_it)){
-                    attr_count += this->attr_counts.at(attr_it);
-                    for (auto &[val, cnt]: this->av_counts.at(attr_it)) all_vals.insert(val);
-                }
-                if (other->av_counts.count(attr_it)){
-                    attr_count += other->attr_counts.at(attr_it);
-                    for (auto &[val, cnt]: other->av_counts.at(attr_it)) all_vals.insert(val);
-                }
-                if (instance.count(attr_it)){
-                    for (auto &[val, cnt]: instance.at(attr_it)){
-                        attr_count += cnt;
-                        all_vals.insert(val);
-                    }
-                }
-
-                double ratio = 1.0;
-
-                if (this->tree->weight_attr){
-                    ratio = (1.0 * attr_count) / (this->count + other->count + 1);
-                }
-
-                double info = transform_reduce(PAR all_vals.begin(), all_vals.end(), 0.0,
-                        std::plus<>(), [&](const auto &val){
-                            COUNT_TYPE av_count = 0;
-
-                            if (this->av_counts.count(attr_it) and this->av_counts.at(attr_it).count(val)){
-                                av_count += this->av_counts.at(attr_it).at(val);
-                            }
-                            if (other->av_counts.count(attr_it) and other->av_counts.at(attr_it).count(val)){
-                                av_count += other->av_counts.at(attr_it).at(val);
-                            }
-                            if (instance.count(attr_it) and instance.at(attr_it).count(val)){
-                                av_count += instance.at(attr_it).at(val);
-                            }
-
-                            double p = ((av_count + alpha) / (attr_count + num_vals * alpha));
-
-                            if (this->tree->use_mutual_info){
-                                return ratio * -p * log(p);
-                            } else {
-                                return ratio * -p * p;
-                            }
-                        });
-
-                COUNT_TYPE num_missing = num_vals - all_vals.size();
-                if (num_missing > 0 and alpha > 0){
-                    double p = (alpha / (attr_count + num_vals * alpha));
-                    if (this->tree->use_mutual_info){
-                        info += num_missing * ratio * -p * log(p);
-                    } else {
-                        info += num_missing * ratio * -p * p;
-                    }
-                }
-
-                return info;
-            });
-}
-
 
 inline double MultinomialCobwebNode::score_merge(MultinomialCobwebNode *other,
         const AV_COUNT_TYPE &instance, const VAL_COUNTS_TYPE &val_counts) {
@@ -1351,47 +1166,6 @@ inline double MultinomialCobwebNode::score(const VAL_COUNTS_TYPE &val_counts) {
     return info;
 }
 
-inline double MultinomialCobwebNode::score_old(const VAL_COUNTS_TYPE &val_counts) {
-
-    return transform_reduce(PAR this->av_counts.begin(), this->av_counts.end(), 0.0,
-            std::plus<>(), [&](const auto& attr_it){
-                // if (attr_it.first[0] == '_') return 0.0;
-                if (attr_it.first.is_hidden()) return 0.0;
-
-                COUNT_TYPE attr_count = this->attr_counts.at(attr_it.first);
-                int num_vals = val_counts.at(attr_it.first);
-                float alpha = this->tree->alpha(num_vals);
-
-                double ratio = 1.0;
-
-                if (this->tree->weight_attr){
-                    ratio = (1.0 * attr_count) / this->count;
-                }
-
-                double info = transform_reduce(PAR attr_it.second.begin(), attr_it.second.end(), 0.0,
-                        std::plus<>(), [&](const auto& val_it){
-                            double p = ((val_it.second + alpha) / (attr_count + num_vals * alpha));
-                            if (this->tree->use_mutual_info){
-                                return ratio * -p * log(p);
-                            } else {
-                                return ratio * -p * p;
-                            }
-                        });
-
-                COUNT_TYPE num_missing = num_vals - attr_it.second.size();
-                if (num_missing > 0 and alpha > 0){
-                    double p = (alpha / (attr_count + num_vals * alpha));
-                    if (this->tree->use_mutual_info){
-                        info += num_missing * ratio * -p * log(p);
-                    } else {
-                        info += num_missing * ratio * -p * p;
-                    }
-                }
-
-                return info;
-            });
-}
-
 inline double MultinomialCobwebNode::partition_utility(const VAL_COUNTS_TYPE &val_counts) {
     if (children.empty()) {
         return 0.0;
@@ -1486,17 +1260,6 @@ inline double MultinomialCobwebNode::pu_for_insert(MultinomialCobwebNode *child,
     return ((this->score_insert(instance, val_counts) - children_score) / this->children.size());
 }
 
-/*
-inline MultinomialCobwebNode* MultinomialCobwebNode::create_new_child(const AV_COUNT_TYPE &instance) {
-    MultinomialCobwebNode *new_child = new MultinomialCobwebNode();
-    new_child->parent = this;
-    new_child->tree = this->tree;
-    new_child->increment_counts(instance);
-    this->children.push_back(new_child);
-    return new_child;
-};
-*/
-
 inline double MultinomialCobwebNode::pu_for_new_child(const AV_COUNT_TYPE &instance,
         const VAL_COUNTS_TYPE &val_counts) {
     double children_score = 0.0;
@@ -1506,6 +1269,7 @@ inline double MultinomialCobwebNode::pu_for_new_child(const AV_COUNT_TYPE &insta
         children_score += p_of_child * c->score(val_counts);
     }
 
+    // TODO modify so that we can evaluate new child without copying instance.
     MultinomialCobwebNode new_child = MultinomialCobwebNode();
     new_child.parent = this;
     new_child.tree = this->tree;
@@ -1516,31 +1280,6 @@ inline double MultinomialCobwebNode::pu_for_new_child(const AV_COUNT_TYPE &insta
     return ((this->score_insert(instance, val_counts) - children_score) /
             (children.size()+1));
 }
-
-/*
-inline MultinomialCobwebNode* MultinomialCobwebNode::merge(MultinomialCobwebNode *best1, MultinomialCobwebNode *best2) {
-    MultinomialCobwebNode *new_child = new MultinomialCobwebNode();
-    new_child->write_lock();
-    new_child->parent = this;
-    new_child->tree = this->tree;
-
-    best1->write_lock();
-    best2->write_lock();
-    new_child->update_counts_from_node(best1);
-    new_child->update_counts_from_node(best2);
-    best1->parent = new_child;
-    best2->parent = new_child;
-    new_child->children.push_back(best1);
-    new_child->children.push_back(best2);
-    children.erase(remove(this->children.begin(), this->children.end(), best1), children.end());
-    children.erase(remove(this->children.begin(), this->children.end(), best2), children.end());
-    children.push_back(new_child);
-    best1->write_unlock();
-    best2->write_unlock();
-
-    return new_child;
-}
-*/
 
 inline double MultinomialCobwebNode::pu_for_merge(MultinomialCobwebNode *best1,
         MultinomialCobwebNode *best2, const AV_COUNT_TYPE &instance,
@@ -1562,18 +1301,6 @@ inline double MultinomialCobwebNode::pu_for_merge(MultinomialCobwebNode *best1,
 
     return ((this->score_insert(instance, val_counts) - children_score) / (children.size()-1));
 }
-
-/*
-inline void MultinomialCobwebNode::split(MultinomialCobwebNode *best) {
-    children.erase(remove(children.begin(), children.end(), best), children.end());
-    for (auto &c: best->children) {
-        c->parent = this;
-        c->tree = this->tree;
-        children.push_back(c);
-    }
-    delete best;
-}
-*/
 
 inline double MultinomialCobwebNode::pu_for_split(MultinomialCobwebNode *best,
         const VAL_COUNTS_TYPE &val_counts){
@@ -1901,18 +1628,14 @@ inline double MultinomialCobwebNode::log_prob_class_given_instance(const AV_COUN
     double log_prob = 0;
 
     for (auto &[attr, vAttr]: instance) {
-        // bool hidden = attr[0] == '_';
         bool hidden = attr.is_hidden();
-        // if (hidden || !this->tree->root->av_counts.count(attr)){
         if (hidden || !av_keys.count(attr)){
             continue;
         }
 
         double num_vals = av_keys.at(attr).size();
-        // double num_vals = this->tree->root->av_counts.at(attr).size();
 
         for (auto &[val, cnt]: vAttr){
-            // if (!this->tree->root->av_counts.at(attr).count(val)){
             if (!av_keys.at(attr).count(val)){
                 continue;
             }
@@ -1986,8 +1709,8 @@ PYBIND11_MODULE(multinomial_cobweb, m) {
         .def("category_utility", &MultinomialCobwebNode::category_utility)
         .def("partition_utility", &MultinomialCobwebNode::partition_utility)
         .def("__str__", &MultinomialCobwebNode::__str__)
-        .def_readonly("read_wait_time", &MultinomialCobwebNode::read_wait_time)
-        .def_readonly("write_wait_time", &MultinomialCobwebNode::write_wait_time)
+        // .def_readonly("read_wait_time", &MultinomialCobwebNode::read_wait_time)
+        // .def_readonly("write_wait_time", &MultinomialCobwebNode::write_wait_time)
         .def_readonly("count", &MultinomialCobwebNode::count)
         .def_readonly("children", &MultinomialCobwebNode::children, py::return_value_policy::reference)
         .def_readonly("parent", &MultinomialCobwebNode::parent, py::return_value_policy::reference)
@@ -2017,7 +1740,7 @@ PYBIND11_MODULE(multinomial_cobweb, m) {
         .def("__str__", &MultinomialCobwebTree::__str__)
         .def("dump_json", &MultinomialCobwebTree::dump_json)
         .def("load_json", &MultinomialCobwebTree::load_json)
-        .def_readonly("av_key_wait_time", &MultinomialCobwebTree::av_key_wait_time)
-        .def_readonly("write_wait_time", &MultinomialCobwebTree::write_wait_time)
+        // .def_readonly("av_key_wait_time", &MultinomialCobwebTree::av_key_wait_time)
+        // .def_readonly("write_wait_time", &MultinomialCobwebTree::write_wait_time)
         .def_readonly("root", &MultinomialCobwebTree::root, py::return_value_policy::reference);
 }
