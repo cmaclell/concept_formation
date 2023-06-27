@@ -1,29 +1,29 @@
 import os
 import re
-import json
+# import json
 import string
 from collections import Counter
 from random import shuffle
-from random import random
+# from random import random
 from tqdm import tqdm
 from concept_formation.multinomial_cobweb import MultinomialCobwebTree
-from concept_formation.visualize import visualize
+# from concept_formation.visualize import visualize
 import spacy
-import numpy as np
-import pandas as pd
-import seaborn as sns
-from matplotlib import pyplot as plt
-from gensim.models import Word2Vec
-from gensim.models.word2vec import LineSentence
+# import numpy as np
+# import pandas as pd
+# import seaborn as sns
+# from matplotlib import pyplot as plt
+# from gensim.models import Word2Vec
+# from gensim.models.word2vec import LineSentence
 from multiprocessing import Pool
-from time import time
+# from time import time
 from time import perf_counter
-from datetime import datetime
+# from datetime import datetime
 from functools import partial
-import itertools
-from pprint import pprint
+# import itertools
+# from pprint import pprint
 
-nlp = spacy.load("en_core_web_sm", disable = ['parser'])
+nlp = spacy.load("en_core_web_sm", disable=['parser'])
 # nlp = spacy.load('en_core_web_trf')
 nlp.add_pipe("sentencizer")
 nlp.max_length = float('inf')
@@ -33,8 +33,9 @@ nlp.max_length = float('inf')
 # import logging  # Setting up the loggings to monitor gensim
 # logging.basicConfig(format="%(levelname)s - %(asctime)s: %(message)s", datefmt= '%H:%M:%S', level=logging.INFO)
 
+
 def get_instance(text, anchor_idx, anchor_wd, window):
-    ctx = text[max(0, anchor_idx-window):anchor_idx] + text[anchor_idx+1:anchor_idx+1+window]
+    ctx = text[max(0, anchor_idx - window):anchor_idx] + text[anchor_idx + 1:anchor_idx + 1 + window]
     ctx = Counter(ctx)
     example = {}
     example['context'] = {word: ctx[word] for word in ctx}
@@ -45,21 +46,24 @@ def get_instance(text, anchor_idx, anchor_wd, window):
     example['anchor'] = {anchor_wd: 1}
     return example
 
+
 def get_instance_list(story, window):
     return list(get_instances(story, window))
+
 
 def get_instances(story, window):
     for anchor_idx, anchor_wd in enumerate(story):
         yield anchor_idx, get_instance(story, anchor_idx, anchor_wd, window=window)
+
 
 def get_raw_roc_stories(limit=None):
     with open("ROCStories_winter2017 - ROCStories_winter2017.txt", 'r') as fin:
 
         lines = list(fin)
         if limit is None:
-            limit = len(lines)-1
+            limit = len(lines) - 1
 
-        for line in tqdm(lines[1:limit+1]):
+        for line in tqdm(lines[1:limit + 1]):
 
             line = line.lower().replace("\n", "").split("\t")
 
