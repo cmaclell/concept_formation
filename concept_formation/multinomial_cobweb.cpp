@@ -801,15 +801,14 @@ inline double MultinomialCobwebNode::score_insert(const AV_COUNT_TYPE &instance,
 
     double info = 0.0;
 
-    // TODO need to iterate over attr in instance too, skipping those in av_counts
     for (auto &[attr, av_inner]: this->av_counts){
         if (attr.is_hidden()) continue;
         bool instance_has_attr = instance.count(attr);
-        COUNT_TYPE attr_count = 0;
+
         int num_vals = val_counts.at(attr);
         float alpha = this->tree->alpha(num_vals);
 
-        attr_count += this->attr_counts.at(attr);
+        COUNT_TYPE attr_count = this->attr_counts.at(attr);
         if (instance_has_attr){
             for (auto &[val, cnt]: instance.at(attr)){
                 attr_count += cnt;
@@ -823,7 +822,6 @@ inline double MultinomialCobwebNode::score_insert(const AV_COUNT_TYPE &instance,
         }
 
         int vals_processed = 0;
-        // TODO need to iterate over values in instance attr, skipping those in av_counts
         for (auto &[val, cnt]: av_inner){
             vals_processed += 1;
             COUNT_TYPE av_count = cnt;
@@ -842,7 +840,7 @@ inline double MultinomialCobwebNode::score_insert(const AV_COUNT_TYPE &instance,
             for (auto &[val, cnt]: instance.at(attr)){
                 if (av_inner.count(val)) continue;
                 vals_processed += 1;
-                COUNT_TYPE av_count = instance.at(attr).at(val);
+                COUNT_TYPE av_count = cnt;
 
                 double p = ((av_count + alpha) / (attr_count + num_vals * alpha));
                 if (this->tree->use_mutual_info){
@@ -1140,7 +1138,7 @@ inline double MultinomialCobwebNode::score_merge(MultinomialCobwebNode *other,
         if (instance_has_attr){
             for (auto &[val, cnt]: instance.at(attr)){
                 if (inner_vals.count(val)) continue;
-                if (other->av_counts.at(attr).count(val)) continue;
+                if (other_has_attr && other->av_counts.at(attr).count(val)) continue;
                 vals_processed += 1;
                 COUNT_TYPE av_count = cnt;
 
@@ -1191,7 +1189,7 @@ inline double MultinomialCobwebNode::score_merge(MultinomialCobwebNode *other,
             vals_processed += 1;
             COUNT_TYPE av_count = cnt;
 
-            if (instance.count(attr) and instance.at(attr).count(val)){
+            if (instance_has_attr and instance.at(attr).count(val)){
                 av_count += instance.at(attr).at(val);
             }
 
