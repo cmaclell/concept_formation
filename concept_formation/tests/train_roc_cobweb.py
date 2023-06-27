@@ -120,7 +120,7 @@ if __name__ == "__main__":
         # pprint(story_instances[:4])
         instances = [i for si in story_instances for _, i in si]
 
-    instances = instances[:200000]
+    instances = instances[:5000]
     shuffle(instances)
 
     # instances = [instance for story in get_raw_roc_stories()
