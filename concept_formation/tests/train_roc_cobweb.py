@@ -132,9 +132,9 @@ if __name__ == "__main__":
     result1t = [f.wait() for f in tqdm(fut1t)]
     end = perf_counter()
     print("Done in {}".format(end - start))
-    print("AV key write wait time: {}".format(tree.av_key_wait_time))
-    print("Tree write wait time: {}".format(tree.write_wait_time))
-    print("Root write wait time: {}".format(tree.root.write_wait_time))
+    # print("AV key write wait time: {}".format(tree.av_key_wait_time))
+    # print("Tree write wait time: {}".format(tree.write_wait_time))
+    # print("Root write wait time: {}".format(tree.root.write_wait_time))
 
     # print("catgorize synchronously")
     # fut1c = [tree.categorize(i) for i in tqdm(instances[len(instances)//2:])]
@@ -153,9 +153,9 @@ if __name__ == "__main__":
     result2t = [f.wait() for f in tqdm(fut2t)]
     end = perf_counter()
     print("Done in {}".format(end - start))
-    print("AV key write wait time: {}".format(tree2.av_key_wait_time))
-    print("Tree write wait time: {}".format(tree2.write_wait_time))
-    print("Root write wait time: {}".format(tree2.root.write_wait_time))
+    # print("AV key write wait time: {}".format(tree2.av_key_wait_time))
+    # print("Tree write wait time: {}".format(tree2.write_wait_time))
+    # print("Root write wait time: {}".format(tree2.root.write_wait_time))
 
     # print("categorize asynchronously")
     # fut2c = [tree2.async_categorize(i) for i in tqdm(instances[len(instances)//2:])]

@@ -39,10 +39,10 @@ if __name__ == "__main__":
     fut1 = [tree1.ifit(m) for m in tqdm(mushrooms_multi)]
     results1 = [f.wait() for f in tqdm(fut1)]
     end1 = time.perf_counter()
-    print("AV key wait time: {}".format(tree1.av_key_wait_time))
-    print("Write wait time: {}".format(tree1.write_wait_time))
+    # print("AV key wait time: {}".format(tree1.av_key_wait_time))
+    # print("Write wait time: {}".format(tree1.write_wait_time))
     # print("Tree write count: {}".format(tree1.write_count))
-    print("Root write wait time: {}".format(tree1.root.write_wait_time))
+    # print("Root write wait time: {}".format(tree1.root.write_wait_time))
     # print("Root write count: {}".format(tree1.root.write_count))
     print("Done in {}".format(end1 - start1))
 
@@ -53,10 +53,10 @@ if __name__ == "__main__":
     fut2 = [tree2.async_ifit(m) for m in tqdm(mushrooms_multi)]
     results2 = [f.wait() for f in tqdm(fut2)]
     end2 = time.perf_counter()
-    print("AV key wait time: {}".format(tree2.av_key_wait_time))
-    print("Tree write wait time: {}".format(tree2.write_wait_time))
+    # print("AV key wait time: {}".format(tree2.av_key_wait_time))
+    # print("Tree write wait time: {}".format(tree2.write_wait_time))
     # print("Tree write count: {}".format(tree2.write_count))
-    print("Root write wait time: {}".format(tree2.root.write_wait_time))
+    # print("Root write wait time: {}".format(tree2.root.write_wait_time))
     # print("Root write count: {}".format(tree2.root.write_count))
     print("Done in {}".format(end2 - start2))
 
