@@ -143,7 +143,9 @@ class CategorizationFuture {
         CategorizationFuture(std::future<MultinomialCobwebNode*> leaf_future);
         CategorizationFuture(MultinomialCobwebNode* leaf_node);
         void wait();
-        std::unordered_map<ATTR_TYPE, std::unordered_map<VALUE_TYPE, double>> predict();
+        std::unordered_map<std::string, std::unordered_map<std::string, double>> predict();
+        std::unordered_map<std::string, std::unordered_map<std::string, double>> predict_basic();
+        std::unordered_map<std::string, std::unordered_map<std::string, double>> predict_best(INSTANCE_TYPE instance);
 
 };
 
@@ -659,8 +661,72 @@ inline void CategorizationFuture::wait(){
     }
 }
 
-inline std::unordered_map<ATTR_TYPE, std::unordered_map<VALUE_TYPE, double>> CategorizationFuture::predict(){
-    std::unordered_map<ATTR_TYPE, std::unordered_map<VALUE_TYPE, double>> out;
+/*
+inline std::unordered_map<std::string, std::unordered_map<std::string, double>> CategorizationFuture::predict_basic(){
+    std::unordered_map<std::string, std::unordered_map<std::string, double>> out;
+
+    if (leaf == nullptr){
+        leaf = leaf_future.get();
+    }
+
+    leaf->read_lock();
+    leaf->tree->root->read_lock();
+    
+    // get val_counts
+
+    MultinomialCobwebNode* curr = leaf;
+    MultinomialCobwebNode* best = leaf;
+    double best_cu = this->category_utility(val_counts);
+
+    while (curr->parent != nullptr) {
+        curr->parent->read_lock();
+        curr = curr->parent;
+        double curr_cu = curr->category_utility(val_counts);
+
+        if (curr_cu > best_cu) {
+            best = curr;
+            best_cu = curr_cu;
+        }
+    }
+    // get basic level
+    
+    leaf->tree->root->read_unlock();
+    leaf->read_lock();
+
+
+    AV_KEY_TYPE attr_vals = leaf->tree->attr_vals;
+
+    for (auto &[attr, val_set]: attr_vals) {
+        // std::cout << attr << std::endl;
+        int num_vals = attr_vals.at(attr).size();
+        float alpha = leaf->tree->alpha(num_vals);
+        COUNT_TYPE attr_count = 0;
+
+        if (leaf->attr_counts.count(attr)){
+            attr_count = leaf->attr_counts.at(attr);
+        }
+
+        for (auto val: val_set) {
+            // std::cout << val << std::endl;
+            COUNT_TYPE av_count = 0;
+            if (leaf->av_counts.count(attr) and leaf->av_counts.at(attr).count(val)){
+                av_count = leaf->av_counts.at(attr).at(val);
+            }
+
+            double p = ((av_count + alpha) / (attr_count + num_vals * alpha));
+            // std::cout << p << std::endl;
+            out[attr.get_string()][val.get_string()] += p;
+        }
+    }
+
+    leaf->read_unlock();
+
+    return out;
+}
+*/
+
+inline std::unordered_map<std::string, std::unordered_map<std::string, double>> CategorizationFuture::predict(){
+    std::unordered_map<std::string, std::unordered_map<std::string, double>> out;
 
     if (leaf == nullptr){
         leaf = leaf_future.get();
@@ -689,11 +755,12 @@ inline std::unordered_map<ATTR_TYPE, std::unordered_map<VALUE_TYPE, double>> Cat
 
             double p = ((av_count + alpha) / (attr_count + num_vals * alpha));
             // std::cout << p << std::endl;
-            out[attr][val] += p;
+            out[attr.get_string()][val.get_string()] += p;
         }
     }
 
     leaf->read_unlock();
+
     return out;
 }
 
@@ -1620,7 +1687,7 @@ inline double MultinomialCobwebNode::log_likelihood(MultinomialCobwebNode *child
 
 inline double MultinomialCobwebNode::category_utility(const VAL_COUNTS_TYPE &val_counts){
     double p_of_c = (1.0 * this->count) / this->tree->get_root()->count;
-    return (p_of_c * (this->tree->get_root()->score(val_counts) - this->score(val_counts)));
+    return (p_of_c * (this->tree->root->score(val_counts) - this->score(val_counts)));
 }
 
 inline double MultinomialCobwebNode::log_prob_class_given_instance(const AV_COUNT_TYPE &instance, const AV_KEY_TYPE &av_keys){
