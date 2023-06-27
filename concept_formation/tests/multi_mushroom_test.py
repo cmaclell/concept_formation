@@ -15,7 +15,7 @@ if __name__ == "__main__":
 
     mushrooms = load_mushroom()
     shuffle(mushrooms)
-    mushrooms = mushrooms[:12800]
+    mushrooms = mushrooms[:10000]
 
     tree1 = MultinomialCobwebTree(True, # Use mutual information (rather than expected correct guesses)
                                  0.1, # alpha weight
@@ -39,6 +39,7 @@ if __name__ == "__main__":
     fut1 = [tree1.ifit(m) for m in tqdm(mushrooms_multi)]
     results1 = [f.wait() for f in tqdm(fut1)]
     end1 = time.perf_counter()
+    print("AV key wait time: {}".format(tree1.av_key_wait_time))
     print("Write wait time: {}".format(tree1.write_wait_time))
     # print("Tree write count: {}".format(tree1.write_count))
     print("Root write wait time: {}".format(tree1.root.write_wait_time))
@@ -50,6 +51,7 @@ if __name__ == "__main__":
     fut2 = [tree2.async_ifit(m) for m in tqdm(mushrooms_multi)]
     results2 = [f.wait() for f in tqdm(fut2)]
     end2 = time.perf_counter()
+    print("AV key wait time: {}".format(tree2.av_key_wait_time))
     print("Tree write wait time: {}".format(tree2.write_wait_time))
     # print("Tree write count: {}".format(tree2.write_count))
     print("Root write wait time: {}".format(tree2.root.write_wait_time))
