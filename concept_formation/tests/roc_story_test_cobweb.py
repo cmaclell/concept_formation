@@ -101,6 +101,38 @@ def get_preprocessed_roc_stories(limit=None):
             yield story
 
 
+def write_predictions(queue, fout, overall_freq, occurances):
+    while queue:
+        leaf, actual_anchor, story_idx, text = queue.pop(0)
+        probs = leaf.predict()
+        p = 0.0
+        best = "NONE"
+
+        if 'anchor' in probs and actual_anchor in probs['anchor']:
+            p = probs['anchor'][actual_anchor]
+
+        if 'anchor' in probs and len(probs['anchor']) > 0:
+            best = sorted(
+                [(probs['anchor'][w], random(), w) for w in probs['anchor']],
+                reverse=True
+            )[0][2]
+
+        fout.write(
+            "{},{},cobweb,{},{},{},{},{},{},{},{}\n".format(
+                n_training_words,
+                story_idx,
+                actual_anchor,
+                overall_freq[actual_anchor],
+                occurances[actual_anchor],
+                len(occurances),
+                best,
+                p,
+                1 if best == actual_anchor else 0,
+                text
+            )
+        )
+
+
 if __name__ == "__main__":
 
     tree = MultinomialCobwebTree(
@@ -113,6 +145,14 @@ if __name__ == "__main__":
     occurances = Counter()
     n_training_words = 0
     window = 6
+
+    # Buffer to avoid "cheating"
+    buffer = 100
+
+    batch_size = 200
+    batch_idx = 0
+
+    save_interval = 3600
 
     if not os.path.isfile("roc_stories.json"):
         print("Reading and preprocessing stories.")
@@ -132,77 +172,66 @@ if __name__ == "__main__":
         fout.write(
             "n_training_words,"
             "n_training_stories,"
-            "model,word,"
+            "model,"
+            "word,"
             "word_freq,"
             "word_obs_count,"
             "vocab_size,"
             "pred_word,"
             "prob_word,"
-            "correct,story\n"
+            "correct,"
+            "story\n"
         )
         fout.close()
 
-    # overall_freq = Counter([w for s in stories for w in s])
+    training_queue = []
+    categorization_queue = []
+    last_checkpoint = time()
 
-    # # TODO PICK OUTFILE NAME
-    # outfile = 'cobweb_freq_5_rocstories_out'
+    overall_freq = Counter([w for s in stories for w in s])
 
-    # with open(outfile + ".csv", 'w') as fout:
-    #     fout.write("n_training_words,n_training_stories,model,word,word_freq,word_obs_count,vocab_size,pred_word,prob_word,correct,story\n")
+    for story_idx, story in enumerate(tqdm(stories)):
 
-    # training_queue = []
-    # last_checkpoint_time = time()
+        for anchor_idx, instance in get_instances(story, window=window):
+            batch_idx += 1
+            text = story[max(0, anchor_idx - window):min(len(story), anchor_idx + window)]
+            text[anchor_idx - max(0, anchor_idx - window)] = '_'
+            text = ' '.join(text)
 
-    # for story_idx, story in enumerate(tqdm(stories)):
+            actual_anchor = list(instance['anchor'].keys())[0]
 
-    #     # drop low frequency words
-    #     story = [w for w in story if overall_freq[w] >= 5]
+            instance_no_anchor = {'context': instance['context']}
 
-    #     for anchor_idx, instance in get_instances(story, window=window):
-    #         actual_anchor = list(instance['anchor'].keys())[0]
-    #         text = " ".join([w for w in story[max(0, anchor_idx-window):anchor_idx]])
-    #         text += " _ "
-    #         text += " ".join([w for w in story[max(0, anchor_idx+1):anchor_idx+window+1]])
+            categorization_queue.append((
+                tree.async_categorize(instance),
+                actual_anchor,
+                story_idx,
+                text,
+            ))
+            training_queue.append(instance)
 
-    #         ## cobweb
-    #         no_anchor = {'context': {cv: instance['context'][cv] for cv in
-    #                                  instance['context']}}
-    #         probs = tree.predict(no_anchor)
-    #         p = 0
-    #         best_word = "NONE"
+            if batch_idx >= batch_size:
+                batch_idx = 0
 
-    #         if 'anchor' in probs and actual_anchor in probs['anchor']:
-    #             p = probs['anchor'][actual_anchor]
+                with open(outfile + ".csv", 'a') as fout:
+                    write_predictions(categorization_queue, fout, overall_freq, occurances)
 
-    #         if 'anchor' in probs and len(probs['anchor']) > 0:
-    #             best_word = sorted([(probs['anchor'][w], random(), w) for w in probs['anchor']], reverse=True)[0][2]
+                training_futures = []
 
-    #         # Append to training queue so we only predict on things that are
-    #         # completely outside the context window. I'm trying to prevent any kind of
-    #         # cheating that cobweb might do that word2vec can't.
-    #         training_queue.append(instance)
+                while len(training_queue) > buffer:
+                    old_inst = training_queue.pop(0)
+                    training_futures.append(tree.async_ifit(old_inst))
+                    old_anchor = list(old_inst['anchor'].keys())[0]
+                    occurances[old_anchor] += 1
+                    n_training_words += 1
 
-    #         with open(outfile + ".csv", 'a') as fout:
-    #             fout.write("{},{},cobweb,{},{},{},{},{},{},{},{}\n".format(n_training_words,
-    #                                                              story_idx,
-    #                                                              actual_anchor,
-    #                                                              overall_freq[actual_anchor],
-    #                                                              occurances[actual_anchor],
-    #                                                              len(occurances),
-    #                                                              best_word,
-    #                                                              p,
-    #                                                              1 if best_word == actual_anchor else 0,
-    #                                                              text))
+                [i.wait() for i in training_futures]
 
-    #         if len(training_queue) >= window:
-    #             old_inst = training_queue.pop(0)
-    #             tree.ifit(old_inst)
-    #             old_anchor = list(old_inst['anchor'].keys())[0]
-    #             occurances[old_anchor] += 1
-    #             n_training_words += 1
+        if (time() - last_checkpoint) > save_interval:
+            timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+            with open('{}-{}-{}.json'.format(outfile, story_idx, timestamp), 'w') as fout:
+                fout.write(tree.dump_json())
+            last_checkpoint = time()
 
-    #     if (time() - last_checkpoint_time) > 3600:
-    #         timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-    #         with open('{}-{}-{}.json'.format(outfile, story_idx, timestamp), 'w') as fout:
-    #             fout.write(tree.dump_json())
-    #             last_checkpoint_time = time()
+    with open(outfile + ".csv", 'a') as fout:
+        write_predictions(categorization_queue, fout, overall_freq, occurances)
