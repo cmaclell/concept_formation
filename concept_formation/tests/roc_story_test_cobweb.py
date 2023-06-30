@@ -102,6 +102,7 @@ def get_preprocessed_roc_stories(limit=None):
 
 
 def write_predictions(queue, fout, overall_freq, occurances):
+    global row_num
     while queue:
         leaf, actual_anchor, story_idx, text = queue.pop(0)
         probs = leaf.predict()
@@ -131,9 +132,11 @@ def write_predictions(queue, fout, overall_freq, occurances):
                 text
             )
         )
+        row_num += 1
 
 
 if __name__ == "__main__":
+    row_num = 0
 
     tree = MultinomialCobwebTree(
         True,
@@ -149,7 +152,7 @@ if __name__ == "__main__":
     # Buffer to avoid "cheating"
     buffer = 100
 
-    batch_size = 200
+    batch_size = 150
     batch_idx = 0
 
     save_interval = 3600
@@ -190,7 +193,7 @@ if __name__ == "__main__":
 
     overall_freq = Counter([w for s in stories for w in s])
 
-    for story_idx, story in enumerate(tqdm(stories)):
+    for story_idx, story in enumerate(tqdm(stories[:500])):
 
         for anchor_idx, instance in get_instances(story, window=window):
             batch_idx += 1
