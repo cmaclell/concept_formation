@@ -389,7 +389,7 @@ class CobwebTorchNode(object):
 
         return best
 
-    def get_best(self):
+    def get_best(self, instance):
         """
         Climbs up the tree from the current node (probably a leaf),
         computes the category utility score, and returns the node with
@@ -925,8 +925,7 @@ class CobwebTorchNode(object):
         output['children'] = []
 
         temp = {}
-        temp['_basic_pu'] = {"#ContinuousValue#": {'mean': self.basic_pu(),
-                                                   'std': 1, 'n': 1}}
+        temp['_category_utility'] = {"#ContinuousValue#": {'mean': self.category_utility(), 'std': 1, 'n': 1}}
 
         # TODO output the tensor mean and std in proper json
         # size = self.mean.size()
