@@ -26,9 +26,9 @@ class CobwebTorchTree(object):
         """
         The tree constructor.
         """
-        self.shape = shape
         self.device = device
         self.use_mutual_info = use_mutual_info
+        self.shape = shape
 
         self.prior_var = prior_var
         if prior_var is None:
@@ -45,6 +45,24 @@ class CobwebTorchTree(object):
 
     def __str__(self):
         return str(self.root)
+
+    def dump_json(self):
+        return self.root.output_json()
+
+    def load_json(self, json_string):
+        data = json.loads(json_string)
+        mean = torch.tensor(data['mean'], dtype=torch.float)
+        self.shape = mean.shape
+        self.root = self.load_helper(data)
+
+    def load_helper(self, json_node):
+        node = CobwebTorchNode(self.shape, device=self.device)
+        node.tree = self
+        node.count = torch.tensor(json_node['size'], dtype=torch.float, device=self.device)
+        node.mean = torch.tensor(json_node['mean'], dtype=torch.float, device=self.device)
+        node.meanSq = torch.tensor(json_node['meanSq'], dtype=torch.float, device=self.device)
+        node.children = [self.load_helper(child) for child in json_node['children']]
+        return node
 
     def ifit(self, instance):
         """
@@ -382,7 +400,7 @@ class CobwebTorchNode(object):
 
         while curr.parent:
             curr = curr.parent
-            curr_cu = curr.basic_pu()
+            curr_cu = curr.category_utility()
             if curr_cu > best_cu:
                 best = curr
                 best_cu = curr_cu
@@ -911,6 +929,11 @@ class CobwebTorchNode(object):
     def output_json(self):
         return json.dumps(self.output_dict())
 
+    def visualize(self):
+        from matplotlib import pyplot as plt
+        plt.imshow(self.mean.numpy())
+        plt.show()
+
     def output_dict(self):
         """
         Outputs the categorization tree in JSON form
@@ -921,23 +944,18 @@ class CobwebTorchNode(object):
         """
         output = {}
         output['name'] = "Concept" + str(self.concept_id)
-        output['size'] = self.count
+        output['size'] = self.count.item()
         output['children'] = []
 
         temp = {}
-        temp['_category_utility'] = {"#ContinuousValue#": {'mean': self.category_utility(), 'std': 1, 'n': 1}}
-
-        # TODO output the tensor mean and std in proper json
-        # size = self.mean.size()
-        # for attr in self.av_counts:
-        #     for value in self.av_counts[attr]:
-        #         temp[str(attr)] = {str(value): self.av_counts[attr][value] for
-        #                            value in self.av_counts[attr]}
+        temp['_category_utility'] = {"#ContinuousValue#": {'mean': self.category_utility().item(), 'std': 1, 'n': 1}}
 
         for child in self.children:
             output["children"].append(child.output_dict())
 
         output['counts'] = temp
+        output['mean'] = self.mean.tolist()
+        output['meanSq'] = self.meanSq.tolist()
 
         return output
 
