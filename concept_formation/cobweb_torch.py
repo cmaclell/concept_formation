@@ -308,10 +308,14 @@ class CobwebTorchNode(object):
         return self.meanSq / self.count + self.tree.prior_var # with adjustment
 
     def log_prob_class_given_instance(self, instance):
-        var = self.var
-        log_prob -= (0.5 * torch.log(var) + 0.5 * torch.log(2 * torch.pi) +
-                     0.5 * torch.square(instance - self.mean) / var).sum()
+        log_prob = self.log_prob(instance)
         log_prob += torch.log(self.count) - torch.log(self.root.count)
+
+    def log_prob(self, instance):
+        var = self.var
+        log_prob = (0.5 * torch.log(var) + 0.5 * torch.log(2 * torch.pi) +
+                     0.5 * torch.square(instance - self.mean) / var).sum()
+        return log_prob
 
     def score_insert(self, instance):
         """
@@ -366,24 +370,47 @@ class CobwebTorchNode(object):
 
         return score.sum()
 
-    def get_basic_level(self):
+    def get_basic(self):
+        """
+        Climbs up the tree from the current node (probably a leaf),
+        computes the category utility score, and returns the node with
+        the highest score.
+        """
         curr = self
         best = self
-        best_pu = self.basic_pu()
+        best_cu = self.category_utility()
 
         while curr.parent:
             curr = curr.parent
-            curr_pu = curr.basic_pu()
-            if curr_pu > best_pu:
+            curr_cu = curr.basic_pu()
+            if curr_cu > best_cu:
                 best = curr
-                best_pu = curr_pu
+                best_cu = curr_cu
 
         return best
 
-    def basic_pu(self):
+    def get_best(self):
+        """
+        Climbs up the tree from the current node (probably a leaf),
+        computes the category utility score, and returns the node with
+        the highest score.
+        """
+        curr = self
+        best = self
+        best_ll = self.log_prob_class_given_instance(instance)
+
+        while curr.parent:
+            curr = curr.parent
+            curr_ll = curr.log_prob_class_given_instance(instance)
+            if curr_cu > best_cu:
+                best = curr
+                best_ll = curr_ll
+
+        return best
+
+    def category_utility(self):
         p_of_c = self.count / self.tree.root.count
-        return (p_of_c * (self.expected_correct_guesses() -
-                          self.tree.root.expected_correct_guesses()))
+        return p_of_c * (self.tree.root.score() - self.score())
 
     def score(self):
         """
@@ -915,43 +942,7 @@ class CobwebTorchNode(object):
 
         return output
 
-    def get_weighted_values(self, attr, allow_none=True):
-        """
-        Return a list of weighted choices for an attribute based on the node's
-        probability table.
-
-        This calculation will include an option for the change that an
-        attribute is missing from an instance all together. This is useful for
-        probability and sampling calculations. If the attribute has never
-        appeared in the tree then it will return a 100% chance of None.
-
-        :param attr: an attribute of an instance
-        :type attr: :ref:`Attribute<attributes>`
-        :param allow_none: whether attributes in the nodes probability table
-            can be inferred to be missing. If False, then None will not be
-            cosidered as a possible value.
-        :type allow_none: Boolean
-        :return: a list of weighted choices for attr's value
-        :rtype: [(:ref:`Value<values>`, float), (:ref:`Value<values>`, float),
-                 ...]
-        """
-        choices = []
-        if attr not in self.av_counts:
-            choices.append((None, 1.0))
-            return choices
-
-        val_count = 0
-        for val in self.av_counts[attr]:
-            count = self.av_counts[attr][val]
-            choices.append((val, count / self.count))
-            val_count += count
-
-        if allow_none:
-            choices.append((None, ((self.count - val_count) / self.count)))
-
-        return choices
-
-    def predict(self, attr, choice_fn="most likely", allow_none=True):
+    def predict(self, most_likely=True):
         """
         Predict the value of an attribute, using the specified choice function
         (either the "most likely" value or a "sampled" value).
@@ -969,45 +960,7 @@ class CobwebTorchNode(object):
                  probability table.
         :rtype: :ref:`Value<values>`
         """
-        if choice_fn == "most likely" or choice_fn == "m":
-            choose = most_likely_choice
-        elif choice_fn == "sampled" or choice_fn == "s":
-            choose = weighted_choice
+        if most_likely:
+            return self.mean.detach().clone()
         else:
-            raise Exception("Unknown choice_fn")
-
-        if attr not in self.av_counts:
-            return None
-
-        choices = self.get_weighted_values(attr, allow_none)
-        val = choose(choices)
-        return val
-
-    def probability(self, attr, val):
-        """
-        Returns the probability of a particular attribute value at the current
-        concept. This takes into account the possibilities that an attribute
-        can take any of the values available at the root, or be missing.
-
-        If you you want to check if the probability that an attribute is
-        missing, then check for the probability that the val is ``None``.
-
-        :param attr: an attribute of an instance
-        :type attr: :ref:`Attribute<attributes>`
-        :param val: a value for the given attribute or None
-        :type val: :ref:`Value<values>`
-        :return: The probability of attr having the value val in the current
-            concept.
-        :rtype: float
-        """
-        if val is None:
-            c = 0.0
-            if attr in self.av_counts:
-                c = sum([self.av_counts[attr][v] for v in
-                         self.av_counts[attr]])
-            return (self.count - c) / self.count
-
-        if attr in self.av_counts and val in self.av_counts[attr]:
-            return self.av_counts[attr][val] / self.count
-
-        return 0.0
+            return torch.normal(self.mean, self.std)
