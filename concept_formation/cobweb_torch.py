@@ -10,22 +10,29 @@ from math import isclose
 from collections import defaultdict
 from collections import Counter
 
+import torch
+
 from concept_formation.utils import weighted_choice
 from concept_formation.utils import most_likely_choice
 
 
-class CobwebTree(object):
+class CobwebTorchTree(object):
     """
     The CobwebTree contains the knoweldge base of a partiucluar instance of the
     cobweb algorithm and can be used to fit and categorize instances.
     """
 
-    def __init__(self):
+    def __init__(self, use_mutual_info=True, prior_var=None):
         """
         The tree constructor.
         """
         self.root = CobwebNode()
         self.root.tree = self
+        self.use_mutual_info = use_mutual_info
+
+        self.prior_var = prior_std
+        if prior_var is None:
+            self.prior_var = 1 / (4 * torch.pi)
 
     def clear(self):
         """
@@ -36,31 +43,6 @@ class CobwebTree(object):
 
     def __str__(self):
         return str(self.root)
-
-    def _sanity_check_instance(self, instance):
-        for attr in instance:
-            try:
-                hash(attr)
-                attr[0]
-            except Exception:
-                raise ValueError('Invalid attribute: '+str(attr) +
-                                 ' of type: '+str(type(attr)) +
-                                 ' in instance: '+str(instance) +
-                                 ',\n'+type(self).__name__ +
-                                 ' only works with hashable ' +
-                                 'and subscriptable attributes' +
-                                 ' (e.g., strings).')
-            try:
-                hash(instance[attr])
-            except Exception:
-                raise ValueError('Invalid value: '+str(instance[attr]) +
-                                 ' of type: '+str(type(instance[attr])) +
-                                 ' in instance: '+str(instance) +
-                                 ',\n'+type(self).__name__ +
-                                 ' only works with hashable values.')
-            if instance[attr] is None:
-                raise ValueError("Attributes with value None should"
-                                 " be manually removed.")
 
     def ifit(self, instance):
         """
@@ -79,7 +61,6 @@ class CobwebTree(object):
 
         .. seealso:: :meth:`CobwebTree.cobweb`
         """
-        self._sanity_check_instance(instance)
         return self.cobweb(instance)
 
     def fit(self, instances, iterations=1, randomize_first=True):
@@ -175,9 +156,9 @@ class CobwebTree(object):
                 break
 
             else:
-                best1_cu, best1, best2 = current.two_best_children(instance)
+                best1_pu, best1, best2 = current.two_best_children(instance)
                 _, best_action = current.get_best_operation(instance, best1,
-                                                            best2, best1_cu)
+                                                            best2, best1_pu)
 
                 # print(best_action)
                 if best_action == 'best':
@@ -208,46 +189,21 @@ class CobwebTree(object):
         .. seealso:: :meth:`CobwebTree.categorize`
         """
         current = self.root
-        while current:
-            if not current.children:
+        
+        while True:
+            if (len(current.children) == 0):
                 return current
 
-            _, best1, best2 = current.two_best_children(instance)
-            current = best1
+            parent = current
+            current = None
+            best_logp = None
 
-    def infer_missing(self, instance, choice_fn="most likely",
-                      allow_none=True):
-        """
-        Given a tree and an instance, returns a new instance with attribute
-        values picked using the specified choice function (either "most likely"
-        or "sampled").
+            for (child in parent.children):
+                logp = child.log_prob_class_given_instance(instance)
 
-        .. todo:: write some kind of test for this.
-
-        :param instance: an instance to be completed.
-        :type instance: :ref:`Instance<instance-rep>`
-        :param choice_fn: a string specifying the choice function to use,
-            either "most likely" or "sampled".
-        :type choice_fn: a string
-        :param allow_none: whether attributes not in the instance can be
-            inferred to be missing. If False, then all attributes will be
-            inferred with some value.
-        :type allow_none: Boolean
-        :return: A completed instance
-        :rtype: :ref:`Instance<instance-rep>`
-        """
-        self._sanity_check_instance(instance)
-        temp_instance = {a: instance[a] for a in instance}
-        concept = self._cobweb_categorize(temp_instance)
-
-        for attr in concept.av_counts:
-            if attr in temp_instance:
-                continue
-            val = concept.predict(attr, choice_fn, allow_none)
-            if val is not None:
-                temp_instance[attr] = val
-
-        return temp_instance
+                if (current is None or logp > best_logp):
+                    best_logp = logp
+                    current = child
 
     def categorize(self, instance):
         """
@@ -267,11 +223,10 @@ class CobwebTree(object):
 
         .. seealso:: :meth:`CobwebTree.cobweb`
         """
-        self._sanity_check_instance(instance)
         return self._cobweb_categorize(instance)
 
 
-class CobwebNode(object):
+class CobwebTorchNode(object):
     """
     A CobwebNode represents a concept within the knoweldge base of a particular
     :class:`CobwebTree`. Each node contains a probability table that can be
@@ -293,13 +248,12 @@ class CobwebNode(object):
     # a counter used to generate unique concept names.
     _counter = 0
 
-    def __init__(self, otherNode=None):
+    def __init__(self, size, device=None, otherNode=None):
         """Create a new CobwebNode"""
         self.concept_id = self.gensym()
-        self.count = 0.0
-        self.squared_counts = 0.0
-        self.attr_counts = 0.0
-        self.av_counts = defaultdict(Counter)
+        self.count = torch.tensor(0.0, dtype=torch.float, device=device)
+        self.mean = torch.zeros(size, dtype=torch.float, device=device)
+        self.meanSq = torch.zeros(size, dtype=torch.float, device=device)
         self.children = []
         self.parent = None
         self.tree = None
@@ -321,22 +275,11 @@ class CobwebNode(object):
         :type instance: :ref:`Instance<instance-rep>`
         """
         self.count += 1
-        for attr in instance:
-            val = instance[attr]
-            hidden = attr[0] == "_"
+        delta = instance - self.mean
+        self.mean += delta / self.count
+        self.meanSq += delta * (instance - self.mean)
 
-            if not hidden and attr not in self.av_counts:
-                self.attr_counts += 1
-
-            if not hidden:
-                self.squared_counts -= self.av_counts[attr][val]**2
-
-            self.av_counts[attr][val] += 1
-
-            if not hidden:
-                self.squared_counts += self.av_counts[attr][val]**2
-
-    def update_counts_from_node(self, node):
+    def update_counts_from_node(self, other):
         """
         Increments the counts of the current node by the amount in the
         specified node.
@@ -346,48 +289,52 @@ class CobwebNode(object):
         :param node: Another node from the same CobwebTree
         :type node: CobwebNode
         """
-        self.count += node.count
-        for attr in node.av_counts:
-            hidden = attr[0] == "_"
+        delta = other.mean - self.mean
+        self.meanSq = (self.meanSq + other.meanSq + delta * delta *
+                       ((self.count * other.count) / (self.count + other.count)))
+        self.mean = ((self.count * self.mean + other.count * other.mean) /
+                     (self.count + other.count))
+        self.count += other.count
 
-            if not hidden and attr not in self.av_counts:
-                self.attr_counts += 1
+    @property
+    def std(self):
+        return torch.sqrt(self.var)
 
-            for val in node.av_counts[attr]:
-                if not hidden:
-                    self.squared_counts -= self.av_counts[attr][val]**2
+    @property
+    def var(self):
+        # return self.meanSq / self.count ## no adjustment
+        return self.meanSq / self.count + self.root.prior_var # with adjustment
 
-                self.av_counts[attr][val] += node.av_counts[attr][val]
+    def log_prob_class_given_instance(self, instance):
+        var = self.var
+        log_prob -= (0.5 * torch.log(var) + 0.5 * torch.log(2 * torch.pi) +
+                     0.5 * torch.square(instance - self.mean) / var).sum()
+        log_prob += torch.log(self.count) - torch.log(self.root.count)
 
-                if not hidden:
-                    self.squared_counts += self.av_counts[attr][val]**2
-
-    def expected_correct_guesses_insert(self, instance):
+    def score_insert(self, instance):
         """
-        Returns the expected correct guesses that would result from inserting
-        the instance into the current node. 
+        Returns the score that would result from inserting the instance into
+        the current node. 
 
         This operation can be used instead of inplace and copying because it
         only looks at the attr values used in the instance and reduces iteration.
         """
+        count = self.count + 1
+        delta = instance - self.mean
+        mean = self.mean + delta / count
+        meanSq = self.meanSq + delta * (instance - mean)
 
-        attr_counts = self.attr_counts
-        squared_counts = self.squared_counts
+        var = meanSq / count + self.root.prior_var
+        std = torch.sqrt(var)
 
-        for attr in instance:
-            if attr[0] == "_":
-                continue
+        if (this.root.use_mutual_info):
+            score = 0.5 * torch.log(2 * torch.pi * var) + 0.5
+        else:
+            score = -(1 / (2 * torch.sqrt(torch.pi) * std))
 
-            if attr not in self.av_counts:
-                attr_counts += 1
+        return score
 
-            val = instance[attr]
-            squared_counts -= self.av_counts[attr][val]**2
-            squared_counts += (self.av_counts[attr][val]+1)**2
-
-        return squared_counts / (self.count+1)**2 / attr_counts
-
-    def expected_correct_guesses_merge(self, other, instance):
+    def score_merge(self, other, instance):
         """
         Returns the expected correct guesses that would result from merging the
         current concept with the other concept and inserting the instance.
@@ -395,61 +342,48 @@ class CobwebNode(object):
         This operation can be used instead of inplace and copying because it
         only looks at the attr values used in the instance and reduces iteration.
         """
-        # use the larger concept as the base
-        big = self
-        small = other
+        delta = other.mean - self.mean
+        meanSq = (self.meanSq + other.meanSq + delta * delta *
+                  ((self.count * other.count) / (self.count + other.count)))
+        mean = ((self.count * self.mean + other.count * other.mean) /
+                (self.count + other.count))
+        count = self.count + other.count
 
-        if self.count < other.count:
-            small = self
-            big = other
+        count = count + 1
+        delta = instance - mean
+        mean += delta / count
+        meanSq += delta * (instance - mean)
 
-        attr_counts = big.attr_counts
-        squared_counts = big.squared_counts
+        var = meanSq / count + self.root.prior_var
+        std = torch.sqrt(var)
 
-        for attr in small.av_counts:
-            if attr[0] == "_":
-                continue
+        if (this.root.use_mutual_info):
+            score = 0.5 * torch.log(2 * torch.pi * var) + 0.5
+        else:
+            score = -(1 / (2 * torch.sqrt(torch.pi) * std))
 
-            if attr not in big.av_counts:
-                attr_counts += 1
-
-            for val in small.av_counts[attr]:
-                squared_counts -= big.av_counts[attr][val]**2
-                squared_counts += (big.av_counts[attr][val]+small.av_counts[attr][val])**2
-
-        for attr in instance:
-            if attr[0] == "_":
-                continue
-
-            if attr not in big.av_counts and attr not in small.av_counts:
-                attr_counts += 1
-
-            val = instance[attr]
-            squared_counts -= (big.av_counts[attr][val]+small.av_counts[attr][val])**2
-            squared_counts += (big.av_counts[attr][val]+small.av_counts[attr][val]+1)**2
-
-        return squared_counts / (big.count + small.count + 1)**2 / attr_counts
+        return score
 
     def get_basic_level(self):
         curr = self
         best = self
-        best_cu = self.basic_cu()
+        best_pu = self.basic_pu()
 
         while curr.parent:
             curr = curr.parent
-            curr_cu = curr.basic_cu()
-            if curr_cu > best_cu:
+            curr_pu = curr.basic_pu()
+            if curr_pu > best_pu:
                 best = curr
-                best_cu = curr_cu
+                best_pu = curr_pu
 
         return best
 
-    def basic_cu(self):
+    def basic_pu(self):
         p_of_c = self.count / self.tree.root.count
         return (p_of_c * (self.expected_correct_guesses() -
                           self.tree.root.expected_correct_guesses()))
 
-    def expected_correct_guesses(self):
+    def score(self):
         """
         Returns the number of correct guesses that are expected from the given
         concept.
@@ -461,9 +395,14 @@ class CobwebNode(object):
                  concept.
         :rtype: float
         """
-        return self.squared_counts / self.count**2 / self.attr_counts
+        if (this.root.use_mutual_info):
+            score = 0.5 * torch.log(2 * torch.pi * self.var) + 0.5
+        else:
+            score = -(1 / (2 * torch.sqrt(torch.pi) * self.std))
 
-    def category_utility(self):
+        return score
+
+    def partition_utility(self):
         """
         Return the category utility of a particular division of a concept into
         its children.
@@ -496,18 +435,15 @@ class CobwebNode(object):
         if len(self.children) == 0:
             return 0.0
 
-        child_correct_guesses = 0.0
+        child_score = 0.0
 
         for child in self.children:
             p_of_child = child.count / self.count
-            child_correct_guesses += (p_of_child *
-                                      child.expected_correct_guesses())
+            child_score += p_of_child * child.score()
 
-        return ((child_correct_guesses - self.expected_correct_guesses()) /
-                len(self.children))
+        return ((self.score() - child_score) / len(self.children))
 
-    def get_best_operation(self, instance, best1, best2, best1_cu,
-                           best_op=True, new_op=True, merge_op=True, split_op=True):
+    def get_best_operation(self, instance, best1, best2, best1_pu):
         """
         Given an instance, the two best children based on category utility and
         a set of possible operations, find the operation that produces the
@@ -582,16 +518,13 @@ class CobwebNode(object):
 
         operations = []
 
-        if best_op:
-            operations.append((best1_cu, random(), "best"))
-        if new_op:
-            operations.append((self.cu_for_new_child(instance), random(),
-                               'new'))
-        if merge_op and len(self.children) > 2 and best2:
-            operations.append((self.cu_for_merge(best1, best2, instance),
+        operations.append((best1_pu, random(), "best"))
+        operations.append((self.pu_for_new_child(instance), random(), 'new'))
+        if len(self.children) > 2 and best2:
+            operations.append((self.pu_for_merge(best1, best2, instance),
                                random(), 'merge'))
-        if split_op and len(best1.children) > 0:
-            operations.append((self.cu_for_split(best1), random(), 'split'))
+        if len(best1.children) > 0:
+            operations.append((self.pu_for_split(best1), random(), 'split'))
 
         operations.sort(reverse=True)
         # print(operations)
@@ -615,22 +548,22 @@ class CobwebNode(object):
         if len(self.children) == 0:
             raise Exception("No children!")
 
-        relative_cus = [(((child.count + 1) * child.expected_correct_guesses_insert(instance)) - 
-                          (child.count * child.expected_correct_guesses()),
+        relative_pus = [(child.count * child.score() -
+                         (child.count + 1) * child.score_insert(instance)),
                          child.count, random(), child) for child in
                         self.children]
-        relative_cus.sort(reverse=True)
+        relative_pus.sort(reverse=True)
 
-        best1 = relative_cus[0][3]
-        best1_cu = self.cu_for_insert(best1, instance)
+        best1 = relative_pus[0][3]
+        best1_pu = self.pu_for_insert(best1, instance)
 
         best2 = None
-        if len(relative_cus) > 1:
-            best2 = relative_cus[1][3]
+        if len(relative_pus) > 1:
+            best2 = relative_pus[1][3]
 
-        return best1_cu, best1, best2
+        return best1_pu, best1, best2
         
-    def cu_for_insert(self, child, instance):
+    def pu_for_insert(self, child, instance):
         """
         Compute the category utility of adding the instance to the specified
         child.
@@ -652,20 +585,17 @@ class CobwebNode(object):
             :meth:`CobwebNode.get_best_operation`
 
         """
-        child_correct_guesses = 0.0
+        children_score = 0.0
 
         for c in self.children:
             if c == child:
-                child_correct_guesses += ((c.count+1) *
-                                          c.expected_correct_guesses_insert(instance))
+                p_of_child = (c.count + 1) / (self.count + 1)
+                children_score += p_of_child * c.score_insert(instance)
             else:
-                child_correct_guesses += (c.count *
-                                          c.expected_correct_guesses())
+                p_of_child = (c.count) / (self.count + 1)
+                children_score += p_of_child * c.score()
 
-        child_correct_guesses /= (self.count + 1)
-        parent_correct_guesses = self.expected_correct_guesses_insert(instance)
-
-        return ((child_correct_guesses - parent_correct_guesses) / len(self.children))
+        return (self.score_insert(instance) - children_score) / len(self.children)
 
     def create_new_child(self, instance):
         """
@@ -687,7 +617,7 @@ class CobwebNode(object):
         self.children.append(new_child)
         return new_child
 
-    def cu_for_new_child(self, instance):
+    def pu_for_new_child(self, instance):
         """
         Return the category utility for creating a new child using the
         particular instance.
@@ -703,18 +633,20 @@ class CobwebNode(object):
 
         .. seealso:: :meth:`CobwebNode.get_best_operation`
         """
-        child_correct_guesses = 0.0
+        children_score = 0.0
 
         for c in self.children:
-            child_correct_guesses += (c.count * c.expected_correct_guesses())
+            p_of_child = c.count / (self.count + 1)
+            children_score += p_of_child * c.score()
 
-        # sum over all attr (at 100% prob) divided by num attr should be 1.
-        child_correct_guesses += 1
+        new_child = CobwebTorchNode(size=self.mean.shape, device=self.mean.device);
+        new_child.parent = self
+        new_child.tree = self.tree
+        new_child.increment_counts(instance)
+        p_of_child = 1.0 / (self.count + 1)
+        children_score += p_of_child * new_child.score()
 
-        child_correct_guesses /= (self.count + 1)
-        parent_correct_guesses = self.expected_correct_guesses_insert(instance)
-
-        return ((child_correct_guesses - parent_correct_guesses) / (len(self.children)+1))
+        return (self.score_insert(instance) - children_score) / (len(self.children) + 1)
 
 
     def merge(self, best1, best2):
@@ -750,7 +682,7 @@ class CobwebNode(object):
 
         return new_child
 
-    def cu_for_merge(self, best1, best2, instance):
+    def pu_for_merge(self, best1, best2, instance):
         """
         Return the category utility for merging the two best children.
 
@@ -772,22 +704,19 @@ class CobwebNode(object):
 
         .. seealso:: :meth:`CobwebNode.get_best_operation`
         """
-        child_correct_guesses = 0.0
+        children_score = 0.0
 
         for c in self.children:
             if c == best1 or c == best2:
                 continue
 
-            child_correct_guesses += (c.count *
-                                      c.expected_correct_guesses())
+            p_of_child = c.count / (self.count + 1)
+            child_correct_guesses += p_of_child * c.score()
 
-        child_correct_guesses += ((best1.count + best2.count + 1) *
-                                  best1.expected_correct_guesses_merge(best2, instance))
+        p_of_child = (best1.count + best2.count + 1) / (self.count + 1)
+        child_correct_guesses += p_of_child * best1.score_merge(best2, instance))
 
-        child_correct_guesses /= (self.count + 1)
-        parent_correct_guesses = self.expected_correct_guesses_insert(instance)
-
-        return ((child_correct_guesses - parent_correct_guesses) / (len(self.children)-1))
+        return (self.score_insert(instance) - children_score) / (len(self.children) - 1)
     
 
     def split(self, best):
@@ -808,7 +737,7 @@ class CobwebNode(object):
             child.tree = self.tree
             self.children.append(child)
 
-    def cu_for_split(self, best):
+    def pu_for_split(self, best):
         """
         Return the category utility for splitting the best child.
 
@@ -826,20 +755,19 @@ class CobwebNode(object):
 
         .. seealso:: :meth:`CobwebNode.get_best_operation`
         """
-        child_correct_guesses = 0.0
+        children_score = 0.0
 
         for c in self.children:
             if c == best:
                 continue
-            child_correct_guesses += (c.count * c.expected_correct_guesses())
+            p_of_child = c.count / self.count
+            children_score += p_of_child * c.score()
 
         for c in best.children:
-            child_correct_guesses += (c.count * c.expected_correct_guesses())
+            p_of_child = c.count / self.count
+            children_score += p_of_child * c.score()
 
-        child_correct_guesses /= self.count
-        parent_correct_guesses = self.expected_correct_guesses()
-
-        return ((child_correct_guesses - parent_correct_guesses) /
+        return ((self.score_insert(instance) - children_score) /
                 (len(self.children) - 1 + len(best.children)))
 
     def is_exact_match(self, instance):
@@ -853,19 +781,10 @@ class CobwebNode(object):
 
         .. seealso:: :meth:`CobwebNode.get_best_operation`
         """
-        for attr in set(instance).union(set(self.av_counts)):
-            if attr[0] == '_':
-                continue
-            if attr in instance and attr not in self.av_counts:
-                return False
-            if attr in self.av_counts and attr not in instance:
-                return False
-            if attr in self.av_counts and attr in instance:
-                if instance[attr] not in self.av_counts[attr]:
-                    return False
-                if not self.av_counts[attr][instance[attr]] == self.count:
-                    return False
-        return True
+        std = torch.sqrt(self.meanSq / self.count)
+        if not torch.isclose(std, torch.zeros(std.shape)).all():
+            return False
+        return torch.isclose(instance, self.mean).all()
 
     def __hash__(self):
         """
@@ -906,7 +825,7 @@ class CobwebNode(object):
         :return: a formated string displaying the tree and its children
         :rtype: str
         """
-        ret = str(('\t' * depth) + "|-" + str(self.av_counts) + ":" +
+        ret = str(('\t' * depth) + "|-" + str(self.mean) + ":" +
                   str(self.count) + '\n')
 
         for c in self.children:
@@ -977,12 +896,15 @@ class CobwebNode(object):
         output['children'] = []
 
         temp = {}
-        temp['_basic_cu'] = {"#ContinuousValue#": {'mean': self.basic_cu(),
+        temp['_basic_pu'] = {"#ContinuousValue#": {'mean': self.basic_pu(),
                                                    'std': 1, 'n': 1}}
-        for attr in self.av_counts:
-            for value in self.av_counts[attr]:
-                temp[str(attr)] = {str(value): self.av_counts[attr][value] for
-                                   value in self.av_counts[attr]}
+
+        # TODO output the tensor mean and std in proper json
+        # size = self.mean.size()
+        # for attr in self.av_counts:
+        #     for value in self.av_counts[attr]:
+        #         temp[str(attr)] = {str(value): self.av_counts[attr][value] for
+        #                            value in self.av_counts[attr]}
 
         for child in self.children:
             output["children"].append(child.output_dict())
@@ -1087,32 +1009,3 @@ class CobwebNode(object):
             return self.av_counts[attr][val] / self.count
 
         return 0.0
-
-    def log_likelihood(self, child_leaf):
-        """
-        Returns the log-likelihood of a leaf contained within the current
-        concept. Note, if the leaf contains multiple instances, then it is
-        treated as if it contained just a single instance (this function is
-        just called multiple times for each instance in the leaf).
-        """
-        ll = 0
-
-        for attr in set(self.av_counts).union(set(child_leaf.av_counts)):
-            if attr[0] == "_":
-                continue
-            vals = set([None])
-            if attr in self.av_counts:
-                vals.update(self.av_counts[attr])
-            if attr in child_leaf.av_counts:
-                vals.update(child_leaf.av_counts[attr])
-
-            for val in vals:
-                op = child_leaf.probability(attr, val)
-                if op > 0:
-                    p = self.probability(attr, val) * op
-                    if p >= 0:
-                        ll += log(p)
-                    else:
-                        raise Exception("Should always be greater than 0")
-
-        return ll
