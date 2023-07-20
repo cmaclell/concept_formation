@@ -22,23 +22,25 @@ class CobwebTorchTree(object):
     cobweb algorithm and can be used to fit and categorize instances.
     """
 
-    def __init__(self, use_mutual_info=True, prior_var=None):
+    def __init__(self, shape, use_mutual_info=True, prior_var=None, device=None):
         """
         The tree constructor.
         """
-        self.root = CobwebNode()
-        self.root.tree = self
+        self.shape = shape
+        self.device = device
         self.use_mutual_info = use_mutual_info
 
-        self.prior_var = prior_std
+        self.prior_var = prior_var
         if prior_var is None:
             self.prior_var = 1 / (4 * torch.pi)
+
+        self.clear()
 
     def clear(self):
         """
         Clears the concepts of the tree.
         """
-        self.root = CobwebNode()
+        self.root = CobwebTorchNode(shape=self.shape, device=self.device)
         self.root.tree = self
 
     def __str__(self):
@@ -141,7 +143,7 @@ class CobwebTorchTree(object):
 
             elif not current.children:
                 # print("fringe split")
-                new = current.__class__(current)
+                new = CobwebTorchNode(shape=self.shape, device=self.device, otherNode=current)
                 current.parent = new
                 new.children.append(current)
 
@@ -198,7 +200,7 @@ class CobwebTorchTree(object):
             current = None
             best_logp = None
 
-            for (child in parent.children):
+            for child in parent.children:
                 logp = child.log_prob_class_given_instance(instance)
 
                 if (current is None or logp > best_logp):
@@ -248,12 +250,12 @@ class CobwebTorchNode(object):
     # a counter used to generate unique concept names.
     _counter = 0
 
-    def __init__(self, size, device=None, otherNode=None):
+    def __init__(self, shape, device=None, otherNode=None):
         """Create a new CobwebNode"""
         self.concept_id = self.gensym()
         self.count = torch.tensor(0.0, dtype=torch.float, device=device)
-        self.mean = torch.zeros(size, dtype=torch.float, device=device)
-        self.meanSq = torch.zeros(size, dtype=torch.float, device=device)
+        self.mean = torch.zeros(shape, dtype=torch.float, device=device)
+        self.meanSq = torch.zeros(shape, dtype=torch.float, device=device)
         self.children = []
         self.parent = None
         self.tree = None
@@ -264,7 +266,7 @@ class CobwebTorchNode(object):
             self.update_counts_from_node(otherNode)
 
             for child in otherNode.children:
-                self.children.append(self.__class__(child))
+                self.children.append(CobwebTorchNode(shape=self.tree.shape, device=self.tree.device, otherNode=child))
 
     def increment_counts(self, instance):
         """
@@ -303,7 +305,7 @@ class CobwebTorchNode(object):
     @property
     def var(self):
         # return self.meanSq / self.count ## no adjustment
-        return self.meanSq / self.count + self.root.prior_var # with adjustment
+        return self.meanSq / self.count + self.tree.prior_var # with adjustment
 
     def log_prob_class_given_instance(self, instance):
         var = self.var
@@ -324,15 +326,15 @@ class CobwebTorchNode(object):
         mean = self.mean + delta / count
         meanSq = self.meanSq + delta * (instance - mean)
 
-        var = meanSq / count + self.root.prior_var
+        var = meanSq / count + self.tree.prior_var
         std = torch.sqrt(var)
 
-        if (this.root.use_mutual_info):
+        if (self.tree.use_mutual_info):
             score = 0.5 * torch.log(2 * torch.pi * var) + 0.5
         else:
             score = -(1 / (2 * torch.sqrt(torch.pi) * std))
 
-        return score
+        return score.sum()
 
     def score_merge(self, other, instance):
         """
@@ -354,15 +356,15 @@ class CobwebTorchNode(object):
         mean += delta / count
         meanSq += delta * (instance - mean)
 
-        var = meanSq / count + self.root.prior_var
+        var = meanSq / count + self.tree.prior_var
         std = torch.sqrt(var)
 
-        if (this.root.use_mutual_info):
+        if (self.tree.use_mutual_info):
             score = 0.5 * torch.log(2 * torch.pi * var) + 0.5
         else:
             score = -(1 / (2 * torch.sqrt(torch.pi) * std))
 
-        return score
+        return score.sum()
 
     def get_basic_level(self):
         curr = self
@@ -395,12 +397,12 @@ class CobwebTorchNode(object):
                  concept.
         :rtype: float
         """
-        if (this.root.use_mutual_info):
+        if (self.tree.use_mutual_info):
             score = 0.5 * torch.log(2 * torch.pi * self.var) + 0.5
         else:
             score = -(1 / (2 * torch.sqrt(torch.pi) * self.std))
 
-        return score
+        return score.sum()
 
     def partition_utility(self):
         """
@@ -549,7 +551,7 @@ class CobwebTorchNode(object):
             raise Exception("No children!")
 
         relative_pus = [(child.count * child.score() -
-                         (child.count + 1) * child.score_insert(instance)),
+                         (child.count + 1) * child.score_insert(instance),
                          child.count, random(), child) for child in
                         self.children]
         relative_pus.sort(reverse=True)
@@ -610,7 +612,7 @@ class CobwebTorchNode(object):
         :return: The new child
         :rtype: CobwebNode
         """
-        new_child = self.__class__()
+        new_child = CobwebTorchNode(shape=self.tree.shape, device=self.tree.device)
         new_child.parent = self
         new_child.tree = self.tree
         new_child.increment_counts(instance)
@@ -639,7 +641,7 @@ class CobwebTorchNode(object):
             p_of_child = c.count / (self.count + 1)
             children_score += p_of_child * c.score()
 
-        new_child = CobwebTorchNode(size=self.mean.shape, device=self.mean.device);
+        new_child = CobwebTorchNode(shape=self.tree.shape, device=self.mean.device);
         new_child.parent = self
         new_child.tree = self.tree
         new_child.increment_counts(instance)
@@ -666,7 +668,7 @@ class CobwebTorchNode(object):
         :return: The new child node that was created by the merge
         :rtype: CobwebNode
         """
-        new_child = self.__class__()
+        new_child = CobwebTorchNode(shape=self.tree.shape, device=self.tree.device)
         new_child.parent = self
         new_child.tree = self.tree
 
@@ -711,10 +713,10 @@ class CobwebTorchNode(object):
                 continue
 
             p_of_child = c.count / (self.count + 1)
-            child_correct_guesses += p_of_child * c.score()
+            children_score += p_of_child * c.score()
 
         p_of_child = (best1.count + best2.count + 1) / (self.count + 1)
-        child_correct_guesses += p_of_child * best1.score_merge(best2, instance))
+        children_score += p_of_child * best1.score_merge(best2, instance)
 
         return (self.score_insert(instance) - children_score) / (len(self.children) - 1)
     
@@ -767,7 +769,7 @@ class CobwebTorchNode(object):
             p_of_child = c.count / self.count
             children_score += p_of_child * c.score()
 
-        return ((self.score_insert(instance) - children_score) /
+        return ((self.score() - children_score) /
                 (len(self.children) - 1 + len(best.children)))
 
     def is_exact_match(self, instance):
