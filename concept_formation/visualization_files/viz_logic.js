@@ -547,6 +547,53 @@
   }
 
   window.make_property_sheet = function(node_data) {
+
+    if (node_data.hasOwnProperty("mean") &&
+        (node_data['mean'].length == 1 || node_data['mean'].length == 3)){
+        const canvas = document.createElement('canvas');
+        rgbArray = node_data['mean'];
+        const h = rgbArray[0].length;
+        const w = rgbArray[0][0].length;
+        canvas.width = w;
+        canvas.height = h;
+        const ctx = canvas.getContext('2d');
+
+        // Iterate through the grayscale values and set the pixel data
+        for (let y = 0; y < h; y++) {
+          for (let x = 0; x < w; x++) {
+              let redValue = 0;
+              let greenValue = 0;
+              let blueValue = 0;
+              if (node_data['mean'].length == 1){
+                  redValue = rgbArray[0][y][x] * 255;
+                  greenValue = rgbArray[0][y][x] * 255;
+                  blueValue = rgbArray[0][y][x] * 255;
+              } else {
+                  redValue = rgbArray[0][y][x] * 255;
+                  greenValue = rgbArray[1][y][x] * 255;
+                  blueValue = rgbArray[2][y][x] * 255;
+              }
+            ctx.fillStyle = `rgb(${redValue}, ${greenValue}, ${blueValue})`;
+            ctx.fillRect(x, y, 1, 1);
+          }
+        }
+
+        // Convert the canvas to an image
+        const dataURL = canvas.toDataURL(); // Returns a base64-encoded PNG image
+
+        // Create an image element and set the source
+        const image = document.createElement('img');
+        image.src = dataURL;
+        $(image).css('width', "" + canvas.width/Math.max(canvas.width, canvas.height) * 250 + "px");
+        $(image).css('height', "" + canvas.height/Math.max(canvas.width, canvas.height) * 250 + "px");
+
+        // Append the image to the document body or any other element
+        $('#render_means').html(image);
+    } else {
+        $('#render_means').html('');
+    }
+    
+
     d = node_data['counts'];
     
     var property_sheet = $("#properties"); 
