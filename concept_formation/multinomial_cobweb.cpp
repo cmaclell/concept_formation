@@ -26,12 +26,12 @@ namespace py = pybind11;
 
 typedef CachedString ATTR_TYPE;
 typedef CachedString VALUE_TYPE;
-typedef int COUNT_TYPE;
+typedef float COUNT_TYPE;
 typedef std::unordered_map<std::string, std::unordered_map<std::string, COUNT_TYPE>> INSTANCE_TYPE;
 typedef std::unordered_map<VALUE_TYPE, COUNT_TYPE> VAL_COUNT_TYPE;
 typedef std::unordered_map<ATTR_TYPE, VAL_COUNT_TYPE> AV_COUNT_TYPE;
 typedef std::unordered_map<ATTR_TYPE, std::unordered_set<VALUE_TYPE>> AV_KEY_TYPE;
-typedef std::unordered_map<ATTR_TYPE, int> VAL_COUNTS_TYPE;
+typedef std::unordered_map<ATTR_TYPE, float> VAL_COUNTS_TYPE;
 typedef std::pair<double, int> OPERATION_TYPE;
 
 class MultinomialCobwebTree;
@@ -146,6 +146,7 @@ class CategorizationFuture {
         void wait();
         std::unordered_map<std::string, std::unordered_map<std::string, double>> predict();
         std::unordered_map<std::string, std::unordered_map<std::string, double>> predict_basic();
+        std::string get_basic_id();
         std::unordered_map<std::string, std::unordered_map<std::string, double>> predict_best(INSTANCE_TYPE instance);
 
 };
@@ -736,6 +737,8 @@ inline std::unordered_map<std::string, std::unordered_map<std::string, double>> 
         }
     }
 
+    out["_info"]["_count"] = best->count;
+
     best->read_unlock();
 
     return out;
@@ -825,9 +828,71 @@ inline std::unordered_map<std::string, std::unordered_map<std::string, double>> 
         }
     }
 
+    out["_info"]["_count"] = best->count;
+
     best->read_unlock();
 
     return out;
+}
+
+inline std::string CategorizationFuture::get_basic_id(){
+
+    if (leaf == nullptr){
+        leaf = leaf_future.get();
+    }
+
+    leaf->tree->read_lock_tree_ptr();
+
+    leaf->tree->read_lock_av_key();
+    AV_KEY_TYPE attr_vals = leaf->tree->attr_vals;
+    leaf->tree->read_unlock_av_key();
+
+    VAL_COUNTS_TYPE val_counts;
+    for (auto &[attr, val_map]: attr_vals) {
+        val_counts[attr] = val_map.size();
+    }
+
+    leaf->tree->root->read_lock();
+    leaf->tree->read_unlock_tree_ptr();
+
+    leaf->read_lock();
+    MultinomialCobwebNode* curr = leaf;
+    MultinomialCobwebNode* best = leaf;
+    double best_cu = leaf->category_utility(val_counts);
+
+    // std::cout << std::endl;
+    // std::cout << "STARTING at LEAF" << std::endl;
+    // std::cout << "LEAF CU=" << best_cu << std::endl;
+
+    while (curr->parent != leaf->tree->root) {
+        if (curr->parent->try_read_lock()){
+            auto* prior = curr;
+            curr = curr->parent;
+            prior->read_unlock();
+
+            double curr_cu = curr->category_utility(val_counts);
+            // std::cout << "CURR CU=" << curr_cu << std::endl;
+
+            if (curr_cu > best_cu) {
+                // std::cout << "BEST FOUND" << std::endl;
+                best = curr;
+                best_cu = curr_cu;
+            }
+        }
+        else{
+            curr->read_unlock();
+            leaf->read_lock();
+            curr = leaf;
+            best = leaf;
+            best_cu = leaf->category_utility(val_counts);
+            // std::cout << "****RESTARTING at LEAF****" << std::endl;
+            // std::cout << "LEAF CU=" << best_cu << std::endl;
+        }
+    }
+    curr->read_unlock();
+    leaf->tree->root->read_unlock();
+
+    return "Concept" + std::to_string(best->_hash());
 }
 
 inline std::unordered_map<std::string, std::unordered_map<std::string, double>> CategorizationFuture::predict(){
@@ -1876,6 +1941,7 @@ PYBIND11_MODULE(multinomial_cobweb, m) {
         .def("wait", &CategorizationFuture::wait, py::call_guard<py::gil_scoped_release>())
         .def("predict", &CategorizationFuture::predict, py::call_guard<py::gil_scoped_release>())
         .def("predict_basic", &CategorizationFuture::predict_basic, py::call_guard<py::gil_scoped_release>())
+        .def("get_basic_id", &CategorizationFuture::get_basic_id, py::call_guard<py::gil_scoped_release>())
         .def("predict_best", &CategorizationFuture::predict_best, py::call_guard<py::gil_scoped_release>());
 
     py::class_<MultinomialCobwebNode>(m, "MultinomialCobwebNode")
