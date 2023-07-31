@@ -15,6 +15,9 @@ import torch
 from concept_formation.utils import weighted_choice
 from concept_formation.utils import most_likely_choice
 
+# modified 1/4
+import math
+pi_tensor = torch.tensor(math.pi)
 
 class CobwebTorchTree(object):
     """
@@ -32,7 +35,7 @@ class CobwebTorchTree(object):
 
         self.prior_var = prior_var
         if prior_var is None:
-            self.prior_var = 1 / (4 * torch.pi)
+            self.prior_var = 1 / (4 * pi_tensor)
 
         self.clear()
 
@@ -220,8 +223,9 @@ class CobwebTorchTree(object):
 
             for child in parent.children:
                 logp = child.log_prob_class_given_instance(instance)
-
-                if (current is None or logp > best_logp):
+            
+                # modified 2/4
+                if ((current is None) or ((best_logp is None) or (logp > best_logp))):
                     best_logp = logp
                     current = child
 
@@ -327,11 +331,14 @@ class CobwebTorchNode(object):
 
     def log_prob_class_given_instance(self, instance):
         log_prob = self.log_prob(instance)
-        log_prob += torch.log(self.count) - torch.log(self.root.count)
+        # modified 3/4
+        log_prob += torch.log(self.count) - torch.log(self.tree.root.count)
+        # modified 4/4
+        return log_prob
 
     def log_prob(self, instance):
         var = self.var
-        log_prob = (0.5 * torch.log(var) + 0.5 * torch.log(2 * torch.pi) +
+        log_prob = (0.5 * torch.log(var) + 0.5 * torch.log(2 * pi_tensor) +
                      0.5 * torch.square(instance - self.mean) / var).sum()
         return log_prob
 
@@ -352,9 +359,9 @@ class CobwebTorchNode(object):
         std = torch.sqrt(var)
 
         if (self.tree.use_mutual_info):
-            score = 0.5 * torch.log(2 * torch.pi * var) + 0.5
+            score = 0.5 * torch.log(2 * pi_tensor * var) + 0.5
         else:
-            score = -(1 / (2 * torch.sqrt(torch.pi) * std))
+            score = -(1 / (2 * torch.sqrt(pi_tensor) * std))
 
         return score.sum()
 
@@ -382,9 +389,9 @@ class CobwebTorchNode(object):
         std = torch.sqrt(var)
 
         if (self.tree.use_mutual_info):
-            score = 0.5 * torch.log(2 * torch.pi * var) + 0.5
+            score = 0.5 * torch.log(2 * pi_tensor * var) + 0.5
         else:
-            score = -(1 / (2 * torch.sqrt(torch.pi) * std))
+            score = -(1 / (2 * torch.sqrt(pi_tensor) * std))
 
         return score.sum()
 
@@ -443,9 +450,9 @@ class CobwebTorchNode(object):
         :rtype: float
         """
         if (self.tree.use_mutual_info):
-            score = 0.5 * torch.log(2 * torch.pi * self.var) + 0.5
+            score = 0.5 * torch.log(2 * pi_tensor * self.var) + 0.5
         else:
-            score = -(1 / (2 * torch.sqrt(torch.pi) * self.std))
+            score = -(1 / (2 * torch.sqrt(pi_tensor) * self.std))
 
         return score.sum()
 
@@ -829,7 +836,7 @@ class CobwebTorchNode(object):
         .. seealso:: :meth:`CobwebNode.get_best_operation`
         """
         std = torch.sqrt(self.meanSq / self.count)
-        if not torch.isclose(std, torch.zeros(std.shape)).all():
+        if not torch.isclose(std, torch.zeros(std.shape,device=self.tree.device)).all():
             return False
         return torch.isclose(instance, self.mean).all()
 
