@@ -35,9 +35,9 @@ def test_transform(testing_images):
 
 if __name__ == "__main__":
     transform = transforms.Compose(
-    #  [transforms.ToTensor()])
-      [transforms.ToTensor(),
-       transforms.Normalize((0.1307,), (0.3081,))])
+      [transforms.ToTensor()])
+    #   [transforms.ToTensor(),
+    #    transforms.Normalize((0.1307,), (0.3081,))])
     #[transforms.ToTensor(),
     #  transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
 
@@ -69,8 +69,11 @@ if __name__ == "__main__":
     train_images, train_labels = next(iter(train_data_loader))
     test_images, test_labels = next(iter(test_data_loader))
 
-    train_images = train_transform_with_one_hot_encoding(train_images,train_labels)
-    test_images = test_transform(test_images)
+    # train_images = train_transform_with_one_hot_encoding(train_images,train_labels)
+    # test_images = test_transform(test_images)
+
+    # train_images = train_images[:10000]
+    # test_images = test_images[:10000]
  
     # print(train_labels[0])
     # print(test_labels[0])
@@ -79,8 +82,7 @@ if __name__ == "__main__":
     print(train_images.shape[0])
     tree = CobwebTorchTree(train_images.shape[1:])
     for i in tqdm(range(train_images.shape[0])):
-        tree.ifit(train_images[i])
-
+        tree.ifit(train_images[i], train_labels[i].item())
 
     # ## Test on one image
     # print("actual_label:", test_labels[5])
@@ -92,23 +94,26 @@ if __name__ == "__main__":
     # print("predicted_label:",L_t)
 
     ## Test on test set
-    correct_prediciton = 0
+    correct_prediction = 0
     for i in tqdm(range(test_images.shape[0])):
         actual_label = test_labels[i]
         o = tree.categorize(test_images[i])
-        out = o.predict()
+        # out, out_label = o.get_best(test_images[i]).predict()
+        # out, out_label = o.get_basic().predict()
+        out, out_label = o.predict()
         # if(i % 100 == 0):
         #      print("actual:", actual_label,"\n")
 
         # get label
-        out_np = out[0][0][:10].numpy()
-        label = np.argmax(out_np)
-        predicted_label = torch.tensor(label)
+        # out_np = out[0][0][:10].numpy()
+        # label = np.argmax(out_np)
+        # predicted_label = torch.tensor(label)
+        predicted_label = torch.tensor(out_label)
 
         if (predicted_label == actual_label):
-             correct_prediciton += 1
+             correct_prediction += 1
 
-    Accuracy = (correct_prediciton/len(test_images))*100
+    Accuracy = (correct_prediction/len(test_images))*100
     print("Accuracy: ",Accuracy)
 
     # # 8x8 Patches, MUCH SLOWER

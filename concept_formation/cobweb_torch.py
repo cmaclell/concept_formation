@@ -3,6 +3,7 @@ The Cobweb module contains the :class:`CobwebTree` and :class:`CobwebNode`
 classes which are used to achieve the basic Cobweb functionality.
 """
 import json
+import math
 from random import shuffle
 from random import random
 from math import log
@@ -15,8 +16,6 @@ import torch
 from concept_formation.utils import weighted_choice
 from concept_formation.utils import most_likely_choice
 
-# modified 1/4
-import math
 pi_tensor = torch.tensor(math.pi)
 
 class CobwebTorchTree(object):
@@ -25,13 +24,18 @@ class CobwebTorchTree(object):
     cobweb algorithm and can be used to fit and categorize instances.
     """
 
-    def __init__(self, shape, use_mutual_info=True, prior_var=None, device=None):
+    def __init__(self, shape, use_mutual_info=True, acuity_cutoff=False,
+                 use_ll_for_categorize=True, prior_var=None, alpha=0.01,
+                 device=None):
         """
         The tree constructor.
         """
         self.device = device
         self.use_mutual_info = use_mutual_info
+        self.acuity_cutoff = acuity_cutoff
+        self.use_ll_for_categorize = use_ll_for_categorize
         self.shape = shape
+        self.alpha = alpha
 
         self.prior_var = prior_var
         if prior_var is None:
@@ -45,6 +49,8 @@ class CobwebTorchTree(object):
         """
         self.root = CobwebTorchNode(shape=self.shape, device=self.device)
         self.root.tree = self
+        self.labels = {}
+        self.reverse_labels = {}
 
     def __str__(self):
         return str(self.root)
@@ -52,12 +58,14 @@ class CobwebTorchTree(object):
     def dump_json(self):
         return self.root.output_json()
 
+    # TODO UPDATE TO SAVE / LOAD LABELS
     def load_json(self, json_string):
         data = json.loads(json_string)
         mean = torch.tensor(data['mean'], dtype=torch.float)
         self.shape = mean.shape
         self.root = self.load_helper(data)
 
+    # TODO UPDATE TO SAVE / LOAD LABELS
     def load_helper(self, json_node):
         node = CobwebTorchNode(self.shape, device=self.device)
         node.tree = self
@@ -67,7 +75,7 @@ class CobwebTorchTree(object):
         node.children = [self.load_helper(child) for child in json_node['children']]
         return node
 
-    def ifit(self, instance):
+    def ifit(self, instance, label=None):
         """
         Incrementally fit a new instance into the tree and return its resulting
         concept.
@@ -84,9 +92,14 @@ class CobwebTorchTree(object):
 
         .. seealso:: :meth:`CobwebTree.cobweb`
         """
-        return self.cobweb(instance)
+        if label not in self.labels:
+            idx = len(self.labels)
+            self.labels[label] = idx
+            self.reverse_labels[idx] = label
 
-    def fit(self, instances, iterations=1, randomize_first=True):
+        return self.cobweb(instance, label)
+
+    def fit(self, instances, labels=None, iterations=1, randomize_first=True):
         """
         Fit a collection of instances into the tree.
 
@@ -106,16 +119,20 @@ class CobwebTorchTree(object):
             should be done in a random order or in the list's original order.
         :type randomize_first: bool
         """
-        instances = [i for i in instances]
+        if labels is None:
+            labels = [None for i in range(len(instances))]
+        
+        instance_labels = [(inst, labels[i]) for i, inst in
+                           enumerate(instances)]
 
         for x in range(iterations):
             if x == 0 and randomize_first:
                 shuffle(instances)
-            for i in instances:
-                self.ifit(i)
+            for inst, label in instances:
+                self.ifit(inst, label)
             shuffle(instances)
 
-    def cobweb(self, instance):
+    def cobweb(self, instance, label):
         """
         The core cobweb algorithm used in fitting and categorization.
 
@@ -156,10 +173,10 @@ class CobwebTorchTree(object):
 
         while current:
             # the current.count == 0 here is for the initially empty tree.
-            if not current.children and (current.is_exact_match(instance) or
+            if not current.children and (current.is_exact_match(instance, label) or
                                          current.count == 0):
                 # print("leaf match")
-                current.increment_counts(instance)
+                current.increment_counts(instance, label)
                 break
 
             elif not current.children:
@@ -174,25 +191,26 @@ class CobwebTorchTree(object):
                 else:
                     self.root = new
 
-                new.increment_counts(instance)
-                current = new.create_new_child(instance)
+                new.increment_counts(instance, label)
+                current = new.create_new_child(instance, label)
                 break
 
             else:
-                best1_pu, best1, best2 = current.two_best_children(instance)
-                _, best_action = current.get_best_operation(instance, best1,
+                best1_pu, best1, best2 = current.two_best_children(instance,
+                                                                   label)
+                _, best_action = current.get_best_operation(instance, label, best1,
                                                             best2, best1_pu)
 
                 # print(best_action)
                 if best_action == 'best':
-                    current.increment_counts(instance)
+                    current.increment_counts(instance, label)
                     current = best1
                 elif best_action == 'new':
-                    current.increment_counts(instance)
-                    current = current.create_new_child(instance)
+                    current.increment_counts(instance, label)
+                    current = current.create_new_child(instance, label)
                     break
                 elif best_action == 'merge':
-                    current.increment_counts(instance)
+                    current.increment_counts(instance, label)
                     new_child = current.merge(best1, best2)
                     current = new_child
                 elif best_action == 'split':
@@ -204,7 +222,7 @@ class CobwebTorchTree(object):
 
         return current
 
-    def _cobweb_categorize(self, instance):
+    def _cobweb_categorize(self, instance, label):
         """
         A cobweb specific version of categorize, not intended to be
         externally called.
@@ -219,17 +237,20 @@ class CobwebTorchTree(object):
 
             parent = current
             current = None
-            best_logp = None
+            best_score = None
 
             for child in parent.children:
-                logp = child.log_prob_class_given_instance(instance)
+                if self.use_ll_for_categorize:
+                    score = child.log_prob_class_given_instance(instance, label)
+                else:
+                    score = (child.count * child.score() -
+                             (child.count + 1) * child.score_insert(instance, label))
             
-                # modified 2/4
-                if ((current is None) or ((best_logp is None) or (logp > best_logp))):
-                    best_logp = logp
+                if ((current is None) or ((best_score is None) or (score > best_score))):
+                    best_score = score
                     current = child
 
-    def categorize(self, instance):
+    def categorize(self, instance, label=None):
         """
         Sort an instance in the categorization tree and return its resulting
         concept.
@@ -247,7 +268,7 @@ class CobwebTorchTree(object):
 
         .. seealso:: :meth:`CobwebTree.cobweb`
         """
-        return self._cobweb_categorize(instance)
+        return self._cobweb_categorize(instance, label)
 
 
 class CobwebTorchNode(object):
@@ -278,6 +299,8 @@ class CobwebTorchNode(object):
         self.count = torch.tensor(0.0, dtype=torch.float, device=device)
         self.mean = torch.zeros(shape, dtype=torch.float, device=device)
         self.meanSq = torch.zeros(shape, dtype=torch.float, device=device)
+        self.label_counts = torch.tensor([], dtype=torch.float, device=device)
+        self.total_label_count = torch.tensor(0, dtype=torch.float, device=device)
         self.children = []
         self.parent = None
         self.tree = None
@@ -290,7 +313,16 @@ class CobwebTorchNode(object):
             for child in otherNode.children:
                 self.children.append(CobwebTorchNode(shape=self.tree.shape, device=self.tree.device, otherNode=child))
 
-    def increment_counts(self, instance):
+    def update_label_count_size(self):
+        if self.label_counts.shape[0] < len(self.tree.labels):
+            num_new = len(self.tree.labels) - self.label_counts.shape[0]
+            new_counts = (self.tree.alpha + torch.zeros(num_new,
+                                                        dtype=torch.float,
+                                                        device=self.tree.device))
+            self.label_counts = torch.cat((self.label_counts, new_counts))
+            self.total_label_count += new_counts.sum()
+
+    def increment_counts(self, instance, label):
         """
         Increment the counts at the current node according to the specified
         instance.
@@ -302,6 +334,12 @@ class CobwebTorchNode(object):
         delta = instance - self.mean
         self.mean += delta / self.count
         self.meanSq += delta * (instance - self.mean)
+
+        self.update_label_count_size()
+
+        if label is not None:
+            self.label_counts[self.tree.labels[label]] += 1
+            self.total_label_count += 1
 
     def update_counts_from_node(self, other):
         """
@@ -320,29 +358,49 @@ class CobwebTorchNode(object):
                      (self.count + other.count))
         self.count += other.count
 
+        self.update_label_count_size()
+        other.update_label_count_size()
+
+        # alpha is added to all the counts, so need to subtract from other to
+        # not double count
+        self.label_counts += (other.label_counts - self.tree.alpha)
+        self.total_label_count += (other.total_label_count -
+                                   other.label_counts.shape[0] * self.tree.alpha)
+
     @property
     def std(self):
         return torch.sqrt(self.var)
 
     @property
     def var(self):
-        # return self.meanSq / self.count ## no adjustment
-        return self.meanSq / self.count + self.tree.prior_var # with adjustment
+        if self.tree.acuity_cutoff:
+            return torch.clamp(self.meanSq / self.count, self.tree.prior_var) # with cutoff
+        else:
+            return self.meanSq / self.count + self.tree.prior_var # with adjustment
 
-    def log_prob_class_given_instance(self, instance):
-        log_prob = self.log_prob(instance)
-        # modified 3/4
+    def log_prob_class_given_instance(self, instance, label):
+        log_prob = self.log_prob(instance, label)
         log_prob += torch.log(self.count) - torch.log(self.tree.root.count)
-        # modified 4/4
         return log_prob
 
-    def log_prob(self, instance):
+    def log_prob(self, instance, label):
         var = self.var
         log_prob = (0.5 * torch.log(var) + 0.5 * torch.log(2 * pi_tensor) +
                      0.5 * torch.square(instance - self.mean) / var).sum()
+
+        self.update_label_count_size()
+        if label is not None:
+            if label not in self.tree.labels:
+                log_prob += (torch.log(selt.tree.alpha) -
+                             torch.log(self.total_label_count +
+                                       self.tree.alpha))
+            elif self.total_label_count > 0:
+                log_prob += (torch.log(self.label_counts[self.tree.labels[label]]) -
+                             torch.log(self.total_label_count))
+
         return log_prob
 
-    def score_insert(self, instance):
+    def score_insert(self, instance, label):
         """
         Returns the score that would result from inserting the instance into
         the current node. 
@@ -355,17 +413,37 @@ class CobwebTorchNode(object):
         mean = self.mean + delta / count
         meanSq = self.meanSq + delta * (instance - mean)
 
-        var = meanSq / count + self.tree.prior_var
+        # hopefully cheap if already updated.
+        self.update_label_count_size()
+
+        label_counts = self.label_counts.clone()
+        total_label_count = self.total_label_count.clone()
+        if label is not None:
+            label_counts[self.tree.labels[label]] += 1
+            total_label_count += 1
+
+        if self.tree.acuity_cutoff:
+            var = torch.clamp(meanSq / count, self.tree.prior_var) # with cutoff
+        else:
+            var = meanSq / count + self.tree.prior_var # with adjustment
+
         std = torch.sqrt(var)
 
         if (self.tree.use_mutual_info):
-            score = 0.5 * torch.log(2 * pi_tensor * var) + 0.5
+            score = (0.5 * torch.log(2 * pi_tensor * var) + 0.5).sum()
         else:
-            score = -(1 / (2 * torch.sqrt(pi_tensor) * std))
+            score = -(1 / (2 * torch.sqrt(pi_tensor) * std)).sum()
 
-        return score.sum()
+        if self.total_label_count > 0:
+            p_label = label_counts / total_label_count
+            if (self.tree.use_mutual_info):
+                score += (-p_label * torch.log(p_label)).sum()
+            else:
+                score += (-p_label * p_label).sum()
 
-    def score_merge(self, other, instance):
+        return score
+
+    def score_merge(self, other, instance, label):
         """
         Returns the expected correct guesses that would result from merging the
         current concept with the other concept and inserting the instance.
@@ -385,15 +463,41 @@ class CobwebTorchNode(object):
         mean += delta / count
         meanSq += delta * (instance - mean)
 
-        var = meanSq / count + self.tree.prior_var
+        # hopefully cheap if already updated.
+        self.update_label_count_size()
+        other.update_label_count_size()
+
+        label_counts = self.label_counts.clone()
+        total_label_count = self.total_label_count.clone()
+
+        label_counts += (other.label_counts - self.tree.alpha)
+        total_label_count += (other.total_label_count -
+                              other.label_counts.shape[0] * self.tree.alpha)
+
+        if label is not None:
+            label_counts[self.tree.labels[label]] += 1
+            total_label_count += 1
+
+        if self.tree.acuity_cutoff:
+            var = torch.clamp(meanSq / count, self.tree.prior_var) # with cutoff
+        else:
+            var = meanSq / count + self.tree.prior_var # with adjustment
+
         std = torch.sqrt(var)
 
         if (self.tree.use_mutual_info):
-            score = 0.5 * torch.log(2 * pi_tensor * var) + 0.5
+            score = (0.5 * torch.log(2 * pi_tensor * var) + 0.5).sum()
         else:
-            score = -(1 / (2 * torch.sqrt(pi_tensor) * std))
+            score = -(1 / (2 * torch.sqrt(pi_tensor) * std)).sum()
 
-        return score.sum()
+        if self.total_label_count > 0:
+            p_label = label_counts / total_label_count
+            if (self.tree.use_mutual_info):
+                score += (-p_label * torch.log(p_label)).sum()
+            else:
+                score += (-p_label * p_label).sum()
+
+        return score
 
     def get_basic(self):
         """
@@ -414,7 +518,7 @@ class CobwebTorchNode(object):
 
         return best
 
-    def get_best(self, instance):
+    def get_best(self, instance, label=None):
         """
         Climbs up the tree from the current node (probably a leaf),
         computes the category utility score, and returns the node with
@@ -422,12 +526,12 @@ class CobwebTorchNode(object):
         """
         curr = self
         best = self
-        best_ll = self.log_prob_class_given_instance(instance)
+        best_ll = self.log_prob_class_given_instance(instance, label)
 
         while curr.parent:
             curr = curr.parent
-            curr_ll = curr.log_prob_class_given_instance(instance)
-            if curr_cu > best_cu:
+            curr_ll = curr.log_prob_class_given_instance(instance, label)
+            if curr_ll > best_ll:
                 best = curr
                 best_ll = curr_ll
 
@@ -449,12 +553,21 @@ class CobwebTorchNode(object):
                  concept.
         :rtype: float
         """
-        if (self.tree.use_mutual_info):
-            score = 0.5 * torch.log(2 * pi_tensor * self.var) + 0.5
-        else:
-            score = -(1 / (2 * torch.sqrt(pi_tensor) * self.std))
+        self.update_label_count_size()
 
-        return score.sum()
+        if (self.tree.use_mutual_info):
+            score = (0.5 * torch.log(2 * pi_tensor * self.var) + 0.5).sum()
+        else:
+            score = -(1 / (2 * torch.sqrt(pi_tensor) * self.std)).sum()
+
+        if self.total_label_count > 0:
+            p_label = self.label_counts / self.total_label_count
+            if (self.tree.use_mutual_info):
+                score += (-p_label * torch.log(p_label)).sum()
+            else:
+                score += (-p_label * p_label).sum()
+
+        return score
 
     def partition_utility(self):
         """
@@ -497,7 +610,7 @@ class CobwebTorchNode(object):
 
         return ((self.score() - child_score) / len(self.children))
 
-    def get_best_operation(self, instance, best1, best2, best1_pu):
+    def get_best_operation(self, instance, label, best1, best2, best1_pu):
         """
         Given an instance, the two best children based on category utility and
         a set of possible operations, find the operation that produces the
@@ -573,9 +686,9 @@ class CobwebTorchNode(object):
         operations = []
 
         operations.append((best1_pu, random(), "best"))
-        operations.append((self.pu_for_new_child(instance), random(), 'new'))
+        operations.append((self.pu_for_new_child(instance, label), random(), 'new'))
         if len(self.children) > 2 and best2:
-            operations.append((self.pu_for_merge(best1, best2, instance),
+            operations.append((self.pu_for_merge(best1, best2, instance, label),
                                random(), 'merge'))
         if len(best1.children) > 0:
             operations.append((self.pu_for_split(best1), random(), 'split'))
@@ -586,7 +699,7 @@ class CobwebTorchNode(object):
         # print(best_op)
         return best_op
 
-    def two_best_children(self, instance):
+    def two_best_children(self, instance, label):
         """
         Calculates the category utility of inserting the instance into each of
         this node's children and returns the best two. In the event of ties
@@ -603,13 +716,13 @@ class CobwebTorchNode(object):
             raise Exception("No children!")
 
         relative_pus = [(child.count * child.score() -
-                         (child.count + 1) * child.score_insert(instance),
+                         (child.count + 1) * child.score_insert(instance, label),
                          child.count, random(), child) for child in
                         self.children]
         relative_pus.sort(reverse=True)
 
         best1 = relative_pus[0][3]
-        best1_pu = self.pu_for_insert(best1, instance)
+        best1_pu = self.pu_for_insert(best1, instance, label)
 
         best2 = None
         if len(relative_pus) > 1:
@@ -617,7 +730,7 @@ class CobwebTorchNode(object):
 
         return best1_pu, best1, best2
         
-    def pu_for_insert(self, child, instance):
+    def pu_for_insert(self, child, instance, label):
         """
         Compute the category utility of adding the instance to the specified
         child.
@@ -644,14 +757,14 @@ class CobwebTorchNode(object):
         for c in self.children:
             if c == child:
                 p_of_child = (c.count + 1) / (self.count + 1)
-                children_score += p_of_child * c.score_insert(instance)
+                children_score += p_of_child * c.score_insert(instance, label)
             else:
                 p_of_child = (c.count) / (self.count + 1)
                 children_score += p_of_child * c.score()
 
-        return (self.score_insert(instance) - children_score) / len(self.children)
+        return (self.score_insert(instance, label) - children_score) / len(self.children)
 
-    def create_new_child(self, instance):
+    def create_new_child(self, instance, label):
         """
         Create a new child (to the current node) with the counts initialized by
         the *given instance*.
@@ -667,11 +780,11 @@ class CobwebTorchNode(object):
         new_child = CobwebTorchNode(shape=self.tree.shape, device=self.tree.device)
         new_child.parent = self
         new_child.tree = self.tree
-        new_child.increment_counts(instance)
+        new_child.increment_counts(instance, label)
         self.children.append(new_child)
         return new_child
 
-    def pu_for_new_child(self, instance):
+    def pu_for_new_child(self, instance, label):
         """
         Return the category utility for creating a new child using the
         particular instance.
@@ -696,11 +809,11 @@ class CobwebTorchNode(object):
         new_child = CobwebTorchNode(shape=self.tree.shape, device=self.mean.device);
         new_child.parent = self
         new_child.tree = self.tree
-        new_child.increment_counts(instance)
+        new_child.increment_counts(instance, label)
         p_of_child = 1.0 / (self.count + 1)
         children_score += p_of_child * new_child.score()
 
-        return (self.score_insert(instance) - children_score) / (len(self.children) + 1)
+        return (self.score_insert(instance, label) - children_score) / (len(self.children) + 1)
 
 
     def merge(self, best1, best2):
@@ -736,7 +849,7 @@ class CobwebTorchNode(object):
 
         return new_child
 
-    def pu_for_merge(self, best1, best2, instance):
+    def pu_for_merge(self, best1, best2, instance, label):
         """
         Return the category utility for merging the two best children.
 
@@ -768,9 +881,9 @@ class CobwebTorchNode(object):
             children_score += p_of_child * c.score()
 
         p_of_child = (best1.count + best2.count + 1) / (self.count + 1)
-        children_score += p_of_child * best1.score_merge(best2, instance)
+        children_score += p_of_child * best1.score_merge(best2, instance, label)
 
-        return (self.score_insert(instance) - children_score) / (len(self.children) - 1)
+        return (self.score_insert(instance, label) - children_score) / (len(self.children) - 1)
     
 
     def split(self, best):
@@ -824,7 +937,7 @@ class CobwebTorchNode(object):
         return ((self.score() - children_score) /
                 (len(self.children) - 1 + len(best.children)))
 
-    def is_exact_match(self, instance):
+    def is_exact_match(self, instance, label):
         """
         Returns true if the concept exactly matches the instance.
 
@@ -835,6 +948,21 @@ class CobwebTorchNode(object):
 
         .. seealso:: :meth:`CobwebNode.get_best_operation`
         """
+        self.update_label_count_size()
+
+        if label is not None and self.total_label_count == 0:
+            return False
+
+        if label is None and self.total_label_count > 0:
+            return False
+
+        if self.total_label_count > 0:
+            label_counts = self.label_counts - self.tree.alpha
+            p_labels = label_counts / label_counts.sum()
+
+            if not math.isclose(p_labels[self.tree.labels[label]].item(), 1.0):
+                return False
+
         std = torch.sqrt(self.meanSq / self.count)
         if not torch.isclose(std, torch.zeros(std.shape,device=self.tree.device)).all():
             return False
@@ -949,6 +1077,8 @@ class CobwebTorchNode(object):
                  the node and its children
         :rtype: obj
         """
+        self.update_label_count_size()
+
         output = {}
         output['name'] = "Concept" + str(self.concept_id)
         output['size'] = self.count.item()
@@ -956,6 +1086,9 @@ class CobwebTorchNode(object):
 
         temp = {}
         temp['_category_utility'] = {"#ContinuousValue#": {'mean': self.category_utility().item(), 'std': 1, 'n': 1}}
+
+        if self.total_label_count > 0:
+            temp['label'] = {label: self.label_counts[self.tree.labels[label]].item() for label in self.tree.labels}
 
         for child in self.children:
             output["children"].append(child.output_dict())
@@ -984,7 +1117,16 @@ class CobwebTorchNode(object):
                  probability table.
         :rtype: :ref:`Value<values>`
         """
+        self.update_label_count_size()
+
         if most_likely:
-            return self.mean.detach().clone()
+            label = None
+            if self.total_label_count > 0:
+                label = self.tree.reverse_labels[self.label_counts.argmax().item()]
+            return self.mean.detach().clone(), label
         else:
-            return torch.normal(self.mean, self.std)
+            label = None
+            if self.total_label_count > 0:
+                p_labels = label_counts / label_counts.sum()
+                label = self.tree.reverse_labels[torch.multinomial(p_labels, 1).item()]
+            return torch.normal(self.mean, self.std), label
