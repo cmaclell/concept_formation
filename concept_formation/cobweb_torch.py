@@ -240,6 +240,7 @@ class CobwebTorchTree(object):
             best_score = None
 
             for child in parent.children:
+
                 if self.use_ll_for_categorize:
                     score = child.log_prob_class_given_instance(instance, label)
                 else:
@@ -385,7 +386,7 @@ class CobwebTorchNode(object):
 
     def log_prob(self, instance, label):
         var = self.var
-        log_prob = (0.5 * torch.log(var) + 0.5 * torch.log(2 * pi_tensor) +
+        log_prob = -(0.5 * torch.log(var) + 0.5 * torch.log(2 * pi_tensor) +
                      0.5 * torch.square(instance - self.mean) / var).sum()
 
         self.update_label_count_size()
