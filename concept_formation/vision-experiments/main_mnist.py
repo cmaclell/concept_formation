@@ -58,7 +58,7 @@ def accuracy2csv(general_config, model_config, data_config, test_accs):
 		for i in range(n_relearning):
 			trainset += ["R%d" % i] * 11
 		for i in range(n_split - n_relearning - index_start_relearning):
-			trainset += ["R%d" % (i + index_start_relearning)] * 11
+			trainset += ["S%d" % (i + index_start_relearning)] * 11
 
 
 	testset = [f"L{i}" for i in range(10)]
