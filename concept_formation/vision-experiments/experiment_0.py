@@ -1,7 +1,7 @@
 import torch
 
 from concept_formation.cobweb_torch import CobwebTorchTree
-from datasets_cifar import dataloaders_0
+from datasets_mnist import dataloaders_0
 import models_nn
 import models_cobweb
 
@@ -23,6 +23,11 @@ def reconfig(general_config, model_config, data_config):
 def experiment_0_nn(general_config, model_config, data_config, dataset_tr, dataset_te, verbose):
 
 	reconfig(general_config, model_config, data_config)
+
+	# if data_config['dataset'] == 'mnist':
+	# 	from datasets_mnist import dataloaders_0
+	# else:
+	# 	from datasets_cifar import dataloaders_0
 
 	# Dataloaders:
 	dataloaders = dataloaders_0(general_config, data_config, dataset_tr, dataset_te, verbose)

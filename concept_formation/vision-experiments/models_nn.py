@@ -91,7 +91,6 @@ def train(model, optimizer, train_loader, epoch, log_interval, device):
 	# train_losses = []
 	# train_counter = []
 	# train_loader = tqdm(train_loader)  # include a progress bar
-
 	with tqdm(train_loader, unit='batch') as tepoch:  # include a progress bar
 		tepoch.set_description(f"Epoch {epoch}")
 		for batch_id, (imgs, labels) in enumerate(train_loader):

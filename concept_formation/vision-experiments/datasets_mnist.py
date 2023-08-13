@@ -32,6 +32,33 @@ def MNIST_dataset(split='train', pad=False, normalize=False, permutation=False,
 
 	return dataset
 
+items = ('plane', 'car', 'bird', 'cat',
+         'deer', 'dog', 'frog', 'horse', 'ship', 'truck')
+
+
+def CIFAR_dataset(split='train', pad=False, normalize=False, permutation=False, 
+				download=True, verbose=True):
+	"""
+	Load the original MNIST training/test dataset.
+	"""
+
+	dataset_class = datasets.CIFAR10
+	transform = [transforms.ToTensor()]
+	if normalize:
+		transform.append(transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)))  # mean and std for all pixels in MNIST
+		# transform.append(transforms.Normalize((0.5,), (0.5,)))
+	dataset_transform = transforms.Compose(transform)
+
+	# Load dataset:
+	dataset = dataset_class(root='./data',
+							train=False if split=='test' else True,
+							download=download,
+							transform=dataset_transform)
+	if verbose:
+		print("CIFAR10 {} dataset consisting of {} samples.".format(split, len(dataset)))
+
+	return dataset
+
 
 
 def get_data_loader(dataset, batch_size, cuda=False, drop_last=False, shuffle=False):
@@ -109,6 +136,7 @@ class dataloaders_0(object):
 		self.pad = data_config['pad']
 		self.permutation = data_config['permutation']
 		self.drop_last = data_config['drop_last']
+		self.n_split = data_config['n_split']
 
 		# Set random seeds:
 		np.random.seed(self.seed)
@@ -116,11 +144,11 @@ class dataloaders_0(object):
 		random.seed(self.seed)
 
 		self.verbose = verbose
-		self.training_loaders, self.n_splits, self.labels_tr, self.size_subsets = self.training_loaders(dataset_tr)
+		self.training_loaders, self.labels_tr, self.size_subsets = self.training_loaders(dataset_tr)
 		self.test_loaders, self.labels_te = test_loaders(dataset_te, general_config, data_config, verbose=verbose)
 		if verbose:
 			print("\nAn overview of the dataloaders for experiments 0:")
-			print("Training dataloaders: (0-9: 1), ..., (0-9: {})".format(self.n_splits) + ", each split with {} data.".format(self.split_size))
+			print("Training dataloaders: (0-9: 1), ..., (0-9: {})".format(self.n_split) + ", each split with {} data.".format(self.split_size))
 			print("Test dataloaders: (0), (1), ..., (9), (0-9), each with all the test data available,")
 			print("(Approx. 6000 for each label and 10000 for all labels).")
 			print("The actual size of each tr subset:", self.size_subsets)
@@ -131,20 +159,23 @@ class dataloaders_0(object):
 		if self.verbose:
 			print("\n\n " +' Loading Training DataLoader for Experiments 0 '.center(70, '*'))
 
-		split_size = self.split_size
+		# split_size = self.split_size
+		n_split = self.n_split
 
 		tr_dataset_indices = list(range(len(tr_dataset)))
 		if self.shuffle:
 			random.shuffle(tr_dataset_indices)
 
 		subset_datasets = []
-		n_splits = len(tr_dataset) // split_size
-		if len(tr_dataset) % split_size != 0:
-			n_splits += 1
+		split_size = len(tr_dataset) // n_split
+		# print(split_size)
+		# n_splits = len(tr_dataset) // split_size
+		# if len(tr_dataset) % split_size != 0:
+		# 	n_splits += 1
 
-		for i in range(n_splits):
+		for i in range(n_split):
 			start = i * split_size
-			end = (i + 1) * split_size if i < n_splits - 1 else len(tr_dataset_indices)
+			end = (i + 1) * split_size if i < n_split - 1 else len(tr_dataset_indices)
 			subsets_indices = tr_dataset_indices[start:end]
 			subset_datasets.append(Subset(tr_dataset, subsets_indices))
 
@@ -159,12 +190,12 @@ class dataloaders_0(object):
 			print(' Loading training DataLoaders successful '.center(70, '*'))
 
 		# labels exist among the tr-datasets:
-		labels_tr = [list(range(10))] * 10
+		labels_tr = [list(range(10))] * n_split
 
 		# size of each tr dataset:
 		size_subsets = [len(subset_dataset) for subset_dataset in subset_datasets]
 
-		return subset_loaders, n_splits, labels_tr, size_subsets
+		return subset_loaders, labels_tr, size_subsets
 
 
 

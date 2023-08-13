@@ -8,7 +8,7 @@ import argparse
 from tqdm import tqdm
 
 from options import general_options, data_options, model_options
-from datasets_mnist import MNIST_dataset
+from datasets_mnist import MNIST_dataset, CIFAR_dataset
 from experiment_0 import experiment_0_nn, experiment_0_cobweb
 from experiment_1 import experiment_1_nn, experiment_1_cobweb
 from experiment_2 import experiment_2_nn, experiment_2_cobweb
@@ -155,7 +155,7 @@ def experiments(args):
 
 	data_config = {
 	# Basic info of the initial dataset:
-	'dataset': 'mnist',
+	'dataset': args.dataset,
 	'available_labels': 10,
 	'image_size': 28,
 
@@ -194,16 +194,28 @@ def experiments(args):
 	device = torch.device("cuda" if general_config['cuda'] else "cpu")
 	
 	# Load initial datasets:
-	dataset_tr = MNIST_dataset(split='train', 
-		pad=data_config['pad'], 
-		normalize=data_config['normalize'], 
-		permutation=data_config['permutation'], 
-		download=True, verbose=verbose)
-	dataset_te = MNIST_dataset(split='test', 
-		pad=data_config['pad'], 
-		normalize=data_config['normalize'], 
-		permutation=data_config['permutation'], 
-		download=True, verbose=verbose)
+	if data_config['dataset'] == 'mnist':
+		dataset_tr = MNIST_dataset(split='train', 
+			pad=data_config['pad'], 
+			normalize=data_config['normalize'], 
+			permutation=data_config['permutation'], 
+			download=True, verbose=verbose)
+		dataset_te = MNIST_dataset(split='test', 
+			pad=data_config['pad'], 
+			normalize=data_config['normalize'], 
+			permutation=data_config['permutation'], 
+			download=True, verbose=verbose)
+	else:
+		dataset_tr = CIFAR_dataset(split='train', 
+			pad=data_config['pad'], 
+			normalize=data_config['normalize'], 
+			permutation=data_config['permutation'], 
+			download=True, verbose=verbose)
+		dataset_te = CIFAR_dataset(split='test', 
+			pad=data_config['pad'], 
+			normalize=data_config['normalize'], 
+			permutation=data_config['permutation'], 
+			download=True, verbose=verbose)
 
 	experiment = general_config['type']
 	model_type = model_config['type']
