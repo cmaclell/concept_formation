@@ -62,11 +62,11 @@ def experiment_1_nn(general_config, model_config, data_config, dataset_tr, datas
 				print("\n====> Model Training with labels {} <====".format(dataloaders.labels_tr[i]))
 			models_nn.train(model, optimizer, loaders_tr[i], epoch, model_config['log_interval'], device)
 			
-			for j in range(len(loaders_te)):
-				if verbose:
-					print("\n----> Model Testing with labels {} <----".format(dataloaders.labels_te[j]))
-				acc = models_nn.test(model, loaders_te[j], device)
-				test_accs.append(acc.item())
+		for j in range(len(loaders_te)):
+			if verbose:
+				print("\n----> Model Testing with labels {} <----".format(dataloaders.labels_te[j]))
+			acc = models_nn.test(model, loaders_te[j], device)
+			test_accs.append(acc.item())
 
 	print("\n\nThis is the end of the experiments.")
 	print("There are {} test accuracy data in total.".format(len(test_accs)))
