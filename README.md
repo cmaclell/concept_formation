@@ -56,9 +56,7 @@ After running all experiments, all results will be stored under the directory `.
 
 	After import the necessary packages and the data at the top of the script, just run the script till the end. 
 
-	`print(p_chosen_1)` 
-
-	will invoke the figure output, and 
+	`print(p_chosen_1)` will invoke the figure output, and 
 
 	`df_display_1 <- ggplot_build(p_chosen_1)$data[[2]]` will store the stats summary coresponding to the plot `p_chosen_1`.
 
