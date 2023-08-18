@@ -54,7 +54,13 @@ After running all experiments, all results will be stored under the directory `.
 
 	You might need to indicate the directory where `exp0.csv` lies in directly since the current working directory of R by default is definitely not the current one until you configure this.
 
-	After import the necessary packages and the data at the top of the script, just run the script till the end. `print(p_chosen_1)` will invoke the figure output, and `df_display_1 <- ggplot_build(p_chosen_1)$data[[2]]` will store the stats summary coresponding to the plot `p_chosen_1`.
+	After import the necessary packages and the data at the top of the script, just run the script till the end. 
+
+	`print(p_chosen_1)` 
+
+	will invoke the figure output, and 
+
+	`df_display_1 <- ggplot_build(p_chosen_1)$data[[2]]` will store the stats summary coresponding to the plot `p_chosen_1`.
 
 The procedures are similar to Experiment 1 (`exp1`) and 2 (`exp2`).
 
