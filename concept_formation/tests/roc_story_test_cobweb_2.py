@@ -3,11 +3,11 @@ import re
 import json
 import string
 from collections import Counter
-# from random import shuffle
+from random import shuffle
 from random import random
 from tqdm import tqdm
 from concept_formation.multinomial_cobweb import MultinomialCobwebTree
-# from concept_formation.visualize import visualize
+from concept_formation.visualize import visualize
 import spacy
 # import numpy as np
 # import pandas as pd
@@ -16,15 +16,19 @@ import spacy
 # from gensim.models import Word2Vec
 # from gensim.models.word2vec import LineSentence
 # import multiprocessing
+from math import log
 from time import time
 from datetime import datetime
 
-nlp = spacy.load("en_core_web_sm", disable=['parser'])
-# nlp = spacy.load('en_core_web_trf')
-nlp.add_pipe("sentencizer")
-nlp.max_length = float('inf')
-# nlp.add_pipe("lemmatizer")
-# nlp.initialize()
+# nlp = spacy.load("en_core_web_sm", disable=['parser'])
+# # nlp = spacy.load('en_core_web_trf')
+# nlp.add_pipe("sentencizer")
+# nlp.max_length = float('inf')
+# # nlp.add_pipe("lemmatizer")
+# # nlp.initialize()
+
+en = spacy.load('en_core_web_sm')
+stopwords = list(en.Defaults.stop_words)
 
 # import logging  # Setting up the loggings to monitor gensim
 # logging.basicConfig(format="%(levelname)s - %(asctime)s: %(message)s", datefmt= '%H:%M:%S', level=logging.INFO)
@@ -34,18 +38,43 @@ def get_instance(text, anchor_idx, anchor_wd, window):
     ctx = text[max(0, anchor_idx - window):anchor_idx] + text[anchor_idx + 1:anchor_idx + 1 + window]
     ctx = Counter(ctx)
     example = {}
-    example['context'] = {word: ctx[word] for word in ctx}
+    example['context'] = {word: ctx[word] for word in ctx}  # / len(ctx)
 
     if anchor_wd is None:
         return example
 
     example['anchor'] = {anchor_wd: 1}
+    example['_kind'] = {'stopword' if anchor_wd in stopwords else 'word': 1}
     return example
 
 
 def get_instances(story, window):
     for anchor_idx, anchor_wd in enumerate(story):
         yield anchor_idx, get_instance(story, anchor_idx, anchor_wd, window=window)
+
+
+def get_raw_holmes_stories(limit=None):
+    non_letters = re.compile(r"[^a-z]")
+    punctuation = re.compile(r'[\'\",\?\!.;:`]*')
+    for i in range(12):
+        with open("Holmes_Training_Data/" + str(i) + ".txt") as f:
+            text = punctuation.sub('', f.read().lower())
+            story = non_letters.sub(' ', text).split()
+
+            yield story
+
+
+def get_go_holmes_stories(limit=None):
+    non_letters = re.compile(r"[^a-z]")
+    punctuation = re.compile(r'[\'\",\?\!.;:`]*')
+    for i in range(12):
+        with open("Holmes_Training_Data/" + str(i) + ".txt") as f:
+            text = punctuation.sub('', f.read().lower())
+            story = non_letters.sub(' ', text).split()
+
+            story = [i for i in story if i not in stopwords]
+
+            yield story
 
 
 def get_raw_roc_stories(limit=None):
@@ -69,6 +98,31 @@ def get_raw_roc_stories(limit=None):
 
             story = " ".join(story)
             story = re.sub('[' + re.escape(string.punctuation) + ']', '', story).split()
+            yield story
+
+
+def get_go_roc_stories(limit=None):
+    with open("ROCStories_winter2017 - ROCStories_winter2017.txt", 'r') as fin:
+
+        lines = list(fin)
+        if limit is None:
+            limit = len(lines) - 1
+
+        for line in tqdm(lines[1:limit + 1]):
+
+            line = line.lower().replace("\n", "").split("\t")
+
+            story = []
+            for sent in line[2:]:
+
+                word_char = re.compile(r"[^_a-zA-Z,.!?:';\s]")
+                sent = word_char.sub("", sent)
+                words = sent.split()
+                story += words
+
+            story = " ".join(story)
+            story = re.sub('[' + re.escape(string.punctuation) + ']', '', story).split()
+            story = [i for i in story if i not in stopwords]
             yield story
 
 
@@ -116,7 +170,9 @@ def write_predictions(queue, fout, overall_freq, occurances):
             )
         )
 
+        i = 0
         for probs in [leaf.predict(), leaf.predict_basic(), leaf.predict_best(instance_no_anchor)]:
+            i += 1
             p = 0.0
             best = "NONE"
 
@@ -137,7 +193,44 @@ def write_predictions(queue, fout, overall_freq, occurances):
                 )
             )
 
-        fout.write("\n")
+            if i >= 2:
+                fout.write(",{}".format(probs['_info']['_count']))
+
+        fout.write(",{}\n".format(text))
+
+
+def instance_iter(it, window):
+    # out = []
+    for story_idx, story in enumerate(it):
+        for anchor_idx, instance in get_instances(story, window=window):
+            # out.append((story_idx, story, anchor_idx, instance))
+            yield (story_idx, story, anchor_idx, instance)
+    # out = sorted(out, key=lambda x: x[2])
+    # return out
+
+
+def tf_idf(instances):
+    df = {}
+    for i in instances:
+        for attr in i:
+            for val in i[attr]:
+                df.setdefault(attr, {}).setdefault(val, 0)
+                df[attr][val] += 1
+
+    def correct(instance):
+        out = {}
+        for attr in instance:
+            for val in instance[attr]:
+                out.setdefault(attr, {})[val] = (
+                    instance[attr][val]
+                    * log(
+                        len(instances)
+                        / (df[attr][val] if attr == 'context' else 1)
+                    )
+                )
+        return out
+
+    return [correct(i) for i in instances]
 
 
 if __name__ == "__main__":
@@ -154,26 +247,28 @@ if __name__ == "__main__":
     window = 6
 
     # Buffer to avoid "cheating"
-    buffer = 100
+    buffer = 1000
 
     batch_size = 200
     batch_idx = 0
 
     save_interval = 3600
 
-    if not os.path.isfile("roc_stories.json"):
-        print("Reading and preprocessing stories.")
-        stories = list(get_raw_roc_stories())
-        with open("roc_stories.json", "w") as fout:
-            json.dump(stories, fout, indent=4)
-        print("done.")
-    else:
-        print("Loading preprocessed stories.")
-        with open("roc_stories.json", "r") as fin:
-            stories = json.load(fin)
-        print("done.")
+    # if not os.path.isfile("roc_stories.json"):
+    #     print("Reading and preprocessing stories.")
+    #     stories = list(get_go_roc_stories())
+    #     with open("roc_stories.json", "w") as fout:
+    #         json.dump(stories, fout, indent=4)
+    #     print("done.")
+    # else:
+    #     print("Loading preprocessed stories.")
+    #     with open("roc_stories.json", "r") as fin:
+    #         stories = json.load(fin)
+    #     print("done.")
 
-    outfile = 'cobweb_basic_roc_story_out'
+    stories = list(get_raw_roc_stories(5000))
+
+    outfile = 'cobweb_out_all'
 
     with open(outfile + ".csv", 'w') as fout:
         fout.write(
@@ -190,9 +285,11 @@ if __name__ == "__main__":
             "basic_pred_word,"
             "basic_prob_word,"
             "basic_correct,"
+            "basic_count,"
             "best_pred_word,"
             "best_prob_word,"
             "best_correct,"
+            "best_count,"
             "story\n"
         )
         fout.close()
@@ -203,44 +300,49 @@ if __name__ == "__main__":
 
     overall_freq = Counter([w for s in stories for w in s])
 
-    for story_idx, story in enumerate(tqdm(stories)):
+    instances = list(instance_iter(stories, window))[:5000]
+    # tf_idf_instances = tf_idf([i[3] for i in instances])
+    # instances = [(*(i[:3]), tf_idf_instances[idx]) for idx, i in enumerate(instances)]
 
-        for anchor_idx, instance in get_instances(story, window=window):
-            batch_idx += 1
-            text = story[max(0, anchor_idx - window):min(len(story), anchor_idx + window)]
-            text[anchor_idx - max(0, anchor_idx - window)] = '_'
-            text = ' '.join(text)
+    for story_idx, story, anchor_idx, instance in tqdm(instances):
+        actual_anchor = list(instance['anchor'].keys())[0]
 
-            actual_anchor = list(instance['anchor'].keys())[0]
+        # if actual_anchor in stopwords:
+        #     continue
 
-            instance_no_anchor = {'context': instance['context']}
+        batch_idx += 1
+        text = story[max(0, anchor_idx - window):min(len(story), anchor_idx + window)]
+        text[anchor_idx - max(0, anchor_idx - window)] = '_'
+        text = ' '.join(text)
 
-            if tree.root.count > 0:
-                categorization_queue.append((
-                    tree.async_categorize(instance),
-                    actual_anchor,
-                    instance_no_anchor,
-                    story_idx,
-                    text,
-                ))
-            training_queue.append(instance)
+        instance_no_anchor = {'context': instance['context']}
 
-            if batch_idx >= batch_size:
-                batch_idx = 0
+        if tree.root.count > 0:
+            categorization_queue.append((
+                tree.async_categorize(instance_no_anchor),
+                actual_anchor,
+                instance_no_anchor,
+                story_idx,
+                text,
+            ))
+        training_queue.append(instance)
 
-                with open(outfile + ".csv", 'a') as fout:
-                    write_predictions(categorization_queue, fout, overall_freq, occurances)
+        if batch_idx >= batch_size:
+            batch_idx = 0
 
-                training_futures = []
+            with open(outfile + ".csv", 'a') as fout:
+                write_predictions(categorization_queue, fout, overall_freq, occurances)
 
-                while len(training_queue) > buffer:
-                    old_inst = training_queue.pop(0)
-                    training_futures.append(tree.async_ifit(old_inst))
-                    old_anchor = list(old_inst['anchor'].keys())[0]
-                    occurances[old_anchor] += 1
-                    n_training_words += 1
+            training_futures = []
 
-                [i.wait() for i in training_futures]
+            while len(training_queue) > buffer:
+                old_inst = training_queue.pop(0)
+                training_futures.append(tree.async_ifit(old_inst))
+                old_anchor = list(old_inst['anchor'].keys())[0]
+                occurances[old_anchor] += 1
+                n_training_words += 1
+
+            [i.wait() for i in training_futures]
 
         if (time() - last_checkpoint) > save_interval:
             timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
@@ -250,3 +352,5 @@ if __name__ == "__main__":
 
     with open(outfile + ".csv", 'a') as fout:
         write_predictions(categorization_queue, fout, overall_freq, occurances)
+
+    visualize(tree)

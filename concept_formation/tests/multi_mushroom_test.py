@@ -1,6 +1,6 @@
 from random import shuffle
 from random import seed
-from pprint import pprint
+# from pprint import pprint
 import time
 
 from tqdm import tqdm
@@ -17,20 +17,28 @@ if __name__ == "__main__":
     shuffle(mushrooms)
     mushrooms = mushrooms
 
-    tree1 = MultinomialCobwebTree(True, # Use mutual information (rather than expected correct guesses)
-                                 0.1, # alpha weight
-                                 False, # dynamically compute alpha
-                                 True) # weight attr by avg occurance of attr
+    tree1 = MultinomialCobwebTree(
+        True,  # Use mutual information (rather than expected correct guesses)
+        0.1,  # alpha weight
+        False,  # dynamically compute alpha
+        True,  # weight attr by avg occurance of attr
+    )
 
-    tree2 = MultinomialCobwebTree(True, # Use mutual information (rather than expected correct guesses)
-                                 0.1, # alpha weight
-                                 False, # dynamically compute alpha
-                                 True) # weight attr by avg occurance of attr
+    tree2 = MultinomialCobwebTree(
+        True,  # Use mutual information (rather than expected correct guesses)
+        0.1,  # alpha weight
+        False,  # dynamically compute alpha
+        True,  # weight attr by avg occurance of attr
+    )
 
     mushrooms_multi = [{a: {mushroom[a]: 1 if a != "classification" else 1} for a in mushroom} for mushroom in mushrooms]
-    mushrooms_no_class_multi = [{a if a != "classification" else "_classification":
-                                 {mushroom[a]: 1} for a in mushroom} for mushroom in
-                                 mushrooms]
+    mushrooms_no_class_multi = [
+        {
+            a if a != "classification" else "_classification":
+            {mushroom[a]: 1}
+            for a in mushroom
+        } for mushroom in mushrooms
+    ]
 
     # print("Starting sync")
     # start1 = time.perf_counter()

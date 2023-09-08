@@ -1,1 +1,5761 @@
-var trestle_output = {"name": "Concept2", "size": 100.0, "children": [{"name": "Concept107", "size": 20.0, "children": [{"name": "Concept60", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 15.5, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 2.4, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 69.0, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 0.7, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 24.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "day": {"sat": 1}, "month": {"mar": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 17.4, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 5.4, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 3.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 4.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept2677", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 233.8, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 71.0, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 53.4, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 0.4, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 90.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "day": {"sat": 1}, "month": {"jun": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 10.6, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 2.7, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 6.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 5.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept3908", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 354.6, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 27.8, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 84.0, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 5.3, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 61.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 11.19, "std": 0.0, "n": 1.0}}, "day": {"wed": 1}, "month": {"dec": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 5.1, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 8.0, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 8.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 6.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept4744", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 26.6, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 6.8, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 84.2, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 7.7, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 79.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "day": {"thu": 1}, "month": {"feb": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 6.7, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 3.1, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 9.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 9.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept5827", "size": 16.0, "children": [{"name": "Concept3127", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 103.8, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 52.2, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 87.6, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 5.0, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 72.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "day": {"mon": 1}, "month": {"mar": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 8.3, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 3.1, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 1.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 3.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept2850", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 113.8, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 28.0, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 85.1, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 3.5, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 94.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "day": {"sat": 1}, "month": {"may": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 11.3, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 4.9, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 6.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 5.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept2638", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 55.0, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 8.2, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 84.7, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 2.9, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 46.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "day": {"sat": 1}, "month": {"feb": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 14.2, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 4.0, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 4.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 5.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept5201", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 102.2, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 51.3, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 89.3, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 9.6, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 46.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "day": {"sun": 1}, "month": {"mar": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 10.6, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 4.9, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 4.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 6.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept6914", "size": 3.0, "children": [{"name": "Concept4634", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 83.7, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 37.6, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 90.1, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 7.2, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 54.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 12.1, "std": 0.0, "n": 1.0}}, "day": {"sun": 1}, "month": {"mar": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 12.4, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 3.6, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 6.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 5.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept5505", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 100.4, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 50.1, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 90.6, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 7.8, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 64.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 13.99, "std": 0.0, "n": 1.0}}, "day": {"sat": 1}, "month": {"mar": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 15.1, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 4.0, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 5.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 6.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept6922", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 92.4, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 44.0, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 90.7, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 5.5, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 60.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 8.24, "std": 0.0, "n": 1.0}}, "day": {"sun": 1}, "month": {"mar": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 11.5, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 4.0, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 7.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 4.0, "std": 0.0, "n": 1.0}}}}], "counts": {"DC": {"#ContinuousValue#": {"mean": 92.16666666666667, "std": 9.424724652346123, "n": 3.0}}, "DMC": {"#ContinuousValue#": {"mean": 43.9, "std": 7.05304678935301, "n": 3.0}}, "FFMC": {"#ContinuousValue#": {"mean": 90.46666666666667, "std": 0.36272315378164327, "n": 3.0}}, "ISI": {"#ContinuousValue#": {"mean": 6.833333333333333, "std": 1.3461962283930653, "n": 3.0}}, "RH": {"#ContinuousValue#": {"mean": 59.333333333333336, "std": 5.679383927853218, "n": 3.0}}, "area": {"#ContinuousValue#": {"mean": 11.443333333333333, "std": 3.3069467626571294, "n": 3.0}}, "day": {"sun": 2, "sat": 1}, "month": {"mar": 3}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 3.0}}, "temp": {"#ContinuousValue#": {"mean": 13.0, "std": 2.114017691983778, "n": 3.0}}, "wind": {"#ContinuousValue#": {"mean": 3.8666666666666667, "std": 0.26058800634822393, "n": 3.0}}, "x-axis": {"#ContinuousValue#": {"mean": 6.0, "std": 1.1283791670955126, "n": 3.0}}, "y-axis": {"#ContinuousValue#": {"mean": 5.0, "std": 1.1283791670955126, "n": 3.0}}}}, {"name": "Concept7009", "size": 3.0, "children": [{"name": "Concept2482", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 30.6, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 18.9, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 90.9, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 8.0, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 51.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "day": {"thu": 1}, "month": {"mar": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 8.7, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 5.8, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 6.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 5.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept5260", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 57.3, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 19.5, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 85.9, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 2.8, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 52.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "day": {"fri": 1}, "month": {"mar": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 12.7, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 6.3, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 4.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 5.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept7017", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 55.2, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 9.1, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 81.5, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 2.7, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 54.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 10.93, "std": 0.0, "n": 1.0}}, "day": {"thu": 1}, "month": {"apr": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 5.8, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 5.8, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 6.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 5.0, "std": 0.0, "n": 1.0}}}}], "counts": {"DC": {"#ContinuousValue#": {"mean": 47.7, "std": 16.752155922599247, "n": 3.0}}, "DMC": {"#ContinuousValue#": {"mean": 15.833333333333332, "std": 6.588549173515933, "n": 3.0}}, "FFMC": {"#ContinuousValue#": {"mean": 86.10000000000001, "std": 5.3069820736028355, "n": 3.0}}, "ISI": {"#ContinuousValue#": {"mean": 4.5, "std": 3.420682887394876, "n": 3.0}}, "RH": {"#ContinuousValue#": {"mean": 52.333333333333336, "std": 1.7236276486088022, "n": 3.0}}, "area": {"#ContinuousValue#": {"mean": 3.643333333333333, "std": 7.120567273465219, "n": 3.0}}, "day": {"thu": 2, "fri": 1}, "month": {"mar": 2, "apr": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 3.0}}, "temp": {"#ContinuousValue#": {"mean": 9.066666666666666, "std": 3.9093629492076754, "n": 3.0}}, "wind": {"#ContinuousValue#": {"mean": 5.966666666666667, "std": 0.32573500793528, "n": 3.0}}, "x-axis": {"#ContinuousValue#": {"mean": 5.333333333333333, "std": 1.30294003174112, "n": 3.0}}, "y-axis": {"#ContinuousValue#": {"mean": 5.0, "std": 0.0, "n": 3.0}}}}, {"name": "Concept7878", "size": 4.0, "children": [{"name": "Concept1", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 74.3, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 30.7, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 91.4, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 7.5, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 29.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "day": {"thu": 1}, "month": {"mar": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 18.2, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 3.1, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 4.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 5.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept333", "size": 2.0, "children": [{"name": "Concept116", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 80.8, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 35.8, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 91.7, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 7.8, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 27.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "day": {"sat": 1}, "month": {"mar": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 15.1, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 5.4, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 5.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 5.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept334", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 80.8, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 35.8, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 91.7, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 7.8, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 25.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "day": {"sat": 1}, "month": {"mar": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 17.4, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 4.9, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 6.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 5.0, "std": 0.0, "n": 1.0}}}}], "counts": {"DC": {"#ContinuousValue#": {"mean": 80.8, "std": 0.0, "n": 2.0}}, "DMC": {"#ContinuousValue#": {"mean": 35.8, "std": 0.0, "n": 2.0}}, "FFMC": {"#ContinuousValue#": {"mean": 91.7, "std": 0.0, "n": 2.0}}, "ISI": {"#ContinuousValue#": {"mean": 7.8, "std": 0.0, "n": 2.0}}, "RH": {"#ContinuousValue#": {"mean": 26.0, "std": 1.772453850905516, "n": 2.0}}, "area": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 2.0}}, "day": {"sat": 2}, "month": {"mar": 2}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 2.0}}, "temp": {"#ContinuousValue#": {"mean": 16.25, "std": 2.0383219285413414, "n": 2.0}}, "wind": {"#ContinuousValue#": {"mean": 5.15, "std": 0.443113462726379, "n": 2.0}}, "x-axis": {"#ContinuousValue#": {"mean": 5.5, "std": 0.886226925452758, "n": 2.0}}, "y-axis": {"#ContinuousValue#": {"mean": 5.0, "std": 0.0, "n": 2.0}}}}, {"name": "Concept7886", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 77.5, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 33.3, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 91.7, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 9.0, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 18.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "day": {"fri": 1}, "month": {"mar": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 18.8, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 4.5, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 3.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 4.0, "std": 0.0, "n": 1.0}}}}], "counts": {"DC": {"#ContinuousValue#": {"mean": 78.35, "std": 3.3822070087272644, "n": 4.0}}, "DMC": {"#ContinuousValue#": {"mean": 33.9, "std": 2.6453539717533565, "n": 4.0}}, "FFMC": {"#ContinuousValue#": {"mean": 91.625, "std": 0.16281028227560868, "n": 4.0}}, "ISI": {"#ContinuousValue#": {"mean": 8.025, "std": 0.7220166417438424, "n": 4.0}}, "RH": {"#ContinuousValue#": {"mean": 24.75, "std": 5.1959659224043495, "n": 4.0}}, "area": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 4.0}}, "day": {"thu": 1, "sat": 2, "fri": 1}, "month": {"mar": 4}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 4.0}}, "temp": {"#ContinuousValue#": {"mean": 17.375, "std": 1.7599471602575696, "n": 4.0}}, "wind": {"#ContinuousValue#": {"mean": 4.475, "std": 1.0722063988211483, "n": 4.0}}, "x-axis": {"#ContinuousValue#": {"mean": 4.5, "std": 1.4012478040994822, "n": 4.0}}, "y-axis": {"#ContinuousValue#": {"mean": 4.75, "std": 0.5427009409187008, "n": 4.0}}}}, {"name": "Concept7965", "size": 2.0, "children": [{"name": "Concept5871", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 64.7, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 23.9, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 87.2, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 4.1, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 35.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "day": {"mon": 1}, "month": {"mar": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 11.8, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 1.8, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 4.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 4.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept7966", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 86.6, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 39.7, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 90.1, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 6.2, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 40.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 0.95, "std": 0.0, "n": 1.0}}, "day": {"mon": 1}, "month": {"mar": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 13.2, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 5.4, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 5.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 4.0, "std": 0.0, "n": 1.0}}}}], "counts": {"DC": {"#ContinuousValue#": {"mean": 75.65, "std": 19.408369667415386, "n": 2.0}}, "DMC": {"#ContinuousValue#": {"mean": 31.8, "std": 14.00238542215358, "n": 2.0}}, "FFMC": {"#ContinuousValue#": {"mean": 88.65, "std": 2.570058083812984, "n": 2.0}}, "ISI": {"#ContinuousValue#": {"mean": 5.15, "std": 1.8610765434507917, "n": 2.0}}, "RH": {"#ContinuousValue#": {"mean": 37.5, "std": 4.43113462726379, "n": 2.0}}, "area": {"#ContinuousValue#": {"mean": 0.475, "std": 0.84191557918012, "n": 2.0}}, "day": {"mon": 2}, "month": {"mar": 2}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 2.0}}, "temp": {"#ContinuousValue#": {"mean": 12.5, "std": 1.2407176956338597, "n": 2.0}}, "wind": {"#ContinuousValue#": {"mean": 3.6000000000000005, "std": 3.1904169316299287, "n": 2.0}}, "x-axis": {"#ContinuousValue#": {"mean": 4.5, "std": 0.886226925452758, "n": 2.0}}, "y-axis": {"#ContinuousValue#": {"mean": 4.0, "std": 0.0, "n": 2.0}}}}], "counts": {"DC": {"#ContinuousValue#": {"mean": 78.69375, "std": 22.3870041117363, "n": 16.0}}, "DMC": {"#ContinuousValue#": {"mean": 32.381249999999994, "std": 14.072084856832785, "n": 16.0}}, "FFMC": {"#ContinuousValue#": {"mean": 88.7625, "std": 3.140093602171113, "n": 16.0}}, "ISI": {"#ContinuousValue#": {"mean": 6.0874999999999995, "std": 2.3648199987757943, "n": 16.0}}, "RH": {"#ContinuousValue#": {"mean": 47.93749999999999, "std": 19.75292698572314, "n": 16.0}}, "area": {"#ContinuousValue#": {"mean": 2.888125, "std": 5.230544367654897, "n": 16.0}}, "day": {"sat": 5, "thu": 3, "sun": 3, "fri": 2, "mon": 3}, "month": {"feb": 1, "mar": 13, "may": 1, "apr": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 16.0}}, "temp": {"#ContinuousValue#": {"mean": 12.81875, "std": 3.6663314630727415, "n": 16.0}}, "wind": {"#ContinuousValue#": {"mean": 4.468750000000001, "std": 1.2165992510951587, "n": 16.0}}, "x-axis": {"#ContinuousValue#": {"mean": 4.75, "std": 1.508148992573575, "n": 16.0}}, "y-axis": {"#ContinuousValue#": {"mean": 4.75, "std": 0.787605124377465, "n": 16.0}}}}], "counts": {"DC": {"#ContinuousValue#": {"mean": 94.47999999999999, "std": 76.80684690429426, "n": 20.0}}, "DMC": {"#ContinuousValue#": {"mean": 31.305, "std": 17.878559224060236, "n": 20.0}}, "FFMC": {"#ContinuousValue#": {"mean": 85.53999999999999, "std": 9.355840884899964, "n": 20.0}}, "ISI": {"#ContinuousValue#": {"mean": 5.575, "std": 2.75510627515924, "n": 20.0}}, "RH": {"#ContinuousValue#": {"mean": 51.05, "std": 21.9848714081146, "n": 20.0}}, "area": {"#ContinuousValue#": {"mean": 2.8699999999999997, "std": 5.150147079638231, "n": 20.0}}, "day": {"thu": 4, "sat": 7, "mon": 3, "wed": 1, "sun": 3, "fri": 2}, "month": {"mar": 14, "feb": 2, "jun": 1, "may": 1, "dec": 1, "apr": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 20.0}}, "temp": {"#ContinuousValue#": {"mean": 12.245000000000001, "std": 4.101786068658004, "n": 20.0}}, "wind": {"#ContinuousValue#": {"mean": 4.535, "std": 1.4651080585830225, "n": 20.0}}, "x-axis": {"#ContinuousValue#": {"mean": 5.1000000000000005, "std": 1.8567152754677758, "n": 20.0}}, "y-axis": {"#ContinuousValue#": {"mean": 5.000000000000001, "std": 1.2300251367079433, "n": 20.0}}}}, {"name": "Concept1208", "size": 34.0, "children": [{"name": "Concept2541", "size": 2.0, "children": [{"name": "Concept1521", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 686.9, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 43.7, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 90.6, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 6.7, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 27.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "day": {"sat": 1}, "month": {"oct": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 17.8, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 4.0, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 7.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 3.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept2542", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 664.2, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 32.8, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 84.9, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 3.0, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 32.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 5.44, "std": 0.0, "n": 1.0}}, "day": {"mon": 1}, "month": {"oct": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 19.1, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 4.0, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 8.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 6.0, "std": 0.0, "n": 1.0}}}}], "counts": {"DC": {"#ContinuousValue#": {"mean": 675.55, "std": 20.117351207777496, "n": 2.0}}, "DMC": {"#ContinuousValue#": {"mean": 38.25, "std": 9.659873487435068, "n": 2.0}}, "FFMC": {"#ContinuousValue#": {"mean": 87.75, "std": 5.051493475080711, "n": 2.0}}, "ISI": {"#ContinuousValue#": {"mean": 4.85, "std": 3.279039624175204, "n": 2.0}}, "RH": {"#ContinuousValue#": {"mean": 29.5, "std": 4.43113462726379, "n": 2.0}}, "area": {"#ContinuousValue#": {"mean": 2.72, "std": 4.821074474463004, "n": 2.0}}, "day": {"sat": 1, "mon": 1}, "month": {"oct": 2}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 2.0}}, "temp": {"#ContinuousValue#": {"mean": 18.450000000000003, "std": 1.1520950030885844, "n": 2.0}}, "wind": {"#ContinuousValue#": {"mean": 4.0, "std": 0.0, "n": 2.0}}, "x-axis": {"#ContinuousValue#": {"mean": 7.5, "std": 0.886226925452758, "n": 2.0}}, "y-axis": {"#ContinuousValue#": {"mean": 4.5, "std": 2.6586807763582736, "n": 2.0}}}}, {"name": "Concept4803", "size": 10.0, "children": [{"name": "Concept11", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 529.8, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 108.0, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 90.1, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 12.5, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 51.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 0.61, "std": 0.0, "n": 1.0}}, "day": {"fri": 1}, "month": {"aug": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 21.2, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 8.9, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 8.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 6.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept2118", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 685.2, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 80.9, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 93.7, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 17.9, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 25.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 1.12, "std": 0.0, "n": 1.0}}, "day": {"thu": 1}, "month": {"sep": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 23.7, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 4.5, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 8.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 6.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept2442", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 698.6, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 222.4, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 94.8, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 13.9, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 38.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "day": {"thu": 1}, "month": {"aug": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 23.9, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 6.7, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 8.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 6.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept4563", "size": 3.0, "children": [{"name": "Concept2951", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 586.7, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 135.7, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 93.9, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 15.1, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 34.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 6.96, "std": 0.0, "n": 1.0}}, "day": {"fri": 1}, "month": {"aug": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 20.8, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 4.9, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 8.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 6.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept1054", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 587.1, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 130.3, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 94.9, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 14.1, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 27.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "day": {"sun": 1}, "month": {"aug": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 31.0, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 5.4, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 8.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 6.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept4571", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 601.4, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 142.4, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 91.4, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 10.6, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 43.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "day": {"sun": 1}, "month": {"aug": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 18.2, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 4.9, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 8.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 6.0, "std": 0.0, "n": 1.0}}}}], "counts": {"DC": {"#ContinuousValue#": {"mean": 591.7333333333333, "std": 9.449010583581982, "n": 3.0}}, "DMC": {"#ContinuousValue#": {"mean": 136.13333333333333, "std": 6.839814690865952, "n": 3.0}}, "FFMC": {"#ContinuousValue#": {"mean": 93.4, "std": 2.0342144725641096, "n": 3.0}}, "ISI": {"#ContinuousValue#": {"mean": 13.266666666666666, "std": 2.666255950098938, "n": 3.0}}, "RH": {"#ContinuousValue#": {"mean": 34.666666666666664, "std": 9.05051070628773, "n": 3.0}}, "area": {"#ContinuousValue#": {"mean": 2.3200000000000003, "std": 4.534231310459097, "n": 3.0}}, "day": {"fri": 1, "sun": 2}, "month": {"aug": 3}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 3.0}}, "temp": {"#ContinuousValue#": {"mean": 23.333333333333332, "std": 7.634161256768432, "n": 3.0}}, "wind": {"#ContinuousValue#": {"mean": 5.066666666666667, "std": 0.32573500793528, "n": 3.0}}, "x-axis": {"#ContinuousValue#": {"mean": 8.0, "std": 0.0, "n": 3.0}}, "y-axis": {"#ContinuousValue#": {"mean": 6.0, "std": 0.0, "n": 3.0}}}}, {"name": "Concept3295", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 715.1, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 231.1, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 93.7, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 8.4, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 31.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 4.96, "std": 0.0, "n": 1.0}}, "day": {"sat": 1}, "month": {"aug": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 26.9, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 3.6, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 8.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 6.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept6215", "size": 3.0, "children": [{"name": "Concept4847", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 672.6, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 207.0, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 92.1, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 8.2, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 54.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "day": {"mon": 1}, "month": {"aug": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 21.1, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 2.2, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 8.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 6.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept814", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 768.4, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 253.6, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 89.4, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 9.7, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 73.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "day": {"sat": 1}, "month": {"aug": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 14.2, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 2.7, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 8.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 6.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept6223", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 664.5, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 203.2, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 92.0, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 8.1, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 70.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "day": {"sun": 1}, "month": {"aug": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 19.1, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 2.2, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 6.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 5.0, "std": 0.0, "n": 1.0}}}}], "counts": {"DC": {"#ContinuousValue#": {"mean": 701.8333333333334, "std": 65.20961034437812, "n": 3.0}}, "DMC": {"#ContinuousValue#": {"mean": 221.26666666666668, "std": 31.66894853202829, "n": 3.0}}, "FFMC": {"#ContinuousValue#": {"mean": 91.16666666666667, "std": 1.7273171875761675, "n": 3.0}}, "ISI": {"#ContinuousValue#": {"mean": 8.666666666666666, "std": 1.011353433574986, "n": 3.0}}, "RH": {"#ContinuousValue#": {"mean": 65.66666666666667, "std": 11.525681144038096, "n": 3.0}}, "area": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 3.0}}, "day": {"mon": 1, "sat": 1, "sun": 1}, "month": {"aug": 3}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 3.0}}, "temp": {"#ContinuousValue#": {"mean": 18.133333333333333, "std": 4.005878479869159, "n": 3.0}}, "wind": {"#ContinuousValue#": {"mean": 2.3666666666666667, "std": 0.32573500793527993, "n": 3.0}}, "x-axis": {"#ContinuousValue#": {"mean": 7.333333333333333, "std": 1.3029400317411197, "n": 3.0}}, "y-axis": {"#ContinuousValue#": {"mean": 5.666666666666667, "std": 0.65147001587056, "n": 3.0}}}}], "counts": {"DC": {"#ContinuousValue#": {"mean": 650.9399999999999, "std": 74.56690239376907, "n": 10.0}}, "DMC": {"#ContinuousValue#": {"mean": 171.46, "std": 60.54798723247972, "n": 10.0}}, "FFMC": {"#ContinuousValue#": {"mean": 92.6, "std": 1.9621060994493509, "n": 10.0}}, "ISI": {"#ContinuousValue#": {"mean": 11.850000000000001, "std": 3.4666411656988654, "n": 10.0}}, "RH": {"#ContinuousValue#": {"mean": 44.6, "std": 17.536220973271842, "n": 10.0}}, "area": {"#ContinuousValue#": {"mean": 1.365, "std": 2.565412434374286, "n": 10.0}}, "day": {"sun": 3, "thu": 2, "fri": 2, "sat": 2, "mon": 1}, "month": {"aug": 9, "sep": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 10.0}}, "temp": {"#ContinuousValue#": {"mean": 22.01, "std": 4.823343513302401, "n": 10.0}}, "wind": {"#ContinuousValue#": {"mean": 4.600000000000001, "std": 2.1636482630801215, "n": 10.0}}, "x-axis": {"#ContinuousValue#": {"mean": 7.8, "std": 0.6502333847634861, "n": 10.0}}, "y-axis": {"#ContinuousValue#": {"mean": 5.9, "std": 0.3251166923817431, "n": 10.0}}}}, {"name": "Concept6014", "size": 22.0, "children": [{"name": "Concept1430", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 624.2, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 96.9, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 90.2, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 8.9, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 53.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 3.5, "std": 0.0, "n": 1.0}}, "day": {"sat": 1}, "month": {"aug": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 14.2, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 1.8, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 1.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 4.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept3217", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 647.1, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 108.3, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 94.8, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 17.0, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 47.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 1.56, "std": 0.0, "n": 1.0}}, "day": {"sun": 1}, "month": {"aug": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 16.4, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 1.3, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 7.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 4.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept3990", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 692.3, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 170.9, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 91.8, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 13.7, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 59.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "day": {"sat": 1}, "month": {"aug": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 20.6, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 0.9, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 3.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 4.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept5961", "size": 4.0, "children": [{"name": "Concept456", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 647.1, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 108.3, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 94.8, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 17.0, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 54.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "day": {"tue": 1}, "month": {"aug": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 16.6, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 5.4, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 4.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 4.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept1292", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 647.1, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 108.3, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 94.8, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 17.0, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 43.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 1.07, "std": 0.0, "n": 1.0}}, "day": {"tue": 1}, "month": {"aug": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 17.4, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 6.7, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 2.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 2.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept5969", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 692.3, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 85.1, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 94.3, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 15.9, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 50.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "day": {"fri": 1}, "month": {"sep": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 19.8, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 5.4, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 3.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 4.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept7795", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 605.8, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 141.3, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 95.1, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 17.7, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 71.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 46.7, "std": 0.0, "n": 1.0}}, "day": {"tue": 1}, "month": {"aug": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 19.4, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 7.6, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 4.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 4.0, "std": 0.0, "n": 1.0}}}}], "counts": {"DC": {"#ContinuousValue#": {"mean": 648.0749999999999, "std": 38.34878864160246, "n": 4.0}}, "DMC": {"#ContinuousValue#": {"mean": 110.75, "std": 25.091571269090466, "n": 4.0}}, "FFMC": {"#ContinuousValue#": {"mean": 94.75, "std": 0.35998707888003045, "n": 4.0}}, "ISI": {"#ContinuousValue#": {"mean": 16.9, "std": 0.8073911540386617, "n": 4.0}}, "RH": {"#ContinuousValue#": {"mean": 54.5, "std": 12.91886642557921, "n": 4.0}}, "area": {"#ContinuousValue#": {"mean": 11.9425, "std": 25.156528693198588, "n": 4.0}}, "day": {"tue": 3, "fri": 1}, "month": {"aug": 3, "sep": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 4.0}}, "temp": {"#ContinuousValue#": {"mean": 18.3, "std": 1.6768200335643844, "n": 4.0}}, "wind": {"#ContinuousValue#": {"mean": 6.275, "std": 1.1669121928364299, "n": 4.0}}, "x-axis": {"#ContinuousValue#": {"mean": 3.25, "std": 1.03919318448087, "n": 4.0}}, "y-axis": {"#ContinuousValue#": {"mean": 3.5, "std": 1.0854018818374016, "n": 4.0}}}}, {"name": "Concept1367", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 744.4, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 163.2, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 91.0, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 10.1, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 35.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 5.8, "std": 0.0, "n": 1.0}}, "day": {"thu": 1}, "month": {"aug": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 26.7, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 1.8, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 1.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 2.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept2063", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 672.6, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 207.0, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 92.1, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 8.2, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 33.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 2.35, "std": 0.0, "n": 1.0}}, "day": {"mon": 1}, "month": {"aug": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 27.9, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 2.2, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 2.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 4.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept2237", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 542.0, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 97.9, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 93.6, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 14.4, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 32.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 8.85, "std": 0.0, "n": 1.0}}, "day": {"mon": 1}, "month": {"aug": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 28.3, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 4.0, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 2.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 4.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept4330", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 700.7, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 175.1, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 91.8, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 13.8, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 39.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 0.09, "std": 0.0, "n": 1.0}}, "day": {"sun": 1}, "month": {"aug": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 25.7, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 5.4, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 5.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 4.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept5376", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 698.6, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 222.4, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 94.8, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 13.9, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 34.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "day": {"thu": 1}, "month": {"aug": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 26.2, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 5.8, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 1.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 3.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept6118", "size": 3.0, "children": [{"name": "Concept1236", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 661.8, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 175.5, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 96.2, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 16.8, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 26.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 2.77, "std": 0.0, "n": 1.0}}, "day": {"mon": 1}, "month": {"aug": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 32.6, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 3.1, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 4.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 5.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept4693", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 680.9, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 212.1, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 94.6, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 9.5, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 27.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "day": {"tue": 1}, "month": {"aug": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 27.9, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 2.2, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 2.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 2.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept6126", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 671.2, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 181.1, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 96.1, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 14.3, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 27.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 14.68, "std": 0.0, "n": 1.0}}, "day": {"tue": 1}, "month": {"aug": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 32.3, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 2.2, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 3.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 4.0, "std": 0.0, "n": 1.0}}}}], "counts": {"DC": {"#ContinuousValue#": {"mean": 671.3, "std": 10.776464117478165, "n": 3.0}}, "DMC": {"#ContinuousValue#": {"mean": 189.56666666666666, "std": 22.245197081463154, "n": 3.0}}, "FFMC": {"#ContinuousValue#": {"mean": 95.63333333333334, "std": 1.011353433574986, "n": 3.0}}, "ISI": {"#ContinuousValue#": {"mean": 13.533333333333333, "std": 4.186170119258369, "n": 3.0}}, "RH": {"#ContinuousValue#": {"mean": 26.666666666666668, "std": 0.6514700158705595, "n": 3.0}}, "area": {"#ContinuousValue#": {"mean": 5.816666666666666, "std": 8.801157382542378, "n": 3.0}}, "day": {"mon": 1, "tue": 2}, "month": {"aug": 3}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 3.0}}, "temp": {"#ContinuousValue#": {"mean": 30.933333333333334, "std": 2.969016972228874, "n": 3.0}}, "wind": {"#ContinuousValue#": {"mean": 2.5000000000000004, "std": 0.586323014283504, "n": 3.0}}, "x-axis": {"#ContinuousValue#": {"mean": 3.0, "std": 1.1283791670955126, "n": 3.0}}, "y-axis": {"#ContinuousValue#": {"mean": 3.6666666666666665, "std": 1.7236276486088036, "n": 3.0}}}}, {"name": "Concept6316", "size": 4.0, "children": [{"name": "Concept3648", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 624.2, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 96.9, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 90.2, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 8.9, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 42.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "day": {"sat": 1}, "month": {"aug": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 18.4, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 6.7, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 4.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 4.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept3789", "size": 2.0, "children": [{"name": "Concept3369", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 573.0, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 112.4, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 91.6, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 8.9, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 42.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 4.25, "std": 0.0, "n": 1.0}}, "day": {"fri": 1}, "month": {"aug": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 21.4, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 3.1, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 2.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 4.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept3790", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 466.6, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 75.3, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 93.0, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 7.7, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 36.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "day": {"thu": 1}, "month": {"aug": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 19.6, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 3.1, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 3.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 4.0, "std": 0.0, "n": 1.0}}}}], "counts": {"DC": {"#ContinuousValue#": {"mean": 519.8, "std": 94.29454486817336, "n": 2.0}}, "DMC": {"#ContinuousValue#": {"mean": 93.85, "std": 32.87901893429732, "n": 2.0}}, "FFMC": {"#ContinuousValue#": {"mean": 92.3, "std": 1.2407176956338661, "n": 2.0}}, "ISI": {"#ContinuousValue#": {"mean": 8.3, "std": 1.0634723105433102, "n": 2.0}}, "RH": {"#ContinuousValue#": {"mean": 39.0, "std": 5.317361552716547, "n": 2.0}}, "area": {"#ContinuousValue#": {"mean": 2.125, "std": 3.766464433174221, "n": 2.0}}, "day": {"fri": 1, "thu": 1}, "month": {"aug": 2}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 2.0}}, "temp": {"#ContinuousValue#": {"mean": 20.5, "std": 1.5952084658149617, "n": 2.0}}, "wind": {"#ContinuousValue#": {"mean": 3.1, "std": 0.0, "n": 2.0}}, "x-axis": {"#ContinuousValue#": {"mean": 2.5, "std": 0.886226925452758, "n": 2.0}}, "y-axis": {"#ContinuousValue#": {"mean": 4.0, "std": 0.0, "n": 2.0}}}}, {"name": "Concept6324", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 537.4, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 110.9, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 90.2, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 6.2, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 43.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "day": {"sat": 1}, "month": {"aug": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 19.5, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 5.8, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 7.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 4.0, "std": 0.0, "n": 1.0}}}}], "counts": {"DC": {"#ContinuousValue#": {"mean": 550.3, "std": 71.85710226292072, "n": 4.0}}, "DMC": {"#ContinuousValue#": {"mean": 98.875, "std": 18.66562537195636, "n": 4.0}}, "FFMC": {"#ContinuousValue#": {"mean": 91.25, "std": 1.454870458273217, "n": 4.0}}, "ISI": {"#ContinuousValue#": {"mean": 7.925, "std": 1.3910516615390183, "n": 4.0}}, "RH": {"#ContinuousValue#": {"mean": 40.75, "std": 3.4749815484741453, "n": 4.0}}, "area": {"#ContinuousValue#": {"mean": 1.0625, "std": 2.306478998904478, "n": 4.0}}, "day": {"sat": 2, "fri": 1, "thu": 1}, "month": {"aug": 4}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 4.0}}, "temp": {"#ContinuousValue#": {"mean": 19.725, "std": 1.3480411716861045, "n": 4.0}}, "wind": {"#ContinuousValue#": {"mean": 4.675, "std": 2.0138519722769037, "n": 4.0}}, "x-axis": {"#ContinuousValue#": {"mean": 4.0, "std": 2.344736049917376, "n": 4.0}}, "y-axis": {"#ContinuousValue#": {"mean": 4.0, "std": 0.0, "n": 4.0}}}}, {"name": "Concept6685", "size": 3.0, "children": [{"name": "Concept233", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 753.8, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 248.4, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 91.6, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 6.3, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 59.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "day": {"thu": 1}, "month": {"aug": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 16.6, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 2.7, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 2.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 4.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept756", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 715.1, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 231.1, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 93.7, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 8.4, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 64.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "day": {"sat": 1}, "month": {"aug": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 18.9, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 4.9, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 2.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 5.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept6693", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 855.3, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 290.0, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 90.3, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 7.4, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 58.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 9.96, "std": 0.0, "n": 1.0}}, "day": {"fri": 1}, "month": {"sep": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 16.2, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 3.6, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 2.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 5.0, "std": 0.0, "n": 1.0}}}}], "counts": {"DC": {"#ContinuousValue#": {"mean": 774.7333333333333, "std": 81.70169077646467, "n": 3.0}}, "DMC": {"#ContinuousValue#": {"mean": 256.5, "std": 34.160456307625985, "n": 3.0}}, "FFMC": {"#ContinuousValue#": {"mean": 91.86666666666667, "std": 1.9358637331530328, "n": 3.0}}, "ISI": {"#ContinuousValue#": {"mean": 7.366666666666666, "std": 1.1852458103804728, "n": 3.0}}, "RH": {"#ContinuousValue#": {"mean": 60.333333333333336, "std": 3.627231537816413, "n": 3.0}}, "area": {"#ContinuousValue#": {"mean": 3.3200000000000003, "std": 6.488641358070778, "n": 3.0}}, "day": {"thu": 1, "sat": 1, "fri": 1}, "month": {"aug": 2, "sep": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 3.0}}, "temp": {"#ContinuousValue#": {"mean": 17.233333333333334, "std": 1.6442359826540491, "n": 3.0}}, "wind": {"#ContinuousValue#": {"mean": 3.7333333333333334, "std": 1.2480370092239583, "n": 3.0}}, "x-axis": {"#ContinuousValue#": {"mean": 2.0, "std": 0.0, "n": 3.0}}, "y-axis": {"#ContinuousValue#": {"mean": 4.666666666666667, "std": 0.6514700158705599, "n": 3.0}}}}], "counts": {"DC": {"#ContinuousValue#": {"mean": 656.9772727272727, "std": 83.44451579733861, "n": 22.0}}, "DMC": {"#ContinuousValue#": {"mean": 155.38181818181815, "std": 61.20182674318284, "n": 22.0}}, "FFMC": {"#ContinuousValue#": {"mean": 93.02727272727273, "std": 2.0326418833382527, "n": 22.0}}, "ISI": {"#ContinuousValue#": {"mean": 11.909090909090908, "std": 4.061225006462414, "n": 22.0}}, "RH": {"#ContinuousValue#": {"mean": 44.27272727272727, "std": 12.964003093534604, "n": 22.0}}, "area": {"#ContinuousValue#": {"mean": 4.617272727272727, "std": 10.323970207337817, "n": 22.0}}, "day": {"tue": 5, "sat": 5, "sun": 2, "thu": 4, "mon": 3, "fri": 3}, "month": {"aug": 20, "sep": 2}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 22.0}}, "temp": {"#ContinuousValue#": {"mean": 21.936363636363637, "std": 5.564356809560222, "n": 22.0}}, "wind": {"#ContinuousValue#": {"mean": 3.895454545454545, "std": 1.9880800539816135, "n": 22.0}}, "x-axis": {"#ContinuousValue#": {"mean": 3.0, "std": 1.710543809414581, "n": 22.0}}, "y-axis": {"#ContinuousValue#": {"mean": 3.818181818181818, "std": 0.8630120797107983, "n": 22.0}}}}], "counts": {"DC": {"#ContinuousValue#": {"mean": 656.2941176470587, "std": 76.1622746874166, "n": 34.0}}, "DMC": {"#ContinuousValue#": {"mean": 153.2205882352941, "std": 64.65510258713216, "n": 34.0}}, "FFMC": {"#ContinuousValue#": {"mean": 92.59117647058825, "std": 2.3664789913285267, "n": 34.0}}, "ISI": {"#ContinuousValue#": {"mean": 11.476470588235296, "std": 4.047899479492843, "n": 34.0}}, "RH": {"#ContinuousValue#": {"mean": 43.5, "std": 14.028650337898878, "n": 34.0}}, "area": {"#ContinuousValue#": {"mean": 3.549117647058824, "std": 8.403899299746827, "n": 34.0}}, "day": {"fri": 5, "tue": 5, "sun": 5, "thu": 6, "sat": 8, "mon": 5}, "month": {"aug": 29, "oct": 2, "sep": 3}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 34.0}}, "temp": {"#ContinuousValue#": {"mean": 21.75294117647059, "std": 5.096239569919246, "n": 34.0}}, "wind": {"#ContinuousValue#": {"mean": 4.108823529411764, "std": 1.9411598605674074, "n": 34.0}}, "x-axis": {"#ContinuousValue#": {"mean": 4.676470588235294, "std": 2.6936579638813583, "n": 34.0}}, "y-axis": {"#ContinuousValue#": {"mean": 4.470588235294117, "std": 1.2366938848016846, "n": 34.0}}}}, {"name": "Concept1768", "size": 46.0, "children": [{"name": "Concept40", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 349.7, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 25.4, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 85.4, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 2.6, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 24.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 24.77, "std": 0.0, "n": 1.0}}, "day": {"tue": 1}, "month": {"dec": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 5.1, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 8.5, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 6.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 5.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept1785", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 671.9, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 73.4, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 84.4, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 3.2, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 36.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 105.66, "std": 0.0, "n": 1.0}}, "day": {"tue": 1}, "month": {"sep": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 24.3, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 3.1, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 9.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 4.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept511", "size": 18.0, "children": [{"name": "Concept3711", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 732.3, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 55.2, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 88.2, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 11.6, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 64.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 0.52, "std": 0.0, "n": 1.0}}, "day": {"fri": 1}, "month": {"sep": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 15.2, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 3.1, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 7.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 4.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept4061", "size": 2.0, "children": [{"name": "Concept24", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 686.5, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 126.5, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 90.9, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 7.0, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 70.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "day": {"mon": 1}, "month": {"sep": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 14.7, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 3.6, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 5.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 6.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept4062", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 686.5, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 126.5, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 90.9, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 7.0, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 66.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "day": {"mon": 1}, "month": {"sep": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 15.6, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 3.1, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 3.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 6.0, "std": 0.0, "n": 1.0}}}}], "counts": {"DC": {"#ContinuousValue#": {"mean": 686.5, "std": 0.0, "n": 2.0}}, "DMC": {"#ContinuousValue#": {"mean": 126.5, "std": 0.0, "n": 2.0}}, "FFMC": {"#ContinuousValue#": {"mean": 90.9, "std": 0.0, "n": 2.0}}, "ISI": {"#ContinuousValue#": {"mean": 7.0, "std": 0.0, "n": 2.0}}, "RH": {"#ContinuousValue#": {"mean": 68.0, "std": 3.544907701811032, "n": 2.0}}, "area": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 2.0}}, "day": {"mon": 2}, "month": {"sep": 2}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 2.0}}, "temp": {"#ContinuousValue#": {"mean": 15.149999999999999, "std": 0.7976042329074833, "n": 2.0}}, "wind": {"#ContinuousValue#": {"mean": 3.35, "std": 0.443113462726379, "n": 2.0}}, "x-axis": {"#ContinuousValue#": {"mean": 4.0, "std": 1.772453850905516, "n": 2.0}}, "y-axis": {"#ContinuousValue#": {"mean": 6.0, "std": 0.0, "n": 2.0}}}}, {"name": "Concept519", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 735.7, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 82.9, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 90.1, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 6.2, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 57.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 37.71, "std": 0.0, "n": 1.0}}, "day": {"wed": 1}, "month": {"sep": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 15.4, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 4.5, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 7.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 4.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept4165", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 738.1, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 91.3, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 91.1, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 7.2, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 46.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 30.18, "std": 0.0, "n": 1.0}}, "day": {"fri": 1}, "month": {"sep": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 20.7, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 2.7, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 8.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 6.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept284", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 807.1, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 130.1, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 91.5, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 7.5, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 66.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 6.1, "std": 0.0, "n": 1.0}}, "day": {"mon": 1}, "month": {"sep": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 12.2, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 4.9, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 6.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 3.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept5587", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 692.6, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 129.5, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 91.0, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 7.0, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 59.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 11.24, "std": 0.0, "n": 1.0}}, "day": {"tue": 1}, "month": {"sep": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 13.9, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 6.3, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 3.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 4.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept4252", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 730.2, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 80.7, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 90.3, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 6.3, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 63.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "day": {"tue": 1}, "month": {"sep": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 17.8, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 4.9, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 4.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 3.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept6588", "size": 3.0, "children": [{"name": "Concept1741", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 789.7, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 122.0, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 92.5, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 10.2, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 55.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "day": {"fri": 1}, "month": {"sep": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 15.9, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 3.6, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 6.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 3.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept5771", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 750.5, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 96.7, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 90.5, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 11.4, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 55.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 3.64, "std": 0.0, "n": 1.0}}, "day": {"sun": 1}, "month": {"sep": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 20.4, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 4.9, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 4.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 3.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept6596", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 789.7, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 122.0, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 92.5, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 10.2, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 45.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 3.94, "std": 0.0, "n": 1.0}}, "day": {"fri": 1}, "month": {"sep": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 17.3, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 4.0, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 4.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 3.0, "std": 0.0, "n": 1.0}}}}], "counts": {"DC": {"#ContinuousValue#": {"mean": 776.6333333333333, "std": 25.537624622125985, "n": 3.0}}, "DMC": {"#ContinuousValue#": {"mean": 113.56666666666666, "std": 16.482191401525164, "n": 3.0}}, "FFMC": {"#ContinuousValue#": {"mean": 91.83333333333333, "std": 1.3029400317411208, "n": 3.0}}, "ISI": {"#ContinuousValue#": {"mean": 10.6, "std": 0.7817640190446727, "n": 3.0}}, "RH": {"#ContinuousValue#": {"mean": 51.666666666666664, "std": 6.5147001587055975, "n": 3.0}}, "area": {"#ContinuousValue#": {"mean": 2.526666666666667, "std": 2.474865909754841, "n": 3.0}}, "day": {"fri": 2, "sun": 1}, "month": {"sep": 3}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 3.0}}, "temp": {"#ContinuousValue#": {"mean": 17.866666666666667, "std": 2.598540690255233, "n": 3.0}}, "wind": {"#ContinuousValue#": {"mean": 4.166666666666667, "std": 0.751311873657841, "n": 3.0}}, "x-axis": {"#ContinuousValue#": {"mean": 4.666666666666667, "std": 1.30294003174112, "n": 3.0}}, "y-axis": {"#ContinuousValue#": {"mean": 3.0, "std": 0.0, "n": 3.0}}}}, {"name": "Concept3857", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 718.3, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 75.6, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 91.7, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 7.8, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 39.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "day": {"sun": 1}, "month": {"sep": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 17.7, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 3.6, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 6.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 3.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept6783", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 692.6, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 129.5, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 91.0, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 7.0, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 40.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "day": {"tue": 1}, "month": {"sep": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 18.3, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 2.7, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 6.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 4.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept6502", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 744.4, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 94.3, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 91.2, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 8.4, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 47.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 12.64, "std": 0.0, "n": 1.0}}, "day": {"sat": 1}, "month": {"sep": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 16.8, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 4.9, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 6.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 5.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept7454", "size": 3.0, "children": [{"name": "Concept1668", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 714.3, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 84.1, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 89.6, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 5.7, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 53.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 0.41, "std": 0.0, "n": 1.0}}, "day": {"sun": 1}, "month": {"sep": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 17.1, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 5.4, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 7.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 4.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept4453", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 698.6, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 88.0, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 92.5, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 7.1, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 51.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "day": {"sat": 1}, "month": {"sep": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 17.8, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 7.2, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 7.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 5.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept7462", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 704.4, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 90.0, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 89.7, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 4.8, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 67.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 2.01, "std": 0.0, "n": 1.0}}, "day": {"sun": 1}, "month": {"sep": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 17.8, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 2.2, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 8.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 5.0, "std": 0.0, "n": 1.0}}}}], "counts": {"DC": {"#ContinuousValue#": {"mean": 705.7666666666667, "std": 8.95789039009884, "n": 3.0}}, "DMC": {"#ContinuousValue#": {"mean": 87.36666666666666, "std": 3.3857643205681467, "n": 3.0}}, "FFMC": {"#ContinuousValue#": {"mean": 90.6, "std": 1.8575465448360347, "n": 3.0}}, "ISI": {"#ContinuousValue#": {"mean": 5.866666666666667, "std": 1.3078169297577174, "n": 3.0}}, "RH": {"#ContinuousValue#": {"mean": 57.0, "std": 9.83698151873187, "n": 3.0}}, "area": {"#ContinuousValue#": {"mean": 0.8066666666666665, "std": 1.1984392549392817, "n": 3.0}}, "day": {"sun": 2, "sat": 1}, "month": {"sep": 3}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 3.0}}, "temp": {"#ContinuousValue#": {"mean": 17.56666666666667, "std": 0.4560290111093906, "n": 3.0}}, "wind": {"#ContinuousValue#": {"mean": 4.933333333333334, "std": 2.8575705789303223, "n": 3.0}}, "x-axis": {"#ContinuousValue#": {"mean": 7.333333333333333, "std": 0.65147001587056, "n": 3.0}}, "y-axis": {"#ContinuousValue#": {"mean": 4.666666666666667, "std": 0.6514700158705599, "n": 3.0}}}}, {"name": "Concept8071", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 692.3, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 85.1, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 94.3, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 15.9, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 47.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 26.13, "std": 0.0, "n": 1.0}}, "day": {"fri": 1}, "month": {"sep": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 20.1, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 4.9, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 7.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 4.0, "std": 0.0, "n": 1.0}}}}], "counts": {"DC": {"#ContinuousValue#": {"mean": 727.9888888888888, "std": 37.93771336329319, "n": 18.0}}, "DMC": {"#ContinuousValue#": {"mean": 100.55555555555556, "std": 23.503021387051266, "n": 18.0}}, "FFMC": {"#ContinuousValue#": {"mean": 91.08333333333333, "std": 1.378418841228251, "n": 18.0}}, "ISI": {"#ContinuousValue#": {"mean": 8.238888888888889, "std": 2.7312598952549987, "n": 18.0}}, "RH": {"#ContinuousValue#": {"mean": 55.0, "std": 9.801897264657157, "n": 18.0}}, "area": {"#ContinuousValue#": {"mean": 7.4733333333333345, "std": 11.974279479570214, "n": 18.0}}, "day": {"mon": 3, "wed": 1, "sun": 4, "fri": 5, "tue": 3, "sat": 2}, "month": {"sep": 18}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 18.0}}, "temp": {"#ContinuousValue#": {"mean": 16.927777777777777, "std": 2.281370703957592, "n": 18.0}}, "wind": {"#ContinuousValue#": {"mean": 4.249999999999999, "std": 1.3342014316171191, "n": 18.0}}, "x-axis": {"#ContinuousValue#": {"mean": 5.777777777777778, "std": 1.6160439320749147, "n": 18.0}}, "y-axis": {"#ContinuousValue#": {"mean": 4.166666666666667, "std": 1.114385584063839, "n": 18.0}}}}, {"name": "Concept4897", "size": 26.0, "children": [{"name": "Concept626", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 692.6, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 129.5, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 91.0, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 7.0, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 40.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 212.88, "std": 0.0, "n": 1.0}}, "day": {"tue": 1}, "month": {"sep": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 18.8, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 2.2, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 1.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 2.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept1009", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 692.6, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 129.5, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 91.0, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 7.0, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 43.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 103.39, "std": 0.0, "n": 1.0}}, "day": {"tue": 1}, "month": {"sep": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 18.7, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 2.7, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 6.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 4.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept578", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 474.9, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 104.2, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 91.6, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 9.0, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 30.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "day": {"sat": 1}, "month": {"jul": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 24.3, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 1.8, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 7.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 4.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept1164", "size": 9.0, "children": [{"name": "Concept405", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 758.1, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 105.8, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 92.4, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 9.9, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 45.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "day": {"sun": 1}, "month": {"sep": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 16.0, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 1.8, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 2.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 4.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept143", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 686.5, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 126.5, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 90.9, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 7.0, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 42.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 7.3, "std": 0.0, "n": 1.0}}, "day": {"mon": 1}, "month": {"sep": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 21.0, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 2.2, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 1.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 5.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept1172", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 721.1, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 87.7, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 92.1, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 9.5, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 54.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 2.13, "std": 0.0, "n": 1.0}}, "day": {"mon": 1}, "month": {"sep": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 18.1, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 3.1, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 1.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 4.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept1594", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 738.1, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 91.3, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 91.1, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 7.2, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 46.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 0.33, "std": 0.0, "n": 1.0}}, "day": {"fri": 1}, "month": {"sep": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 19.1, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 2.2, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 1.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 3.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept1996", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 783.5, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 119.0, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 92.8, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 7.5, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 28.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 7.21, "std": 0.0, "n": 1.0}}, "day": {"thu": 1}, "month": {"sep": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 16.8, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 4.0, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 1.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 4.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept7121", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 668.0, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 117.9, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 92.4, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 12.2, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 37.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "day": {"fri": 1}, "month": {"sep": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 23.0, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 4.5, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 2.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 2.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept7570", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 728.6, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 149.3, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 93.5, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 8.1, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 39.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "day": {"sun": 1}, "month": {"sep": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 22.8, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 3.6, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 6.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 3.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept7682", "size": 2.0, "children": [{"name": "Concept2371", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 751.5, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 102.3, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 92.2, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 8.4, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 35.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "day": {"sat": 1}, "month": {"sep": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 19.7, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 1.8, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 6.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 5.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept7683", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 770.3, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 111.7, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 91.9, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 6.5, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 35.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 5.65, "std": 0.0, "n": 1.0}}, "day": {"tue": 1}, "month": {"sep": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 21.1, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 2.7, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 6.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 5.0, "std": 0.0, "n": 1.0}}}}], "counts": {"DC": {"#ContinuousValue#": {"mean": 760.9, "std": 16.66106619851181, "n": 2.0}}, "DMC": {"#ContinuousValue#": {"mean": 107.0, "std": 8.33053309925593, "n": 2.0}}, "FFMC": {"#ContinuousValue#": {"mean": 92.05000000000001, "std": 0.2658680776358312, "n": 2.0}}, "ISI": {"#ContinuousValue#": {"mean": 7.45, "std": 1.6838311583602403, "n": 2.0}}, "RH": {"#ContinuousValue#": {"mean": 35.0, "std": 0.0, "n": 2.0}}, "area": {"#ContinuousValue#": {"mean": 2.825, "std": 5.007182128808083, "n": 2.0}}, "day": {"sat": 1, "tue": 1}, "month": {"sep": 2}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 2.0}}, "temp": {"#ContinuousValue#": {"mean": 20.4, "std": 1.2407176956338646, "n": 2.0}}, "wind": {"#ContinuousValue#": {"mean": 2.25, "std": 0.7976042329074824, "n": 2.0}}, "x-axis": {"#ContinuousValue#": {"mean": 6.0, "std": 0.0, "n": 2.0}}, "y-axis": {"#ContinuousValue#": {"mean": 5.0, "std": 0.0, "n": 2.0}}}}], "counts": {"DC": {"#ContinuousValue#": {"mean": 733.9666666666667, "std": 39.08010805913435, "n": 9.0}}, "DMC": {"#ContinuousValue#": {"mean": 112.3888888888889, "std": 19.42288025806545, "n": 9.0}}, "FFMC": {"#ContinuousValue#": {"mean": 92.14444444444446, "std": 0.8238946538157464, "n": 9.0}}, "ISI": {"#ContinuousValue#": {"mean": 8.47777777777778, "std": 1.8510896855271137, "n": 9.0}}, "RH": {"#ContinuousValue#": {"mean": 40.111111111111114, "std": 7.8644178998565, "n": 9.0}}, "area": {"#ContinuousValue#": {"mean": 2.513333333333333, "std": 3.3626212904100474, "n": 9.0}}, "day": {"sun": 2, "mon": 2, "fri": 2, "thu": 1, "sat": 1, "tue": 1}, "month": {"sep": 9}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 9.0}}, "temp": {"#ContinuousValue#": {"mean": 19.733333333333334, "std": 2.5573957369702423, "n": 9.0}}, "wind": {"#ContinuousValue#": {"mean": 2.8777777777777778, "std": 1.0144666035601564, "n": 9.0}}, "x-axis": {"#ContinuousValue#": {"mean": 2.888888888888889, "std": 2.443776181662923, "n": 9.0}}, "y-axis": {"#ContinuousValue#": {"mean": 3.888888888888889, "std": 1.087466127940737, "n": 9.0}}}}, {"name": "Concept3569", "size": 2.0, "children": [{"name": "Concept1875", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 691.8, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 46.5, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 92.6, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 8.8, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 35.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "day": {"sun": 1}, "month": {"oct": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 15.4, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 0.9, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 2.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 5.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept3570", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 669.1, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 35.4, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 90.6, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 6.7, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 33.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "day": {"tue": 1}, "month": {"oct": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 18.0, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 0.9, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 7.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 4.0, "std": 0.0, "n": 1.0}}}}], "counts": {"DC": {"#ContinuousValue#": {"mean": 680.45, "std": 20.1173512077776, "n": 2.0}}, "DMC": {"#ContinuousValue#": {"mean": 40.95, "std": 9.837118872525616, "n": 2.0}}, "FFMC": {"#ContinuousValue#": {"mean": 91.6, "std": 1.772453850905516, "n": 2.0}}, "ISI": {"#ContinuousValue#": {"mean": 7.75, "std": 1.8610765434507917, "n": 2.0}}, "RH": {"#ContinuousValue#": {"mean": 34.0, "std": 1.772453850905516, "n": 2.0}}, "area": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 2.0}}, "day": {"sun": 1, "tue": 1}, "month": {"oct": 2}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 2.0}}, "temp": {"#ContinuousValue#": {"mean": 16.7, "std": 2.304190006177171, "n": 2.0}}, "wind": {"#ContinuousValue#": {"mean": 0.9, "std": 0.0, "n": 2.0}}, "x-axis": {"#ContinuousValue#": {"mean": 4.5, "std": 4.43113462726379, "n": 2.0}}, "y-axis": {"#ContinuousValue#": {"mean": 4.5, "std": 0.886226925452758, "n": 2.0}}}}, {"name": "Concept4950", "size": 11.0, "children": [{"name": "Concept3", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 706.4, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 137.0, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 92.9, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 9.2, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 15.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 11.06, "std": 0.0, "n": 1.0}}, "day": {"thu": 1}, "month": {"sep": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 21.5, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 0.9, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 4.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 5.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept2593", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 699.6, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 133.3, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 92.9, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 9.2, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 21.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 88.49, "std": 0.0, "n": 1.0}}, "day": {"wed": 1}, "month": {"sep": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 26.4, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 4.5, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 4.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 4.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept712", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 728.6, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 149.3, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 93.5, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 8.1, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 39.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 48.55, "std": 0.0, "n": 1.0}}, "day": {"sun": 1}, "month": {"sep": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 22.9, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 4.9, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 4.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 4.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept914", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 680.7, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 124.1, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 92.4, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 8.5, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 42.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "day": {"sun": 1}, "month": {"sep": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 22.5, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 5.4, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 3.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 4.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept194", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 745.3, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 99.0, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 92.1, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 9.6, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 35.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 13.06, "std": 0.0, "n": 1.0}}, "day": {"fri": 1}, "month": {"sep": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 20.8, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 4.9, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 4.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 4.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept4999", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 674.4, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 121.1, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 92.5, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 8.6, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 25.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 154.88, "std": 0.0, "n": 1.0}}, "day": {"sat": 1}, "month": {"sep": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 17.7, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 3.1, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 4.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 5.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept5106", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 721.4, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 145.4, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 93.4, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 8.1, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 24.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "day": {"sat": 1}, "month": {"sep": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 30.2, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 2.7, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 6.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 3.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept7248", "size": 4.0, "children": [{"name": "Concept2806", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 777.1, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 115.4, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 92.6, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 8.8, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 27.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "day": {"wed": 1}, "month": {"sep": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 24.3, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 4.9, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 6.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 5.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept3052", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 739.4, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 96.2, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 92.4, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 8.6, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 24.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 3.78, "std": 0.0, "n": 1.0}}, "day": {"thu": 1}, "month": {"sep": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 19.2, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 4.9, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 4.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 4.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept3498", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 739.4, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 96.2, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 92.4, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 8.6, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 24.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "day": {"thu": 1}, "month": {"sep": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 18.6, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 5.8, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 4.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 5.0, "std": 0.0, "n": 1.0}}}}, {"name": "Concept7272", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 783.5, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 119.0, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 92.8, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 7.5, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 28.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 1.01, "std": 0.0, "n": 1.0}}, "day": {"thu": 1}, "month": {"sep": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 16.8, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 4.0, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 6.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 5.0, "std": 0.0, "n": 1.0}}}}], "counts": {"DC": {"#ContinuousValue#": {"mean": 759.85, "std": 25.78669090925846, "n": 4.0}}, "DMC": {"#ContinuousValue#": {"mean": 106.7, "std": 13.256130094358046, "n": 4.0}}, "FFMC": {"#ContinuousValue#": {"mean": 92.54999999999998, "std": 0.20783863689617782, "n": 4.0}}, "ISI": {"#ContinuousValue#": {"mean": 8.375, "std": 0.6413675140505741, "n": 4.0}}, "RH": {"#ContinuousValue#": {"mean": 25.75, "std": 2.2376133025298928, "n": 4.0}}, "area": {"#ContinuousValue#": {"mean": 1.1975, "std": 1.9388404117110811, "n": 4.0}}, "day": {"thu": 3, "wed": 1}, "month": {"sep": 4}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 4.0}}, "temp": {"#ContinuousValue#": {"mean": 19.725, "std": 3.4906261268441754, "n": 4.0}}, "wind": {"#ContinuousValue#": {"mean": 4.9, "std": 0.7976042329074823, "n": 4.0}}, "x-axis": {"#ContinuousValue#": {"mean": 5.0, "std": 1.2533141373155001, "n": 4.0}}, "y-axis": {"#ContinuousValue#": {"mean": 4.75, "std": 0.5427009409187007, "n": 4.0}}}}], "counts": {"DC": {"#ContinuousValue#": {"mean": 726.8909090909091, "std": 36.19667716152161, "n": 11.0}}, "DMC": {"#ContinuousValue#": {"mean": 121.45454545454545, "std": 19.345699515811006, "n": 11.0}}, "FFMC": {"#ContinuousValue#": {"mean": 92.71818181818182, "std": 0.44647822896841743, "n": 11.0}}, "ISI": {"#ContinuousValue#": {"mean": 8.618181818181817, "std": 0.6045080332955641, "n": 11.0}}, "RH": {"#ContinuousValue#": {"mean": 27.636363636363637, "std": 8.205677686800398, "n": 11.0}}, "area": {"#ContinuousValue#": {"mean": 29.16636363636364, "std": 51.39281853308124, "n": 11.0}}, "day": {"sun": 2, "fri": 1, "wed": 2, "thu": 4, "sat": 2}, "month": {"sep": 11}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 11.0}}, "temp": {"#ContinuousValue#": {"mean": 21.900000000000002, "std": 4.094165150162536, "n": 11.0}}, "wind": {"#ContinuousValue#": {"mean": 4.181818181818182, "std": 1.4656871766595787, "n": 11.0}}, "x-axis": {"#ContinuousValue#": {"mean": 4.454545454545454, "std": 1.0619012656318347, "n": 11.0}}, "y-axis": {"#ContinuousValue#": {"mean": 4.363636363636363, "std": 0.6912388467088355, "n": 11.0}}}}, {"name": "Concept5653", "size": 1.0, "children": [], "counts": {"DC": {"#ContinuousValue#": {"mean": 480.8, "std": 0.0, "n": 1.0}}, "DMC": {"#ContinuousValue#": {"mean": 81.8, "std": 0.0, "n": 1.0}}, "FFMC": {"#ContinuousValue#": {"mean": 92.2, "std": 0.0, "n": 1.0}}, "ISI": {"#ContinuousValue#": {"mean": 11.9, "std": 0.0, "n": 1.0}}, "RH": {"#ContinuousValue#": {"mean": 43.0, "std": 0.0, "n": 1.0}}, "area": {"#ContinuousValue#": {"mean": 71.3, "std": 0.0, "n": 1.0}}, "day": {"sat": 1}, "month": {"aug": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 1.0}}, "temp": {"#ContinuousValue#": {"mean": 16.4, "std": 0.0, "n": 1.0}}, "wind": {"#ContinuousValue#": {"mean": 4.0, "std": 0.0, "n": 1.0}}, "x-axis": {"#ContinuousValue#": {"mean": 8.0, "std": 0.0, "n": 1.0}}, "y-axis": {"#ContinuousValue#": {"mean": 6.0, "std": 0.0, "n": 1.0}}}}], "counts": {"DC": {"#ContinuousValue#": {"mean": 703.973076923077, "std": 76.04829610833498, "n": 26.0}}, "DMC": {"#ContinuousValue#": {"mean": 110.55384615384614, "std": 27.895869066788663, "n": 26.0}}, "FFMC": {"#ContinuousValue#": {"mean": 92.23846153846155, "std": 0.8055478754501286, "n": 26.0}}, "ISI": {"#ContinuousValue#": {"mean": 8.519230769230766, "std": 1.4143605743948584, "n": 26.0}}, "RH": {"#ContinuousValue#": {"mean": 34.1923076923077, "std": 9.261729945938333, "n": 26.0}}, "area": {"#ContinuousValue#": {"mean": 28.116153846153843, "std": 55.382678438375464, "n": 26.0}}, "day": {"tue": 4, "sun": 5, "mon": 2, "fri": 3, "thu": 5, "sat": 5, "wed": 2}, "month": {"sep": 22, "oct": 2, "jul": 1, "aug": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 26.0}}, "temp": {"#ContinuousValue#": {"mean": 20.388461538461545, "std": 3.526709399809776, "n": 26.0}}, "wind": {"#ContinuousValue#": {"mean": 3.246153846153846, "std": 1.4856231470316859, "n": 26.0}}, "x-axis": {"#ContinuousValue#": {"mean": 4.076923076923077, "std": 2.211484170477837, "n": 26.0}}, "y-axis": {"#ContinuousValue#": {"mean": 4.153846153846154, "std": 0.9768702873449344, "n": 26.0}}}}], "counts": {"DC": {"#ContinuousValue#": {"mean": 704.9717391304348, "std": 81.96938632615222, "n": 46.0}}, "DMC": {"#ContinuousValue#": {"mean": 103.98260869565219, "std": 28.531715720095903, "n": 46.0}}, "FFMC": {"#ContinuousValue#": {"mean": 91.46739130434783, "std": 1.838725929408256, "n": 46.0}}, "ISI": {"#ContinuousValue#": {"mean": 8.165217391304347, "std": 2.2663938454738917, "n": 46.0}}, "RH": {"#ContinuousValue#": {"mean": 42.15217391304349, "std": 13.883591260196086, "n": 46.0}}, "area": {"#ContinuousValue#": {"mean": 21.651521739130423, "std": 44.54761657010725, "n": 46.0}}, "day": {"mon": 5, "tue": 9, "sun": 9, "fri": 8, "sat": 7, "thu": 5, "wed": 3}, "month": {"sep": 41, "jul": 1, "dec": 1, "oct": 2, "aug": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 46.0}}, "temp": {"#ContinuousValue#": {"mean": 18.786956521739132, "std": 4.047858621578804, "n": 46.0}}, "wind": {"#ContinuousValue#": {"mean": 3.7500000000000004, "std": 1.6162714293500746, "n": 46.0}}, "x-axis": {"#ContinuousValue#": {"mean": 4.891304347826087, "std": 2.172845148336011, "n": 46.0}}, "y-axis": {"#ContinuousValue#": {"mean": 4.17391304347826, "std": 0.9956426807977281, "n": 46.0}}}}], "counts": {"DC": {"#ContinuousValue#": {"mean": 566.3230000000001, "std": 250.5584267655597, "n": 100.0}}, "DMC": {"#ContinuousValue#": {"mean": 106.18800000000002, "std": 60.97529766432079, "n": 100.0}}, "FFMC": {"#ContinuousValue#": {"mean": 90.664, "std": 5.16197284343531, "n": 100.0}}, "ISI": {"#ContinuousValue#": {"mean": 8.773000000000001, "std": 3.7367639811078583, "n": 100.0}}, "RH": {"#ContinuousValue#": {"mean": 44.38999999999997, "std": 15.972764066347185, "n": 100.0}}, "area": {"#ContinuousValue#": {"mean": 11.740399999999998, "std": 31.86099048978074, "n": 100.0}}, "day": {"thu": 15, "fri": 15, "mon": 13, "tue": 14, "sat": 22, "sun": 17, "wed": 4}, "month": {"mar": 14, "sep": 44, "aug": 30, "dec": 2, "jul": 1, "oct": 4, "feb": 2, "jun": 1, "may": 1, "apr": 1}, "rain": {"#ContinuousValue#": {"mean": 0.0, "std": 0.0, "n": 100.0}}, "temp": {"#ContinuousValue#": {"mean": 18.487, "std": 5.552152280827223, "n": 100.0}}, "wind": {"#ContinuousValue#": {"mean": 4.029, "std": 1.7131278617508592, "n": 100.0}}, "x-axis": {"#ContinuousValue#": {"mean": 4.859999999999999, "std": 2.287515524040717, "n": 100.0}}, "y-axis": {"#ContinuousValue#": {"mean": 4.44, "std": 1.1574964275530097, "n": 100.0}}}};
+(function (){ window.trestle_output={"name": "Concept5227842656",
+"size": 200.000000,
+"children": [
+{"name": "Concept5227859744",
+"size": 43.000000,
+"children": [
+{"name": "Concept5227866736",
+"size": 18.000000,
+"children": [
+{"name": "Concept5227974208",
+"size": 9.000000,
+"children": [
+{"name": "Concept5227972944",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.140076,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.140115,
+"std": 1,
+"n": 1,
+}},
+"_base": {"e": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227664176": 1.000000, "Concept5227788336": 1.000000, "Concept5227611248": 1.000000, "Concept5227790864": 1.000000, "Concept5227608928": 1.000000, "Concept5227669088": 1.000000, "Concept5227592384": 1.000000, "Concept5227502304": 1.000000, "Concept5227553472": 3.000000, "Concept5227603712": 1.000000, "Concept5227784448": 1.000000, "Concept5227727200": 1.000000, "Concept5227597328": 2.000000, "Concept5227485216": 1.000000, "Concept5227559040": 2.000000, "Concept5227621168": 1.000000, "Concept5227647712": 1.000000, "Concept5227780592": 1.000000, "Concept5227607232": 1.000000}, "anchor": {"e2": 1.000000}}
+}
+,{"name": "Concept5227868608",
+"size": 3.000000,
+"children": [
+{"name": "Concept5227868304",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.119534,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.114194,
+"std": 1,
+"n": 1,
+}},
+"_base": {"c": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227793792": 1.000000, "Concept5227792800": 1.000000, "Concept5227559040": 1.000000, "Concept5227618816": 1.000000, "Concept5227621168": 1.000000, "Concept5227705088": 1.000000, "Concept5227788336": 1.000000, "Concept5227570496": 2.000000, "Concept5227790864": 1.000000, "Concept5227611248": 1.000000, "Concept5227593376": 1.000000, "Concept5227607232": 1.000000, "Concept5227644608": 1.000000, "Concept5227502304": 1.000000, "Concept5227785440": 1.000000, "Concept5227784448": 1.000000, "Concept5227553472": 3.000000, "Concept5227529552": 1.000000, "Concept5227597328": 2.000000, "Concept5227608928": 1.000000}, "anchor": {"c1": 1.000000}}
+}
+,{"name": "Concept5227976432",
+"size": 2.000000,
+"children": [
+{"name": "Concept5227977200",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.113081,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.107368,
+"std": 1,
+"n": 1,
+}},
+"_base": {"e": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227590528": 1.000000, "Concept5227793792": 1.000000, "Concept5227792800": 1.000000, "Concept5227485216": 1.000000, "Concept5227705088": 1.000000, "Concept5227621168": 1.000000, "Concept5227618816": 1.000000, "Concept5227559040": 3.000000, "Concept5227685216": 1.000000, "Concept5227603712": 1.000000, "Concept5227529552": 1.000000, "Concept5227597328": 1.000000, "Concept5227788336": 1.000000, "Concept5227664176": 1.000000, "Concept5227570496": 2.000000, "Concept5227611248": 1.000000, "Concept5227593376": 1.000000, "Concept5227644608": 1.000000, "Concept5227620176": 1.000000, "Concept5227553472": 1.000000, "Concept5227785440": 1.000000}, "anchor": {"e1": 1.000000}}
+}
+,{"name": "Concept5227978080",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.113081,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.107368,
+"std": 1,
+"n": 1,
+}},
+"_base": {"a": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227690848": 1.000000, "Concept5227570496": 1.000000, "Concept5227590528": 1.000000, "Concept5227705088": 1.000000, "Concept5227621168": 1.000000, "Concept5227793792": 1.000000, "Concept5227502304": 1.000000, "Concept5227644608": 1.000000, "Concept5227620176": 1.000000, "Concept5227607232": 1.000000, "Concept5227685216": 1.000000, "Concept5227559040": 3.000000, "Concept5227603712": 1.000000, "Concept5227553472": 2.000000, "Concept5227597328": 1.000000, "Concept5227593376": 1.000000, "Concept5227611248": 1.000000, "Concept5227790864": 1.000000, "Concept5227788336": 1.000000, "Concept5227664176": 1.000000, "Concept5227485216": 1.000000}, "anchor": {"a2": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.219514,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.113164,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"a2": 1.000000, "e1": 1.000000}, "context": {"Concept5227502304": 1.000000, "Concept5227785440": 1.000000, "Concept5227553472": 3.000000, "Concept5227607232": 1.000000, "Concept5227621168": 2.000000, "Concept5227620176": 2.000000, "Concept5227644608": 2.000000, "Concept5227790864": 1.000000, "Concept5227690848": 1.000000, "Concept5227792800": 1.000000, "Concept5227593376": 2.000000, "Concept5227485216": 2.000000, "Concept5227788336": 2.000000, "Concept5227611248": 2.000000, "Concept5227570496": 3.000000, "Concept5227664176": 2.000000, "Concept5227685216": 2.000000, "Concept5227597328": 2.000000, "Concept5227529552": 1.000000, "Concept5227603712": 2.000000, "Concept5227559040": 6.000000, "Concept5227705088": 2.000000, "Concept5227618816": 1.000000, "Concept5227793792": 2.000000, "Concept5227590528": 2.000000}, "_variant": {"2": 1.000000, "1": 1.000000}, "_base": {"a": 1.000000, "e": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.314107,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.113282,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"a2": 1.000000, "e1": 1.000000, "c1": 1.000000}, "context": {"Concept5227603712": 2.000000, "Concept5227590528": 2.000000, "Concept5227608928": 1.000000, "Concept5227685216": 2.000000, "Concept5227597328": 4.000000, "Concept5227529552": 2.000000, "Concept5227785440": 2.000000, "Concept5227553472": 6.000000, "Concept5227618816": 2.000000, "Concept5227784448": 1.000000, "Concept5227502304": 2.000000, "Concept5227621168": 3.000000, "Concept5227620176": 2.000000, "Concept5227644608": 3.000000, "Concept5227607232": 2.000000, "Concept5227690848": 1.000000, "Concept5227792800": 2.000000, "Concept5227593376": 3.000000, "Concept5227485216": 2.000000, "Concept5227788336": 3.000000, "Concept5227611248": 3.000000, "Concept5227790864": 2.000000, "Concept5227570496": 5.000000, "Concept5227664176": 2.000000, "Concept5227705088": 3.000000, "Concept5227559040": 7.000000, "Concept5227793792": 3.000000}, "_variant": {"2": 1.000000, "1": 2.000000}, "_base": {"e": 1.000000, "a": 1.000000, "c": 1.000000}}
+}
+,{"name": "Concept5227975744",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.124697,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.122841,
+"std": 1,
+"n": 1,
+}},
+"_base": {"a": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227559040": 1.000000, "Concept5227792800": 1.000000, "Concept5227485216": 1.000000, "Concept5227664176": 1.000000, "Concept5227603712": 1.000000, "Concept5227644608": 1.000000, "Concept5227607232": 1.000000, "Concept5227553472": 2.000000, "Concept5227570496": 2.000000, "Concept5227784448": 1.000000, "Concept5227592384": 1.000000, "Concept5227502304": 1.000000, "Concept5227785440": 1.000000, "Concept5227608928": 1.000000, "Concept5227790864": 1.000000, "Concept5227593376": 1.000000, "Concept5227647712": 1.000000, "Concept5227618816": 1.000000, "Concept5227727200": 1.000000, "Concept5227529552": 1.000000, "Concept5227597328": 1.000000}, "anchor": {"a1": 1.000000}}
+}
+,{"name": "Concept5227978384",
+"size": 4.000000,
+"children": [
+{"name": "Concept5227979344",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.117034,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.111539,
+"std": 1,
+"n": 1,
+}},
+"_base": {"c": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227641712": 1.000000, "Concept5227590528": 1.000000, "Concept5227570496": 2.000000, "Concept5227690848": 1.000000, "Concept5227713040": 1.000000, "Concept5227529552": 1.000000, "Concept5227618816": 1.000000, "Concept5227553472": 2.000000, "Concept5227502304": 2.000000, "Concept5227593376": 1.000000, "Concept5227790864": 1.000000, "Concept5227685216": 1.000000, "Concept5227559040": 2.000000, "Concept5227485216": 1.000000, "Concept5227792800": 1.000000, "Concept5227603712": 1.000000, "Concept5227644608": 1.000000, "Concept5227620176": 1.000000, "Concept5227607232": 1.000000, "Concept5227664176": 1.000000}, "anchor": {"c1": 1.000000}}
+}
+,{"name": "Concept5227979648",
+"size": 2.000000,
+"children": [
+{"name": "Concept5227980608",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.128487,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.123807,
+"std": 1,
+"n": 1,
+}},
+"_base": {"e": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227641712": 1.000000, "Concept5227690848": 1.000000, "Concept5227713040": 1.000000, "Concept5227626592": 1.000000, "Concept5227570496": 2.000000, "Concept5227593376": 1.000000, "Concept5227790864": 1.000000, "Concept5227644608": 1.000000, "Concept5227607232": 1.000000, "Concept5227621168": 1.000000, "Concept5227705088": 1.000000, "Concept5227618816": 1.000000, "Concept5227529552": 1.000000, "Concept5227762912": 1.000000, "Concept5227793792": 1.000000, "Concept5227792800": 1.000000, "Concept5227502304": 3.000000, "Concept5227553472": 3.000000, "Concept5227559040": 1.000000}, "anchor": {"e1": 1.000000}}
+}
+,{"name": "Concept5227981872",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.117034,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.111539,
+"std": 1,
+"n": 1,
+}},
+"_base": {"b": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227593376": 1.000000, "Concept5227620176": 1.000000, "Concept5227762912": 1.000000, "Concept5227616496": 1.000000, "Concept5227775136": 1.000000, "Concept5227553472": 2.000000, "Concept5227626592": 1.000000, "Concept5227502304": 2.000000, "Concept5227641712": 1.000000, "Concept5227590528": 1.000000, "Concept5227559040": 2.000000, "Concept5227685216": 1.000000, "Concept5227570496": 2.000000, "Concept5227529552": 1.000000, "Concept5227713040": 1.000000, "Concept5227621168": 1.000000, "Concept5227705088": 1.000000, "Concept5227618816": 1.000000, "Concept5227793792": 1.000000, "Concept5227792800": 1.000000}, "anchor": {"b1": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.236087,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.122756,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"b1": 1.000000, "e1": 1.000000}, "context": {"Concept5227607232": 1.000000, "Concept5227616496": 1.000000, "Concept5227775136": 1.000000, "Concept5227590528": 1.000000, "Concept5227685216": 1.000000, "Concept5227559040": 3.000000, "Concept5227553472": 5.000000, "Concept5227502304": 5.000000, "Concept5227690848": 1.000000, "Concept5227593376": 2.000000, "Concept5227792800": 2.000000, "Concept5227793792": 2.000000, "Concept5227705088": 2.000000, "Concept5227762912": 2.000000, "Concept5227529552": 2.000000, "Concept5227618816": 2.000000, "Concept5227620176": 1.000000, "Concept5227621168": 2.000000, "Concept5227644608": 1.000000, "Concept5227790864": 1.000000, "Concept5227713040": 2.000000, "Concept5227626592": 2.000000, "Concept5227570496": 4.000000, "Concept5227641712": 2.000000}, "_variant": {"1": 2.000000}, "_base": {"b": 1.000000, "e": 1.000000}}
+}
+,{"name": "Concept5227977504",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.131139,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.130012,
+"std": 1,
+"n": 1,
+}},
+"_base": {"c": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227631440": 1.000000, "Concept5227626592": 1.000000, "Concept5227570496": 2.000000, "Concept5227592384": 1.000000, "Concept5227502304": 1.000000, "Concept5227616496": 1.000000, "Concept5227775136": 1.000000, "Concept5227553472": 1.000000, "Concept5227754368": 1.000000, "Concept5227690848": 1.000000, "Concept5227590528": 1.000000, "Concept5227620176": 1.000000, "Concept5227644608": 1.000000, "Concept5227593376": 2.000000, "Concept5227559040": 2.000000, "Concept5227685216": 1.000000, "Concept5227621168": 1.000000, "Concept5227705088": 1.000000, "Concept5227762912": 1.000000, "Concept5227793792": 1.000000}, "anchor": {"c1": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.425795,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.120735,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"b1": 1.000000, "e1": 1.000000, "c1": 2.000000}, "context": {"Concept5227631440": 1.000000, "Concept5227592384": 1.000000, "Concept5227754368": 1.000000, "Concept5227775136": 2.000000, "Concept5227626592": 3.000000, "Concept5227705088": 3.000000, "Concept5227762912": 3.000000, "Concept5227793792": 3.000000, "Concept5227664176": 1.000000, "Concept5227616496": 2.000000, "Concept5227607232": 2.000000, "Concept5227621168": 3.000000, "Concept5227620176": 3.000000, "Concept5227644608": 3.000000, "Concept5227603712": 1.000000, "Concept5227690848": 3.000000, "Concept5227593376": 5.000000, "Concept5227792800": 3.000000, "Concept5227485216": 1.000000, "Concept5227559040": 7.000000, "Concept5227685216": 3.000000, "Concept5227502304": 8.000000, "Concept5227553472": 8.000000, "Concept5227790864": 2.000000, "Concept5227618816": 3.000000, "Concept5227529552": 3.000000, "Concept5227713040": 3.000000, "Concept5227570496": 8.000000, "Concept5227590528": 3.000000, "Concept5227641712": 3.000000}, "_variant": {"1": 4.000000}, "_base": {"b": 1.000000, "e": 1.000000, "c": 2.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.750878,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.103893,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"b1": 1.000000, "a1": 1.000000, "a2": 1.000000, "e1": 2.000000, "c1": 3.000000, "e2": 1.000000}, "context": {"Concept5227631440": 1.000000, "Concept5227775136": 2.000000, "Concept5227626592": 3.000000, "Concept5227641712": 3.000000, "Concept5227793792": 6.000000, "Concept5227762912": 3.000000, "Concept5227705088": 6.000000, "Concept5227644608": 7.000000, "Concept5227570496": 15.000000, "Concept5227616496": 2.000000, "Concept5227607232": 6.000000, "Concept5227784448": 3.000000, "Concept5227618816": 6.000000, "Concept5227754368": 1.000000, "Concept5227780592": 1.000000, "Concept5227713040": 3.000000, "Concept5227647712": 2.000000, "Concept5227620176": 5.000000, "Concept5227621168": 7.000000, "Concept5227559040": 17.000000, "Concept5227611248": 4.000000, "Concept5227788336": 4.000000, "Concept5227485216": 5.000000, "Concept5227529552": 6.000000, "Concept5227685216": 5.000000, "Concept5227597328": 7.000000, "Concept5227727200": 2.000000, "Concept5227603712": 5.000000, "Concept5227785440": 3.000000, "Concept5227553472": 19.000000, "Concept5227590528": 5.000000, "Concept5227608928": 3.000000, "Concept5227669088": 1.000000, "Concept5227502304": 12.000000, "Concept5227592384": 3.000000, "Concept5227664176": 5.000000, "Concept5227690848": 4.000000, "Concept5227792800": 6.000000, "Concept5227593376": 9.000000, "Concept5227790864": 6.000000}, "_variant": {"1": 7.000000, "2": 2.000000}, "_base": {"b": 1.000000, "c": 3.000000, "a": 2.000000, "e": 3.000000}}
+}
+,{"name": "Concept5227983056",
+"size": 9.000000,
+"children": [
+{"name": "Concept5227868000",
+"size": 6.000000,
+"children": [
+{"name": "Concept5227869264",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.140076,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.140115,
+"std": 1,
+"n": 1,
+}},
+"_base": {"c": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227834880": 1.000000, "Concept5227611248": 1.000000, "Concept5227790864": 1.000000, "Concept5227608928": 1.000000, "Concept5227502304": 1.000000, "Concept5227592384": 2.000000, "Concept5227682816": 1.000000, "Concept5227612240": 1.000000, "Concept5227559040": 1.000000, "Concept5227673632": 1.000000, "Concept5227615136": 1.000000, "Concept5227727200": 1.000000, "Concept5227597328": 2.000000, "Concept5227784448": 1.000000, "Concept5227553472": 3.000000, "Concept5227590528": 1.000000, "Concept5227607232": 1.000000, "Concept5227633584": 1.000000, "Concept5227647712": 1.000000}, "anchor": {"c1": 1.000000}}
+}
+,{"name": "Concept5227865472",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.124697,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.122841,
+"std": 1,
+"n": 1,
+}},
+"_base": {"a": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227590528": 1.000000, "Concept5227682816": 1.000000, "Concept5227785440": 1.000000, "Concept5227502304": 1.000000, "Concept5227592384": 1.000000, "Concept5227559040": 1.000000, "Concept5227612240": 1.000000, "Concept5227553472": 2.000000, "Concept5227673632": 1.000000, "Concept5227607232": 1.000000, "Concept5227644608": 1.000000, "Concept5227593376": 1.000000, "Concept5227611248": 1.000000, "Concept5227790864": 1.000000, "Concept5227570496": 2.000000, "Concept5227618816": 1.000000, "Concept5227647712": 1.000000, "Concept5227727200": 1.000000, "Concept5227597328": 1.000000, "Concept5227529552": 1.000000, "Concept5227741184": 1.000000}, "anchor": {"a2": 1.000000}}
+}
+,{"name": "Concept5227870224",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.110581,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.104745,
+"std": 1,
+"n": 1,
+}},
+"_base": {"e": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227616496": 1.000000, "Concept5227597328": 1.000000, "Concept5227590528": 1.000000, "Concept5227775136": 1.000000, "Concept5227834880": 1.000000, "Concept5227633584": 1.000000, "Concept5227559040": 1.000000, "Concept5227612240": 1.000000, "Concept5227615136": 1.000000, "Concept5227673632": 1.000000, "Concept5227608928": 1.000000, "Concept5227785440": 1.000000, "Concept5227592384": 1.000000, "Concept5227502304": 1.000000, "Concept5227644608": 1.000000, "Concept5227607232": 1.000000, "Concept5227790864": 1.000000, "Concept5227593376": 2.000000, "Concept5227784448": 1.000000, "Concept5227553472": 2.000000, "Concept5227570496": 2.000000}, "anchor": {"e2": 1.000000}}
+}
+,{"name": "Concept5227984208",
+"size": 3.000000,
+"children": [
+{"name": "Concept5227980912",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.137580,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.137275,
+"std": 1,
+"n": 1,
+}},
+"_base": {"a": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227757584": 1.000000, "Concept5227644608": 1.000000, "Concept5227612240": 1.000000, "Concept5227559040": 1.000000, "Concept5227673632": 1.000000, "Concept5227634336": 1.000000, "Concept5227592384": 1.000000, "Concept5227502304": 2.000000, "Concept5227690848": 1.000000, "Concept5227713040": 1.000000, "Concept5227754368": 1.000000, "Concept5227553472": 2.000000, "Concept5227762912": 1.000000, "Concept5227590528": 1.000000, "Concept5227631440": 1.000000, "Concept5227641712": 1.000000, "Concept5227626592": 1.000000, "Concept5227570496": 2.000000, "Concept5227593376": 2.000000}, "anchor": {"a2": 1.000000}}
+}
+,{"name": "Concept5227985376",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.141393,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.137958,
+"std": 1,
+"n": 1,
+}},
+"_base": {"d": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227736512": 1.000000, "Concept5227757584": 1.000000, "Concept5227612240": 1.000000, "Concept5227559040": 1.000000, "Concept5227590528": 1.000000, "Concept5227673632": 1.000000, "Concept5227593376": 2.000000, "Concept5227570496": 2.000000, "Concept5227626592": 2.000000, "Concept5227616496": 1.000000, "Concept5227553472": 3.000000, "Concept5227775136": 1.000000, "Concept5227634336": 1.000000, "Concept5227502304": 3.000000, "Concept5227641712": 1.000000, "Concept5227762912": 1.000000, "Concept5227713040": 1.000000}, "anchor": {"d1": 1.000000}}
+}
+,{"name": "Concept5227983744",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.144022,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.144632,
+"std": 1,
+"n": 1,
+}},
+"_base": {"f": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227559040": 2.000000, "Concept5227612240": 1.000000, "Concept5227673632": 1.000000, "Concept5227601392": 1.000000, "Concept5227592384": 1.000000, "Concept5227502304": 2.000000, "Concept5227754368": 1.000000, "Concept5227593376": 1.000000, "Concept5227616496": 1.000000, "Concept5227736512": 1.000000, "Concept5227570496": 1.000000, "Concept5227631440": 1.000000, "Concept5227626592": 2.000000, "Concept5227590528": 2.000000, "Concept5227614384": 1.000000, "Concept5227775136": 1.000000, "Concept5227553472": 2.000000, "Concept5227762912": 1.000000}, "anchor": {"f2": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.401151,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.151735,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"f2": 1.000000, "d1": 1.000000, "a2": 1.000000}, "context": {"Concept5227553472": 7.000000, "Concept5227736512": 2.000000, "Concept5227616496": 2.000000, "Concept5227614384": 1.000000, "Concept5227775136": 2.000000, "Concept5227690848": 1.000000, "Concept5227593376": 5.000000, "Concept5227570496": 5.000000, "Concept5227626592": 5.000000, "Concept5227641712": 2.000000, "Concept5227631440": 2.000000, "Concept5227590528": 4.000000, "Concept5227762912": 3.000000, "Concept5227754368": 2.000000, "Concept5227713040": 2.000000, "Concept5227601392": 1.000000, "Concept5227502304": 7.000000, "Concept5227673632": 3.000000, "Concept5227592384": 2.000000, "Concept5227634336": 2.000000, "Concept5227644608": 1.000000, "Concept5227757584": 2.000000, "Concept5227559040": 4.000000, "Concept5227612240": 3.000000}, "_variant": {"1": 1.000000, "2": 2.000000}, "_base": {"d": 1.000000, "f": 1.000000, "a": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.547089,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.108620,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"e2": 1.000000, "a2": 2.000000, "f2": 1.000000, "d1": 1.000000, "c1": 1.000000}, "context": {"Concept5227757584": 2.000000, "Concept5227634336": 2.000000, "Concept5227754368": 2.000000, "Concept5227626592": 5.000000, "Concept5227762912": 3.000000, "Concept5227641712": 2.000000, "Concept5227631440": 2.000000, "Concept5227775136": 3.000000, "Concept5227741184": 1.000000, "Concept5227529552": 1.000000, "Concept5227570496": 9.000000, "Concept5227713040": 2.000000, "Concept5227647712": 2.000000, "Concept5227633584": 2.000000, "Concept5227644608": 3.000000, "Concept5227616496": 3.000000, "Concept5227607232": 3.000000, "Concept5227608928": 2.000000, "Concept5227590528": 7.000000, "Concept5227736512": 2.000000, "Concept5227785440": 2.000000, "Concept5227553472": 14.000000, "Concept5227614384": 1.000000, "Concept5227618816": 1.000000, "Concept5227784448": 2.000000, "Concept5227597328": 4.000000, "Concept5227727200": 2.000000, "Concept5227615136": 2.000000, "Concept5227592384": 6.000000, "Concept5227682816": 2.000000, "Concept5227673632": 6.000000, "Concept5227834880": 2.000000, "Concept5227559040": 7.000000, "Concept5227612240": 6.000000, "Concept5227601392": 1.000000, "Concept5227502304": 10.000000, "Concept5227690848": 1.000000, "Concept5227593376": 8.000000, "Concept5227790864": 3.000000, "Concept5227611248": 2.000000}, "_variant": {"2": 4.000000, "1": 2.000000}, "_base": {"d": 1.000000, "e": 1.000000, "f": 1.000000, "a": 2.000000, "c": 1.000000}}
+}
+,{"name": "Concept5227970064",
+"size": 3.000000,
+"children": [
+{"name": "Concept5227868960",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.140076,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.140115,
+"std": 1,
+"n": 1,
+}},
+"_base": {"f": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227618816": 1.000000, "Concept5227647712": 1.000000, "Concept5227644608": 1.000000, "Concept5227784448": 1.000000, "Concept5227741184": 1.000000, "Concept5227608928": 1.000000, "Concept5227611248": 1.000000, "Concept5227593376": 1.000000, "Concept5227785440": 1.000000, "Concept5227592384": 1.000000, "Concept5227502304": 1.000000, "Concept5227682816": 1.000000, "Concept5227597328": 2.000000, "Concept5227529552": 1.000000, "Concept5227727200": 1.000000, "Concept5227696528": 1.000000, "Concept5227626592": 1.000000, "Concept5227570496": 2.000000, "Concept5227553472": 3.000000}, "anchor": {"f2": 1.000000}}
+}
+,{"name": "Concept5227867696",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.119534,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.114194,
+"std": 1,
+"n": 1,
+}},
+"_base": {"d": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227608928": 1.000000, "Concept5227570496": 2.000000, "Concept5227607232": 1.000000, "Concept5227644608": 1.000000, "Concept5227593376": 1.000000, "Concept5227790864": 1.000000, "Concept5227618816": 1.000000, "Concept5227741184": 1.000000, "Concept5227784448": 1.000000, "Concept5227597328": 1.000000, "Concept5227529552": 1.000000, "Concept5227785440": 1.000000, "Concept5227502304": 2.000000, "Concept5227696528": 1.000000, "Concept5227559040": 1.000000, "Concept5227485216": 1.000000, "Concept5227626592": 1.000000, "Concept5227553472": 3.000000, "Concept5227603712": 1.000000, "Concept5227689856": 1.000000}, "anchor": {"d2": 1.000000}}
+}
+,{"name": "Concept5227971760",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.140076,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.140115,
+"std": 1,
+"n": 1,
+}},
+"_base": {"f": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227593376": 1.000000, "Concept5227597328": 1.000000, "Concept5227727200": 1.000000, "Concept5227644608": 1.000000, "Concept5227777664": 1.000000, "Concept5227553472": 2.000000, "Concept5227784448": 1.000000, "Concept5227647712": 1.000000, "Concept5227592384": 1.000000, "Concept5227502304": 1.000000, "Concept5227779600": 1.000000, "Concept5227785440": 1.000000, "Concept5227641712": 1.000000, "Concept5227608928": 1.000000, "Concept5227585728": 2.000000, "Concept5227640720": 1.000000, "Concept5227674992": 1.000000, "Concept5227570496": 3.000000, "Concept5227630448": 1.000000}, "anchor": {"f2": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.328719,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.121022,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"d2": 1.000000, "f2": 2.000000}, "context": {"Concept5227777664": 1.000000, "Concept5227641712": 1.000000, "Concept5227585728": 2.000000, "Concept5227640720": 1.000000, "Concept5227689856": 1.000000, "Concept5227603712": 1.000000, "Concept5227611248": 1.000000, "Concept5227485216": 1.000000, "Concept5227785440": 3.000000, "Concept5227553472": 8.000000, "Concept5227570496": 7.000000, "Concept5227626592": 2.000000, "Concept5227559040": 1.000000, "Concept5227696528": 2.000000, "Concept5227727200": 2.000000, "Concept5227741184": 2.000000, "Concept5227529552": 2.000000, "Concept5227597328": 4.000000, "Concept5227674992": 1.000000, "Concept5227592384": 2.000000, "Concept5227682816": 1.000000, "Concept5227502304": 4.000000, "Concept5227790864": 1.000000, "Concept5227593376": 3.000000, "Concept5227630448": 1.000000, "Concept5227608928": 3.000000, "Concept5227647712": 2.000000, "Concept5227618816": 2.000000, "Concept5227784448": 3.000000, "Concept5227779600": 1.000000, "Concept5227607232": 1.000000, "Concept5227644608": 3.000000}, "_variant": {"2": 3.000000}, "_base": {"d": 1.000000, "f": 2.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.694306,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.095933,
+"std": 1,
+"n": 1,
+}},
+"_base": {"d": 2.000000, "f": 3.000000, "c": 1.000000, "a": 2.000000, "e": 1.000000}, "_variant": {"1": 2.000000, "2": 7.000000}, "context": {"Concept5227736512": 2.000000, "Concept5227696528": 2.000000, "Concept5227585728": 2.000000, "Concept5227777664": 1.000000, "Concept5227612240": 6.000000, "Concept5227485216": 1.000000, "Concept5227611248": 3.000000, "Concept5227790864": 4.000000, "Concept5227593376": 11.000000, "Concept5227615136": 2.000000, "Concept5227690848": 1.000000, "Concept5227502304": 14.000000, "Concept5227559040": 8.000000, "Concept5227834880": 2.000000, "Concept5227674992": 1.000000, "Concept5227673632": 6.000000, "Concept5227682816": 3.000000, "Concept5227553472": 22.000000, "Concept5227592384": 8.000000, "Concept5227603712": 1.000000, "Concept5227727200": 4.000000, "Concept5227597328": 8.000000, "Concept5227785440": 5.000000, "Concept5227630448": 1.000000, "Concept5227608928": 5.000000, "Concept5227590528": 7.000000, "Concept5227779600": 1.000000, "Concept5227634336": 2.000000, "Concept5227607232": 4.000000, "Concept5227616496": 3.000000, "Concept5227633584": 2.000000, "Concept5227784448": 5.000000, "Concept5227644608": 6.000000, "Concept5227741184": 3.000000, "Concept5227618816": 3.000000, "Concept5227713040": 2.000000, "Concept5227647712": 4.000000, "Concept5227529552": 3.000000, "Concept5227631440": 2.000000, "Concept5227641712": 3.000000, "Concept5227762912": 3.000000, "Concept5227775136": 3.000000, "Concept5227601392": 1.000000, "Concept5227689856": 1.000000, "Concept5227614384": 1.000000, "Concept5227640720": 1.000000, "Concept5227754368": 2.000000, "Concept5227570496": 16.000000, "Concept5227626592": 7.000000, "Concept5227757584": 2.000000}, "anchor": {"f2": 3.000000, "d1": 1.000000, "a2": 2.000000, "d2": 1.000000, "c1": 1.000000, "e2": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 1.088099,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.081852,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"e1": 2.000000, "e2": 2.000000, "d1": 1.000000, "a1": 1.000000, "d2": 1.000000, "a2": 3.000000, "c1": 4.000000, "b1": 1.000000, "f2": 3.000000}, "context": {"Concept5227736512": 2.000000, "Concept5227757584": 2.000000, "Concept5227631440": 3.000000, "Concept5227754368": 3.000000, "Concept5227762912": 6.000000, "Concept5227713040": 5.000000, "Concept5227685216": 5.000000, "Concept5227793792": 6.000000, "Concept5227601392": 1.000000, "Concept5227689856": 1.000000, "Concept5227705088": 6.000000, "Concept5227664176": 5.000000, "Concept5227644608": 13.000000, "Concept5227618816": 9.000000, "Concept5227741184": 3.000000, "Concept5227669088": 1.000000, "Concept5227777664": 1.000000, "Concept5227641712": 6.000000, "Concept5227785440": 8.000000, "Concept5227621168": 7.000000, "Concept5227585728": 2.000000, "Concept5227775136": 5.000000, "Concept5227633584": 2.000000, "Concept5227647712": 6.000000, "Concept5227614384": 1.000000, "Concept5227780592": 1.000000, "Concept5227640720": 1.000000, "Concept5227690848": 5.000000, "Concept5227615136": 2.000000, "Concept5227792800": 6.000000, "Concept5227603712": 6.000000, "Concept5227592384": 11.000000, "Concept5227553472": 41.000000, "Concept5227626592": 10.000000, "Concept5227788336": 4.000000, "Concept5227611248": 7.000000, "Concept5227612240": 6.000000, "Concept5227485216": 6.000000, "Concept5227834880": 2.000000, "Concept5227559040": 25.000000, "Concept5227696528": 2.000000, "Concept5227674992": 1.000000, "Concept5227673632": 6.000000, "Concept5227682816": 3.000000, "Concept5227502304": 26.000000, "Concept5227727200": 6.000000, "Concept5227529552": 9.000000, "Concept5227597328": 15.000000, "Concept5227784448": 8.000000, "Concept5227620176": 5.000000, "Concept5227790864": 10.000000, "Concept5227593376": 20.000000, "Concept5227779600": 1.000000, "Concept5227616496": 5.000000, "Concept5227634336": 2.000000, "Concept5227607232": 10.000000, "Concept5227570496": 31.000000, "Concept5227630448": 1.000000, "Concept5227590528": 12.000000, "Concept5227608928": 8.000000}, "_variant": {"1": 9.000000, "2": 9.000000}, "_base": {"b": 1.000000, "f": 3.000000, "e": 4.000000, "c": 4.000000, "a": 4.000000, "d": 2.000000}}
+}
+,{"name": "Concept5228001920",
+"size": 25.000000,
+"children": [
+{"name": "Concept5227907264",
+"size": 8.000000,
+"children": [
+{"name": "Concept5227861584",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.139067,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.135381,
+"std": 1,
+"n": 1,
+}},
+"_base": {"d": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227689856": 1.000000, "Concept5227630448": 1.000000, "Concept5227590528": 1.000000, "Concept5227598320": 1.000000, "Concept5227601392": 1.000000, "Concept5227585728": 1.000000, "Concept5227597328": 1.000000, "Concept5227674992": 1.000000, "Concept5227611248": 1.000000, "Concept5227553472": 1.000000, "Concept5227718832": 1.000000, "Concept5227651600": 1.000000, "Concept5227559040": 4.000000, "Concept5227720000": 1.000000, "Concept5227603712": 2.000000, "Concept5227570496": 1.000000, "Concept5227485216": 3.000000, "Concept5227664176": 1.000000}, "anchor": {"d1": 1.000000}}
+}
+,{"name": "Concept5227861888",
+"size": 4.000000,
+"children": [
+{"name": "Concept5227864208",
+"size": 2.000000,
+"children": [
+{"name": "Concept5227860928",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.125987,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.121105,
+"std": 1,
+"n": 1,
+}},
+"_base": {"e": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227502304": 1.000000, "Concept5227570496": 1.000000, "Concept5227626592": 1.000000, "Concept5227603712": 1.000000, "Concept5227689856": 1.000000, "Concept5227630448": 1.000000, "Concept5227636864": 1.000000, "Concept5227559040": 2.000000, "Concept5227696528": 1.000000, "Concept5227485216": 2.000000, "Concept5227598320": 1.000000, "Concept5227553472": 3.000000, "Concept5227718832": 1.000000, "Concept5227611248": 1.000000, "Concept5227585728": 1.000000, "Concept5227597328": 2.000000, "Concept5227674992": 1.000000, "Concept5227738656": 1.000000, "Concept5227720000": 1.000000}, "anchor": {"e1": 1.000000}}
+}
+,{"name": "Concept5227866432",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.133635,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.132815,
+"std": 1,
+"n": 1,
+}},
+"_base": {"a": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227608928": 1.000000, "Concept5227592384": 1.000000, "Concept5227502304": 2.000000, "Concept5227784448": 1.000000, "Concept5227553472": 3.000000, "Concept5227607232": 1.000000, "Concept5227647712": 1.000000, "Concept5227790864": 1.000000, "Concept5227626592": 1.000000, "Concept5227597328": 1.000000, "Concept5227727200": 1.000000, "Concept5227485216": 1.000000, "Concept5227603712": 1.000000, "Concept5227559040": 1.000000, "Concept5227696528": 1.000000, "Concept5227570496": 1.000000, "Concept5227674992": 1.000000, "Concept5227585728": 1.000000, "Concept5227689856": 1.000000, "Concept5227630448": 1.000000}, "anchor": {"a2": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.235452,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.123868,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"a2": 1.000000, "e1": 1.000000}, "context": {"Concept5227784448": 1.000000, "Concept5227607232": 1.000000, "Concept5227647712": 1.000000, "Concept5227608928": 1.000000, "Concept5227630448": 2.000000, "Concept5227720000": 1.000000, "Concept5227738656": 1.000000, "Concept5227592384": 1.000000, "Concept5227674992": 2.000000, "Concept5227727200": 1.000000, "Concept5227597328": 3.000000, "Concept5227585728": 2.000000, "Concept5227790864": 1.000000, "Concept5227485216": 3.000000, "Concept5227611248": 1.000000, "Concept5227718832": 1.000000, "Concept5227553472": 6.000000, "Concept5227689856": 2.000000, "Concept5227598320": 1.000000, "Concept5227696528": 2.000000, "Concept5227559040": 3.000000, "Concept5227636864": 1.000000, "Concept5227603712": 2.000000, "Concept5227626592": 2.000000, "Concept5227570496": 2.000000, "Concept5227502304": 3.000000}, "_variant": {"2": 1.000000, "1": 1.000000}, "_base": {"a": 1.000000, "e": 1.000000}}
+}
+,{"name": "Concept5227860624",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.119534,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.114194,
+"std": 1,
+"n": 1,
+}},
+"_base": {"a": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227502304": 1.000000, "Concept5227626592": 1.000000, "Concept5227570496": 1.000000, "Concept5227603712": 1.000000, "Concept5227689856": 1.000000, "Concept5227590528": 1.000000, "Concept5227618816": 1.000000, "Concept5227601392": 1.000000, "Concept5227651600": 1.000000, "Concept5227636864": 1.000000, "Concept5227529552": 1.000000, "Concept5227597328": 1.000000, "Concept5227738656": 1.000000, "Concept5227696528": 1.000000, "Concept5227559040": 3.000000, "Concept5227485216": 2.000000, "Concept5227741184": 1.000000, "Concept5227598320": 1.000000, "Concept5227553472": 2.000000, "Concept5227718832": 1.000000}, "anchor": {"a1": 1.000000}}
+}
+,{"name": "Concept5227921008",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.125987,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.121105,
+"std": 1,
+"n": 1,
+}},
+"_base": {"d": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227585728": 1.000000, "Concept5227674992": 1.000000, "Concept5227570496": 3.000000, "Concept5227626592": 1.000000, "Concept5227690848": 1.000000, "Concept5227689856": 1.000000, "Concept5227630448": 1.000000, "Concept5227559040": 1.000000, "Concept5227696528": 1.000000, "Concept5227634336": 1.000000, "Concept5227617488": 1.000000, "Concept5227593376": 2.000000, "Concept5227485216": 1.000000, "Concept5227644608": 1.000000, "Concept5227553472": 2.000000, "Concept5227603712": 1.000000, "Concept5227641712": 1.000000, "Concept5227502304": 2.000000, "Concept5227779600": 1.000000}, "anchor": {"d2": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.358201,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.099659,
+"std": 1,
+"n": 1,
+}},
+"_base": {"d": 1.000000, "e": 1.000000, "a": 2.000000}, "_variant": {"1": 2.000000, "2": 2.000000}, "context": {"Concept5227634336": 1.000000, "Concept5227690848": 1.000000, "Concept5227593376": 2.000000, "Concept5227641712": 1.000000, "Concept5227741184": 1.000000, "Concept5227529552": 1.000000, "Concept5227651600": 1.000000, "Concept5227601392": 1.000000, "Concept5227502304": 6.000000, "Concept5227570496": 6.000000, "Concept5227626592": 4.000000, "Concept5227603712": 4.000000, "Concept5227559040": 7.000000, "Concept5227696528": 4.000000, "Concept5227598320": 2.000000, "Concept5227689856": 4.000000, "Concept5227553472": 10.000000, "Concept5227718832": 2.000000, "Concept5227485216": 6.000000, "Concept5227611248": 1.000000, "Concept5227790864": 1.000000, "Concept5227585728": 3.000000, "Concept5227727200": 1.000000, "Concept5227597328": 4.000000, "Concept5227592384": 1.000000, "Concept5227674992": 3.000000, "Concept5227738656": 2.000000, "Concept5227644608": 1.000000, "Concept5227636864": 2.000000, "Concept5227590528": 1.000000, "Concept5227720000": 1.000000, "Concept5227630448": 3.000000, "Concept5227608928": 1.000000, "Concept5227617488": 1.000000, "Concept5227647712": 1.000000, "Concept5227779600": 1.000000, "Concept5227607232": 1.000000, "Concept5227618816": 1.000000, "Concept5227784448": 1.000000}, "anchor": {"d2": 1.000000, "a1": 1.000000, "e1": 1.000000, "a2": 1.000000}}
+}
+,{"name": "Concept5227922272",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.119534,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.114194,
+"std": 1,
+"n": 1,
+}},
+"_base": {"e": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227590528": 1.000000, "Concept5227601392": 1.000000, "Concept5227502304": 1.000000, "Concept5227553472": 1.000000, "Concept5227697888": 1.000000, "Concept5227626592": 1.000000, "Concept5227570496": 3.000000, "Concept5227585728": 1.000000, "Concept5227674992": 1.000000, "Concept5227630448": 1.000000, "Concept5227696528": 1.000000, "Concept5227559040": 2.000000, "Concept5227593376": 2.000000, "Concept5227485216": 1.000000, "Concept5227689856": 1.000000, "Concept5227692960": 1.000000, "Concept5227690848": 1.000000, "Concept5227603712": 1.000000, "Concept5227616496": 1.000000, "Concept5227644608": 1.000000}, "anchor": {"e1": 1.000000}}
+}
+,{"name": "Concept5228008464",
+"size": 2.000000,
+"children": [
+{"name": "Concept5228004160",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.177786,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.184806,
+"std": 1,
+"n": 1,
+}},
+"_base": {"e": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227607232": 2.000000, "Concept5227701984": 1.000000, "Concept5227707984": 1.000000, "Concept5227636864": 1.000000, "Concept5227626592": 1.000000, "Concept5227696528": 1.000000, "Concept5227631440": 1.000000, "Concept5227747584": 1.000000, "Concept5227502304": 3.000000, "Concept5227592384": 1.000000, "Concept5227720992": 1.000000, "Concept5227720000": 1.000000, "Concept5227553472": 5.000000, "Concept5227597328": 2.000000, "Concept5227611248": 1.000000}, "anchor": {"e1": 1.000000}}
+}
+,{"name": "Concept5228010304",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.152960,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.154999,
+"std": 1,
+"n": 1,
+}},
+"_base": {"a": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227730096": 1.000000, "Concept5227597328": 1.000000, "Concept5227701984": 1.000000, "Concept5227644608": 1.000000, "Concept5227607232": 2.000000, "Concept5227731392": 1.000000, "Concept5227553472": 3.000000, "Concept5227785440": 1.000000, "Concept5227502304": 2.000000, "Concept5227592384": 2.000000, "Concept5227636864": 1.000000, "Concept5227747584": 1.000000, "Concept5227738656": 1.000000, "Concept5227707984": 1.000000, "Concept5227593376": 1.000000, "Concept5227570496": 1.000000, "Concept5227631440": 2.000000}, "anchor": {"a1": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.310675,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.172350,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"a1": 1.000000, "e1": 1.000000}, "context": {"Concept5227570496": 1.000000, "Concept5227593376": 1.000000, "Concept5227611248": 1.000000, "Concept5227730096": 1.000000, "Concept5227597328": 3.000000, "Concept5227731392": 1.000000, "Concept5227553472": 8.000000, "Concept5227720000": 1.000000, "Concept5227785440": 1.000000, "Concept5227502304": 5.000000, "Concept5227592384": 3.000000, "Concept5227720992": 1.000000, "Concept5227747584": 2.000000, "Concept5227631440": 3.000000, "Concept5227696528": 1.000000, "Concept5227626592": 1.000000, "Concept5227636864": 2.000000, "Concept5227738656": 1.000000, "Concept5227707984": 2.000000, "Concept5227701984": 2.000000, "Concept5227644608": 1.000000, "Concept5227607232": 4.000000}, "_variant": {"1": 2.000000}, "_base": {"a": 1.000000, "e": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.598777,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.090671,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"a2": 1.000000, "e1": 3.000000, "a1": 2.000000, "d2": 1.000000, "d1": 1.000000}, "context": {"Concept5227785440": 1.000000, "Concept5227701984": 2.000000, "Concept5227747584": 2.000000, "Concept5227636864": 4.000000, "Concept5227720992": 1.000000, "Concept5227731392": 1.000000, "Concept5227585728": 5.000000, "Concept5227738656": 3.000000, "Concept5227692960": 1.000000, "Concept5227784448": 1.000000, "Concept5227741184": 1.000000, "Concept5227644608": 3.000000, "Concept5227618816": 1.000000, "Concept5227616496": 1.000000, "Concept5227634336": 1.000000, "Concept5227607232": 5.000000, "Concept5227779600": 1.000000, "Concept5227697888": 1.000000, "Concept5227647712": 1.000000, "Concept5227617488": 1.000000, "Concept5227631440": 3.000000, "Concept5227727200": 1.000000, "Concept5227790864": 1.000000, "Concept5227696528": 6.000000, "Concept5227626592": 6.000000, "Concept5227641712": 1.000000, "Concept5227707984": 2.000000, "Concept5227664176": 1.000000, "Concept5227611248": 3.000000, "Concept5227485216": 10.000000, "Concept5227570496": 11.000000, "Concept5227730096": 1.000000, "Concept5227603712": 7.000000, "Concept5227608928": 1.000000, "Concept5227630448": 5.000000, "Concept5227590528": 3.000000, "Concept5227720000": 3.000000, "Concept5227559040": 13.000000, "Concept5227651600": 2.000000, "Concept5227718832": 3.000000, "Concept5227592384": 4.000000, "Concept5227553472": 20.000000, "Concept5227690848": 2.000000, "Concept5227593376": 5.000000, "Concept5227674992": 5.000000, "Concept5227597328": 8.000000, "Concept5227598320": 3.000000, "Concept5227502304": 12.000000, "Concept5227689856": 6.000000, "Concept5227601392": 3.000000, "Concept5227529552": 1.000000}, "_variant": {"2": 2.000000, "1": 6.000000}, "_base": {"a": 3.000000, "e": 3.000000, "d": 2.000000}}
+}
+,{"name": "Concept5227921312",
+"size": 17.000000,
+"children": [
+{"name": "Concept5227862272",
+"size": 2.000000,
+"children": [
+{"name": "Concept5227862848",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.124697,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.122841,
+"std": 1,
+"n": 1,
+}},
+"_base": {"c": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227741184": 1.000000, "Concept5227502304": 1.000000, "Concept5227592384": 1.000000, "Concept5227626592": 1.000000, "Concept5227570496": 2.000000, "Concept5227585728": 1.000000, "Concept5227674992": 1.000000, "Concept5227559040": 1.000000, "Concept5227696528": 1.000000, "Concept5227590528": 1.000000, "Concept5227647712": 1.000000, "Concept5227618816": 1.000000, "Concept5227601392": 1.000000, "Concept5227651600": 1.000000, "Concept5227553472": 2.000000, "Concept5227597328": 1.000000, "Concept5227529552": 1.000000, "Concept5227727200": 1.000000, "Concept5227738656": 1.000000, "Concept5227630448": 1.000000, "Concept5227636864": 1.000000}, "anchor": {"c1": 1.000000}}
+}
+,{"name": "Concept5227865168",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.124697,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.122841,
+"std": 1,
+"n": 1,
+}},
+"_base": {"e": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227553472": 1.000000, "Concept5227603712": 1.000000, "Concept5227607232": 1.000000, "Concept5227689856": 1.000000, "Concept5227790864": 1.000000, "Concept5227502304": 1.000000, "Concept5227592384": 1.000000, "Concept5227727200": 1.000000, "Concept5227529552": 1.000000, "Concept5227741184": 1.000000, "Concept5227570496": 2.000000, "Concept5227585728": 1.000000, "Concept5227674992": 1.000000, "Concept5227630448": 1.000000, "Concept5227559040": 2.000000, "Concept5227590528": 1.000000, "Concept5227485216": 1.000000, "Concept5227618816": 1.000000, "Concept5227601392": 1.000000, "Concept5227647712": 1.000000, "Concept5227651600": 1.000000}, "anchor": {"e2": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.235804,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.125598,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"e2": 1.000000, "c1": 1.000000}, "context": {"Concept5227603712": 1.000000, "Concept5227607232": 1.000000, "Concept5227689856": 1.000000, "Concept5227790864": 1.000000, "Concept5227485216": 1.000000, "Concept5227636864": 1.000000, "Concept5227590528": 2.000000, "Concept5227630448": 2.000000, "Concept5227738656": 1.000000, "Concept5227727200": 2.000000, "Concept5227741184": 2.000000, "Concept5227529552": 2.000000, "Concept5227597328": 1.000000, "Concept5227553472": 3.000000, "Concept5227651600": 2.000000, "Concept5227502304": 2.000000, "Concept5227601392": 2.000000, "Concept5227618816": 2.000000, "Concept5227647712": 2.000000, "Concept5227696528": 1.000000, "Concept5227559040": 3.000000, "Concept5227592384": 2.000000, "Concept5227674992": 2.000000, "Concept5227585728": 2.000000, "Concept5227570496": 4.000000, "Concept5227626592": 1.000000}, "_variant": {"2": 1.000000, "1": 1.000000}, "_base": {"e": 1.000000, "c": 1.000000}}
+}
+,{"name": "Concept5227923536",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.142572,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.142968,
+"std": 1,
+"n": 1,
+}},
+"_base": {"a": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227592384": 1.000000, "Concept5227502304": 1.000000, "Concept5227634336": 1.000000, "Concept5227617488": 1.000000, "Concept5227559040": 1.000000, "Concept5227696528": 1.000000, "Concept5227553472": 1.000000, "Concept5227697888": 1.000000, "Concept5227590528": 1.000000, "Concept5227616496": 1.000000, "Concept5227647712": 1.000000, "Concept5227601392": 1.000000, "Concept5227626592": 1.000000, "Concept5227690848": 1.000000, "Concept5227692960": 1.000000, "Concept5227570496": 3.000000, "Concept5227698880": 1.000000, "Concept5227593376": 3.000000, "Concept5227644608": 1.000000}, "anchor": {"a1": 1.000000}}
+}
+,{"name": "Concept5227924416",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.153134,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.155202,
+"std": 1,
+"n": 1,
+}},
+"_base": {"d": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227644608": 1.000000, "Concept5227590528": 1.000000, "Concept5227592384": 1.000000, "Concept5227634336": 1.000000, "Concept5227617488": 1.000000, "Concept5227559040": 1.000000, "Concept5227630448": 1.000000, "Concept5227697888": 1.000000, "Concept5227601392": 1.000000, "Concept5227647712": 1.000000, "Concept5227692960": 1.000000, "Concept5227570496": 4.000000, "Concept5227698880": 1.000000, "Concept5227593376": 3.000000, "Concept5227700992": 1.000000, "Concept5227585728": 1.000000, "Concept5227674992": 1.000000, "Concept5227616496": 1.000000}, "anchor": {"d1": 1.000000}}
+}
+,{"name": "Concept5227925984",
+"size": 3.000000,
+"children": [
+{"name": "Concept5227924720",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.123487,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.118417,
+"std": 1,
+"n": 1,
+}},
+"_base": {"a": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227593376": 1.000000, "Concept5227553472": 2.000000, "Concept5227697888": 1.000000, "Concept5227701984": 1.000000, "Concept5227700992": 1.000000, "Concept5227607232": 1.000000, "Concept5227644608": 1.000000, "Concept5227559040": 2.000000, "Concept5227696528": 1.000000, "Concept5227612240": 1.000000, "Concept5227601392": 1.000000, "Concept5227704096": 1.000000, "Concept5227590528": 2.000000, "Concept5227502304": 2.000000, "Concept5227626592": 1.000000, "Concept5227570496": 2.000000, "Concept5227674992": 1.000000, "Concept5227585728": 1.000000, "Concept5227630448": 1.000000}, "anchor": {"a1": 1.000000}}
+}
+,{"name": "Concept5227926960",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.146518,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.147508,
+"std": 1,
+"n": 1,
+}},
+"_base": {"c": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227607232": 1.000000, "Concept5227697888": 1.000000, "Concept5227553472": 2.000000, "Concept5227701984": 1.000000, "Concept5227592384": 1.000000, "Concept5227502304": 2.000000, "Concept5227698880": 1.000000, "Concept5227696528": 1.000000, "Concept5227559040": 3.000000, "Concept5227612240": 1.000000, "Concept5227601392": 1.000000, "Concept5227704096": 1.000000, "Concept5227705088": 1.000000, "Concept5227621168": 1.000000, "Concept5227647712": 1.000000, "Concept5227793792": 1.000000, "Concept5227590528": 2.000000, "Concept5227626592": 1.000000}, "anchor": {"c1": 1.000000}}
+}
+,{"name": "Concept5227922880",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.160401,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.168327,
+"std": 1,
+"n": 1,
+}},
+"_base": {"e": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227707984": 1.000000, "Concept5227612240": 1.000000, "Concept5227559040": 3.000000, "Concept5227570496": 1.000000, "Concept5227631440": 1.000000, "Concept5227644608": 1.000000, "Concept5227592384": 2.000000, "Concept5227647712": 1.000000, "Concept5227705088": 1.000000, "Concept5227621168": 1.000000, "Concept5227601392": 1.000000, "Concept5227704096": 1.000000, "Concept5227593376": 1.000000, "Concept5227698880": 1.000000, "Concept5227700992": 1.000000, "Concept5227793792": 1.000000, "Concept5227590528": 2.000000, "Concept5227697888": 1.000000}, "anchor": {"e1": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.372092,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.140316,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"e1": 1.000000, "c1": 1.000000, "a1": 1.000000}, "context": {"Concept5227707984": 1.000000, "Concept5227631440": 1.000000, "Concept5227698880": 2.000000, "Concept5227590528": 6.000000, "Concept5227630448": 1.000000, "Concept5227621168": 2.000000, "Concept5227585728": 1.000000, "Concept5227793792": 2.000000, "Concept5227592384": 3.000000, "Concept5227674992": 1.000000, "Concept5227570496": 3.000000, "Concept5227626592": 2.000000, "Concept5227601392": 3.000000, "Concept5227502304": 4.000000, "Concept5227705088": 2.000000, "Concept5227697888": 3.000000, "Concept5227700992": 2.000000, "Concept5227647712": 2.000000, "Concept5227704096": 3.000000, "Concept5227559040": 8.000000, "Concept5227612240": 3.000000, "Concept5227696528": 2.000000, "Concept5227644608": 2.000000, "Concept5227607232": 2.000000, "Concept5227701984": 2.000000, "Concept5227553472": 4.000000, "Concept5227593376": 2.000000}, "_variant": {"1": 3.000000}, "_base": {"e": 1.000000, "c": 1.000000, "a": 1.000000}}
+}
+,{"name": "Concept5227923184",
+"size": 2.000000,
+"children": [
+{"name": "Concept5227925296",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.146518,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.147508,
+"std": 1,
+"n": 1,
+}},
+"_base": {"f": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227701984": 1.000000, "Concept5227700992": 1.000000, "Concept5227585728": 1.000000, "Concept5227592384": 1.000000, "Concept5227502304": 2.000000, "Concept5227644608": 1.000000, "Concept5227607232": 1.000000, "Concept5227553472": 2.000000, "Concept5227647712": 1.000000, "Concept5227674992": 1.000000, "Concept5227696528": 1.000000, "Concept5227626592": 1.000000, "Concept5227570496": 3.000000, "Concept5227593376": 2.000000, "Concept5227698880": 1.000000, "Concept5227617488": 1.000000, "Concept5227634336": 1.000000, "Concept5227630448": 1.000000}, "anchor": {"f1": 1.000000}}
+}
+,{"name": "Concept5227928416",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.147542,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.152771,
+"std": 1,
+"n": 1,
+}},
+"_base": {"a": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227615136": 1.000000, "Concept5227631440": 1.000000, "Concept5227570496": 1.000000, "Concept5227707984": 1.000000, "Concept5227559040": 1.000000, "Concept5227793792": 1.000000, "Concept5227633584": 1.000000, "Concept5227553472": 1.000000, "Concept5227701984": 1.000000, "Concept5227607232": 1.000000, "Concept5227644608": 1.000000, "Concept5227700992": 1.000000, "Concept5227621168": 1.000000, "Concept5227837408": 1.000000, "Concept5227647712": 1.000000, "Concept5227705088": 1.000000, "Concept5227698880": 1.000000, "Concept5227593376": 1.000000, "Concept5227502304": 1.000000, "Concept5227592384": 3.000000}, "anchor": {"a1": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.255749,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.139412,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"a1": 1.000000, "f1": 1.000000}, "context": {"Concept5227615136": 1.000000, "Concept5227631440": 1.000000, "Concept5227707984": 1.000000, "Concept5227559040": 1.000000, "Concept5227630448": 1.000000, "Concept5227634336": 1.000000, "Concept5227700992": 2.000000, "Concept5227647712": 2.000000, "Concept5227617488": 1.000000, "Concept5227698880": 2.000000, "Concept5227593376": 3.000000, "Concept5227570496": 4.000000, "Concept5227626592": 1.000000, "Concept5227696528": 1.000000, "Concept5227701984": 2.000000, "Concept5227837408": 1.000000, "Concept5227585728": 1.000000, "Concept5227621168": 1.000000, "Concept5227705088": 1.000000, "Concept5227644608": 2.000000, "Concept5227607232": 2.000000, "Concept5227553472": 3.000000, "Concept5227674992": 1.000000, "Concept5227592384": 4.000000, "Concept5227502304": 3.000000, "Concept5227793792": 1.000000, "Concept5227633584": 1.000000}, "_variant": {"1": 2.000000}, "_base": {"a": 1.000000, "f": 1.000000}}
+}
+,{"name": "Concept5227927648",
+"size": 8.000000,
+"children": [
+{"name": "Concept5227925600",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.104128,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.098034,
+"std": 1,
+"n": 1,
+}},
+"_base": {"c": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227603712": 1.000000, "Concept5227689856": 1.000000, "Concept5227840304": 1.000000, "Concept5227590528": 1.000000, "Concept5227615136": 1.000000, "Concept5227485216": 1.000000, "Concept5227633584": 1.000000, "Concept5227631440": 1.000000, "Concept5227707984": 1.000000, "Concept5227559040": 2.000000, "Concept5227612240": 1.000000, "Concept5227704096": 1.000000, "Concept5227837408": 1.000000, "Concept5227592384": 2.000000, "Concept5227502304": 1.000000, "Concept5227570496": 1.000000, "Concept5227593376": 1.000000, "Concept5227644608": 1.000000, "Concept5227607232": 1.000000, "Concept5227553472": 1.000000, "Concept5227701984": 1.000000, "Concept5227700992": 1.000000}, "anchor": {"c1": 1.000000}}
+}
+,{"name": "Concept5227928720",
+"size": 2.000000,
+"children": [
+{"name": "Concept5227930080",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.109380,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.100959,
+"std": 1,
+"n": 1,
+}},
+"_base": {"e": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227712048": 1.000000, "Concept5227603712": 1.000000, "Concept5227689856": 1.000000, "Concept5227840304": 1.000000, "Concept5227590528": 2.000000, "Concept5227615136": 1.000000, "Concept5227485216": 1.000000, "Concept5227793792": 1.000000, "Concept5227633584": 1.000000, "Concept5227559040": 4.000000, "Concept5227612240": 2.000000, "Concept5227705088": 1.000000, "Concept5227837408": 1.000000, "Concept5227621168": 1.000000, "Concept5227704096": 1.000000, "Concept5227553472": 1.000000, "Concept5227502304": 1.000000, "Concept5227592384": 1.000000, "Concept5227607232": 1.000000, "Concept5227701984": 1.000000}, "anchor": {"e2": 1.000000}}
+}
+,{"name": "Concept5227931344",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.130114,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.125570,
+"std": 1,
+"n": 1,
+}},
+"_base": {"a": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227603712": 1.000000, "Concept5227553472": 1.000000, "Concept5227689856": 1.000000, "Concept5227713040": 1.000000, "Concept5227705088": 1.000000, "Concept5227621168": 1.000000, "Concept5227704096": 1.000000, "Concept5227712048": 1.000000, "Concept5227631440": 1.000000, "Concept5227641712": 1.000000, "Concept5227707984": 1.000000, "Concept5227485216": 1.000000, "Concept5227592384": 1.000000, "Concept5227502304": 1.000000, "Concept5227793792": 1.000000, "Concept5227559040": 4.000000, "Concept5227612240": 2.000000, "Concept5227840304": 1.000000, "Concept5227590528": 2.000000}, "anchor": {"a2": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.232213,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.119076,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"a2": 1.000000, "e2": 1.000000}, "context": {"Concept5227713040": 1.000000, "Concept5227704096": 2.000000, "Concept5227641712": 1.000000, "Concept5227631440": 1.000000, "Concept5227707984": 1.000000, "Concept5227837408": 1.000000, "Concept5227701984": 1.000000, "Concept5227607232": 1.000000, "Concept5227592384": 2.000000, "Concept5227502304": 2.000000, "Concept5227553472": 2.000000, "Concept5227621168": 2.000000, "Concept5227705088": 2.000000, "Concept5227612240": 4.000000, "Concept5227559040": 8.000000, "Concept5227793792": 2.000000, "Concept5227633584": 1.000000, "Concept5227485216": 2.000000, "Concept5227603712": 2.000000, "Concept5227615136": 1.000000, "Concept5227590528": 4.000000, "Concept5227840304": 2.000000, "Concept5227689856": 2.000000, "Concept5227712048": 2.000000}, "_variant": {"2": 2.000000}, "_base": {"a": 1.000000, "e": 1.000000}}
+}
+,{"name": "Concept5227931648",
+"size": 4.000000,
+"children": [
+{"name": "Concept5227922576",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.124697,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.122841,
+"std": 1,
+"n": 1,
+}},
+"_base": {"c": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227570496": 1.000000, "Concept5227712048": 1.000000, "Concept5227715152": 1.000000, "Concept5227590528": 1.000000, "Concept5227529552": 1.000000, "Concept5227624064": 1.000000, "Concept5227553472": 1.000000, "Concept5227713040": 1.000000, "Concept5227615136": 1.000000, "Concept5227502304": 1.000000, "Concept5227592384": 2.000000, "Concept5227631440": 1.000000, "Concept5227641712": 1.000000, "Concept5227707984": 1.000000, "Concept5227612240": 1.000000, "Concept5227559040": 2.000000, "Concept5227705088": 1.000000, "Concept5227837408": 1.000000, "Concept5227621168": 1.000000, "Concept5227633584": 1.000000, "Concept5227793792": 1.000000}, "anchor": {"c1": 1.000000}}
+}
+,{"name": "Concept5227930384",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.104128,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.098034,
+"std": 1,
+"n": 1,
+}},
+"_base": {"e": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227570496": 2.000000, "Concept5227603712": 1.000000, "Concept5227715152": 1.000000, "Concept5227595616": 1.000000, "Concept5227529552": 1.000000, "Concept5227716512": 1.000000, "Concept5227624064": 1.000000, "Concept5227553472": 1.000000, "Concept5227559040": 1.000000, "Concept5227713040": 1.000000, "Concept5227689856": 1.000000, "Concept5227585728": 1.000000, "Concept5227840304": 1.000000, "Concept5227615136": 1.000000, "Concept5227485216": 1.000000, "Concept5227633584": 1.000000, "Concept5227837408": 1.000000, "Concept5227502304": 1.000000, "Concept5227592384": 2.000000, "Concept5227631440": 1.000000, "Concept5227641712": 1.000000, "Concept5227707984": 1.000000}, "anchor": {"e1": 1.000000}}
+}
+,{"name": "Concept5227931952",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.092320,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.083892,
+"std": 1,
+"n": 1,
+}},
+"_base": {"a": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227529552": 1.000000, "Concept5227570496": 2.000000, "Concept5227712048": 1.000000, "Concept5227661440": 1.000000, "Concept5227624064": 1.000000, "Concept5227716512": 1.000000, "Concept5227595616": 1.000000, "Concept5227715152": 1.000000, "Concept5227590528": 1.000000, "Concept5227559040": 3.000000, "Concept5227612240": 1.000000, "Concept5227603712": 1.000000, "Concept5227689856": 1.000000, "Concept5227808240": 1.000000, "Concept5227585728": 1.000000, "Concept5227840304": 1.000000, "Concept5227592384": 1.000000, "Concept5227615136": 1.000000, "Concept5227485216": 1.000000, "Concept5227633584": 1.000000, "Concept5227621168": 1.000000, "Concept5227837408": 1.000000}, "anchor": {"a1": 1.000000}}
+}
+,{"name": "Concept5227932256",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.102917,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.094430,
+"std": 1,
+"n": 1,
+}},
+"_base": {"c": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227598320": 1.000000, "Concept5227590528": 1.000000, "Concept5227621168": 1.000000, "Concept5227570496": 1.000000, "Concept5227595616": 1.000000, "Concept5227661440": 1.000000, "Concept5227718832": 1.000000, "Concept5227716512": 1.000000, "Concept5227553472": 1.000000, "Concept5227502304": 1.000000, "Concept5227641712": 1.000000, "Concept5227712048": 1.000000, "Concept5227559040": 4.000000, "Concept5227612240": 1.000000, "Concept5227485216": 2.000000, "Concept5227603712": 1.000000, "Concept5227840304": 1.000000, "Concept5227808240": 1.000000, "Concept5227585728": 1.000000, "Concept5227713040": 1.000000, "Concept5227689856": 1.000000}, "anchor": {"c1": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.332624,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.090907,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"a1": 1.000000, "e1": 1.000000, "c1": 2.000000}, "context": {"Concept5227718832": 1.000000, "Concept5227661440": 2.000000, "Concept5227808240": 2.000000, "Concept5227716512": 3.000000, "Concept5227598320": 1.000000, "Concept5227689856": 3.000000, "Concept5227840304": 3.000000, "Concept5227793792": 1.000000, "Concept5227633584": 3.000000, "Concept5227585728": 3.000000, "Concept5227621168": 3.000000, "Concept5227837408": 3.000000, "Concept5227705088": 1.000000, "Concept5227559040": 10.000000, "Concept5227612240": 3.000000, "Concept5227707984": 2.000000, "Concept5227641712": 3.000000, "Concept5227631440": 2.000000, "Concept5227595616": 3.000000, "Concept5227592384": 5.000000, "Concept5227502304": 3.000000, "Concept5227485216": 4.000000, "Concept5227603712": 3.000000, "Concept5227615136": 3.000000, "Concept5227713040": 3.000000, "Concept5227553472": 3.000000, "Concept5227624064": 3.000000, "Concept5227715152": 3.000000, "Concept5227590528": 3.000000, "Concept5227529552": 3.000000, "Concept5227712048": 3.000000, "Concept5227570496": 6.000000}, "_variant": {"1": 4.000000}, "_base": {"e": 1.000000, "a": 1.000000, "c": 2.000000}}
+}
+,{"name": "Concept5227932560",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.113081,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.107368,
+"std": 1,
+"n": 1,
+}},
+"_base": {"e": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227720000": 1.000000, "Concept5227485216": 1.000000, "Concept5227598320": 1.000000, "Concept5227715152": 1.000000, "Concept5227621168": 1.000000, "Concept5227611248": 1.000000, "Concept5227661440": 1.000000, "Concept5227808240": 1.000000, "Concept5227570496": 1.000000, "Concept5227597328": 1.000000, "Concept5227529552": 1.000000, "Concept5227718832": 1.000000, "Concept5227624064": 1.000000, "Concept5227553472": 2.000000, "Concept5227502304": 1.000000, "Concept5227641712": 1.000000, "Concept5227612240": 1.000000, "Concept5227559040": 3.000000, "Concept5227713040": 1.000000, "Concept5227590528": 1.000000, "Concept5227712048": 1.000000}, "anchor": {"e2": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.568316,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.084636,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"a1": 1.000000, "e1": 1.000000, "a2": 1.000000, "e2": 2.000000, "c1": 3.000000}, "context": {"Concept5227597328": 1.000000, "Concept5227718832": 2.000000, "Concept5227661440": 3.000000, "Concept5227808240": 3.000000, "Concept5227716512": 3.000000, "Concept5227529552": 4.000000, "Concept5227624064": 4.000000, "Concept5227712048": 6.000000, "Concept5227793792": 3.000000, "Concept5227585728": 3.000000, "Concept5227621168": 6.000000, "Concept5227713040": 5.000000, "Concept5227700992": 1.000000, "Concept5227837408": 5.000000, "Concept5227701984": 2.000000, "Concept5227553472": 8.000000, "Concept5227607232": 2.000000, "Concept5227644608": 1.000000, "Concept5227593376": 1.000000, "Concept5227570496": 8.000000, "Concept5227502304": 7.000000, "Concept5227595616": 3.000000, "Concept5227592384": 9.000000, "Concept5227705088": 3.000000, "Concept5227641712": 5.000000, "Concept5227704096": 3.000000, "Concept5227612240": 9.000000, "Concept5227559040": 23.000000, "Concept5227707984": 4.000000, "Concept5227631440": 4.000000, "Concept5227633584": 5.000000, "Concept5227611248": 1.000000, "Concept5227485216": 8.000000, "Concept5227603712": 6.000000, "Concept5227615136": 5.000000, "Concept5227720000": 1.000000, "Concept5227715152": 4.000000, "Concept5227590528": 9.000000, "Concept5227840304": 6.000000, "Concept5227598320": 2.000000, "Concept5227689856": 6.000000}, "_variant": {"2": 3.000000, "1": 5.000000}, "_base": {"e": 3.000000, "a": 2.000000, "c": 3.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.849017,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.066026,
+"std": 1,
+"n": 1,
+}},
+"_base": {"e": 5.000000, "c": 5.000000, "a": 5.000000, "f": 1.000000, "d": 1.000000}, "_variant": {"2": 4.000000, "1": 13.000000}, "context": {"Concept5227720000": 1.000000, "Concept5227611248": 1.000000, "Concept5227661440": 3.000000, "Concept5227808240": 3.000000, "Concept5227718832": 2.000000, "Concept5227595616": 3.000000, "Concept5227624064": 4.000000, "Concept5227713040": 5.000000, "Concept5227641712": 5.000000, "Concept5227633584": 6.000000, "Concept5227707984": 6.000000, "Concept5227601392": 7.000000, "Concept5227689856": 7.000000, "Concept5227705088": 6.000000, "Concept5227840304": 6.000000, "Concept5227793792": 6.000000, "Concept5227644608": 7.000000, "Concept5227741184": 2.000000, "Concept5227618816": 2.000000, "Concept5227651600": 2.000000, "Concept5227837408": 6.000000, "Concept5227597328": 2.000000, "Concept5227529552": 6.000000, "Concept5227727200": 2.000000, "Concept5227716512": 3.000000, "Concept5227631440": 6.000000, "Concept5227585728": 8.000000, "Concept5227692960": 2.000000, "Concept5227738656": 1.000000, "Concept5227612240": 12.000000, "Concept5227485216": 9.000000, "Concept5227790864": 1.000000, "Concept5227690848": 1.000000, "Concept5227615136": 6.000000, "Concept5227603712": 7.000000, "Concept5227607232": 7.000000, "Concept5227634336": 3.000000, "Concept5227696528": 5.000000, "Concept5227559040": 37.000000, "Concept5227616496": 2.000000, "Concept5227715152": 4.000000, "Concept5227626592": 5.000000, "Concept5227570496": 26.000000, "Concept5227698880": 6.000000, "Concept5227593376": 12.000000, "Concept5227704096": 6.000000, "Concept5227636864": 1.000000, "Concept5227598320": 2.000000, "Concept5227502304": 17.000000, "Concept5227674992": 5.000000, "Concept5227553472": 19.000000, "Concept5227592384": 20.000000, "Concept5227700992": 6.000000, "Concept5227617488": 3.000000, "Concept5227697888": 5.000000, "Concept5227647712": 8.000000, "Concept5227712048": 6.000000, "Concept5227590528": 19.000000, "Concept5227630448": 5.000000, "Concept5227621168": 9.000000, "Concept5227701984": 6.000000}, "anchor": {"e1": 2.000000, "e2": 3.000000, "a2": 1.000000, "d1": 1.000000, "a1": 4.000000, "f1": 1.000000, "c1": 5.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 1.032723,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.057529,
+"std": 1,
+"n": 1,
+}},
+"_base": {"d": 3.000000, "e": 8.000000, "f": 1.000000, "c": 5.000000, "a": 8.000000}, "_variant": {"1": 19.000000, "2": 6.000000}, "context": {"Concept5227747584": 2.000000, "Concept5227701984": 8.000000, "Concept5227785440": 1.000000, "Concept5227621168": 9.000000, "Concept5227700992": 6.000000, "Concept5227698880": 6.000000, "Concept5227631440": 9.000000, "Concept5227716512": 3.000000, "Concept5227793792": 6.000000, "Concept5227840304": 6.000000, "Concept5227707984": 8.000000, "Concept5227633584": 6.000000, "Concept5227713040": 5.000000, "Concept5227624064": 4.000000, "Concept5227808240": 3.000000, "Concept5227705088": 6.000000, "Concept5227601392": 10.000000, "Concept5227689856": 13.000000, "Concept5227502304": 29.000000, "Concept5227598320": 5.000000, "Concept5227607232": 12.000000, "Concept5227634336": 4.000000, "Concept5227618816": 3.000000, "Concept5227644608": 10.000000, "Concept5227741184": 3.000000, "Concept5227529552": 7.000000, "Concept5227731392": 1.000000, "Concept5227692960": 3.000000, "Concept5227738656": 4.000000, "Concept5227585728": 13.000000, "Concept5227837408": 6.000000, "Concept5227597328": 10.000000, "Concept5227718832": 5.000000, "Concept5227595616": 3.000000, "Concept5227674992": 10.000000, "Concept5227553472": 39.000000, "Concept5227592384": 24.000000, "Concept5227593376": 17.000000, "Concept5227615136": 6.000000, "Concept5227690848": 3.000000, "Concept5227651600": 4.000000, "Concept5227559040": 50.000000, "Concept5227570496": 37.000000, "Concept5227611248": 4.000000, "Concept5227612240": 12.000000, "Concept5227485216": 19.000000, "Concept5227720000": 4.000000, "Concept5227712048": 6.000000, "Concept5227590528": 22.000000, "Concept5227630448": 10.000000, "Concept5227608928": 1.000000, "Concept5227641712": 6.000000, "Concept5227664176": 1.000000, "Concept5227661440": 3.000000, "Concept5227715152": 4.000000, "Concept5227626592": 11.000000, "Concept5227696528": 11.000000, "Concept5227790864": 2.000000, "Concept5227727200": 3.000000, "Concept5227720992": 1.000000, "Concept5227704096": 6.000000, "Concept5227636864": 5.000000, "Concept5227784448": 1.000000, "Concept5227617488": 4.000000, "Concept5227697888": 6.000000, "Concept5227647712": 9.000000, "Concept5227616496": 3.000000, "Concept5227779600": 1.000000, "Concept5227730096": 1.000000, "Concept5227603712": 14.000000}, "anchor": {"c1": 5.000000, "f1": 1.000000, "e2": 3.000000, "a2": 2.000000, "d1": 2.000000, "d2": 1.000000, "a1": 6.000000, "e1": 5.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 1.283403,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.045036,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"f1": 1.000000, "b1": 1.000000, "f2": 3.000000, "e2": 5.000000, "d2": 2.000000, "a2": 5.000000, "d1": 3.000000, "a1": 7.000000, "e1": 7.000000, "c1": 9.000000}, "context": {"Concept5227747584": 2.000000, "Concept5227736512": 2.000000, "Concept5227757584": 2.000000, "Concept5227754368": 3.000000, "Concept5227762912": 6.000000, "Concept5227685216": 5.000000, "Concept5227788336": 4.000000, "Concept5227777664": 1.000000, "Concept5227614384": 1.000000, "Concept5227780592": 1.000000, "Concept5227640720": 1.000000, "Concept5227661440": 3.000000, "Concept5227808240": 3.000000, "Concept5227624064": 4.000000, "Concept5227713040": 10.000000, "Concept5227707984": 8.000000, "Concept5227716512": 3.000000, "Concept5227631440": 12.000000, "Concept5227840304": 6.000000, "Concept5227793792": 12.000000, "Concept5227701984": 8.000000, "Concept5227700992": 6.000000, "Concept5227697888": 6.000000, "Concept5227641712": 12.000000, "Concept5227633584": 8.000000, "Concept5227593376": 37.000000, "Concept5227779600": 2.000000, "Concept5227616496": 8.000000, "Concept5227634336": 6.000000, "Concept5227607232": 22.000000, "Concept5227620176": 5.000000, "Concept5227790864": 12.000000, "Concept5227617488": 4.000000, "Concept5227647712": 15.000000, "Concept5227727200": 9.000000, "Concept5227784448": 9.000000, "Concept5227669088": 1.000000, "Concept5227644608": 23.000000, "Concept5227741184": 6.000000, "Concept5227618816": 12.000000, "Concept5227529552": 16.000000, "Concept5227705088": 12.000000, "Concept5227689856": 14.000000, "Concept5227601392": 11.000000, "Concept5227598320": 5.000000, "Concept5227502304": 55.000000, "Concept5227731392": 1.000000, "Concept5227692960": 3.000000, "Concept5227585728": 15.000000, "Concept5227738656": 4.000000, "Concept5227715152": 4.000000, "Concept5227626592": 21.000000, "Concept5227664176": 6.000000, "Concept5227611248": 11.000000, "Concept5227612240": 18.000000, "Concept5227485216": 25.000000, "Concept5227570496": 68.000000, "Concept5227690848": 8.000000, "Concept5227615136": 8.000000, "Concept5227730096": 1.000000, "Concept5227792800": 6.000000, "Concept5227603712": 20.000000, "Concept5227608928": 9.000000, "Concept5227630448": 11.000000, "Concept5227712048": 6.000000, "Concept5227590528": 34.000000, "Concept5227720000": 4.000000, "Concept5227696528": 13.000000, "Concept5227698880": 6.000000, "Concept5227834880": 2.000000, "Concept5227559040": 75.000000, "Concept5227651600": 4.000000, "Concept5227775136": 5.000000, "Concept5227595616": 3.000000, "Concept5227718832": 5.000000, "Concept5227621168": 16.000000, "Concept5227785440": 9.000000, "Concept5227592384": 35.000000, "Concept5227553472": 80.000000, "Concept5227673632": 6.000000, "Concept5227682816": 3.000000, "Concept5227674992": 11.000000, "Concept5227837408": 6.000000, "Concept5227597328": 25.000000, "Concept5227720992": 1.000000, "Concept5227704096": 6.000000, "Concept5227636864": 5.000000}, "_variant": {"2": 15.000000, "1": 28.000000}, "_base": {"b": 1.000000, "e": 12.000000, "f": 4.000000, "c": 9.000000, "a": 12.000000, "d": 5.000000}}
+}
+,{"name": "Concept5227883552",
+"size": 55.000000,
+"children": [
+{"name": "Concept5227885776",
+"size": 17.000000,
+"children": [
+{"name": "Concept5227879488",
+"size": 7.000000,
+"children": [
+{"name": "Concept5227846224",
+"size": 5.000000,
+"children": [
+{"name": "Concept5227881328",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.124697,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.122841,
+"std": 1,
+"n": 1,
+}},
+"_base": {"b": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227590528": 1.000000, "Concept5227705088": 1.000000, "Concept5227601392": 1.000000, "Concept5227621168": 1.000000, "Concept5227559040": 2.000000, "Concept5227757584": 1.000000, "Concept5227697888": 1.000000, "Concept5227553472": 1.000000, "Concept5227733984": 1.000000, "Concept5227634336": 1.000000, "Concept5227750688": 1.000000, "Concept5227597328": 1.000000, "Concept5227730096": 1.000000, "Concept5227631440": 1.000000, "Concept5227570496": 2.000000, "Concept5227585728": 1.000000, "Concept5227592384": 1.000000, "Concept5227636864": 1.000000, "Concept5227630448": 1.000000, "Concept5227593376": 1.000000, "Concept5227766800": 1.000000}, "anchor": {"b2": 1.000000}}
+}
+,{"name": "Concept5227884016",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.140076,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.140115,
+"std": 1,
+"n": 1,
+}},
+"_base": {"c": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227585728": 1.000000, "Concept5227640720": 1.000000, "Concept5227697888": 1.000000, "Concept5227559040": 3.000000, "Concept5227620176": 1.000000, "Concept5227757584": 1.000000, "Concept5227777664": 1.000000, "Concept5227654336": 1.000000, "Concept5227631440": 1.000000, "Concept5227570496": 2.000000, "Concept5227705088": 1.000000, "Concept5227601392": 1.000000, "Concept5227621168": 1.000000, "Concept5227750688": 1.000000, "Concept5227634336": 1.000000, "Concept5227592384": 1.000000, "Concept5227730096": 1.000000, "Concept5227590528": 2.000000, "Concept5227593376": 1.000000}, "anchor": {"c2": 1.000000}}
+}
+,{"name": "Concept5227883168",
+"size": 3.000000,
+"children": [
+{"name": "Concept5227882864",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.117034,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.111539,
+"std": 1,
+"n": 1,
+}},
+"_base": {"f": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227502304": 1.000000, "Concept5227636864": 1.000000, "Concept5227597328": 1.000000, "Concept5227601392": 1.000000, "Concept5227713040": 1.000000, "Concept5227559040": 2.000000, "Concept5227640720": 1.000000, "Concept5227585728": 1.000000, "Concept5227697888": 1.000000, "Concept5227553472": 2.000000, "Concept5227590528": 2.000000, "Concept5227641712": 1.000000, "Concept5227654336": 1.000000, "Concept5227570496": 2.000000, "Concept5227733984": 1.000000, "Concept5227757584": 1.000000, "Concept5227777664": 1.000000, "Concept5227620176": 1.000000, "Concept5227593376": 1.000000, "Concept5227634336": 1.000000}, "anchor": {"f1": 1.000000}}
+}
+,{"name": "Concept5227884320",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.110581,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.104745,
+"std": 1,
+"n": 1,
+}},
+"_base": {"b": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227593376": 1.000000, "Concept5227502304": 1.000000, "Concept5227570496": 2.000000, "Concept5227690848": 1.000000, "Concept5227713040": 1.000000, "Concept5227585728": 1.000000, "Concept5227640720": 1.000000, "Concept5227705088": 1.000000, "Concept5227621168": 1.000000, "Concept5227750688": 1.000000, "Concept5227597328": 1.000000, "Concept5227636864": 1.000000, "Concept5227559040": 2.000000, "Concept5227590528": 1.000000, "Concept5227553472": 2.000000, "Concept5227620176": 1.000000, "Concept5227644608": 1.000000, "Concept5227777664": 1.000000, "Concept5227733984": 1.000000, "Concept5227641712": 1.000000, "Concept5227654336": 1.000000}, "anchor": {"b1": 1.000000}}
+}
+,{"name": "Concept5227880176",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.113081,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.107368,
+"std": 1,
+"n": 1,
+}},
+"_base": {"c": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227645600": 1.000000, "Concept5227590528": 1.000000, "Concept5227644608": 1.000000, "Concept5227570496": 1.000000, "Concept5227593376": 1.000000, "Concept5227485216": 1.000000, "Concept5227502304": 1.000000, "Concept5227641712": 1.000000, "Concept5227713040": 1.000000, "Concept5227690848": 1.000000, "Concept5227705088": 1.000000, "Concept5227621168": 1.000000, "Concept5227601392": 1.000000, "Concept5227559040": 3.000000, "Concept5227598320": 1.000000, "Concept5227750688": 1.000000, "Concept5227697888": 1.000000, "Concept5227553472": 2.000000, "Concept5227597328": 1.000000, "Concept5227636864": 1.000000, "Concept5227733984": 1.000000}, "anchor": {"c1": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.307478,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.110626,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"c1": 1.000000, "b1": 1.000000, "f1": 1.000000}, "context": {"Concept5227645600": 1.000000, "Concept5227485216": 1.000000, "Concept5227705088": 2.000000, "Concept5227777664": 2.000000, "Concept5227750688": 2.000000, "Concept5227634336": 1.000000, "Concept5227690848": 2.000000, "Concept5227593376": 3.000000, "Concept5227636864": 3.000000, "Concept5227644608": 2.000000, "Concept5227621168": 2.000000, "Concept5227585728": 2.000000, "Concept5227620176": 2.000000, "Concept5227757584": 1.000000, "Concept5227733984": 3.000000, "Concept5227570496": 5.000000, "Concept5227654336": 2.000000, "Concept5227641712": 3.000000, "Concept5227553472": 6.000000, "Concept5227713040": 3.000000, "Concept5227697888": 2.000000, "Concept5227590528": 4.000000, "Concept5227598320": 1.000000, "Concept5227640720": 2.000000, "Concept5227559040": 7.000000, "Concept5227597328": 3.000000, "Concept5227502304": 3.000000, "Concept5227601392": 2.000000}, "_variant": {"1": 3.000000}, "_base": {"b": 1.000000, "c": 1.000000, "f": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.486472,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.113075,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"f1": 1.000000, "c1": 1.000000, "c2": 1.000000, "b1": 1.000000, "b2": 1.000000}, "context": {"Concept5227645600": 1.000000, "Concept5227485216": 1.000000, "Concept5227641712": 3.000000, "Concept5227598320": 1.000000, "Concept5227640720": 3.000000, "Concept5227766800": 1.000000, "Concept5227690848": 2.000000, "Concept5227593376": 5.000000, "Concept5227590528": 7.000000, "Concept5227630448": 1.000000, "Concept5227644608": 2.000000, "Concept5227636864": 4.000000, "Concept5227592384": 2.000000, "Concept5227620176": 3.000000, "Concept5227621168": 4.000000, "Concept5227585728": 4.000000, "Concept5227570496": 9.000000, "Concept5227654336": 3.000000, "Concept5227631440": 2.000000, "Concept5227559040": 12.000000, "Concept5227730096": 2.000000, "Concept5227597328": 4.000000, "Concept5227777664": 3.000000, "Concept5227750688": 4.000000, "Concept5227634336": 3.000000, "Concept5227733984": 4.000000, "Concept5227553472": 7.000000, "Concept5227713040": 3.000000, "Concept5227697888": 4.000000, "Concept5227757584": 3.000000, "Concept5227502304": 3.000000, "Concept5227601392": 4.000000, "Concept5227705088": 4.000000}, "_variant": {"1": 3.000000, "2": 2.000000}, "_base": {"f": 1.000000, "c": 2.000000, "b": 2.000000}}
+}
+,{"name": "Concept5227982176",
+"size": 2.000000,
+"children": [
+{"name": "Concept5227847760",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.113081,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.107368,
+"std": 1,
+"n": 1,
+}},
+"_base": {"f": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227590528": 1.000000, "Concept5227670080": 1.000000, "Concept5227620176": 1.000000, "Concept5227593376": 1.000000, "Concept5227608928": 1.000000, "Concept5227634336": 1.000000, "Concept5227598320": 1.000000, "Concept5227685216": 1.000000, "Concept5227559040": 2.000000, "Concept5227619808": 1.000000, "Concept5227485216": 1.000000, "Concept5227624064": 1.000000, "Concept5227553472": 1.000000, "Concept5227743120": 1.000000, "Concept5227570496": 3.000000, "Concept5227731088": 1.000000, "Concept5227597328": 1.000000, "Concept5227529552": 1.000000, "Concept5227640720": 1.000000, "Concept5227585728": 1.000000, "Concept5227645600": 1.000000}, "anchor": {"f1": 1.000000}}
+}
+,{"name": "Concept5227982752",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.142572,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.142968,
+"std": 1,
+"n": 1,
+}},
+"_base": {"f": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227592384": 1.000000, "Concept5227502304": 1.000000, "Concept5227634336": 1.000000, "Concept5227757584": 1.000000, "Concept5227644608": 1.000000, "Concept5227620176": 1.000000, "Concept5227616496": 1.000000, "Concept5227713040": 1.000000, "Concept5227754368": 1.000000, "Concept5227690848": 1.000000, "Concept5227570496": 3.000000, "Concept5227641712": 1.000000, "Concept5227631440": 1.000000, "Concept5227593376": 3.000000, "Concept5227559040": 1.000000, "Concept5227685216": 1.000000, "Concept5227590528": 1.000000, "Concept5227553472": 1.000000, "Concept5227775136": 1.000000}, "anchor": {"f2": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.195070,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.100489,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"f2": 1.000000, "f1": 1.000000}, "context": {"Concept5227592384": 1.000000, "Concept5227502304": 1.000000, "Concept5227644608": 1.000000, "Concept5227713040": 1.000000, "Concept5227616496": 1.000000, "Concept5227631440": 1.000000, "Concept5227775136": 1.000000, "Concept5227645600": 1.000000, "Concept5227620176": 2.000000, "Concept5227585728": 1.000000, "Concept5227754368": 1.000000, "Concept5227598320": 1.000000, "Concept5227640720": 1.000000, "Concept5227529552": 1.000000, "Concept5227685216": 2.000000, "Concept5227597328": 1.000000, "Concept5227731088": 1.000000, "Concept5227570496": 6.000000, "Concept5227590528": 2.000000, "Concept5227608928": 1.000000, "Concept5227743120": 1.000000, "Concept5227553472": 2.000000, "Concept5227757584": 1.000000, "Concept5227624064": 1.000000, "Concept5227485216": 1.000000, "Concept5227619808": 1.000000, "Concept5227559040": 3.000000, "Concept5227690848": 1.000000, "Concept5227593376": 4.000000, "Concept5227634336": 2.000000, "Concept5227641712": 1.000000, "Concept5227670080": 1.000000}, "_variant": {"2": 1.000000, "1": 1.000000}, "_base": {"f": 2.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.551399,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.094100,
+"std": 1,
+"n": 1,
+}},
+"_base": {"b": 2.000000, "c": 2.000000, "f": 3.000000}, "_variant": {"2": 3.000000, "1": 4.000000}, "context": {"Concept5227616496": 1.000000, "Concept5227645600": 2.000000, "Concept5227529552": 1.000000, "Concept5227731088": 1.000000, "Concept5227485216": 2.000000, "Concept5227619808": 1.000000, "Concept5227705088": 4.000000, "Concept5227601392": 4.000000, "Concept5227502304": 4.000000, "Concept5227624064": 1.000000, "Concept5227757584": 4.000000, "Concept5227697888": 4.000000, "Concept5227713040": 4.000000, "Concept5227553472": 9.000000, "Concept5227670080": 1.000000, "Concept5227733984": 4.000000, "Concept5227634336": 5.000000, "Concept5227777664": 3.000000, "Concept5227750688": 4.000000, "Concept5227685216": 2.000000, "Concept5227597328": 5.000000, "Concept5227730096": 2.000000, "Concept5227559040": 15.000000, "Concept5227570496": 15.000000, "Concept5227585728": 5.000000, "Concept5227620176": 5.000000, "Concept5227621168": 4.000000, "Concept5227592384": 3.000000, "Concept5227743120": 1.000000, "Concept5227608928": 1.000000, "Concept5227590528": 9.000000, "Concept5227630448": 1.000000, "Concept5227636864": 4.000000, "Concept5227644608": 3.000000, "Concept5227690848": 3.000000, "Concept5227593376": 9.000000, "Concept5227766800": 1.000000, "Concept5227754368": 1.000000, "Concept5227598320": 2.000000, "Concept5227640720": 4.000000, "Concept5227631440": 3.000000, "Concept5227775136": 1.000000, "Concept5227654336": 3.000000, "Concept5227641712": 4.000000}, "anchor": {"c2": 1.000000, "b2": 1.000000, "f2": 1.000000, "b1": 1.000000, "c1": 1.000000, "f1": 2.000000}}
+}
+,{"name": "Concept5227884624",
+"size": 10.000000,
+"children": [
+{"name": "Concept5227887424",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.133635,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.132815,
+"std": 1,
+"n": 1,
+}},
+"_base": {"f": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227645600": 1.000000, "Concept5227592384": 1.000000, "Concept5227593376": 1.000000, "Concept5227698880": 1.000000, "Concept5227485216": 1.000000, "Concept5227690848": 1.000000, "Concept5227570496": 2.000000, "Concept5227585728": 1.000000, "Concept5227640720": 1.000000, "Concept5227644608": 1.000000, "Concept5227777664": 1.000000, "Concept5227697888": 1.000000, "Concept5227621168": 1.000000, "Concept5227601392": 1.000000, "Concept5227705088": 1.000000, "Concept5227647712": 1.000000, "Concept5227598320": 1.000000, "Concept5227750688": 1.000000, "Concept5227559040": 3.000000, "Concept5227590528": 1.000000}, "anchor": {"f2": 1.000000}}
+}
+,{"name": "Concept5227953536",
+"size": 2.000000,
+"children": [
+{"name": "Concept5227880480",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.170942,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.181396,
+"std": 1,
+"n": 1,
+}},
+"_base": {"e": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227754368": 1.000000, "Concept5227612928": 1.000000, "Concept5227697888": 1.000000, "Concept5227718832": 1.000000, "Concept5227592384": 2.000000, "Concept5227485216": 1.000000, "Concept5227615136": 1.000000, "Concept5227631440": 1.000000, "Concept5227601392": 1.000000, "Concept5227621168": 2.000000, "Concept5227705088": 1.000000, "Concept5227750688": 1.000000, "Concept5227598320": 1.000000, "Concept5227748576": 1.000000, "Concept5227590528": 1.000000, "Concept5227559040": 4.000000, "Concept5227661440": 1.000000}, "anchor": {"e1": 1.000000}}
+}
+,{"name": "Concept5227957104",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.133635,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.132815,
+"std": 1,
+"n": 1,
+}},
+"_base": {"b": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227593376": 1.000000, "Concept5227757584": 1.000000, "Concept5227592384": 1.000000, "Concept5227615136": 1.000000, "Concept5227485216": 1.000000, "Concept5227612928": 1.000000, "Concept5227697888": 1.000000, "Concept5227624064": 1.000000, "Concept5227718832": 1.000000, "Concept5227570496": 2.000000, "Concept5227529552": 1.000000, "Concept5227621168": 1.000000, "Concept5227705088": 1.000000, "Concept5227601392": 1.000000, "Concept5227752432": 1.000000, "Concept5227634336": 1.000000, "Concept5227598320": 1.000000, "Concept5227750688": 1.000000, "Concept5227559040": 3.000000, "Concept5227590528": 1.000000}, "anchor": {"b2": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.285275,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.158051,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"b2": 1.000000, "e1": 1.000000}, "context": {"Concept5227593376": 1.000000, "Concept5227624064": 1.000000, "Concept5227757584": 1.000000, "Concept5227570496": 2.000000, "Concept5227529552": 1.000000, "Concept5227661440": 1.000000, "Concept5227559040": 7.000000, "Concept5227612928": 2.000000, "Concept5227590528": 2.000000, "Concept5227752432": 1.000000, "Concept5227705088": 2.000000, "Concept5227748576": 1.000000, "Concept5227634336": 1.000000, "Concept5227754368": 1.000000, "Concept5227598320": 2.000000, "Concept5227750688": 2.000000, "Concept5227621168": 3.000000, "Concept5227601392": 2.000000, "Concept5227631440": 1.000000, "Concept5227615136": 2.000000, "Concept5227485216": 2.000000, "Concept5227718832": 2.000000, "Concept5227697888": 2.000000, "Concept5227592384": 3.000000}, "_variant": {"2": 1.000000, "1": 1.000000}, "_base": {"b": 1.000000, "e": 1.000000}}
+}
+,{"name": "Concept5227958864",
+"size": 2.000000,
+"children": [
+{"name": "Concept5227957984",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.160401,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.168327,
+"std": 1,
+"n": 1,
+}},
+"_base": {"d": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227648704": 1.000000, "Concept5227612928": 1.000000, "Concept5227592384": 2.000000, "Concept5227615136": 1.000000, "Concept5227485216": 1.000000, "Concept5227634336": 1.000000, "Concept5227598320": 1.000000, "Concept5227754368": 1.000000, "Concept5227570496": 3.000000, "Concept5227631440": 1.000000, "Concept5227529552": 2.000000, "Concept5227593376": 1.000000, "Concept5227559040": 1.000000, "Concept5227758576": 1.000000, "Concept5227624064": 1.000000, "Concept5227718832": 1.000000, "Concept5227757584": 1.000000, "Concept5227752432": 1.000000}, "anchor": {"d2": 1.000000}}
+}
+,{"name": "Concept5227959632",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.140076,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.140115,
+"std": 1,
+"n": 1,
+}},
+"_base": {"e": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227648704": 1.000000, "Concept5227590528": 1.000000, "Concept5227758576": 1.000000, "Concept5227559040": 2.000000, "Concept5227761552": 1.000000, "Concept5227621168": 1.000000, "Concept5227601392": 1.000000, "Concept5227634336": 1.000000, "Concept5227592384": 1.000000, "Concept5227624064": 1.000000, "Concept5227697888": 1.000000, "Concept5227757584": 1.000000, "Concept5227631440": 1.000000, "Concept5227669088": 1.000000, "Concept5227754368": 1.000000, "Concept5227570496": 3.000000, "Concept5227529552": 2.000000, "Concept5227593376": 1.000000, "Concept5227752432": 1.000000}, "anchor": {"e1": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.284788,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.157739,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"e1": 1.000000, "d2": 1.000000}, "context": {"Concept5227621168": 1.000000, "Concept5227601392": 1.000000, "Concept5227752432": 2.000000, "Concept5227624064": 2.000000, "Concept5227757584": 2.000000, "Concept5227697888": 1.000000, "Concept5227718832": 1.000000, "Concept5227592384": 3.000000, "Concept5227761552": 1.000000, "Concept5227758576": 2.000000, "Concept5227559040": 3.000000, "Concept5227593376": 2.000000, "Concept5227529552": 4.000000, "Concept5227669088": 1.000000, "Concept5227631440": 2.000000, "Concept5227570496": 6.000000, "Concept5227754368": 2.000000, "Concept5227598320": 1.000000, "Concept5227634336": 2.000000, "Concept5227615136": 1.000000, "Concept5227485216": 1.000000, "Concept5227590528": 1.000000, "Concept5227612928": 1.000000, "Concept5227648704": 2.000000}, "_variant": {"1": 1.000000, "2": 1.000000}, "_base": {"e": 1.000000, "d": 1.000000}}
+}
+,{"name": "Concept5227958288",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.145050,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.149805,
+"std": 1,
+"n": 1,
+}},
+"_base": {"a": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227762912": 1.000000, "Concept5227570496": 1.000000, "Concept5227626592": 1.000000, "Concept5227529552": 1.000000, "Concept5227615136": 1.000000, "Concept5227590528": 1.000000, "Concept5227612928": 1.000000, "Concept5227648704": 1.000000, "Concept5227761552": 1.000000, "Concept5227758576": 1.000000, "Concept5227559040": 2.000000, "Concept5227621168": 1.000000, "Concept5227601392": 1.000000, "Concept5227553472": 1.000000, "Concept5227697888": 1.000000, "Concept5227502304": 1.000000, "Concept5227592384": 2.000000, "Concept5227631440": 1.000000, "Concept5227669088": 1.000000, "Concept5227754368": 1.000000}, "anchor": {"a1": 1.000000}}
+}
+,{"name": "Concept5227985680",
+"size": 4.000000,
+"children": [
+{"name": "Concept5227533120",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.274248,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.419582,
+"std": 1,
+"n": 1,
+}},
+"_base": {"d": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227559040": 1.000000, "Concept5227624064": 1.000000, "Concept5227485216": 1.000000, "Concept5227640720": 1.000000, "Concept5227585728": 1.000000, "Concept5227731088": 1.000000, "Concept5227529552": 1.000000, "Concept5227754368": 1.000000, "Concept5227743120": 1.000000, "Concept5227592384": 1.000000, "Concept5227570496": 2.000000, "Concept5227631440": 1.000000, "Concept5227598320": 1.000000, "Concept5227645600": 1.000000}, "anchor": {"d2": 1.000000}}
+}
+,{"name": "Concept5227887040",
+"size": 3.000000,
+"children": [
+{"name": "Concept5227987216",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.133635,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.132815,
+"std": 1,
+"n": 1,
+}},
+"_base": {"b": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227529552": 1.000000, "Concept5227559040": 1.000000, "Concept5227757584": 1.000000, "Concept5227590528": 1.000000, "Concept5227601392": 1.000000, "Concept5227553472": 1.000000, "Concept5227624064": 1.000000, "Concept5227743120": 1.000000, "Concept5227626592": 1.000000, "Concept5227736512": 1.000000, "Concept5227634336": 1.000000, "Concept5227502304": 1.000000, "Concept5227592384": 1.000000, "Concept5227593376": 2.000000, "Concept5227616496": 1.000000, "Concept5227631440": 1.000000, "Concept5227570496": 3.000000, "Concept5227775136": 1.000000, "Concept5227614384": 1.000000, "Concept5227754368": 1.000000}, "anchor": {"b2": 1.000000}}
+}
+,{"name": "Concept5227988480",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.131139,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.130012,
+"std": 1,
+"n": 1,
+}},
+"_base": {"c": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227743120": 1.000000, "Concept5227553472": 1.000000, "Concept5227624064": 1.000000, "Concept5227529552": 1.000000, "Concept5227597328": 1.000000, "Concept5227601392": 1.000000, "Concept5227673632": 1.000000, "Concept5227614384": 1.000000, "Concept5227590528": 2.000000, "Concept5227612240": 1.000000, "Concept5227559040": 2.000000, "Concept5227757584": 1.000000, "Concept5227634336": 1.000000, "Concept5227807248": 1.000000, "Concept5227631440": 1.000000, "Concept5227608928": 1.000000, "Concept5227592384": 1.000000, "Concept5227570496": 2.000000, "Concept5227593376": 1.000000, "Concept5227754368": 1.000000}, "anchor": {"c2": 1.000000}}
+}
+,{"name": "Concept5227896384",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.110581,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.104745,
+"std": 1,
+"n": 1,
+}},
+"_base": {"f": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227621168": 1.000000, "Concept5227808240": 1.000000, "Concept5227502304": 1.000000, "Concept5227807248": 1.000000, "Concept5227608928": 1.000000, "Concept5227597328": 1.000000, "Concept5227529552": 1.000000, "Concept5227553472": 2.000000, "Concept5227624064": 1.000000, "Concept5227736512": 1.000000, "Concept5227590528": 1.000000, "Concept5227673632": 1.000000, "Concept5227743120": 1.000000, "Concept5227626592": 1.000000, "Concept5227570496": 2.000000, "Concept5227559040": 2.000000, "Concept5227612240": 1.000000, "Concept5227661440": 1.000000, "Concept5227593376": 1.000000, "Concept5227634336": 1.000000, "Concept5227757584": 1.000000}, "anchor": {"f2": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.335955,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.124017,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"f2": 1.000000, "c2": 1.000000, "b2": 1.000000}, "context": {"Concept5227621168": 1.000000, "Concept5227808240": 1.000000, "Concept5227597328": 2.000000, "Concept5227754368": 2.000000, "Concept5227614384": 2.000000, "Concept5227775136": 1.000000, "Concept5227570496": 7.000000, "Concept5227590528": 4.000000, "Concept5227743120": 3.000000, "Concept5227608928": 2.000000, "Concept5227807248": 2.000000, "Concept5227631440": 2.000000, "Concept5227616496": 1.000000, "Concept5227593376": 4.000000, "Concept5227673632": 2.000000, "Concept5227592384": 2.000000, "Concept5227601392": 2.000000, "Concept5227502304": 2.000000, "Concept5227634336": 3.000000, "Concept5227553472": 4.000000, "Concept5227736512": 2.000000, "Concept5227661440": 1.000000, "Concept5227626592": 2.000000, "Concept5227624064": 3.000000, "Concept5227757584": 3.000000, "Concept5227612240": 2.000000, "Concept5227559040": 5.000000, "Concept5227529552": 3.000000}, "_variant": {"2": 3.000000}, "_base": {"f": 1.000000, "c": 1.000000, "b": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.535976,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.166406,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"b2": 1.000000, "f2": 1.000000, "c2": 1.000000, "d2": 1.000000}, "context": {"Concept5227808240": 1.000000, "Concept5227597328": 2.000000, "Concept5227807248": 2.000000, "Concept5227593376": 4.000000, "Concept5227616496": 1.000000, "Concept5227614384": 2.000000, "Concept5227775136": 1.000000, "Concept5227553472": 4.000000, "Concept5227736512": 2.000000, "Concept5227645600": 1.000000, "Concept5227634336": 3.000000, "Concept5227640720": 1.000000, "Concept5227754368": 3.000000, "Concept5227598320": 1.000000, "Concept5227631440": 3.000000, "Concept5227570496": 9.000000, "Concept5227661440": 1.000000, "Concept5227626592": 2.000000, "Concept5227608928": 2.000000, "Concept5227590528": 4.000000, "Concept5227743120": 4.000000, "Concept5227601392": 2.000000, "Concept5227502304": 2.000000, "Concept5227673632": 2.000000, "Concept5227592384": 3.000000, "Concept5227731088": 1.000000, "Concept5227529552": 4.000000, "Concept5227621168": 1.000000, "Concept5227585728": 1.000000, "Concept5227485216": 1.000000, "Concept5227757584": 3.000000, "Concept5227624064": 4.000000, "Concept5227612240": 2.000000, "Concept5227559040": 6.000000}, "_variant": {"2": 4.000000}, "_base": {"f": 1.000000, "c": 1.000000, "b": 1.000000, "d": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.966522,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.128550,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"d2": 2.000000, "a1": 1.000000, "c2": 1.000000, "b2": 2.000000, "e1": 2.000000, "f2": 2.000000}, "context": {"Concept5227808240": 1.000000, "Concept5227597328": 2.000000, "Concept5227673632": 2.000000, "Concept5227608928": 2.000000, "Concept5227777664": 1.000000, "Concept5227807248": 2.000000, "Concept5227748576": 1.000000, "Concept5227616496": 1.000000, "Concept5227640720": 2.000000, "Concept5227614384": 2.000000, "Concept5227644608": 1.000000, "Concept5227669088": 2.000000, "Concept5227736512": 2.000000, "Concept5227592384": 12.000000, "Concept5227553472": 5.000000, "Concept5227648704": 3.000000, "Concept5227758576": 3.000000, "Concept5227752432": 3.000000, "Concept5227634336": 6.000000, "Concept5227775136": 1.000000, "Concept5227718832": 3.000000, "Concept5227690848": 1.000000, "Concept5227615136": 4.000000, "Concept5227626592": 3.000000, "Concept5227661440": 2.000000, "Concept5227698880": 1.000000, "Concept5227593376": 8.000000, "Concept5227750688": 3.000000, "Concept5227612928": 4.000000, "Concept5227743120": 4.000000, "Concept5227590528": 9.000000, "Concept5227697888": 5.000000, "Concept5227647712": 1.000000, "Concept5227598320": 5.000000, "Concept5227502304": 3.000000, "Concept5227705088": 3.000000, "Concept5227601392": 7.000000, "Concept5227585728": 2.000000, "Concept5227621168": 7.000000, "Concept5227762912": 1.000000, "Concept5227645600": 2.000000, "Concept5227754368": 7.000000, "Concept5227631440": 7.000000, "Concept5227570496": 20.000000, "Concept5227761552": 2.000000, "Concept5227731088": 1.000000, "Concept5227529552": 10.000000, "Concept5227612240": 2.000000, "Concept5227485216": 5.000000, "Concept5227757584": 6.000000, "Concept5227624064": 7.000000, "Concept5227559040": 21.000000}, "_variant": {"1": 3.000000, "2": 7.000000}, "_base": {"b": 2.000000, "c": 1.000000, "f": 2.000000, "e": 2.000000, "a": 1.000000, "d": 2.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 1.173890,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.095059,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"e1": 2.000000, "f1": 2.000000, "f2": 3.000000, "b1": 1.000000, "b2": 3.000000, "c2": 2.000000, "c1": 1.000000, "a1": 1.000000, "d2": 2.000000}, "context": {"Concept5227808240": 1.000000, "Concept5227673632": 2.000000, "Concept5227736512": 2.000000, "Concept5227775136": 2.000000, "Concept5227762912": 1.000000, "Concept5227626592": 3.000000, "Concept5227761552": 2.000000, "Concept5227648704": 3.000000, "Concept5227758576": 3.000000, "Concept5227752432": 3.000000, "Concept5227612928": 4.000000, "Concept5227690848": 4.000000, "Concept5227615136": 4.000000, "Concept5227661440": 2.000000, "Concept5227698880": 1.000000, "Concept5227641712": 4.000000, "Concept5227654336": 3.000000, "Concept5227766800": 1.000000, "Concept5227593376": 17.000000, "Concept5227669088": 2.000000, "Concept5227644608": 4.000000, "Concept5227636864": 4.000000, "Concept5227597328": 7.000000, "Concept5227685216": 2.000000, "Concept5227750688": 7.000000, "Concept5227807248": 2.000000, "Concept5227777664": 4.000000, "Concept5227634336": 11.000000, "Concept5227624064": 8.000000, "Concept5227757584": 10.000000, "Concept5227598320": 7.000000, "Concept5227502304": 7.000000, "Concept5227705088": 7.000000, "Concept5227601392": 11.000000, "Concept5227616496": 2.000000, "Concept5227748576": 1.000000, "Concept5227645600": 4.000000, "Concept5227614384": 2.000000, "Concept5227640720": 6.000000, "Concept5227754368": 8.000000, "Concept5227631440": 10.000000, "Concept5227570496": 35.000000, "Concept5227630448": 1.000000, "Concept5227590528": 18.000000, "Concept5227608928": 3.000000, "Concept5227743120": 5.000000, "Concept5227733984": 4.000000, "Concept5227670080": 1.000000, "Concept5227647712": 1.000000, "Concept5227697888": 9.000000, "Concept5227713040": 4.000000, "Concept5227553472": 14.000000, "Concept5227592384": 15.000000, "Concept5227731088": 2.000000, "Concept5227529552": 11.000000, "Concept5227621168": 11.000000, "Concept5227620176": 5.000000, "Concept5227585728": 7.000000, "Concept5227718832": 3.000000, "Concept5227619808": 1.000000, "Concept5227612240": 2.000000, "Concept5227485216": 7.000000, "Concept5227730096": 2.000000, "Concept5227559040": 36.000000}, "_variant": {"1": 7.000000, "2": 10.000000}, "_base": {"a": 1.000000, "e": 2.000000, "f": 5.000000, "c": 3.000000, "b": 4.000000, "d": 2.000000}}
+}
+,{"name": "Concept5227888112",
+"size": 14.000000,
+"children": [
+{"name": "Concept5227848064",
+"size": 6.000000,
+"children": [
+{"name": "Concept5227845920",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.124697,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.122841,
+"std": 1,
+"n": 1,
+}},
+"_base": {"b": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227553472": 2.000000, "Concept5227745648": 1.000000, "Concept5227559040": 2.000000, "Concept5227485216": 1.000000, "Concept5227598320": 1.000000, "Concept5227645600": 1.000000, "Concept5227570496": 1.000000, "Concept5227585728": 1.000000, "Concept5227640720": 1.000000, "Concept5227590528": 1.000000, "Concept5227614384": 1.000000, "Concept5227597328": 1.000000, "Concept5227731088": 1.000000, "Concept5227502304": 1.000000, "Concept5227592384": 1.000000, "Concept5227631440": 1.000000, "Concept5227641712": 1.000000, "Concept5227608928": 1.000000, "Concept5227601392": 1.000000, "Concept5227670080": 1.000000, "Concept5227754368": 1.000000}, "anchor": {"b1": 1.000000}}
+}
+,{"name": "Concept5227848944",
+"size": 2.000000,
+"children": [
+{"name": "Concept5227849904",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.119534,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.114194,
+"std": 1,
+"n": 1,
+}},
+"_base": {"c": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227570496": 2.000000, "Concept5227670080": 1.000000, "Concept5227726208": 1.000000, "Concept5227607232": 1.000000, "Concept5227597328": 1.000000, "Concept5227585728": 1.000000, "Concept5227553472": 3.000000, "Concept5227502304": 2.000000, "Concept5227608928": 1.000000, "Concept5227641712": 1.000000, "Concept5227593376": 1.000000, "Concept5227745648": 1.000000, "Concept5227559040": 1.000000, "Concept5227619808": 1.000000, "Concept5227485216": 1.000000, "Concept5227701984": 1.000000, "Concept5227595616": 1.000000, "Concept5227645600": 1.000000, "Concept5227598320": 1.000000, "Concept5227634336": 1.000000}, "anchor": {"c2": 1.000000}}
+}
+,{"name": "Concept5227851168",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.119534,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.114194,
+"std": 1,
+"n": 1,
+}},
+"_base": {"e": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227648704": 1.000000, "Concept5227590528": 1.000000, "Concept5227570496": 2.000000, "Concept5227726208": 1.000000, "Concept5227559040": 1.000000, "Concept5227685216": 1.000000, "Concept5227585728": 1.000000, "Concept5227607232": 1.000000, "Concept5227620176": 1.000000, "Concept5227701984": 1.000000, "Concept5227595616": 1.000000, "Concept5227811136": 1.000000, "Concept5227529552": 1.000000, "Concept5227597328": 1.000000, "Concept5227670080": 1.000000, "Concept5227553472": 3.000000, "Concept5227502304": 2.000000, "Concept5227608928": 1.000000, "Concept5227641712": 1.000000, "Concept5227745648": 1.000000}, "anchor": {"e2": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.221351,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.114219,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"e2": 1.000000, "c2": 1.000000}, "context": {"Concept5227634336": 1.000000, "Concept5227598320": 1.000000, "Concept5227811136": 1.000000, "Concept5227645600": 1.000000, "Concept5227595616": 2.000000, "Concept5227701984": 2.000000, "Concept5227485216": 1.000000, "Concept5227619808": 1.000000, "Concept5227559040": 2.000000, "Concept5227745648": 2.000000, "Concept5227593376": 1.000000, "Concept5227641712": 2.000000, "Concept5227590528": 1.000000, "Concept5227608928": 2.000000, "Concept5227502304": 4.000000, "Concept5227648704": 1.000000, "Concept5227553472": 6.000000, "Concept5227620176": 1.000000, "Concept5227585728": 2.000000, "Concept5227529552": 1.000000, "Concept5227685216": 1.000000, "Concept5227597328": 2.000000, "Concept5227607232": 2.000000, "Concept5227726208": 2.000000, "Concept5227670080": 2.000000, "Concept5227570496": 4.000000}, "_variant": {"2": 2.000000}, "_base": {"e": 1.000000, "c": 1.000000}}
+}
+,{"name": "Concept5227992992",
+"size": 3.000000,
+"children": [
+{"name": "Concept5227992688",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.117034,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.111539,
+"std": 1,
+"n": 1,
+}},
+"_base": {"b": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227598320": 1.000000, "Concept5227641712": 1.000000, "Concept5227745648": 1.000000, "Concept5227592384": 1.000000, "Concept5227502304": 1.000000, "Concept5227615136": 1.000000, "Concept5227485216": 1.000000, "Concept5227633584": 1.000000, "Concept5227758576": 1.000000, "Concept5227559040": 1.000000, "Concept5227553472": 2.000000, "Concept5227733984": 1.000000, "Concept5227570496": 2.000000, "Concept5227529552": 2.000000, "Concept5227814656": 1.000000, "Concept5227597328": 1.000000, "Concept5227645600": 1.000000, "Concept5227811136": 1.000000, "Concept5227636864": 1.000000, "Concept5227648704": 2.000000}, "anchor": {"b1": 1.000000}}
+}
+,{"name": "Concept5227994416",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.105247,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.096775,
+"std": 1,
+"n": 1,
+}},
+"_base": {"d": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227679600": 1.000000, "Concept5227818272": 1.000000, "Concept5227485216": 2.000000, "Concept5227598320": 1.000000, "Concept5227645600": 1.000000, "Concept5227502304": 1.000000, "Concept5227608928": 1.000000, "Concept5227641712": 1.000000, "Concept5227745648": 1.000000, "Concept5227670080": 1.000000, "Concept5227570496": 1.000000, "Concept5227758576": 1.000000, "Concept5227559040": 2.000000, "Concept5227529552": 1.000000, "Concept5227597328": 2.000000, "Concept5227648704": 1.000000, "Concept5227636864": 1.000000, "Concept5227553472": 3.000000, "Concept5227603712": 1.000000, "Concept5227733984": 1.000000}, "anchor": {"d2": 1.000000}}
+}
+,{"name": "Concept5227996768",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.130114,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.125570,
+"std": 1,
+"n": 1,
+}},
+"_base": {"c": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227597328": 2.000000, "Concept5227814656": 1.000000, "Concept5227611248": 1.000000, "Concept5227745648": 1.000000, "Concept5227502304": 2.000000, "Concept5227720992": 1.000000, "Concept5227592384": 1.000000, "Concept5227720000": 1.000000, "Concept5227553472": 4.000000, "Concept5227696528": 1.000000, "Concept5227559040": 1.000000, "Concept5227641712": 1.000000, "Concept5227626592": 1.000000, "Concept5227485216": 1.000000, "Concept5227615136": 1.000000, "Concept5227636864": 1.000000, "Concept5227645600": 1.000000, "Concept5227598320": 1.000000, "Concept5227633584": 1.000000}, "anchor": {"c1": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.288782,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.102437,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"c1": 1.000000, "d2": 1.000000, "b1": 1.000000}, "context": {"Concept5227720992": 1.000000, "Concept5227696528": 1.000000, "Concept5227626592": 1.000000, "Concept5227679600": 1.000000, "Concept5227733984": 2.000000, "Concept5227670080": 1.000000, "Concept5227553472": 9.000000, "Concept5227648704": 3.000000, "Concept5227745648": 3.000000, "Concept5227636864": 3.000000, "Concept5227811136": 1.000000, "Concept5227818272": 1.000000, "Concept5227645600": 3.000000, "Concept5227597328": 5.000000, "Concept5227758576": 2.000000, "Concept5227814656": 2.000000, "Concept5227529552": 3.000000, "Concept5227570496": 3.000000, "Concept5227615136": 2.000000, "Concept5227603712": 1.000000, "Concept5227559040": 4.000000, "Concept5227633584": 2.000000, "Concept5227611248": 1.000000, "Concept5227485216": 4.000000, "Concept5227502304": 4.000000, "Concept5227592384": 2.000000, "Concept5227720000": 1.000000, "Concept5227608928": 1.000000, "Concept5227641712": 3.000000, "Concept5227598320": 3.000000}, "_variant": {"2": 1.000000, "1": 2.000000}, "_base": {"c": 1.000000, "d": 1.000000, "b": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.433155,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.082967,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"c1": 1.000000, "d2": 1.000000, "c2": 1.000000, "e2": 1.000000, "b1": 2.000000}, "context": {"Concept5227696528": 1.000000, "Concept5227626592": 1.000000, "Concept5227603712": 1.000000, "Concept5227615136": 2.000000, "Concept5227633584": 2.000000, "Concept5227758576": 2.000000, "Concept5227814656": 2.000000, "Concept5227811136": 2.000000, "Concept5227529552": 4.000000, "Concept5227726208": 2.000000, "Concept5227607232": 2.000000, "Concept5227593376": 1.000000, "Concept5227720992": 1.000000, "Concept5227619808": 1.000000, "Concept5227634336": 1.000000, "Concept5227598320": 5.000000, "Concept5227640720": 1.000000, "Concept5227754368": 1.000000, "Concept5227679600": 1.000000, "Concept5227733984": 2.000000, "Concept5227670080": 4.000000, "Concept5227502304": 9.000000, "Concept5227601392": 1.000000, "Concept5227720000": 1.000000, "Concept5227590528": 2.000000, "Concept5227608928": 4.000000, "Concept5227641712": 6.000000, "Concept5227631440": 1.000000, "Concept5227595616": 2.000000, "Concept5227592384": 3.000000, "Concept5227731088": 1.000000, "Concept5227685216": 1.000000, "Concept5227597328": 8.000000, "Concept5227620176": 1.000000, "Concept5227585728": 3.000000, "Concept5227570496": 8.000000, "Concept5227614384": 1.000000, "Concept5227701984": 2.000000, "Concept5227818272": 1.000000, "Concept5227645600": 5.000000, "Concept5227611248": 1.000000, "Concept5227485216": 6.000000, "Concept5227636864": 3.000000, "Concept5227745648": 6.000000, "Concept5227559040": 8.000000, "Concept5227648704": 4.000000, "Concept5227553472": 17.000000}, "_variant": {"2": 3.000000, "1": 3.000000}, "_base": {"d": 1.000000, "e": 1.000000, "c": 2.000000, "b": 2.000000}}
+}
+,{"name": "Concept5227885232",
+"size": 4.000000,
+"children": [
+{"name": "Concept5227884928",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.124697,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.122841,
+"std": 1,
+"n": 1,
+}},
+"_base": {"b": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227529552": 1.000000, "Concept5227485216": 1.000000, "Concept5227698880": 1.000000, "Concept5227592384": 1.000000, "Concept5227502304": 1.000000, "Concept5227598320": 1.000000, "Concept5227648704": 1.000000, "Concept5227645600": 1.000000, "Concept5227641712": 1.000000, "Concept5227713040": 1.000000, "Concept5227570496": 2.000000, "Concept5227640720": 1.000000, "Concept5227585728": 1.000000, "Concept5227758576": 1.000000, "Concept5227559040": 2.000000, "Concept5227647712": 1.000000, "Concept5227601392": 1.000000, "Concept5227697888": 1.000000, "Concept5227553472": 1.000000, "Concept5227590528": 1.000000, "Concept5227777664": 1.000000}, "anchor": {"b2": 1.000000}}
+}
+,{"name": "Concept5227888880",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.127193,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.125609,
+"std": 1,
+"n": 1,
+}},
+"_base": {"c": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227651600": 1.000000, "Concept5227529552": 1.000000, "Concept5227648704": 1.000000, "Concept5227590528": 1.000000, "Concept5227559040": 1.000000, "Concept5227758576": 1.000000, "Concept5227601392": 1.000000, "Concept5227647712": 1.000000, "Concept5227698880": 1.000000, "Concept5227593376": 1.000000, "Concept5227592384": 1.000000, "Concept5227502304": 1.000000, "Concept5227641712": 1.000000, "Concept5227713040": 1.000000, "Concept5227690848": 1.000000, "Concept5227570496": 3.000000, "Concept5227640720": 1.000000, "Concept5227585728": 1.000000, "Concept5227553472": 1.000000, "Concept5227644608": 1.000000, "Concept5227777664": 1.000000}, "anchor": {"c1": 1.000000}}
+}
+,{"name": "Concept5227846912",
+"size": 2.000000,
+"children": [
+{"name": "Concept5227889760",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.110581,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.104745,
+"std": 1,
+"n": 1,
+}},
+"_base": {"f": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227590528": 1.000000, "Concept5227648704": 1.000000, "Concept5227598320": 1.000000, "Concept5227645600": 1.000000, "Concept5227601392": 1.000000, "Concept5227651600": 1.000000, "Concept5227529552": 1.000000, "Concept5227597328": 1.000000, "Concept5227485216": 1.000000, "Concept5227644608": 1.000000, "Concept5227553472": 2.000000, "Concept5227502304": 1.000000, "Concept5227807248": 1.000000, "Concept5227608928": 1.000000, "Concept5227641712": 1.000000, "Concept5227570496": 2.000000, "Concept5227713040": 1.000000, "Concept5227690848": 1.000000, "Concept5227559040": 2.000000, "Concept5227758576": 1.000000, "Concept5227593376": 1.000000}, "anchor": {"f2": 1.000000}}
+}
+,{"name": "Concept5227891024",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.124697,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.122841,
+"std": 1,
+"n": 1,
+}},
+"_base": {"b": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227747584": 1.000000, "Concept5227502304": 1.000000, "Concept5227592384": 1.000000, "Concept5227553472": 2.000000, "Concept5227597328": 1.000000, "Concept5227807248": 1.000000, "Concept5227608928": 1.000000, "Concept5227590528": 1.000000, "Concept5227651600": 1.000000, "Concept5227601392": 1.000000, "Concept5227647712": 1.000000, "Concept5227559040": 2.000000, "Concept5227598320": 1.000000, "Concept5227645600": 1.000000, "Concept5227485216": 1.000000, "Concept5227698880": 1.000000, "Concept5227593376": 1.000000, "Concept5227607232": 1.000000, "Concept5227644608": 1.000000, "Concept5227570496": 1.000000, "Concept5227690848": 1.000000}, "anchor": {"b2": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.222689,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.116372,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"b2": 1.000000, "f2": 1.000000}, "context": {"Concept5227747584": 1.000000, "Concept5227592384": 1.000000, "Concept5227698880": 1.000000, "Concept5227690848": 2.000000, "Concept5227593376": 2.000000, "Concept5227758576": 1.000000, "Concept5227559040": 4.000000, "Concept5227647712": 1.000000, "Concept5227713040": 1.000000, "Concept5227570496": 3.000000, "Concept5227641712": 1.000000, "Concept5227590528": 2.000000, "Concept5227608928": 2.000000, "Concept5227807248": 2.000000, "Concept5227601392": 2.000000, "Concept5227502304": 2.000000, "Concept5227648704": 1.000000, "Concept5227553472": 4.000000, "Concept5227607232": 1.000000, "Concept5227644608": 2.000000, "Concept5227485216": 2.000000, "Concept5227597328": 2.000000, "Concept5227529552": 1.000000, "Concept5227651600": 2.000000, "Concept5227598320": 2.000000, "Concept5227645600": 2.000000}, "_variant": {"2": 2.000000}, "_base": {"b": 1.000000, "f": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.425950,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.122140,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"f2": 1.000000, "c1": 1.000000, "b2": 2.000000}, "context": {"Concept5227747584": 1.000000, "Concept5227607232": 1.000000, "Concept5227597328": 2.000000, "Concept5227807248": 2.000000, "Concept5227651600": 3.000000, "Concept5227644608": 3.000000, "Concept5227777664": 2.000000, "Concept5227608928": 2.000000, "Concept5227590528": 4.000000, "Concept5227648704": 3.000000, "Concept5227553472": 6.000000, "Concept5227713040": 3.000000, "Concept5227647712": 3.000000, "Concept5227697888": 1.000000, "Concept5227502304": 4.000000, "Concept5227601392": 4.000000, "Concept5227559040": 7.000000, "Concept5227758576": 3.000000, "Concept5227585728": 2.000000, "Concept5227598320": 3.000000, "Concept5227640720": 2.000000, "Concept5227570496": 8.000000, "Concept5227593376": 3.000000, "Concept5227690848": 3.000000, "Concept5227641712": 3.000000, "Concept5227645600": 3.000000, "Concept5227592384": 3.000000, "Concept5227698880": 3.000000, "Concept5227485216": 3.000000, "Concept5227529552": 3.000000}, "_variant": {"1": 1.000000, "2": 3.000000}, "_base": {"f": 1.000000, "c": 1.000000, "b": 2.000000}}
+}
+,{"name": "Concept5227888416",
+"size": 4.000000,
+"children": [
+{"name": "Concept5227848640",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.117034,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.111539,
+"std": 1,
+"n": 1,
+}},
+"_base": {"a": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227590528": 1.000000, "Concept5227607232": 1.000000, "Concept5227620176": 1.000000, "Concept5227641712": 1.000000, "Concept5227502304": 2.000000, "Concept5227745648": 1.000000, "Concept5227593376": 1.000000, "Concept5227559040": 2.000000, "Concept5227685216": 1.000000, "Concept5227485216": 1.000000, "Concept5227619808": 1.000000, "Concept5227634336": 1.000000, "Concept5227598320": 1.000000, "Concept5227701984": 1.000000, "Concept5227645600": 1.000000, "Concept5227570496": 2.000000, "Concept5227529552": 1.000000, "Concept5227743120": 1.000000, "Concept5227553472": 2.000000, "Concept5227624064": 1.000000}, "anchor": {"a1": 1.000000}}
+}
+,{"name": "Concept5227844384",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.198331,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.237378,
+"std": 1,
+"n": 1,
+}},
+"_base": {"f": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227641712": 1.000000, "Concept5227631440": 1.000000, "Concept5227745648": 1.000000, "Concept5227559040": 2.000000, "Concept5227485216": 1.000000, "Concept5227598320": 1.000000, "Concept5227645600": 1.000000, "Concept5227570496": 1.000000, "Concept5227529552": 1.000000, "Concept5227502304": 1.000000, "Concept5227592384": 1.000000, "Concept5227743120": 1.000000, "Concept5227754368": 1.000000, "Concept5227553472": 1.000000, "Concept5227624064": 1.000000, "Concept5227601392": 1.000000, "Concept5227590528": 1.000000, "Concept5227614384": 1.000000}, "anchor": {"f1": 1.000000}}
+}
+,{"name": "Concept5227846528",
+"size": 2.000000,
+"children": [
+{"name": "Concept5227890064",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.131139,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.130012,
+"std": 1,
+"n": 1,
+}},
+"_base": {"c": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227624064": 1.000000, "Concept5227553472": 2.000000, "Concept5227607232": 1.000000, "Concept5227752432": 1.000000, "Concept5227747584": 1.000000, "Concept5227608928": 1.000000, "Concept5227807248": 1.000000, "Concept5227570496": 2.000000, "Concept5227597328": 1.000000, "Concept5227529552": 2.000000, "Concept5227647712": 1.000000, "Concept5227502304": 1.000000, "Concept5227592384": 1.000000, "Concept5227698880": 1.000000, "Concept5227485216": 1.000000, "Concept5227758576": 1.000000, "Concept5227559040": 1.000000, "Concept5227648704": 1.000000, "Concept5227598320": 1.000000, "Concept5227645600": 1.000000}, "anchor": {"c2": 1.000000}}
+}
+,{"name": "Concept5227891328",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.137580,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.137275,
+"std": 1,
+"n": 1,
+}},
+"_base": {"f": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227747584": 1.000000, "Concept5227559040": 2.000000, "Concept5227758576": 1.000000, "Concept5227553472": 1.000000, "Concept5227624064": 1.000000, "Concept5227502304": 1.000000, "Concept5227592384": 1.000000, "Concept5227590528": 2.000000, "Concept5227601392": 1.000000, "Concept5227647712": 1.000000, "Concept5227607232": 1.000000, "Concept5227620176": 1.000000, "Concept5227651600": 1.000000, "Concept5227529552": 2.000000, "Concept5227570496": 2.000000, "Concept5227654336": 1.000000, "Concept5227752432": 1.000000, "Concept5227648704": 1.000000, "Concept5227698880": 1.000000}, "anchor": {"f2": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.249139,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.133650,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"f2": 1.000000, "c2": 1.000000}, "context": {"Concept5227651600": 1.000000, "Concept5227645600": 1.000000, "Concept5227598320": 1.000000, "Concept5227553472": 3.000000, "Concept5227648704": 2.000000, "Concept5227559040": 3.000000, "Concept5227758576": 2.000000, "Concept5227485216": 1.000000, "Concept5227698880": 2.000000, "Concept5227592384": 2.000000, "Concept5227601392": 1.000000, "Concept5227502304": 2.000000, "Concept5227647712": 2.000000, "Concept5227529552": 4.000000, "Concept5227597328": 1.000000, "Concept5227570496": 4.000000, "Concept5227654336": 1.000000, "Concept5227807248": 1.000000, "Concept5227590528": 2.000000, "Concept5227608928": 1.000000, "Concept5227747584": 2.000000, "Concept5227620176": 1.000000, "Concept5227607232": 2.000000, "Concept5227752432": 2.000000, "Concept5227624064": 2.000000}, "_variant": {"2": 2.000000}, "_base": {"f": 1.000000, "c": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.454426,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.134418,
+"std": 1,
+"n": 1,
+}},
+"_base": {"a": 1.000000, "f": 2.000000, "c": 1.000000}, "_variant": {"1": 2.000000, "2": 2.000000}, "context": {"Concept5227651600": 1.000000, "Concept5227654336": 1.000000, "Concept5227634336": 1.000000, "Concept5227619808": 1.000000, "Concept5227593376": 1.000000, "Concept5227620176": 2.000000, "Concept5227641712": 2.000000, "Concept5227631440": 1.000000, "Concept5227570496": 7.000000, "Concept5227485216": 3.000000, "Concept5227559040": 7.000000, "Concept5227758576": 2.000000, "Concept5227745648": 2.000000, "Concept5227698880": 2.000000, "Concept5227645600": 3.000000, "Concept5227529552": 6.000000, "Concept5227685216": 1.000000, "Concept5227597328": 1.000000, "Concept5227754368": 1.000000, "Concept5227598320": 3.000000, "Concept5227592384": 3.000000, "Concept5227502304": 5.000000, "Concept5227601392": 2.000000, "Concept5227647712": 2.000000, "Concept5227807248": 1.000000, "Concept5227743120": 2.000000, "Concept5227608928": 1.000000, "Concept5227590528": 4.000000, "Concept5227614384": 1.000000, "Concept5227553472": 6.000000, "Concept5227648704": 2.000000, "Concept5227701984": 1.000000, "Concept5227747584": 2.000000, "Concept5227624064": 4.000000, "Concept5227752432": 2.000000, "Concept5227607232": 3.000000}, "anchor": {"a1": 1.000000, "f1": 1.000000, "f2": 1.000000, "c2": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.896133,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.083902,
+"std": 1,
+"n": 1,
+}},
+"_base": {"d": 1.000000, "c": 4.000000, "e": 1.000000, "f": 3.000000, "a": 1.000000, "b": 4.000000}, "_variant": {"1": 6.000000, "2": 8.000000}, "context": {"Concept5227611248": 1.000000, "Concept5227720000": 1.000000, "Concept5227696528": 1.000000, "Concept5227626592": 1.000000, "Concept5227679600": 1.000000, "Concept5227603712": 1.000000, "Concept5227633584": 2.000000, "Concept5227733984": 2.000000, "Concept5227814656": 2.000000, "Concept5227720992": 1.000000, "Concept5227636864": 3.000000, "Concept5227654336": 1.000000, "Concept5227752432": 2.000000, "Concept5227777664": 2.000000, "Concept5227807248": 3.000000, "Concept5227670080": 4.000000, "Concept5227685216": 2.000000, "Concept5227726208": 2.000000, "Concept5227811136": 2.000000, "Concept5227641712": 11.000000, "Concept5227631440": 2.000000, "Concept5227570496": 23.000000, "Concept5227485216": 12.000000, "Concept5227595616": 2.000000, "Concept5227619808": 2.000000, "Concept5227559040": 22.000000, "Concept5227597328": 11.000000, "Concept5227745648": 8.000000, "Concept5227644608": 3.000000, "Concept5227593376": 5.000000, "Concept5227615136": 2.000000, "Concept5227690848": 3.000000, "Concept5227607232": 6.000000, "Concept5227634336": 2.000000, "Concept5227645600": 11.000000, "Concept5227747584": 3.000000, "Concept5227701984": 3.000000, "Concept5227529552": 13.000000, "Concept5227754368": 2.000000, "Concept5227614384": 2.000000, "Concept5227640720": 3.000000, "Concept5227502304": 18.000000, "Concept5227598320": 11.000000, "Concept5227592384": 9.000000, "Concept5227553472": 29.000000, "Concept5227648704": 9.000000, "Concept5227601392": 7.000000, "Concept5227608928": 7.000000, "Concept5227590528": 10.000000, "Concept5227818272": 1.000000, "Concept5227743120": 2.000000, "Concept5227620176": 3.000000, "Concept5227585728": 5.000000, "Concept5227697888": 1.000000, "Concept5227647712": 5.000000, "Concept5227713040": 3.000000, "Concept5227758576": 7.000000, "Concept5227698880": 5.000000, "Concept5227624064": 4.000000, "Concept5227731088": 1.000000, "Concept5227651600": 4.000000}, "anchor": {"f2": 2.000000, "b1": 2.000000, "e2": 1.000000, "f1": 1.000000, "d2": 1.000000, "a1": 1.000000, "b2": 2.000000, "c2": 2.000000, "c1": 2.000000}}
+}
+,{"name": "Concept5227893168",
+"size": 12.000000,
+"children": [
+{"name": "Concept5227894352",
+"size": 2.000000,
+"children": [
+{"name": "Concept5227894048",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.123661,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.118604,
+"std": 1,
+"n": 1,
+}},
+"_base": {"a": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227595616": 1.000000, "Concept5227648704": 1.000000, "Concept5227590528": 1.000000, "Concept5227700992": 1.000000, "Concept5227529552": 2.000000, "Concept5227585728": 1.000000, "Concept5227752432": 1.000000, "Concept5227687744": 1.000000, "Concept5227559040": 1.000000, "Concept5227654336": 1.000000, "Concept5227570496": 4.000000, "Concept5227624064": 1.000000, "Concept5227553472": 1.000000, "Concept5227716512": 1.000000, "Concept5227502304": 1.000000, "Concept5227620176": 1.000000, "Concept5227644608": 1.000000, "Concept5227607232": 1.000000, "Concept5227593376": 1.000000, "Concept5227747584": 1.000000}, "anchor": {"a2": 1.000000}}
+}
+,{"name": "Concept5227895776",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.130114,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.125570,
+"std": 1,
+"n": 1,
+}},
+"_base": {"c": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227585728": 2.000000, "Concept5227752432": 1.000000, "Concept5227597328": 1.000000, "Concept5227529552": 2.000000, "Concept5227553472": 1.000000, "Concept5227716512": 1.000000, "Concept5227624064": 1.000000, "Concept5227595616": 1.000000, "Concept5227630448": 1.000000, "Concept5227636864": 1.000000, "Concept5227648704": 1.000000, "Concept5227590528": 1.000000, "Concept5227766800": 1.000000, "Concept5227620176": 1.000000, "Concept5227570496": 4.000000, "Concept5227654336": 1.000000, "Concept5227687744": 1.000000, "Concept5227559040": 1.000000, "Concept5227720992": 1.000000}, "anchor": {"c2": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.238925,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.124416,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"c2": 1.000000, "a2": 1.000000}, "context": {"Concept5227597328": 1.000000, "Concept5227747584": 1.000000, "Concept5227766800": 1.000000, "Concept5227593376": 1.000000, "Concept5227607232": 1.000000, "Concept5227636864": 1.000000, "Concept5227644608": 1.000000, "Concept5227585728": 3.000000, "Concept5227620176": 2.000000, "Concept5227720992": 1.000000, "Concept5227502304": 1.000000, "Concept5227716512": 2.000000, "Concept5227648704": 2.000000, "Concept5227687744": 2.000000, "Concept5227553472": 2.000000, "Concept5227624064": 2.000000, "Concept5227570496": 8.000000, "Concept5227654336": 2.000000, "Concept5227559040": 2.000000, "Concept5227752432": 2.000000, "Concept5227700992": 1.000000, "Concept5227529552": 4.000000, "Concept5227590528": 2.000000, "Concept5227630448": 1.000000, "Concept5227595616": 2.000000}, "_variant": {"2": 2.000000}, "_base": {"c": 1.000000, "a": 1.000000}}
+}
+,{"name": "Concept5227858480",
+"size": 2.000000,
+"children": [
+{"name": "Concept5227893744",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.117034,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.111539,
+"std": 1,
+"n": 1,
+}},
+"_base": {"d": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227570496": 2.000000, "Concept5227585728": 1.000000, "Concept5227700992": 1.000000, "Concept5227630448": 1.000000, "Concept5227747584": 1.000000, "Concept5227593376": 1.000000, "Concept5227766800": 1.000000, "Concept5227502304": 1.000000, "Concept5227644608": 1.000000, "Concept5227620176": 1.000000, "Concept5227607232": 1.000000, "Concept5227553472": 2.000000, "Concept5227597328": 1.000000, "Concept5227807248": 1.000000, "Concept5227654336": 1.000000, "Concept5227608928": 1.000000, "Concept5227559040": 2.000000, "Concept5227590528": 2.000000, "Concept5227601392": 1.000000, "Concept5227651600": 1.000000}, "anchor": {"d1": 1.000000}}
+}
+,{"name": "Concept5227895424",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.140076,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.140115,
+"std": 1,
+"n": 1,
+}},
+"_base": {"e": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227595616": 1.000000, "Concept5227644608": 1.000000, "Concept5227620176": 1.000000, "Concept5227716512": 1.000000, "Concept5227553472": 1.000000, "Concept5227661440": 1.000000, "Concept5227593376": 1.000000, "Concept5227766800": 1.000000, "Concept5227630448": 1.000000, "Concept5227636864": 1.000000, "Concept5227720992": 1.000000, "Concept5227559040": 2.000000, "Concept5227621168": 1.000000, "Concept5227585728": 2.000000, "Concept5227597328": 1.000000, "Concept5227700992": 1.000000, "Concept5227590528": 1.000000, "Concept5227570496": 3.000000, "Concept5227654336": 1.000000}, "anchor": {"e2": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.233233,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.122558,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"e2": 1.000000, "d1": 1.000000}, "context": {"Concept5227595616": 1.000000, "Concept5227716512": 1.000000, "Concept5227661440": 1.000000, "Concept5227651600": 1.000000, "Concept5227585728": 3.000000, "Concept5227620176": 2.000000, "Concept5227621168": 1.000000, "Concept5227502304": 1.000000, "Concept5227601392": 1.000000, "Concept5227630448": 2.000000, "Concept5227608928": 1.000000, "Concept5227590528": 3.000000, "Concept5227559040": 4.000000, "Concept5227654336": 2.000000, "Concept5227766800": 2.000000, "Concept5227807248": 1.000000, "Concept5227597328": 2.000000, "Concept5227553472": 3.000000, "Concept5227607232": 1.000000, "Concept5227636864": 1.000000, "Concept5227644608": 2.000000, "Concept5227720992": 1.000000, "Concept5227593376": 2.000000, "Concept5227747584": 1.000000, "Concept5227700992": 2.000000, "Concept5227570496": 5.000000}, "_variant": {"2": 1.000000, "1": 1.000000}, "_base": {"e": 1.000000, "d": 1.000000}}
+}
+,{"name": "Concept5227896080",
+"size": 2.000000,
+"children": [
+{"name": "Concept5227892016",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.130114,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.125570,
+"std": 1,
+"n": 1,
+}},
+"_base": {"f": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227630448": 1.000000, "Concept5227648704": 1.000000, "Concept5227700992": 1.000000, "Concept5227570496": 4.000000, "Concept5227766800": 1.000000, "Concept5227593376": 1.000000, "Concept5227624064": 1.000000, "Concept5227553472": 2.000000, "Concept5227585728": 1.000000, "Concept5227752432": 1.000000, "Concept5227607232": 1.000000, "Concept5227644608": 1.000000, "Concept5227597328": 1.000000, "Concept5227529552": 2.000000, "Concept5227502304": 1.000000, "Concept5227807248": 1.000000, "Concept5227608928": 1.000000, "Concept5227747584": 1.000000, "Concept5227687744": 1.000000}, "anchor": {"f2": 1.000000}}
+}
+,{"name": "Concept5227898400",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.144196,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.144832,
+"std": 1,
+"n": 1,
+}},
+"_base": {"a": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227640720": 1.000000, "Concept5227585728": 2.000000, "Concept5227648704": 1.000000, "Concept5227636864": 1.000000, "Concept5227630448": 1.000000, "Concept5227559040": 1.000000, "Concept5227687744": 1.000000, "Concept5227553472": 1.000000, "Concept5227644608": 1.000000, "Concept5227672272": 1.000000, "Concept5227593376": 1.000000, "Concept5227661440": 1.000000, "Concept5227766800": 1.000000, "Concept5227597328": 1.000000, "Concept5227529552": 1.000000, "Concept5227700992": 1.000000, "Concept5227720992": 1.000000, "Concept5227621168": 1.000000, "Concept5227570496": 4.000000}, "anchor": {"a1": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.248095,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.131394,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"a1": 1.000000, "f2": 1.000000}, "context": {"Concept5227640720": 1.000000, "Concept5227559040": 1.000000, "Concept5227672272": 1.000000, "Concept5227585728": 3.000000, "Concept5227621168": 1.000000, "Concept5227648704": 2.000000, "Concept5227553472": 3.000000, "Concept5227687744": 2.000000, "Concept5227747584": 1.000000, "Concept5227630448": 2.000000, "Concept5227608928": 1.000000, "Concept5227766800": 2.000000, "Concept5227807248": 1.000000, "Concept5227720992": 1.000000, "Concept5227502304": 1.000000, "Concept5227529552": 3.000000, "Concept5227597328": 2.000000, "Concept5227636864": 1.000000, "Concept5227644608": 2.000000, "Concept5227607232": 1.000000, "Concept5227752432": 1.000000, "Concept5227624064": 1.000000, "Concept5227661440": 1.000000, "Concept5227593376": 2.000000, "Concept5227570496": 8.000000, "Concept5227700992": 2.000000}, "_variant": {"1": 1.000000, "2": 1.000000}, "_base": {"a": 1.000000, "f": 1.000000}}
+}
+,{"name": "Concept5227957408",
+"size": 6.000000,
+"children": [
+{"name": "Concept5227988784",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.119534,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.114194,
+"std": 1,
+"n": 1,
+}},
+"_base": {"a": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227570496": 1.000000, "Concept5227808240": 1.000000, "Concept5227648704": 1.000000, "Concept5227614384": 1.000000, "Concept5227661440": 1.000000, "Concept5227529552": 1.000000, "Concept5227597328": 1.000000, "Concept5227608928": 1.000000, "Concept5227807248": 1.000000, "Concept5227553472": 2.000000, "Concept5227502304": 1.000000, "Concept5227626592": 1.000000, "Concept5227811136": 1.000000, "Concept5227736512": 1.000000, "Concept5227590528": 2.000000, "Concept5227601392": 1.000000, "Concept5227621168": 1.000000, "Concept5227559040": 3.000000, "Concept5227612240": 1.000000, "Concept5227673632": 1.000000}, "anchor": {"a2": 1.000000}}
+}
+,{"name": "Concept5227989744",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.117034,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.111539,
+"std": 1,
+"n": 1,
+}},
+"_base": {"c": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227733984": 1.000000, "Concept5227636864": 1.000000, "Concept5227648704": 1.000000, "Concept5227590528": 1.000000, "Concept5227661440": 1.000000, "Concept5227808240": 1.000000, "Concept5227570496": 2.000000, "Concept5227597328": 1.000000, "Concept5227529552": 2.000000, "Concept5227559040": 2.000000, "Concept5227621168": 1.000000, "Concept5227601392": 1.000000, "Concept5227614384": 1.000000, "Concept5227553472": 2.000000, "Concept5227624064": 1.000000, "Concept5227502304": 1.000000, "Concept5227743120": 1.000000, "Concept5227626592": 1.000000, "Concept5227811136": 1.000000, "Concept5227736512": 1.000000}, "anchor": {"c2": 1.000000}}
+}
+,{"name": "Concept5227990048",
+"size": 3.000000,
+"children": [
+{"name": "Concept5227987520",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.141393,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.137958,
+"std": 1,
+"n": 1,
+}},
+"_base": {"e": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227636864": 1.000000, "Concept5227648704": 2.000000, "Concept5227733984": 1.000000, "Concept5227758576": 1.000000, "Concept5227559040": 1.000000, "Concept5227807248": 1.000000, "Concept5227608928": 1.000000, "Concept5227811136": 1.000000, "Concept5227597328": 2.000000, "Concept5227529552": 3.000000, "Concept5227553472": 2.000000, "Concept5227624064": 1.000000, "Concept5227614384": 1.000000, "Concept5227590528": 1.000000, "Concept5227743120": 1.000000, "Concept5227570496": 3.000000, "Concept5227601392": 1.000000}, "anchor": {"e2": 1.000000}}
+}
+,{"name": "Concept5227992080",
+"size": 2.000000,
+"children": [
+{"name": "Concept5227991200",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.141393,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.137958,
+"std": 1,
+"n": 1,
+}},
+"_base": {"a": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227648704": 1.000000, "Concept5227636864": 1.000000, "Concept5227608928": 2.000000, "Concept5227807248": 1.000000, "Concept5227733984": 1.000000, "Concept5227621168": 1.000000, "Concept5227758576": 1.000000, "Concept5227559040": 1.000000, "Concept5227661440": 1.000000, "Concept5227553472": 3.000000, "Concept5227624064": 1.000000, "Concept5227597328": 3.000000, "Concept5227529552": 2.000000, "Concept5227670080": 1.000000, "Concept5227570496": 2.000000, "Concept5227808240": 1.000000, "Concept5227743120": 1.000000}, "anchor": {"a1": 1.000000}}
+}
+,{"name": "Concept5227992384",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.129940,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.125381,
+"std": 1,
+"n": 1,
+}},
+"_base": {"d": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227615136": 1.000000, "Concept5227592384": 1.000000, "Concept5227814656": 1.000000, "Concept5227597328": 2.000000, "Concept5227529552": 2.000000, "Concept5227808240": 1.000000, "Concept5227633584": 1.000000, "Concept5227811136": 1.000000, "Concept5227758576": 1.000000, "Concept5227559040": 1.000000, "Concept5227621168": 1.000000, "Concept5227661440": 1.000000, "Concept5227553472": 2.000000, "Concept5227648704": 2.000000, "Concept5227608928": 2.000000, "Concept5227807248": 1.000000, "Concept5227570496": 2.000000, "Concept5227670080": 1.000000}, "anchor": {"d2": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.262781,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.138559,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"d2": 1.000000, "a1": 1.000000}, "context": {"Concept5227615136": 1.000000, "Concept5227592384": 1.000000, "Concept5227633584": 1.000000, "Concept5227811136": 1.000000, "Concept5227743120": 1.000000, "Concept5227808240": 2.000000, "Concept5227570496": 4.000000, "Concept5227670080": 2.000000, "Concept5227814656": 1.000000, "Concept5227529552": 4.000000, "Concept5227597328": 5.000000, "Concept5227624064": 1.000000, "Concept5227553472": 5.000000, "Concept5227661440": 2.000000, "Concept5227758576": 2.000000, "Concept5227559040": 2.000000, "Concept5227621168": 2.000000, "Concept5227733984": 1.000000, "Concept5227807248": 2.000000, "Concept5227608928": 4.000000, "Concept5227636864": 1.000000, "Concept5227648704": 3.000000}, "_variant": {"2": 1.000000, "1": 1.000000}, "_base": {"d": 1.000000, "a": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.382005,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.141227,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"d2": 1.000000, "a1": 1.000000, "e2": 1.000000}, "context": {"Concept5227615136": 1.000000, "Concept5227592384": 1.000000, "Concept5227633584": 1.000000, "Concept5227733984": 2.000000, "Concept5227670080": 2.000000, "Concept5227661440": 2.000000, "Concept5227808240": 2.000000, "Concept5227621168": 2.000000, "Concept5227601392": 1.000000, "Concept5227570496": 7.000000, "Concept5227608928": 5.000000, "Concept5227743120": 2.000000, "Concept5227590528": 1.000000, "Concept5227614384": 1.000000, "Concept5227624064": 2.000000, "Concept5227648704": 5.000000, "Concept5227553472": 7.000000, "Concept5227758576": 3.000000, "Concept5227814656": 1.000000, "Concept5227529552": 7.000000, "Concept5227597328": 7.000000, "Concept5227811136": 2.000000, "Concept5227559040": 3.000000, "Concept5227807248": 3.000000, "Concept5227636864": 2.000000}, "_variant": {"1": 1.000000, "2": 2.000000}, "_base": {"d": 1.000000, "a": 1.000000, "e": 1.000000}}
+}
+,{"name": "Concept5227991504",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.113081,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.107368,
+"std": 1,
+"n": 1,
+}},
+"_base": {"f": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227633584": 1.000000, "Concept5227733984": 1.000000, "Concept5227615136": 1.000000, "Concept5227592384": 1.000000, "Concept5227502304": 1.000000, "Concept5227608928": 1.000000, "Concept5227641712": 1.000000, "Concept5227670080": 1.000000, "Concept5227570496": 1.000000, "Concept5227553472": 3.000000, "Concept5227636864": 1.000000, "Concept5227648704": 1.000000, "Concept5227814656": 1.000000, "Concept5227597328": 2.000000, "Concept5227529552": 1.000000, "Concept5227811136": 1.000000, "Concept5227621168": 1.000000, "Concept5227559040": 1.000000, "Concept5227745648": 1.000000, "Concept5227661440": 1.000000, "Concept5227808240": 1.000000}, "anchor": {"f1": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.615297,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.122115,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"f1": 1.000000, "a2": 1.000000, "d2": 1.000000, "a1": 1.000000, "e2": 1.000000, "c2": 1.000000}, "context": {"Concept5227641712": 1.000000, "Concept5227615136": 2.000000, "Concept5227633584": 2.000000, "Concept5227814656": 2.000000, "Concept5227758576": 3.000000, "Concept5227670080": 3.000000, "Concept5227733984": 4.000000, "Concept5227592384": 2.000000, "Concept5227673632": 1.000000, "Concept5227612240": 1.000000, "Concept5227559040": 9.000000, "Concept5227621168": 5.000000, "Concept5227502304": 3.000000, "Concept5227601392": 3.000000, "Concept5227608928": 7.000000, "Concept5227743120": 3.000000, "Concept5227590528": 4.000000, "Concept5227648704": 8.000000, "Concept5227553472": 14.000000, "Concept5227736512": 2.000000, "Concept5227811136": 5.000000, "Concept5227661440": 5.000000, "Concept5227626592": 2.000000, "Concept5227624064": 3.000000, "Concept5227807248": 4.000000, "Concept5227597328": 11.000000, "Concept5227529552": 11.000000, "Concept5227745648": 1.000000, "Concept5227636864": 4.000000, "Concept5227614384": 3.000000, "Concept5227808240": 5.000000, "Concept5227570496": 11.000000}, "_variant": {"1": 2.000000, "2": 4.000000}, "_base": {"d": 1.000000, "e": 1.000000, "f": 1.000000, "c": 1.000000, "a": 2.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.843504,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.089767,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"f1": 1.000000, "e2": 2.000000, "d2": 1.000000, "a1": 2.000000, "d1": 1.000000, "a2": 2.000000, "c2": 2.000000, "f2": 1.000000}, "context": {"Concept5227641712": 1.000000, "Concept5227745648": 1.000000, "Concept5227615136": 2.000000, "Concept5227633584": 2.000000, "Concept5227621168": 7.000000, "Concept5227814656": 2.000000, "Concept5227758576": 3.000000, "Concept5227614384": 3.000000, "Concept5227640720": 1.000000, "Concept5227672272": 1.000000, "Concept5227626592": 2.000000, "Concept5227661440": 7.000000, "Concept5227808240": 5.000000, "Concept5227636864": 7.000000, "Concept5227720992": 3.000000, "Concept5227553472": 22.000000, "Concept5227592384": 2.000000, "Concept5227673632": 1.000000, "Concept5227595616": 3.000000, "Concept5227670080": 3.000000, "Concept5227733984": 4.000000, "Concept5227716512": 3.000000, "Concept5227624064": 6.000000, "Concept5227736512": 2.000000, "Concept5227648704": 12.000000, "Concept5227687744": 4.000000, "Concept5227651600": 1.000000, "Concept5227502304": 6.000000, "Concept5227601392": 4.000000, "Concept5227743120": 3.000000, "Concept5227630448": 5.000000, "Concept5227608928": 9.000000, "Concept5227590528": 9.000000, "Concept5227612240": 1.000000, "Concept5227559040": 16.000000, "Concept5227811136": 5.000000, "Concept5227654336": 4.000000, "Concept5227766800": 5.000000, "Concept5227807248": 6.000000, "Concept5227529552": 18.000000, "Concept5227597328": 16.000000, "Concept5227585728": 9.000000, "Concept5227620176": 4.000000, "Concept5227607232": 3.000000, "Concept5227644608": 5.000000, "Concept5227593376": 5.000000, "Concept5227747584": 3.000000, "Concept5227700992": 5.000000, "Concept5227752432": 3.000000, "Concept5227570496": 32.000000}, "_variant": {"2": 8.000000, "1": 4.000000}, "_base": {"e": 2.000000, "c": 2.000000, "a": 4.000000, "f": 2.000000, "d": 2.000000}}
+}
+,{"name": "Concept5227896960",
+"size": 12.000000,
+"children": [
+{"name": "Concept5227855376",
+"size": 3.000000,
+"children": [
+{"name": "Concept5195536768",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.327834,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.629770,
+"std": 1,
+"n": 1,
+}},
+"_base": {"a": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227624064": 1.000000, "Concept5227743120": 1.000000, "Concept5227570496": 2.000000, "Concept5227585728": 1.000000, "Concept5227529552": 1.000000, "Concept5227731088": 1.000000, "Concept5227559040": 1.000000, "Concept5227614384": 1.000000, "Concept5227640720": 1.000000, "Concept5227590528": 1.000000, "Concept5227601392": 1.000000}, "anchor": {"a2": 1.000000}}
+}
+,{"name": "Concept5227844992",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.117034,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.111539,
+"std": 1,
+"n": 1,
+}},
+"_base": {"c": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227620176": 1.000000, "Concept5227670080": 1.000000, "Concept5227570496": 2.000000, "Concept5227502304": 1.000000, "Concept5227608928": 1.000000, "Concept5227641712": 1.000000, "Concept5227745648": 1.000000, "Concept5227553472": 2.000000, "Concept5227624064": 1.000000, "Concept5227743120": 1.000000, "Concept5227640720": 1.000000, "Concept5227585728": 1.000000, "Concept5227597328": 1.000000, "Concept5227529552": 1.000000, "Concept5227731088": 1.000000, "Concept5227685216": 1.000000, "Concept5227559040": 2.000000, "Concept5227601392": 1.000000, "Concept5227590528": 2.000000, "Concept5227614384": 1.000000}, "anchor": {"c2": 1.000000}}
+}
+,{"name": "Concept5227892864",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.125987,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.121105,
+"std": 1,
+"n": 1,
+}},
+"_base": {"a": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227630448": 1.000000, "Concept5227648704": 1.000000, "Concept5227559040": 2.000000, "Concept5227758576": 1.000000, "Concept5227766800": 1.000000, "Concept5227620176": 1.000000, "Concept5227752432": 1.000000, "Concept5227585728": 1.000000, "Concept5227624064": 1.000000, "Concept5227553472": 1.000000, "Concept5227654336": 1.000000, "Concept5227608928": 1.000000, "Concept5227807248": 1.000000, "Concept5227590528": 2.000000, "Concept5227601392": 1.000000, "Concept5227570496": 3.000000, "Concept5227651600": 1.000000, "Concept5227529552": 2.000000, "Concept5227597328": 1.000000}, "anchor": {"a2": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.525795,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.227703,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"c2": 1.000000, "a2": 2.000000}, "context": {"Concept5227758576": 1.000000, "Concept5227752432": 1.000000, "Concept5227731088": 2.000000, "Concept5227651600": 1.000000, "Concept5227745648": 1.000000, "Concept5227766800": 1.000000, "Concept5227807248": 1.000000, "Concept5227654336": 1.000000, "Concept5227641712": 1.000000, "Concept5227630448": 1.000000, "Concept5227743120": 2.000000, "Concept5227590528": 5.000000, "Concept5227608928": 2.000000, "Concept5227601392": 3.000000, "Concept5227502304": 1.000000, "Concept5227670080": 1.000000, "Concept5227620176": 2.000000, "Concept5227585728": 3.000000, "Concept5227640720": 2.000000, "Concept5227614384": 2.000000, "Concept5227597328": 2.000000, "Concept5227685216": 1.000000, "Concept5227559040": 5.000000, "Concept5227529552": 4.000000, "Concept5227570496": 7.000000, "Concept5227648704": 1.000000, "Concept5227553472": 3.000000, "Concept5227624064": 3.000000}, "_variant": {"2": 3.000000}, "_base": {"c": 1.000000, "a": 2.000000}}
+}
+,{"name": "Concept5227860320",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.117034,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.111539,
+"std": 1,
+"n": 1,
+}},
+"_base": {"b": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227601392": 1.000000, "Concept5227674992": 1.000000, "Concept5227585728": 1.000000, "Concept5227738656": 1.000000, "Concept5227597328": 2.000000, "Concept5227590528": 1.000000, "Concept5227651600": 1.000000, "Concept5227630448": 1.000000, "Concept5227636864": 1.000000, "Concept5227559040": 2.000000, "Concept5227664176": 1.000000, "Concept5227570496": 2.000000, "Concept5227767408": 1.000000, "Concept5227593376": 1.000000, "Concept5227611248": 1.000000, "Concept5227485216": 1.000000, "Concept5227553472": 2.000000, "Concept5227720000": 1.000000, "Concept5227603712": 1.000000, "Concept5227616496": 1.000000}, "anchor": {"b2": 1.000000}}
+}
+,{"name": "Concept5227932864",
+"size": 8.000000,
+"children": [
+{"name": "Concept5227950592",
+"size": 7.000000,
+"children": [
+{"name": "Concept5227949328",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.125987,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.121105,
+"std": 1,
+"n": 1,
+}},
+"_base": {"c": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227747584": 1.000000, "Concept5227559040": 2.000000, "Concept5227669088": 1.000000, "Concept5227641712": 1.000000, "Concept5227502304": 2.000000, "Concept5227570496": 1.000000, "Concept5227529552": 1.000000, "Concept5227597328": 1.000000, "Concept5227780592": 1.000000, "Concept5227621168": 2.000000, "Concept5227705088": 1.000000, "Concept5227618816": 1.000000, "Concept5227741184": 1.000000, "Concept5227770672": 1.000000, "Concept5227553472": 3.000000, "Concept5227607232": 1.000000, "Concept5227745648": 1.000000, "Concept5227636864": 1.000000, "Concept5227738656": 1.000000}, "anchor": {"c2": 1.000000}}
+}
+,{"name": "Concept5227951280",
+"size": 2.000000,
+"children": [
+{"name": "Concept5227951744",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.129940,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.125381,
+"std": 1,
+"n": 1,
+}},
+"_base": {"e": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227661440": 1.000000, "Concept5227745648": 1.000000, "Concept5227747584": 1.000000, "Concept5227559040": 2.000000, "Concept5227641712": 1.000000, "Concept5227553472": 2.000000, "Concept5227624064": 1.000000, "Concept5227705088": 1.000000, "Concept5227621168": 2.000000, "Concept5227618816": 1.000000, "Concept5227741184": 1.000000, "Concept5227770672": 1.000000, "Concept5227570496": 2.000000, "Concept5227529552": 2.000000, "Concept5227607232": 1.000000, "Concept5227748576": 1.000000, "Concept5227502304": 2.000000, "Concept5227743120": 1.000000}, "anchor": {"e2": 1.000000}}
+}
+,{"name": "Concept5227952624",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.134940,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.130838,
+"std": 1,
+"n": 1,
+}},
+"_base": {"b": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227669088": 1.000000, "Concept5227607232": 1.000000, "Concept5227750688": 1.000000, "Concept5227741184": 1.000000, "Concept5227747584": 1.000000, "Concept5227559040": 3.000000, "Concept5227661440": 1.000000, "Concept5227780592": 1.000000, "Concept5227705088": 1.000000, "Concept5227621168": 3.000000, "Concept5227618816": 1.000000, "Concept5227553472": 1.000000, "Concept5227624064": 1.000000, "Concept5227748576": 1.000000, "Concept5227743120": 1.000000, "Concept5227502304": 1.000000, "Concept5227570496": 2.000000, "Concept5227529552": 2.000000}, "anchor": {"b1": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.265154,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.139986,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"b1": 1.000000, "e2": 1.000000}, "context": {"Concept5227743120": 2.000000, "Concept5227502304": 3.000000, "Concept5227748576": 2.000000, "Concept5227607232": 2.000000, "Concept5227529552": 4.000000, "Concept5227570496": 4.000000, "Concept5227780592": 1.000000, "Concept5227621168": 5.000000, "Concept5227618816": 2.000000, "Concept5227705088": 2.000000, "Concept5227750688": 1.000000, "Concept5227770672": 1.000000, "Concept5227741184": 2.000000, "Concept5227624064": 2.000000, "Concept5227553472": 3.000000, "Concept5227661440": 2.000000, "Concept5227745648": 1.000000, "Concept5227747584": 2.000000, "Concept5227559040": 5.000000, "Concept5227669088": 1.000000, "Concept5227641712": 1.000000}, "_variant": {"1": 1.000000, "2": 1.000000}, "_base": {"b": 1.000000, "e": 1.000000}}
+}
+,{"name": "Concept5227952928",
+"size": 4.000000,
+"children": [
+{"name": "Concept5227952048",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.132614,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.128293,
+"std": 1,
+"n": 1,
+}},
+"_base": {"d": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227485216": 1.000000, "Concept5227705088": 1.000000, "Concept5227780592": 1.000000, "Concept5227621168": 3.000000, "Concept5227553472": 1.000000, "Concept5227718832": 1.000000, "Concept5227624064": 1.000000, "Concept5227669088": 1.000000, "Concept5227641712": 1.000000, "Concept5227598320": 1.000000, "Concept5227750688": 1.000000, "Concept5227661440": 1.000000, "Concept5227745648": 1.000000, "Concept5227559040": 4.000000, "Concept5227529552": 1.000000, "Concept5227748576": 1.000000, "Concept5227570496": 1.000000, "Concept5227502304": 1.000000, "Concept5227743120": 1.000000}, "anchor": {"d1": 1.000000}}
+}
+,{"name": "Concept5227954080",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.125987,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.121105,
+"std": 1,
+"n": 1,
+}},
+"_base": {"e": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227570496": 1.000000, "Concept5227529552": 1.000000, "Concept5227485216": 1.000000, "Concept5227752432": 1.000000, "Concept5227705088": 1.000000, "Concept5227621168": 2.000000, "Concept5227780592": 1.000000, "Concept5227718832": 1.000000, "Concept5227553472": 2.000000, "Concept5227624064": 1.000000, "Concept5227641712": 1.000000, "Concept5227669088": 1.000000, "Concept5227750688": 1.000000, "Concept5227598320": 1.000000, "Concept5227747584": 1.000000, "Concept5227559040": 3.000000, "Concept5227745648": 1.000000, "Concept5227607232": 1.000000, "Concept5227502304": 2.000000}, "anchor": {"e2": 1.000000}}
+}
+,{"name": "Concept5227844688",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.131139,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.130012,
+"std": 1,
+"n": 1,
+}},
+"_base": {"a": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227754368": 1.000000, "Concept5227570496": 1.000000, "Concept5227598320": 1.000000, "Concept5227529552": 1.000000, "Concept5227485216": 1.000000, "Concept5227559040": 2.000000, "Concept5227621168": 1.000000, "Concept5227747584": 1.000000, "Concept5227752432": 1.000000, "Concept5227748576": 1.000000, "Concept5227607232": 1.000000, "Concept5227718832": 1.000000, "Concept5227624064": 1.000000, "Concept5227553472": 2.000000, "Concept5227592384": 1.000000, "Concept5227502304": 2.000000, "Concept5227641712": 1.000000, "Concept5227631440": 1.000000, "Concept5227661440": 1.000000, "Concept5227745648": 1.000000}, "anchor": {"a2": 1.000000}}
+}
+,{"name": "Concept5227953232",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.133635,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.132815,
+"std": 1,
+"n": 1,
+}},
+"_base": {"c": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227590528": 1.000000, "Concept5227754368": 1.000000, "Concept5227529552": 1.000000, "Concept5227570496": 1.000000, "Concept5227631440": 1.000000, "Concept5227750688": 1.000000, "Concept5227559040": 3.000000, "Concept5227752432": 1.000000, "Concept5227748576": 1.000000, "Concept5227661440": 1.000000, "Concept5227697888": 1.000000, "Concept5227624064": 1.000000, "Concept5227553472": 1.000000, "Concept5227502304": 1.000000, "Concept5227592384": 1.000000, "Concept5227621168": 2.000000, "Concept5227601392": 1.000000, "Concept5227705088": 1.000000, "Concept5227607232": 1.000000, "Concept5227747584": 1.000000}, "anchor": {"c2": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.470737,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.135966,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"a2": 1.000000, "e2": 1.000000, "c2": 1.000000, "d1": 1.000000}, "context": {"Concept5227697888": 1.000000, "Concept5227592384": 2.000000, "Concept5227607232": 3.000000, "Concept5227747584": 3.000000, "Concept5227590528": 1.000000, "Concept5227743120": 1.000000, "Concept5227601392": 1.000000, "Concept5227502304": 6.000000, "Concept5227570496": 4.000000, "Concept5227752432": 3.000000, "Concept5227705088": 3.000000, "Concept5227748576": 3.000000, "Concept5227529552": 4.000000, "Concept5227559040": 12.000000, "Concept5227745648": 3.000000, "Concept5227661440": 3.000000, "Concept5227750688": 3.000000, "Concept5227754368": 2.000000, "Concept5227780592": 2.000000, "Concept5227598320": 3.000000, "Concept5227631440": 2.000000, "Concept5227669088": 2.000000, "Concept5227641712": 3.000000, "Concept5227624064": 4.000000, "Concept5227553472": 6.000000, "Concept5227718832": 3.000000, "Concept5227621168": 8.000000, "Concept5227485216": 3.000000}, "_variant": {"2": 3.000000, "1": 1.000000}, "_base": {"c": 1.000000, "a": 1.000000, "e": 1.000000, "d": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.755828,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.133255,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"a2": 1.000000, "b1": 1.000000, "e2": 2.000000, "d1": 1.000000, "c2": 2.000000}, "context": {"Concept5227697888": 1.000000, "Concept5227592384": 2.000000, "Concept5227752432": 3.000000, "Concept5227485216": 3.000000, "Concept5227718832": 3.000000, "Concept5227750688": 4.000000, "Concept5227705088": 6.000000, "Concept5227748576": 5.000000, "Concept5227590528": 1.000000, "Concept5227743120": 3.000000, "Concept5227631440": 2.000000, "Concept5227738656": 1.000000, "Concept5227745648": 5.000000, "Concept5227636864": 1.000000, "Concept5227661440": 5.000000, "Concept5227607232": 6.000000, "Concept5227624064": 6.000000, "Concept5227553472": 12.000000, "Concept5227570496": 9.000000, "Concept5227770672": 2.000000, "Concept5227529552": 9.000000, "Concept5227741184": 3.000000, "Concept5227618816": 3.000000, "Concept5227621168": 15.000000, "Concept5227754368": 2.000000, "Concept5227598320": 3.000000, "Concept5227780592": 4.000000, "Concept5227597328": 1.000000, "Concept5227601392": 1.000000, "Concept5227502304": 11.000000, "Concept5227641712": 5.000000, "Concept5227669088": 4.000000, "Concept5227747584": 6.000000, "Concept5227559040": 19.000000}, "_variant": {"1": 2.000000, "2": 5.000000}, "_base": {"d": 1.000000, "b": 1.000000, "e": 2.000000, "a": 1.000000, "c": 2.000000}}
+}
+,{"name": "Concept5227933552",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.119534,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.114194,
+"std": 1,
+"n": 1,
+}},
+"_base": {"b": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227720000": 1.000000, "Concept5227595616": 1.000000, "Concept5227715152": 1.000000, "Concept5227611248": 1.000000, "Concept5227636864": 1.000000, "Concept5227559040": 1.000000, "Concept5227485216": 1.000000, "Concept5227598320": 1.000000, "Concept5227585728": 1.000000, "Concept5227597328": 2.000000, "Concept5227529552": 1.000000, "Concept5227570496": 2.000000, "Concept5227718832": 1.000000, "Concept5227716512": 1.000000, "Concept5227624064": 1.000000, "Concept5227553472": 3.000000, "Concept5227713040": 1.000000, "Concept5227720992": 1.000000, "Concept5227502304": 1.000000, "Concept5227641712": 1.000000}, "anchor": {"b2": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.731821,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.112815,
+"std": 1,
+"n": 1,
+}},
+"_base": {"c": 2.000000, "a": 1.000000, "e": 2.000000, "b": 2.000000, "d": 1.000000}, "_variant": {"2": 6.000000, "1": 2.000000}, "context": {"Concept5227720992": 1.000000, "Concept5227697888": 1.000000, "Concept5227713040": 1.000000, "Concept5227716512": 1.000000, "Concept5227559040": 20.000000, "Concept5227747584": 6.000000, "Concept5227669088": 4.000000, "Concept5227641712": 6.000000, "Concept5227601392": 1.000000, "Concept5227502304": 12.000000, "Concept5227597328": 3.000000, "Concept5227780592": 4.000000, "Concept5227598320": 4.000000, "Concept5227754368": 2.000000, "Concept5227741184": 3.000000, "Concept5227529552": 10.000000, "Concept5227770672": 2.000000, "Concept5227570496": 11.000000, "Concept5227607232": 6.000000, "Concept5227745648": 5.000000, "Concept5227636864": 2.000000, "Concept5227661440": 5.000000, "Concept5227738656": 1.000000, "Concept5227631440": 2.000000, "Concept5227590528": 1.000000, "Concept5227715152": 1.000000, "Concept5227720000": 1.000000, "Concept5227743120": 3.000000, "Concept5227752432": 3.000000, "Concept5227705088": 6.000000, "Concept5227748576": 5.000000, "Concept5227585728": 1.000000, "Concept5227621168": 15.000000, "Concept5227618816": 3.000000, "Concept5227750688": 4.000000, "Concept5227553472": 15.000000, "Concept5227624064": 7.000000, "Concept5227718832": 4.000000, "Concept5227611248": 1.000000, "Concept5227485216": 4.000000, "Concept5227595616": 1.000000, "Concept5227592384": 2.000000}, "anchor": {"b2": 1.000000, "c2": 2.000000, "a2": 1.000000, "d1": 1.000000, "e2": 2.000000, "b1": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.911367,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.099495,
+"std": 1,
+"n": 1,
+}},
+"_base": {"b": 3.000000, "c": 3.000000, "a": 3.000000, "e": 2.000000, "d": 1.000000}, "_variant": {"2": 10.000000, "1": 2.000000}, "context": {"Concept5227697888": 1.000000, "Concept5227648704": 1.000000, "Concept5227685216": 1.000000, "Concept5227620176": 2.000000, "Concept5227670080": 1.000000, "Concept5227608928": 2.000000, "Concept5227654336": 1.000000, "Concept5227807248": 1.000000, "Concept5227766800": 1.000000, "Concept5227731088": 2.000000, "Concept5227758576": 1.000000, "Concept5227621168": 15.000000, "Concept5227674992": 1.000000, "Concept5227597328": 7.000000, "Concept5227738656": 2.000000, "Concept5227585728": 5.000000, "Concept5227559040": 27.000000, "Concept5227664176": 1.000000, "Concept5227767408": 1.000000, "Concept5227595616": 1.000000, "Concept5227718832": 4.000000, "Concept5227641712": 7.000000, "Concept5227593376": 1.000000, "Concept5227611248": 2.000000, "Concept5227485216": 5.000000, "Concept5227553472": 20.000000, "Concept5227592384": 2.000000, "Concept5227570496": 20.000000, "Concept5227590528": 7.000000, "Concept5227770672": 2.000000, "Concept5227720000": 2.000000, "Concept5227630448": 2.000000, "Concept5227715152": 1.000000, "Concept5227743120": 5.000000, "Concept5227603712": 1.000000, "Concept5227745648": 6.000000, "Concept5227720992": 1.000000, "Concept5227636864": 3.000000, "Concept5227624064": 10.000000, "Concept5227631440": 2.000000, "Concept5227716512": 1.000000, "Concept5227669088": 4.000000, "Concept5227618816": 3.000000, "Concept5227741184": 3.000000, "Concept5227529552": 14.000000, "Concept5227705088": 6.000000, "Concept5227601392": 5.000000, "Concept5227598320": 4.000000, "Concept5227502304": 13.000000, "Concept5227752432": 4.000000, "Concept5227616496": 1.000000, "Concept5227748576": 5.000000, "Concept5227747584": 6.000000, "Concept5227607232": 6.000000, "Concept5227754368": 2.000000, "Concept5227614384": 2.000000, "Concept5227640720": 2.000000, "Concept5227780592": 4.000000, "Concept5227651600": 2.000000, "Concept5227750688": 4.000000, "Concept5227661440": 5.000000, "Concept5227713040": 1.000000}, "anchor": {"e2": 2.000000, "b1": 1.000000, "b2": 2.000000, "c2": 3.000000, "d1": 1.000000, "a2": 3.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 2.011275,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.058692,
+"std": 1,
+"n": 1,
+}},
+"_base": {"d": 6.000000, "e": 7.000000, "f": 10.000000, "c": 12.000000, "a": 9.000000, "b": 11.000000}, "_variant": {"2": 36.000000, "1": 19.000000}, "context": {"Concept5227696528": 1.000000, "Concept5227633584": 4.000000, "Concept5227808240": 6.000000, "Concept5227673632": 3.000000, "Concept5227736512": 4.000000, "Concept5227775136": 2.000000, "Concept5227762912": 1.000000, "Concept5227761552": 2.000000, "Concept5227612928": 4.000000, "Concept5227679600": 1.000000, "Concept5227626592": 6.000000, "Concept5227715152": 1.000000, "Concept5227672272": 1.000000, "Concept5227661440": 14.000000, "Concept5227700992": 5.000000, "Concept5227752432": 12.000000, "Concept5227747584": 12.000000, "Concept5227758576": 14.000000, "Concept5227698880": 6.000000, "Concept5227647712": 6.000000, "Concept5227615136": 8.000000, "Concept5227690848": 7.000000, "Concept5227669088": 6.000000, "Concept5227618816": 3.000000, "Concept5227741184": 3.000000, "Concept5227644608": 12.000000, "Concept5227648704": 25.000000, "Concept5227811136": 7.000000, "Concept5227654336": 9.000000, "Concept5227641712": 23.000000, "Concept5227716512": 4.000000, "Concept5227631440": 14.000000, "Concept5227701984": 3.000000, "Concept5227529552": 56.000000, "Concept5227731088": 5.000000, "Concept5227559040": 101.000000, "Concept5227730096": 2.000000, "Concept5227603712": 2.000000, "Concept5227726208": 2.000000, "Concept5227685216": 5.000000, "Concept5227597328": 41.000000, "Concept5227612240": 3.000000, "Concept5227485216": 24.000000, "Concept5227611248": 3.000000, "Concept5227718832": 7.000000, "Concept5227595616": 6.000000, "Concept5227619808": 3.000000, "Concept5227624064": 28.000000, "Concept5227757584": 10.000000, "Concept5227553472": 85.000000, "Concept5227592384": 28.000000, "Concept5227674992": 1.000000, "Concept5227670080": 9.000000, "Concept5227733984": 10.000000, "Concept5227570496": 110.000000, "Concept5227780592": 4.000000, "Concept5227640720": 12.000000, "Concept5227614384": 9.000000, "Concept5227645600": 15.000000, "Concept5227620176": 14.000000, "Concept5227814656": 4.000000, "Concept5227621168": 33.000000, "Concept5227585728": 26.000000, "Concept5227738656": 2.000000, "Concept5227598320": 22.000000, "Concept5227502304": 44.000000, "Concept5227601392": 27.000000, "Concept5227705088": 13.000000, "Concept5227766800": 7.000000, "Concept5227593376": 28.000000, "Concept5227745648": 15.000000, "Concept5227720992": 5.000000, "Concept5227636864": 17.000000, "Concept5227748576": 6.000000, "Concept5227687744": 4.000000, "Concept5227616496": 3.000000, "Concept5227634336": 13.000000, "Concept5227607232": 15.000000, "Concept5227651600": 7.000000, "Concept5227750688": 11.000000, "Concept5227807248": 12.000000, "Concept5227777664": 6.000000, "Concept5227713040": 8.000000, "Concept5227697888": 11.000000, "Concept5227754368": 12.000000, "Concept5227664176": 1.000000, "Concept5227767408": 1.000000, "Concept5227630448": 8.000000, "Concept5227608928": 21.000000, "Concept5227818272": 1.000000, "Concept5227743120": 15.000000, "Concept5227770672": 2.000000, "Concept5227590528": 44.000000, "Concept5227720000": 3.000000}, "anchor": {"c1": 3.000000, "f2": 6.000000, "a2": 5.000000, "b1": 4.000000, "e2": 5.000000, "d1": 2.000000, "e1": 2.000000, "d2": 4.000000, "a1": 4.000000, "f1": 4.000000, "b2": 7.000000, "c2": 9.000000}}
+}
+,{"name": "Concept5227914032",
+"size": 27.000000,
+"children": [
+{"name": "Concept5227871520",
+"size": 3.000000,
+"children": [
+{"name": "Concept5227870528",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.110581,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.104745,
+"std": 1,
+"n": 1,
+}},
+"_base": {"f": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227620176": 1.000000, "Concept5227618816": 1.000000, "Concept5227633584": 1.000000, "Concept5227570496": 2.000000, "Concept5227661136": 1.000000, "Concept5227585728": 1.000000, "Concept5227595616": 1.000000, "Concept5227773200": 1.000000, "Concept5227834880": 1.000000, "Concept5227590528": 2.000000, "Concept5227559040": 2.000000, "Concept5227612240": 1.000000, "Concept5227615136": 1.000000, "Concept5227792800": 1.000000, "Concept5227673632": 1.000000, "Concept5227553472": 1.000000, "Concept5227682816": 1.000000, "Concept5227592384": 1.000000, "Concept5227611248": 1.000000, "Concept5227529552": 1.000000, "Concept5227597328": 1.000000}, "anchor": {"f2": 1.000000}}
+}
+,{"name": "Concept5227871824",
+"size": 2.000000,
+"children": [
+{"name": "Concept5227873056",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.119534,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.114194,
+"std": 1,
+"n": 1,
+}},
+"_base": {"b": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227669088": 1.000000, "Concept5227620176": 1.000000, "Concept5227593376": 1.000000, "Concept5227529552": 1.000000, "Concept5227616496": 1.000000, "Concept5227621168": 1.000000, "Concept5227618816": 1.000000, "Concept5227570496": 2.000000, "Concept5227661136": 1.000000, "Concept5227775136": 1.000000, "Concept5227633584": 1.000000, "Concept5227834880": 1.000000, "Concept5227590528": 2.000000, "Concept5227761552": 1.000000, "Concept5227559040": 3.000000, "Concept5227612240": 1.000000, "Concept5227592384": 1.000000, "Concept5227615136": 1.000000, "Concept5227792800": 1.000000, "Concept5227673632": 1.000000}, "anchor": {"b2": 1.000000}}
+}
+,{"name": "Concept5227874208",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.113081,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.107368,
+"std": 1,
+"n": 1,
+}},
+"_base": {"d": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227529552": 1.000000, "Concept5227585728": 1.000000, "Concept5227624064": 1.000000, "Concept5227620176": 1.000000, "Concept5227621168": 1.000000, "Concept5227761552": 1.000000, "Concept5227559040": 2.000000, "Concept5227590528": 1.000000, "Concept5227715152": 1.000000, "Concept5227595616": 1.000000, "Concept5227669088": 1.000000, "Concept5227773200": 1.000000, "Concept5227616496": 1.000000, "Concept5227570496": 3.000000, "Concept5227775136": 1.000000, "Concept5227661136": 1.000000, "Concept5227615136": 1.000000, "Concept5227592384": 1.000000, "Concept5227593376": 1.000000, "Concept5227633584": 1.000000, "Concept5227834880": 1.000000}, "anchor": {"d2": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.222740,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.115018,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"d2": 1.000000, "b2": 1.000000}, "context": {"Concept5227624064": 1.000000, "Concept5227590528": 3.000000, "Concept5227715152": 1.000000, "Concept5227761552": 2.000000, "Concept5227592384": 2.000000, "Concept5227595616": 1.000000, "Concept5227673632": 1.000000, "Concept5227593376": 2.000000, "Concept5227792800": 1.000000, "Concept5227615136": 2.000000, "Concept5227612240": 1.000000, "Concept5227559040": 5.000000, "Concept5227834880": 2.000000, "Concept5227775136": 2.000000, "Concept5227669088": 2.000000, "Concept5227661136": 2.000000, "Concept5227570496": 5.000000, "Concept5227618816": 1.000000, "Concept5227585728": 1.000000, "Concept5227620176": 2.000000, "Concept5227621168": 2.000000, "Concept5227616496": 2.000000, "Concept5227529552": 2.000000, "Concept5227633584": 2.000000, "Concept5227773200": 1.000000}, "_variant": {"2": 2.000000}, "_base": {"d": 1.000000, "b": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.301339,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.108178,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"b2": 1.000000, "d2": 1.000000, "f2": 1.000000}, "context": {"Concept5227624064": 1.000000, "Concept5227616496": 2.000000, "Concept5227597328": 1.000000, "Concept5227529552": 3.000000, "Concept5227611248": 1.000000, "Concept5227595616": 2.000000, "Concept5227761552": 2.000000, "Concept5227673632": 2.000000, "Concept5227592384": 3.000000, "Concept5227682816": 1.000000, "Concept5227553472": 1.000000, "Concept5227593376": 2.000000, "Concept5227792800": 2.000000, "Concept5227615136": 3.000000, "Concept5227834880": 3.000000, "Concept5227612240": 2.000000, "Concept5227559040": 7.000000, "Concept5227715152": 1.000000, "Concept5227590528": 5.000000, "Concept5227773200": 2.000000, "Concept5227621168": 2.000000, "Concept5227620176": 3.000000, "Concept5227585728": 2.000000, "Concept5227775136": 2.000000, "Concept5227669088": 2.000000, "Concept5227661136": 3.000000, "Concept5227570496": 7.000000, "Concept5227633584": 3.000000, "Concept5227618816": 2.000000}, "_variant": {"2": 3.000000}, "_base": {"d": 1.000000, "b": 1.000000, "f": 1.000000}}
+}
+,{"name": "Concept5227914336",
+"size": 7.000000,
+"children": [
+{"name": "Concept5227914688",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.153971,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.160497,
+"std": 1,
+"n": 1,
+}},
+"_base": {"f": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227570496": 1.000000, "Concept5227616496": 1.000000, "Concept5227603712": 1.000000, "Concept5227590528": 1.000000, "Concept5227707984": 1.000000, "Concept5227620176": 1.000000, "Concept5227679600": 1.000000, "Concept5227592384": 3.000000, "Concept5227841664": 1.000000, "Concept5227559040": 2.000000, "Concept5227685216": 1.000000, "Concept5227615136": 1.000000, "Concept5227485216": 1.000000, "Concept5227593376": 1.000000, "Concept5227631440": 1.000000, "Concept5227692960": 1.000000, "Concept5227763904": 1.000000, "Concept5227647712": 1.000000, "Concept5227612928": 1.000000}, "anchor": {"f2": 1.000000}}
+}
+,{"name": "Concept5227915568",
+"size": 2.000000,
+"children": [
+{"name": "Concept5227917616",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.104128,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.098034,
+"std": 1,
+"n": 1,
+}},
+"_base": {"e": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227603712": 1.000000, "Concept5227689856": 1.000000, "Concept5227687744": 1.000000, "Concept5227641712": 1.000000, "Concept5227570496": 1.000000, "Concept5227590528": 1.000000, "Concept5227620176": 1.000000, "Concept5227485216": 1.000000, "Concept5227615136": 1.000000, "Concept5227612928": 1.000000, "Concept5227648704": 1.000000, "Concept5227559040": 2.000000, "Concept5227685216": 1.000000, "Concept5227841664": 1.000000, "Concept5227553472": 2.000000, "Concept5227529552": 1.000000, "Concept5227597328": 1.000000, "Concept5227611248": 1.000000, "Concept5227502304": 1.000000, "Concept5227592384": 1.000000, "Concept5227779600": 1.000000, "Concept5227682816": 1.000000}, "anchor": {"e1": 1.000000}}
+}
+,{"name": "Concept5227918192",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.110581,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.104745,
+"std": 1,
+"n": 1,
+}},
+"_base": {"b": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227593376": 2.000000, "Concept5227641712": 1.000000, "Concept5227570496": 2.000000, "Concept5227553472": 1.000000, "Concept5227644608": 1.000000, "Concept5227620176": 1.000000, "Concept5227616496": 1.000000, "Concept5227603712": 1.000000, "Concept5227590528": 1.000000, "Concept5227592384": 1.000000, "Concept5227502304": 1.000000, "Concept5227779600": 1.000000, "Concept5227615136": 1.000000, "Concept5227485216": 1.000000, "Concept5227612928": 1.000000, "Concept5227841664": 1.000000, "Concept5227559040": 2.000000, "Concept5227685216": 1.000000, "Concept5227689856": 1.000000, "Concept5227692960": 1.000000, "Concept5227690848": 1.000000}, "anchor": {"b2": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.194468,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.098974,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"b2": 1.000000, "e1": 1.000000}, "context": {"Concept5227644608": 1.000000, "Concept5227692960": 1.000000, "Concept5227592384": 2.000000, "Concept5227682816": 1.000000, "Concept5227616496": 1.000000, "Concept5227779600": 2.000000, "Concept5227502304": 2.000000, "Concept5227485216": 2.000000, "Concept5227611248": 1.000000, "Concept5227685216": 2.000000, "Concept5227597328": 1.000000, "Concept5227529552": 1.000000, "Concept5227687744": 1.000000, "Concept5227648704": 1.000000, "Concept5227553472": 3.000000, "Concept5227841664": 2.000000, "Concept5227559040": 4.000000, "Concept5227590528": 2.000000, "Concept5227612928": 2.000000, "Concept5227603712": 2.000000, "Concept5227615136": 2.000000, "Concept5227620176": 2.000000, "Concept5227570496": 3.000000, "Concept5227641712": 2.000000, "Concept5227593376": 2.000000, "Concept5227690848": 1.000000, "Concept5227689856": 2.000000}, "_variant": {"2": 1.000000, "1": 1.000000}, "_base": {"b": 1.000000, "e": 1.000000}}
+}
+,{"name": "Concept5227914992",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.151973,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.149827,
+"std": 1,
+"n": 1,
+}},
+"_base": {"d": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227644608": 1.000000, "Concept5227620176": 1.000000, "Concept5227485216": 1.000000, "Concept5227593376": 3.000000, "Concept5227529552": 1.000000, "Concept5227616496": 2.000000, "Concept5227603712": 1.000000, "Concept5227648704": 1.000000, "Concept5227590528": 1.000000, "Concept5227570496": 4.000000, "Concept5227689856": 1.000000, "Concept5227692960": 2.000000, "Concept5227690848": 1.000000, "Concept5227687744": 1.000000, "Concept5227559040": 2.000000, "Concept5227685216": 1.000000}, "anchor": {"d2": 1.000000}}
+}
+,{"name": "Concept5227960240",
+"size": 3.000000,
+"children": [
+{"name": "Concept5227917312",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.131139,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.130012,
+"std": 1,
+"n": 1,
+}},
+"_base": {"c": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227687744": 1.000000, "Concept5227616496": 1.000000, "Concept5227529552": 1.000000, "Concept5227597328": 1.000000, "Concept5227615136": 1.000000, "Concept5227570496": 2.000000, "Concept5227692960": 1.000000, "Concept5227841664": 1.000000, "Concept5227648704": 1.000000, "Concept5227612928": 1.000000, "Concept5227553472": 2.000000, "Concept5227611248": 1.000000, "Concept5227593376": 1.000000, "Concept5227779600": 1.000000, "Concept5227682816": 1.000000, "Concept5227502304": 1.000000, "Concept5227592384": 2.000000, "Concept5227631440": 1.000000, "Concept5227641712": 1.000000, "Concept5227707984": 1.000000}, "anchor": {"c2": 1.000000}}
+}
+,{"name": "Concept5227913728",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.145050,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.149805,
+"std": 1,
+"n": 1,
+}},
+"_base": {"a": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227648704": 1.000000, "Concept5227590528": 1.000000, "Concept5227687744": 1.000000, "Concept5227616496": 1.000000, "Concept5227529552": 1.000000, "Concept5227597328": 1.000000, "Concept5227570496": 2.000000, "Concept5227692960": 1.000000, "Concept5227620176": 1.000000, "Concept5227685216": 1.000000, "Concept5227559040": 1.000000, "Concept5227553472": 1.000000, "Concept5227611248": 1.000000, "Concept5227593376": 1.000000, "Concept5227631440": 1.000000, "Concept5227682816": 1.000000, "Concept5227592384": 2.000000, "Concept5227763904": 1.000000, "Concept5227647712": 1.000000, "Concept5227707984": 1.000000}, "anchor": {"a2": 1.000000}}
+}
+,{"name": "Concept5227961664",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.153971,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.160497,
+"std": 1,
+"n": 1,
+}},
+"_base": {"e": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227502304": 1.000000, "Concept5227592384": 2.000000, "Concept5227585728": 1.000000, "Concept5227529552": 1.000000, "Concept5227763904": 1.000000, "Concept5227647712": 1.000000, "Concept5227766800": 1.000000, "Concept5227593376": 1.000000, "Concept5227762912": 1.000000, "Concept5227553472": 1.000000, "Concept5227630448": 1.000000, "Concept5227648704": 1.000000, "Concept5227612928": 1.000000, "Concept5227626592": 1.000000, "Concept5227570496": 3.000000, "Concept5227758576": 1.000000, "Concept5227757584": 1.000000, "Concept5227634336": 1.000000, "Concept5227615136": 1.000000}, "anchor": {"e1": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.341564,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.129363,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"e1": 1.000000, "a2": 1.000000, "c2": 1.000000}, "context": {"Concept5227766800": 1.000000, "Concept5227626592": 1.000000, "Concept5227758576": 1.000000, "Concept5227634336": 1.000000, "Concept5227757584": 1.000000, "Concept5227762912": 1.000000, "Concept5227763904": 2.000000, "Concept5227559040": 1.000000, "Concept5227585728": 1.000000, "Concept5227620176": 1.000000, "Concept5227630448": 1.000000, "Concept5227612928": 2.000000, "Concept5227590528": 1.000000, "Concept5227707984": 2.000000, "Concept5227641712": 1.000000, "Concept5227631440": 2.000000, "Concept5227682816": 2.000000, "Concept5227592384": 6.000000, "Concept5227502304": 2.000000, "Concept5227616496": 2.000000, "Concept5227779600": 1.000000, "Concept5227593376": 3.000000, "Concept5227611248": 2.000000, "Concept5227687744": 2.000000, "Concept5227553472": 4.000000, "Concept5227648704": 3.000000, "Concept5227597328": 2.000000, "Concept5227685216": 1.000000, "Concept5227647712": 2.000000, "Concept5227841664": 1.000000, "Concept5227692960": 2.000000, "Concept5227570496": 7.000000, "Concept5227529552": 3.000000, "Concept5227615136": 2.000000}, "_variant": {"1": 1.000000, "2": 2.000000}, "_base": {"e": 1.000000, "a": 1.000000, "c": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.649558,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.114067,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"c2": 1.000000, "b2": 1.000000, "e1": 2.000000, "d2": 1.000000, "a2": 1.000000, "f2": 1.000000}, "context": {"Concept5227766800": 1.000000, "Concept5227626592": 1.000000, "Concept5227758576": 1.000000, "Concept5227634336": 1.000000, "Concept5227757584": 1.000000, "Concept5227644608": 2.000000, "Concept5227689856": 3.000000, "Concept5227502304": 4.000000, "Concept5227641712": 3.000000, "Concept5227529552": 5.000000, "Concept5227685216": 5.000000, "Concept5227597328": 3.000000, "Concept5227648704": 5.000000, "Concept5227687744": 4.000000, "Concept5227553472": 7.000000, "Concept5227630448": 1.000000, "Concept5227590528": 5.000000, "Concept5227612928": 5.000000, "Concept5227841664": 4.000000, "Concept5227647712": 3.000000, "Concept5227762912": 1.000000, "Concept5227763904": 3.000000, "Concept5227692960": 6.000000, "Concept5227631440": 3.000000, "Concept5227485216": 4.000000, "Concept5227611248": 3.000000, "Concept5227690848": 2.000000, "Concept5227593376": 9.000000, "Concept5227603712": 4.000000, "Concept5227615136": 5.000000, "Concept5227559040": 9.000000, "Concept5227682816": 3.000000, "Concept5227592384": 11.000000, "Concept5227585728": 1.000000, "Concept5227620176": 5.000000, "Concept5227679600": 1.000000, "Concept5227707984": 3.000000, "Concept5227779600": 3.000000, "Concept5227616496": 6.000000, "Concept5227570496": 15.000000}, "_variant": {"1": 2.000000, "2": 5.000000}, "_base": {"d": 1.000000, "b": 1.000000, "f": 1.000000, "e": 2.000000, "c": 1.000000, "a": 1.000000}}
+}
+,{"name": "Concept5227910176",
+"size": 17.000000,
+"children": [
+{"name": "Concept5227918496",
+"size": 4.000000,
+"children": [
+{"name": "Concept5227909872",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.167889,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.168157,
+"std": 1,
+"n": 1,
+}},
+"_base": {"e": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227687744": 1.000000, "Concept5227529552": 1.000000, "Concept5227553472": 1.000000, "Concept5227644608": 1.000000, "Concept5227634336": 1.000000, "Concept5227617488": 1.000000, "Concept5227648704": 1.000000, "Concept5227641712": 1.000000, "Concept5227502304": 1.000000, "Concept5227779600": 1.000000, "Concept5227593376": 4.000000, "Concept5227690848": 1.000000, "Concept5227692960": 2.000000, "Concept5227570496": 5.000000, "Concept5227616496": 2.000000}, "anchor": {"e1": 1.000000}}
+}
+,{"name": "Concept5227919264",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.123661,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.118604,
+"std": 1,
+"n": 1,
+}},
+"_base": {"b": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227585728": 1.000000, "Concept5227593376": 2.000000, "Concept5227485216": 1.000000, "Concept5227559040": 1.000000, "Concept5227617488": 1.000000, "Concept5227634336": 1.000000, "Concept5227603712": 1.000000, "Concept5227616496": 1.000000, "Concept5227553472": 1.000000, "Concept5227692960": 1.000000, "Concept5227689856": 1.000000, "Concept5227641712": 1.000000, "Concept5227502304": 1.000000, "Concept5227779600": 1.000000, "Concept5227570496": 4.000000, "Concept5227687744": 1.000000, "Concept5227674992": 1.000000, "Concept5227529552": 1.000000, "Concept5227648704": 1.000000, "Concept5227630448": 1.000000}, "anchor": {"b2": 1.000000}}
+}
+,{"name": "Concept5227972064",
+"size": 2.000000,
+"children": [
+{"name": "Concept5227972640",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.119534,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.114194,
+"std": 1,
+"n": 1,
+}},
+"_base": {"a": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227597328": 2.000000, "Concept5227611248": 1.000000, "Concept5227593376": 1.000000, "Concept5227788336": 1.000000, "Concept5227784448": 1.000000, "Concept5227553472": 3.000000, "Concept5227669088": 1.000000, "Concept5227608928": 1.000000, "Concept5227641712": 1.000000, "Concept5227559040": 1.000000, "Concept5227621168": 1.000000, "Concept5227780592": 1.000000, "Concept5227785440": 1.000000, "Concept5227502304": 1.000000, "Concept5227779600": 1.000000, "Concept5227570496": 2.000000, "Concept5227640720": 1.000000, "Concept5227585728": 1.000000, "Concept5227644608": 1.000000, "Concept5227777664": 1.000000}, "anchor": {"a2": 1.000000}}
+}
+,{"name": "Concept5227973904",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.124697,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.122841,
+"std": 1,
+"n": 1,
+}},
+"_base": {"c": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227485216": 1.000000, "Concept5227603712": 1.000000, "Concept5227644608": 1.000000, "Concept5227788336": 1.000000, "Concept5227664176": 1.000000, "Concept5227611248": 1.000000, "Concept5227593376": 1.000000, "Concept5227570496": 1.000000, "Concept5227597328": 1.000000, "Concept5227727200": 1.000000, "Concept5227559040": 2.000000, "Concept5227647712": 1.000000, "Concept5227780592": 1.000000, "Concept5227621168": 1.000000, "Concept5227669088": 1.000000, "Concept5227641712": 1.000000, "Concept5227779600": 1.000000, "Concept5227785440": 1.000000, "Concept5227592384": 1.000000, "Concept5227502304": 1.000000, "Concept5227553472": 2.000000}, "anchor": {"c1": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.226474,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.118585,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"c1": 1.000000, "a2": 1.000000}, "context": {"Concept5227603712": 1.000000, "Concept5227664176": 1.000000, "Concept5227777664": 1.000000, "Concept5227644608": 2.000000, "Concept5227621168": 2.000000, "Concept5227585728": 1.000000, "Concept5227780592": 2.000000, "Concept5227640720": 1.000000, "Concept5227570496": 3.000000, "Concept5227592384": 1.000000, "Concept5227779600": 2.000000, "Concept5227502304": 2.000000, "Concept5227553472": 5.000000, "Concept5227785440": 2.000000, "Concept5227647712": 1.000000, "Concept5227559040": 3.000000, "Concept5227608928": 1.000000, "Concept5227641712": 2.000000, "Concept5227669088": 2.000000, "Concept5227784448": 1.000000, "Concept5227593376": 2.000000, "Concept5227485216": 1.000000, "Concept5227611248": 2.000000, "Concept5227788336": 2.000000, "Concept5227727200": 1.000000, "Concept5227597328": 3.000000}, "_variant": {"1": 1.000000, "2": 1.000000}, "_base": {"c": 1.000000, "a": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.364792,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.101679,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"c1": 1.000000, "b2": 1.000000, "a2": 1.000000, "e1": 1.000000}, "context": {"Concept5227664176": 1.000000, "Concept5227727200": 1.000000, "Concept5227597328": 3.000000, "Concept5227784448": 1.000000, "Concept5227669088": 2.000000, "Concept5227621168": 2.000000, "Concept5227585728": 2.000000, "Concept5227611248": 2.000000, "Concept5227788336": 2.000000, "Concept5227485216": 2.000000, "Concept5227559040": 4.000000, "Concept5227603712": 2.000000, "Concept5227779600": 4.000000, "Concept5227616496": 3.000000, "Concept5227570496": 12.000000, "Concept5227780592": 2.000000, "Concept5227640720": 1.000000, "Concept5227689856": 1.000000, "Concept5227692960": 3.000000, "Concept5227690848": 1.000000, "Concept5227593376": 8.000000, "Concept5227502304": 4.000000, "Concept5227641712": 4.000000, "Concept5227608928": 1.000000, "Concept5227630448": 1.000000, "Concept5227785440": 2.000000, "Concept5227687744": 2.000000, "Concept5227553472": 7.000000, "Concept5227648704": 2.000000, "Concept5227777664": 1.000000, "Concept5227644608": 3.000000, "Concept5227529552": 2.000000, "Concept5227634336": 2.000000, "Concept5227647712": 1.000000, "Concept5227617488": 2.000000, "Concept5227592384": 1.000000, "Concept5227674992": 1.000000}, "_variant": {"2": 2.000000, "1": 2.000000}, "_base": {"c": 1.000000, "a": 1.000000, "b": 1.000000, "e": 1.000000}}
+}
+,{"name": "Concept5227961968",
+"size": 10.000000,
+"children": [
+{"name": "Concept5227964288",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.119534,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.114194,
+"std": 1,
+"n": 1,
+}},
+"_base": {"c": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227770672": 1.000000, "Concept5227616496": 1.000000, "Concept5227585728": 1.000000, "Concept5227593376": 1.000000, "Concept5227766800": 1.000000, "Concept5227762912": 1.000000, "Concept5227553472": 1.000000, "Concept5227502304": 1.000000, "Concept5227626592": 1.000000, "Concept5227621168": 2.000000, "Concept5227705088": 1.000000, "Concept5227767408": 1.000000, "Concept5227669088": 1.000000, "Concept5227570496": 3.000000, "Concept5227529552": 1.000000, "Concept5227648704": 1.000000, "Concept5227630448": 1.000000, "Concept5227559040": 2.000000, "Concept5227761552": 1.000000, "Concept5227758576": 1.000000}, "anchor": {"c1": 1.000000}}
+}
+,{"name": "Concept5227918800",
+"size": 2.000000,
+"children": [
+{"name": "Concept5227960928",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.131139,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.130012,
+"std": 1,
+"n": 1,
+}},
+"_base": {"f": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227730096": 1.000000, "Concept5227593376": 1.000000, "Concept5227770672": 1.000000, "Concept5227616496": 1.000000, "Concept5227570496": 1.000000, "Concept5227626592": 1.000000, "Concept5227763904": 1.000000, "Concept5227553472": 1.000000, "Concept5227731392": 1.000000, "Concept5227621168": 2.000000, "Concept5227647712": 1.000000, "Concept5227705088": 1.000000, "Concept5227762912": 1.000000, "Concept5227767408": 1.000000, "Concept5227631440": 1.000000, "Concept5227669088": 1.000000, "Concept5227761552": 1.000000, "Concept5227559040": 2.000000, "Concept5227592384": 2.000000, "Concept5227502304": 1.000000}, "anchor": {"f1": 1.000000}}
+}
+,{"name": "Concept5227965168",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.131139,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.130012,
+"std": 1,
+"n": 1,
+}},
+"_base": {"b": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227595616": 1.000000, "Concept5227766800": 1.000000, "Concept5227730096": 1.000000, "Concept5227559040": 1.000000, "Concept5227630448": 1.000000, "Concept5227621168": 1.000000, "Concept5227705088": 1.000000, "Concept5227647712": 1.000000, "Concept5227770672": 1.000000, "Concept5227585728": 2.000000, "Concept5227553472": 1.000000, "Concept5227731392": 1.000000, "Concept5227592384": 2.000000, "Concept5227502304": 1.000000, "Concept5227570496": 2.000000, "Concept5227626592": 1.000000, "Concept5227631440": 1.000000, "Concept5227773200": 1.000000, "Concept5227763904": 1.000000, "Concept5227762912": 1.000000}, "anchor": {"b1": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.244932,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.131097,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"b1": 1.000000, "f1": 1.000000}, "context": {"Concept5227766800": 1.000000, "Concept5227630448": 1.000000, "Concept5227621168": 3.000000, "Concept5227585728": 2.000000, "Concept5227502304": 2.000000, "Concept5227595616": 1.000000, "Concept5227761552": 1.000000, "Concept5227592384": 4.000000, "Concept5227730096": 2.000000, "Concept5227559040": 3.000000, "Concept5227731392": 2.000000, "Concept5227773200": 1.000000, "Concept5227669088": 1.000000, "Concept5227631440": 2.000000, "Concept5227767408": 1.000000, "Concept5227763904": 2.000000, "Concept5227762912": 2.000000, "Concept5227705088": 2.000000, "Concept5227647712": 2.000000, "Concept5227553472": 2.000000, "Concept5227626592": 2.000000, "Concept5227770672": 2.000000, "Concept5227570496": 3.000000, "Concept5227616496": 1.000000, "Concept5227593376": 1.000000}, "_variant": {"1": 2.000000}, "_base": {"b": 1.000000, "f": 1.000000}}
+}
+,{"name": "Concept5227963328",
+"size": 2.000000,
+"children": [
+{"name": "Concept5227961312",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.144196,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.144832,
+"std": 1,
+"n": 1,
+}},
+"_base": {"b": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227630448": 1.000000, "Concept5227648704": 1.000000, "Concept5227766800": 1.000000, "Concept5227593376": 2.000000, "Concept5227647712": 1.000000, "Concept5227621168": 1.000000, "Concept5227763904": 1.000000, "Concept5227767408": 1.000000, "Concept5227669088": 1.000000, "Concept5227559040": 1.000000, "Concept5227758576": 1.000000, "Concept5227761552": 1.000000, "Concept5227570496": 4.000000, "Concept5227585728": 1.000000, "Concept5227529552": 1.000000, "Concept5227616496": 1.000000, "Concept5227592384": 1.000000, "Concept5227634336": 1.000000, "Concept5227757584": 1.000000}, "anchor": {"b1": 1.000000}}
+}
+,{"name": "Concept5227966432",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.163521,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.167493,
+"std": 1,
+"n": 1,
+}},
+"_base": {"d": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227775136": 1.000000, "Concept5227595616": 1.000000, "Concept5227731392": 1.000000, "Concept5227593376": 2.000000, "Concept5227766800": 1.000000, "Concept5227730096": 1.000000, "Concept5227630448": 1.000000, "Concept5227631440": 1.000000, "Concept5227773200": 1.000000, "Concept5227767408": 1.000000, "Concept5227592384": 2.000000, "Concept5227763904": 1.000000, "Concept5227647712": 1.000000, "Concept5227570496": 4.000000, "Concept5227616496": 2.000000, "Concept5227585728": 2.000000}, "anchor": {"d2": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.278741,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.151943,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"d2": 1.000000, "b1": 1.000000}, "context": {"Concept5227773200": 1.000000, "Concept5227731392": 1.000000, "Concept5227757584": 1.000000, "Concept5227634336": 1.000000, "Concept5227595616": 1.000000, "Concept5227761552": 1.000000, "Concept5227592384": 3.000000, "Concept5227616496": 3.000000, "Concept5227559040": 1.000000, "Concept5227730096": 1.000000, "Concept5227529552": 1.000000, "Concept5227621168": 1.000000, "Concept5227585728": 3.000000, "Concept5227570496": 8.000000, "Concept5227631440": 1.000000, "Concept5227669088": 1.000000, "Concept5227775136": 1.000000, "Concept5227767408": 2.000000, "Concept5227758576": 1.000000, "Concept5227766800": 2.000000, "Concept5227593376": 4.000000, "Concept5227763904": 2.000000, "Concept5227647712": 2.000000, "Concept5227648704": 1.000000, "Concept5227630448": 2.000000}, "_variant": {"2": 1.000000, "1": 1.000000}, "_base": {"d": 1.000000, "b": 1.000000}}
+}
+,{"name": "Concept5227943280",
+"size": 5.000000,
+"children": [
+{"name": "Concept5227966736",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.136567,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.132624,
+"std": 1,
+"n": 1,
+}},
+"_base": {"a": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227777664": 1.000000, "Concept5227770672": 1.000000, "Concept5227630448": 1.000000, "Concept5227674992": 1.000000, "Concept5227585728": 2.000000, "Concept5227640720": 1.000000, "Concept5227775136": 1.000000, "Concept5227730096": 1.000000, "Concept5227621168": 1.000000, "Concept5227705088": 1.000000, "Concept5227570496": 4.000000, "Concept5227767408": 1.000000, "Concept5227631440": 1.000000, "Concept5227592384": 1.000000, "Concept5227616496": 2.000000, "Concept5227731392": 1.000000, "Concept5227593376": 2.000000, "Concept5227559040": 1.000000}, "anchor": {"a2": 1.000000}}
+}
+,{"name": "Concept5227945344",
+"size": 2.000000,
+"children": [
+{"name": "Concept5227945040",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.122035,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.116862,
+"std": 1,
+"n": 1,
+}},
+"_base": {"c": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227777664": 1.000000, "Concept5227630448": 1.000000, "Concept5227674992": 1.000000, "Concept5227585728": 3.000000, "Concept5227640720": 1.000000, "Concept5227570496": 3.000000, "Concept5227595616": 1.000000, "Concept5227631440": 1.000000, "Concept5227773200": 1.000000, "Concept5227641712": 1.000000, "Concept5227502304": 1.000000, "Concept5227592384": 1.000000, "Concept5227779600": 1.000000, "Concept5227553472": 1.000000, "Concept5227731392": 1.000000, "Concept5227705088": 1.000000, "Concept5227621168": 1.000000, "Concept5227559040": 1.000000, "Concept5227730096": 1.000000, "Concept5227770672": 1.000000}, "anchor": {"c2": 1.000000}}
+}
+,{"name": "Concept5227968768",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.113081,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.107368,
+"std": 1,
+"n": 1,
+}},
+"_base": {"e": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227593376": 1.000000, "Concept5227559040": 1.000000, "Concept5227780592": 1.000000, "Concept5227621168": 1.000000, "Concept5227777664": 1.000000, "Concept5227616496": 1.000000, "Concept5227775136": 1.000000, "Concept5227595616": 1.000000, "Concept5227570496": 3.000000, "Concept5227640720": 1.000000, "Concept5227585728": 2.000000, "Concept5227779600": 1.000000, "Concept5227502304": 1.000000, "Concept5227592384": 1.000000, "Concept5227669088": 1.000000, "Concept5227641712": 1.000000, "Concept5227631440": 1.000000, "Concept5227773200": 1.000000, "Concept5227730096": 1.000000, "Concept5227553472": 1.000000, "Concept5227731392": 1.000000}, "anchor": {"e2": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.226619,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.117256,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"e2": 1.000000, "c2": 1.000000}, "context": {"Concept5227593376": 1.000000, "Concept5227779600": 2.000000, "Concept5227616496": 1.000000, "Concept5227775136": 1.000000, "Concept5227570496": 6.000000, "Concept5227770672": 1.000000, "Concept5227730096": 2.000000, "Concept5227559040": 2.000000, "Concept5227585728": 5.000000, "Concept5227621168": 2.000000, "Concept5227705088": 1.000000, "Concept5227773200": 2.000000, "Concept5227731392": 2.000000, "Concept5227553472": 2.000000, "Concept5227674992": 1.000000, "Concept5227595616": 2.000000, "Concept5227592384": 2.000000, "Concept5227502304": 2.000000, "Concept5227669088": 1.000000, "Concept5227631440": 2.000000, "Concept5227641712": 2.000000, "Concept5227780592": 1.000000, "Concept5227640720": 2.000000, "Concept5227630448": 1.000000, "Concept5227777664": 2.000000}, "_variant": {"2": 2.000000}, "_base": {"e": 1.000000, "c": 1.000000}}
+}
+,{"name": "Concept5227969376",
+"size": 2.000000,
+"children": [
+{"name": "Concept5227969072",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.133635,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.132815,
+"std": 1,
+"n": 1,
+}},
+"_base": {"a": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227727200": 1.000000, "Concept5227779600": 1.000000, "Concept5227592384": 1.000000, "Concept5227502304": 1.000000, "Concept5227621168": 1.000000, "Concept5227780592": 1.000000, "Concept5227647712": 1.000000, "Concept5227559040": 1.000000, "Concept5227630448": 1.000000, "Concept5227593376": 1.000000, "Concept5227570496": 3.000000, "Concept5227674992": 1.000000, "Concept5227616496": 1.000000, "Concept5227585728": 2.000000, "Concept5227553472": 1.000000, "Concept5227775136": 1.000000, "Concept5227595616": 1.000000, "Concept5227669088": 1.000000, "Concept5227641712": 1.000000, "Concept5227773200": 1.000000}, "anchor": {"a1": 1.000000}}
+}
+,{"name": "Concept5227970880",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.133635,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.132815,
+"std": 1,
+"n": 1,
+}},
+"_base": {"d": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227784448": 1.000000, "Concept5227553472": 1.000000, "Concept5227592384": 1.000000, "Concept5227608928": 1.000000, "Concept5227669088": 1.000000, "Concept5227727200": 1.000000, "Concept5227597328": 1.000000, "Concept5227559040": 1.000000, "Concept5227621168": 1.000000, "Concept5227647712": 1.000000, "Concept5227780592": 1.000000, "Concept5227777664": 1.000000, "Concept5227585728": 2.000000, "Concept5227640720": 1.000000, "Concept5227630448": 1.000000, "Concept5227616496": 1.000000, "Concept5227674992": 1.000000, "Concept5227593376": 1.000000, "Concept5227570496": 3.000000, "Concept5227775136": 1.000000}, "anchor": {"d2": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.255907,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.137781,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"d2": 1.000000, "a1": 1.000000}, "context": {"Concept5227784448": 1.000000, "Concept5227777664": 1.000000, "Concept5227773200": 1.000000, "Concept5227641712": 1.000000, "Concept5227669088": 2.000000, "Concept5227592384": 2.000000, "Concept5227674992": 2.000000, "Concept5227595616": 1.000000, "Concept5227775136": 2.000000, "Concept5227553472": 2.000000, "Concept5227780592": 2.000000, "Concept5227640720": 1.000000, "Concept5227621168": 2.000000, "Concept5227585728": 4.000000, "Concept5227779600": 1.000000, "Concept5227616496": 2.000000, "Concept5227570496": 6.000000, "Concept5227593376": 2.000000, "Concept5227608928": 1.000000, "Concept5227630448": 2.000000, "Concept5227559040": 2.000000, "Concept5227647712": 2.000000, "Concept5227502304": 1.000000, "Concept5227597328": 1.000000, "Concept5227727200": 2.000000}, "_variant": {"2": 1.000000, "1": 1.000000}, "_base": {"d": 1.000000, "a": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.542315,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.127712,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"a1": 1.000000, "e2": 1.000000, "d2": 1.000000, "c2": 1.000000, "a2": 1.000000}, "context": {"Concept5227784448": 1.000000, "Concept5227597328": 1.000000, "Concept5227727200": 2.000000, "Concept5227647712": 2.000000, "Concept5227669088": 3.000000, "Concept5227730096": 3.000000, "Concept5227559040": 5.000000, "Concept5227593376": 5.000000, "Concept5227553472": 4.000000, "Concept5227773200": 3.000000, "Concept5227731392": 3.000000, "Concept5227779600": 3.000000, "Concept5227616496": 5.000000, "Concept5227502304": 3.000000, "Concept5227595616": 3.000000, "Concept5227674992": 4.000000, "Concept5227592384": 5.000000, "Concept5227641712": 3.000000, "Concept5227631440": 3.000000, "Concept5227775136": 4.000000, "Concept5227767408": 1.000000, "Concept5227770672": 2.000000, "Concept5227570496": 16.000000, "Concept5227585728": 11.000000, "Concept5227621168": 5.000000, "Concept5227705088": 2.000000, "Concept5227780592": 3.000000, "Concept5227640720": 4.000000, "Concept5227608928": 1.000000, "Concept5227630448": 4.000000, "Concept5227777664": 4.000000}, "_variant": {"1": 1.000000, "2": 4.000000}, "_base": {"d": 1.000000, "e": 1.000000, "c": 1.000000, "a": 2.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.914301,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.117511,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"e2": 1.000000, "c2": 1.000000, "a1": 1.000000, "d2": 2.000000, "a2": 1.000000, "f1": 1.000000, "c1": 1.000000, "b1": 2.000000}, "context": {"Concept5227784448": 1.000000, "Concept5227597328": 1.000000, "Concept5227641712": 3.000000, "Concept5227777664": 4.000000, "Concept5227780592": 3.000000, "Concept5227640720": 4.000000, "Concept5227773200": 5.000000, "Concept5227731392": 6.000000, "Concept5227631440": 6.000000, "Concept5227648704": 2.000000, "Concept5227553472": 7.000000, "Concept5227626592": 3.000000, "Concept5227757584": 1.000000, "Concept5227634336": 1.000000, "Concept5227502304": 6.000000, "Concept5227674992": 4.000000, "Concept5227595616": 5.000000, "Concept5227761552": 3.000000, "Concept5227592384": 12.000000, "Concept5227779600": 3.000000, "Concept5227616496": 10.000000, "Concept5227529552": 2.000000, "Concept5227621168": 11.000000, "Concept5227585728": 17.000000, "Concept5227770672": 5.000000, "Concept5227570496": 30.000000, "Concept5227669088": 6.000000, "Concept5227775136": 5.000000, "Concept5227767408": 5.000000, "Concept5227730096": 6.000000, "Concept5227559040": 11.000000, "Concept5227758576": 2.000000, "Concept5227727200": 2.000000, "Concept5227766800": 4.000000, "Concept5227593376": 11.000000, "Concept5227762912": 3.000000, "Concept5227763904": 4.000000, "Concept5227705088": 5.000000, "Concept5227647712": 6.000000, "Concept5227608928": 1.000000, "Concept5227630448": 8.000000}, "_variant": {"2": 5.000000, "1": 5.000000}, "_base": {"d": 2.000000, "a": 2.000000, "e": 1.000000, "f": 1.000000, "c": 2.000000, "b": 2.000000}}
+}
+,{"name": "Concept5227965472",
+"size": 3.000000,
+"children": [
+{"name": "Concept5227875088",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.109380,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.100959,
+"std": 1,
+"n": 1,
+}},
+"_base": {"e": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227598320": 1.000000, "Concept5227624064": 1.000000, "Concept5227559040": 2.000000, "Concept5227761552": 1.000000, "Concept5227529552": 2.000000, "Concept5227832560": 1.000000, "Concept5227665872": 1.000000, "Concept5227621168": 1.000000, "Concept5227618816": 1.000000, "Concept5227595616": 1.000000, "Concept5227715152": 1.000000, "Concept5227485216": 1.000000, "Concept5227792800": 1.000000, "Concept5227669088": 1.000000, "Concept5227773200": 1.000000, "Concept5227593376": 1.000000, "Concept5227585728": 1.000000, "Concept5227616496": 1.000000, "Concept5227570496": 4.000000, "Concept5227775136": 1.000000}, "anchor": {"e1": 1.000000}}
+}
+,{"name": "Concept5227871216",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.123661,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.118604,
+"std": 1,
+"n": 1,
+}},
+"_base": {"c": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227618816": 1.000000, "Concept5227616496": 1.000000, "Concept5227585728": 1.000000, "Concept5227595616": 1.000000, "Concept5227775136": 1.000000, "Concept5227773200": 1.000000, "Concept5227590528": 1.000000, "Concept5227559040": 1.000000, "Concept5227612240": 1.000000, "Concept5227673632": 1.000000, "Concept5227792800": 1.000000, "Concept5227529552": 1.000000, "Concept5227597328": 1.000000, "Concept5227570496": 4.000000, "Concept5227593376": 2.000000, "Concept5227611248": 1.000000, "Concept5227553472": 1.000000, "Concept5227682816": 1.000000, "Concept5227785440": 1.000000, "Concept5227644608": 1.000000}, "anchor": {"c2": 1.000000}}
+}
+,{"name": "Concept5227967696",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.163763,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.163349,
+"std": 1,
+"n": 1,
+}},
+"_base": {"e": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227559040": 1.000000, "Concept5227621168": 1.000000, "Concept5227705088": 1.000000, "Concept5227775136": 1.000000, "Concept5227595616": 1.000000, "Concept5227770672": 1.000000, "Concept5227773200": 1.000000, "Concept5227767408": 1.000000, "Concept5227593376": 2.000000, "Concept5227766800": 1.000000, "Concept5227674992": 1.000000, "Concept5227616496": 2.000000, "Concept5227585728": 3.000000, "Concept5227570496": 5.000000, "Concept5227630448": 2.000000}, "anchor": {"e1": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.294624,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.104726,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"c2": 1.000000, "e1": 2.000000}, "context": {"Concept5227705088": 1.000000, "Concept5227766800": 1.000000, "Concept5227644608": 1.000000, "Concept5227785440": 1.000000, "Concept5227553472": 1.000000, "Concept5227597328": 1.000000, "Concept5227630448": 2.000000, "Concept5227715152": 1.000000, "Concept5227590528": 1.000000, "Concept5227767408": 1.000000, "Concept5227775136": 3.000000, "Concept5227770672": 1.000000, "Concept5227570496": 13.000000, "Concept5227616496": 4.000000, "Concept5227621168": 2.000000, "Concept5227585728": 5.000000, "Concept5227792800": 2.000000, "Concept5227593376": 5.000000, "Concept5227773200": 3.000000, "Concept5227669088": 1.000000, "Concept5227674992": 1.000000, "Concept5227682816": 1.000000, "Concept5227761552": 1.000000, "Concept5227595616": 3.000000, "Concept5227673632": 1.000000, "Concept5227611248": 1.000000, "Concept5227485216": 1.000000, "Concept5227618816": 2.000000, "Concept5227665872": 1.000000, "Concept5227832560": 1.000000, "Concept5227529552": 3.000000, "Concept5227612240": 1.000000, "Concept5227559040": 4.000000, "Concept5227624064": 1.000000, "Concept5227598320": 1.000000}, "_variant": {"2": 1.000000, "1": 2.000000}, "_base": {"c": 1.000000, "e": 2.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 1.008448,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.079255,
+"std": 1,
+"n": 1,
+}},
+"_base": {"a": 3.000000, "d": 2.000000, "b": 3.000000, "f": 1.000000, "c": 4.000000, "e": 4.000000}, "_variant": {"2": 8.000000, "1": 9.000000}, "context": {"Concept5227664176": 1.000000, "Concept5227788336": 2.000000, "Concept5227784448": 2.000000, "Concept5227608928": 2.000000, "Concept5227777664": 5.000000, "Concept5227780592": 5.000000, "Concept5227640720": 5.000000, "Concept5227631440": 6.000000, "Concept5227762912": 3.000000, "Concept5227647712": 7.000000, "Concept5227763904": 4.000000, "Concept5227758576": 2.000000, "Concept5227730096": 6.000000, "Concept5227792800": 2.000000, "Concept5227603712": 2.000000, "Concept5227644608": 4.000000, "Concept5227618816": 2.000000, "Concept5227669088": 9.000000, "Concept5227665872": 1.000000, "Concept5227727200": 3.000000, "Concept5227832560": 1.000000, "Concept5227757584": 1.000000, "Concept5227624064": 1.000000, "Concept5227705088": 6.000000, "Concept5227689856": 1.000000, "Concept5227502304": 10.000000, "Concept5227598320": 1.000000, "Concept5227785440": 3.000000, "Concept5227621168": 15.000000, "Concept5227731392": 6.000000, "Concept5227692960": 3.000000, "Concept5227585728": 24.000000, "Concept5227767408": 6.000000, "Concept5227775136": 8.000000, "Concept5227766800": 5.000000, "Concept5227773200": 8.000000, "Concept5227641712": 7.000000, "Concept5227630448": 11.000000, "Concept5227626592": 3.000000, "Concept5227715152": 1.000000, "Concept5227770672": 6.000000, "Concept5227590528": 1.000000, "Concept5227559040": 19.000000, "Concept5227485216": 3.000000, "Concept5227612240": 1.000000, "Concept5227529552": 7.000000, "Concept5227597328": 5.000000, "Concept5227570496": 55.000000, "Concept5227690848": 1.000000, "Concept5227593376": 24.000000, "Concept5227611248": 3.000000, "Concept5227553472": 15.000000, "Concept5227592384": 13.000000, "Concept5227674992": 6.000000, "Concept5227779600": 7.000000, "Concept5227761552": 4.000000, "Concept5227682816": 1.000000, "Concept5227673632": 1.000000, "Concept5227595616": 8.000000, "Concept5227616496": 17.000000, "Concept5227687744": 2.000000, "Concept5227648704": 4.000000, "Concept5227634336": 3.000000, "Concept5227617488": 2.000000}, "anchor": {"e2": 1.000000, "a1": 1.000000, "a2": 2.000000, "d2": 2.000000, "f1": 1.000000, "b1": 2.000000, "c2": 2.000000, "b2": 1.000000, "c1": 2.000000, "e1": 3.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 1.097060,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.057320,
+"std": 1,
+"n": 1,
+}},
+"_base": {"a": 4.000000, "b": 5.000000, "d": 4.000000, "c": 5.000000, "f": 3.000000, "e": 6.000000}, "_variant": {"2": 16.000000, "1": 11.000000}, "context": {"Concept5227664176": 1.000000, "Concept5227788336": 2.000000, "Concept5227784448": 2.000000, "Concept5227608928": 2.000000, "Concept5227777664": 5.000000, "Concept5227780592": 5.000000, "Concept5227640720": 5.000000, "Concept5227767408": 6.000000, "Concept5227762912": 4.000000, "Concept5227758576": 3.000000, "Concept5227757584": 2.000000, "Concept5227630448": 12.000000, "Concept5227674992": 6.000000, "Concept5227634336": 4.000000, "Concept5227705088": 6.000000, "Concept5227689856": 4.000000, "Concept5227641712": 10.000000, "Concept5227633584": 3.000000, "Concept5227644608": 6.000000, "Concept5227669088": 11.000000, "Concept5227618816": 4.000000, "Concept5227687744": 6.000000, "Concept5227616496": 25.000000, "Concept5227731392": 6.000000, "Concept5227692960": 9.000000, "Concept5227585728": 27.000000, "Concept5227785440": 3.000000, "Concept5227621168": 17.000000, "Concept5227620176": 8.000000, "Concept5227775136": 10.000000, "Concept5227766800": 6.000000, "Concept5227773200": 10.000000, "Concept5227770672": 6.000000, "Concept5227590528": 11.000000, "Concept5227626592": 4.000000, "Concept5227679600": 1.000000, "Concept5227715152": 2.000000, "Concept5227682816": 5.000000, "Concept5227612928": 5.000000, "Concept5227834880": 3.000000, "Concept5227559040": 35.000000, "Concept5227485216": 7.000000, "Concept5227612240": 3.000000, "Concept5227529552": 15.000000, "Concept5227597328": 9.000000, "Concept5227685216": 5.000000, "Concept5227570496": 77.000000, "Concept5227593376": 35.000000, "Concept5227730096": 6.000000, "Concept5227603712": 6.000000, "Concept5227792800": 4.000000, "Concept5227673632": 3.000000, "Concept5227779600": 10.000000, "Concept5227761552": 6.000000, "Concept5227595616": 10.000000, "Concept5227553472": 23.000000, "Concept5227592384": 27.000000, "Concept5227648704": 9.000000, "Concept5227624064": 2.000000, "Concept5227502304": 14.000000, "Concept5227598320": 1.000000, "Concept5227617488": 2.000000, "Concept5227661136": 3.000000, "Concept5227631440": 9.000000, "Concept5227647712": 10.000000, "Concept5227841664": 4.000000, "Concept5227611248": 7.000000, "Concept5227690848": 3.000000, "Concept5227615136": 8.000000, "Concept5227727200": 3.000000, "Concept5227832560": 1.000000, "Concept5227665872": 1.000000, "Concept5227707984": 3.000000, "Concept5227763904": 7.000000}, "anchor": {"e2": 1.000000, "f1": 1.000000, "c1": 2.000000, "c2": 3.000000, "b2": 3.000000, "a1": 1.000000, "a2": 3.000000, "d2": 4.000000, "b1": 2.000000, "f2": 2.000000, "e1": 5.000000}}
+}
+,{"name": "Concept5227993680",
+"size": 46.000000,
+"children": [
+{"name": "Concept5227905536",
+"size": 20.000000,
+"children": [
+{"name": "Concept5227934160",
+"size": 6.000000,
+"children": [
+{"name": "Concept5227900832",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.144196,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.144832,
+"std": 1,
+"n": 1,
+}},
+"_base": {"c": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227615136": 1.000000, "Concept5227592384": 1.000000, "Concept5227633584": 1.000000, "Concept5227687744": 1.000000, "Concept5227672272": 1.000000, "Concept5227593376": 1.000000, "Concept5227661440": 1.000000, "Concept5227559040": 1.000000, "Concept5227529552": 1.000000, "Concept5227814656": 1.000000, "Concept5227585728": 2.000000, "Concept5227640720": 1.000000, "Concept5227648704": 1.000000, "Concept5227716512": 1.000000, "Concept5227595616": 1.000000, "Concept5227644608": 1.000000, "Concept5227570496": 4.000000, "Concept5227621168": 1.000000, "Concept5227700992": 1.000000}, "anchor": {"c1": 1.000000}}
+}
+,{"name": "Concept5227904544",
+"size": 2.000000,
+"children": [
+{"name": "Concept5227902496",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.123661,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.118604,
+"std": 1,
+"n": 1,
+}},
+"_base": {"e": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227615136": 1.000000, "Concept5227617488": 1.000000, "Concept5227634336": 1.000000, "Concept5227720992": 1.000000, "Concept5227592384": 1.000000, "Concept5227593376": 1.000000, "Concept5227672272": 1.000000, "Concept5227640720": 1.000000, "Concept5227585728": 2.000000, "Concept5227595616": 1.000000, "Concept5227553472": 1.000000, "Concept5227716512": 1.000000, "Concept5227570496": 4.000000, "Concept5227529552": 1.000000, "Concept5227597328": 1.000000, "Concept5227814656": 1.000000, "Concept5227636864": 1.000000, "Concept5227648704": 1.000000, "Concept5227633584": 1.000000, "Concept5227687744": 1.000000}, "anchor": {"e1": 1.000000}}
+}
+,{"name": "Concept5227905232",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.106628,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.100624,
+"std": 1,
+"n": 1,
+}},
+"_base": {"a": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227723104": 1.000000, "Concept5227553472": 1.000000, "Concept5227788336": 1.000000, "Concept5227592384": 1.000000, "Concept5227559040": 1.000000, "Concept5227485216": 1.000000, "Concept5227615136": 1.000000, "Concept5227665872": 1.000000, "Concept5227618816": 1.000000, "Concept5227597328": 1.000000, "Concept5227529552": 1.000000, "Concept5227814656": 1.000000, "Concept5227570496": 3.000000, "Concept5227640720": 1.000000, "Concept5227585728": 1.000000, "Concept5227598320": 1.000000, "Concept5227617488": 1.000000, "Concept5227634336": 1.000000, "Concept5227672272": 1.000000, "Concept5227593376": 1.000000, "Concept5227611248": 1.000000, "Concept5227633584": 1.000000}, "anchor": {"a1": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.204458,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.104590,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"a1": 1.000000, "e1": 1.000000}, "context": {"Concept5227723104": 1.000000, "Concept5227559040": 1.000000, "Concept5227665872": 1.000000, "Concept5227618816": 1.000000, "Concept5227553472": 2.000000, "Concept5227648704": 1.000000, "Concept5227687744": 1.000000, "Concept5227633584": 2.000000, "Concept5227636864": 1.000000, "Concept5227814656": 2.000000, "Concept5227597328": 2.000000, "Concept5227529552": 2.000000, "Concept5227570496": 7.000000, "Concept5227716512": 1.000000, "Concept5227592384": 2.000000, "Concept5227595616": 1.000000, "Concept5227672272": 2.000000, "Concept5227585728": 3.000000, "Concept5227598320": 1.000000, "Concept5227640720": 2.000000, "Concept5227788336": 1.000000, "Concept5227485216": 1.000000, "Concept5227611248": 1.000000, "Concept5227593376": 2.000000, "Concept5227634336": 2.000000, "Concept5227617488": 2.000000, "Concept5227720992": 1.000000, "Concept5227615136": 2.000000}, "_variant": {"1": 2.000000}, "_base": {"a": 1.000000, "e": 1.000000}}
+}
+,{"name": "Concept5227934464",
+"size": 3.000000,
+"children": [
+{"name": "Concept5227935888",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.125987,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.121105,
+"std": 1,
+"n": 1,
+}},
+"_base": {"c": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227553472": 2.000000, "Concept5227716512": 1.000000, "Concept5227624064": 1.000000, "Concept5227720000": 1.000000, "Concept5227595616": 1.000000, "Concept5227715152": 1.000000, "Concept5227597328": 2.000000, "Concept5227529552": 2.000000, "Concept5227585728": 1.000000, "Concept5227808240": 1.000000, "Concept5227621168": 1.000000, "Concept5227618816": 1.000000, "Concept5227611248": 1.000000, "Concept5227661440": 1.000000, "Concept5227723104": 1.000000, "Concept5227636864": 1.000000, "Concept5227570496": 3.000000, "Concept5227720992": 1.000000, "Concept5227559040": 1.000000}, "anchor": {"c2": 1.000000}}
+}
+,{"name": "Concept5227936192",
+"size": 2.000000,
+"children": [
+{"name": "Concept5227934768",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.113081,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.107368,
+"std": 1,
+"n": 1,
+}},
+"_base": {"f": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227529552": 1.000000, "Concept5227597328": 1.000000, "Concept5227720992": 1.000000, "Concept5227559040": 2.000000, "Concept5227636864": 1.000000, "Concept5227723104": 1.000000, "Concept5227619808": 1.000000, "Concept5227485216": 1.000000, "Concept5227618816": 1.000000, "Concept5227621168": 1.000000, "Concept5227598320": 1.000000, "Concept5227634336": 1.000000, "Concept5227661440": 1.000000, "Concept5227593376": 1.000000, "Concept5227570496": 3.000000, "Concept5227808240": 1.000000, "Concept5227585728": 1.000000, "Concept5227595616": 1.000000, "Concept5227553472": 1.000000, "Concept5227718832": 1.000000, "Concept5227716512": 1.000000}, "anchor": {"f1": 1.000000}}
+}
+,{"name": "Concept5227938112",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.113081,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.107368,
+"std": 1,
+"n": 1,
+}},
+"_base": {"b": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227595616": 1.000000, "Concept5227570496": 3.000000, "Concept5227723104": 1.000000, "Concept5227597328": 1.000000, "Concept5227529552": 1.000000, "Concept5227726208": 1.000000, "Concept5227720000": 1.000000, "Concept5227619808": 1.000000, "Concept5227485216": 1.000000, "Concept5227634336": 1.000000, "Concept5227598320": 1.000000, "Concept5227718832": 1.000000, "Concept5227553472": 1.000000, "Concept5227559040": 2.000000, "Concept5227621168": 1.000000, "Concept5227618816": 1.000000, "Concept5227593376": 1.000000, "Concept5227661440": 1.000000, "Concept5227611248": 1.000000, "Concept5227585728": 1.000000, "Concept5227808240": 1.000000}, "anchor": {"b1": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.227758,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.117915,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"b1": 1.000000, "f1": 1.000000}, "context": {"Concept5227726208": 1.000000, "Concept5227720000": 1.000000, "Concept5227716512": 1.000000, "Concept5227718832": 2.000000, "Concept5227553472": 2.000000, "Concept5227595616": 2.000000, "Concept5227621168": 2.000000, "Concept5227585728": 2.000000, "Concept5227720992": 1.000000, "Concept5227619808": 2.000000, "Concept5227808240": 2.000000, "Concept5227570496": 6.000000, "Concept5227485216": 2.000000, "Concept5227611248": 1.000000, "Concept5227593376": 2.000000, "Concept5227661440": 2.000000, "Concept5227634336": 2.000000, "Concept5227598320": 2.000000, "Concept5227618816": 2.000000, "Concept5227723104": 2.000000, "Concept5227636864": 1.000000, "Concept5227559040": 4.000000, "Concept5227597328": 2.000000, "Concept5227529552": 2.000000}, "_variant": {"1": 2.000000}, "_base": {"b": 1.000000, "f": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.332216,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.120600,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"b1": 1.000000, "f1": 1.000000, "c2": 1.000000}, "context": {"Concept5227726208": 1.000000, "Concept5227598320": 2.000000, "Concept5227634336": 2.000000, "Concept5227559040": 5.000000, "Concept5227619808": 2.000000, "Concept5227808240": 3.000000, "Concept5227720992": 2.000000, "Concept5227570496": 9.000000, "Concept5227636864": 2.000000, "Concept5227723104": 3.000000, "Concept5227593376": 2.000000, "Concept5227661440": 3.000000, "Concept5227485216": 2.000000, "Concept5227611248": 2.000000, "Concept5227618816": 3.000000, "Concept5227621168": 3.000000, "Concept5227585728": 3.000000, "Concept5227529552": 4.000000, "Concept5227597328": 4.000000, "Concept5227595616": 3.000000, "Concept5227720000": 2.000000, "Concept5227715152": 1.000000, "Concept5227718832": 2.000000, "Concept5227624064": 1.000000, "Concept5227716512": 2.000000, "Concept5227553472": 4.000000}, "_variant": {"1": 2.000000, "2": 1.000000}, "_base": {"b": 1.000000, "f": 1.000000, "c": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.501104,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.097580,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"b1": 1.000000, "e1": 1.000000, "f1": 1.000000, "a1": 1.000000, "c2": 1.000000, "c1": 1.000000}, "context": {"Concept5227726208": 1.000000, "Concept5227718832": 2.000000, "Concept5227624064": 1.000000, "Concept5227720000": 2.000000, "Concept5227715152": 1.000000, "Concept5227619808": 2.000000, "Concept5227808240": 3.000000, "Concept5227720992": 3.000000, "Concept5227634336": 4.000000, "Concept5227611248": 3.000000, "Concept5227485216": 3.000000, "Concept5227788336": 1.000000, "Concept5227597328": 6.000000, "Concept5227617488": 2.000000, "Concept5227700992": 1.000000, "Concept5227618816": 4.000000, "Concept5227665872": 1.000000, "Concept5227672272": 3.000000, "Concept5227585728": 8.000000, "Concept5227621168": 4.000000, "Concept5227570496": 20.000000, "Concept5227636864": 3.000000, "Concept5227644608": 1.000000, "Concept5227592384": 3.000000, "Concept5227595616": 5.000000, "Concept5227687744": 2.000000, "Concept5227648704": 2.000000, "Concept5227553472": 6.000000, "Concept5227716512": 4.000000, "Concept5227723104": 4.000000, "Concept5227529552": 7.000000, "Concept5227814656": 3.000000, "Concept5227598320": 3.000000, "Concept5227640720": 3.000000, "Concept5227593376": 5.000000, "Concept5227661440": 4.000000, "Concept5227559040": 7.000000, "Concept5227633584": 3.000000, "Concept5227615136": 3.000000}, "_variant": {"2": 1.000000, "1": 5.000000}, "_base": {"b": 1.000000, "e": 1.000000, "f": 1.000000, "a": 1.000000, "c": 2.000000}}
+}
+,{"name": "Concept5227937152",
+"size": 6.000000,
+"children": [
+{"name": "Concept5227867344",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.125987,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.121105,
+"std": 1,
+"n": 1,
+}},
+"_base": {"b": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227585728": 1.000000, "Concept5227616496": 1.000000, "Concept5227595616": 1.000000, "Concept5227773200": 1.000000, "Concept5227608928": 1.000000, "Concept5227615136": 1.000000, "Concept5227611248": 1.000000, "Concept5227593376": 2.000000, "Concept5227633584": 1.000000, "Concept5227834880": 1.000000, "Concept5227785440": 1.000000, "Concept5227682816": 1.000000, "Concept5227592384": 1.000000, "Concept5227570496": 3.000000, "Concept5227784448": 1.000000, "Concept5227644608": 1.000000, "Concept5227775136": 1.000000, "Concept5227553472": 2.000000, "Concept5227597328": 2.000000}, "anchor": {"b2": 1.000000}}
+}
+,{"name": "Concept5227938416",
+"size": 5.000000,
+"children": [
+{"name": "Concept5227939680",
+"size": 3.000000,
+"children": [
+{"name": "Concept5227940640",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.157909,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.165280,
+"std": 1,
+"n": 1,
+}},
+"_base": {"e": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227726208": 1.000000, "Concept5227720000": 1.000000, "Concept5227720992": 1.000000, "Concept5227592384": 2.000000, "Concept5227585728": 1.000000, "Concept5227636864": 1.000000, "Concept5227723104": 1.000000, "Concept5227647712": 1.000000, "Concept5227618816": 1.000000, "Concept5227529552": 1.000000, "Concept5227730096": 1.000000, "Concept5227597328": 2.000000, "Concept5227727200": 1.000000, "Concept5227595616": 1.000000, "Concept5227553472": 2.000000, "Concept5227631440": 1.000000, "Concept5227570496": 2.000000, "Concept5227611248": 1.000000}, "anchor": {"e2": 1.000000}}
+}
+,{"name": "Concept5227933856",
+"size": 2.000000,
+"children": [
+{"name": "Concept5227941520",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.153971,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.160497,
+"std": 1,
+"n": 1,
+}},
+"_base": {"b": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227592384": 2.000000, "Concept5227720992": 1.000000, "Concept5227634336": 1.000000, "Concept5227647712": 1.000000, "Concept5227618816": 1.000000, "Concept5227631440": 1.000000, "Concept5227593376": 1.000000, "Concept5227619808": 1.000000, "Concept5227585728": 1.000000, "Concept5227640720": 1.000000, "Concept5227597328": 1.000000, "Concept5227529552": 1.000000, "Concept5227727200": 1.000000, "Concept5227730096": 1.000000, "Concept5227731088": 1.000000, "Concept5227636864": 1.000000, "Concept5227723104": 1.000000, "Concept5227553472": 1.000000, "Concept5227570496": 3.000000}, "anchor": {"b2": 1.000000}}
+}
+,{"name": "Concept5227935072",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.144196,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.144832,
+"std": 1,
+"n": 1,
+}},
+"_base": {"c": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227585728": 2.000000, "Concept5227640720": 1.000000, "Concept5227733984": 1.000000, "Concept5227593376": 1.000000, "Concept5227636864": 1.000000, "Concept5227723104": 1.000000, "Concept5227731088": 1.000000, "Concept5227730096": 1.000000, "Concept5227597328": 1.000000, "Concept5227529552": 1.000000, "Concept5227726208": 1.000000, "Concept5227619808": 1.000000, "Concept5227631440": 1.000000, "Concept5227570496": 4.000000, "Concept5227592384": 1.000000, "Concept5227634336": 1.000000, "Concept5227618816": 1.000000, "Concept5227595616": 1.000000, "Concept5227553472": 1.000000}, "anchor": {"c1": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.298426,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.166551,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"c1": 1.000000, "b2": 1.000000}, "context": {"Concept5227733984": 1.000000, "Concept5227595616": 1.000000, "Concept5227726208": 1.000000, "Concept5227570496": 7.000000, "Concept5227553472": 2.000000, "Concept5227723104": 2.000000, "Concept5227636864": 2.000000, "Concept5227585728": 3.000000, "Concept5227640720": 2.000000, "Concept5227731088": 2.000000, "Concept5227730096": 2.000000, "Concept5227727200": 1.000000, "Concept5227529552": 2.000000, "Concept5227597328": 2.000000, "Concept5227619808": 2.000000, "Concept5227631440": 2.000000, "Concept5227593376": 2.000000, "Concept5227647712": 1.000000, "Concept5227618816": 2.000000, "Concept5227720992": 1.000000, "Concept5227592384": 3.000000, "Concept5227634336": 2.000000}, "_variant": {"1": 1.000000, "2": 1.000000}, "_base": {"c": 1.000000, "b": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.439239,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.172747,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"c1": 1.000000, "b2": 1.000000, "e2": 1.000000}, "context": {"Concept5227733984": 1.000000, "Concept5227634336": 2.000000, "Concept5227720992": 2.000000, "Concept5227619808": 2.000000, "Concept5227593376": 2.000000, "Concept5227611248": 1.000000, "Concept5227570496": 9.000000, "Concept5227631440": 3.000000, "Concept5227553472": 4.000000, "Concept5227592384": 5.000000, "Concept5227595616": 2.000000, "Concept5227731088": 2.000000, "Concept5227727200": 2.000000, "Concept5227597328": 4.000000, "Concept5227529552": 3.000000, "Concept5227730096": 3.000000, "Concept5227618816": 3.000000, "Concept5227647712": 2.000000, "Concept5227636864": 3.000000, "Concept5227723104": 3.000000, "Concept5227640720": 2.000000, "Concept5227585728": 4.000000, "Concept5227720000": 1.000000, "Concept5227726208": 2.000000}, "_variant": {"1": 1.000000, "2": 2.000000}, "_base": {"c": 1.000000, "b": 1.000000, "e": 1.000000}}
+}
+,{"name": "Concept5227935376",
+"size": 2.000000,
+"children": [
+{"name": "Concept5227939376",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.131139,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.130012,
+"std": 1,
+"n": 1,
+}},
+"_base": {"d": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227647712": 1.000000, "Concept5227585728": 1.000000, "Concept5227597328": 2.000000, "Concept5227727200": 1.000000, "Concept5227595616": 1.000000, "Concept5227570496": 2.000000, "Concept5227636864": 1.000000, "Concept5227592384": 1.000000, "Concept5227720992": 1.000000, "Concept5227720000": 1.000000, "Concept5227726208": 1.000000, "Concept5227559040": 1.000000, "Concept5227611248": 1.000000, "Concept5227593376": 1.000000, "Concept5227619808": 1.000000, "Concept5227485216": 1.000000, "Concept5227634336": 1.000000, "Concept5227598320": 1.000000, "Concept5227553472": 2.000000, "Concept5227718832": 1.000000}, "anchor": {"d2": 1.000000}}
+}
+,{"name": "Concept5227942976",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.113081,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.107368,
+"std": 1,
+"n": 1,
+}},
+"_base": {"f": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227559040": 1.000000, "Concept5227679600": 1.000000, "Concept5227636864": 1.000000, "Concept5227592384": 1.000000, "Concept5227553472": 1.000000, "Concept5227733984": 1.000000, "Concept5227603712": 1.000000, "Concept5227647712": 1.000000, "Concept5227585728": 2.000000, "Concept5227640720": 1.000000, "Concept5227595616": 1.000000, "Concept5227726208": 1.000000, "Concept5227570496": 3.000000, "Concept5227593376": 1.000000, "Concept5227619808": 1.000000, "Concept5227818272": 1.000000, "Concept5227485216": 1.000000, "Concept5227727200": 1.000000, "Concept5227597328": 1.000000, "Concept5227731088": 1.000000, "Concept5227634336": 1.000000}, "anchor": {"f2": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.226474,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.118585,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"f2": 1.000000, "d2": 1.000000}, "context": {"Concept5227679600": 1.000000, "Concept5227733984": 1.000000, "Concept5227603712": 1.000000, "Concept5227718832": 1.000000, "Concept5227553472": 3.000000, "Concept5227640720": 1.000000, "Concept5227598320": 1.000000, "Concept5227634336": 2.000000, "Concept5227818272": 1.000000, "Concept5227611248": 1.000000, "Concept5227485216": 2.000000, "Concept5227720992": 1.000000, "Concept5227619808": 2.000000, "Concept5227593376": 2.000000, "Concept5227559040": 2.000000, "Concept5227720000": 1.000000, "Concept5227726208": 2.000000, "Concept5227595616": 2.000000, "Concept5227592384": 2.000000, "Concept5227636864": 2.000000, "Concept5227570496": 5.000000, "Concept5227647712": 2.000000, "Concept5227731088": 1.000000, "Concept5227597328": 3.000000, "Concept5227727200": 2.000000, "Concept5227585728": 3.000000}, "_variant": {"2": 2.000000}, "_base": {"f": 1.000000, "d": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.601781,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.146307,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"b2": 1.000000, "e2": 1.000000, "f2": 1.000000, "c1": 1.000000, "d2": 1.000000}, "context": {"Concept5227603712": 1.000000, "Concept5227818272": 1.000000, "Concept5227679600": 1.000000, "Concept5227733984": 2.000000, "Concept5227731088": 3.000000, "Concept5227529552": 3.000000, "Concept5227631440": 3.000000, "Concept5227718832": 1.000000, "Concept5227553472": 7.000000, "Concept5227640720": 3.000000, "Concept5227598320": 1.000000, "Concept5227634336": 4.000000, "Concept5227611248": 2.000000, "Concept5227485216": 2.000000, "Concept5227720992": 3.000000, "Concept5227619808": 4.000000, "Concept5227593376": 4.000000, "Concept5227730096": 3.000000, "Concept5227559040": 2.000000, "Concept5227720000": 2.000000, "Concept5227726208": 4.000000, "Concept5227595616": 4.000000, "Concept5227592384": 7.000000, "Concept5227723104": 3.000000, "Concept5227636864": 5.000000, "Concept5227570496": 14.000000, "Concept5227618816": 3.000000, "Concept5227647712": 4.000000, "Concept5227597328": 7.000000, "Concept5227727200": 4.000000, "Concept5227585728": 7.000000}, "_variant": {"1": 1.000000, "2": 4.000000}, "_base": {"f": 1.000000, "c": 1.000000, "b": 1.000000, "e": 1.000000, "d": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.596478,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.120445,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"f2": 1.000000, "c1": 1.000000, "d2": 1.000000, "e2": 1.000000, "b2": 2.000000}, "context": {"Concept5227679600": 1.000000, "Concept5227733984": 2.000000, "Concept5227731088": 3.000000, "Concept5227529552": 3.000000, "Concept5227723104": 3.000000, "Concept5227631440": 3.000000, "Concept5227647712": 4.000000, "Concept5227727200": 4.000000, "Concept5227726208": 4.000000, "Concept5227720992": 3.000000, "Concept5227619808": 4.000000, "Concept5227597328": 9.000000, "Concept5227775136": 1.000000, "Concept5227718832": 1.000000, "Concept5227785440": 1.000000, "Concept5227553472": 9.000000, "Concept5227636864": 5.000000, "Concept5227644608": 1.000000, "Concept5227634336": 4.000000, "Concept5227640720": 3.000000, "Concept5227598320": 1.000000, "Concept5227618816": 3.000000, "Concept5227784448": 1.000000, "Concept5227570496": 17.000000, "Concept5227730096": 3.000000, "Concept5227559040": 2.000000, "Concept5227834880": 1.000000, "Concept5227633584": 1.000000, "Concept5227593376": 6.000000, "Concept5227611248": 3.000000, "Concept5227485216": 2.000000, "Concept5227603712": 1.000000, "Concept5227615136": 1.000000, "Concept5227720000": 2.000000, "Concept5227608928": 1.000000, "Concept5227818272": 1.000000, "Concept5227773200": 1.000000, "Concept5227585728": 8.000000, "Concept5227616496": 1.000000, "Concept5227592384": 8.000000, "Concept5227682816": 1.000000, "Concept5227595616": 5.000000}, "_variant": {"1": 1.000000, "2": 5.000000}, "_base": {"f": 1.000000, "c": 1.000000, "e": 1.000000, "d": 1.000000, "b": 2.000000}}
+}
+,{"name": "Concept5227993984",
+"size": 8.000000,
+"children": [
+{"name": "Concept5227900272",
+"size": 3.000000,
+"children": [
+{"name": "Concept5227899088",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.104128,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.098034,
+"std": 1,
+"n": 1,
+}},
+"_base": {"d": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227669088": 1.000000, "Concept5227553472": 1.000000, "Concept5227603712": 1.000000, "Concept5227826176": 1.000000, "Concept5227723104": 1.000000, "Concept5227621168": 1.000000, "Concept5227618816": 1.000000, "Concept5227559040": 2.000000, "Concept5227788336": 1.000000, "Concept5227664176": 1.000000, "Concept5227570496": 2.000000, "Concept5227634336": 1.000000, "Concept5227617488": 1.000000, "Concept5227593376": 1.000000, "Concept5227611248": 1.000000, "Concept5227592384": 1.000000, "Concept5227615136": 1.000000, "Concept5227485216": 1.000000, "Concept5227633584": 1.000000, "Concept5227529552": 1.000000, "Concept5227597328": 1.000000, "Concept5227814656": 1.000000}, "anchor": {"d1": 1.000000}}
+}
+,{"name": "Concept5227906656",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.119534,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.114194,
+"std": 1,
+"n": 1,
+}},
+"_base": {"f": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227826176": 1.000000, "Concept5227670080": 1.000000, "Concept5227553472": 1.000000, "Concept5227608928": 1.000000, "Concept5227669088": 1.000000, "Concept5227597328": 1.000000, "Concept5227529552": 1.000000, "Concept5227723104": 1.000000, "Concept5227621168": 1.000000, "Concept5227618816": 1.000000, "Concept5227665872": 1.000000, "Concept5227603712": 1.000000, "Concept5227664176": 1.000000, "Concept5227485216": 2.000000, "Concept5227593376": 1.000000, "Concept5227570496": 2.000000, "Concept5227617488": 1.000000, "Concept5227598320": 1.000000, "Concept5227634336": 1.000000, "Concept5227559040": 3.000000}, "anchor": {"f1": 1.000000}}
+}
+,{"name": "Concept5227870832",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.125987,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.121105,
+"std": 1,
+"n": 1,
+}},
+"_base": {"a": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227670080": 1.000000, "Concept5227621168": 1.000000, "Concept5227665872": 1.000000, "Concept5227672272": 1.000000, "Concept5227611248": 1.000000, "Concept5227669088": 1.000000, "Concept5227608928": 1.000000, "Concept5227553472": 2.000000, "Concept5227826176": 1.000000, "Concept5227597328": 2.000000, "Concept5227585728": 1.000000, "Concept5227640720": 1.000000, "Concept5227598320": 1.000000, "Concept5227559040": 3.000000, "Concept5227603712": 1.000000, "Concept5227570496": 1.000000, "Concept5227664176": 1.000000, "Concept5227788336": 1.000000, "Concept5227485216": 2.000000}, "anchor": {"a2": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.304050,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.109258,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"a2": 1.000000, "f1": 1.000000, "d1": 1.000000}, "context": {"Concept5227670080": 2.000000, "Concept5227608928": 2.000000, "Concept5227665872": 2.000000, "Concept5227814656": 1.000000, "Concept5227597328": 4.000000, "Concept5227529552": 2.000000, "Concept5227633584": 1.000000, "Concept5227788336": 2.000000, "Concept5227611248": 2.000000, "Concept5227485216": 5.000000, "Concept5227603712": 3.000000, "Concept5227615136": 1.000000, "Concept5227592384": 1.000000, "Concept5227593376": 2.000000, "Concept5227640720": 1.000000, "Concept5227598320": 2.000000, "Concept5227617488": 2.000000, "Concept5227634336": 2.000000, "Concept5227570496": 5.000000, "Concept5227664176": 3.000000, "Concept5227672272": 1.000000, "Concept5227585728": 1.000000, "Concept5227826176": 3.000000, "Concept5227621168": 3.000000, "Concept5227618816": 2.000000, "Concept5227559040": 8.000000, "Concept5227723104": 2.000000, "Concept5227553472": 4.000000, "Concept5227669088": 3.000000}, "_variant": {"2": 1.000000, "1": 2.000000}, "_base": {"a": 1.000000, "f": 1.000000, "d": 1.000000}}
+}
+,{"name": "Concept5227902800",
+"size": 3.000000,
+"children": [
+{"name": "Concept5227903376",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.124697,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.122841,
+"std": 1,
+"n": 1,
+}},
+"_base": {"b": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227603712": 1.000000, "Concept5227664176": 1.000000, "Concept5227617488": 1.000000, "Concept5227634336": 1.000000, "Concept5227559040": 2.000000, "Concept5227621168": 1.000000, "Concept5227485216": 1.000000, "Concept5227615136": 1.000000, "Concept5227633584": 1.000000, "Concept5227597328": 1.000000, "Concept5227814656": 1.000000, "Concept5227636864": 1.000000, "Concept5227592384": 1.000000, "Concept5227720992": 1.000000, "Concept5227570496": 2.000000, "Concept5227585728": 1.000000, "Concept5227595616": 1.000000, "Concept5227716512": 1.000000, "Concept5227553472": 1.000000, "Concept5227593376": 1.000000, "Concept5227661440": 1.000000}, "anchor": {"b1": 1.000000}}
+}
+,{"name": "Concept5227899968",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.140076,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.140115,
+"std": 1,
+"n": 1,
+}},
+"_base": {"d": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227559040": 3.000000, "Concept5227603712": 1.000000, "Concept5227634336": 1.000000, "Concept5227617488": 1.000000, "Concept5227598320": 1.000000, "Concept5227485216": 2.000000, "Concept5227640720": 1.000000, "Concept5227585728": 1.000000, "Concept5227621168": 1.000000, "Concept5227665872": 1.000000, "Concept5227672272": 1.000000, "Concept5227661440": 1.000000, "Concept5227593376": 1.000000, "Concept5227553472": 1.000000, "Concept5227636864": 1.000000, "Concept5227664176": 1.000000, "Concept5227570496": 2.000000, "Concept5227597328": 1.000000, "Concept5227720992": 1.000000}, "anchor": {"d2": 1.000000}}
+}
+,{"name": "Concept5227897440",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.133635,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.132815,
+"std": 1,
+"n": 1,
+}},
+"_base": {"e": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227592384": 1.000000, "Concept5227598320": 1.000000, "Concept5227603712": 1.000000, "Concept5227553472": 1.000000, "Concept5227664176": 1.000000, "Concept5227788336": 1.000000, "Concept5227485216": 2.000000, "Concept5227615136": 1.000000, "Concept5227633584": 1.000000, "Concept5227597328": 1.000000, "Concept5227814656": 1.000000, "Concept5227570496": 1.000000, "Concept5227585728": 1.000000, "Concept5227640720": 1.000000, "Concept5227621168": 1.000000, "Concept5227665872": 1.000000, "Concept5227559040": 3.000000, "Concept5227672272": 1.000000, "Concept5227611248": 1.000000, "Concept5227661440": 1.000000}, "anchor": {"e1": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.366864,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.138072,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"e1": 1.000000, "d2": 1.000000, "b1": 1.000000}, "context": {"Concept5227598320": 2.000000, "Concept5227640720": 2.000000, "Concept5227621168": 3.000000, "Concept5227585728": 3.000000, "Concept5227672272": 2.000000, "Concept5227661440": 3.000000, "Concept5227593376": 2.000000, "Concept5227553472": 3.000000, "Concept5227716512": 1.000000, "Concept5227592384": 2.000000, "Concept5227595616": 1.000000, "Concept5227570496": 5.000000, "Concept5227720992": 2.000000, "Concept5227636864": 2.000000, "Concept5227814656": 2.000000, "Concept5227597328": 3.000000, "Concept5227633584": 2.000000, "Concept5227603712": 3.000000, "Concept5227615136": 2.000000, "Concept5227788336": 1.000000, "Concept5227611248": 1.000000, "Concept5227485216": 5.000000, "Concept5227665872": 2.000000, "Concept5227559040": 8.000000, "Concept5227634336": 2.000000, "Concept5227617488": 2.000000, "Concept5227664176": 3.000000}, "_variant": {"2": 1.000000, "1": 2.000000}, "_base": {"e": 1.000000, "d": 1.000000, "b": 1.000000}}
+}
+,{"name": "Concept5227994720",
+"size": 2.000000,
+"children": [
+{"name": "Concept5227996464",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.096279,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.087805,
+"std": 1,
+"n": 1,
+}},
+"_base": {"e": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227611248": 1.000000, "Concept5227592384": 1.000000, "Concept5227598320": 1.000000, "Concept5227645600": 1.000000, "Concept5227720000": 1.000000, "Concept5227603712": 1.000000, "Concept5227679600": 1.000000, "Concept5227818272": 1.000000, "Concept5227485216": 2.000000, "Concept5227615136": 1.000000, "Concept5227553472": 2.000000, "Concept5227608928": 1.000000, "Concept5227670080": 1.000000, "Concept5227570496": 1.000000, "Concept5227814656": 1.000000, "Concept5227529552": 1.000000, "Concept5227597328": 2.000000, "Concept5227758576": 1.000000, "Concept5227559040": 2.000000, "Concept5227648704": 1.000000, "Concept5227633584": 1.000000}, "anchor": {"e1": 1.000000}}
+}
+,{"name": "Concept5227997728",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.111884,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.103510,
+"std": 1,
+"n": 1,
+}},
+"_base": {"a": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227636864": 1.000000, "Concept5227559040": 1.000000, "Concept5227745648": 1.000000, "Concept5227611248": 1.000000, "Concept5227720992": 1.000000, "Concept5227592384": 1.000000, "Concept5227502304": 1.000000, "Concept5227679600": 1.000000, "Concept5227603712": 1.000000, "Concept5227615136": 1.000000, "Concept5227818272": 1.000000, "Concept5227485216": 1.000000, "Concept5227633584": 1.000000, "Concept5227720000": 1.000000, "Concept5227553472": 4.000000, "Concept5227814656": 1.000000, "Concept5227597328": 3.000000, "Concept5227641712": 1.000000, "Concept5227608928": 1.000000, "Concept5227670080": 1.000000}, "anchor": {"a2": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.190002,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.094277,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"a2": 1.000000, "e1": 1.000000}, "context": {"Concept5227636864": 1.000000, "Concept5227745648": 1.000000, "Concept5227720992": 1.000000, "Concept5227633584": 2.000000, "Concept5227553472": 6.000000, "Concept5227648704": 1.000000, "Concept5227559040": 3.000000, "Concept5227814656": 2.000000, "Concept5227758576": 1.000000, "Concept5227597328": 5.000000, "Concept5227529552": 1.000000, "Concept5227570496": 1.000000, "Concept5227679600": 2.000000, "Concept5227670080": 2.000000, "Concept5227641712": 1.000000, "Concept5227720000": 2.000000, "Concept5227608928": 2.000000, "Concept5227603712": 2.000000, "Concept5227615136": 2.000000, "Concept5227611248": 2.000000, "Concept5227485216": 3.000000, "Concept5227645600": 1.000000, "Concept5227818272": 2.000000, "Concept5227598320": 1.000000, "Concept5227502304": 1.000000, "Concept5227592384": 2.000000}, "_variant": {"2": 1.000000, "1": 1.000000}, "_base": {"a": 1.000000, "e": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.615660,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.093012,
+"std": 1,
+"n": 1,
+}},
+"_base": {"b": 1.000000, "e": 2.000000, "d": 2.000000, "f": 1.000000, "a": 2.000000}, "_variant": {"1": 5.000000, "2": 3.000000}, "context": {"Concept5227502304": 1.000000, "Concept5227641712": 1.000000, "Concept5227645600": 1.000000, "Concept5227818272": 2.000000, "Concept5227745648": 1.000000, "Concept5227636864": 3.000000, "Concept5227720992": 3.000000, "Concept5227661440": 3.000000, "Concept5227669088": 3.000000, "Concept5227648704": 1.000000, "Concept5227553472": 13.000000, "Concept5227723104": 2.000000, "Concept5227559040": 19.000000, "Concept5227618816": 2.000000, "Concept5227621168": 6.000000, "Concept5227672272": 3.000000, "Concept5227585728": 4.000000, "Concept5227826176": 3.000000, "Concept5227570496": 11.000000, "Concept5227634336": 4.000000, "Concept5227617488": 4.000000, "Concept5227598320": 5.000000, "Concept5227640720": 3.000000, "Concept5227595616": 1.000000, "Concept5227592384": 5.000000, "Concept5227603712": 8.000000, "Concept5227615136": 5.000000, "Concept5227788336": 3.000000, "Concept5227611248": 5.000000, "Concept5227485216": 13.000000, "Concept5227633584": 5.000000, "Concept5227529552": 3.000000, "Concept5227597328": 12.000000, "Concept5227758576": 1.000000, "Concept5227814656": 5.000000, "Concept5227665872": 4.000000, "Concept5227593376": 4.000000, "Concept5227664176": 6.000000, "Concept5227720000": 2.000000, "Concept5227608928": 4.000000, "Concept5227679600": 2.000000, "Concept5227716512": 1.000000, "Concept5227670080": 4.000000}, "anchor": {"b1": 1.000000, "a2": 2.000000, "d2": 1.000000, "d1": 1.000000, "f1": 1.000000, "e1": 2.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 1.072357,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.073088,
+"std": 1,
+"n": 1,
+}},
+"_base": {"a": 3.000000, "e": 4.000000, "c": 3.000000, "f": 3.000000, "b": 4.000000, "d": 3.000000}, "_variant": {"1": 11.000000, "2": 9.000000}, "context": {"Concept5227641712": 1.000000, "Concept5227645600": 1.000000, "Concept5227758576": 1.000000, "Concept5227818272": 3.000000, "Concept5227733984": 2.000000, "Concept5227731088": 3.000000, "Concept5227647712": 4.000000, "Concept5227745648": 1.000000, "Concept5227727200": 4.000000, "Concept5227726208": 5.000000, "Concept5227624064": 1.000000, "Concept5227720000": 6.000000, "Concept5227775136": 1.000000, "Concept5227773200": 1.000000, "Concept5227687744": 2.000000, "Concept5227616496": 1.000000, "Concept5227615136": 9.000000, "Concept5227730096": 3.000000, "Concept5227603712": 9.000000, "Concept5227808240": 3.000000, "Concept5227636864": 11.000000, "Concept5227720992": 9.000000, "Concept5227633584": 9.000000, "Concept5227834880": 1.000000, "Concept5227559040": 28.000000, "Concept5227661440": 7.000000, "Concept5227593376": 15.000000, "Concept5227640720": 9.000000, "Concept5227502304": 1.000000, "Concept5227598320": 9.000000, "Concept5227621168": 10.000000, "Concept5227785440": 1.000000, "Concept5227814656": 8.000000, "Concept5227529552": 13.000000, "Concept5227597328": 27.000000, "Concept5227631440": 3.000000, "Concept5227716512": 5.000000, "Concept5227670080": 4.000000, "Concept5227592384": 16.000000, "Concept5227553472": 28.000000, "Concept5227648704": 3.000000, "Concept5227682816": 1.000000, "Concept5227619808": 6.000000, "Concept5227718832": 3.000000, "Concept5227595616": 11.000000, "Concept5227669088": 3.000000, "Concept5227618816": 9.000000, "Concept5227644608": 2.000000, "Concept5227570496": 48.000000, "Concept5227679600": 3.000000, "Concept5227715152": 1.000000, "Concept5227672272": 6.000000, "Concept5227585728": 20.000000, "Concept5227665872": 5.000000, "Concept5227826176": 3.000000, "Concept5227617488": 6.000000, "Concept5227700992": 1.000000, "Concept5227634336": 12.000000, "Concept5227611248": 11.000000, "Concept5227485216": 18.000000, "Concept5227788336": 4.000000, "Concept5227664176": 6.000000, "Concept5227784448": 1.000000, "Concept5227723104": 9.000000, "Concept5227608928": 5.000000}, "anchor": {"f2": 1.000000, "e2": 1.000000, "c2": 1.000000, "b2": 2.000000, "c1": 2.000000, "d2": 2.000000, "e1": 3.000000, "b1": 2.000000, "a2": 2.000000, "d1": 1.000000, "a1": 1.000000, "f1": 2.000000}}
+}
+,{"name": "Concept5227851472",
+"size": 26.000000,
+"children": [
+{"name": "Concept5227843808",
+"size": 5.000000,
+"children": [
+{"name": "Concept5227854768",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.113081,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.107368,
+"std": 1,
+"n": 1,
+}},
+"_base": {"c": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227664176": 1.000000, "Concept5227603712": 1.000000, "Concept5227616496": 1.000000, "Concept5227767408": 1.000000, "Concept5227592384": 1.000000, "Concept5227615136": 1.000000, "Concept5227485216": 1.000000, "Concept5227559040": 2.000000, "Concept5227621168": 1.000000, "Concept5227661440": 1.000000, "Concept5227593376": 1.000000, "Concept5227648704": 1.000000, "Concept5227612928": 1.000000, "Concept5227570496": 3.000000, "Concept5227585728": 1.000000, "Concept5227748576": 1.000000, "Concept5227529552": 1.000000, "Concept5227811136": 1.000000, "Concept5227595616": 1.000000, "Concept5227821584": 1.000000, "Concept5227726208": 1.000000}, "anchor": {"c2": 1.000000}}
+}
+,{"name": "Concept5227845296",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.113081,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.107368,
+"std": 1,
+"n": 1,
+}},
+"_base": {"f": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227485216": 1.000000, "Concept5227704096": 1.000000, "Concept5227621168": 1.000000, "Concept5227664176": 1.000000, "Concept5227720000": 1.000000, "Concept5227553472": 1.000000, "Concept5227616496": 1.000000, "Concept5227603712": 1.000000, "Concept5227767408": 1.000000, "Concept5227590528": 1.000000, "Concept5227612240": 1.000000, "Concept5227559040": 3.000000, "Concept5227611248": 1.000000, "Concept5227593376": 1.000000, "Concept5227661440": 1.000000, "Concept5227570496": 2.000000, "Concept5227811136": 1.000000, "Concept5227597328": 1.000000, "Concept5227529552": 1.000000, "Concept5227748576": 1.000000, "Concept5227648704": 1.000000}, "anchor": {"f2": 1.000000}}
+}
+,{"name": "Concept5227857216",
+"size": 3.000000,
+"children": [
+{"name": "Concept5227845600",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.123661,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.118604,
+"std": 1,
+"n": 1,
+}},
+"_base": {"b": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227598320": 1.000000, "Concept5227612928": 1.000000, "Concept5227597328": 1.000000, "Concept5227603712": 1.000000, "Concept5227553472": 1.000000, "Concept5227718832": 1.000000, "Concept5227720000": 1.000000, "Concept5227821584": 1.000000, "Concept5227664176": 1.000000, "Concept5227615136": 1.000000, "Concept5227485216": 2.000000, "Concept5227621168": 1.000000, "Concept5227704096": 1.000000, "Concept5227612240": 1.000000, "Concept5227559040": 4.000000, "Concept5227592384": 1.000000, "Concept5227611248": 1.000000, "Concept5227661440": 1.000000, "Concept5227590528": 1.000000, "Concept5227748576": 1.000000}, "anchor": {"b2": 1.000000}}
+}
+,{"name": "Concept5227855072",
+"size": 2.000000,
+"children": [
+{"name": "Concept5227858176",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.110581,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.104745,
+"std": 1,
+"n": 1,
+}},
+"_base": {"c": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227598320": 1.000000, "Concept5227718832": 1.000000, "Concept5227553472": 2.000000, "Concept5227597328": 2.000000, "Concept5227738656": 1.000000, "Concept5227616496": 1.000000, "Concept5227570496": 1.000000, "Concept5227767408": 1.000000, "Concept5227592384": 1.000000, "Concept5227593376": 1.000000, "Concept5227611248": 1.000000, "Concept5227485216": 1.000000, "Concept5227615136": 1.000000, "Concept5227612928": 1.000000, "Concept5227636864": 1.000000, "Concept5227720000": 1.000000, "Concept5227821584": 1.000000, "Concept5227559040": 2.000000, "Concept5227612240": 1.000000, "Concept5227590528": 1.000000, "Concept5227704096": 1.000000}, "anchor": {"c1": 1.000000}}
+}
+,{"name": "Concept5227859440",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.113081,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.107368,
+"std": 1,
+"n": 1,
+}},
+"_base": {"f": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227590528": 1.000000, "Concept5227598320": 1.000000, "Concept5227601392": 1.000000, "Concept5227651600": 1.000000, "Concept5227597328": 1.000000, "Concept5227738656": 1.000000, "Concept5227553472": 1.000000, "Concept5227718832": 1.000000, "Concept5227559040": 3.000000, "Concept5227664176": 1.000000, "Concept5227570496": 1.000000, "Concept5227603712": 1.000000, "Concept5227616496": 1.000000, "Concept5227767408": 1.000000, "Concept5227592384": 1.000000, "Concept5227485216": 2.000000, "Concept5227615136": 1.000000, "Concept5227612928": 1.000000, "Concept5227636864": 1.000000, "Concept5227593376": 1.000000, "Concept5227821584": 1.000000}, "anchor": {"f1": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.215635,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.110942,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"f1": 1.000000, "c1": 1.000000}, "context": {"Concept5227601392": 1.000000, "Concept5227651600": 1.000000, "Concept5227664176": 1.000000, "Concept5227704096": 1.000000, "Concept5227612928": 2.000000, "Concept5227720000": 1.000000, "Concept5227590528": 2.000000, "Concept5227612240": 1.000000, "Concept5227559040": 5.000000, "Concept5227821584": 2.000000, "Concept5227636864": 2.000000, "Concept5227603712": 1.000000, "Concept5227615136": 2.000000, "Concept5227611248": 1.000000, "Concept5227485216": 3.000000, "Concept5227593376": 2.000000, "Concept5227592384": 2.000000, "Concept5227718832": 2.000000, "Concept5227767408": 2.000000, "Concept5227570496": 2.000000, "Concept5227616496": 2.000000, "Concept5227738656": 2.000000, "Concept5227597328": 3.000000, "Concept5227553472": 3.000000, "Concept5227598320": 2.000000}, "_variant": {"1": 2.000000}, "_base": {"f": 1.000000, "c": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.312148,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.112495,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"f1": 1.000000, "c1": 1.000000, "b2": 1.000000}, "context": {"Concept5227601392": 1.000000, "Concept5227651600": 1.000000, "Concept5227738656": 2.000000, "Concept5227616496": 2.000000, "Concept5227570496": 2.000000, "Concept5227718832": 3.000000, "Concept5227767408": 2.000000, "Concept5227748576": 1.000000, "Concept5227612928": 3.000000, "Concept5227720000": 2.000000, "Concept5227590528": 3.000000, "Concept5227593376": 2.000000, "Concept5227661440": 1.000000, "Concept5227485216": 5.000000, "Concept5227611248": 2.000000, "Concept5227592384": 3.000000, "Concept5227559040": 9.000000, "Concept5227612240": 2.000000, "Concept5227704096": 2.000000, "Concept5227621168": 1.000000, "Concept5227603712": 2.000000, "Concept5227615136": 3.000000, "Concept5227664176": 2.000000, "Concept5227821584": 3.000000, "Concept5227553472": 4.000000, "Concept5227597328": 4.000000, "Concept5227636864": 2.000000, "Concept5227598320": 3.000000}, "_variant": {"1": 2.000000, "2": 1.000000}, "_base": {"f": 1.000000, "c": 1.000000, "b": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.433759,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.098765,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"f1": 1.000000, "b2": 1.000000, "c1": 1.000000, "f2": 1.000000, "c2": 1.000000}, "context": {"Concept5227601392": 1.000000, "Concept5227651600": 1.000000, "Concept5227738656": 2.000000, "Concept5227636864": 2.000000, "Concept5227598320": 3.000000, "Concept5227704096": 3.000000, "Concept5227726208": 1.000000, "Concept5227821584": 4.000000, "Concept5227592384": 4.000000, "Concept5227595616": 1.000000, "Concept5227718832": 3.000000, "Concept5227767408": 4.000000, "Concept5227811136": 2.000000, "Concept5227597328": 5.000000, "Concept5227529552": 2.000000, "Concept5227748576": 3.000000, "Concept5227621168": 3.000000, "Concept5227585728": 1.000000, "Concept5227570496": 7.000000, "Concept5227720000": 3.000000, "Concept5227590528": 4.000000, "Concept5227612928": 4.000000, "Concept5227553472": 5.000000, "Concept5227648704": 2.000000, "Concept5227485216": 7.000000, "Concept5227611248": 3.000000, "Concept5227593376": 4.000000, "Concept5227661440": 3.000000, "Concept5227612240": 3.000000, "Concept5227559040": 14.000000, "Concept5227603712": 4.000000, "Concept5227615136": 4.000000, "Concept5227616496": 4.000000, "Concept5227664176": 4.000000}, "_variant": {"1": 2.000000, "2": 3.000000}, "_base": {"b": 1.000000, "f": 2.000000, "c": 2.000000}}
+}
+,{"name": "Concept5227851776",
+"size": 2.000000,
+"children": [
+{"name": "Concept5227853312",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.104128,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.098034,
+"std": 1,
+"n": 1,
+}},
+"_base": {"f": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227590528": 1.000000, "Concept5227612928": 1.000000, "Concept5227559040": 2.000000, "Concept5227612240": 1.000000, "Concept5227621168": 1.000000, "Concept5227704096": 1.000000, "Concept5227585728": 1.000000, "Concept5227748576": 1.000000, "Concept5227821584": 1.000000, "Concept5227726208": 1.000000, "Concept5227553472": 1.000000, "Concept5227607232": 1.000000, "Concept5227595616": 1.000000, "Concept5227701984": 1.000000, "Concept5227570496": 2.000000, "Concept5227615136": 1.000000, "Concept5227619808": 1.000000, "Concept5227661440": 1.000000, "Concept5227593376": 1.000000, "Concept5227592384": 1.000000, "Concept5227502304": 1.000000, "Concept5227634336": 1.000000}, "anchor": {"f2": 1.000000}}
+}
+,{"name": "Concept5227853888",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.106628,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.100624,
+"std": 1,
+"n": 1,
+}},
+"_base": {"b": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227593376": 1.000000, "Concept5227704096": 1.000000, "Concept5227616496": 1.000000, "Concept5227529552": 1.000000, "Concept5227590528": 1.000000, "Concept5227767408": 1.000000, "Concept5227615136": 1.000000, "Concept5227559040": 1.000000, "Concept5227612240": 1.000000, "Concept5227612928": 1.000000, "Concept5227648704": 1.000000, "Concept5227570496": 3.000000, "Concept5227821584": 1.000000, "Concept5227726208": 1.000000, "Concept5227585728": 1.000000, "Concept5227595616": 1.000000, "Concept5227701984": 1.000000, "Concept5227811136": 1.000000, "Concept5227592384": 1.000000, "Concept5227502304": 1.000000, "Concept5227553472": 1.000000, "Concept5227607232": 1.000000}, "anchor": {"b1": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.197363,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.100596,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"b1": 1.000000, "f2": 1.000000}, "context": {"Concept5227529552": 1.000000, "Concept5227634336": 1.000000, "Concept5227502304": 2.000000, "Concept5227595616": 2.000000, "Concept5227592384": 2.000000, "Concept5227593376": 2.000000, "Concept5227661440": 1.000000, "Concept5227619808": 1.000000, "Concept5227615136": 2.000000, "Concept5227570496": 5.000000, "Concept5227767408": 1.000000, "Concept5227811136": 1.000000, "Concept5227701984": 2.000000, "Concept5227616496": 1.000000, "Concept5227607232": 2.000000, "Concept5227648704": 1.000000, "Concept5227553472": 2.000000, "Concept5227726208": 2.000000, "Concept5227821584": 2.000000, "Concept5227748576": 1.000000, "Concept5227585728": 2.000000, "Concept5227621168": 1.000000, "Concept5227704096": 2.000000, "Concept5227559040": 3.000000, "Concept5227612240": 2.000000, "Concept5227612928": 2.000000, "Concept5227590528": 2.000000}, "_variant": {"1": 1.000000, "2": 1.000000}, "_base": {"b": 1.000000, "f": 1.000000}}
+}
+,{"name": "Concept5227852464",
+"size": 3.000000,
+"children": [
+{"name": "Concept5227853008",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.119534,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.114194,
+"std": 1,
+"n": 1,
+}},
+"_base": {"d": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227704096": 1.000000, "Concept5227621168": 1.000000, "Concept5227748576": 1.000000, "Concept5227648704": 1.000000, "Concept5227529552": 1.000000, "Concept5227811136": 1.000000, "Concept5227701984": 1.000000, "Concept5227553472": 1.000000, "Concept5227502304": 1.000000, "Concept5227570496": 2.000000, "Concept5227634336": 1.000000, "Concept5227590528": 2.000000, "Concept5227620176": 1.000000, "Concept5227607232": 1.000000, "Concept5227593376": 1.000000, "Concept5227661440": 1.000000, "Concept5227619808": 1.000000, "Concept5227612240": 1.000000, "Concept5227559040": 3.000000, "Concept5227685216": 1.000000}, "anchor": {"d1": 1.000000}}
+}
+,{"name": "Concept5227850208",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.113081,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.107368,
+"std": 1,
+"n": 1,
+}},
+"_base": {"a": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227621168": 1.000000, "Concept5227726208": 1.000000, "Concept5227648704": 1.000000, "Concept5227748576": 1.000000, "Concept5227585728": 1.000000, "Concept5227595616": 1.000000, "Concept5227811136": 1.000000, "Concept5227570496": 3.000000, "Concept5227661440": 1.000000, "Concept5227593376": 1.000000, "Concept5227619808": 1.000000, "Concept5227590528": 1.000000, "Concept5227620176": 1.000000, "Concept5227559040": 2.000000, "Concept5227685216": 1.000000, "Concept5227597328": 1.000000, "Concept5227529552": 1.000000, "Concept5227553472": 1.000000, "Concept5227634336": 1.000000, "Concept5227608928": 1.000000, "Concept5227670080": 1.000000}, "anchor": {"a2": 1.000000}}
+}
+,{"name": "Concept5228003280",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.119534,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.114194,
+"std": 1,
+"n": 1,
+}},
+"_base": {"c": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227631440": 1.000000, "Concept5227707984": 1.000000, "Concept5227636864": 1.000000, "Concept5227612928": 1.000000, "Concept5227611248": 1.000000, "Concept5227720992": 1.000000, "Concept5227592384": 2.000000, "Concept5227502304": 1.000000, "Concept5227553472": 3.000000, "Concept5227559040": 1.000000, "Concept5227603712": 1.000000, "Concept5227747584": 1.000000, "Concept5227821584": 1.000000, "Concept5227720000": 1.000000, "Concept5227679600": 1.000000, "Concept5227607232": 1.000000, "Concept5227818272": 1.000000, "Concept5227485216": 1.000000, "Concept5227615136": 1.000000, "Concept5227597328": 2.000000}, "anchor": {"c2": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.187865,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.064803,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"a2": 1.000000, "c2": 1.000000, "d1": 1.000000}, "context": {"Concept5227631440": 1.000000, "Concept5227707984": 1.000000, "Concept5227636864": 1.000000, "Concept5227821584": 1.000000, "Concept5227603712": 1.000000, "Concept5227615136": 1.000000, "Concept5227611248": 1.000000, "Concept5227485216": 1.000000, "Concept5227818272": 1.000000, "Concept5227679600": 1.000000, "Concept5227670080": 1.000000, "Concept5227726208": 1.000000, "Concept5227597328": 3.000000, "Concept5227685216": 2.000000, "Concept5227559040": 6.000000, "Concept5227612240": 1.000000, "Concept5227720992": 1.000000, "Concept5227619808": 2.000000, "Concept5227661440": 2.000000, "Concept5227593376": 2.000000, "Concept5227607232": 2.000000, "Concept5227621168": 2.000000, "Concept5227585728": 1.000000, "Concept5227620176": 2.000000, "Concept5227612928": 1.000000, "Concept5227720000": 1.000000, "Concept5227608928": 1.000000, "Concept5227590528": 3.000000, "Concept5227570496": 5.000000, "Concept5227634336": 2.000000, "Concept5227502304": 2.000000, "Concept5227648704": 2.000000, "Concept5227553472": 5.000000, "Concept5227592384": 2.000000, "Concept5227595616": 1.000000, "Concept5227747584": 1.000000, "Concept5227701984": 1.000000, "Concept5227811136": 2.000000, "Concept5227529552": 2.000000, "Concept5227748576": 2.000000, "Concept5227704096": 1.000000}, "_variant": {"2": 2.000000, "1": 1.000000}, "_base": {"c": 1.000000, "a": 1.000000, "d": 1.000000}}
+}
+,{"name": "Concept5228006112",
+"size": 16.000000,
+"children": [
+{"name": "Concept5228006800",
+"size": 2.000000,
+"children": [
+{"name": "Concept5228008160",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.131139,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.130012,
+"std": 1,
+"n": 1,
+}},
+"_base": {"c": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227570496": 1.000000, "Concept5227621168": 1.000000, "Concept5227593376": 1.000000, "Concept5227826176": 1.000000, "Concept5227669088": 1.000000, "Concept5227631440": 1.000000, "Concept5227607232": 1.000000, "Concept5227644608": 1.000000, "Concept5227701984": 1.000000, "Concept5227707984": 1.000000, "Concept5227612928": 1.000000, "Concept5227821584": 1.000000, "Concept5227553472": 2.000000, "Concept5227502304": 2.000000, "Concept5227592384": 2.000000, "Concept5227785440": 1.000000, "Concept5227615136": 1.000000, "Concept5227559040": 1.000000, "Concept5227696528": 1.000000, "Concept5227626592": 1.000000}, "anchor": {"c2": 1.000000}}
+}
+,{"name": "Concept5228009424",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.124697,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.122841,
+"std": 1,
+"n": 1,
+}},
+"_base": {"f": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227597328": 1.000000, "Concept5227593376": 1.000000, "Concept5227570496": 1.000000, "Concept5227621168": 1.000000, "Concept5227559040": 1.000000, "Concept5227747584": 1.000000, "Concept5227826176": 1.000000, "Concept5227553472": 2.000000, "Concept5227669088": 1.000000, "Concept5227631440": 1.000000, "Concept5227644608": 1.000000, "Concept5227607232": 1.000000, "Concept5227738656": 1.000000, "Concept5227707984": 1.000000, "Concept5227785440": 1.000000, "Concept5227592384": 2.000000, "Concept5227502304": 1.000000, "Concept5227615136": 1.000000, "Concept5227636864": 1.000000, "Concept5227612928": 1.000000, "Concept5227821584": 1.000000}, "anchor": {"f1": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.253169,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.136106,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"f1": 1.000000, "c2": 1.000000}, "context": {"Concept5227597328": 1.000000, "Concept5227701984": 1.000000, "Concept5227747584": 1.000000, "Concept5227626592": 1.000000, "Concept5227696528": 1.000000, "Concept5227559040": 2.000000, "Concept5227615136": 2.000000, "Concept5227553472": 4.000000, "Concept5227785440": 2.000000, "Concept5227592384": 4.000000, "Concept5227502304": 3.000000, "Concept5227821584": 2.000000, "Concept5227631440": 2.000000, "Concept5227738656": 1.000000, "Concept5227707984": 2.000000, "Concept5227607232": 2.000000, "Concept5227636864": 1.000000, "Concept5227644608": 2.000000, "Concept5227669088": 2.000000, "Concept5227612928": 2.000000, "Concept5227621168": 2.000000, "Concept5227826176": 2.000000, "Concept5227593376": 2.000000, "Concept5227570496": 2.000000}, "_variant": {"1": 1.000000, "2": 1.000000}, "_base": {"f": 1.000000, "c": 1.000000}}
+}
+,{"name": "Concept5228003584",
+"size": 2.000000,
+"children": [
+{"name": "Concept5228006496",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.139067,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.135381,
+"std": 1,
+"n": 1,
+}},
+"_base": {"b": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227826176": 1.000000, "Concept5227612928": 1.000000, "Concept5227636864": 1.000000, "Concept5227559040": 1.000000, "Concept5227696528": 1.000000, "Concept5227747584": 1.000000, "Concept5227621168": 1.000000, "Concept5227607232": 2.000000, "Concept5227615136": 1.000000, "Concept5227720992": 1.000000, "Concept5227502304": 3.000000, "Concept5227592384": 1.000000, "Concept5227669088": 1.000000, "Concept5227553472": 4.000000, "Concept5227821584": 1.000000, "Concept5227701984": 1.000000, "Concept5227597328": 1.000000, "Concept5227626592": 1.000000}, "anchor": {"b2": 1.000000}}
+}
+,{"name": "Concept5228007104",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.125987,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.121105,
+"std": 1,
+"n": 1,
+}},
+"_base": {"d": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227485216": 1.000000, "Concept5227631440": 1.000000, "Concept5227669088": 1.000000, "Concept5227598320": 1.000000, "Concept5227636864": 1.000000, "Concept5227592384": 1.000000, "Concept5227502304": 2.000000, "Concept5227738656": 1.000000, "Concept5227826176": 1.000000, "Concept5227553472": 3.000000, "Concept5227731392": 1.000000, "Concept5227701984": 1.000000, "Concept5227730096": 1.000000, "Concept5227597328": 1.000000, "Concept5227747584": 1.000000, "Concept5227559040": 2.000000, "Concept5227621168": 1.000000, "Concept5227665872": 1.000000, "Concept5227607232": 2.000000}, "anchor": {"d2": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.243183,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.126914,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"d2": 1.000000, "b2": 1.000000}, "context": {"Concept5227485216": 1.000000, "Concept5227598320": 1.000000, "Concept5227631440": 1.000000, "Concept5227738656": 1.000000, "Concept5227626592": 1.000000, "Concept5227559040": 3.000000, "Concept5227730096": 1.000000, "Concept5227597328": 2.000000, "Concept5227747584": 2.000000, "Concept5227701984": 2.000000, "Concept5227821584": 1.000000, "Concept5227731392": 1.000000, "Concept5227553472": 7.000000, "Concept5227669088": 2.000000, "Concept5227607232": 4.000000, "Concept5227665872": 1.000000, "Concept5227696528": 1.000000, "Concept5227592384": 2.000000, "Concept5227720992": 1.000000, "Concept5227502304": 5.000000, "Concept5227615136": 1.000000, "Concept5227612928": 1.000000, "Concept5227636864": 2.000000, "Concept5227826176": 2.000000, "Concept5227621168": 2.000000}, "_variant": {"2": 2.000000}, "_base": {"d": 1.000000, "b": 1.000000}}
+}
+,{"name": "Concept5228010912",
+"size": 12.000000,
+"children": [
+{"name": "Concept5228010608",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.104128,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.098034,
+"std": 1,
+"n": 1,
+}},
+"_base": {"f": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227598320": 1.000000, "Concept5227640720": 1.000000, "Concept5227585728": 1.000000, "Concept5227485216": 1.000000, "Concept5227593376": 1.000000, "Concept5227730096": 1.000000, "Concept5227570496": 2.000000, "Concept5227631440": 1.000000, "Concept5227669088": 1.000000, "Concept5227559040": 2.000000, "Concept5227621168": 1.000000, "Concept5227665872": 1.000000, "Concept5227553472": 1.000000, "Concept5227731392": 1.000000, "Concept5227592384": 1.000000, "Concept5227502304": 1.000000, "Concept5227785440": 1.000000, "Concept5227607232": 1.000000, "Concept5227777664": 1.000000, "Concept5227644608": 1.000000, "Concept5227826176": 1.000000, "Concept5227701984": 1.000000}, "anchor": {"f1": 1.000000}}
+}
+,{"name": "Concept5228011216",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.111710,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.103332,
+"std": 1,
+"n": 1,
+}},
+"_base": {"a": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227598320": 2.000000, "Concept5227777664": 1.000000, "Concept5227644608": 1.000000, "Concept5227485216": 2.000000, "Concept5227832560": 1.000000, "Concept5227665872": 2.000000, "Concept5227621168": 1.000000, "Concept5227553472": 1.000000, "Concept5227640720": 1.000000, "Concept5227585728": 1.000000, "Concept5227597328": 1.000000, "Concept5227738656": 1.000000, "Concept5227636864": 1.000000, "Concept5227570496": 2.000000, "Concept5227785440": 1.000000, "Concept5227669088": 1.000000, "Concept5227593376": 1.000000, "Concept5227559040": 3.000000, "Concept5227826176": 1.000000}, "anchor": {"a1": 1.000000}}
+}
+,{"name": "Concept5228011952",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.104128,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.098034,
+"std": 1,
+"n": 1,
+}},
+"_base": {"d": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227559040": 1.000000, "Concept5227485216": 1.000000, "Concept5227731392": 1.000000, "Concept5227553472": 1.000000, "Concept5227763904": 1.000000, "Concept5227598320": 1.000000, "Concept5227665872": 1.000000, "Concept5227832560": 1.000000, "Concept5227647712": 1.000000, "Concept5227585728": 1.000000, "Concept5227640720": 1.000000, "Concept5227730096": 1.000000, "Concept5227597328": 1.000000, "Concept5227738656": 1.000000, "Concept5227631440": 1.000000, "Concept5227570496": 2.000000, "Concept5227592384": 2.000000, "Concept5227785440": 1.000000, "Concept5227644608": 1.000000, "Concept5227777664": 1.000000, "Concept5227636864": 1.000000, "Concept5227593376": 1.000000}, "anchor": {"d2": 1.000000}}
+}
+,{"name": "Concept5228012256",
+"size": 9.000000,
+"children": [
+{"name": "Concept5228012560",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.132440,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.128103,
+"std": 1,
+"n": 1,
+}},
+"_base": {"f": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227592384": 3.000000, "Concept5227485216": 2.000000, "Concept5227615136": 1.000000, "Concept5227633584": 1.000000, "Concept5227731392": 1.000000, "Concept5227553472": 1.000000, "Concept5227834880": 1.000000, "Concept5227631440": 1.000000, "Concept5227559040": 2.000000, "Concept5227647712": 1.000000, "Concept5227832560": 1.000000, "Concept5227665872": 2.000000, "Concept5227597328": 1.000000, "Concept5227730096": 1.000000, "Concept5227598320": 2.000000, "Concept5227763904": 1.000000, "Concept5227636864": 1.000000, "Concept5227738656": 1.000000}, "anchor": {"f2": 1.000000}}
+}
+,{"name": "Concept5228007408",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.164512,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.173390,
+"std": 1,
+"n": 1,
+}},
+"_base": {"b": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227633584": 1.000000, "Concept5227485216": 1.000000, "Concept5227615136": 1.000000, "Concept5227598320": 1.000000, "Concept5227570496": 1.000000, "Concept5227834880": 1.000000, "Concept5227647712": 2.000000, "Concept5227665872": 1.000000, "Concept5227763904": 1.000000, "Concept5227585728": 1.000000, "Concept5227640720": 1.000000, "Concept5227777664": 1.000000, "Concept5227592384": 4.000000, "Concept5227698880": 1.000000, "Concept5227631440": 1.000000, "Concept5227730096": 1.000000, "Concept5227559040": 1.000000, "Concept5227731392": 1.000000}, "anchor": {"b2": 1.000000}}
+}
+,{"name": "Concept5228013600",
+"size": 2.000000,
+"children": [
+{"name": "Concept5228013296",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.145346,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.142363,
+"std": 1,
+"n": 1,
+}},
+"_base": {"d": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227633584": 2.000000, "Concept5227615136": 2.000000, "Concept5227485216": 2.000000, "Concept5227592384": 3.000000, "Concept5227698880": 1.000000, "Concept5227570496": 1.000000, "Concept5227647712": 1.000000, "Concept5227837408": 1.000000, "Concept5227665872": 2.000000, "Concept5227832560": 1.000000, "Concept5227834880": 1.000000, "Concept5227559040": 2.000000, "Concept5227598320": 2.000000, "Concept5227585728": 1.000000, "Concept5227640720": 1.000000, "Concept5227777664": 1.000000}, "anchor": {"d1": 1.000000}}
+}
+,{"name": "Concept5228013904",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.140076,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.140115,
+"std": 1,
+"n": 1,
+}},
+"_base": {"e": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227633584": 1.000000, "Concept5227698880": 1.000000, "Concept5227615136": 1.000000, "Concept5227792800": 1.000000, "Concept5227485216": 1.000000, "Concept5227559040": 1.000000, "Concept5227665872": 1.000000, "Concept5227832560": 1.000000, "Concept5227837408": 1.000000, "Concept5227647712": 2.000000, "Concept5227618816": 1.000000, "Concept5227570496": 2.000000, "Concept5227763904": 1.000000, "Concept5227529552": 1.000000, "Concept5227640720": 1.000000, "Concept5227585728": 1.000000, "Concept5227598320": 1.000000, "Concept5227592384": 3.000000, "Concept5227777664": 1.000000}, "anchor": {"e2": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.285143,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.154037,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"e2": 1.000000, "d1": 1.000000}, "context": {"Concept5227763904": 1.000000, "Concept5227529552": 1.000000, "Concept5227777664": 2.000000, "Concept5227640720": 2.000000, "Concept5227585728": 2.000000, "Concept5227598320": 3.000000, "Concept5227559040": 3.000000, "Concept5227834880": 1.000000, "Concept5227618816": 1.000000, "Concept5227832560": 2.000000, "Concept5227665872": 3.000000, "Concept5227837408": 2.000000, "Concept5227647712": 3.000000, "Concept5227570496": 3.000000, "Concept5227698880": 2.000000, "Concept5227792800": 1.000000, "Concept5227485216": 3.000000, "Concept5227615136": 3.000000, "Concept5227592384": 6.000000, "Concept5227633584": 3.000000}, "_variant": {"2": 1.000000, "1": 1.000000}, "_base": {"e": 1.000000, "d": 1.000000}}
+}
+,{"name": "Concept5228014896",
+"size": 5.000000,
+"children": [
+{"name": "Concept5228014208",
+"size": 3.000000,
+"children": [
+{"name": "Concept5228015200",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.150638,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.152287,
+"std": 1,
+"n": 1,
+}},
+"_base": {"d": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227559040": 1.000000, "Concept5227841664": 1.000000, "Concept5227612928": 1.000000, "Concept5227603712": 1.000000, "Concept5227689856": 1.000000, "Concept5227834880": 1.000000, "Concept5227570496": 1.000000, "Concept5227792800": 1.000000, "Concept5227615136": 2.000000, "Concept5227485216": 1.000000, "Concept5227647712": 2.000000, "Concept5227618816": 1.000000, "Concept5227633584": 1.000000, "Concept5227529552": 1.000000, "Concept5227698880": 1.000000, "Concept5227592384": 4.000000, "Concept5227840304": 1.000000, "Concept5227763904": 1.000000}, "anchor": {"d2": 1.000000}}
+}
+,{"name": "Concept5228007712",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.219733,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.261401,
+"std": 1,
+"n": 1,
+}},
+"_base": {"f": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227603712": 1.000000, "Concept5227689856": 1.000000, "Concept5227834880": 1.000000, "Concept5227840304": 1.000000, "Concept5227837408": 1.000000, "Concept5227647712": 1.000000, "Concept5227559040": 1.000000, "Concept5227841664": 1.000000, "Concept5227485216": 1.000000, "Concept5227615136": 3.000000, "Concept5227698880": 1.000000, "Concept5227592384": 4.000000, "Concept5227612928": 1.000000, "Concept5227633584": 2.000000}, "anchor": {"f2": 1.000000}}
+}
+,{"name": "Concept5228016080",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.289293,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.453028,
+"std": 1,
+"n": 1,
+}},
+"_base": {"a": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227612928": 1.000000, "Concept5227529552": 1.000000, "Concept5227570496": 1.000000, "Concept5227841664": 1.000000, "Concept5227633584": 1.000000, "Concept5227647712": 1.000000, "Concept5227837408": 1.000000, "Concept5227618816": 1.000000, "Concept5227698880": 1.000000, "Concept5227792800": 1.000000, "Concept5227615136": 2.000000, "Concept5227592384": 3.000000}, "anchor": {"a1": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.658949,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.308789,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"a1": 1.000000, "f2": 1.000000, "d2": 1.000000}, "context": {"Concept5227763904": 1.000000, "Concept5227840304": 2.000000, "Concept5227592384": 11.000000, "Concept5227698880": 3.000000, "Concept5227529552": 2.000000, "Concept5227633584": 4.000000, "Concept5227792800": 2.000000, "Concept5227485216": 2.000000, "Concept5227615136": 7.000000, "Concept5227837408": 2.000000, "Concept5227618816": 2.000000, "Concept5227647712": 4.000000, "Concept5227612928": 3.000000, "Concept5227834880": 2.000000, "Concept5227689856": 2.000000, "Concept5227603712": 2.000000, "Concept5227570496": 2.000000, "Concept5227841664": 3.000000, "Concept5227559040": 2.000000}, "_variant": {"1": 1.000000, "2": 2.000000}, "_base": {"a": 1.000000, "f": 1.000000, "d": 1.000000}}
+}
+,{"name": "Concept5228016384",
+"size": 2.000000,
+"children": [
+{"name": "Concept5228014592",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.111710,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.103332,
+"std": 1,
+"n": 1,
+}},
+"_base": {"a": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227603712": 1.000000, "Concept5227689856": 1.000000, "Concept5227834880": 1.000000, "Concept5227633584": 2.000000, "Concept5227615136": 2.000000, "Concept5227485216": 2.000000, "Concept5227792800": 1.000000, "Concept5227592384": 3.000000, "Concept5227570496": 1.000000, "Concept5227529552": 1.000000, "Concept5227832560": 1.000000, "Concept5227647712": 1.000000, "Concept5227837408": 1.000000, "Concept5227618816": 1.000000, "Concept5227665872": 1.000000, "Concept5227598320": 1.000000, "Concept5227840304": 1.000000, "Concept5227763904": 1.000000, "Concept5227559040": 2.000000}, "anchor": {"a2": 1.000000}}
+}
+,{"name": "Concept5228015504",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.304093,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.532753,
+"std": 1,
+"n": 1,
+}},
+"_base": {"d": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227618816": 1.000000, "Concept5227837408": 1.000000, "Concept5227559040": 1.000000, "Concept5227603712": 1.000000, "Concept5227840304": 1.000000, "Concept5227570496": 1.000000, "Concept5227529552": 1.000000, "Concept5227485216": 1.000000, "Concept5227792800": 1.000000, "Concept5227615136": 1.000000, "Concept5227592384": 1.000000, "Concept5227633584": 1.000000, "Concept5227689856": 1.000000}, "anchor": {"d2": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.421350,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.279466,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"d2": 1.000000, "a2": 1.000000}, "context": {"Concept5227559040": 3.000000, "Concept5227763904": 1.000000, "Concept5227840304": 2.000000, "Concept5227598320": 1.000000, "Concept5227529552": 2.000000, "Concept5227570496": 2.000000, "Concept5227615136": 3.000000, "Concept5227792800": 2.000000, "Concept5227485216": 3.000000, "Concept5227633584": 3.000000, "Concept5227665872": 1.000000, "Concept5227618816": 2.000000, "Concept5227837408": 2.000000, "Concept5227647712": 1.000000, "Concept5227832560": 1.000000, "Concept5227689856": 2.000000, "Concept5227834880": 1.000000, "Concept5227592384": 4.000000, "Concept5227603712": 2.000000}, "_variant": {"2": 2.000000}, "_base": {"d": 1.000000, "a": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 1.055907,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.317374,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"a1": 1.000000, "f2": 1.000000, "d2": 2.000000, "a2": 1.000000}, "context": {"Concept5227612928": 3.000000, "Concept5227698880": 3.000000, "Concept5227841664": 3.000000, "Concept5227559040": 5.000000, "Concept5227763904": 2.000000, "Concept5227840304": 4.000000, "Concept5227598320": 1.000000, "Concept5227529552": 4.000000, "Concept5227570496": 4.000000, "Concept5227615136": 10.000000, "Concept5227792800": 4.000000, "Concept5227485216": 5.000000, "Concept5227633584": 7.000000, "Concept5227665872": 1.000000, "Concept5227618816": 4.000000, "Concept5227837408": 4.000000, "Concept5227647712": 5.000000, "Concept5227832560": 1.000000, "Concept5227689856": 4.000000, "Concept5227834880": 3.000000, "Concept5227592384": 15.000000, "Concept5227603712": 4.000000}, "_variant": {"1": 1.000000, "2": 4.000000}, "_base": {"d": 2.000000, "f": 1.000000, "a": 2.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 1.430311,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.231598,
+"std": 1,
+"n": 1,
+}},
+"_base": {"b": 1.000000, "d": 3.000000, "e": 1.000000, "f": 2.000000, "a": 2.000000}, "_variant": {"2": 7.000000, "1": 2.000000}, "context": {"Concept5227636864": 1.000000, "Concept5227597328": 1.000000, "Concept5227553472": 1.000000, "Concept5227633584": 12.000000, "Concept5227485216": 11.000000, "Concept5227615136": 15.000000, "Concept5227603712": 4.000000, "Concept5227792800": 5.000000, "Concept5227570496": 8.000000, "Concept5227763904": 5.000000, "Concept5227665872": 7.000000, "Concept5227841664": 3.000000, "Concept5227647712": 11.000000, "Concept5227837408": 6.000000, "Concept5227832560": 4.000000, "Concept5227618816": 5.000000, "Concept5227640720": 3.000000, "Concept5227689856": 4.000000, "Concept5227598320": 7.000000, "Concept5227592384": 28.000000, "Concept5227698880": 6.000000, "Concept5227738656": 1.000000, "Concept5227631440": 2.000000, "Concept5227834880": 6.000000, "Concept5227559040": 11.000000, "Concept5227730096": 2.000000, "Concept5227529552": 5.000000, "Concept5227731392": 2.000000, "Concept5227585728": 3.000000, "Concept5227840304": 4.000000, "Concept5227777664": 3.000000, "Concept5227612928": 3.000000}, "anchor": {"f2": 2.000000, "b2": 1.000000, "e2": 1.000000, "a1": 1.000000, "d1": 1.000000, "d2": 2.000000, "a2": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 1.424057,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.167963,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"e2": 1.000000, "b2": 1.000000, "f2": 2.000000, "a2": 1.000000, "d1": 1.000000, "d2": 3.000000, "a1": 2.000000, "f1": 1.000000}, "context": {"Concept5227612928": 3.000000, "Concept5227840304": 4.000000, "Concept5227618816": 5.000000, "Concept5227529552": 5.000000, "Concept5227698880": 6.000000, "Concept5227603712": 4.000000, "Concept5227615136": 15.000000, "Concept5227633584": 12.000000, "Concept5227763904": 6.000000, "Concept5227841664": 3.000000, "Concept5227647712": 12.000000, "Concept5227832560": 6.000000, "Concept5227597328": 3.000000, "Concept5227644608": 3.000000, "Concept5227636864": 3.000000, "Concept5227837408": 6.000000, "Concept5227701984": 1.000000, "Concept5227585728": 6.000000, "Concept5227621168": 2.000000, "Concept5227826176": 2.000000, "Concept5227777664": 6.000000, "Concept5227607232": 1.000000, "Concept5227553472": 4.000000, "Concept5227785440": 3.000000, "Concept5227502304": 1.000000, "Concept5227592384": 31.000000, "Concept5227731392": 4.000000, "Concept5227665872": 11.000000, "Concept5227834880": 6.000000, "Concept5227730096": 4.000000, "Concept5227559040": 17.000000, "Concept5227669088": 2.000000, "Concept5227738656": 3.000000, "Concept5227631440": 4.000000, "Concept5227570496": 14.000000, "Concept5227792800": 5.000000, "Concept5227593376": 3.000000, "Concept5227485216": 15.000000, "Concept5227689856": 4.000000, "Concept5227598320": 11.000000, "Concept5227640720": 6.000000}, "_variant": {"2": 8.000000, "1": 4.000000}, "_base": {"e": 1.000000, "b": 1.000000, "d": 4.000000, "a": 3.000000, "f": 3.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 1.451067,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.128289,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"e2": 1.000000, "f2": 2.000000, "a2": 1.000000, "d1": 1.000000, "d2": 4.000000, "a1": 2.000000, "f1": 2.000000, "c2": 1.000000, "b2": 2.000000}, "context": {"Concept5227840304": 4.000000, "Concept5227618816": 5.000000, "Concept5227529552": 5.000000, "Concept5227698880": 6.000000, "Concept5227633584": 12.000000, "Concept5227763904": 6.000000, "Concept5227841664": 3.000000, "Concept5227647712": 12.000000, "Concept5227832560": 6.000000, "Concept5227777664": 6.000000, "Concept5227485216": 16.000000, "Concept5227689856": 4.000000, "Concept5227640720": 6.000000, "Concept5227598320": 12.000000, "Concept5227731392": 5.000000, "Concept5227570496": 16.000000, "Concept5227792800": 5.000000, "Concept5227593376": 5.000000, "Concept5227707984": 2.000000, "Concept5227626592": 2.000000, "Concept5227597328": 6.000000, "Concept5227837408": 6.000000, "Concept5227747584": 3.000000, "Concept5227701984": 4.000000, "Concept5227821584": 3.000000, "Concept5227785440": 5.000000, "Concept5227553472": 15.000000, "Concept5227738656": 5.000000, "Concept5227631440": 7.000000, "Concept5227669088": 6.000000, "Concept5227636864": 6.000000, "Concept5227644608": 5.000000, "Concept5227607232": 7.000000, "Concept5227834880": 6.000000, "Concept5227730096": 5.000000, "Concept5227559040": 22.000000, "Concept5227665872": 12.000000, "Concept5227696528": 2.000000, "Concept5227592384": 37.000000, "Concept5227720992": 1.000000, "Concept5227502304": 9.000000, "Concept5227603712": 4.000000, "Concept5227615136": 18.000000, "Concept5227612928": 6.000000, "Concept5227585728": 6.000000, "Concept5227826176": 6.000000, "Concept5227621168": 6.000000}, "_variant": {"1": 5.000000, "2": 11.000000}, "_base": {"d": 5.000000, "a": 3.000000, "e": 1.000000, "f": 4.000000, "c": 1.000000, "b": 2.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 1.177638,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.064452,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"e2": 1.000000, "f1": 3.000000, "c1": 1.000000, "f2": 4.000000, "b1": 1.000000, "b2": 3.000000, "c2": 3.000000, "a1": 2.000000, "d2": 4.000000, "d1": 2.000000, "a2": 2.000000}, "context": {"Concept5227840304": 4.000000, "Concept5227633584": 12.000000, "Concept5227698880": 6.000000, "Concept5227834880": 6.000000, "Concept5227763904": 6.000000, "Concept5227841664": 3.000000, "Concept5227647712": 12.000000, "Concept5227832560": 6.000000, "Concept5227640720": 6.000000, "Concept5227777664": 6.000000, "Concept5227665872": 12.000000, "Concept5227826176": 6.000000, "Concept5227696528": 2.000000, "Concept5227618816": 5.000000, "Concept5227644608": 5.000000, "Concept5227669088": 6.000000, "Concept5227631440": 8.000000, "Concept5227707984": 3.000000, "Concept5227818272": 1.000000, "Concept5227651600": 1.000000, "Concept5227731392": 5.000000, "Concept5227585728": 10.000000, "Concept5227738656": 7.000000, "Concept5227720992": 2.000000, "Concept5227704096": 6.000000, "Concept5227636864": 9.000000, "Concept5227502304": 13.000000, "Concept5227598320": 15.000000, "Concept5227664176": 4.000000, "Concept5227611248": 4.000000, "Concept5227612240": 6.000000, "Concept5227485216": 24.000000, "Concept5227821584": 10.000000, "Concept5227792800": 5.000000, "Concept5227730096": 5.000000, "Concept5227603712": 9.000000, "Concept5227615136": 25.000000, "Concept5227747584": 4.000000, "Concept5227701984": 7.000000, "Concept5227689856": 4.000000, "Concept5227601392": 1.000000, "Concept5227626592": 2.000000, "Concept5227679600": 1.000000, "Concept5227670080": 1.000000, "Concept5227720000": 4.000000, "Concept5227612928": 13.000000, "Concept5227590528": 9.000000, "Concept5227608928": 1.000000, "Concept5227607232": 11.000000, "Concept5227634336": 3.000000, "Concept5227648704": 5.000000, "Concept5227592384": 45.000000, "Concept5227553472": 27.000000, "Concept5227529552": 10.000000, "Concept5227726208": 4.000000, "Concept5227685216": 2.000000, "Concept5227837408": 6.000000, "Concept5227597328": 14.000000, "Concept5227559040": 45.000000, "Concept5227748576": 6.000000, "Concept5227616496": 5.000000, "Concept5227785440": 5.000000, "Concept5227621168": 12.000000, "Concept5227620176": 2.000000, "Concept5227661440": 6.000000, "Concept5227593376": 13.000000, "Concept5227595616": 4.000000, "Concept5227718832": 3.000000, "Concept5227619808": 3.000000, "Concept5227570496": 33.000000, "Concept5227767408": 5.000000, "Concept5227811136": 5.000000}, "_variant": {"1": 9.000000, "2": 17.000000}, "_base": {"b": 4.000000, "d": 6.000000, "e": 1.000000, "c": 4.000000, "f": 7.000000, "a": 4.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 1.284412,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.042691,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"f1": 5.000000, "d2": 6.000000, "e1": 3.000000, "a1": 3.000000, "d1": 3.000000, "b1": 3.000000, "a2": 4.000000, "c2": 4.000000, "b2": 5.000000, "e2": 2.000000, "c1": 3.000000, "f2": 5.000000}, "context": {"Concept5227840304": 4.000000, "Concept5227763904": 6.000000, "Concept5227777664": 6.000000, "Concept5227696528": 2.000000, "Concept5227707984": 3.000000, "Concept5227747584": 4.000000, "Concept5227641712": 1.000000, "Concept5227645600": 1.000000, "Concept5227758576": 1.000000, "Concept5227811136": 5.000000, "Concept5227767408": 5.000000, "Concept5227620176": 2.000000, "Concept5227590528": 9.000000, "Concept5227689856": 4.000000, "Concept5227601392": 1.000000, "Concept5227701984": 7.000000, "Concept5227821584": 10.000000, "Concept5227651600": 1.000000, "Concept5227608928": 6.000000, "Concept5227723104": 9.000000, "Concept5227784448": 1.000000, "Concept5227664176": 10.000000, "Concept5227788336": 4.000000, "Concept5227612240": 6.000000, "Concept5227485216": 42.000000, "Concept5227611248": 15.000000, "Concept5227607232": 11.000000, "Concept5227634336": 15.000000, "Concept5227700992": 1.000000, "Concept5227617488": 6.000000, "Concept5227826176": 9.000000, "Concept5227665872": 17.000000, "Concept5227731392": 5.000000, "Concept5227738656": 7.000000, "Concept5227585728": 30.000000, "Concept5227570496": 81.000000, "Concept5227644608": 7.000000, "Concept5227618816": 14.000000, "Concept5227669088": 9.000000, "Concept5227718832": 6.000000, "Concept5227619808": 9.000000, "Concept5227595616": 15.000000, "Concept5227612928": 13.000000, "Concept5227682816": 1.000000, "Concept5227553472": 55.000000, "Concept5227592384": 61.000000, "Concept5227716512": 5.000000, "Concept5227631440": 11.000000, "Concept5227837408": 6.000000, "Concept5227597328": 41.000000, "Concept5227529552": 23.000000, "Concept5227785440": 6.000000, "Concept5227621168": 22.000000, "Concept5227814656": 8.000000, "Concept5227626592": 2.000000, "Concept5227679600": 4.000000, "Concept5227715152": 1.000000, "Concept5227672272": 6.000000, "Concept5227502304": 14.000000, "Concept5227598320": 24.000000, "Concept5227640720": 15.000000, "Concept5227593376": 28.000000, "Concept5227661440": 13.000000, "Concept5227792800": 5.000000, "Concept5227603712": 18.000000, "Concept5227730096": 8.000000, "Concept5227559040": 73.000000, "Concept5227698880": 6.000000, "Concept5227834880": 7.000000, "Concept5227808240": 3.000000, "Concept5227704096": 6.000000, "Concept5227720992": 11.000000, "Concept5227636864": 20.000000, "Concept5227685216": 2.000000, "Concept5227726208": 9.000000, "Concept5227775136": 1.000000, "Concept5227720000": 10.000000, "Concept5227633584": 21.000000, "Concept5227648704": 8.000000, "Concept5227748576": 6.000000, "Concept5227616496": 6.000000, "Concept5227687744": 2.000000, "Concept5227818272": 4.000000, "Concept5227773200": 1.000000, "Concept5227731088": 3.000000, "Concept5227832560": 6.000000, "Concept5227745648": 1.000000, "Concept5227727200": 4.000000, "Concept5227841664": 3.000000, "Concept5227647712": 16.000000, "Concept5227624064": 1.000000, "Concept5227615136": 34.000000, "Concept5227670080": 5.000000, "Concept5227733984": 2.000000}, "_variant": {"2": 26.000000, "1": 20.000000}, "_base": {"d": 9.000000, "b": 8.000000, "e": 5.000000, "f": 10.000000, "c": 7.000000, "a": 7.000000}}
+}
+,{"name": "Concept5227998032",
+"size": 29.000000,
+"children": [
+{"name": "Concept5227875392",
+"size": 17.000000,
+"children": [
+{"name": "Concept5227861232",
+"size": 3.000000,
+"children": [
+{"name": "Concept5227878800",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.104128,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.098034,
+"std": 1,
+"n": 1,
+}},
+"_base": {"c": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227631440": 1.000000, "Concept5227712048": 1.000000, "Concept5227626592": 1.000000, "Concept5227766800": 1.000000, "Concept5227585728": 1.000000, "Concept5227630448": 1.000000, "Concept5227590528": 1.000000, "Concept5227592384": 1.000000, "Concept5227502304": 1.000000, "Concept5227612240": 1.000000, "Concept5227559040": 2.000000, "Concept5227832560": 1.000000, "Concept5227665872": 1.000000, "Concept5227570496": 2.000000, "Concept5227624064": 1.000000, "Concept5227553472": 1.000000, "Concept5227485216": 1.000000, "Concept5227529552": 1.000000, "Concept5227730096": 1.000000, "Concept5227715152": 1.000000, "Concept5227736512": 1.000000, "Concept5227598320": 1.000000}, "anchor": {"c1": 1.000000}}
+}
+,{"name": "Concept5227863152",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.110581,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.104745,
+"std": 1,
+"n": 1,
+}},
+"_base": {"f": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227730096": 1.000000, "Concept5227570496": 2.000000, "Concept5227631440": 1.000000, "Concept5227585728": 1.000000, "Concept5227630448": 1.000000, "Concept5227593376": 1.000000, "Concept5227766800": 1.000000, "Concept5227603712": 1.000000, "Concept5227553472": 1.000000, "Concept5227626592": 1.000000, "Concept5227679600": 1.000000, "Concept5227757584": 1.000000, "Concept5227559040": 2.000000, "Concept5227485216": 2.000000, "Concept5227592384": 1.000000, "Concept5227502304": 1.000000, "Concept5227598320": 1.000000, "Concept5227634336": 1.000000, "Concept5227832560": 1.000000, "Concept5227665872": 1.000000, "Concept5227736512": 1.000000}, "anchor": {"f1": 1.000000}}
+}
+,{"name": "Concept5227876656",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.133635,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.132815,
+"std": 1,
+"n": 1,
+}},
+"_base": {"a": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227593376": 1.000000, "Concept5227485216": 1.000000, "Concept5227634336": 1.000000, "Concept5227631440": 1.000000, "Concept5227654336": 1.000000, "Concept5227570496": 1.000000, "Concept5227730096": 1.000000, "Concept5227590528": 2.000000, "Concept5227679600": 1.000000, "Concept5227757584": 1.000000, "Concept5227620176": 1.000000, "Concept5227612240": 1.000000, "Concept5227559040": 3.000000, "Concept5227603712": 1.000000, "Concept5227553472": 1.000000, "Concept5227592384": 1.000000, "Concept5227502304": 1.000000, "Concept5227626592": 1.000000, "Concept5227712048": 1.000000, "Concept5227736512": 1.000000}, "anchor": {"a2": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.304070,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.110097,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"a2": 1.000000, "f1": 1.000000, "c1": 1.000000}, "context": {"Concept5227654336": 1.000000, "Concept5227593376": 2.000000, "Concept5227603712": 2.000000, "Concept5227679600": 2.000000, "Concept5227634336": 2.000000, "Concept5227598320": 2.000000, "Concept5227553472": 3.000000, "Concept5227736512": 3.000000, "Concept5227630448": 2.000000, "Concept5227590528": 3.000000, "Concept5227715152": 1.000000, "Concept5227612240": 2.000000, "Concept5227559040": 7.000000, "Concept5227730096": 3.000000, "Concept5227529552": 1.000000, "Concept5227485216": 4.000000, "Concept5227757584": 2.000000, "Concept5227624064": 1.000000, "Concept5227570496": 5.000000, "Concept5227665872": 2.000000, "Concept5227832560": 2.000000, "Concept5227502304": 3.000000, "Concept5227592384": 3.000000, "Concept5227620176": 1.000000, "Concept5227585728": 2.000000, "Concept5227631440": 3.000000, "Concept5227712048": 2.000000, "Concept5227626592": 3.000000, "Concept5227766800": 2.000000}, "_variant": {"2": 1.000000, "1": 2.000000}, "_base": {"a": 1.000000, "f": 1.000000, "c": 1.000000}}
+}
+,{"name": "Concept5227881024",
+"size": 3.000000,
+"children": [
+{"name": "Concept5227876000",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.109380,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.100959,
+"std": 1,
+"n": 1,
+}},
+"_base": {"b": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227585728": 1.000000, "Concept5227529552": 1.000000, "Concept5227630448": 1.000000, "Concept5227590528": 1.000000, "Concept5227598320": 1.000000, "Concept5227766800": 1.000000, "Concept5227712048": 1.000000, "Concept5227570496": 2.000000, "Concept5227603712": 1.000000, "Concept5227485216": 2.000000, "Concept5227624064": 1.000000, "Concept5227715152": 1.000000, "Concept5227665872": 1.000000, "Concept5227621168": 1.000000, "Concept5227832560": 1.000000, "Concept5227761552": 1.000000, "Concept5227612240": 1.000000, "Concept5227559040": 4.000000, "Concept5227669088": 1.000000, "Concept5227679600": 1.000000}, "anchor": {"b1": 1.000000}}
+}
+,{"name": "Concept5227877920",
+"size": 2.000000,
+"children": [
+{"name": "Concept5227863840",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.119534,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.114194,
+"std": 1,
+"n": 1,
+}},
+"_base": {"c": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227553472": 1.000000, "Concept5227597328": 1.000000, "Concept5227585728": 1.000000, "Concept5227634336": 1.000000, "Concept5227570496": 2.000000, "Concept5227654336": 1.000000, "Concept5227630448": 1.000000, "Concept5227636864": 1.000000, "Concept5227593376": 1.000000, "Concept5227766800": 1.000000, "Concept5227590528": 2.000000, "Concept5227712048": 1.000000, "Concept5227559040": 3.000000, "Concept5227612240": 1.000000, "Concept5227485216": 1.000000, "Concept5227679600": 1.000000, "Concept5227757584": 1.000000, "Concept5227620176": 1.000000, "Concept5227733984": 1.000000, "Concept5227603712": 1.000000}, "anchor": {"c1": 1.000000}}
+}
+,{"name": "Concept5227882560",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.133635,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.132815,
+"std": 1,
+"n": 1,
+}},
+"_base": {"e": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227553472": 1.000000, "Concept5227750688": 1.000000, "Concept5227705088": 1.000000, "Concept5227621168": 1.000000, "Concept5227733984": 1.000000, "Concept5227620176": 1.000000, "Concept5227592384": 1.000000, "Concept5227654336": 1.000000, "Concept5227631440": 1.000000, "Concept5227730096": 1.000000, "Concept5227597328": 1.000000, "Concept5227585728": 1.000000, "Concept5227630448": 1.000000, "Concept5227636864": 1.000000, "Concept5227590528": 2.000000, "Concept5227559040": 3.000000, "Concept5227612240": 1.000000, "Concept5227766800": 1.000000, "Concept5227570496": 1.000000, "Concept5227712048": 1.000000}, "anchor": {"e2": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.234560,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.123341,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"e2": 1.000000, "c1": 1.000000}, "context": {"Concept5227750688": 1.000000, "Concept5227705088": 1.000000, "Concept5227592384": 1.000000, "Concept5227603712": 1.000000, "Concept5227679600": 1.000000, "Concept5227733984": 2.000000, "Concept5227621168": 1.000000, "Concept5227585728": 2.000000, "Concept5227620176": 2.000000, "Concept5227757584": 1.000000, "Concept5227485216": 1.000000, "Concept5227730096": 1.000000, "Concept5227612240": 2.000000, "Concept5227559040": 6.000000, "Concept5227712048": 2.000000, "Concept5227630448": 2.000000, "Concept5227590528": 4.000000, "Concept5227766800": 2.000000, "Concept5227593376": 1.000000, "Concept5227636864": 2.000000, "Concept5227634336": 1.000000, "Concept5227631440": 1.000000, "Concept5227654336": 2.000000, "Concept5227570496": 3.000000, "Concept5227597328": 2.000000, "Concept5227553472": 2.000000}, "_variant": {"2": 1.000000, "1": 1.000000}, "_base": {"e": 1.000000, "c": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.277647,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.098833,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"c1": 1.000000, "e2": 1.000000, "b1": 1.000000}, "context": {"Concept5227750688": 1.000000, "Concept5227705088": 1.000000, "Concept5227631440": 1.000000, "Concept5227553472": 2.000000, "Concept5227597328": 2.000000, "Concept5227634336": 1.000000, "Concept5227654336": 2.000000, "Concept5227636864": 2.000000, "Concept5227593376": 1.000000, "Concept5227585728": 3.000000, "Concept5227621168": 2.000000, "Concept5227620176": 2.000000, "Concept5227624064": 1.000000, "Concept5227757584": 1.000000, "Concept5227733984": 2.000000, "Concept5227679600": 2.000000, "Concept5227669088": 1.000000, "Concept5227730096": 1.000000, "Concept5227559040": 10.000000, "Concept5227612240": 3.000000, "Concept5227592384": 1.000000, "Concept5227761552": 1.000000, "Concept5227832560": 1.000000, "Concept5227665872": 1.000000, "Concept5227630448": 3.000000, "Concept5227590528": 5.000000, "Concept5227715152": 1.000000, "Concept5227485216": 3.000000, "Concept5227603712": 2.000000, "Concept5227570496": 5.000000, "Concept5227712048": 3.000000, "Concept5227766800": 3.000000, "Concept5227598320": 1.000000, "Concept5227529552": 1.000000}, "_variant": {"2": 1.000000, "1": 2.000000}, "_base": {"e": 1.000000, "c": 1.000000, "b": 1.000000}}
+}
+,{"name": "Concept5227944736",
+"size": 7.000000,
+"children": [
+{"name": "Concept5227943856",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.124697,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.122841,
+"std": 1,
+"n": 1,
+}},
+"_base": {"a": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227626592": 1.000000, "Concept5227631440": 1.000000, "Concept5227559040": 1.000000, "Concept5227679600": 1.000000, "Concept5227485216": 1.000000, "Concept5227818272": 1.000000, "Concept5227553472": 2.000000, "Concept5227603712": 1.000000, "Concept5227733984": 1.000000, "Concept5227636864": 1.000000, "Concept5227502304": 1.000000, "Concept5227592384": 2.000000, "Concept5227647712": 1.000000, "Concept5227730096": 1.000000, "Concept5227597328": 1.000000, "Concept5227727200": 1.000000, "Concept5227570496": 1.000000, "Concept5227585728": 1.000000, "Concept5227595616": 1.000000, "Concept5227736512": 1.000000, "Concept5227726208": 1.000000}, "anchor": {"a1": 1.000000}}
+}
+,{"name": "Concept5227946688",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.124697,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.122841,
+"std": 1,
+"n": 1,
+}},
+"_base": {"d": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227636864": 1.000000, "Concept5227738656": 1.000000, "Concept5227626592": 1.000000, "Concept5227570496": 1.000000, "Concept5227553472": 2.000000, "Concept5227603712": 1.000000, "Concept5227736512": 1.000000, "Concept5227559040": 1.000000, "Concept5227679600": 1.000000, "Concept5227585728": 1.000000, "Concept5227640720": 1.000000, "Concept5227631440": 1.000000, "Concept5227730096": 1.000000, "Concept5227731088": 1.000000, "Concept5227597328": 1.000000, "Concept5227727200": 1.000000, "Concept5227647712": 1.000000, "Concept5227485216": 1.000000, "Concept5227818272": 1.000000, "Concept5227502304": 1.000000, "Concept5227592384": 2.000000}, "anchor": {"d2": 1.000000}}
+}
+,{"name": "Concept5227947296",
+"size": 3.000000,
+"children": [
+{"name": "Concept5227946992",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.102742,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.094255,
+"std": 1,
+"n": 1,
+}},
+"_base": {"a": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227559040": 2.000000, "Concept5227741184": 1.000000, "Concept5227770672": 1.000000, "Concept5227618816": 1.000000, "Concept5227705088": 1.000000, "Concept5227621168": 1.000000, "Concept5227738656": 1.000000, "Concept5227818272": 1.000000, "Concept5227485216": 1.000000, "Concept5227679600": 1.000000, "Concept5227553472": 2.000000, "Concept5227603712": 1.000000, "Concept5227733984": 1.000000, "Concept5227570496": 2.000000, "Concept5227731088": 1.000000, "Concept5227597328": 2.000000, "Concept5227529552": 1.000000, "Concept5227585728": 1.000000, "Concept5227640720": 1.000000, "Concept5227636864": 2.000000}, "anchor": {"a1": 1.000000}}
+}
+,{"name": "Concept5227942208",
+"size": 2.000000,
+"children": [
+{"name": "Concept5227948144",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.096279,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.087805,
+"std": 1,
+"n": 1,
+}},
+"_base": {"c": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227570496": 2.000000, "Concept5227559040": 2.000000, "Concept5227618816": 1.000000, "Concept5227705088": 1.000000, "Concept5227621168": 1.000000, "Concept5227736512": 1.000000, "Concept5227770672": 1.000000, "Concept5227741184": 1.000000, "Concept5227502304": 1.000000, "Concept5227743120": 1.000000, "Concept5227626592": 1.000000, "Concept5227679600": 1.000000, "Concept5227485216": 1.000000, "Concept5227818272": 1.000000, "Concept5227529552": 2.000000, "Concept5227597328": 1.000000, "Concept5227636864": 1.000000, "Concept5227624064": 1.000000, "Concept5227553472": 2.000000, "Concept5227603712": 1.000000, "Concept5227733984": 1.000000}, "anchor": {"c1": 1.000000}}
+}
+,{"name": "Concept5227949024",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.096279,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.087805,
+"std": 1,
+"n": 1,
+}},
+"_base": {"e": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227669088": 1.000000, "Concept5227741184": 1.000000, "Concept5227624064": 1.000000, "Concept5227553472": 2.000000, "Concept5227570496": 2.000000, "Concept5227621168": 1.000000, "Concept5227780592": 1.000000, "Concept5227618816": 1.000000, "Concept5227636864": 1.000000, "Concept5227502304": 1.000000, "Concept5227743120": 1.000000, "Concept5227626592": 1.000000, "Concept5227736512": 1.000000, "Concept5227559040": 2.000000, "Concept5227679600": 1.000000, "Concept5227818272": 1.000000, "Concept5227485216": 1.000000, "Concept5227603712": 1.000000, "Concept5227529552": 2.000000, "Concept5227597328": 1.000000, "Concept5227738656": 1.000000}, "anchor": {"e1": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.194274,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.096602,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"e1": 1.000000, "c1": 1.000000}, "context": {"Concept5227669088": 1.000000, "Concept5227738656": 1.000000, "Concept5227679600": 2.000000, "Concept5227733984": 1.000000, "Concept5227603712": 2.000000, "Concept5227736512": 2.000000, "Concept5227553472": 4.000000, "Concept5227624064": 2.000000, "Concept5227636864": 2.000000, "Concept5227597328": 2.000000, "Concept5227741184": 2.000000, "Concept5227529552": 4.000000, "Concept5227818272": 2.000000, "Concept5227485216": 2.000000, "Concept5227626592": 2.000000, "Concept5227743120": 2.000000, "Concept5227502304": 2.000000, "Concept5227570496": 4.000000, "Concept5227770672": 1.000000, "Concept5227780592": 1.000000, "Concept5227621168": 2.000000, "Concept5227705088": 1.000000, "Concept5227618816": 2.000000, "Concept5227559040": 4.000000}, "_variant": {"1": 2.000000}, "_base": {"e": 1.000000, "c": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.273743,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.095177,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"e1": 1.000000, "c1": 1.000000, "a1": 1.000000}, "context": {"Concept5227669088": 1.000000, "Concept5227502304": 2.000000, "Concept5227743120": 2.000000, "Concept5227626592": 2.000000, "Concept5227636864": 4.000000, "Concept5227780592": 1.000000, "Concept5227640720": 1.000000, "Concept5227621168": 3.000000, "Concept5227585728": 1.000000, "Concept5227741184": 3.000000, "Concept5227529552": 5.000000, "Concept5227597328": 4.000000, "Concept5227731088": 1.000000, "Concept5227770672": 2.000000, "Concept5227570496": 6.000000, "Concept5227679600": 3.000000, "Concept5227733984": 2.000000, "Concept5227603712": 3.000000, "Concept5227624064": 2.000000, "Concept5227736512": 2.000000, "Concept5227553472": 6.000000, "Concept5227485216": 3.000000, "Concept5227818272": 3.000000, "Concept5227738656": 2.000000, "Concept5227618816": 3.000000, "Concept5227705088": 2.000000, "Concept5227559040": 6.000000}, "_variant": {"1": 3.000000}, "_base": {"e": 1.000000, "c": 1.000000, "a": 1.000000}}
+}
+,{"name": "Concept5227948448",
+"size": 2.000000,
+"children": [
+{"name": "Concept5227944160",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.140076,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.140115,
+"std": 1,
+"n": 1,
+}},
+"_base": {"f": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227559040": 1.000000, "Concept5227553472": 3.000000, "Concept5227705088": 1.000000, "Concept5227621168": 1.000000, "Concept5227738656": 1.000000, "Concept5227597328": 2.000000, "Concept5227731088": 1.000000, "Concept5227730096": 1.000000, "Concept5227585728": 1.000000, "Concept5227640720": 1.000000, "Concept5227733984": 1.000000, "Concept5227770672": 1.000000, "Concept5227636864": 2.000000, "Concept5227502304": 1.000000, "Concept5227592384": 1.000000, "Concept5227570496": 1.000000, "Concept5227626592": 1.000000, "Concept5227631440": 1.000000, "Concept5227736512": 1.000000}, "anchor": {"f1": 1.000000}}
+}
+,{"name": "Concept5227950288",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.125987,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.121105,
+"std": 1,
+"n": 1,
+}},
+"_base": {"a": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227641712": 1.000000, "Concept5227669088": 1.000000, "Concept5227529552": 1.000000, "Concept5227597328": 1.000000, "Concept5227738656": 1.000000, "Concept5227570496": 1.000000, "Concept5227624064": 1.000000, "Concept5227553472": 3.000000, "Concept5227559040": 2.000000, "Concept5227705088": 1.000000, "Concept5227780592": 1.000000, "Concept5227621168": 2.000000, "Concept5227745648": 1.000000, "Concept5227770672": 1.000000, "Concept5227502304": 2.000000, "Concept5227636864": 1.000000, "Concept5227626592": 1.000000, "Concept5227743120": 1.000000, "Concept5227736512": 1.000000}, "anchor": {"a2": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.238002,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.125378,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"a2": 1.000000, "f1": 1.000000}, "context": {"Concept5227641712": 1.000000, "Concept5227669088": 1.000000, "Concept5227529552": 1.000000, "Concept5227636864": 3.000000, "Concept5227745648": 1.000000, "Concept5227553472": 6.000000, "Concept5227736512": 2.000000, "Concept5227738656": 2.000000, "Concept5227631440": 1.000000, "Concept5227743120": 1.000000, "Concept5227626592": 2.000000, "Concept5227770672": 2.000000, "Concept5227570496": 2.000000, "Concept5227592384": 1.000000, "Concept5227502304": 3.000000, "Concept5227733984": 1.000000, "Concept5227621168": 3.000000, "Concept5227585728": 1.000000, "Concept5227780592": 1.000000, "Concept5227640720": 1.000000, "Concept5227559040": 3.000000, "Concept5227730096": 1.000000, "Concept5227731088": 1.000000, "Concept5227597328": 3.000000, "Concept5227705088": 2.000000, "Concept5227624064": 1.000000}, "_variant": {"2": 1.000000, "1": 1.000000}, "_base": {"a": 1.000000, "f": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.588797,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.100262,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"e1": 1.000000, "c1": 1.000000, "a2": 1.000000, "a1": 2.000000, "d2": 1.000000, "f1": 1.000000}, "context": {"Concept5227641712": 1.000000, "Concept5227669088": 2.000000, "Concept5227743120": 3.000000, "Concept5227624064": 3.000000, "Concept5227618816": 3.000000, "Concept5227741184": 3.000000, "Concept5227529552": 6.000000, "Concept5227705088": 4.000000, "Concept5227726208": 1.000000, "Concept5227553472": 16.000000, "Concept5227736512": 6.000000, "Concept5227592384": 5.000000, "Concept5227595616": 1.000000, "Concept5227780592": 2.000000, "Concept5227640720": 3.000000, "Concept5227621168": 6.000000, "Concept5227585728": 4.000000, "Concept5227770672": 4.000000, "Concept5227570496": 10.000000, "Concept5227731088": 3.000000, "Concept5227727200": 2.000000, "Concept5227597328": 9.000000, "Concept5227559040": 11.000000, "Concept5227730096": 3.000000, "Concept5227647712": 2.000000, "Concept5227502304": 7.000000, "Concept5227745648": 1.000000, "Concept5227636864": 9.000000, "Concept5227679600": 5.000000, "Concept5227733984": 4.000000, "Concept5227603712": 5.000000, "Concept5227485216": 5.000000, "Concept5227818272": 5.000000, "Concept5227738656": 5.000000, "Concept5227631440": 3.000000, "Concept5227626592": 6.000000}, "_variant": {"2": 2.000000, "1": 5.000000}, "_base": {"e": 1.000000, "d": 1.000000, "c": 1.000000, "f": 1.000000, "a": 3.000000}}
+}
+,{"name": "Concept5227999184",
+"size": 4.000000,
+"children": [
+{"name": "Concept5227876352",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.098783,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.090295,
+"std": 1,
+"n": 1,
+}},
+"_base": {"a": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227502304": 1.000000, "Concept5227598320": 1.000000, "Concept5227590528": 1.000000, "Concept5227626592": 1.000000, "Concept5227661136": 1.000000, "Concept5227553472": 1.000000, "Concept5227624064": 1.000000, "Concept5227620176": 1.000000, "Concept5227559040": 2.000000, "Concept5227529552": 2.000000, "Concept5227832560": 1.000000, "Concept5227665872": 1.000000, "Concept5227618816": 1.000000, "Concept5227792800": 1.000000, "Concept5227485216": 1.000000, "Concept5227570496": 3.000000, "Concept5227595616": 1.000000, "Concept5227715152": 1.000000, "Concept5227736512": 1.000000, "Concept5227585728": 1.000000, "Concept5227773200": 1.000000}, "anchor": {"a1": 1.000000}}
+}
+,{"name": "Concept5227878496",
+"size": 2.000000,
+"children": [
+{"name": "Concept5227877616",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.102917,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.094430,
+"std": 1,
+"n": 1,
+}},
+"_base": {"d": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227603712": 1.000000, "Concept5227553472": 1.000000, "Concept5227669088": 1.000000, "Concept5227502304": 1.000000, "Concept5227626592": 1.000000, "Concept5227736512": 1.000000, "Concept5227598320": 1.000000, "Concept5227590528": 1.000000, "Concept5227679600": 1.000000, "Concept5227620176": 1.000000, "Concept5227661136": 1.000000, "Concept5227570496": 1.000000, "Concept5227529552": 1.000000, "Concept5227559040": 4.000000, "Concept5227761552": 1.000000, "Concept5227665872": 1.000000, "Concept5227832560": 1.000000, "Concept5227621168": 1.000000, "Concept5227618816": 1.000000, "Concept5227485216": 2.000000, "Concept5227792800": 1.000000}, "anchor": {"d1": 1.000000}}
+}
+,{"name": "Concept5227875696",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.123661,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.118604,
+"std": 1,
+"n": 1,
+}},
+"_base": {"f": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227485216": 1.000000, "Concept5227603712": 1.000000, "Concept5227553472": 1.000000, "Concept5227624064": 1.000000, "Concept5227502304": 1.000000, "Concept5227626592": 1.000000, "Concept5227712048": 1.000000, "Concept5227570496": 1.000000, "Concept5227529552": 1.000000, "Concept5227715152": 1.000000, "Concept5227736512": 1.000000, "Concept5227669088": 1.000000, "Concept5227761552": 1.000000, "Concept5227559040": 4.000000, "Concept5227612240": 1.000000, "Concept5227621168": 1.000000, "Concept5227679600": 1.000000, "Concept5227620176": 1.000000, "Concept5227590528": 2.000000, "Concept5227661136": 1.000000}, "anchor": {"f1": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.217200,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.110527,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"f1": 1.000000, "d1": 1.000000}, "context": {"Concept5227624064": 1.000000, "Concept5227712048": 1.000000, "Concept5227792800": 1.000000, "Concept5227485216": 3.000000, "Concept5227618816": 1.000000, "Concept5227620176": 2.000000, "Concept5227621168": 2.000000, "Concept5227832560": 1.000000, "Concept5227665872": 1.000000, "Concept5227559040": 8.000000, "Concept5227612240": 1.000000, "Concept5227761552": 2.000000, "Concept5227529552": 2.000000, "Concept5227570496": 2.000000, "Concept5227679600": 2.000000, "Concept5227715152": 1.000000, "Concept5227590528": 3.000000, "Concept5227598320": 1.000000, "Concept5227553472": 2.000000, "Concept5227736512": 2.000000, "Concept5227669088": 2.000000, "Concept5227661136": 2.000000, "Concept5227626592": 2.000000, "Concept5227502304": 2.000000, "Concept5227603712": 2.000000}, "_variant": {"1": 2.000000}, "_base": {"f": 1.000000, "d": 1.000000}}
+}
+,{"name": "Concept5228000736",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.105247,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.096775,
+"std": 1,
+"n": 1,
+}},
+"_base": {"e": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227821584": 1.000000, "Concept5227603712": 1.000000, "Concept5227626592": 1.000000, "Concept5227636864": 1.000000, "Concept5227612928": 1.000000, "Concept5227597328": 1.000000, "Concept5227818272": 1.000000, "Concept5227615136": 1.000000, "Concept5227485216": 2.000000, "Concept5227559040": 2.000000, "Concept5227696528": 1.000000, "Concept5227598320": 1.000000, "Concept5227645600": 1.000000, "Concept5227553472": 3.000000, "Concept5227745648": 1.000000, "Concept5227720992": 1.000000, "Concept5227592384": 1.000000, "Concept5227502304": 2.000000, "Concept5227679600": 1.000000, "Concept5227641712": 1.000000}, "anchor": {"e2": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.261439,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.069361,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"e2": 1.000000, "d1": 1.000000, "f1": 1.000000, "a1": 1.000000}, "context": {"Concept5227821584": 1.000000, "Concept5227597328": 1.000000, "Concept5227720992": 1.000000, "Concept5227641712": 1.000000, "Concept5227636864": 1.000000, "Concept5227745648": 1.000000, "Concept5227615136": 1.000000, "Concept5227603712": 3.000000, "Concept5227679600": 3.000000, "Concept5227818272": 1.000000, "Concept5227645600": 1.000000, "Concept5227773200": 1.000000, "Concept5227620176": 3.000000, "Concept5227621168": 2.000000, "Concept5227585728": 1.000000, "Concept5227553472": 6.000000, "Concept5227736512": 3.000000, "Concept5227612928": 1.000000, "Concept5227590528": 4.000000, "Concept5227715152": 2.000000, "Concept5227592384": 1.000000, "Concept5227761552": 2.000000, "Concept5227595616": 1.000000, "Concept5227570496": 5.000000, "Concept5227485216": 6.000000, "Concept5227792800": 2.000000, "Concept5227618816": 2.000000, "Concept5227696528": 1.000000, "Concept5227665872": 2.000000, "Concept5227832560": 2.000000, "Concept5227529552": 4.000000, "Concept5227612240": 1.000000, "Concept5227559040": 12.000000, "Concept5227624064": 2.000000, "Concept5227712048": 1.000000, "Concept5227626592": 4.000000, "Concept5227669088": 2.000000, "Concept5227661136": 3.000000, "Concept5227598320": 3.000000, "Concept5227502304": 5.000000}, "_variant": {"2": 1.000000, "1": 3.000000}, "_base": {"e": 1.000000, "d": 1.000000, "f": 1.000000, "a": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.750941,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.057411,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"e1": 1.000000, "e2": 2.000000, "b1": 1.000000, "c1": 3.000000, "d2": 1.000000, "a2": 2.000000, "a1": 3.000000, "d1": 1.000000, "f1": 3.000000}, "context": {"Concept5227821584": 1.000000, "Concept5227612928": 1.000000, "Concept5227615136": 1.000000, "Concept5227696528": 1.000000, "Concept5227645600": 1.000000, "Concept5227641712": 2.000000, "Concept5227780592": 2.000000, "Concept5227640720": 3.000000, "Concept5227731088": 3.000000, "Concept5227647712": 2.000000, "Concept5227726208": 1.000000, "Concept5227750688": 1.000000, "Concept5227705088": 5.000000, "Concept5227597328": 12.000000, "Concept5227720992": 1.000000, "Concept5227636864": 12.000000, "Concept5227654336": 3.000000, "Concept5227634336": 3.000000, "Concept5227631440": 7.000000, "Concept5227745648": 2.000000, "Concept5227832560": 5.000000, "Concept5227727200": 2.000000, "Concept5227773200": 1.000000, "Concept5227766800": 5.000000, "Concept5227770672": 4.000000, "Concept5227590528": 12.000000, "Concept5227712048": 6.000000, "Concept5227730096": 7.000000, "Concept5227792800": 2.000000, "Concept5227603712": 12.000000, "Concept5227733984": 6.000000, "Concept5227626592": 13.000000, "Concept5227715152": 4.000000, "Concept5227679600": 12.000000, "Concept5227743120": 3.000000, "Concept5227818272": 6.000000, "Concept5227620176": 6.000000, "Concept5227621168": 10.000000, "Concept5227738656": 5.000000, "Concept5227585728": 10.000000, "Concept5227592384": 10.000000, "Concept5227553472": 27.000000, "Concept5227736512": 12.000000, "Concept5227630448": 5.000000, "Concept5227761552": 3.000000, "Concept5227595616": 2.000000, "Concept5227570496": 25.000000, "Concept5227612240": 6.000000, "Concept5227485216": 18.000000, "Concept5227593376": 3.000000, "Concept5227741184": 3.000000, "Concept5227669088": 5.000000, "Concept5227618816": 5.000000, "Concept5227665872": 5.000000, "Concept5227529552": 12.000000, "Concept5227559040": 40.000000, "Concept5227757584": 3.000000, "Concept5227624064": 7.000000, "Concept5227661136": 3.000000, "Concept5227598320": 6.000000, "Concept5227502304": 15.000000}, "_variant": {"2": 5.000000, "1": 12.000000}, "_base": {"b": 1.000000, "d": 2.000000, "e": 3.000000, "c": 3.000000, "f": 3.000000, "a": 5.000000}}
+}
+,{"name": "Concept5227908496",
+"size": 12.000000,
+"children": [
+{"name": "Concept5227898704",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.117034,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.111539,
+"std": 1,
+"n": 1,
+}},
+"_base": {"c": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227670080": 1.000000, "Concept5227570496": 2.000000, "Concept5227723104": 1.000000, "Concept5227529552": 1.000000, "Concept5227597328": 2.000000, "Concept5227640720": 1.000000, "Concept5227585728": 1.000000, "Concept5227590528": 1.000000, "Concept5227608928": 1.000000, "Concept5227553472": 2.000000, "Concept5227672272": 1.000000, "Concept5227611248": 1.000000, "Concept5227788336": 1.000000, "Concept5227612240": 1.000000, "Concept5227559040": 2.000000, "Concept5227618816": 1.000000, "Concept5227665872": 1.000000, "Concept5227673632": 1.000000, "Concept5227485216": 1.000000, "Concept5227598320": 1.000000}, "anchor": {"c2": 1.000000}}
+}
+,{"name": "Concept5227906960",
+"size": 2.000000,
+"children": [
+{"name": "Concept5227909264",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.119534,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.114194,
+"std": 1,
+"n": 1,
+}},
+"_base": {"e": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227673632": 1.000000, "Concept5227601392": 1.000000, "Concept5227621168": 1.000000, "Concept5227618816": 1.000000, "Concept5227640720": 1.000000, "Concept5227585728": 1.000000, "Concept5227590528": 2.000000, "Concept5227614384": 1.000000, "Concept5227826176": 1.000000, "Concept5227559040": 3.000000, "Concept5227612240": 1.000000, "Concept5227570496": 2.000000, "Concept5227669088": 1.000000, "Concept5227553472": 1.000000, "Concept5227723104": 1.000000, "Concept5227597328": 1.000000, "Concept5227529552": 1.000000, "Concept5227672272": 1.000000, "Concept5227611248": 1.000000, "Concept5227788336": 1.000000}, "anchor": {"e2": 1.000000}}
+}
+,{"name": "Concept5227873744",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.132614,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.128293,
+"std": 1,
+"n": 1,
+}},
+"_base": {"b": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227620176": 1.000000, "Concept5227673632": 1.000000, "Concept5227597328": 1.000000, "Concept5227529552": 1.000000, "Concept5227559040": 4.000000, "Concept5227612240": 1.000000, "Concept5227621168": 1.000000, "Concept5227601392": 1.000000, "Concept5227618816": 1.000000, "Concept5227590528": 3.000000, "Concept5227661136": 1.000000, "Concept5227614384": 1.000000, "Concept5227669088": 1.000000, "Concept5227608928": 1.000000, "Concept5227570496": 1.000000, "Concept5227670080": 1.000000, "Concept5227826176": 1.000000, "Concept5227553472": 1.000000, "Concept5227723104": 1.000000}, "anchor": {"b2": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.243005,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.126809,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"b2": 1.000000, "e2": 1.000000}, "context": {"Concept5227670080": 1.000000, "Concept5227788336": 1.000000, "Concept5227611248": 1.000000, "Concept5227620176": 1.000000, "Concept5227621168": 2.000000, "Concept5227585728": 1.000000, "Concept5227826176": 2.000000, "Concept5227672272": 1.000000, "Concept5227529552": 2.000000, "Concept5227597328": 2.000000, "Concept5227723104": 2.000000, "Concept5227553472": 2.000000, "Concept5227590528": 5.000000, "Concept5227608928": 1.000000, "Concept5227661136": 1.000000, "Concept5227669088": 2.000000, "Concept5227570496": 3.000000, "Concept5227559040": 7.000000, "Concept5227612240": 2.000000, "Concept5227640720": 1.000000, "Concept5227614384": 2.000000, "Concept5227618816": 2.000000, "Concept5227601392": 2.000000, "Concept5227673632": 2.000000}, "_variant": {"2": 2.000000}, "_base": {"b": 1.000000, "e": 1.000000}}
+}
+,{"name": "Concept5227867040",
+"size": 7.000000,
+"children": [
+{"name": "Concept5227909568",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.119534,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.114194,
+"std": 1,
+"n": 1,
+}},
+"_base": {"d": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227502304": 1.000000, "Concept5227626592": 1.000000, "Concept5227570496": 1.000000, "Concept5227620176": 1.000000, "Concept5227762912": 1.000000, "Concept5227590528": 2.000000, "Concept5227614384": 1.000000, "Concept5227661136": 1.000000, "Concept5227640720": 1.000000, "Concept5227585728": 1.000000, "Concept5227597328": 1.000000, "Concept5227670080": 1.000000, "Concept5227621168": 1.000000, "Concept5227601392": 1.000000, "Concept5227672272": 1.000000, "Concept5227559040": 3.000000, "Concept5227669088": 1.000000, "Concept5227608928": 1.000000, "Concept5227553472": 2.000000, "Concept5227826176": 1.000000}, "anchor": {"d1": 1.000000}}
+}
+,{"name": "Concept5227901440",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.119534,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.114194,
+"std": 1,
+"n": 1,
+}},
+"_base": {"e": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227603712": 1.000000, "Concept5227502304": 1.000000, "Concept5227626592": 1.000000, "Concept5227661136": 1.000000, "Concept5227762912": 1.000000, "Concept5227679600": 1.000000, "Concept5227620176": 1.000000, "Concept5227485216": 1.000000, "Concept5227673632": 1.000000, "Concept5227559040": 3.000000, "Concept5227612240": 1.000000, "Concept5227590528": 2.000000, "Concept5227585728": 1.000000, "Concept5227640720": 1.000000, "Concept5227672272": 1.000000, "Concept5227553472": 2.000000, "Concept5227597328": 1.000000, "Concept5227608928": 1.000000, "Concept5227570496": 1.000000, "Concept5227670080": 1.000000}, "anchor": {"e1": 1.000000}}
+}
+,{"name": "Concept5227910656",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.133635,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.132815,
+"std": 1,
+"n": 1,
+}},
+"_base": {"b": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227763904": 1.000000, "Concept5227762912": 1.000000, "Concept5227679600": 1.000000, "Concept5227601392": 1.000000, "Concept5227647712": 1.000000, "Concept5227553472": 1.000000, "Concept5227603712": 1.000000, "Concept5227592384": 1.000000, "Concept5227502304": 1.000000, "Concept5227559040": 3.000000, "Concept5227612240": 1.000000, "Concept5227485216": 1.000000, "Concept5227673632": 1.000000, "Concept5227626592": 1.000000, "Concept5227570496": 1.000000, "Concept5227640720": 1.000000, "Concept5227585728": 1.000000, "Concept5227614384": 1.000000, "Concept5227590528": 2.000000, "Concept5227672272": 1.000000}, "anchor": {"b1": 1.000000}}
+}
+,{"name": "Concept5227911264",
+"size": 4.000000,
+"children": [
+{"name": "Concept5227912656",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.179863,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.192686,
+"std": 1,
+"n": 1,
+}},
+"_base": {"d": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227592384": 2.000000, "Concept5227647712": 1.000000, "Concept5227601392": 1.000000, "Concept5227763904": 1.000000, "Concept5227603712": 1.000000, "Concept5227631440": 1.000000, "Concept5227614384": 1.000000, "Concept5227661136": 1.000000, "Concept5227559040": 4.000000, "Concept5227612240": 1.000000, "Concept5227590528": 3.000000, "Concept5227679600": 1.000000, "Concept5227620176": 1.000000, "Concept5227673632": 1.000000, "Concept5227485216": 1.000000, "Concept5227707984": 1.000000}, "anchor": {"d1": 1.000000}}
+}
+,{"name": "Concept5227910960",
+"size": 3.000000,
+"children": [
+{"name": "Concept5227911568",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.157909,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.165280,
+"std": 1,
+"n": 1,
+}},
+"_base": {"e": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227597328": 1.000000, "Concept5227631440": 1.000000, "Concept5227626592": 1.000000, "Concept5227661136": 1.000000, "Concept5227614384": 1.000000, "Concept5227611248": 1.000000, "Concept5227682816": 1.000000, "Concept5227592384": 2.000000, "Concept5227502304": 1.000000, "Concept5227647712": 1.000000, "Concept5227601392": 1.000000, "Concept5227707984": 1.000000, "Concept5227762912": 1.000000, "Concept5227763904": 1.000000, "Concept5227620176": 1.000000, "Concept5227590528": 2.000000, "Concept5227559040": 2.000000, "Concept5227553472": 2.000000}, "anchor": {"e1": 1.000000}}
+}
+,{"name": "Concept5227901744",
+"size": 2.000000,
+"children": [
+{"name": "Concept5227912256",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.131139,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.130012,
+"std": 1,
+"n": 1,
+}},
+"_base": {"b": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227612928": 1.000000, "Concept5227631440": 1.000000, "Concept5227597328": 1.000000, "Concept5227611248": 1.000000, "Concept5227615136": 1.000000, "Concept5227485216": 1.000000, "Concept5227603712": 1.000000, "Concept5227553472": 2.000000, "Concept5227682816": 1.000000, "Concept5227502304": 1.000000, "Concept5227592384": 2.000000, "Concept5227707984": 1.000000, "Concept5227762912": 1.000000, "Concept5227841664": 1.000000, "Concept5227559040": 2.000000, "Concept5227679600": 1.000000, "Concept5227620176": 1.000000, "Concept5227590528": 1.000000, "Concept5227626592": 1.000000, "Concept5227661136": 1.000000}, "anchor": {"b2": 1.000000}}
+}
+,{"name": "Concept5227902048",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.131139,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.130012,
+"std": 1,
+"n": 1,
+}},
+"_base": {"c": 1.000000}, "_variant": {"1": 1.000000}, "context": {"Concept5227590528": 1.000000, "Concept5227612928": 1.000000, "Concept5227647712": 1.000000, "Concept5227763904": 1.000000, "Concept5227597328": 1.000000, "Concept5227611248": 1.000000, "Concept5227685216": 1.000000, "Concept5227841664": 1.000000, "Concept5227559040": 2.000000, "Concept5227615136": 1.000000, "Concept5227485216": 1.000000, "Concept5227620176": 1.000000, "Concept5227679600": 1.000000, "Concept5227603712": 1.000000, "Concept5227553472": 2.000000, "Concept5227682816": 1.000000, "Concept5227592384": 2.000000, "Concept5227502304": 1.000000, "Concept5227626592": 1.000000, "Concept5227762912": 1.000000}, "anchor": {"c1": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.263955,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.142733,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"c1": 1.000000, "b2": 1.000000}, "context": {"Concept5227647712": 1.000000, "Concept5227763904": 1.000000, "Concept5227661136": 1.000000, "Concept5227626592": 2.000000, "Concept5227590528": 2.000000, "Concept5227620176": 2.000000, "Concept5227679600": 2.000000, "Concept5227685216": 1.000000, "Concept5227559040": 4.000000, "Concept5227841664": 2.000000, "Concept5227762912": 2.000000, "Concept5227707984": 1.000000, "Concept5227502304": 2.000000, "Concept5227592384": 4.000000, "Concept5227682816": 2.000000, "Concept5227553472": 4.000000, "Concept5227603712": 2.000000, "Concept5227485216": 2.000000, "Concept5227615136": 2.000000, "Concept5227611248": 2.000000, "Concept5227597328": 2.000000, "Concept5227631440": 1.000000, "Concept5227612928": 2.000000}, "_variant": {"1": 1.000000, "2": 1.000000}, "_base": {"c": 1.000000, "b": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.403765,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.155345,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"c1": 1.000000, "b2": 1.000000, "e1": 1.000000}, "context": {"Concept5227603712": 2.000000, "Concept5227615136": 2.000000, "Concept5227611248": 3.000000, "Concept5227485216": 2.000000, "Concept5227553472": 6.000000, "Concept5227647712": 2.000000, "Concept5227841664": 2.000000, "Concept5227559040": 6.000000, "Concept5227612928": 2.000000, "Concept5227590528": 4.000000, "Concept5227679600": 2.000000, "Concept5227620176": 3.000000, "Concept5227763904": 2.000000, "Concept5227762912": 3.000000, "Concept5227707984": 2.000000, "Concept5227502304": 3.000000, "Concept5227601392": 1.000000, "Concept5227682816": 3.000000, "Concept5227592384": 6.000000, "Concept5227614384": 1.000000, "Concept5227661136": 2.000000, "Concept5227626592": 3.000000, "Concept5227631440": 2.000000, "Concept5227685216": 1.000000, "Concept5227597328": 3.000000}, "_variant": {"2": 1.000000, "1": 2.000000}, "_base": {"c": 1.000000, "b": 1.000000, "e": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.538975,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.162552,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"b2": 1.000000, "e1": 1.000000, "c1": 1.000000, "d1": 1.000000}, "context": {"Concept5227685216": 1.000000, "Concept5227597328": 3.000000, "Concept5227626592": 3.000000, "Concept5227485216": 3.000000, "Concept5227611248": 3.000000, "Concept5227553472": 6.000000, "Concept5227763904": 3.000000, "Concept5227762912": 3.000000, "Concept5227707984": 3.000000, "Concept5227592384": 8.000000, "Concept5227682816": 3.000000, "Concept5227673632": 1.000000, "Concept5227620176": 4.000000, "Concept5227679600": 3.000000, "Concept5227612240": 1.000000, "Concept5227559040": 10.000000, "Concept5227612928": 2.000000, "Concept5227590528": 7.000000, "Concept5227614384": 2.000000, "Concept5227661136": 3.000000, "Concept5227631440": 3.000000, "Concept5227615136": 2.000000, "Concept5227603712": 3.000000, "Concept5227502304": 3.000000, "Concept5227601392": 2.000000, "Concept5227841664": 2.000000, "Concept5227647712": 3.000000}, "_variant": {"2": 1.000000, "1": 3.000000}, "_base": {"c": 1.000000, "b": 1.000000, "e": 1.000000, "d": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.749489,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.133967,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"b2": 1.000000, "b1": 1.000000, "e1": 2.000000, "c1": 1.000000, "d1": 2.000000}, "context": {"Concept5227707984": 3.000000, "Concept5227631440": 3.000000, "Concept5227841664": 2.000000, "Concept5227647712": 4.000000, "Concept5227615136": 2.000000, "Concept5227603712": 5.000000, "Concept5227611248": 3.000000, "Concept5227485216": 5.000000, "Concept5227682816": 3.000000, "Concept5227592384": 9.000000, "Concept5227673632": 3.000000, "Concept5227620176": 6.000000, "Concept5227585728": 3.000000, "Concept5227621168": 1.000000, "Concept5227672272": 3.000000, "Concept5227826176": 1.000000, "Concept5227553472": 11.000000, "Concept5227612928": 2.000000, "Concept5227590528": 13.000000, "Concept5227608928": 2.000000, "Concept5227661136": 5.000000, "Concept5227669088": 1.000000, "Concept5227612240": 3.000000, "Concept5227559040": 19.000000, "Concept5227502304": 6.000000, "Concept5227601392": 4.000000, "Concept5227679600": 5.000000, "Concept5227670080": 2.000000, "Concept5227685216": 1.000000, "Concept5227597328": 5.000000, "Concept5227640720": 3.000000, "Concept5227614384": 4.000000, "Concept5227763904": 4.000000, "Concept5227762912": 6.000000, "Concept5227626592": 6.000000, "Concept5227570496": 3.000000}, "_variant": {"2": 1.000000, "1": 6.000000}, "_base": {"c": 1.000000, "b": 2.000000, "e": 2.000000, "d": 2.000000}}
+}
+,{"name": "Concept5227901136",
+"size": 2.000000,
+"children": [
+{"name": "Concept5227959936",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.145050,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.149805,
+"std": 1,
+"n": 1,
+}},
+"_base": {"c": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227763904": 1.000000, "Concept5227762912": 1.000000, "Concept5227669088": 1.000000, "Concept5227570496": 1.000000, "Concept5227626592": 1.000000, "Concept5227593376": 1.000000, "Concept5227634336": 1.000000, "Concept5227502304": 1.000000, "Concept5227592384": 2.000000, "Concept5227615136": 1.000000, "Concept5227590528": 1.000000, "Concept5227601392": 1.000000, "Concept5227621168": 1.000000, "Concept5227647712": 1.000000, "Concept5227757584": 1.000000, "Concept5227559040": 2.000000, "Concept5227761552": 1.000000, "Concept5227697888": 1.000000, "Concept5227553472": 1.000000, "Concept5227612928": 1.000000}, "anchor": {"c2": 1.000000}}
+}
+,{"name": "Concept5228001616",
+"size": 1.000000,
+"children": [
+],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.117034,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.111539,
+"std": 1,
+"n": 1,
+}},
+"_base": {"a": 1.000000}, "_variant": {"2": 1.000000}, "context": {"Concept5227631440": 1.000000, "Concept5227626592": 1.000000, "Concept5227612928": 1.000000, "Concept5227707984": 1.000000, "Concept5227502304": 1.000000, "Concept5227592384": 2.000000, "Concept5227611248": 1.000000, "Concept5227553472": 2.000000, "Concept5227821584": 1.000000, "Concept5227720000": 1.000000, "Concept5227603712": 1.000000, "Concept5227679600": 1.000000, "Concept5227696528": 1.000000, "Concept5227559040": 2.000000, "Concept5227818272": 1.000000, "Concept5227615136": 1.000000, "Concept5227485216": 2.000000, "Concept5227645600": 1.000000, "Concept5227598320": 1.000000, "Concept5227597328": 1.000000}, "anchor": {"a2": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.193960,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.101058,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"a2": 1.000000, "c2": 1.000000}, "context": {"Concept5227631440": 1.000000, "Concept5227707984": 1.000000, "Concept5227821584": 1.000000, "Concept5227597328": 1.000000, "Concept5227679600": 1.000000, "Concept5227696528": 1.000000, "Concept5227818272": 1.000000, "Concept5227645600": 1.000000, "Concept5227720000": 1.000000, "Concept5227590528": 1.000000, "Concept5227612928": 2.000000, "Concept5227553472": 3.000000, "Concept5227647712": 1.000000, "Concept5227697888": 1.000000, "Concept5227592384": 4.000000, "Concept5227761552": 1.000000, "Concept5227559040": 4.000000, "Concept5227757584": 1.000000, "Concept5227621168": 1.000000, "Concept5227502304": 2.000000, "Concept5227601392": 1.000000, "Concept5227611248": 1.000000, "Concept5227485216": 2.000000, "Concept5227603712": 1.000000, "Concept5227615136": 2.000000, "Concept5227598320": 1.000000, "Concept5227634336": 1.000000, "Concept5227593376": 1.000000, "Concept5227626592": 2.000000, "Concept5227570496": 1.000000, "Concept5227669088": 1.000000, "Concept5227762912": 1.000000, "Concept5227763904": 1.000000}, "_variant": {"2": 2.000000}, "_base": {"a": 1.000000, "c": 1.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.891878,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.096422,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"c1": 1.000000, "b1": 1.000000, "e1": 2.000000, "c2": 2.000000, "b2": 2.000000, "e2": 1.000000, "a2": 1.000000, "d1": 2.000000}, "context": {"Concept5227821584": 1.000000, "Concept5227720000": 1.000000, "Concept5227696528": 1.000000, "Concept5227818272": 1.000000, "Concept5227645600": 1.000000, "Concept5227593376": 1.000000, "Concept5227634336": 1.000000, "Concept5227757584": 1.000000, "Concept5227707984": 4.000000, "Concept5227631440": 4.000000, "Concept5227697888": 1.000000, "Concept5227841664": 2.000000, "Concept5227647712": 5.000000, "Concept5227615136": 4.000000, "Concept5227603712": 6.000000, "Concept5227679600": 6.000000, "Concept5227672272": 5.000000, "Concept5227626592": 8.000000, "Concept5227763904": 5.000000, "Concept5227762912": 7.000000, "Concept5227598320": 2.000000, "Concept5227502304": 8.000000, "Concept5227601392": 7.000000, "Concept5227669088": 4.000000, "Concept5227618816": 3.000000, "Concept5227640720": 5.000000, "Concept5227614384": 6.000000, "Concept5227620176": 7.000000, "Concept5227621168": 4.000000, "Concept5227585728": 5.000000, "Concept5227665872": 1.000000, "Concept5227826176": 3.000000, "Concept5227611248": 6.000000, "Concept5227788336": 2.000000, "Concept5227612240": 6.000000, "Concept5227485216": 8.000000, "Concept5227761552": 1.000000, "Concept5227612928": 4.000000, "Concept5227682816": 3.000000, "Concept5227553472": 18.000000, "Concept5227592384": 13.000000, "Concept5227673632": 6.000000, "Concept5227559040": 32.000000, "Concept5227661136": 6.000000, "Concept5227608928": 4.000000, "Concept5227590528": 20.000000, "Concept5227529552": 3.000000, "Concept5227685216": 1.000000, "Concept5227597328": 10.000000, "Concept5227723104": 3.000000, "Concept5227570496": 9.000000, "Concept5227670080": 4.000000}, "_variant": {"1": 6.000000, "2": 6.000000}, "_base": {"d": 2.000000, "b": 3.000000, "e": 3.000000, "a": 1.000000, "c": 3.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.934309,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.045324,
+"std": 1,
+"n": 1,
+}},
+"_base": {"a": 6.000000, "f": 3.000000, "c": 6.000000, "e": 6.000000, "d": 4.000000, "b": 4.000000}, "_variant": {"1": 18.000000, "2": 11.000000}, "context": {"Concept5227720000": 1.000000, "Concept5227821584": 2.000000, "Concept5227696528": 2.000000, "Concept5227645600": 2.000000, "Concept5227670080": 4.000000, "Concept5227723104": 3.000000, "Concept5227608928": 4.000000, "Concept5227673632": 6.000000, "Concept5227612928": 5.000000, "Concept5227682816": 3.000000, "Concept5227788336": 2.000000, "Concept5227611248": 6.000000, "Concept5227762912": 7.000000, "Concept5227763904": 5.000000, "Concept5227615136": 5.000000, "Concept5227697888": 1.000000, "Concept5227707984": 4.000000, "Concept5227502304": 23.000000, "Concept5227598320": 8.000000, "Concept5227661136": 9.000000, "Concept5227624064": 7.000000, "Concept5227757584": 4.000000, "Concept5227559040": 72.000000, "Concept5227529552": 15.000000, "Concept5227826176": 3.000000, "Concept5227665872": 6.000000, "Concept5227618816": 8.000000, "Concept5227669088": 9.000000, "Concept5227741184": 3.000000, "Concept5227612240": 12.000000, "Concept5227485216": 26.000000, "Concept5227736512": 12.000000, "Concept5227592384": 23.000000, "Concept5227553472": 45.000000, "Concept5227595616": 2.000000, "Concept5227761552": 4.000000, "Concept5227738656": 5.000000, "Concept5227585728": 15.000000, "Concept5227621168": 14.000000, "Concept5227620176": 13.000000, "Concept5227672272": 5.000000, "Concept5227715152": 4.000000, "Concept5227626592": 21.000000, "Concept5227679600": 18.000000, "Concept5227733984": 6.000000, "Concept5227730096": 7.000000, "Concept5227792800": 2.000000, "Concept5227603712": 18.000000, "Concept5227593376": 4.000000, "Concept5227770672": 4.000000, "Concept5227590528": 32.000000, "Concept5227712048": 6.000000, "Concept5227630448": 5.000000, "Concept5227818272": 7.000000, "Concept5227743120": 3.000000, "Concept5227832560": 5.000000, "Concept5227745648": 2.000000, "Concept5227727200": 2.000000, "Concept5227773200": 1.000000, "Concept5227766800": 5.000000, "Concept5227720992": 1.000000, "Concept5227636864": 12.000000, "Concept5227631440": 11.000000, "Concept5227641712": 2.000000, "Concept5227654336": 3.000000, "Concept5227731088": 3.000000, "Concept5227597328": 22.000000, "Concept5227841664": 2.000000, "Concept5227647712": 7.000000, "Concept5227614384": 6.000000, "Concept5227640720": 8.000000, "Concept5227780592": 2.000000, "Concept5227601392": 7.000000, "Concept5227705088": 5.000000, "Concept5227570496": 34.000000, "Concept5227634336": 4.000000, "Concept5227750688": 1.000000, "Concept5227685216": 1.000000, "Concept5227726208": 1.000000}, "anchor": {"b2": 2.000000, "c2": 2.000000, "f1": 3.000000, "d1": 3.000000, "a1": 3.000000, "a2": 3.000000, "d2": 1.000000, "c1": 4.000000, "b1": 2.000000, "e2": 3.000000, "e1": 3.000000}}
+}
+,],
+"counts": {"_category_utility": {
+"#ContinuousValue#": {
+"mean": 0.000000,
+"std": 1,
+"n": 1,
+}},
+"_norm_cu": {
+"#ContinuousValue#": {
+"mean": 0.000000,
+"std": 1,
+"n": 1,
+}},
+"anchor": {"c1": 21.000000, "e2": 16.000000, "f2": 16.000000, "a2": 20.000000, "b1": 12.000000, "f1": 14.000000, "b2": 17.000000, "c2": 18.000000, "d1": 11.000000, "a1": 18.000000, "e1": 20.000000, "d2": 17.000000}, "context": {"Concept5227770672": 12.000000, "Concept5227808240": 12.000000, "Concept5227793792": 12.000000, "Concept5227779600": 12.000000, "Concept5227707984": 18.000000, "Concept5227826176": 12.000000, "Concept5227617488": 12.000000, "Concept5227814656": 12.000000, "Concept5227837408": 12.000000, "Concept5227672272": 12.000000, "Concept5227720992": 18.000000, "Concept5227716512": 12.000000, "Concept5227687744": 12.000000, "Concept5227700992": 12.000000, "Concept5227752432": 12.000000, "Concept5227747584": 18.000000, "Concept5227758576": 18.000000, "Concept5227841664": 9.000000, "Concept5227713040": 18.000000, "Concept5227807248": 12.000000, "Concept5227777664": 18.000000, "Concept5227698880": 18.000000, "Concept5227697888": 18.000000, "Concept5227733984": 18.000000, "Concept5227619808": 12.000000, "Concept5227654336": 12.000000, "Concept5227757584": 18.000000, "Concept5227736512": 18.000000, "Concept5227665872": 24.000000, "Concept5227763904": 18.000000, "Concept5227761552": 12.000000, "Concept5227661136": 12.000000, "Concept5227689856": 22.000000, "Concept5227766800": 18.000000, "Concept5227773200": 12.000000, "Concept5227811136": 12.000000, "Concept5227630448": 36.000000, "Concept5227775136": 18.000000, "Concept5227834880": 12.000000, "Concept5227780592": 12.000000, "Concept5227633584": 36.000000, "Concept5227673632": 18.000000, "Concept5227784448": 12.000000, "Concept5227615136": 63.000000, "Concept5227647712": 54.000000, "Concept5227669088": 36.000000, "Concept5227644608": 48.000000, "Concept5227618816": 41.000000, "Concept5227741184": 12.000000, "Concept5227762912": 18.000000, "Concept5227727200": 18.000000, "Concept5227679600": 24.000000, "Concept5227715152": 12.000000, "Concept5227661440": 30.000000, "Concept5227626592": 54.000000, "Concept5227696528": 18.000000, "Concept5227818272": 12.000000, "Concept5227674992": 18.000000, "Concept5227723104": 12.000000, "Concept5227585728": 113.000000, "Concept5227750688": 12.000000, "Concept5227651600": 12.000000, "Concept5227730096": 24.000000, "Concept5227720000": 18.000000, "Concept5227611248": 42.000000, "Concept5227664176": 18.000000, "Concept5227821584": 12.000000, "Concept5227792800": 17.000000, "Concept5227603712": 64.000000, "Concept5227690848": 18.000000, "Concept5227616496": 42.000000, "Concept5227748576": 12.000000, "Concept5227648704": 42.000000, "Concept5227767408": 12.000000, "Concept5227685216": 18.000000, "Concept5227726208": 12.000000, "Concept5227634336": 42.000000, "Concept5227485216": 124.000000, "Concept5227607232": 48.000000, "Concept5227731088": 11.000000, "Concept5227701984": 18.000000, "Concept5227593376": 132.000000, "Concept5227718832": 18.000000, "Concept5227595616": 36.000000, "Concept5227788336": 12.000000, "Concept5227597328": 138.000000, "Concept5227641712": 48.000000, "Concept5227832560": 12.000000, "Concept5227745648": 18.000000, "Concept5227754368": 15.000000, "Concept5227612240": 42.000000, "Concept5227614384": 16.000000, "Concept5227670080": 18.000000, "Concept5227640720": 41.000000, "Concept5227612928": 27.000000, "Concept5227502304": 150.000000, "Concept5227598320": 60.000000, "Concept5227840304": 10.000000, "Concept5227705088": 36.000000, "Concept5227601392": 46.000000, "Concept5227553472": 288.000000, "Concept5227592384": 174.000000, "Concept5227645600": 18.000000, "Concept5227631440": 57.000000, "Concept5227682816": 12.000000, "Concept5227743120": 18.000000, "Concept5227712048": 12.000000, "Concept5227590528": 130.000000, "Concept5227731392": 12.000000, "Concept5227608928": 42.000000, "Concept5227636864": 54.000000, "Concept5227704096": 12.000000, "Concept5227785440": 18.000000, "Concept5227621168": 102.000000, "Concept5227790864": 12.000000, "Concept5227620176": 42.000000, "Concept5227738656": 18.000000, "Concept5227559040": 356.000000, "Concept5227529552": 125.000000, "Concept5227692960": 12.000000, "Concept5227570496": 370.000000, "Concept5227624064": 42.000000}, "_variant": {"1": 96.000000, "2": 104.000000}, "_base": {"b": 29.000000, "d": 28.000000, "e": 36.000000, "c": 39.000000, "f": 30.000000, "a": 38.000000}}
+}
+; })();

@@ -4,25 +4,36 @@ from matplotlib import pyplot as plt
 cobweb_data = pd.read_csv("cobweb_roc_story_out.csv")
 word2vec_data = pd.read_csv("word2vec_roc_story_out.csv")
 
+cobweb_partial_data = pd.read_csv("partial_out_cobweb.csv")
+word2vec_partial_data = pd.read_csv("partial_out_word2vec.csv")
+
 cobweb_data['percent_correct'] = cobweb_data.correct.rolling(window=500).mean()
 cobweb_data['avg_prob_word'] = cobweb_data.prob_word.rolling(window=500).mean()
 
 word2vec_data['percent_correct'] = word2vec_data.correct.rolling(window=500).mean()
 word2vec_data['avg_prob_word'] = word2vec_data.prob_word.rolling(window=500).mean()
 
+cobweb_partial_data['avg_sim'] = cobweb_partial_data.Similarity.rolling(window=500).mean()
+word2vec_partial_data['avg_sim'] = word2vec_partial_data.Similarity.rolling(window=500).mean()
 
 plt.rcParams["figure.figsize"] = [7.00, 7.50]
 
-plt.subplot(2, 1, 1)
+plt.subplot(3, 1, 1)
 plt.plot(cobweb_data.index, cobweb_data.percent_correct, color='blue', label='cobweb')
 plt.plot(word2vec_data.index, word2vec_data.percent_correct, color='red', label='word2vec')
 plt.title('Rate of correct guesses')
 plt.legend()
 
-plt.subplot(2, 1, 2)
+plt.subplot(3, 1, 2)
 plt.plot(cobweb_data.index, cobweb_data.avg_prob_word, color='blue', label='cobweb')
 plt.plot(word2vec_data.index, word2vec_data.avg_prob_word, color='red', label='word2vec')
 plt.title('Average probability of correct word')
+plt.legend()
+
+plt.subplot(3, 1, 3)
+plt.plot(cobweb_partial_data.index, cobweb_partial_data.avg_sim, color='blue', label='cobweb')
+plt.plot(word2vec_partial_data.index, word2vec_partial_data.avg_sim, color='red', label='word2vec')
+plt.title('Average similarity score')
 plt.legend()
 
 plt.tight_layout()

@@ -152,7 +152,7 @@ if __name__ == "__main__":
     # Buffer to avoid "cheating"
     buffer = 100
 
-    batch_size = 150
+    batch_size = 200
     batch_idx = 0
 
     save_interval = 3600
@@ -193,7 +193,7 @@ if __name__ == "__main__":
 
     overall_freq = Counter([w for s in stories for w in s])
 
-    for story_idx, story in enumerate(tqdm(stories[:500])):
+    for story_idx, story in enumerate(tqdm(stories)):
 
         for anchor_idx, instance in get_instances(story, window=window):
             batch_idx += 1

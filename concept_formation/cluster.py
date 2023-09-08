@@ -426,7 +426,7 @@ def cluster_iter(tree, instances, heuristic=CU, minsplit=1, maxsplit=100000,
     else:
         temp_clusters = [tree.categorize(instance) for instance in instances]
 
-    for nth_split in range(1, maxsplit+1):
+    for nth_split in range(1, maxsplit + 1):
 
         cluster_assign = []
         child_cluster_assign = []
