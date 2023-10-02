@@ -65,8 +65,11 @@ def get_roc_stories(limit=None):
 
             story = " ".join(story)
             story = nlp(story)
-            story = [token.lemma_ for token in story if (not token.is_punct and
-                                                         not token.is_stop)]
+            story = [# token.lemma_
+                     token.text
+                     for token in story if (not token.is_punct
+                                                         # and not token.is_stop
+                                                         )]
             yield story
 
 if __name__ == "__main__":
@@ -117,7 +120,8 @@ if __name__ == "__main__":
             ## cobweb
             no_anchor = {'context': {cv: instance['context'][cv] for cv in
                                      instance['context']}}
-            probs = tree.predict(no_anchor)
+            f = tree.categorize(no_anchor)
+            probs = f.predict()
             p = 0
             best_word = "NONE"
 

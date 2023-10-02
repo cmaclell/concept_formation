@@ -13,6 +13,7 @@ from os.path import exists
 from shutil import copy
 import webbrowser
 import json
+import math
 
 from concept_formation.cobweb import CobwebNode
 
@@ -48,6 +49,77 @@ def _gen_viz(js_ob, dst, recreate_html):
             out.write(_gen_output_file(js_ob))
         webbrowser.open('file://' + realpath(viz_file))
 
+def entropy_component_k(n, p):
+    info = -n * p * math.log(p) if p > 0 else 0
+    for xi in range(n + 1):
+        info += math.comb(n, xi) * math.pow(p, xi) * math.pow((1 - p), (n - xi)) * math.lgamma(xi + 1)
+    return info
+
+def frex(root, tree_data, w=0.5):
+
+    if len(tree_data['children']) == 0:
+        return tree_data
+
+    new = {'name': tree_data['name'],
+           'size': tree_data['size'],
+           'children': [],
+           'attr_counts': tree_data['attr_counts'],
+           'counts': tree_data['counts']}
+
+    for child in tree_data['children']:
+        new['children'].append({'name': child['name'],
+                             'size': child['size'],
+                             'children': child['children'],
+                             'attr_counts': child['attr_counts'],
+                             'counts': {}})
+
+    # get normalization
+    normalize = {}
+    for attr in tree_data['counts']:
+        if attr not in normalize:
+            normalize[attr] = {}
+        for val in tree_data['counts'][attr]:
+            normalize[attr][val] = 0
+            for child in tree_data['children']:
+                if attr in child['counts'] and val in child['counts'][attr]:
+                    normalize[attr][val] += child['counts'][attr][val] / child['attr_counts'][attr]
+
+    phis = []
+    freqs = []
+    for child in tree_data['children']:
+        phi_c = []
+        freq_c = []
+        for attr in child['counts']:
+            for val in child['counts'][attr]:
+                p = child['counts'][attr][val] / child['attr_counts'][attr]
+                p_root = root['counts'][attr][val] / root['attr_counts'][attr]
+                freq_c.append(p)
+                # phi_c.append(entropy_component_k(1, p_root) - entropy_component_k(1, p))
+                phi_c.append(p / p_root)
+                # phi_c.append(p / normalize[attr][val])
+        freqs.append(freq_c)
+        phis.append(phi_c)
+
+    for i, child in enumerate(tree_data['children']):
+        new_child = new['children'][i]
+        phi_c = phis[i]
+        freq_c = freqs[i]
+        for attr in child['counts']:
+            if attr not in new_child['counts']:
+                new_child['counts'][attr] = {}
+            for val in child['counts'][attr]:
+                p = child['counts'][attr][val] / child['attr_counts'][attr]
+                p_root = root['counts'][attr][val] / root['attr_counts'][attr]
+                # phi = entropy_component_k(8, p_root) - entropy_component_k(8, p)
+                phi = p / p_root
+                # phi = p / normalize[attr][val]
+                ex_cdf = sum([phi >= x for x in phi_c]) / len(phi_c)
+                p_cdf = sum([p >= x for x in freq_c]) / len(freq_c)
+                # new_child['counts'][attr][val] = phi
+                new_child['counts'][attr][val] = 1 / ((w / ex_cdf) + ((1-w) / p_cdf))
+
+    new['children'] = [frex(root, child, w) for child in new['children']]
+    return new
 
 def visualize(tree, dst=None, recreate_html=True):
     """
@@ -70,6 +142,10 @@ def visualize(tree, dst=None, recreate_html=True):
     :type dst: str
     :type create_html: bool
     """
+    # tree_data = json.loads(tree.root.output_json())
+    # tree_data = json.dumps(frex(tree_data, tree_data))
+    # _gen_viz(tree_data, dst, recreate_html)
+
     _gen_viz(tree.root.output_json(), dst, recreate_html)
 
 

@@ -592,8 +592,9 @@
       }
 
     }
-    attrs.sort(sort_by_reverse_text);
-    attrs.reverse();
+    // attrs.sort(sort_by_reverse_text);
+    attrs.sort();
+    // attrs.reverse();
     for (var a in attrs) {
       attr = attrs[a]
       var tr = $("<tr></tr>");
@@ -603,8 +604,54 @@
       tr.append(ar);
       property_sheet.append(tr);
       vals = Object.keys(d[attr]);
-      vals.sort();
-      vals.reverse();
+      vals.sort((a, b) => {
+
+          let alpha = 1;
+          let p_c = (node_data['size'] + alpha) / (window.trestle_output['size'] + 2 * alpha);
+          let p_not_c = 1 - p_c;
+
+          let p_a = (window.trestle_output['counts'][attr][a] + alpha) / (window.trestle_output['attr_counts'][attr] + 2 * alpha);
+          let p_b = (window.trestle_output['counts'][attr][b] + alpha)/ (window.trestle_output['attr_counts'][attr] + 2 * alpha);
+          let p_not_a = 1 - p_a;
+          let p_not_b = 1 - p_b;
+
+
+          let p_a_c = (d[attr][a] + alpha) / (node_data['attr_counts'][attr] + 2 * alpha);
+          let p_b_c = (d[attr][b] + alpha) / (node_data['attr_counts'][attr] + 2 * alpha);
+          let p_not_a_c = 1 - p_a_c;
+          let p_not_b_c = 1 - p_b_c;
+
+          let p_a_not_c = ((window.trestle_output['counts'][attr][a] - d[attr][a] + alpha) / 
+                            (window.trestle_output['attr_counts'][attr] - node_data['attr_counts'][attr] + 2 * alpha));
+          let p_b_not_c = ((window.trestle_output['counts'][attr][b] - d[attr][b] + alpha) / 
+                            (window.trestle_output['attr_counts'][attr] - node_data['attr_counts'][attr] + 2 * alpha));
+          let p_not_a_not_c = 1 - p_a_not_c;
+          let p_not_b_not_c = 1 - p_b_not_c;
+
+          let b_score = p_b_c * Math.log(p_b_c / (p_b * p_c));
+          b_score += p_not_b_c * Math.log(p_not_b_c / (p_not_b * p_c));
+          b_score += p_b_not_c * Math.log(p_b_not_c / (p_b * p_not_c));
+          b_score += p_not_b_not_c * Math.log(p_not_b_not_c / (p_not_b * p_not_c));
+
+          let a_score = p_a_c * Math.log(p_a_c / (p_a * p_c));
+          a_score += p_not_a_c * Math.log(p_not_a_c / (p_not_a * p_c));
+          a_score += p_a_not_c * Math.log(p_a_not_c / (p_a * p_not_c));
+          a_score += p_not_a_not_c * Math.log(p_not_a_not_c / (p_not_a * p_not_c));
+
+          b_score = d[attr][b];
+          a_score = d[attr][a];
+
+          if (b_score == a_score){
+              if (d[attr][b] == d[attr][a]) return a.localeCompare(b);
+              else return d[attr][b] - d[attr][a];
+          }
+        
+          // let b_score = d[attr][b];
+          // let a_score = d[attr][a];
+
+          return b_score - a_score
+      });
+      //  vals.reverse();
       for (var v in vals){
         val = vals[v];
         tr = $("<tr></tr>");
@@ -623,7 +670,7 @@
         vd.addClass("val-row");
         tr.append(vd);
         var cd = $("<td>"+n+"</td>");
-        var pd = $("<td>"+(n/node_data['size']*100).toFixed(2)+"%</td>")
+        var pd = $("<td>"+(n/node_data['attr_counts'][attr]*100).toFixed(2)+"%</td>")
         tr.append(cd);
         tr.append(pd);
         property_sheet.append(tr);
