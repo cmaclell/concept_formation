@@ -49,8 +49,7 @@ if __name__ == "__main__":
     print("Starting async")
     start2 = time.perf_counter()
     # fut2 = [tree2.async_ifit(m) for m in tqdm(mushrooms_multi[:3000])]
-    fut2 = [tree2.async_ifit(m) for m in tqdm(mushrooms_multi[:300])]
-    results2 = [f.wait() for f in tqdm(fut2)]
+    fut2 = [tree2.ifit(m) for m in tqdm(mushrooms_multi[:500])]
     end2 = time.perf_counter()
     # print("AV key wait time: {}".format(tree2.av_key_wait_time))
     # print("Tree write wait time: {}".format(tree2.write_wait_time))
@@ -70,18 +69,18 @@ if __name__ == "__main__":
             # v = leaf.predict("classification")
             # v = leaf.get_basic_level().predict("classification")
             cf = tree2.categorize(m)
-            leaf_p = cf.predict()['classification']
+            leaf_p = cf.predict_probs()['classification']
             leaf_v = sorted([(leaf_p[val], val) for val in leaf_p])[-1][1]
-            basic_p = cf.predict_basic()['classification']
+            basic_p = cf.get_basic_level().predict_probs()['classification']
             basic_v = sorted([(basic_p[val], val) for val in basic_p])[-1][1]
-            best_p = cf.predict_best(m)['classification']
-            best_v = sorted([(best_p[val], val) for val in basic_p])[-1][1]
+            best_p = cf.get_best_level(m).predict_probs()['classification']
+            best_v = sorted([(best_p[val], val) for val in best_p])[-1][1]
             # v = best_concept.predict("classification")
-            if (leaf_v != basic_v or basic_v != best_v):
-                print()
-                print("Leaf: {}".format(leaf_p))
-                print("Basic: {}".format(basic_p))
-                print("Best: {}".format(best_p))
+            # if (leaf_v != basic_v or basic_v != best_v):
+            #     print()
+            #     print("Leaf: {}".format(leaf_p))
+            #     print("Basic: {}".format(basic_p))
+            #     print("Best: {}".format(best_p))
 
             leaf_acc.append(int(leaf_v in m['_classification']))
             basic_acc.append(int(basic_v in m['_classification']))
