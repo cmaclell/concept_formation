@@ -3,6 +3,8 @@
 .python-version
 *.so
 
+build/
+
 .coverage
 .tox/
 AUTHORS
