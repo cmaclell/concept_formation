@@ -158,12 +158,16 @@ class MultinomialCobwebNode {
 
         void increment_counts(const AV_COUNT_TYPE &instance);
         void update_counts_from_node(MultinomialCobwebNode *node);
+        double score_attr_insert(ATTR_TYPE attr, const AV_COUNT_TYPE &instance);
         double score_insert(const AV_COUNT_TYPE &instance);
+        double score_attr_merge(ATTR_TYPE attr, MultinomialCobwebNode *other, const AV_COUNT_TYPE
+                &instance);
         double score_merge(MultinomialCobwebNode *other, const AV_COUNT_TYPE
                 &instance);
         MultinomialCobwebNode* get_best_level(INSTANCE_TYPE instance);
         MultinomialCobwebNode* get_basic_level();
         double category_utility();
+        double score_attr(ATTR_TYPE attr);
         double score();
         double partition_utility();
         std::tuple<double, int> get_best_operation(const AV_COUNT_TYPE
@@ -556,35 +560,42 @@ inline void MultinomialCobwebNode::update_counts_from_node(MultinomialCobwebNode
     }
 }
 
-inline double MultinomialCobwebNode::score_insert(const AV_COUNT_TYPE &instance){
+inline double MultinomialCobwebNode::score_attr_insert(ATTR_TYPE attr, const AV_COUNT_TYPE &instance){
+    if (attr.is_hidden()) return 0.0;
 
     double info = 0.0;
 
-    for (auto &[attr, av_inner]: this->av_counts){
-        if (attr.is_hidden()) continue;
-        bool instance_has_attr = instance.count(attr);
+    bool concept_has_attr = this->attr_counts.count(attr);
+    bool instance_has_attr = instance.count(attr);
 
-        int num_vals = this->tree->attr_vals.at(attr).size();
-        float alpha = this->tree->alpha(num_vals);
+    int num_vals = this->tree->attr_vals.at(attr).size();
+    float alpha = this->tree->alpha(num_vals);
 
-        COUNT_TYPE attr_count = this->attr_counts.at(attr);
-        if (instance_has_attr){
-            for (auto &[val, cnt]: instance.at(attr)){
-                attr_count += cnt;
-            }
+    COUNT_TYPE attr_count = 0.0;
+
+    if (concept_has_attr){
+        attr_count += this->attr_counts.at(attr);
+    }
+
+    if (instance_has_attr){
+        for (auto &[val, cnt]: instance.at(attr)){
+            attr_count += cnt;
         }
+    }
 
-        double ratio = 1.0;
+    double ratio = 1.0;
+    if (this->tree->weight_attr){
+        ratio = (1.0 * this->tree->root->attr_counts.at(attr)) / (this->tree->root->count);
+        // ratio = (1.0 * attr_count) / (this->count + 1);
+    }
 
-        if (this->tree->weight_attr){
-            ratio = (1.0 * attr_count) / (this->count + 1);
-        }
+    int n = std::ceil(ratio);
+    // std::cout << attr.get_string() << ": " << n << std::endl;
+    if (this->tree->use_mutual_info) info -= lgamma_cached(n+1);
 
-        int n = std::ceil(ratio);
-        if (this->tree->use_mutual_info) info -= lgamma_cached(n+1);
-
-        int vals_processed = 0;
-        for (auto &[val, cnt]: av_inner){
+    int vals_processed = 0;
+    if (concept_has_attr){
+        for (auto &[val, cnt]: this->av_counts.at(attr)){
             vals_processed += 1;
             COUNT_TYPE av_count = cnt;
             if (instance_has_attr and instance.at(attr).count(val)){
@@ -598,54 +609,14 @@ inline double MultinomialCobwebNode::score_insert(const AV_COUNT_TYPE &instance)
                 info += ratio * -p * p;
             }
         }
-        if (instance_has_attr){
-            for (auto &[val, cnt]: instance.at(attr)){
-                if (av_inner.count(val)) continue;
-                vals_processed += 1;
-                COUNT_TYPE av_count = cnt;
-
-                double p = ((av_count + alpha) / (attr_count + num_vals * alpha));
-                if (this->tree->use_mutual_info){
-                    info += entropy_component_k(n, p);
-                } else{
-                    info += ratio * -p * p;
-                }
-            }
-        }
-
-        COUNT_TYPE num_missing = num_vals - vals_processed;
-        if (num_missing > 0 and alpha > 0){
-            double p = (alpha / (attr_count + num_vals * alpha));
-            if (this->tree->use_mutual_info){
-                info += num_missing * entropy_component_k(n, p);
-            } else {
-                info += num_missing * ratio * -p * p;
-            }
-        }
     }
-
-    // iterate over attr in instance not in av_counts
-    for (auto &[attr, av_inner]: instance){
-        if (attr.is_hidden()) continue;
-        if (this->av_counts.count(attr)) continue;
-        COUNT_TYPE attr_count = 0;
-        int num_vals = this->tree->attr_vals.at(attr).size();
-        float alpha = this->tree->alpha(num_vals);
-        for (auto &[val, cnt]: av_inner){
-            attr_count += cnt;
-        }
-
-        double ratio = 1.0;
-
-        if (this->tree->weight_attr){
-            ratio = (1.0 * attr_count) / (this->count + 1);
-        }
-        int n = std::ceil(ratio);
-        if (this->tree->use_mutual_info) info -= lgamma_cached(n+1);
-
-        int vals_processed = 0;
-        for (auto &[val, av_count]: av_inner){
+    
+    if (instance_has_attr){
+        for (auto &[val, cnt]: instance.at(attr)){
+            if (concept_has_attr && this->av_counts.at(attr).count(val)) continue;
             vals_processed += 1;
+            COUNT_TYPE av_count = cnt;
+
             double p = ((av_count + alpha) / (attr_count + num_vals * alpha));
             if (this->tree->use_mutual_info){
                 info += entropy_component_k(n, p);
@@ -653,20 +624,154 @@ inline double MultinomialCobwebNode::score_insert(const AV_COUNT_TYPE &instance)
                 info += ratio * -p * p;
             }
         }
+    }
 
-        COUNT_TYPE num_missing = num_vals - vals_processed;
-        if (num_missing > 0 and alpha > 0){
-            double p = (alpha / (attr_count + num_vals * alpha));
-            if (this->tree->use_mutual_info){
-                info += num_missing * entropy_component_k(n, p);
-            } else {
-                info += num_missing * ratio * -p * p;
-            }
+    COUNT_TYPE num_missing = num_vals - vals_processed;
+    if (num_missing > 0 and alpha > 0){
+        double p = (alpha / (attr_count + num_vals * alpha));
+        if (this->tree->use_mutual_info){
+            info += num_missing * entropy_component_k(n, p);
+        } else {
+            info += num_missing * ratio * -p * p;
         }
     }
 
     return info;
+
 }
+
+inline double MultinomialCobwebNode::score_insert(const AV_COUNT_TYPE &instance){
+
+    double info = 0.0;
+
+    for (auto &[attr, av_inner]: this->av_counts){
+        if (attr.is_hidden()) continue;
+        info += this->score_attr_insert(attr, instance);
+     }
+
+    // iterate over attr in instance not in av_counts
+    for (auto &[attr, av_inner]: instance){
+        if (attr.is_hidden()) continue;
+        if (this->av_counts.count(attr)) continue;
+        info += this->score_attr_insert(attr, instance);
+     }
+
+    return info;
+}
+
+inline double MultinomialCobwebNode::score_attr_merge(ATTR_TYPE attr,
+        MultinomialCobwebNode *other, const AV_COUNT_TYPE &instance) {
+
+    if (attr.is_hidden()) return 0.0;
+
+    double info = 0.0;
+
+    bool concept_has_attr = this->attr_counts.count(attr);
+    bool other_has_attr = other->av_counts.count(attr);
+    bool instance_has_attr = instance.count(attr);
+
+    int num_vals = this->tree->attr_vals.at(attr).size();
+    float alpha = this->tree->alpha(num_vals);
+
+    COUNT_TYPE attr_count = 0.0;
+
+    if (concept_has_attr){
+        attr_count += this->attr_counts.at(attr);
+    }
+
+    if (other_has_attr){
+        attr_count += other->attr_counts.at(attr);
+    }
+
+    if (instance_has_attr){
+        for (auto &[val, cnt]: instance.at(attr)){
+            attr_count += cnt;
+        }
+    }
+
+    double ratio = 1.0;
+    if (this->tree->weight_attr){
+        ratio = (1.0 * this->tree->root->attr_counts.at(attr)) / (this->tree->root->count);
+        // ratio = (1.0 * attr_count) / (this->count + other->count + 1);
+    }
+
+    int n = std::ceil(ratio);
+    // std::cout << attr.get_string() << ": " << n << std::endl;
+    if (this->tree->use_mutual_info) info -= lgamma_cached(n+1);
+
+    int vals_processed = 0;
+    if (concept_has_attr){
+        for (auto &[val, cnt]: this->av_counts.at(attr)){
+            vals_processed += 1;
+            COUNT_TYPE av_count = cnt;
+            if (other_has_attr and other->av_counts.at(attr).count(val)){
+                av_count += other->av_counts.at(attr).at(val);
+            }
+
+            if (instance_has_attr and instance.at(attr).count(val)){
+                av_count += instance.at(attr).at(val);
+            }
+
+            double p = ((av_count + alpha) / (attr_count + num_vals * alpha));
+            if (this->tree->use_mutual_info){
+                info += entropy_component_k(n, p);
+            } else{
+                info += ratio * -p * p;
+            }
+        }
+    }
+
+    if (other_has_attr){
+        for (auto &[val, cnt]: other->av_counts.at(attr)){
+            if (concept_has_attr && this->av_counts.at(attr).count(val)) continue;
+            vals_processed += 1;
+            COUNT_TYPE av_count = cnt;
+
+            if (instance_has_attr and instance.at(attr).count(val)){
+                av_count += instance.at(attr).at(val);
+            }
+
+            double p = ((av_count + alpha) / (attr_count + num_vals * alpha));
+
+            if (this->tree->use_mutual_info){
+                info += entropy_component_k(n, p);
+            } else {
+                info += ratio * -p * p;
+            }
+        }
+    }
+    
+    if (instance_has_attr){
+        for (auto &[val, cnt]: instance.at(attr)){
+            if (concept_has_attr && this->av_counts.at(attr).count(val)) continue;
+            if (other_has_attr && other->av_counts.at(attr).count(val)) continue;
+            vals_processed += 1;
+            COUNT_TYPE av_count = cnt;
+
+            double p = ((av_count + alpha) / (attr_count + num_vals * alpha));
+            if (this->tree->use_mutual_info){
+                info += entropy_component_k(n, p);
+            } else{
+                info += ratio * -p * p;
+            }
+        }
+    }
+
+    COUNT_TYPE num_missing = num_vals - vals_processed;
+    if (num_missing > 0 and alpha > 0){
+        double p = (alpha / (attr_count + num_vals * alpha));
+        if (this->tree->use_mutual_info){
+            info += num_missing * entropy_component_k(n, p);
+        } else {
+            info += num_missing * ratio * -p * p;
+        }
+    }
+
+    return info;
+
+}
+
+
 
 inline double MultinomialCobwebNode::score_merge(MultinomialCobwebNode *other,
         const AV_COUNT_TYPE &instance) {
@@ -675,214 +780,20 @@ inline double MultinomialCobwebNode::score_merge(MultinomialCobwebNode *other,
 
     for (auto &[attr, inner_vals]: this->av_counts){
         if (attr.is_hidden()) continue;
-        int num_vals = this->tree->attr_vals.at(attr).size();
-        float alpha = this->tree->alpha(num_vals);
-
-        bool other_has_attr = other->av_counts.count(attr);
-        bool instance_has_attr = instance.count(attr);
-
-        COUNT_TYPE attr_count = this->attr_counts.at(attr);
-
-        if (other_has_attr){
-            attr_count += other->attr_counts.at(attr);
-        }
-        if (instance_has_attr){
-            for (auto &[val, cnt]: instance.at(attr)){
-                attr_count += cnt;
-            }
-        }
-
-        double ratio = 1.0;
-
-        if (this->tree->weight_attr){
-            ratio = (1.0 * attr_count) / (this->count + other->count + 1);
-        }
-
-        int n = std::ceil(ratio);
-        if (this->tree->use_mutual_info) info -= lgamma_cached(n+1);
-
-        int vals_processed = 0;
-        for (auto &[val, cnt]: inner_vals){
-            vals_processed += 1;
-            COUNT_TYPE av_count = cnt;
-
-            if (other->av_counts.count(attr) and other->av_counts.at(attr).count(val)){
-                av_count += other->av_counts.at(attr).at(val);
-            }
-            if (instance.count(attr) and instance.at(attr).count(val)){
-                av_count += instance.at(attr).at(val);
-            }
-
-            double p = ((av_count + alpha) / (attr_count + num_vals * alpha));
-
-            if (this->tree->use_mutual_info){
-                info += entropy_component_k(n, p);
-            } else {
-                info += ratio * -p * p;
-            }
-        }
-
-        if (other_has_attr){
-            for (auto &[val, cnt]: other->av_counts.at(attr)){
-                if (inner_vals.count(val)) continue;
-                vals_processed += 1;
-                COUNT_TYPE av_count = cnt;
-
-                if (instance.count(attr) and instance.at(attr).count(val)){
-                    av_count += instance.at(attr).at(val);
-                }
-
-                double p = ((av_count + alpha) / (attr_count + num_vals * alpha));
-
-                if (this->tree->use_mutual_info){
-                    info += entropy_component_k(n, p);
-                } else {
-                    info += ratio * -p * p;
-                }
-            }
-        }
-
-        if (instance_has_attr){
-            for (auto &[val, cnt]: instance.at(attr)){
-                if (inner_vals.count(val)) continue;
-                if (other_has_attr && other->av_counts.at(attr).count(val)) continue;
-                vals_processed += 1;
-                COUNT_TYPE av_count = cnt;
-
-                double p = ((av_count + alpha) / (attr_count + num_vals * alpha));
-
-                if (this->tree->use_mutual_info){
-                    info += entropy_component_k(n, p);
-                } else {
-                    info += ratio * -p * p;
-                }
-            }
-        }
-
-        COUNT_TYPE num_missing = num_vals - vals_processed;
-        if (num_missing > 0 and alpha > 0){
-            double p = (alpha / (attr_count + num_vals * alpha));
-            if (this->tree->use_mutual_info){
-                info += num_missing * entropy_component_k(n, p);
-            } else {
-                info += num_missing * ratio * -p * p;
-            }
-        }
+        info += this->score_attr_merge(attr, other, instance);
     }
 
     for (auto &[attr, inner_vals]: other->av_counts){
         if (attr.is_hidden()) continue;
         if (this->av_counts.count(attr)) continue;
-        COUNT_TYPE attr_count = other->attr_counts.at(attr);
-        int num_vals = this->tree->attr_vals.at(attr).size();
-        float alpha = this->tree->alpha(num_vals);
-
-        bool instance_has_attr = instance.count(attr);
-
-        if (instance_has_attr){
-            for (auto &[val, cnt]: instance.at(attr)){
-                attr_count += cnt;
-            }
-        }
-
-        double ratio = 1.0;
-
-        if (this->tree->weight_attr){
-            ratio = (1.0 * attr_count) / (this->count + other->count + 1);
-        }
-
-        int n = std::ceil(ratio);
-        if (this->tree->use_mutual_info) info -= lgamma_cached(n+1);
-
-        int vals_processed = 0;
-        for (auto &[val, cnt]: inner_vals){
-            vals_processed += 1;
-            COUNT_TYPE av_count = cnt;
-
-            if (instance_has_attr and instance.at(attr).count(val)){
-                av_count += instance.at(attr).at(val);
-            }
-
-            double p = ((av_count + alpha) / (attr_count + num_vals * alpha));
-
-            if (this->tree->use_mutual_info){
-                info += entropy_component_k(n, p);
-            } else {
-                info += ratio * -p * p;
-            }
-        }
-
-        if (instance_has_attr){
-            for (auto &[val, cnt]: instance.at(attr)){
-                if (inner_vals.count(val)) continue;
-                vals_processed += 1;
-                COUNT_TYPE av_count = cnt;
-
-                double p = ((av_count + alpha) / (attr_count + num_vals * alpha));
-
-                if (this->tree->use_mutual_info){
-                    info += entropy_component_k(n, p);
-                } else {
-                    info += ratio * -p * p;
-                }
-            }
-        }
-
-        COUNT_TYPE num_missing = num_vals - vals_processed;
-        if (num_missing > 0 and alpha > 0){
-            double p = (alpha / (attr_count + num_vals * alpha));
-            if (this->tree->use_mutual_info){
-                info += num_missing * entropy_component_k(n, p);
-            } else {
-                info += num_missing * ratio * -p * p;
-            }
-        }
+        info += this->score_attr_merge(attr, other, instance);
     }
 
     for (auto &[attr, inner_vals]: instance){
         if (attr.is_hidden()) continue;
         if (this->av_counts.count(attr)) continue;
         if (other->av_counts.count(attr)) continue;
-
-        int num_vals = this->tree->attr_vals.at(attr).size();
-        float alpha = this->tree->alpha(num_vals);
-
-        COUNT_TYPE attr_count = 0;
-        for (auto &[val, cnt]: instance.at(attr)){
-            attr_count += cnt;
-        }
-
-        double ratio = 1.0;
-
-        if (this->tree->weight_attr){
-            ratio = (1.0 * attr_count) / (this->count + other->count + 1);
-        }
-
-        int n = std::ceil(ratio);
-        if (this->tree->use_mutual_info) info -= lgamma_cached(n+1);
-
-        int vals_processed = 0;
-        for (auto &[val, av_count]: inner_vals){
-            vals_processed += 1;
-
-            double p = ((av_count + alpha) / (attr_count + num_vals * alpha));
-
-            if (this->tree->use_mutual_info){
-                info += entropy_component_k(n, p);
-            } else {
-                info += ratio * -p * p;
-            }
-        }
-
-        COUNT_TYPE num_missing = num_vals - vals_processed;
-        if (num_missing > 0 and alpha > 0){
-            double p = (alpha / (attr_count + num_vals * alpha));
-            if (this->tree->use_mutual_info){
-                info += num_missing * entropy_component_k(n, p);
-            } else {
-                info += num_missing * ratio * -p * p;
-            }
-        }
+        info += score_attr_merge(attr, other, instance);
     }
 
     return info;
@@ -933,43 +844,54 @@ inline MultinomialCobwebNode* MultinomialCobwebNode::get_basic_level(){
     return best;
 }
 
+inline double MultinomialCobwebNode::score_attr(ATTR_TYPE attr){
+    if (attr.is_hidden()) return 0.0;
+
+    auto inner_av = this->av_counts.at(attr);
+    COUNT_TYPE attr_count = this->attr_counts.at(attr);
+    int num_vals = this->tree->attr_vals.at(attr).size();
+    float alpha = this->tree->alpha(num_vals);
+
+    double info = 0.0;
+    double ratio = 1.0;
+
+    if (this->tree->weight_attr){
+        ratio = (1.0 * this->tree->root->attr_counts.at(attr)) / (this->tree->root->count);
+        // ratio = (1.0 * attr_count) / this->count;
+    }
+
+    int n = std::ceil(ratio);
+    if (this->tree->use_mutual_info) info -= lgamma_cached(n+1);
+
+    for (auto &[val, cnt]: inner_av){
+        double p = ((cnt + alpha) / (attr_count + num_vals * alpha));
+        if (this->tree->use_mutual_info){
+            info += entropy_component_k(n, p);
+        } else {
+            info += ratio * -p * p;
+        }
+    }
+
+    COUNT_TYPE num_missing = num_vals - inner_av.size();
+    if (num_missing > 0 and alpha > 0){
+        double p = (alpha / (attr_count + num_vals * alpha));
+        if (this->tree->use_mutual_info){
+            info += num_missing * entropy_component_k(n, p);
+        } else {
+            info += num_missing * ratio * -p * p;
+        }
+    }
+
+    return info;
+
+}
+
 inline double MultinomialCobwebNode::score() {
 
     double info = 0.0;
     for (auto &[attr, inner_av]: this->av_counts){
         if (attr.is_hidden()) continue;
-
-        COUNT_TYPE attr_count = this->attr_counts.at(attr);
-        int num_vals = this->tree->attr_vals.at(attr).size();
-        float alpha = this->tree->alpha(num_vals);
-
-        double ratio = 1.0;
-
-        if (this->tree->weight_attr){
-            ratio = (1.0 * attr_count) / this->count;
-        }
-
-        int n = std::ceil(ratio);
-        if (this->tree->use_mutual_info) info -= lgamma_cached(n+1);
-
-        for (auto &[val, cnt]: inner_av){
-            double p = ((cnt + alpha) / (attr_count + num_vals * alpha));
-            if (this->tree->use_mutual_info){
-                info += entropy_component_k(n, p);
-            } else {
-                info += ratio * -p * p;
-            }
-        }
-
-        COUNT_TYPE num_missing = num_vals - inner_av.size();
-        if (num_missing > 0 and alpha > 0){
-            double p = (alpha / (attr_count + num_vals * alpha));
-            if (this->tree->use_mutual_info){
-                info += num_missing * entropy_component_k(n, p);
-            } else {
-                info += num_missing * ratio * -p * p;
-            }
-        }
+        info += this->score_attr(attr);
     }
 
     return info;
