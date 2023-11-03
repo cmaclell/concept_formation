@@ -1215,7 +1215,7 @@ inline double MultinomialCobwebNode::pu_for_new_child(const AV_COUNT_TYPE &insta
             obj /= (children_entropy + concept_entropy);
         }
         if (this->tree->children_norm){
-            obj /= this->children.size();
+            obj /= (this->children.size() + 1);
         }
         return obj;
     }
@@ -1293,7 +1293,7 @@ inline double MultinomialCobwebNode::pu_for_merge(MultinomialCobwebNode *best1,
             obj /= (children_entropy + concept_entropy);
         }
         if (this->tree->children_norm){
-            obj /= this->children.size();
+            obj /= (this->children.size() - 1);
         }
         return obj;
     }
@@ -1381,7 +1381,7 @@ inline double MultinomialCobwebNode::pu_for_split(MultinomialCobwebNode *best){
             obj /= (children_entropy + concept_entropy);
         }
         if (this->tree->children_norm){
-            obj /= this->children.size();
+            obj /= (this->children.size() - 1 + best->children.size());
         }
         return obj;
     }
@@ -1751,8 +1751,20 @@ inline double MultinomialCobwebNode::probability(ATTR_TYPE attr, VALUE_TYPE val)
 }
 
 inline double MultinomialCobwebNode::category_utility(){
-    double p_of_c = (1.0 * this->count) / this->tree->root->count;
-    return (p_of_c * (this->tree->root->entropy() - this->entropy()));
+    // double p_of_c = (1.0 * this->count) / this->tree->root->count;
+    // return (p_of_c * (this->tree->root->entropy() - this->entropy()));
+
+    double root_entropy = 0.0;
+    double child_entropy = 0.0;
+
+    double p_of_child = (1.0 * this->count) / this->tree->root->count;
+    for (auto &[attr, val_set]: this->tree->attr_vals) {
+        root_entropy += this->tree->root->entropy_attr(attr);
+        child_entropy += this->entropy_attr(attr);
+    }
+
+    return p_of_child * (root_entropy - child_entropy);
+
 }
 
 inline double MultinomialCobwebNode::log_prob_class_given_instance(const AV_COUNT_TYPE &instance, bool use_root_counts){
