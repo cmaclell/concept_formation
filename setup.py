@@ -6,7 +6,9 @@ from pybind11.setup_helpers import build_ext
 
 ext_modules = intree_extensions(glob('concept_formation/*.cpp'))
 
-# for module in ext_modules:
+# Specify the C++ standard for each extension module
+for module in ext_modules:
+    module.cxx_std = 20
 #     module.extra_link_args.append("-ltbb")
 
 setup(

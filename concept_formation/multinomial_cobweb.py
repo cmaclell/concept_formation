@@ -20,22 +20,15 @@ class MultinomialCobwebTree(object):
     cobweb algorithm and can be used to fit and categorize instances.
     """
 
-    def __init__(self):
+    def __init__(self, alpha=1.0, weight_attr=True):
         """
         The tree constructor.
         """
         self.root = MultinomialCobwebNode()
         self.root.tree = self
-        self.alpha_weight = 10
-        # self.alpha = 0.01
+        self.alpha = alpha
+        self.weight_attr = weight_attr
         self.attr_vals = defaultdict(set)
-
-    def alpha(self, attr):
-        n_vals = len(self.attr_vals[attr])
-        if n_vals == 0:
-            return 1.0
-        else:
-            return self.alpha_weight / n_vals
 
     def clear(self):
         """
@@ -110,14 +103,14 @@ class MultinomialCobwebTree(object):
         In the general case, the cobweb algorithm entertains a number of
         sorting operations for the instance and then commits to the operation
         that maximizes the :meth:`category utility
-        <CobwebNode.category_utility>` of the tree at the current node and then
+        <CobwebNode.partition_utility>` of the tree at the current node and then
         recurses.
 
         At each node the alogrithm first calculates the category utility of
         inserting the instance at each of the node's children, keeping the best
         two (see: :meth:`CobwebNode.two_best_children
         <CobwebNode.two_best_children>`), and then calculates the
-        category_utility of performing other operations using the best two
+        partition_utility of performing other operations using the best two
         children (see: :meth:`CobwebNode.get_best_operation
         <CobwebNode.get_best_operation>`), commiting to whichever operation
         results in the highest category utility. In the case of ties an
@@ -167,9 +160,9 @@ class MultinomialCobwebTree(object):
                 break
 
             else:
-                best1_cu, best1, best2 = current.two_best_children(instance)
+                best1_pu, best1, best2 = current.two_best_children(instance)
                 _, best_action = current.get_best_operation(instance, best1,
-                                                            best2, best1_cu)
+                                                            best2, best1_pu)
 
                 # print(best_action)
                 if best_action == 'best':
@@ -243,7 +236,7 @@ class MultinomialCobwebTree(object):
         temp_instance = {a: instance[a] for a in instance}
         concept = self._cobweb_categorize(temp_instance)
 
-        for attr in concept.av_counts:
+        for attr in concept.av_count:
             if attr in temp_instance:
                 continue
             val = concept.predict(attr, choice_fn, allow_none)
@@ -299,11 +292,10 @@ class MultinomialCobwebNode(object):
     def __init__(self, otherNode=None):
         """Create a new CobwebNode"""
         self.concept_id = self.gensym()
-        self.count = 0.0
-        # self.squared_counts = 0.0
-        # self.attr_counts = 0.0
-        self.attr_counts = Counter()
-        self.av_counts = defaultdict(Counter)
+        self.count = 0
+        self.sum_cnt_log_cnt = defaultdict(float)
+        self.a_count = Counter()
+        self.av_count = defaultdict(Counter)
         self.children = []
         self.parent = None
         self.tree = None
@@ -314,7 +306,9 @@ class MultinomialCobwebNode(object):
             self.update_counts_from_node(otherNode)
 
             for child in otherNode.children:
-                self.children.append(self.__class__(child))
+                # TODO confirm we don't need to make a copy
+                self.children.append(child)
+                # self.children.append(self.__class__(child))
 
     def log_prob_class_given_instance(self, instance):
 
@@ -322,25 +316,23 @@ class MultinomialCobwebNode(object):
 
         for attr in instance:
             hidden = attr[0] == '_';
-            if hidden or attr not in self.tree.root.av_counts:
+            if hidden or attr not in self.tree.root.av_count:
                 continue
 
-            alpha = self.tree.alpha(attr)
-
             num_vals = len(self.tree.attr_vals[attr])
-            # num_vals = len(self.tree.root.av_counts[attr])
 
             for val in instance[attr]:
-                if val not in self.tree.root.av_counts[attr]:
+                if val not in self.tree.root.av_count[attr]:
                     continue
-            
-                av_count = alpha
-                if attr in self.av_counts and val in self.av_counts[attr]:
-                    av_count += self.av_counts[attr][val]
 
-                log_prob += instance[attr][val] * log((1.0 * av_count) / (self.attr_counts[attr] + num_vals * alpha))
+                cnt = instance[attr][val]
+                av_count = self.tree.alpha
 
-        log_prob += log((1.0 * self.count) / self.tree.root.count)
+                if attr in self.av_count and val in self.av_count[attr]:
+                    av_count += self.av_count[attr][val]
+                log_prob += cnt * (log(av_count) - log(self.a_count[attr] + num_vals * self.tree.alpha));
+                
+        log_prob += log(self.count) - log(self.tree.root.count)
 
         return log_prob;
 
@@ -355,8 +347,18 @@ class MultinomialCobwebNode(object):
         self.count += 1
         for attr in instance:
             for val in instance[attr]:
-                self.attr_counts[attr] += instance[attr][val]
-                self.av_counts[attr][val] += instance[attr][val]
+                self.a_count[attr] += instance[attr][val]
+
+                if attr[0] != "_":
+                    if attr in self.av_count and val in self.av_count[attr]:
+                        tf = self.av_count[attr][val] + self.tree.alpha
+                        self.sum_cnt_log_cnt[attr] -= tf * log(tf)
+
+                self.av_count[attr][val] += instance[attr][val]
+
+                if attr[0] != "_":
+                    tf = self.av_count[attr][val] + self.tree.alpha
+                    self.sum_cnt_log_cnt[attr] += tf * log(tf)
 
     def update_counts_from_node(self, node):
         """
@@ -369,11 +371,163 @@ class MultinomialCobwebNode(object):
         :type node: CobwebNode
         """
         self.count += node.count
-        for attr in node.av_counts:
-            self.attr_counts[attr] += node.attr_counts[attr]
+        for attr in node.av_count:
+            self.a_count[attr] += node.a_count[attr]
             
-            for val in node.av_counts[attr]:
-                self.av_counts[attr][val] += node.av_counts[attr][val]
+            for val in node.av_count[attr]:
+                if attr[0] != "_":
+                    if attr in self.av_count and val in self.av_count[attr]:
+                        tf = self.av_count[attr][val] + self.tree.alpha
+                        self.sum_cnt_log_cnt[attr] -= tf * log(tf)
+
+                self.av_count[attr][val] += node.av_count[attr][val]
+
+                if attr[0] != "_":
+                    tf = self.av_count[attr][val] + self.tree.alpha
+                    self.sum_cnt_log_cnt[attr] += tf * log(tf)
+
+    def entropy_new_attr(self, attr, instance):
+        """
+        Computes the entropy over the provided attribute.
+        """
+        if attr[0] == "_":
+            return 0.0
+
+        alpha = self.tree.alpha
+        num_vals = len(self.tree.attr_vals[attr])
+
+        ratio = 1.0
+        if self.tree.weight_attr:
+            ratio = self.tree.root.a_count[attr] / self.tree.root.count
+
+        if attr in instance:
+            attr_count = sum([instance[attr][v] for v in instance[attr]])
+            sum_cnt_log_cnt = sum([(instance[attr][v] + alpha) *
+                                  log(instance[attr][v] + alpha) for v in
+                                  instance[attr]])
+            n0 = num_vals - len(instance[attr])
+        else:
+            attr_count = 0
+            sum_cnt_log_cnt = 0
+            n0 = num_vals
+
+        info = -ratio * ((1 / (attr_count + num_vals * alpha)) *
+                         (sum_cnt_log_cnt + n0 * alpha * log(alpha)) -
+                         log(attr_count + num_vals * alpha))
+
+        return info
+
+
+    def entropy_attr(self, attr):
+        """
+        Computes the entropy over the provided attribute.
+        """
+        if attr[0] == "_":
+            return 0.0
+
+        alpha = self.tree.alpha
+        num_vals = len(self.tree.attr_vals[attr])
+        attr_count = self.a_count[attr]
+
+        ratio = 1.0
+        if self.tree.weight_attr:
+            ratio = self.tree.root.a_count[attr] / self.tree.root.count
+
+        n0 = num_vals - len(self.av_count[attr])
+
+        info = -ratio * ((1 / (attr_count + num_vals * alpha)) *
+                 (self.sum_cnt_log_cnt[attr] + n0 * alpha * log(alpha)) -
+                 log(attr_count + num_vals * alpha))
+
+        return info
+
+    def entropy(self):
+        """
+        Computes the entropy of all attributes in a concept.
+        """
+        return sum(self.entropy_attr(attr) for attr in self.tree.attr_vals)
+
+    def entropy_attr_insert(self, attr, instance):
+        """
+        Computes the entropy over the provided attribute.
+        """
+        if attr[0] == "_":
+            return 0.0
+
+        alpha = self.tree.alpha
+        num_vals = len(self.tree.attr_vals[attr])
+        attr_count = self.a_count[attr]
+        num_vals_in_c = len(self.av_count[attr])
+
+        ratio = 1.0
+        if self.tree.weight_attr:
+            ratio = self.tree.root.a_count[attr] / self.tree.root.count
+
+        sum_cnt_log_cnt = self.sum_cnt_log_cnt[attr]
+
+        if attr in instance:
+            for val in instance[attr]:
+                attr_count += instance[attr][val]
+
+                if attr in self.av_count and val in self.av_count[attr]:
+                    tf = self.av_count[attr][val] + alpha
+                    sum_cnt_log_cnt -= tf * log(tf)
+                else:
+                    num_vals_in_c += 1
+
+                new_av_count = self.av_count[attr][val] + instance[attr][val] + alpha
+                sum_cnt_log_cnt += new_av_count * log(new_av_count) 
+
+        n0 = num_vals - num_vals_in_c
+        info = -ratio * ((1 / (attr_count + num_vals * alpha)) *
+                 (sum_cnt_log_cnt + n0 * alpha * log(alpha)) -
+                 log(attr_count + num_vals * alpha))
+
+        return info
+
+    def entropy_attr_merge(self, attr, other, instance):
+        """
+        Computes the entropy over the provided attribute.
+        """
+        if attr[0] == "_":
+            return 0.0
+
+        alpha = self.tree.alpha
+        num_vals = len(self.tree.attr_vals[attr])
+        attr_count = self.a_count[attr]
+        num_vals_in_c = len(self.av_count[attr])
+
+        ratio = 1.0
+        if self.tree.weight_attr:
+            ratio = self.tree.root.a_count[attr] / self.tree.root.count
+
+        sum_cnt_log_cnt = self.sum_cnt_log_cnt[attr]
+
+        if attr in other.av_count or attr in instance:
+            for val in set(other.av_count[attr]).union(set(instance[attr])):
+                other_av_count = other.av_count[attr][val]
+
+                instance_av_count = 0
+                if attr in instance and val in instance[attr]:
+                    instance_av_count = instance[attr][val]
+
+                attr_count += other_av_count + instance_av_count
+
+                if attr in self.av_count and val in self.av_count[attr]:
+                    tf = self.av_count[attr][val] + alpha
+                    sum_cnt_log_cnt -= tf * log(tf)
+                else:
+                    num_vals_in_c += 1
+
+                new_av_count = self.av_count[attr][val] + other_av_count + instance_av_count + alpha
+                sum_cnt_log_cnt += new_av_count * log(new_av_count) 
+
+        n0 = num_vals - num_vals_in_c
+        info = -ratio * ((1 / (attr_count + num_vals * alpha)) *
+                 (sum_cnt_log_cnt + n0 * alpha * log(alpha)) -
+                 log(attr_count + num_vals * alpha))
+
+        return info
 
     def entropy_insert(self, instance):
         """
@@ -384,104 +538,15 @@ class MultinomialCobwebNode(object):
         only looks at the attr values used in the instance and reduces iteration.
         """
         info = 0
-        for attr in set(self.av_counts).union(set(instance)):
-            a_count = self.attr_counts[attr]
-            if attr in instance:
-                a_count += sum(instance[attr].values())
+        for attr in set(self.av_count).union(set(instance)):
+            if attr[0] == "_":
+                continue
 
-            vals = set(self.av_counts[attr])
-            if attr in instance:
-                vals = vals.union(set(instance[attr]))
+            info += self.entropy_attr_insert(attr, instance)
 
-            for val in vals:
-                av_count = self.av_counts[attr][val]
-
-                if attr in instance and val in instance[attr]:
-                    av_count += instance[attr][val]
-
-                p = ((av_count + self.tree.alpha(attr))/
-                     (a_count + len(self.tree.attr_vals[attr]) * self.tree.alpha(attr)))
-                info -= p * log(p)
-
-            num_missing = len(self.tree.attr_vals[attr]) - len(vals)
-            if num_missing > 0 and self.tree.alpha(attr) > 0:
-                p = (self.tree.alpha(attr) /
-                     (a_count + len(self.tree.attr_vals[attr]) * self.tree.alpha(attr)))
-                info -= num_missing * p * log(p)
-        
         return info
 
-    def entropy_merge(self, other, instance):
-        """
-        Returns the expected correct guesses that would result from merging the
-        current concept with the other concept and inserting the instance.
-
-        This operation can be used instead of inplace and copying because it
-        only looks at the attr values used in the instance and reduces iteration.
-        """
-        av_counts = defaultdict(Counter)
-        attr_counts = Counter()
-        for attr in self.av_counts:
-            attr_counts[attr] += self.attr_counts[attr]
-
-            for val in self.av_counts[attr]:
-                av_counts[attr][val] += self.av_counts[attr][val]
-
-        for attr in other.av_counts:
-            attr_counts[attr] += other.attr_counts[attr]
-
-            for val in other.av_counts[attr]:
-                av_counts[attr][val] += other.av_counts[attr][val]
-
-
-        for attr in instance:
-            for val in instance[attr]:
-                av_counts[attr][val] += instance[attr][val]
-                attr_counts[attr] += instance[attr][val]
-
-        info = 0
-        for attr in av_counts:
-            for val in av_counts[attr]:
-                p = ((av_counts[attr][val] + self.tree.alpha(attr))/
-                     (attr_counts[attr] + len(self.tree.attr_vals[attr]) *
-                      self.tree.alpha(attr)))
-                info -= p * log(p)
-
-            num_missing = len(self.tree.attr_vals[attr]) - len(av_counts[attr])
-            if num_missing > 0 and self.tree.alpha(attr) > 0:
-                p = (self.tree.alpha(attr) / (attr_counts[attr] +
-                                        len(self.tree.attr_vals[attr]) *
-                                        self.tree.alpha(attr)))
-                info -= num_missing * p * log(p)
-        
-        return info
-
-
-    def entropy(self):
-        """
-        Returns the entropy or the amount of information needed to encode distributions.
-
-        This formula contains a smoothing capability that ensures all
-        experienced attribute values have some probability mass.
-        """
-        info = 0
-        for attr in self.av_counts:
-            for val in self.av_counts[attr]:
-                p = ((self.av_counts[attr][val] + self.tree.alpha(attr))/
-                     (self.attr_counts[attr] + len(self.tree.attr_vals[attr]) *
-                      self.tree.alpha(attr)))
-                info -= p * log(p)
-
-            num_missing = len(self.tree.attr_vals[attr]) - len(self.av_counts[attr])
-            if num_missing > 0 and self.tree.alpha(attr) > 0:
-                p = (self.tree.alpha(attr) / (self.attr_counts[attr] +
-                                        len(self.tree.attr_vals[attr]) *
-                                        self.tree.alpha(attr)))
-                info -= num_missing * p * log(p)
-        
-        return info
-
-    def category_utility(self):
+    def partition_utility(self):
         """
         Return the category utility of a particular division of a concept into
         its children.
@@ -514,19 +579,170 @@ class MultinomialCobwebNode(object):
         if len(self.children) == 0:
             return 0.0
 
-        children_entropy = 0.0
+        entropy = 0.0
 
-        info_c = 0.0
-        for child in self.children:
-            p_of_child = child.count / self.count
-            info_c -= p_of_child * log(p_of_child)
-            children_entropy += (p_of_child * child.entropy())
+        for attr in self.tree.attr_vals:
+            children_entropy = 0.0
 
-        return ((self.entropy() - children_entropy) 
-                - info_c)
-                # / len(self.children))
+            for child in self.children:
+                p_of_child = child.count / self.count
+                children_entropy += (p_of_child * child.entropy_attr(attr))
 
-    def get_best_operation(self, instance, best1, best2, best1_cu,
+            parent_entropy = self.entropy_attr(attr)
+            entropy += (parent_entropy - children_entropy) / len(self.children)
+
+        return entropy
+
+    def pu_for_insert(self, child, instance):
+        """
+        Compute the category utility of adding the instance to the specified
+        child.
+
+        This operation does not actually insert the instance into the child it
+        only calculates what the result of the insertion would be. For the
+        actual insertion function see: :meth:`CobwebNode.increment_counts` This
+        is the function used to determine the best children for each of the
+        other operations.
+
+        :param child: a child of the current node
+        :type child: CobwebNode
+        :param instance: The instance currently being categorized
+        :type instance: :ref:`Instance<instance-rep>`
+        :return: the category utility of adding the instance to the given node
+        :rtype: float
+
+        .. seealso:: :meth:`CobwebNode.two_best_children` and
+            :meth:`CobwebNode.get_best_operation`
+
+        """
+        entropy = 0.0
+
+        for attr in self.tree.attr_vals:
+            children_entropy = 0.0
+
+            for c in self.children:
+                if c == child:
+                    p_of_child = (c.count + 1) / (self.count + 1)
+                    children_entropy += p_of_child * c.entropy_attr_insert(attr, instance)
+                else:
+                    p_of_child = (c.count) / (self.count + 1)
+                    children_entropy += p_of_child * c.entropy_attr(attr)
+
+            parent_entropy = self.entropy_attr_insert(attr, instance)
+            entropy += ((parent_entropy - children_entropy) / len(self.children))
+
+        return entropy
+
+    def pu_for_new_child(self, instance):
+        """
+        Return the category utility for creating a new child using the
+        particular instance.
+
+        This operation does not actually create the child it only calculates
+        what the result of creating it would be. For the actual new function
+        see: :meth:`CobwebNode.create_new_child`.
+
+        :param instance: The instance currently being categorized
+        :type instance: :ref:`Instance<instance-rep>`
+        :return: the category utility of adding the instance to a new child.
+        :rtype: float
+
+        .. seealso:: :meth:`CobwebNode.get_best_operation`
+        """
+        entropy = 0.0
+
+        p_of_new_child = 1 / (self.count + 1)
+        for attr in self.tree.attr_vals:
+            children_entropy = p_of_new_child * self.entropy_new_attr(attr, instance)
+
+            for c in self.children:
+                p_of_child = c.count / (self.count + 1)
+                children_entropy += p_of_child * c.entropy_attr(attr)
+
+            parent_entropy = self.entropy_attr_insert(attr, instance) 
+            entropy += ((parent_entropy - children_entropy) / (len(self.children) + 1))
+
+        return entropy
+
+    def pu_for_merge(self, best1, best2, instance):
+        """
+        Return the category utility for merging the two best children.
+
+        This does not actually merge the two children it only calculates what
+        the result of the merge would be. For the actual merge operation see:
+        :meth:`CobwebNode.merge`
+
+        :param best1: The child of the current node with the best category
+            utility
+        :type best1: CobwebNode
+        :param best2: The child of the current node with the second best
+            category utility
+        :type best2: CobwebNode
+        :param instance: The instance currently being categorized
+        :type instance: :ref:`Instance<instance-rep>`
+        :return: The category utility that would result from merging best1 and
+            best2.
+        :rtype: float
+
+        .. seealso:: :meth:`CobwebNode.get_best_operation`
+        """
+        entropy = 0.0
+
+        for attr in self.tree.attr_vals:
+            children_entropy = 0.0;
+
+            for c in self.children:
+                if c == best1 or c == best2:
+                    continue
+
+                p_of_child = c.count / (self.count + 1)
+                children_entropy += p_of_child * c.entropy_attr(attr)
+
+            p_of_child = (best1.count + best2.count + 1) / (self.count + 1)
+            children_entropy += p_of_child * best1.entropy_attr_merge(attr, best2, instance)
+
+            parent_entropy = self.entropy_attr_insert(attr, instance)
+            return ((parent_entropy - children_entropy) / (len(self.children) - 1))
+
+    def pu_for_split(self, best):
+        """
+        Return the category utility for splitting the best child.
+
+        This does not actually split the child it only calculates what the
+        result of the split would be. For the actual split operation see:
+        :meth:`CobwebNode.split`. Unlike the category utility calculations for
+        the other operations split does not need the instance because splits
+        trigger a recursive call on the current node.
+
+        :param best: The child of the current node with the best category
+            utility
+        :type best: CobwebNode
+        :return: The category utility that would result from splitting best
+        :rtype: float
+
+        .. seealso:: :meth:`CobwebNode.get_best_operation`
+        """
+        entropy = 0.0
+
+        for attr in self.tree.attr_vals:
+
+            children_entropy = 0.0
+
+            for c in self.children:
+                if c == best:
+                    continue
+
+                p_of_child = c.count / self.count
+                children_entropy += p_of_child * c.entropy_attr(attr)
+
+            for c in best.children:
+                p_of_child = c.count / self.count
+                children_entropy += p_of_child * c.entropy_attr(attr)
+
+            parent_entropy = self.entropy_attr(attr)
+            return ((parent_entropy - children_entropy) / (len(self.children) - 1 + len(best.children)))
+
+    def get_best_operation(self, instance, best1, best2, best1_pu,
                            best_op=True, new_op=True, merge_op=True, split_op=True):
         """
         Given an instance, the two best children based on category utility and
@@ -603,15 +819,15 @@ class MultinomialCobwebNode(object):
         operations = []
 
         if best_op:
-            operations.append((best1_cu, random(), "best"))
+            operations.append((best1_pu, random(), "best"))
         if new_op:
-            operations.append((self.cu_for_new_child(instance), random(),
+            operations.append((self.pu_for_new_child(instance), random(),
                                'new'))
         if merge_op and len(self.children) > 2 and best2:
-            operations.append((self.cu_for_merge(best1, best2, instance),
+            operations.append((self.pu_for_merge(best1, best2, instance),
                                random(), 'merge'))
         if split_op and len(best1.children) > 0:
-            operations.append((self.cu_for_split(best1), random(), 'split'))
+            operations.append((self.pu_for_split(best1), random(), 'split'))
 
         operations.sort(reverse=True)
         # print(operations)
@@ -635,61 +851,21 @@ class MultinomialCobwebNode(object):
         if len(self.children) == 0:
             raise Exception("No children!")
 
-        relative_cus = [((child.count * child.entropy()) -
+        relative_pus = [((child.count * child.entropy()) -
                          ((child.count + 1) * child.entropy_insert(instance)),
                          child.count, random(), child) for child in
                         self.children]
-        relative_cus.sort(reverse=True)
+        relative_pus.sort(reverse=True)
 
-        best1 = relative_cus[0][3]
-        best1_cu = self.cu_for_insert(best1, instance)
+        best1 = relative_pus[0][3]
+        best1_pu = self.pu_for_insert(best1, instance)
 
         best2 = None
-        if len(relative_cus) > 1:
-            best2 = relative_cus[1][3]
+        if len(relative_pus) > 1:
+            best2 = relative_pus[1][3]
 
-        return best1_cu, best1, best2
+        return best1_pu, best1, best2
         
-    def cu_for_insert(self, child, instance):
-        """
-        Compute the category utility of adding the instance to the specified
-        child.
-
-        This operation does not actually insert the instance into the child it
-        only calculates what the result of the insertion would be. For the
-        actual insertion function see: :meth:`CobwebNode.increment_counts` This
-        is the function used to determine the best children for each of the
-        other operations.
-
-        :param child: a child of the current node
-        :type child: CobwebNode
-        :param instance: The instance currently being categorized
-        :type instance: :ref:`Instance<instance-rep>`
-        :return: the category utility of adding the instance to the given node
-        :rtype: float
-
-        .. seealso:: :meth:`CobwebNode.two_best_children` and
-            :meth:`CobwebNode.get_best_operation`
-
-        """
-        children_entropy = 0.0
-
-        info_c = 0.0
-        for c in self.children:
-            if c == child:
-                p_of_child = (c.count+1) / (self.count + 1)
-                info_c -= p_of_child * log(p_of_child)
-                children_entropy += p_of_child * c.entropy_insert(instance)
-            else:
-                p_of_child = (c.count) / (self.count + 1)
-                info_c -= p_of_child * log(p_of_child)
-                children_entropy += p_of_child * c.entropy()
-
-        return ((self.entropy_insert(instance) - children_entropy) 
-                - info_c)
-                # / 1)
-                # / len(self.children))
-
     def create_new_child(self, instance):
         """
         Create a new child (to the current node) with the counts initialized by
@@ -709,44 +885,6 @@ class MultinomialCobwebNode(object):
         new_child.increment_counts(instance)
         self.children.append(new_child)
         return new_child
-
-    def cu_for_new_child(self, instance):
-        """
-        Return the category utility for creating a new child using the
-        particular instance.
-
-        This operation does not actually create the child it only calculates
-        what the result of creating it would be. For the actual new function
-        see: :meth:`CobwebNode.create_new_child`.
-
-        :param instance: The instance currently being categorized
-        :type instance: :ref:`Instance<instance-rep>`
-        :return: the category utility of adding the instance to a new child.
-        :rtype: float
-
-        .. seealso:: :meth:`CobwebNode.get_best_operation`
-        """
-        children_entropy = 0.0
-
-        info_c = 0.0
-        for c in self.children:
-            p_of_child = c.count / (self.count + 1)
-            info_c -= p_of_child * log(p_of_child)
-            children_entropy += p_of_child * c.entropy()
-
-        new_child = self.__class__()
-        new_child.parent = self
-        new_child.tree = self.tree
-        new_child.increment_counts(instance)
-        p_of_child = 1 / (self.count + 1)
-        children_entropy += p_of_child * new_child.entropy()
-        info_c -= p_of_child * log(p_of_child)
-
-        return ((self.entropy_insert(instance) - children_entropy)
-                - info_c)
-                # / 1)
-                # / (len(self.children)+1))
-
 
     def merge(self, best1, best2):
         """
@@ -781,48 +919,6 @@ class MultinomialCobwebNode(object):
 
         return new_child
 
-    def cu_for_merge(self, best1, best2, instance):
-        """
-        Return the category utility for merging the two best children.
-
-        This does not actually merge the two children it only calculates what
-        the result of the merge would be. For the actual merge operation see:
-        :meth:`CobwebNode.merge`
-
-        :param best1: The child of the current node with the best category
-            utility
-        :type best1: CobwebNode
-        :param best2: The child of the current node with the second best
-            category utility
-        :type best2: CobwebNode
-        :param instance: The instance currently being categorized
-        :type instance: :ref:`Instance<instance-rep>`
-        :return: The category utility that would result from merging best1 and
-            best2.
-        :rtype: float
-
-        .. seealso:: :meth:`CobwebNode.get_best_operation`
-        """
-        children_entropy = 0.0
-
-        info_c = 0.0
-        for c in self.children:
-            if c == best1 or c == best2:
-                continue
-
-            p_of_child = c.count / (self.count + 1)
-            info_c -= p_of_child * log(p_of_child)
-            children_entropy += p_of_child * c.entropy()
-
-        p_of_child = (best1.count + best2.count + 1) / (self.count + 1)
-        info_c -= p_of_child * log(p_of_child)
-        children_entropy += p_of_child * best1.entropy_merge(best2, instance)
-
-        return ((self.entropy_insert(instance) - children_entropy)
-                - info_c)
-                # / 1)
-                # / (len(self.children)-1))
-    
 
     def split(self, best):
         """
@@ -842,44 +938,6 @@ class MultinomialCobwebNode(object):
             child.tree = self.tree
             self.children.append(child)
 
-    def cu_for_split(self, best):
-        """
-        Return the category utility for splitting the best child.
-
-        This does not actually split the child it only calculates what the
-        result of the split would be. For the actual split operation see:
-        :meth:`CobwebNode.split`. Unlike the category utility calculations for
-        the other operations split does not need the instance because splits
-        trigger a recursive call on the current node.
-
-        :param best: The child of the current node with the best category
-            utility
-        :type best: CobwebNode
-        :return: The category utility that would result from splitting best
-        :rtype: float
-
-        .. seealso:: :meth:`CobwebNode.get_best_operation`
-        """
-        children_entropy = 0.0
-        info_c = 0.0
-
-        for c in self.children:
-            if c == best:
-                continue
-
-            p_of_child = c.count / self.count
-            info_c -= p_of_child * log(p_of_child)
-            children_entropy += p_of_child * c.entropy()
-
-        for c in best.children:
-            p_of_child = c.count / self.count
-            info_c -= p_of_child * log(p_of_child)
-            children_entropy += p_of_child * c.entropy()
-
-        return ((self.entropy() - children_entropy)
-                - info_c)
-                # / 1)
-                # / (len(self.children) - 1 + len(best.children)))
 
     def is_exact_match(self, instance):
         """
@@ -892,20 +950,24 @@ class MultinomialCobwebNode(object):
 
         .. seealso:: :meth:`CobwebNode.get_best_operation`
         """
-        for attr in set(instance).union(set(self.av_counts)):
+        for attr in set(instance).union(set(self.av_count)):
             if attr[0] == '_':
                 continue
-            if attr in instance and attr not in self.av_counts:
+            if attr in instance and attr not in self.av_count:
                 return False
-            if attr in self.av_counts and attr not in instance:
+            if attr in self.av_count and attr not in instance:
                 return False
-            if attr in self.av_counts and attr in instance:
-                for val in set(instance[attr]).union(set(self.av_counts[attr])):
-                    if val in instance[attr] and val not in self.av_counts[attr]:
+            if attr in self.av_count and attr in instance:
+                instance_attr_count = sum(instance[attr][val] for val in instance[attr])
+                for val in set(instance[attr]).union(set(self.av_count[attr])):
+                    if val in instance[attr] and val not in self.av_count[attr]:
                         return False
-                    if val in self.av_counts[attr] and val not in instance[attr]:
+                    if val in self.av_count[attr] and val not in instance[attr]:
                         return False
-                    if not instance[attr][val] == self.av_counts[attr][val]:
+
+                    instance_prob = instance[attr][val] / instance_attr_count
+                    concept_prob = self.av_count[attr][val] / self.a_count[attr]
+                    if not isclose(instance_prob, concept_prob):
                         return False
         return True
 
@@ -948,7 +1010,7 @@ class MultinomialCobwebNode(object):
         :return: a formated string displaying the tree and its children
         :rtype: str
         """
-        ret = str(('\t' * depth) + "|-" + str(self.av_counts) + ":" +
+        ret = str(('\t' * depth) + "|-" + str(self.av_count) + ":" +
                   str(self.count) + '\n')
 
         for c in self.children:
@@ -1019,14 +1081,14 @@ class MultinomialCobwebNode(object):
         output['children'] = []
 
         temp = {}
-        temp['_basic_cu'] = {"#ContinuousValue#": {'mean': self.entropy(),
+        temp['_basic_pu'] = {"#ContinuousValue#": {'mean': self.entropy(),
                                                    'std': 1, 'n': 1}}
-        temp['_basic_cu2'] = {"#ContinuousValue#": {'mean': self.category_utility(),
+        temp['_basic_pu2'] = {"#ContinuousValue#": {'mean': self.partition_utility(),
                                                    'std': 1, 'n': 1}}
-        for attr in self.av_counts:
-            for value in self.av_counts[attr]:
-                temp[str(attr)] = {str(value): self.av_counts[attr][value] for
-                                   value in self.av_counts[attr]}
+        for attr in self.av_count:
+            for value in self.av_count[attr]:
+                temp[str(attr)] = {str(value): self.av_count[attr][value] for
+                                   value in self.av_count[attr]}
 
         for child in self.children:
             output["children"].append(child.output_dict())
@@ -1056,13 +1118,13 @@ class MultinomialCobwebNode(object):
                  ...]
         """
         choices = []
-        if attr not in self.av_counts:
+        if attr not in self.av_count:
             choices.append((None, 1.0))
             return choices
 
         val_count = 0
-        for val in self.av_counts[attr]:
-            count = self.av_counts[attr][val]
+        for val in self.av_count[attr]:
+            count = self.av_count[attr][val]
             choices.append((val, count / self.count))
             val_count += count
 
@@ -1096,7 +1158,7 @@ class MultinomialCobwebNode(object):
         else:
             raise Exception("Unknown choice_fn")
 
-        if attr not in self.av_counts:
+        if attr not in self.av_count:
             return None
 
         choices = self.get_weighted_values(attr, allow_none)
@@ -1122,13 +1184,13 @@ class MultinomialCobwebNode(object):
         """
         if val is None:
             c = 0.0
-            if attr in self.av_counts:
-                c = sum([self.av_counts[attr][v] for v in
-                         self.av_counts[attr]])
+            if attr in self.av_count:
+                c = sum([self.av_count[attr][v] for v in
+                         self.av_count[attr]])
             return (self.count - c) / self.count
 
-        if attr in self.av_counts and val in self.av_counts[attr]:
-            return self.av_counts[attr][val] / self.count
+        if attr in self.av_count and val in self.av_count[attr]:
+            return self.av_count[attr][val] / self.count
 
         return 0.0
 
@@ -1141,14 +1203,14 @@ class MultinomialCobwebNode(object):
         """
         ll = 0
 
-        for attr in set(self.av_counts).union(set(child_leaf.av_counts)):
+        for attr in set(self.av_count).union(set(child_leaf.av_count)):
             if attr[0] == "_":
                 continue
             vals = set([None])
-            if attr in self.av_counts:
-                vals.update(self.av_counts[attr])
-            if attr in child_leaf.av_counts:
-                vals.update(child_leaf.av_counts[attr])
+            if attr in self.av_count:
+                vals.update(self.av_count[attr])
+            if attr in child_leaf.av_count:
+                vals.update(child_leaf.av_count[attr])
 
             for val in vals:
                 op = child_leaf.probability(attr, val)

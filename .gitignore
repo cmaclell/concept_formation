@@ -3,6 +3,7 @@
 .python-version
 *.so
 
+concept_formation/data/
 build/
 
 .coverage
