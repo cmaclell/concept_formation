@@ -212,6 +212,8 @@ class MultinomialCobwebNode {
         std::vector<std::tuple<VALUE_TYPE, double>>
             get_weighted_values(ATTR_TYPE attr, bool allowNone = true);
         std::unordered_map<std::string, std::unordered_map<std::string, double>> predict_probs();
+        std::unordered_map<std::string, std::unordered_map<std::string, double>> predict_weighted_probs(INSTANCE_TYPE instance);
+        std::unordered_map<std::string, std::unordered_map<std::string, double>> predict_weighted_leaves_probs(INSTANCE_TYPE instance);
         VALUE_TYPE predict(ATTR_TYPE attr, std::string choiceFn = "most likely",
                 bool allowNone = true);
         double probability(ATTR_TYPE attr, VALUE_TYPE val);
@@ -1539,6 +1541,13 @@ inline std::string MultinomialCobwebNode::avcounts_to_json() {
     // ret += "\"std\": 1,\n";
     // ret += "\"n\": 1,\n";
     // ret += "}},\n";
+    
+    ret += "\"_category_utility\": {\n";
+    ret += "\"#ContinuousValue#\": {\n";
+    ret += "\"mean\": " + std::to_string(this->category_utility()) + ",\n";
+    ret += "\"std\": 1,\n";
+    ret += "\"n\": 1,\n";
+    ret += "}},\n";
 
     // ret += "\"_mutual_info\": {\n";
     // ret += "\"#ContinuousValue#\": {\n";
@@ -1671,6 +1680,127 @@ inline std::string MultinomialCobwebNode::output_json(){
     return output;
 }
 
+inline std::unordered_map<std::string, std::unordered_map<std::string, double>> MultinomialCobwebNode::predict_weighted_leaves_probs(INSTANCE_TYPE instance){
+
+    AV_COUNT_TYPE cached_instance;
+    for (auto &[attr, val_map]: instance) {
+        for (auto &[val, cnt]: val_map) {
+            cached_instance[CachedString(attr)][CachedString(val)] = instance.at(attr).at(val);
+        }
+    }
+
+    double concept_weights = 0.0;
+    std::unordered_map<std::string, std::unordered_map<std::string, double>> out;
+
+    // std::cout << std::endl << "Prob of nodes along path (starting with leaf)" << std::endl;
+    auto curr = this;
+    while (curr->parent != nullptr) {
+        curr = curr->parent;
+
+        for (auto &child: curr->children) {
+            double c_prob = exp(curr->log_prob_class_given_instance(cached_instance, true));
+            // double c_prob = 1.0;
+            // std::cout << c_prob << std::endl;
+            concept_weights += c_prob;
+
+            for (auto &[attr, val_set]: this->tree->attr_vals) {
+                // std::cout << attr << std::endl;
+                int num_vals = this->tree->attr_vals.at(attr).size();
+                float alpha = this->tree->alpha;
+                COUNT_TYPE attr_count = 0;
+
+                if (curr->a_count.count(attr)){
+                    attr_count = curr->a_count.at(attr);
+                }
+
+                for (auto val: val_set) {
+                    // std::cout << val << std::endl;
+                    COUNT_TYPE av_count = 0;
+                    if (curr->av_count.count(attr) and curr->av_count.at(attr).count(val)){
+                        av_count = curr->av_count.at(attr).at(val);
+                    }
+
+                    double p = ((av_count + alpha) / (attr_count + num_vals * alpha));
+                    // std::cout << p << std::endl;
+                    // if (attr.get_string() == "class"){
+                    //     std::cout << val.get_string() << ", " << c_prob << ", " << p << ", " << p * c_prob << " :: ";
+                    // }
+                    out[attr.get_string()][val.get_string()] += p * c_prob;
+                }
+            }
+        }
+        // std::cout << std::endl;
+
+    }
+
+    for (auto &[attr, val_set]: this->tree->attr_vals) {
+        for (auto val: val_set) {
+            out[attr.get_string()][val.get_string()] /= concept_weights;
+        }
+    }
+
+    return out;
+}
+
+inline std::unordered_map<std::string, std::unordered_map<std::string, double>> MultinomialCobwebNode::predict_weighted_probs(INSTANCE_TYPE instance){
+
+    AV_COUNT_TYPE cached_instance;
+    for (auto &[attr, val_map]: instance) {
+        for (auto &[val, cnt]: val_map) {
+            cached_instance[CachedString(attr)][CachedString(val)] = instance.at(attr).at(val);
+        }
+    }
+
+    double concept_weights = 0.0;
+    std::unordered_map<std::string, std::unordered_map<std::string, double>> out;
+
+    // std::cout << std::endl << "Prob of nodes along path (starting with leaf)" << std::endl;
+    auto curr = this;
+    while (curr != nullptr) {
+        double c_prob = exp(curr->log_prob_class_given_instance(cached_instance, true));
+        // double c_prob = 1.0;
+        // std::cout << c_prob << std::endl;
+        concept_weights += c_prob;
+
+        for (auto &[attr, val_set]: this->tree->attr_vals) {
+            // std::cout << attr << std::endl;
+            int num_vals = this->tree->attr_vals.at(attr).size();
+            float alpha = this->tree->alpha;
+            COUNT_TYPE attr_count = 0;
+
+            if (curr->a_count.count(attr)){
+                attr_count = curr->a_count.at(attr);
+            }
+
+            for (auto val: val_set) {
+                // std::cout << val << std::endl;
+                COUNT_TYPE av_count = 0;
+                if (curr->av_count.count(attr) and curr->av_count.at(attr).count(val)){
+                    av_count = curr->av_count.at(attr).at(val);
+                }
+
+                double p = ((av_count + alpha) / (attr_count + num_vals * alpha));
+                // std::cout << p << std::endl;
+                // if (attr.get_string() == "class"){
+                //     std::cout << val.get_string() << ", " << c_prob << ", " << p << ", " << p * c_prob << " :: ";
+                // }
+                out[attr.get_string()][val.get_string()] += p * c_prob;
+            }
+        }
+        // std::cout << std::endl;
+
+        curr = curr->parent;
+    }
+
+    for (auto &[attr, val_set]: this->tree->attr_vals) {
+        for (auto val: val_set) {
+            out[attr.get_string()][val.get_string()] /= concept_weights;
+        }
+    }
+
+    return out;
+}
+
 inline std::unordered_map<std::string, std::unordered_map<std::string, double>> MultinomialCobwebNode::predict_probs(){
     std::unordered_map<std::string, std::unordered_map<std::string, double>> out;
     for (auto &[attr, val_set]: this->tree->attr_vals) {
@@ -1793,12 +1923,17 @@ inline double MultinomialCobwebNode::log_prob_class_given_instance(const AV_COUN
                 // std::cout << val << "(" << this->av_count.at(attr).at(val) << ") ";
             }
 
-            // the cnt here is because we have to compute probability over all context words.
-            COUNT_TYPE a_count = 0.0;
+            // a_count starts with the alphas over all values (even vals not in
+            // current node)
+            COUNT_TYPE a_count = num_vals * alpha;
             if (this->a_count.count(attr)){
-                a_count = this->a_count.at(attr);
+                a_count += this->a_count.at(attr);
             }
-            log_prob += cnt * (log(av_count) - log(a_count + num_vals * alpha));
+
+            // we use cnt here to weight accuracy by counts in the training
+            // instance. Usually this is 1, but in multinomial models, it might
+            // be something else.
+            log_prob += cnt * (log(av_count) - log(a_count));
 
             /*
             if (av_count > 1.0){
@@ -1857,6 +1992,8 @@ PYBIND11_MODULE(multinomial_cobweb, m) {
         .def("pretty_print", &MultinomialCobwebNode::pretty_print)
         .def("output_json", &MultinomialCobwebNode::output_json)
         .def("predict_probs", &MultinomialCobwebNode::predict_probs)
+        .def("predict_weighted_probs", &MultinomialCobwebNode::predict_weighted_probs)
+        .def("predict_weighted_leaves_probs", &MultinomialCobwebNode::predict_weighted_leaves_probs)
         .def("predict", &MultinomialCobwebNode::predict, py::arg("attr") = "",
                 py::arg("choiceFn") = "most likely",
                 py::arg("allowNone") = true )
