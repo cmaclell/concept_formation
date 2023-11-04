@@ -4,10 +4,10 @@ import json
 from collections import Counter
 from tqdm import tqdm
 
-import sentencepiece as spm
+# import sentencepiece as spm
 import spacy
 
-sp = spm.SentencePieceProcessor(model_file='spiece.model')
+# sp = spm.SentencePieceProcessor(model_file='spiece.model')
 nlp = spacy.load("en_core_web_sm", disable = ['parser'])
 nlp.add_pipe("sentencizer")
 nlp.max_length = float('inf')
