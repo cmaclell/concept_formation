@@ -138,7 +138,7 @@ if __name__ == "__main__":
                 last_checkpoint_time = time()
 
     timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-    with open('{}-{}-{}-final.json'.format(outfile, idx, timestamp), 'w') as fout:
+    with open('{}-{}-{}-final.json'.format(outfile, len(instances), timestamp), 'w') as fout:
         fout.write(tree.dump_json())
         last_checkpoint_time = time()
 
