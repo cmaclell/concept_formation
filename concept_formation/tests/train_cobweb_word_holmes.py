@@ -8,6 +8,7 @@ from time import time
 from datetime import datetime
 
 from tqdm import tqdm
+from multiprocessing import Pool
 
 from preprocess_holmes import load_holmes_data
 from concept_formation.multinomial_cobweb import MultinomialCobwebTree
@@ -42,13 +43,14 @@ def get_instances(story, window):
     for anchor_idx, anchor_wd in enumerate(story):
         yield anchor_idx, get_instance(story, anchor_idx, anchor_wd, window=window)
 
-
+def process_story(story, window):
+    return list(get_instances(story, window))
 
 if __name__ == "__main__":
 
     tree = MultinomialCobwebTree(alpha=0.000001, weight_attr=False,
-                                 objective=0, children_norm=True,
-                                 norm_attributes=False) 
+            objective=0, children_norm=True,
+            norm_attributes=False)
     window = 10
     n_training_words = 0
     occurances = Counter()
@@ -68,9 +70,15 @@ if __name__ == "__main__":
 
     instances = []
 
-    for story_idx, story in enumerate(tqdm(stories)):
-        for anchor_idx, instance in get_instances(story, window=window):
-            instances.append((instance, story_idx, anchor_idx))
+    with Pool() as pool:
+        processed_stories = pool.starmap(process_story, [(story, window) for story in stories])
+        for story_idx, story_instances in enumerate(processed_stories):
+            for anchor_idx, instance in story_instances:
+                instances.append((instance, story_idx, anchor_idx))
+
+    # for story_idx, story in enumerate(tqdm(stories)):
+    #     for anchor_idx, instance in get_instances(story, window=window):
+    #         instances.append((instance, story_idx, anchor_idx))
 
     shuffle(instances)
     training_queue = []
@@ -113,17 +121,17 @@ if __name__ == "__main__":
 
         with open(outfile + ".csv", 'a') as fout:
             fout.write("{},{},cobweb,{},{},{},{},{},{},{},{}\n".format(n_training_words,
-                                                             story_idx,
-                                                             actual_anchor,
-                                                             overall_freq[actual_anchor],
-                                                             occurances[actual_anchor],
-                                                             len(occurances),
-                                                             best_word,
-                                                             p,
-                                                             1 if best_word == actual_anchor else 0,
-                                                             text))
+                story_idx,
+                actual_anchor,
+                overall_freq[actual_anchor],
+                occurances[actual_anchor],
+                len(occurances),
+                best_word,
+                p,
+                1 if best_word == actual_anchor else 0,
+                text))
 
-        # if len(training_queue) > window:
+            # if len(training_queue) > window:
         if len(training_queue) > 0:
             old_inst = training_queue.pop(0)
             tree.ifit(old_inst)

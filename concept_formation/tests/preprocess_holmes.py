@@ -3,6 +3,7 @@ import re
 import json
 from collections import Counter
 from tqdm import tqdm
+from multiprocessing import Pool
 
 # import sentencepiece as spm
 import spacy
@@ -87,33 +88,39 @@ def cnn_texts(limit=None):
 
                 yield output
 
+def process_file(idx, name, fp):
+    print("Processing file {}".format(idx))
+    if not re.search(r'^[A-Z0-9]*.TXT$', name):
+        return None
+    print(name)
+    with open(fp, 'r', encoding='latin-1') as fin:
+        skip = True
+        text = ""
+        for line in fin:
+            if not skip and not "project gutenberg" in line.lower():
+                text += line
+            elif "*END*THE SMALL PRINT! FOR PUBLIC DOMAIN ETEXTS" in line:
+                skip = False
+
+        output = process_text(text)
+        return output
+
 def training_texts(limit=None):
 
-    training_dir = "/Users/cmaclellan3/Projects/Microsoft-Sentence-Completion-Challenge/data/raw_data/Holmes_Training_Data"
+    training_dir = "/home/cmaclellan3/Microsoft-Sentence-Completion-Challenge/data/raw_data/Holmes_Training_Data"
 
     for path, subdirs, files in os.walk(training_dir):
 
         if limit is None:
             limit = len(files)
 
-        for idx, name in enumerate(files[:limit]):
-            print("Processing file {} of {}".format(idx, len(files)))
-            if not re.search(r'^[A-Z0-9]*.TXT$', name):
-                continue
-            print(name)
-            with open(os.path.join(path, name), 'r', encoding='latin-1') as fin:
-                skip = True
-                text = ""
-                for line in fin:
-                    if not skip and not "project gutenberg" in line.lower():
-                        text += line
-                    elif "*END*THE SMALL PRINT! FOR PUBLIC DOMAIN ETEXTS" in line:
-                        skip = False
-
-                output = process_text(text)
-                # print(output)
-
-                yield output
+        texts = [(idx, name, os.path.join(path, name)) for idx, name in enumerate(files[:limit])]
+        with Pool() as pool:
+            outputs = pool.starmap(process_file, texts)
+            for o in outputs:
+                if o is None:
+                    continue
+                yield o
 
 def load_holmes_data(limit=None):
 
