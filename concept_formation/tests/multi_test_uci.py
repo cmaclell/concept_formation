@@ -12,6 +12,8 @@ from sklearn.preprocessing import OrdinalEncoder
 from concept_formation.multinomial_cobweb import MultinomialCobwebTree
 from concept_formation.visualize import visualize
 
+from viz_path import plot_path_probs
+
 # Monks
 # data = pd.read_csv('../data/monks/monks-1.train',
 #                    header=None, 
@@ -70,7 +72,7 @@ data = fetch_ucirepo(id=19)
 X = data.data.features 
 y = data.data.targets 
 
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=40)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2) #, random_state=40)
 
 inst_train = X_train.to_dict(orient='records')
 labels_train = y_train.to_dict(orient='records')
@@ -135,6 +137,12 @@ for i, instance in enumerate(tqdm(inst_test)):
         mix_leaves_acc.append(int(wcleaf_v == label[attr]))
         basic_acc.append(int(basic_v == label[attr]))
         best_acc.append(int(best_v == label[attr]))
+
+        # if leaf_acc[-1] == 0:
+        print("Predicted: ", leaf_v)
+        print("Actual: ", label[attr])
+        plot_path_probs(instance, tree, attr, label[attr])
+        raise Exception("BEEP")
 
 print("leaf acc: ", sum(leaf_acc)/len(leaf_acc))
 print("path mix acc: ", sum(mix_acc)/len(mix_acc))

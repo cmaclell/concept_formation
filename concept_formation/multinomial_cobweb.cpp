@@ -187,6 +187,7 @@ class MultinomialCobwebNode {
                 *best2, double best1Cu);
         std::tuple<double, MultinomialCobwebNode *, MultinomialCobwebNode *>
             two_best_children(const AV_COUNT_TYPE &instance);
+        std::vector<double> prob_children_given_instance(INSTANCE_TYPE instance);
         double log_prob_class_given_instance(const AV_COUNT_TYPE &instance,
                 bool use_root_counts=false);
         double pu_for_insert(MultinomialCobwebNode *child, const AV_COUNT_TYPE
@@ -1680,6 +1681,9 @@ inline std::string MultinomialCobwebNode::output_json(){
     return output;
 }
 
+// TODO 
+// TODO This should use the path prob, not the node prob.
+// TODO
 inline std::unordered_map<std::string, std::unordered_map<std::string, double>> MultinomialCobwebNode::predict_weighted_leaves_probs(INSTANCE_TYPE instance){
 
     AV_COUNT_TYPE cached_instance;
@@ -1695,10 +1699,12 @@ inline std::unordered_map<std::string, std::unordered_map<std::string, double>> 
     // std::cout << std::endl << "Prob of nodes along path (starting with leaf)" << std::endl;
     auto curr = this;
     while (curr->parent != nullptr) {
+        auto prev = curr;
         curr = curr->parent;
 
         for (auto &child: curr->children) {
-            double c_prob = exp(curr->log_prob_class_given_instance(cached_instance, true));
+            if (child == prev) continue;
+            double c_prob = exp(child->log_prob_class_given_instance(cached_instance, true));
             // double c_prob = 1.0;
             // std::cout << c_prob << std::endl;
             concept_weights += c_prob;
@@ -1709,15 +1715,15 @@ inline std::unordered_map<std::string, std::unordered_map<std::string, double>> 
                 float alpha = this->tree->alpha;
                 COUNT_TYPE attr_count = 0;
 
-                if (curr->a_count.count(attr)){
-                    attr_count = curr->a_count.at(attr);
+                if (child->a_count.count(attr)){
+                    attr_count = child->a_count.at(attr);
                 }
 
                 for (auto val: val_set) {
                     // std::cout << val << std::endl;
                     COUNT_TYPE av_count = 0;
-                    if (curr->av_count.count(attr) and curr->av_count.at(attr).count(val)){
-                        av_count = curr->av_count.at(attr).at(val);
+                    if (child->av_count.count(attr) and child->av_count.at(attr).count(val)){
+                        av_count = child->av_count.at(attr).at(val);
                     }
 
                     double p = ((av_count + alpha) / (attr_count + num_vals * alpha));
@@ -1897,6 +1903,33 @@ inline double MultinomialCobwebNode::category_utility(){
 
 }
 
+inline std::vector<double> MultinomialCobwebNode::prob_children_given_instance(INSTANCE_TYPE instance){
+
+    AV_COUNT_TYPE cached_instance;
+    for (auto &[attr, val_map]: instance) {
+        for (auto &[val, cnt]: val_map) {
+            cached_instance[CachedString(attr)][CachedString(val)] = instance.at(attr).at(val);
+        }
+    }
+
+    double sum_probs = 0;
+    std::vector<double> raw_probs = std::vector<double>();
+    std::vector<double> norm_probs = std::vector<double>();
+
+    for (auto &child: this->children){
+        double p = exp(child->log_prob_class_given_instance(cached_instance, false));
+        sum_probs += p;
+        raw_probs.push_back(p);
+    }
+
+    for (auto p: raw_probs){
+        norm_probs.push_back(p/sum_probs);
+    }
+
+    return norm_probs;
+
+}
+
 inline double MultinomialCobwebNode::log_prob_class_given_instance(const AV_COUNT_TYPE &instance, bool use_root_counts){
 
     double log_prob = 0;
@@ -1999,7 +2032,8 @@ PYBIND11_MODULE(multinomial_cobweb, m) {
                 py::arg("allowNone") = true )
         .def("get_best_level", &MultinomialCobwebNode::get_best_level, py::return_value_policy::reference)
         .def("get_basic_level", &MultinomialCobwebNode::get_basic_level, py::return_value_policy::reference)
-        .def("log_prob_class_given_instance", &MultinomialCobwebNode::log_prob_class_given_instance)
+        // .def("log_prob_class_given_instance", &MultinomialCobwebNode::log_prob_class_given_instance)
+        .def("prob_children_given_instance", &MultinomialCobwebNode::prob_children_given_instance)
         .def("entropy", &MultinomialCobwebNode::entropy)
         .def("category_utility", &MultinomialCobwebNode::category_utility)
         .def("partition_utility", &MultinomialCobwebNode::partition_utility)
