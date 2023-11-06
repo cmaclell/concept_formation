@@ -12,7 +12,7 @@ from sklearn.preprocessing import OrdinalEncoder
 from concept_formation.multinomial_cobweb import MultinomialCobwebTree
 from concept_formation.visualize import visualize
 
-from viz_path import plot_path_probs
+import viz_path
 
 # Monks
 # data = pd.read_csv('../data/monks/monks-1.train',
@@ -68,7 +68,7 @@ from viz_path import plot_path_probs
 # breast cancer = 14
 # congressional voting = 105
 
-data = fetch_ucirepo(id=19) 
+data = fetch_ucirepo(id=14) 
 X = data.data.features 
 y = data.data.targets 
 
@@ -104,6 +104,7 @@ for i, instance in enumerate(tqdm(inst_train)):
 leaf_acc = []
 mix_acc = []
 mix_leaves_acc = []
+full_acc = []
 basic_acc = []
 best_acc = []
 for i, instance in enumerate(tqdm(inst_test)):
@@ -132,21 +133,26 @@ for i, instance in enumerate(tqdm(inst_test)):
         best_p = leaf.get_best_level(instance).predict_probs()[attr]
         best_v = sorted([(best_p[val], val) for val in best_p])[-1][1]
 
+        full_p = tree.root.predict_probs_mixture(instance, 100)[attr]
+        full_v = sorted([(full_p[val], val) for val in full_p])[-1][1]
+
         leaf_acc.append(int(leaf_v == label[attr]))
         mix_acc.append(int(wleaf_v == label[attr]))
         mix_leaves_acc.append(int(wcleaf_v == label[attr]))
+        full_acc.append(int(full_v == label[attr]))
         basic_acc.append(int(basic_v == label[attr]))
         best_acc.append(int(best_v == label[attr]))
 
-        # if leaf_acc[-1] == 0:
-        print("Predicted: ", leaf_v)
-        print("Actual: ", label[attr])
-        plot_path_probs(instance, tree, attr, label[attr])
-        raise Exception("BEEP")
+        # # if leaf_acc[-1] == 0:
+        # print("Predicted: ", leaf_v)
+        # print("Actual: ", label[attr])
+        # viz_path.plot_frontier_paths(instance, tree, attr, label[attr], -22)
+        # raise Exception("BEEP")
 
 print("leaf acc: ", sum(leaf_acc)/len(leaf_acc))
 print("path mix acc: ", sum(mix_acc)/len(mix_acc))
 print("leaves mix acc: ", sum(mix_leaves_acc)/len(mix_leaves_acc))
+print("full acc: ", sum(full_acc)/len(full_acc))
 print("basic acc: ", sum(basic_acc)/len(basic_acc))
 print("best acc: ", sum(best_acc)/len(best_acc))
 
