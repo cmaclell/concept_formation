@@ -68,7 +68,7 @@ import viz_path
 # breast cancer = 14
 # congressional voting = 105
 
-data = fetch_ucirepo(id=14) 
+data = fetch_ucirepo(id=19) 
 X = data.data.features 
 y = data.data.targets 
 
@@ -85,7 +85,7 @@ print(inst_train[:1])
 print(labels_train[:1])
 
 # Build Cobweb model
-alpha = 0.001
+alpha = 0.01
 tree = MultinomialCobwebTree(alpha, # alpha weight
                              False, # weight attr by avg occurance of attr
                              0, # 0 = MI, 1 = Theil's U, 2 = NMI

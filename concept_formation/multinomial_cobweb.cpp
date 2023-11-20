@@ -46,6 +46,14 @@ std::unordered_map<int, double> lgammaCache;
 std::unordered_map<int, std::unordered_map<int, int>> binomialCache;
 std::unordered_map<int, std::unordered_map<double, double>> entropy_k_cache;
 
+// for predict_probs_mixture search
+struct CompareSum {
+    bool operator()(const std::tuple<MultinomialCobwebNode*, double, double>& a,
+                    const std::tuple<MultinomialCobwebNode*, double, double>& b) const {
+        return std::get<1>(a) + std::get<2>(a) < std::get<1>(b) + std::get<2>(b);
+    }
+};
+
 double lgamma_cached(int n){
     auto it = lgammaCache.find(n);
     if (it != lgammaCache.end()) return it->second;
@@ -191,7 +199,9 @@ class MultinomialCobwebNode {
         std::vector<double> prob_children_given_instance(const AV_COUNT_TYPE &instance);
         std::vector<double> prob_children_given_instance_ext(INSTANCE_TYPE instance);
         double log_prob_instance(const AV_COUNT_TYPE &instance);
+        double log_prob_instance_missing(const AV_COUNT_TYPE &instance);
         double log_prob_instance_ext(INSTANCE_TYPE instance);
+        double log_prob_instance_missing_ext(INSTANCE_TYPE instance);
         double log_prob_class_given_instance(const AV_COUNT_TYPE &instance,
                 bool use_root_counts=false);
         double log_prob_class_given_instance_ext(INSTANCE_TYPE instance,
@@ -221,8 +231,6 @@ class MultinomialCobwebNode {
         std::unordered_map<std::string, std::unordered_map<std::string, double>> predict_probs();
         std::unordered_map<std::string, std::unordered_map<std::string, double>> predict_weighted_probs(INSTANCE_TYPE instance);
         std::unordered_map<std::string, std::unordered_map<std::string, double>> predict_weighted_leaves_probs(INSTANCE_TYPE instance);
-        std::unordered_map<std::string, std::unordered_map<std::string, double>> predict_probs_mixture(INSTANCE_TYPE instance, int nodes);
-        std::unordered_map<std::string, std::unordered_map<std::string, double>> predict_probs_mixture_helper(const AV_COUNT_TYPE &instance, double ll_path, int nodes);
         VALUE_TYPE predict(ATTR_TYPE attr, std::string choiceFn = "most likely",
                 bool allowNone = true);
         double probability(ATTR_TYPE attr, VALUE_TYPE val);
@@ -580,6 +588,126 @@ class MultinomialCobwebTree {
 
         MultinomialCobwebNode* categorize(const INSTANCE_TYPE instance) {
             return this->categorize_helper(instance);
+        }
+
+        std::unordered_map<std::string, std::unordered_map<std::string, double>> predict_probs_mixture_helper(const AV_COUNT_TYPE &instance, double ll_path, int max_nodes, bool greedy, bool missing, int obj){
+
+            std::unordered_map<std::string, std::unordered_map<std::string, double>> out;
+            int nodes_expanded = 0;
+            double total_weight = 0.0;
+
+            double root_ll_inst = 0;
+            if (missing){
+                root_ll_inst = this->root->log_prob_instance_missing(instance);
+            }
+            else {
+                root_ll_inst = this->root->log_prob_instance(instance);
+            }
+
+            auto queue = std::priority_queue<
+                std::tuple<MultinomialCobwebNode*, double, double>,
+                std::vector<std::tuple<MultinomialCobwebNode*, double, double>>,
+                CompareSum
+            >();
+
+            // TODO is setting root's score to 0 a good idea, it basically will
+            // get 0 weight? I think this makes sense because we don't condition
+            // on x at all to compute the score.
+            queue.push(std::make_tuple(this->root, 0.0, 0.0));
+
+            while (queue.size() > 0){
+                auto node = queue.top();
+                queue.pop();
+                nodes_expanded += 1;
+
+                if (greedy){
+                    queue = std::priority_queue<
+                        std::tuple<MultinomialCobwebNode*, double, double>,
+                        std::vector<std::tuple<MultinomialCobwebNode*, double, double>>,
+                        CompareSum
+                    >();
+                }
+
+                auto curr = std::get<0>(node);
+                auto curr_score = std::get<1>(node);
+                auto curr_ll = std::get<2>(node);
+
+                // no negative weights... but keep in when sorting node to expand
+                if (curr_score < 0){
+                    curr_score = 0;
+                }
+
+                total_weight += curr_score;
+
+                auto curr_preds = curr->predict_probs();
+
+                for (auto &[attr, val_set]: curr_preds) {
+                    for (auto &[val, p]: val_set) {
+                        out[attr][val] += curr_score * p;
+                    }
+                }
+
+                if (nodes_expanded >= max_nodes) break;
+
+                // TODO look at missing in computing prob children given instance
+                std::vector<double> children_probs = curr->prob_children_given_instance(instance);
+
+                for (size_t i = 0; i < curr->children.size(); ++i) {
+                    auto child = curr->children[i];
+                    double child_ll_inst = 0;
+                    if (missing){
+                        child_ll_inst = child->log_prob_instance_missing(instance);
+                    } else {
+                        child_ll_inst = child->log_prob_instance(instance);
+                    }
+                    auto child_ll_given_parent = log(children_probs[i]);
+                    auto child_ll = child_ll_given_parent + curr_ll;
+
+                    double score = 0;
+                    if (obj == 0){
+                        score = exp(child_ll);
+                    } else if (obj == 1){
+                        score = exp(child_ll_inst + child_ll);
+                    } else if (obj == 2){
+                        score = exp(child_ll) * (exp(child_ll_inst) - exp(root_ll_inst));
+                    } else if (obj == 3){
+                        score = exp(child_ll) * (child_ll_inst - root_ll_inst);
+                    }
+
+                    queue.push(std::make_tuple(child, score, child_ll));
+                }
+            }
+
+            std::cout << "Total weight " << total_weight << std::endl;
+            for (auto &[attr, val_set]: out) {
+                double total_p = 0.0;
+                for (auto &[val, p]: val_set) {
+                    total_p += p;
+                }
+
+                // TODO if the normalizing constant is the same, then we can just
+                //      compute once..
+                // TODO maybe better  yet, we can compute the weights as we go up
+                //      above, then normalize here by it
+                std::cout << "Norm " << attr << " by " << total_p << std::endl;
+
+                for (auto &[val, p]: val_set) {
+                    out[attr][val] /= total_p;
+                }
+            }
+
+            return out;
+        }
+
+        std::unordered_map<std::string, std::unordered_map<std::string, double>> predict_probs_mixture(INSTANCE_TYPE instance, int max_nodes, bool greedy, bool missing, int obj){
+           AV_COUNT_TYPE cached_instance;
+            for (auto &[attr, val_map]: instance) {
+                for (auto &[val, cnt]: val_map) {
+                    cached_instance[CachedString(attr)][CachedString(val)] = instance.at(attr).at(val);
+                }
+            }
+            return this->predict_probs_mixture_helper(cached_instance, 0.0,
+                    max_nodes, greedy, missing, obj);
         }
 
 };
@@ -1689,99 +1817,6 @@ inline std::string MultinomialCobwebNode::output_json(){
     return output;
 }
 
-inline std::unordered_map<std::string, std::unordered_map<std::string, double>> MultinomialCobwebNode::predict_probs_mixture(INSTANCE_TYPE instance, int max_nodes){
-   AV_COUNT_TYPE cached_instance;
-    for (auto &[attr, val_map]: instance) {
-        for (auto &[val, cnt]: val_map) {
-            cached_instance[CachedString(attr)][CachedString(val)] = instance.at(attr).at(val);
-        }
-    }
-    return this->predict_probs_mixture_helper(cached_instance, 0.0, max_nodes);
-}
-
-struct CompareSum {
-    bool operator()(const std::tuple<MultinomialCobwebNode*, double, double>& a,
-                    const std::tuple<MultinomialCobwebNode*, double, double>& b) const {
-        return std::get<1>(a) + std::get<2>(a) < std::get<1>(b) + std::get<2>(b);
-    }
-};
-
-inline std::unordered_map<std::string, std::unordered_map<std::string, double>> MultinomialCobwebNode::predict_probs_mixture_helper(const AV_COUNT_TYPE &instance, double ll_path, int max_nodes){
-
-    std::unordered_map<std::string, std::unordered_map<std::string, double>> out;
-    int nodes_expanded = 0;
-
-    double ll_instance = this->log_prob_instance(instance);
-    double best = ll_instance;
-    auto queue = std::priority_queue<
-        std::tuple<MultinomialCobwebNode*, double, double>,
-        std::vector<std::tuple<MultinomialCobwebNode*, double, double>>,
-        CompareSum
-    >();
-    queue.push(std::make_tuple(this, ll_instance, 0.0));
-
-    while (queue.size() > 0){
-        // std::cout << std::endl << "popping node" << std::endl;
-        auto node = queue.top();
-        queue.pop();
-        auto curr = std::get<0>(node);
-        auto curr_ll_inst = std::get<1>(node);
-        auto curr_ll_path = std::get<2>(node);
-        auto node_v = curr_ll_inst + curr_ll_path;
-
-        // if (curr_ll_path < best) continue;
-
-        nodes_expanded += 1;
-
-        if (node_v > best){
-            best = node_v;
-        }
-
-        // std::cout << "predicting from node" << std::endl;
-        auto curr_p = exp(curr_ll_inst + curr_ll_path);
-        auto curr_preds = curr->predict_probs();
-
-        for (auto &[attr, val_set]: curr_preds) {
-            for (auto &[val, p]: val_set) {
-                out[attr][val] += curr_p * p;
-            }
-        }
-
-        if (nodes_expanded >= max_nodes) break;
-
-        // std::cout << "expanding children" << std::endl;
-        std::vector<double> children_probs = curr->prob_children_given_instance(instance);
-        for (size_t i = 0; i < curr->children.size(); ++i) {
-            // std::cout << "#expanding=" << i << std::endl;
-            auto child = curr->children[i];
-            auto child_ll_instance = child->log_prob_instance(instance);
-            // std::cout << "->child_ll_inst=" << std::to_string(child_ll_instance) << std::endl;
-            auto child_ll = log(children_probs[i]);
-            // std::cout << "->child_ll=" << std::to_string(child_ll) << std::endl;
-            auto child_ll_path = child_ll + curr_ll_path;
-            // std::cout << "->child_ll_path=" << std::to_string(child_ll_path) << std::endl;
-            queue.push(std::make_tuple(child, child_ll_instance, child_ll_path));
-            // std::cout << "->inserted!" << std::endl;
-        }
-    }
-
-    // std::cout << "normalizing" << std::endl;
-    for (auto &[attr, val_set]: out) {
-        double total_p = 0.0;
-        for (auto &[val, p]: val_set) {
-            total_p += p;
-        }
-        for (auto &[val, p]: val_set) {
-            out[attr][val] /= total_p;
-        }
-    }
-
-    // std::cout << "NODES EXPANDED: " << nodes_expanded << std::endl;
-
-    return out;
-}
-
-
 // TODO 
 // TODO This should use the path prob, not the node prob.
 // TODO
@@ -2077,7 +2112,6 @@ inline double MultinomialCobwebNode::log_prob_instance(const AV_COUNT_TYPE &inst
 
     double log_prob = 0;
 
-    // std::cout << std::endl;
 
     for (auto &[attr, vAttr]: instance) {
         bool hidden = attr.is_hidden();
@@ -2096,7 +2130,6 @@ inline double MultinomialCobwebNode::log_prob_instance(const AV_COUNT_TYPE &inst
             double av_count = alpha;
             if (this->av_count.count(attr) && this->av_count.at(attr).count(val)){
                 av_count += this->av_count.at(attr).at(val);
-                // std::cout << val << "(" << this->av_count.at(attr).at(val) << ") ";
             }
 
             // a_count starts with the alphas over all values (even vals not in
@@ -2111,24 +2144,89 @@ inline double MultinomialCobwebNode::log_prob_instance(const AV_COUNT_TYPE &inst
             // be something else.
             log_prob += cnt * (log(av_count) - log(a_count));
 
-            /*
-            if (av_count > 1.0){
-                double tmp = cnt * (log(av_count) - log(this->a_count[attr] + num_vals * alpha));
-                std::cout << "Depth: " << this->depth() << " Value: " << val.get_string() << ": " << std::to_string(tmp) << " (" << std::to_string(cnt) << " x " << std::to_string(av_count) << "/" << std::to_string(this->a_count[attr] + num_vals * alpha) << ")" << std::endl;
-            }
-            */
         }
 
-        // std::cout << std::endl;
-        // std::cout << "denom: " << std::to_string(this->counts[attr] + num_vals * this->tree->alpha) << std::endl;
-        // std::cout << "denom (no alpha): " << std::to_string(this->counts[attr]) << std::endl;
-        // std::cout << "node count: " << std::to_string(this->count) << std::endl;
-        // std::cout << "num vals: " << std::to_string(num_vals) << std::endl;
     }
 
-    // std::cout << std::endl;
+    return log_prob;
+}
 
-    // std::cout << "LOB PROB" << std::to_string(log_prob) << std::endl;
+inline double MultinomialCobwebNode::log_prob_instance_missing_ext(INSTANCE_TYPE instance){
+    AV_COUNT_TYPE cached_instance;
+    for (auto &[attr, val_map]: instance) {
+        for (auto &[val, cnt]: val_map) {
+            cached_instance[CachedString(attr)][CachedString(val)] = instance.at(attr).at(val);
+        }
+    }
+
+    return this->log_prob_instance_missing(cached_instance);
+}
+
+inline double MultinomialCobwebNode::log_prob_instance_missing(const AV_COUNT_TYPE &instance){
+
+    double log_prob = 0;
+
+    for (auto &[attr, val_set]: this->tree->attr_vals) {
+    // for (auto &[attr, vAttr]: instance) {
+        bool hidden = attr.is_hidden();
+        if (hidden){
+            continue;
+        }
+
+        double num_vals = this->tree->attr_vals.at(attr).size();
+        double alpha = this->tree->alpha;
+
+        if (instance.count(attr)){
+            for (auto &[val, cnt]: instance.at(attr)){
+
+                // TODO IS THIS RIGHT???
+                // we could treat it as just alpha...
+                if (!this->tree->attr_vals.at(attr).count(val)){
+                    std::cout << "VALUE MISSING TREATING AS ALPHA" << std::endl;
+                    // continue;
+                }
+
+                double av_count = alpha;
+                if (this->av_count.count(attr) && this->av_count.at(attr).count(val)){
+                    av_count += this->av_count.at(attr).at(val);
+                }
+
+                // a_count starts with the alphas over all values (even vals not in
+                // current node)
+                COUNT_TYPE a_count = num_vals * alpha;
+                if (this->a_count.count(attr)){
+                    a_count += this->a_count.at(attr);
+                }
+
+                // we use cnt here to weight accuracy by counts in the training
+                // instance. Usually this is 1, but in multinomial models, it might
+                // be something else.
+                log_prob += cnt * (log(av_count) - log(a_count));
+
+            }
+        }
+        else {
+            double cnt = 1.0;
+            if (this->tree->weight_attr){
+                cnt = (1.0 * this->tree->root->a_count.at(attr)) / (this->tree->root->count);
+            }
+
+            int num_vals_in_c = 0;
+            if (this->av_count.count(attr)){
+                auto attr_count = this->a_count.at(attr);
+                num_vals_in_c = this->av_count.at(attr).size();
+                for (auto &[val, av_count]: this->av_count.at(attr)) {
+                    double p = ((av_count + alpha) / (attr_count + num_vals * alpha));
+                    log_prob += cnt * p * log(p);
+                }
+            }
+
+            int n0 = num_vals - num_vals_in_c;
+            double p_missing = alpha / (num_vals * alpha);
+            log_prob += cnt * n0 * p_missing * log(p_missing);
+        }
+
+    }
 
     return log_prob;
 }
@@ -2163,7 +2261,6 @@ PYBIND11_MODULE(multinomial_cobweb, m) {
         .def("predict_probs", &MultinomialCobwebNode::predict_probs)
         .def("predict_weighted_probs", &MultinomialCobwebNode::predict_weighted_probs)
         .def("predict_weighted_leaves_probs", &MultinomialCobwebNode::predict_weighted_leaves_probs)
-        .def("predict_probs_mixture", &MultinomialCobwebNode::predict_probs_mixture)
         .def("predict", &MultinomialCobwebNode::predict, py::arg("attr") = "",
                 py::arg("choiceFn") = "most likely",
                 py::arg("allowNone") = true )
@@ -2171,6 +2268,7 @@ PYBIND11_MODULE(multinomial_cobweb, m) {
         .def("get_basic_level", &MultinomialCobwebNode::get_basic_level, py::return_value_policy::reference)
         .def("log_prob_class_given_instance", &MultinomialCobwebNode::log_prob_class_given_instance_ext) 
         .def("log_prob_instance", &MultinomialCobwebNode::log_prob_instance_ext) 
+        .def("log_prob_instance_missing", &MultinomialCobwebNode::log_prob_instance_missing_ext) 
         .def("prob_children_given_instance", &MultinomialCobwebNode::prob_children_given_instance_ext)
         .def("entropy", &MultinomialCobwebNode::entropy)
         .def("category_utility", &MultinomialCobwebNode::category_utility)
@@ -2200,6 +2298,7 @@ PYBIND11_MODULE(multinomial_cobweb, m) {
                 py::arg("instance") = std::vector<AV_COUNT_TYPE>(),
                 // py::arg("get_best_concept") = false,
                 py::return_value_policy::reference)
+        .def("predict_probs_mixture", &MultinomialCobwebTree::predict_probs_mixture)
         .def("clear", &MultinomialCobwebTree::clear)
         .def("__str__", &MultinomialCobwebTree::__str__)
         .def("dump_json", &MultinomialCobwebTree::dump_json)

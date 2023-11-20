@@ -107,7 +107,7 @@ def process_file(idx, name, fp):
 
 def training_texts(limit=None):
 
-    training_dir = "/home/cmaclellan3/Microsoft-Sentence-Completion-Challenge/data/raw_data/Holmes_Training_Data"
+    training_dir = "/Users/cmaclellan3/Projects/Microsoft-Sentence-Completion-Challenge/data/raw_data/Holmes_Training_Data"
 
     for path, subdirs, files in os.walk(training_dir):
 
