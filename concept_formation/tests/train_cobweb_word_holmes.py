@@ -99,7 +99,10 @@ if __name__ == "__main__":
         #                          instance['context']}}
         no_anchor = {'context': instance['context']}
         # no_anchor = {'ctx_before': instance['ctx_before'], 'ctx_after': instance['ctx_after']}
-        probs = tree.categorize(no_anchor).predict_probs()
+
+        # probs = tree.categorize(no_anchor).predict_probs()
+        probs = tree.predict_probs_mixture(no_anchor, 100, False, False, 1)
+
         # probs = tree.categorize(no_anchor).get_best_level(no_anchor).predict_probs()
         p = 0
         best_word = "NONE"
@@ -139,15 +142,15 @@ if __name__ == "__main__":
             occurances[old_anchor] += 1
             n_training_words += 1
 
-        if (time() - last_checkpoint_time) > 3600:
-            timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-            with open('{}-{}-{}.json'.format(outfile, idx, timestamp), 'w') as fout:
-                fout.write(tree.dump_json())
-                last_checkpoint_time = time()
+        # if (time() - last_checkpoint_time) > 3600:
+        #     timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+        #     with open('{}-{}-{}.json'.format(outfile, idx, timestamp), 'w') as fout:
+        #         fout.write(tree.dump_json())
+        #         last_checkpoint_time = time()
 
-    timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-    with open('{}-{}-{}-final.json'.format(outfile, len(instances), timestamp), 'w') as fout:
-        fout.write(tree.dump_json())
-        last_checkpoint_time = time()
+    # timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    # with open('{}-{}-{}-final.json'.format(outfile, len(instances), timestamp), 'w') as fout:
+    #     fout.write(tree.dump_json())
+    #     last_checkpoint_time = time()
 
 

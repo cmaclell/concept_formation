@@ -85,7 +85,7 @@ print(inst_train[:1])
 print(labels_train[:1])
 
 # Build Cobweb model
-alpha = 0.01
+alpha = 0.000001
 tree = MultinomialCobwebTree(alpha, # alpha weight
                              False, # weight attr by avg occurance of attr
                              0, # 0 = MI, 1 = Theil's U, 2 = NMI
@@ -102,11 +102,13 @@ for i, instance in enumerate(tqdm(inst_train)):
 
 
 leaf_acc = []
-mix_acc = []
-mix_leaves_acc = []
-full_acc = []
-basic_acc = []
-best_acc = []
+obj1_acc = []
+obj1_greedy_acc = []
+obj2_acc = []
+obj2_greedy_acc = []
+obj3_acc = []
+obj3_greedy_acc = []
+
 for i, instance in enumerate(tqdm(inst_test)):
     instance = {a: {str(instance[a]): 1.0} for a in instance if not(isinstance(instance[a], float))}
     label = labels_test[i]
@@ -118,43 +120,40 @@ for i, instance in enumerate(tqdm(inst_test)):
         # print('leaf')
         # pprint(leaf_p)
 
-        wleaf_p = leaf.predict_weighted_probs(instance)[attr]
-        # print('mixture path')
-        # pprint(wleaf_p)
-        wleaf_v = sorted([(wleaf_p[val], val) for val in wleaf_p])[-1][1]
+        samples = 100
+        obj1_p = tree.predict_probs_mixture(instance, samples, False, False, 1)[attr]
+        obj1_v = sorted([(obj1_p[val], val) for val in obj1_p])[-1][1]
 
-        wcleaf_p = leaf.predict_weighted_leaves_probs(instance)[attr]
-        # print('mixture leaves')
-        # pprint(wcleaf_p)
-        wcleaf_v = sorted([(wcleaf_p[val], val) for val in wcleaf_p])[-1][1]
+        obj1_greedy_p = tree.predict_probs_mixture(instance, samples, True, False, 1)[attr]
+        obj1_greedy_v = sorted([(obj1_greedy_p[val], val) for val in obj1_greedy_p])[-1][1]
 
-        basic_p = leaf.get_basic_level().predict_probs()[attr]
-        basic_v = sorted([(basic_p[val], val) for val in basic_p])[-1][1]
-        best_p = leaf.get_best_level(instance).predict_probs()[attr]
-        best_v = sorted([(best_p[val], val) for val in best_p])[-1][1]
+        obj2_p = tree.predict_probs_mixture(instance, samples, False, False, 2)[attr]
+        obj2_v = sorted([(obj2_p[val], val) for val in obj2_p])[-1][1]
 
-        full_p = tree.root.predict_probs_mixture(instance, 100)[attr]
-        full_v = sorted([(full_p[val], val) for val in full_p])[-1][1]
+        obj2_greedy_p = tree.predict_probs_mixture(instance, samples, True, False, 2)[attr]
+        obj2_greedy_v = sorted([(obj2_greedy_p[val], val) for val in obj2_greedy_p])[-1][1]
+
+        obj3_p = tree.predict_probs_mixture(instance, samples, False, False, 3)[attr]
+        obj3_v = sorted([(obj3_p[val], val) for val in obj3_p])[-1][1]
+
+        obj3_greedy_p = tree.predict_probs_mixture(instance, samples, True, False, 3)[attr]
+        obj3_greedy_v = sorted([(obj3_greedy_p[val], val) for val in obj3_greedy_p])[-1][1]
 
         leaf_acc.append(int(leaf_v == label[attr]))
-        mix_acc.append(int(wleaf_v == label[attr]))
-        mix_leaves_acc.append(int(wcleaf_v == label[attr]))
-        full_acc.append(int(full_v == label[attr]))
-        basic_acc.append(int(basic_v == label[attr]))
-        best_acc.append(int(best_v == label[attr]))
-
-        # # if leaf_acc[-1] == 0:
-        # print("Predicted: ", leaf_v)
-        # print("Actual: ", label[attr])
-        # viz_path.plot_frontier_paths(instance, tree, attr, label[attr], -22)
-        # raise Exception("BEEP")
+        obj1_acc.append(int(obj1_v == label[attr]))
+        obj1_greedy_acc.append(int(obj1_greedy_v == label[attr]))
+        obj2_acc.append(int(obj2_v == label[attr]))
+        obj2_greedy_acc.append(int(obj2_greedy_v == label[attr]))
+        obj3_acc.append(int(obj3_v == label[attr]))
+        obj3_greedy_acc.append(int(obj3_greedy_v == label[attr]))
 
 print("leaf acc: ", sum(leaf_acc)/len(leaf_acc))
-print("path mix acc: ", sum(mix_acc)/len(mix_acc))
-print("leaves mix acc: ", sum(mix_leaves_acc)/len(mix_leaves_acc))
-print("full acc: ", sum(full_acc)/len(full_acc))
-print("basic acc: ", sum(basic_acc)/len(basic_acc))
-print("best acc: ", sum(best_acc)/len(best_acc))
+print("obj1 acc: ", sum(obj1_acc)/len(obj1_acc))
+print("obj2 acc: ", sum(obj2_acc)/len(obj2_acc))
+print("obj3 acc: ", sum(obj3_acc)/len(obj3_acc))
+print("obj1_greedy acc: ", sum(obj1_greedy_acc)/len(obj1_greedy_acc))
+print("obj2_greedy acc: ", sum(obj2_greedy_acc)/len(obj2_greedy_acc))
+print("obj3_greedy acc: ", sum(obj3_greedy_acc)/len(obj3_greedy_acc))
 
 visualize(tree)
 

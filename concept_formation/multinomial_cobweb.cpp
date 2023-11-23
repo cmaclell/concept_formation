@@ -46,14 +46,6 @@ std::unordered_map<int, double> lgammaCache;
 std::unordered_map<int, std::unordered_map<int, int>> binomialCache;
 std::unordered_map<int, std::unordered_map<double, double>> entropy_k_cache;
 
-// for predict_probs_mixture search
-struct CompareSum {
-    bool operator()(const std::tuple<MultinomialCobwebNode*, double, double>& a,
-                    const std::tuple<MultinomialCobwebNode*, double, double>& b) const {
-        return std::get<1>(a) + std::get<2>(a) < std::get<1>(b) + std::get<2>(b);
-    }
-};
-
 double lgamma_cached(int n){
     auto it = lgammaCache.find(n);
     if (it != lgammaCache.end()) return it->second;
@@ -605,15 +597,20 @@ class MultinomialCobwebTree {
             }
 
             auto queue = std::priority_queue<
-                std::tuple<MultinomialCobwebNode*, double, double>,
-                std::vector<std::tuple<MultinomialCobwebNode*, double, double>>,
-                CompareSum
-            >();
+                std::tuple<double, double, MultinomialCobwebNode*>>();
 
-            // TODO is setting root's score to 0 a good idea, it basically will
-            // get 0 weight? I think this makes sense because we don't condition
-            // on x at all to compute the score.
-            queue.push(std::make_tuple(this->root, 0.0, 0.0));
+            double score = 0.0;
+            if (obj == 0){
+                score = 1;
+            } else if (obj == 1){
+                score = exp(root_ll_inst);
+            } else if (obj == 2){
+                score = 0.0;
+            } else if (obj == 3){
+                score = 0.0;
+            }
+
+            queue.push(std::make_tuple(score, 0.0, this->root));
 
             while (queue.size() > 0){
                 auto node = queue.top();
@@ -622,17 +619,13 @@ class MultinomialCobwebTree {
 
                 if (greedy){
                     queue = std::priority_queue<
-                        std::tuple<MultinomialCobwebNode*, double, double>,
-                        std::vector<std::tuple<MultinomialCobwebNode*, double, double>>,
-                        CompareSum
-                    >();
+                        std::tuple<double, double, MultinomialCobwebNode*>>();
                 }
 
-                auto curr = std::get<0>(node);
-                auto curr_score = std::get<1>(node);
-                auto curr_ll = std::get<2>(node);
+                auto curr_score = std::get<0>(node);
+                auto curr_ll = std::get<1>(node);
+                auto curr = std::get<2>(node);
 
-                // no negative weights... but keep in when sorting node to expand
                 if (curr_score < 0){
                     curr_score = 0;
                 }
@@ -674,25 +667,13 @@ class MultinomialCobwebTree {
                         score = exp(child_ll) * (child_ll_inst - root_ll_inst);
                     }
 
-                    queue.push(std::make_tuple(child, score, child_ll));
+                    queue.push(std::make_tuple(score, child_ll, child));
                 }
             }
 
-            std::cout << "Total weight " << total_weight << std::endl;
             for (auto &[attr, val_set]: out) {
-                double total_p = 0.0;
                 for (auto &[val, p]: val_set) {
-                    total_p += p;
-                }
-
-                // TODO if the normalizing constant is the same, then we can just
-                //      compute once..
-                // TODO maybe better  yet, we can compute the weights as we go up
-                //      above, then normalize here by it
-                std::cout << "Norm " << attr << " by " << total_p << std::endl;
-
-                for (auto &[val, p]: val_set) {
-                    out[attr][val] /= total_p;
+                    out[attr][val] /= total_weight;
                 }
             }
 

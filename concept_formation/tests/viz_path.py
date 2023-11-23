@@ -39,11 +39,13 @@ def plot_best_search(instance, tree, max_nodes, greedy=False, consider_missing=F
 
     root = True
     if consider_missing:
-        ll_instance = tree.root.log_prob_instance_missing(instance)
+        # root_ll_inst = tree.root.log_prob_instance_missing(instance)
+        root_ll_inst = tree.root.log_prob_instance_missing({})
     else:
-        ll_instance = tree.root.log_prob_instance(instance)
-    ll_instance_root = ll_instance
-    queue = [(tree.root, ll_instance, 0.0)]
+        root_ll_inst = tree.root.log_prob_instance(instance)
+
+    total_weight = 0
+    queue = [(0.0, 0.0, random(), tree.root)]
     visited = []
     pred = defaultdict(Counter)
 
@@ -54,53 +56,33 @@ def plot_best_search(instance, tree, max_nodes, greedy=False, consider_missing=F
     obj2 = []
     obj3 = []
 
-
     while len(queue) > 0:
-        curr, curr_ll_inst, curr_ll = queue.pop()
+        score, curr_ll, _, curr = queue.pop(0)
 
         if greedy:
             queue = []
 
-        if obj == 0:
-            score = curr_ll
-            w = math.exp(score) 
-        elif obj == 1:
-            score = curr_ll_inst + curr_ll
-            w = math.exp(score)
-        elif obj == 2:
-            score = math.exp(curr_ll) * (math.exp(curr_ll_inst) - math.exp(ll_instance_root))
-            # w = score
-            w = max(0, score)
-        elif obj == 3:
-            score = math.exp(curr_ll) * (curr_ll_inst - ll_instance_root)
-            # w = score
-            w = max(0, score)
+        # truncate negative scores.
+        # w = max(0, score)
+        # w = math.exp(score)
+        w = score
+        total_weight += w
 
-        # print("Expanding node with score: ", score)
-        # print("Weight: ", w)
         p = curr.predict_probs()
-        # print("P(ctx=queen): ", p['context']['queen'])
         for attr in p:
             for val in p[attr]:
                 pred[attr][val] += w * p[attr][val]
 
-        if score is not None:
-            visited.append((w, curr))
-            obj0.append(math.exp(curr_ll))
-            obj1.append(math.exp(curr_ll_inst + curr_ll))
-            obj2.append(math.exp(curr_ll) * (math.exp(curr_ll_inst) - math.exp(ll_instance_root)))
-            obj3.append(math.exp(curr_ll) * (curr_ll_inst - ll_instance_root))
-        else:
-            score = float('-inf')
+        visited.append((w, curr))
 
         # visited.append((curr_ll_path, curr))
         leaves += 1
-        # color = get_color(score)
-        # color = get_color(math.exp(curr_ll_inst + curr_ll_path))
         is_leaf = "TERMINAL\n" if len(curr.children) == 0 else ""
-        d.node(curr.concept_hash(), is_leaf + '{}\nscore: {:.10e}\nw: {:.10f}\nll(c|x)+ll(x|c): {:.10f}\nll(c|x): {:.10f}\nll(x|c): {:.10f}'.format(curr.concept_hash(), score, w, curr_ll_inst + curr_ll, curr_ll, curr_ll_inst),
-               # color="%f, %f, %f" % (color[0], color[1], color[2]),
+        d.node(curr.concept_hash(), is_leaf +
+               '{}\nscore: {:.10e}\nw: {:.10f}\n'.format(curr.concept_hash(),
+                                                         score, w),
                style='filled')
+
         if root:
             root = False
         else:
@@ -116,32 +98,40 @@ def plot_best_search(instance, tree, max_nodes, greedy=False, consider_missing=F
             # print(prob_children_given_instance(curr, instance))
             children_probs = prob_children_given_instance(curr, instance, missing=consider_missing)
 
-
             for i, c in enumerate(curr.children):
-                ll_c = math.log(children_probs[i]) + curr_ll
+                child_ll = math.log(children_probs[i]) + curr_ll
 
                 if consider_missing:
-                    ll_instance = c.log_prob_instance_missing(instance)
+                    # child_ll_inst = c.log_prob_instance_missing(instance)
+                    child_ll_inst = c.log_prob_instance_missing({})
                 else:
-                    ll_instance = c.log_prob_instance(instance)
+                    child_ll_inst = c.log_prob_instance(instance)
 
-                queue.append((c, ll_instance, ll_c))
+                if obj == 0:
+                    score = math.exp(child_ll)
+                elif obj == 1:
+                    score = math.exp(child_ll_inst + child_ll)
+                elif obj == 2:
+                    score = math.exp(child_ll) * (math.exp(child_ll_inst) - math.exp(root_ll_inst))
+                elif obj == 3:
+                    # score = math.exp(child_ll) * (child_ll_inst - root_ll_inst)
+                    score = (child_ll_inst - root_ll_inst)
+                    # score = (c.count / curr.count) * (child_ll_inst - root_ll_inst)
 
-            if obj == 0:
-                queue.sort(key=lambda x: x[2])
-            elif obj == 1:
-                queue.sort(key=lambda x: x[1] + x[2])
-            elif obj == 2:
-                queue.sort(key=lambda x: math.exp(x[2]) * (math.exp(x[1]) - math.exp(ll_instance_root)))
-            elif obj == 3:
-                queue.sort(key=lambda x: math.exp(x[2]) * (x[1] - ll_instance_root))
+                obj0.append(math.exp(child_ll))
+                obj1.append(math.exp(child_ll_inst + child_ll))
+                obj2.append(math.exp(child_ll) * (math.exp(child_ll_inst) - math.exp(root_ll_inst)))
+                obj3.append((child_ll_inst - root_ll_inst))
+
+                queue.append((score, child_ll, random(), c))
+
+            # queue.sort()
 
     scores = [s for s, _ in visited]
     # plt.hist(scores)
     # plt.show()
 
     df = pd.DataFrame({'p(c|x)': obj0, 'p(c|x)*p(x|c)': obj1, 'p(c|x)*[p(x|c) - p(x)]': obj2, 'p(c|x)*[log p(x|c) - log p(x)]': obj3})
-    # pd.plotting.scatter_matrix(df, alpha=0.2, diagonal="kde")
     axes = pd.plotting.scatter_matrix(df, alpha=0.5, diagonal='kde')
     corr = df.corr().to_numpy()
     for i, j in zip(*plt.np.triu_indices_from(axes, k=1)):
@@ -155,12 +145,8 @@ def plot_best_search(instance, tree, max_nodes, greedy=False, consider_missing=F
         d.node(node.concept_hash(), color="%f, %f, %f" % (color[0], color[1], color[2]))
 
     for attr in pred:
-        s = 0
         for val in pred[attr]:
-            s += pred[attr][val]
-        # print('norm', attr, 'by', s)
-        for val in pred[attr]:
-            pred[attr][val] /= s
+            pred[attr][val] /= total_weight
 
     print("# LEAVES:", leaves)
     d.render(directory='graph_output', view=True)
