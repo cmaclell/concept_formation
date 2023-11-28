@@ -662,6 +662,7 @@ class MultinomialCobwebTree {
                     } else if (obj == 1){
                         score = exp(child_ll_inst + child_ll);
                     } else if (obj == 2){
+                        // score = exp(child_ll) - (child->count / this->root->count);
                         score = exp(child_ll) * (exp(child_ll_inst) - exp(root_ll_inst));
                     } else if (obj == 3){
                         score = exp(child_ll) * (child_ll_inst - root_ll_inst);
@@ -1096,41 +1097,44 @@ inline std::tuple<double, MultinomialCobwebNode *, MultinomialCobwebNode *> Mult
         throw "No children!";
     }
 
-    /*
-    // DO RELATIVE PU, requires only B
-    std::vector<std::tuple<double, double, double, MultinomialCobwebNode *>> relative_pu;
-    for (auto &child: this->children) {
-        relative_pu.push_back(
+    if (this->tree->objective == 1){
+        // DO RELATIVE PU, requires only B
+        std::vector<std::tuple<double, double, double, MultinomialCobwebNode *>> relative_pu;
+        for (auto &child: this->children) {
+            relative_pu.push_back(
+                    std::make_tuple(
+                        (child->count * child->entropy()) -
+                        ((child->count + 1) * child->entropy_insert(instance)),
+                        child->count,
+                        custom_rand(),
+                        child));
+        }
+
+        sort(relative_pu.rbegin(), relative_pu.rend());
+        MultinomialCobwebNode *best1 = std::get<3>(relative_pu[0]);
+        double best1_pu = pu_for_insert(best1, instance);
+        MultinomialCobwebNode *best2 = relative_pu.size() > 1 ? std::get<3>(relative_pu[1]) : nullptr;
+        return std::make_tuple(best1_pu, best1, best2);
+
+    } else {
+        // Evaluate each insert, requires B^2 where B is branching factor
+        // However, we need to do this for other objectives because the denominator changes.
+        std::vector<std::tuple<double, double, double, MultinomialCobwebNode *>> pus;
+        for (auto &child: this->children) {
+            pus.push_back(
                 std::make_tuple(
-                    (child->count * child->entropy()) -
-                    ((child->count + 1) * child->entropy_insert(instance)),
+                    pu_for_insert(child, instance),
                     child->count,
                     custom_rand(),
                     child));
+        }
+        sort(pus.rbegin(), pus.rend());
+        MultinomialCobwebNode *best1 = std::get<3>(pus[0]);
+        double best1_pu = std::get<0>(pus[0]);
+        MultinomialCobwebNode *best2 = pus.size() > 1 ? std::get<3>(pus[1]) : nullptr;
+
+        return std::make_tuple(best1_pu, best1, best2);
     }
-
-    sort(relative_pu.rbegin(), relative_pu.rend());
-    MultinomialCobwebNode *best1 = std::get<3>(relative_pu[0]);
-    double best1_pu = pu_for_insert(best1, instance);
-    MultinomialCobwebNode *best2 = relative_pu.size() > 1 ? std::get<3>(relative_pu[1]) : nullptr;
-    */
-
-    // Evaluate each insert, requires B^2 where B is branching factor
-    std::vector<std::tuple<double, double, double, MultinomialCobwebNode *>> pus;
-    for (auto &child: this->children) {
-        pus.push_back(
-            std::make_tuple(
-                pu_for_insert(child, instance),
-                child->count,
-                custom_rand(),
-                child));
-    }
-    sort(pus.rbegin(), pus.rend());
-    MultinomialCobwebNode *best1 = std::get<3>(pus[0]);
-    double best1_pu = std::get<0>(pus[0]);
-    MultinomialCobwebNode *best2 = pus.size() > 1 ? std::get<3>(pus[1]) : nullptr;
-
-    return std::make_tuple(best1_pu, best1, best2);
 }
 
 inline double MultinomialCobwebNode::partition_utility() {
