@@ -10,13 +10,13 @@ from math import log
 from math import isclose
 from collections import defaultdict
 from collections import Counter
+import heapq
 
 import torch
 
 from concept_formation.utils import weighted_choice
 from concept_formation.utils import most_likely_choice
 
-pi_tensor = torch.tensor(math.pi)
 
 class CobwebTorchTree(object):
     """
@@ -25,7 +25,7 @@ class CobwebTorchTree(object):
     """
 
     def __init__(self, shape, use_mutual_info=True, acuity_cutoff=False,
-                 use_ll_for_categorize=True, prior_var=None, alpha=0.01,
+                 prior_var=None, alpha=1e-8,
                  device=None):
         """
         The tree constructor.
@@ -33,13 +33,15 @@ class CobwebTorchTree(object):
         self.device = device
         self.use_mutual_info = use_mutual_info
         self.acuity_cutoff = acuity_cutoff
-        self.use_ll_for_categorize = use_ll_for_categorize
         self.shape = shape
-        self.alpha = alpha
+        self.alpha = torch.tensor(alpha, dtype=torch.float, device=self.device,
+                                  requires_grad=False)
+        self.pi_tensor = torch.tensor(math.pi, dtype=torch.float,
+                                      device=self.device, requires_grad=False)
 
         self.prior_var = prior_var
         if prior_var is None:
-            self.prior_var = 1 / (4 * pi_tensor)
+            self.prior_var = 1 / (4 * self.pi_tensor)
 
         self.clear()
 
@@ -56,24 +58,63 @@ class CobwebTorchTree(object):
         return str(self.root)
 
     def dump_json(self):
-        return self.root.output_json()
+        # only save reverse labels, because regular labels get converted into
+        # strings regardless of type and we know the type of the indices.
+        tree_params = {
+                'use_mutual_info': self.use_mutual_info,
+                'acuity_cutoff': self.acuity_cutoff,
+                'shape': self.shape.tolist() if isinstance(self.shape, torch.Tensor) else self.shape,
+                'alpha': self.alpha.item(),
+                'prior_var': self.prior_var.item(),
+                'reverse_labels': self.reverse_labels}
 
-    # TODO UPDATE TO SAVE / LOAD LABELS
+        json_output = json.dumps(tree_params)[:-1]
+        json_output += ', "root": '
+        json_output += self.root.iterative_output_json()
+        json_output += "}"
+
+        return json_output
+
+    def load_json_helper(self, node_data_json):
+        node = CobwebTorchNode(self.shape, device=self.device)
+        node.count = torch.tensor(node_data_json['count'], dtype=torch.float,
+                                  device=self.device, requires_grad=False)
+        node.mean = torch.tensor(node_data_json['mean'], dtype=torch.float,
+                                 device=self.device, requires_grad=False)
+        node.meanSq = torch.tensor(node_data_json['meanSq'], dtype=torch.float,
+                                   device=self.device, requires_grad=False)
+        node.label_counts = torch.tensor(node_data_json['label_counts'],
+                                         dtype=torch.float, device=self.device,
+                                         requires_grad=False)
+        node.total_label_count = node.label_counts.sum()
+        return node
+
     def load_json(self, json_string):
         data = json.loads(json_string)
-        mean = torch.tensor(data['mean'], dtype=torch.float)
-        self.shape = mean.shape
-        self.root = self.load_helper(data)
+        
+        self.use_mutual_info = data['use_mutual_info']
+        self.acuity_cutoff = data['acuity_cutoff']
+        self.shape = data['shape']
+        self.alpha = torch.tensor(data['alpha'], dtype=torch.float,
+                                  device=self.device, requires_grad=False)
+        self.prior_var = torch.tensor(data['prior_var'], dtype=torch.float,
+                                      device=self.device, requires_grad=False)
+        self.reverse_labels = {int(attr): data['reverse_labels'][attr] for attr in data['reverse_labels']}
+        self.labels = {self.reverse_labels[attr]: attr for attr in self.reverse_labels}
+        self.root = self.load_json_helper(data['root'])
+        self.root.tree = self
 
-    # TODO UPDATE TO SAVE / LOAD LABELS
-    def load_helper(self, json_node):
-        node = CobwebTorchNode(self.shape, device=self.device)
-        node.tree = self
-        node.count = torch.tensor(json_node['size'], dtype=torch.float, device=self.device)
-        node.mean = torch.tensor(json_node['mean'], dtype=torch.float, device=self.device)
-        node.meanSq = torch.tensor(json_node['meanSq'], dtype=torch.float, device=self.device)
-        node.children = [self.load_helper(child) for child in json_node['children']]
-        return node
+        queue = [(self.root, c) for c in data['root']['children']]
+
+        while len(queue) > 0:
+            parent, curr_data = queue.pop()
+            curr = self.load_json_helper(curr_data)
+            curr.tree = self
+            curr.parent = parent
+            parent.children.append(curr)
+
+            for c in curr_data['children']:
+                queue.append((curr, c))
 
     def ifit(self, instance, label=None):
         """
@@ -92,12 +133,13 @@ class CobwebTorchTree(object):
 
         .. seealso:: :meth:`CobwebTree.cobweb`
         """
-        if label not in self.labels:
+        if label is not None and label not in self.labels:
             idx = len(self.labels)
             self.labels[label] = idx
             self.reverse_labels[idx] = label
 
-        return self.cobweb(instance, label)
+        with torch.no_grad():
+            return self.cobweb(instance, label)
 
     def fit(self, instances, labels=None, iterations=1, randomize_first=True):
         """
@@ -121,7 +163,7 @@ class CobwebTorchTree(object):
         """
         if labels is None:
             labels = [None for i in range(len(instances))]
-        
+
         instance_labels = [(inst, labels[i]) for i, inst in
                            enumerate(instances)]
 
@@ -222,36 +264,59 @@ class CobwebTorchTree(object):
 
         return current
 
-    def _cobweb_categorize(self, instance, label):
+    def _cobweb_categorize(self, instance, label, use_best, greedy, max_nodes):
         """
         A cobweb specific version of categorize, not intended to be
         externally called.
 
         .. seealso:: :meth:`CobwebTree.categorize`
         """
-        current = self.root
-        
-        while True:
-            if (len(current.children) == 0):
-                return current
+        queue = []
+        heapq.heappush(queue, (-self.root.log_prob(instance, label), 0.0, random(), self.root))
+        nodes_visited = 0
 
-            parent = current
-            current = None
-            best_score = None
+        best = self.root
+        best_score = float('-inf')
 
-            for child in parent.children:
+        while len(queue) > 0:
+            neg_score, neg_curr_ll, _, curr = heapq.heappop(queue)
+            score = -neg_score # the heap sorts smallest to largest, so we flip the sign
+            curr_ll = -neg_curr_ll # the heap sorts smallest to largest, so we flip the sign
+            nodes_visited += 1
+            curr.update_label_count_size()
 
-                if self.use_ll_for_categorize:
-                    score = child.log_prob_class_given_instance(instance, label)
-                else:
-                    score = (child.count * child.score() -
-                             (child.count + 1) * child.score_insert(instance, label))
-            
-                if ((current is None) or ((best_score is None) or (score > best_score))):
-                    best_score = score
-                    current = child
+            if score > best_score:
+                best = curr
+                best_score = score
 
-    def categorize(self, instance, label=None):
+            if use_best and best_score > curr_ll:
+                # if best_score is greater than curr_ll, then we know we've
+                # found the best and can stop early.
+                break
+
+            if greedy:
+                queue = []
+
+            if nodes_visited >= max_nodes:
+                break
+
+            if len(curr.children) > 0:
+                ll_children_unnorm = torch.zeros(len(curr.children))
+                for i, c in enumerate(curr.children):
+                    log_prob = c.log_prob(instance, label)
+                    ll_children_unnorm[i] = (log_prob + math.log(c.count) - math.log(curr.count))
+                log_p_of_x = torch.logsumexp(ll_children_unnorm, dim=0)
+
+                for i, c in enumerate(curr.children):
+                    child_ll = ll_children_unnorm[i] - log_p_of_x + curr_ll
+                    child_ll_inst = c.log_prob(instance, label)
+                    score = child_ll + child_ll_inst # p(c|x) * p(x|c)
+                    # score = child_ll # p(c|x)
+                    heapq.heappush(queue, (-score, -child_ll, random(), c))
+
+        return best if use_best else curr
+
+    def categorize(self, instance, label=None, use_best=True, greedy=False, max_nodes=float('inf')):
         """
         Sort an instance in the categorization tree and return its resulting
         concept.
@@ -269,7 +334,86 @@ class CobwebTorchTree(object):
 
         .. seealso:: :meth:`CobwebTree.cobweb`
         """
-        return self._cobweb_categorize(instance, label)
+        with torch.no_grad():
+            return self._cobweb_categorize(instance, label, use_best, greedy, max_nodes)
+
+    def old_categorize(self, instance, label):
+        """
+        A cobweb specific version of categorize, not intended to be
+        externally called.
+
+        .. seealso:: :meth:`CobwebTree.categorize`
+        """
+        current = self.root
+
+        while True:
+            if (len(current.children) == 0):
+                return current
+
+            parent = current
+            current = None
+            best_score = None
+
+            for child in parent.children:
+                score = child.log_prob_class_given_instance(instance, label)
+
+                if ((current is None) or ((best_score is None) or (score > best_score))):
+                    best_score = score
+                    current = child
+
+    def predict_probs(self, instance, label=None, greedy=False,
+                      max_nodes=float('inf')):
+        with torch.no_grad():
+            return self._predict_probs(instance, label, greedy, max_nodes)
+
+    def _predict_probs(self, instance, label, greedy, max_nodes):
+        queue = []
+        heapq.heappush(queue, (-self.root.log_prob(instance, label), 0.0, random(), self.root))
+        nodes_visited = 0
+
+        pred = Counter()
+        total_w = 0
+
+        while len(queue) > 0:
+            neg_score, neg_curr_ll, _, curr = heapq.heappop(queue)
+            score = -neg_score # the heap sorts smallest to largest, so we flip the sign
+            curr_ll = -neg_curr_ll # the heap sorts smallest to largest, so we flip the sign
+            nodes_visited += 1
+
+            w = math.exp(score)
+            total_w += w
+
+            curr.update_label_count_size()
+            p_label = curr.label_counts / curr.label_counts.sum()
+            p_label = {self.reverse_labels[i]: v.item()
+                       for i, v in enumerate(p_label)}
+
+            for label in p_label:
+                pred[label] += w * p_label[label]
+
+            if greedy:
+                queue = []
+
+            if nodes_visited >= max_nodes:
+                break
+
+            if len(curr.children) > 0:
+                ll_children_unnorm = torch.zeros(len(curr.children))
+                for i, c in enumerate(curr.children):
+                    log_prob = c.log_prob(instance, label)
+                    ll_children_unnorm[i] = (log_prob + math.log(c.count) - math.log(curr.count))
+                log_p_of_x = torch.logsumexp(ll_children_unnorm, dim=0)
+
+                for i, c in enumerate(curr.children):
+                    child_ll = ll_children_unnorm[i] - log_p_of_x + curr_ll
+                    child_ll_inst = c.log_prob(instance, label)
+                    score = child_ll + child_ll_inst
+                    heapq.heappush(queue, (-score, -child_ll, random(), c))
+
+        for label in pred:
+            pred[label] /= total_w
+
+        return pred
 
 
 class CobwebTorchNode(object):
@@ -297,11 +441,17 @@ class CobwebTorchNode(object):
     def __init__(self, shape, device=None, otherNode=None):
         """Create a new CobwebNode"""
         self.concept_id = self.gensym()
-        self.count = torch.tensor(0.0, dtype=torch.float, device=device)
-        self.mean = torch.zeros(shape, dtype=torch.float, device=device)
-        self.meanSq = torch.zeros(shape, dtype=torch.float, device=device)
-        self.label_counts = torch.tensor([], dtype=torch.float, device=device)
-        self.total_label_count = torch.tensor(0, dtype=torch.float, device=device)
+        self.count = torch.tensor(0.0, dtype=torch.float, device=device,
+                                  requires_grad=False)
+        self.mean = torch.zeros(shape, dtype=torch.float, device=device,
+                                requires_grad=False)
+        self.meanSq = torch.zeros(shape, dtype=torch.float, device=device,
+                                  requires_grad=False)
+        self.label_counts = torch.tensor([], dtype=torch.float, device=device,
+                                         requires_grad=False)
+        self.total_label_count = torch.tensor(0, dtype=torch.float,
+                                              device=device,
+                                              requires_grad=False)
         self.children = []
         self.parent = None
         self.tree = None
@@ -386,13 +536,13 @@ class CobwebTorchNode(object):
 
     def log_prob(self, instance, label):
         var = self.var
-        log_prob = -(0.5 * torch.log(var) + 0.5 * torch.log(2 * pi_tensor) +
+        log_prob = -(0.5 * torch.log(var) + 0.5 * torch.log(2 * self.tree.pi_tensor) +
                      0.5 * torch.square(instance - self.mean) / var).sum()
 
         self.update_label_count_size()
         if label is not None:
             if label not in self.tree.labels:
-                log_prob += (torch.log(selt.tree.alpha) -
+                log_prob += (torch.log(self.tree.alpha) -
                              torch.log(self.total_label_count +
                                        self.tree.alpha))
             elif self.total_label_count > 0:
@@ -404,7 +554,7 @@ class CobwebTorchNode(object):
     def score_insert(self, instance, label):
         """
         Returns the score that would result from inserting the instance into
-        the current node. 
+        the current node.
 
         This operation can be used instead of inplace and copying because it
         only looks at the attr values used in the instance and reduces iteration.
@@ -431,9 +581,9 @@ class CobwebTorchNode(object):
         std = torch.sqrt(var)
 
         if (self.tree.use_mutual_info):
-            score = (0.5 * torch.log(2 * pi_tensor * var) + 0.5).sum()
+            score = (0.5 * torch.log(2 * self.tree.pi_tensor * var) + 0.5).sum()
         else:
-            score = -(1 / (2 * torch.sqrt(pi_tensor) * std)).sum()
+            score = -(1 / (2 * torch.sqrt(self.tree.pi_tensor) * std)).sum()
 
         if self.total_label_count > 0:
             p_label = label_counts / total_label_count
@@ -487,9 +637,9 @@ class CobwebTorchNode(object):
         std = torch.sqrt(var)
 
         if (self.tree.use_mutual_info):
-            score = (0.5 * torch.log(2 * pi_tensor * var) + 0.5).sum()
+            score = (0.5 * torch.log(2 * self.tree.pi_tensor * var) + 0.5).sum()
         else:
-            score = -(1 / (2 * torch.sqrt(pi_tensor) * std)).sum()
+            score = -(1 / (2 * torch.sqrt(self.tree.pi_tensor) * std)).sum()
 
         if self.total_label_count > 0:
             p_label = label_counts / total_label_count
@@ -557,9 +707,9 @@ class CobwebTorchNode(object):
         self.update_label_count_size()
 
         if (self.tree.use_mutual_info):
-            score = (0.5 * torch.log(2 * pi_tensor * self.var) + 0.5).sum()
+            score = (0.5 * torch.log(2 * self.tree.pi_tensor * self.var) + 0.5).sum()
         else:
-            score = -(1 / (2 * torch.sqrt(pi_tensor) * self.std)).sum()
+            score = -(1 / (2 * torch.sqrt(self.tree.pi_tensor) * self.std)).sum()
 
         if self.total_label_count > 0:
             p_label = self.label_counts / self.total_label_count
@@ -730,7 +880,7 @@ class CobwebTorchNode(object):
             best2 = relative_pus[1][3]
 
         return best1_pu, best1, best2
-        
+
     def pu_for_insert(self, child, instance, label):
         """
         Compute the category utility of adding the instance to the specified
@@ -885,7 +1035,7 @@ class CobwebTorchNode(object):
         children_score += p_of_child * best1.score_merge(best2, instance, label)
 
         return (self.score_insert(instance, label) - children_score) / (len(self.children) - 1)
-    
+
 
     def split(self, best):
         """
@@ -1062,6 +1212,41 @@ class CobwebTorchNode(object):
             children_count += c.num_concepts()
         return 1 + children_count
 
+    def iterative_output_json_helper(self):
+        self.update_label_count_size()
+        output = {}
+        output['count'] = self.count.item()
+        output['mean'] = self.mean.tolist()
+        output['meanSq'] = self.meanSq.tolist()
+        output['label_counts'] = self.label_counts.tolist()
+        return json.dumps(output)
+
+    def iterative_output_json(self):
+        output = ""
+
+        visited = set()
+        curr = self
+
+        while curr is not None:
+            if curr.concept_id not in visited:
+                node_output = curr.iterative_output_json_helper()
+                if len(output) > 1 and output[-1] == "}":
+                    output += ", "
+                output += node_output[:-1]
+                output += ', "children": ['
+                visited.add(curr.concept_id)
+
+            for child in curr.children:
+                if child.concept_id not in visited:
+                    curr = child
+                    break
+            else:
+                curr = curr.parent
+                output += "]}"
+
+        return output
+
+    # TODO remove and just use above output, left for legacy use with viz.
     def output_json(self):
         return json.dumps(self.output_dict())
 
