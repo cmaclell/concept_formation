@@ -13,9 +13,60 @@ from collections import Counter
 import heapq
 
 import torch
+from torch.distributions.multivariate_normal import MultivariateNormal
+from torch.distributions.normal import Normal
 
 from concept_formation.utils import weighted_choice
 from concept_formation.utils import most_likely_choice
+
+def _batch_mahalanobis(bL, bx):
+    r"""
+    Computes the squared Mahalanobis distance :math:`\mathbf{x}^\top\mathbf{M}^{-1}\mathbf{x}`
+    for a factored :math:`\mathbf{M} = \mathbf{L}\mathbf{L}^\top`.
+
+    Accepts batches for both bL and bx. They are not necessarily assumed to have the same batch
+    shape, but `bL` one should be able to broadcasted to `bx` one.
+    """
+    n = bx.size(-1)
+    bx_batch_shape = bx.shape[:-1]
+
+    # Assume that bL.shape = (i, 1, n, n), bx.shape = (..., i, j, n),
+    # we are going to make bx have shape (..., 1, j,  i, 1, n) to apply batched tri.solve
+    bx_batch_dims = len(bx_batch_shape)
+    bL_batch_dims = bL.dim() - 2
+    outer_batch_dims = bx_batch_dims - bL_batch_dims
+    old_batch_dims = outer_batch_dims + bL_batch_dims
+    new_batch_dims = outer_batch_dims + 2 * bL_batch_dims
+    # Reshape bx with the shape (..., 1, i, j, 1, n)
+    bx_new_shape = bx.shape[:outer_batch_dims]
+    for sL, sx in zip(bL.shape[:-2], bx.shape[outer_batch_dims:-1]):
+        bx_new_shape += (sx // sL, sL)
+    bx_new_shape += (n,)
+    bx = bx.reshape(bx_new_shape)
+    # Permute bx to make it have shape (..., 1, j, i, 1, n)
+    permute_dims = (
+        list(range(outer_batch_dims))
+        + list(range(outer_batch_dims, new_batch_dims, 2))
+        + list(range(outer_batch_dims + 1, new_batch_dims, 2))
+        + [new_batch_dims]
+    )
+    bx = bx.permute(permute_dims)
+
+    flat_L = bL.reshape(-1, n, n)  # shape = b x n x n
+    flat_x = bx.reshape(-1, flat_L.size(0), n)  # shape = c x b x n
+    flat_x_swap = flat_x.permute(1, 2, 0)  # shape = b x n x c
+    M_swap = (
+        torch.linalg.solve_triangular(flat_L, flat_x_swap, upper=False).pow(2).sum(-2)
+    )  # shape = b x c
+    M = M_swap.t()  # shape = c x b
+
+    # Now we revert the above reshape and permute operators.
+    permuted_M = M.reshape(bx.shape[:-1])  # shape = (..., 1, j, i, 1)
+    permute_inv_dims = list(range(outer_batch_dims))
+    for i in range(bL_batch_dims):
+        permute_inv_dims += [outer_batch_dims + i, old_batch_dims + i]
+    reshaped_M = permuted_M.permute(permute_inv_dims)  # shape = (..., 1, i, j, 1)
+    return reshaped_M.reshape(bx_batch_shape)
 
 
 class CobwebTorchTree(object):
@@ -26,14 +77,15 @@ class CobwebTorchTree(object):
 
     def __init__(self, shape, use_mutual_info=True, acuity_cutoff=False,
                  prior_var=None, alpha=1e-8,
-                 device=None):
+                 full_covar=False, device=None):
         """
         The tree constructor.
         """
         self.device = device
+        self.full_covar = full_covar
         self.use_mutual_info = use_mutual_info
         self.acuity_cutoff = acuity_cutoff
-        self.shape = shape
+        self.shape = shape if isinstance(shape, torch.Tensor) else torch.tensor(shape)
         self.alpha = torch.tensor(alpha, dtype=torch.float, device=self.device,
                                   requires_grad=False)
         self.pi_tensor = torch.tensor(math.pi, dtype=torch.float,
@@ -49,7 +101,9 @@ class CobwebTorchTree(object):
         """
         Clears the concepts of the tree.
         """
-        self.root = CobwebTorchNode(shape=self.shape, device=self.device)
+        self.root = CobwebTorchNode(shape=self.shape,
+                                    full_covar=self.full_covar,
+                                    device=self.device)
         self.root.tree = self
         self.labels = {}
         self.reverse_labels = {}
@@ -63,7 +117,7 @@ class CobwebTorchTree(object):
         tree_params = {
                 'use_mutual_info': self.use_mutual_info,
                 'acuity_cutoff': self.acuity_cutoff,
-                'shape': self.shape.tolist() if isinstance(self.shape, torch.Tensor) else self.shape,
+                'shape': self.shape.tolist(),
                 'alpha': self.alpha.item(),
                 'prior_var': self.prior_var.item(),
                 'reverse_labels': self.reverse_labels}
@@ -76,7 +130,8 @@ class CobwebTorchTree(object):
         return json_output
 
     def load_json_helper(self, node_data_json):
-        node = CobwebTorchNode(self.shape, device=self.device)
+        node = CobwebTorchNode(self.shape, full_covar=self.tree.full_covar,
+                               device=self.device)
         node.count = torch.tensor(node_data_json['count'], dtype=torch.float,
                                   device=self.device, requires_grad=False)
         node.mean = torch.tensor(node_data_json['mean'], dtype=torch.float,
@@ -94,7 +149,7 @@ class CobwebTorchTree(object):
         
         self.use_mutual_info = data['use_mutual_info']
         self.acuity_cutoff = data['acuity_cutoff']
-        self.shape = data['shape']
+        self.shape = torch.tensor(data['shape'])
         self.alpha = torch.tensor(data['alpha'], dtype=torch.float,
                                   device=self.device, requires_grad=False)
         self.prior_var = torch.tensor(data['prior_var'], dtype=torch.float,
@@ -139,7 +194,7 @@ class CobwebTorchTree(object):
             self.reverse_labels[idx] = label
 
         with torch.no_grad():
-            return self.cobweb(instance, label)
+            return self.cobweb(instance.flatten(), label)
 
     def fit(self, instances, labels=None, iterations=1, randomize_first=True):
         """
@@ -223,7 +278,9 @@ class CobwebTorchTree(object):
 
             elif not current.children:
                 # print("fringe split")
-                new = CobwebTorchNode(shape=self.shape, device=self.device, otherNode=current)
+                new = CobwebTorchNode(shape=self.shape,
+                                      full_covar=self.full_covar,
+                                      device=self.device, otherNode=current)
                 current.parent = new
                 new.children.append(current)
 
@@ -335,7 +392,7 @@ class CobwebTorchTree(object):
         .. seealso:: :meth:`CobwebTree.cobweb`
         """
         with torch.no_grad():
-            return self._cobweb_categorize(instance, label, use_best, greedy, max_nodes)
+            return self._cobweb_categorize(instance.flatten(), label, use_best, greedy, max_nodes)
 
     def old_categorize(self, instance, label):
         """
@@ -364,7 +421,7 @@ class CobwebTorchTree(object):
     def predict_probs(self, instance, label=None, greedy=False,
                       max_nodes=float('inf')):
         with torch.no_grad():
-            return self._predict_probs(instance, label, greedy, max_nodes)
+            return self._predict_probs(instance.flatten(), label, greedy, max_nodes)
 
     def _predict_probs(self, instance, label, greedy, max_nodes):
         queue = []
@@ -438,15 +495,23 @@ class CobwebTorchNode(object):
     # a counter used to generate unique concept names.
     _counter = 0
 
-    def __init__(self, shape, device=None, otherNode=None):
+    def __init__(self, shape, full_covar, device=None, otherNode=None):
         """Create a new CobwebNode"""
         self.concept_id = self.gensym()
         self.count = torch.tensor(0.0, dtype=torch.float, device=device,
                                   requires_grad=False)
-        self.mean = torch.zeros(shape, dtype=torch.float, device=device,
+        self.mean = torch.zeros(torch.prod(shape), dtype=torch.float, device=device,
                                 requires_grad=False)
-        self.meanSq = torch.zeros(shape, dtype=torch.float, device=device,
-                                  requires_grad=False)
+
+        # for covariance estimation this becomes a square matrix
+        if full_covar:
+            self.meanSq = torch.zeros((torch.prod(shape), torch.prod(shape)),
+                                      dtype=torch.float, device=device,
+                                      requires_grad=False)
+        else:
+            self.meanSq = torch.zeros(torch.prod(shape),
+                                      dtype=torch.float, device=device,
+                                      requires_grad=False)
         self.label_counts = torch.tensor([], dtype=torch.float, device=device,
                                          requires_grad=False)
         self.total_label_count = torch.tensor(0, dtype=torch.float,
@@ -462,7 +527,10 @@ class CobwebTorchNode(object):
             self.update_counts_from_node(otherNode)
 
             for child in otherNode.children:
-                self.children.append(CobwebTorchNode(shape=self.tree.shape, device=self.tree.device, otherNode=child))
+                self.children.append(CobwebTorchNode(shape=self.tree.shape,
+                                                     full_covar=self.tree.full_covar,
+                                                     device=self.tree.device,
+                                                     otherNode=child))
 
     def update_label_count_size(self):
         if self.label_counts.shape[0] < len(self.tree.labels):
@@ -484,7 +552,12 @@ class CobwebTorchNode(object):
         self.count += 1
         delta = instance - self.mean
         self.mean += delta / self.count
-        self.meanSq += delta * (instance - self.mean)
+
+        # for covariance this becomes a matrix multiplication
+        if self.tree.full_covar:
+            self.meanSq += torch.matmul(delta.view(-1, 1), (instance - self.mean).view(1, -1))
+        else:
+            self.meanSq += delta * (instance - self.mean)
 
         self.update_label_count_size()
 
@@ -503,8 +576,14 @@ class CobwebTorchNode(object):
         :type node: CobwebNode
         """
         delta = other.mean - self.mean
-        self.meanSq = (self.meanSq + other.meanSq + delta * delta *
-                       ((self.count * other.count) / (self.count + other.count)))
+        if self.tree.full_covar:
+            delta2 = torch.matmul(delta.view(-1, 1), delta.view(1, -1))
+            self.meanSq = (self.meanSq + other.meanSq + delta2 *
+                           ((self.count * other.count) / (self.count + other.count)))
+        else:
+            self.meanSq = (self.meanSq + other.meanSq + delta * delta *
+                           ((self.count * other.count) / (self.count + other.count)))
+
         self.mean = ((self.count * self.mean + other.count * other.mean) /
                      (self.count + other.count))
         self.count += other.count
@@ -524,10 +603,26 @@ class CobwebTorchNode(object):
 
     @property
     def var(self):
+        return self.compute_var(self.meanSq, self.count)
+
+        # if self.tree.acuity_cutoff:
+        #     return torch.clamp(self.meanSq / self.count, self.tree.prior_var) # with cutoff
+        # else:
+        #     if self.tree.full_covar:
+        #         return self.meanSq / self.count + torch.eye(self.meanSq.shape[0], device=self.tree.device) * self.tree.prior_var # without adjustment
+        #     else:
+        #         return self.meanSq / self.count + self.tree.prior_var # with adjustment
+
+    def compute_var(self, meanSq, count):
         if self.tree.acuity_cutoff:
-            return torch.clamp(self.meanSq / self.count, self.tree.prior_var) # with cutoff
+            var = torch.clamp(meanSq / count, self.tree.prior_var) # with cutoff
         else:
-            return self.meanSq / self.count + self.tree.prior_var # with adjustment
+            if self.tree.full_covar:
+                var = meanSq / count + torch.eye(meanSq.shape[0], device=self.tree.device) * self.tree.prior_var # without adjustment
+            else:
+                var = meanSq / count + self.tree.prior_var # with adjustment
+
+        return var
 
     def log_prob_class_given_instance(self, instance, label):
         log_prob = self.log_prob(instance, label)
@@ -535,9 +630,20 @@ class CobwebTorchNode(object):
         return log_prob
 
     def log_prob(self, instance, label):
-        var = self.var
-        log_prob = -(0.5 * torch.log(var) + 0.5 * torch.log(2 * self.tree.pi_tensor) +
-                     0.5 * torch.square(instance - self.mean) / var).sum()
+        if self.tree.full_covar:
+            # m = MultivariateNormal(self.mean, self.var)
+            L = torch.linalg.cholesky_ex(self.var)[0]
+            half_log_det = L.diagonal(dim1=-2, dim2=-1).log().sum(-1)
+            diff = instance - self.mean
+            M = _batch_mahalanobis(L, diff)
+            log_prob = (-0.5 * (self.mean.shape[0] * torch.log(2 * self.tree.pi_tensor) + M)
+                        - half_log_det)
+        else:
+            # m = Normal(self.mean, self.std)
+            # log_prob = m.log_prob(instance).sum()
+            var = self.var
+            log_prob = -(0.5 * torch.log(var) + 0.5 * torch.log(2 * self.tree.pi_tensor) +
+                          0.5 * torch.square(instance - self.mean) / var).sum()
 
         self.update_label_count_size()
         if label is not None:
@@ -551,37 +657,26 @@ class CobwebTorchNode(object):
 
         return log_prob
 
-    def score_insert(self, instance, label):
-        """
-        Returns the score that would result from inserting the instance into
-        the current node.
 
-        This operation can be used instead of inplace and copying because it
-        only looks at the attr values used in the instance and reduces iteration.
-        """
-        count = self.count + 1
-        delta = instance - self.mean
-        mean = self.mean + delta / count
-        meanSq = self.meanSq + delta * (instance - mean)
-
-        # hopefully cheap if already updated.
-        self.update_label_count_size()
-
-        label_counts = self.label_counts.clone()
-        total_label_count = self.total_label_count.clone()
-        if label is not None:
-            label_counts[self.tree.labels[label]] += 1
-            total_label_count += 1
-
-        if self.tree.acuity_cutoff:
-            var = torch.clamp(meanSq / count, self.tree.prior_var) # with cutoff
-        else:
-            var = meanSq / count + self.tree.prior_var # with adjustment
-
-        std = torch.sqrt(var)
+    def compute_score(self, meanSq, count, label_counts, total_label_count, var):
 
         if (self.tree.use_mutual_info):
-            score = (0.5 * torch.log(2 * self.tree.pi_tensor * var) + 0.5).sum()
+            if self.tree.full_covar:
+                # m = MultivariateNormal(self.mean, var)
+                half_log_det = torch.linalg.cholesky_ex(var)[0].diagonal(dim1=-2, dim2=-1).log().sum(-1)
+                score = (0.5 * self.mean.shape[0] *
+                         (1.0 + torch.log(2 * self.tree.pi_tensor))
+                         + half_log_det)
+                # print(m.entropy().sum())
+                # print()
+            else:
+                std = torch.sqrt(var)
+                m = Normal(self.mean, std)
+                score = m.entropy().sum()
+                # score = (0.5 * torch.log(2 * self.tree.pi_tensor * var) + 0.5).sum()
+                # 0.5 + 0.5 * math.log(2 * math.pi) + torch.log(self.scale)
+                # print((0.5 * torch.log(2 * self.tree.pi_tensor * var) + 0.5).sum())
+                # print(score)
         else:
             score = -(1 / (2 * torch.sqrt(self.tree.pi_tensor) * std)).sum()
 
@@ -594,6 +689,66 @@ class CobwebTorchNode(object):
 
         return score
 
+    def score_insert(self, instance, label):
+        """
+        Returns the score that would result from inserting the instance into
+        the current node.
+
+        This operation can be used instead of inplace and copying because it
+        only looks at the attr values used in the instance and reduces iteration.
+        """
+        count = self.count + 1
+        delta = instance - self.mean
+        mean = self.mean + delta / count
+
+        if self.tree.full_covar:
+            meanSq = self.meanSq + torch.matmul(delta.view(-1, 1), (instance - mean).view(1, -1))
+        else:
+            meanSq = self.meanSq + delta * (instance - mean)
+
+        # hopefully cheap if already updated.
+        self.update_label_count_size()
+
+        label_counts = self.label_counts.clone()
+        total_label_count = self.total_label_count.clone()
+        if label is not None:
+            label_counts[self.tree.labels[label]] += 1
+            total_label_count += 1
+
+        var = self.compute_var(meanSq, count)
+
+        return self.compute_score(meanSq, count, label_counts,
+                             total_label_count, var)
+
+        # if self.tree.acuity_cutoff:
+        #     var = torch.clamp(meanSq / count, self.tree.prior_var) # with cutoff
+        # else:
+        #     if self.tree.full_covar:
+        #         var = meanSq / count + torch.eye(meanSq.shape[0], device=self.tree.device) * self.tree.prior_var # without adjustment
+        #     else:
+        #         var = meanSq / count + self.tree.prior_var # with adjustment
+
+        # std = torch.sqrt(var)
+
+        # if (self.tree.use_mutual_info):
+        #     if self.tree.full_covar:
+        #         m = MultivariateNormal(self.mean, var)
+        #     else:
+        #         m = Normal(self.mean, std)
+        #     score = m.entropy().sum()
+        #     # score = (0.5 * torch.log(2 * self.tree.pi_tensor * var) + 0.5).sum()
+        # else:
+        #     score = -(1 / (2 * torch.sqrt(self.tree.pi_tensor) * std)).sum()
+
+        # if self.total_label_count > 0:
+        #     p_label = label_counts / total_label_count
+        #     if (self.tree.use_mutual_info):
+        #         score += (-p_label * torch.log(p_label)).sum()
+        #     else:
+        #         score += (-p_label * p_label).sum()
+
+        # return score
+
     def score_merge(self, other, instance, label):
         """
         Returns the expected correct guesses that would result from merging the
@@ -603,7 +758,12 @@ class CobwebTorchNode(object):
         only looks at the attr values used in the instance and reduces iteration.
         """
         delta = other.mean - self.mean
-        meanSq = (self.meanSq + other.meanSq + delta * delta *
+        if self.tree.full_covar:
+            delta2 = torch.matmul(delta.view(-1, 1), delta.view(1, -1))
+        else:
+            delta2 = delta * delta
+
+        meanSq = (self.meanSq + other.meanSq + delta2 *
                   ((self.count * other.count) / (self.count + other.count)))
         mean = ((self.count * self.mean + other.count * other.mean) /
                 (self.count + other.count))
@@ -612,7 +772,11 @@ class CobwebTorchNode(object):
         count = count + 1
         delta = instance - mean
         mean += delta / count
-        meanSq += delta * (instance - mean)
+
+        if self.tree.full_covar:
+            meanSq += torch.matmul(delta.view(-1, 1), (instance - mean).view(1, -1))
+        else:
+            meanSq += delta * (instance - mean)
 
         # hopefully cheap if already updated.
         self.update_label_count_size()
@@ -629,64 +793,77 @@ class CobwebTorchNode(object):
             label_counts[self.tree.labels[label]] += 1
             total_label_count += 1
 
-        if self.tree.acuity_cutoff:
-            var = torch.clamp(meanSq / count, self.tree.prior_var) # with cutoff
-        else:
-            var = meanSq / count + self.tree.prior_var # with adjustment
+        var = self.compute_var(meanSq, count)
 
-        std = torch.sqrt(var)
+        return self.compute_score(meanSq, count, label_counts,
+                                  total_label_count, var)
 
-        if (self.tree.use_mutual_info):
-            score = (0.5 * torch.log(2 * self.tree.pi_tensor * var) + 0.5).sum()
-        else:
-            score = -(1 / (2 * torch.sqrt(self.tree.pi_tensor) * std)).sum()
+        # if self.tree.acuity_cutoff:
+        #     var = torch.clamp(meanSq / count, self.tree.prior_var) # with cutoff
+        # else:
+        #     if self.tree.full_covar:
+        #         var = meanSq / count + torch.eye(meanSq.shape[0], device=self.tree.device) * self.tree.prior_var # without adjustment
+        #     else:
+        #         var = meanSq / count + self.tree.prior_var # with adjustment
 
-        if self.total_label_count > 0:
-            p_label = label_counts / total_label_count
-            if (self.tree.use_mutual_info):
-                score += (-p_label * torch.log(p_label)).sum()
-            else:
-                score += (-p_label * p_label).sum()
+        # std = torch.sqrt(var)
 
-        return score
+        # if (self.tree.use_mutual_info):
+        #     if self.tree.full_covar:
+        #         m = MultivariateNormal(self.mean, var)
+        #     else:
+        #         m = Normal(self.mean, std)
+        #     score = m.entropy().sum()
+        #     # score = (0.5 * torch.log(2 * self.tree.pi_tensor * var) + 0.5).sum()
+        # else:
+        #     score = -(1 / (2 * torch.sqrt(self.tree.pi_tensor) * std)).sum()
 
-    def get_basic(self):
-        """
-        Climbs up the tree from the current node (probably a leaf),
-        computes the category utility score, and returns the node with
-        the highest score.
-        """
-        curr = self
-        best = self
-        best_cu = self.category_utility()
+        # if self.total_label_count > 0:
+        #     p_label = label_counts / total_label_count
+        #     if (self.tree.use_mutual_info):
+        #         score += (-p_label * torch.log(p_label)).sum()
+        #     else:
+        #         score += (-p_label * p_label).sum()
 
-        while curr.parent:
-            curr = curr.parent
-            curr_cu = curr.category_utility()
-            if curr_cu > best_cu:
-                best = curr
-                best_cu = curr_cu
+        # return score
 
-        return best
+    # def get_basic(self):
+    #     """
+    #     Climbs up the tree from the current node (probably a leaf),
+    #     computes the category utility score, and returns the node with
+    #     the highest score.
+    #     """
+    #     curr = self
+    #     best = self
+    #     best_cu = self.category_utility()
 
-    def get_best(self, instance, label=None):
-        """
-        Climbs up the tree from the current node (probably a leaf),
-        computes the category utility score, and returns the node with
-        the highest score.
-        """
-        curr = self
-        best = self
-        best_ll = self.log_prob_class_given_instance(instance, label)
+    #     while curr.parent:
+    #         curr = curr.parent
+    #         curr_cu = curr.category_utility()
+    #         if curr_cu > best_cu:
+    #             best = curr
+    #             best_cu = curr_cu
 
-        while curr.parent:
-            curr = curr.parent
-            curr_ll = curr.log_prob_class_given_instance(instance, label)
-            if curr_ll > best_ll:
-                best = curr
-                best_ll = curr_ll
+    #     return best
 
-        return best
+    # def get_best(self, instance, label=None):
+    #     """
+    #     Climbs up the tree from the current node (probably a leaf),
+    #     computes the category utility score, and returns the node with
+    #     the highest score.
+    #     """
+    #     curr = self
+    #     best = self
+    #     best_ll = self.log_prob_class_given_instance(instance, label)
+
+    #     while curr.parent:
+    #         curr = curr.parent
+    #         curr_ll = curr.log_prob_class_given_instance(instance, label)
+    #         if curr_ll > best_ll:
+    #             best = curr
+    #             best_ll = curr_ll
+
+    #     return best
 
     def category_utility(self):
         p_of_c = self.count / self.tree.root.count
@@ -705,20 +882,28 @@ class CobwebTorchNode(object):
         :rtype: float
         """
         self.update_label_count_size()
+        return self.compute_score(self.meanSq, self.count,
+                                  self.label_counts, self.total_label_count,
+                                  self.var)
 
-        if (self.tree.use_mutual_info):
-            score = (0.5 * torch.log(2 * self.tree.pi_tensor * self.var) + 0.5).sum()
-        else:
-            score = -(1 / (2 * torch.sqrt(self.tree.pi_tensor) * self.std)).sum()
+        # if (self.tree.use_mutual_info):
+        #     if self.tree.full_covar:
+        #         m = MultivariateNormal(self.mean, self.var)
+        #     else:
+        #         m = Normal(self.mean, self.std)
+        #     score = m.entropy().sum()
+        #     # score = (0.5 * torch.log(2 * self.tree.pi_tensor * self.var) + 0.5).sum()
+        # else:
+        #     score = -(1 / (2 * torch.sqrt(self.tree.pi_tensor) * self.std)).sum()
 
-        if self.total_label_count > 0:
-            p_label = self.label_counts / self.total_label_count
-            if (self.tree.use_mutual_info):
-                score += (-p_label * torch.log(p_label)).sum()
-            else:
-                score += (-p_label * p_label).sum()
+        # if self.total_label_count > 0:
+        #     p_label = self.label_counts / self.total_label_count
+        #     if (self.tree.use_mutual_info):
+        #         score += (-p_label * torch.log(p_label)).sum()
+        #     else:
+        #         score += (-p_label * p_label).sum()
 
-        return score
+        # return score
 
     def partition_utility(self):
         """
@@ -928,7 +1113,9 @@ class CobwebTorchNode(object):
         :return: The new child
         :rtype: CobwebNode
         """
-        new_child = CobwebTorchNode(shape=self.tree.shape, device=self.tree.device)
+        new_child = CobwebTorchNode(shape=self.tree.shape,
+                                    full_covar=self.tree.full_covar,
+                                    device=self.tree.device)
         new_child.parent = self
         new_child.tree = self.tree
         new_child.increment_counts(instance, label)
@@ -957,7 +1144,9 @@ class CobwebTorchNode(object):
             p_of_child = c.count / (self.count + 1)
             children_score += p_of_child * c.score()
 
-        new_child = CobwebTorchNode(shape=self.tree.shape, device=self.mean.device);
+        new_child = CobwebTorchNode(shape=self.tree.shape,
+                                    full_covar=self.tree.full_covar,
+                                    device=self.mean.device);
         new_child.parent = self
         new_child.tree = self.tree
         new_child.increment_counts(instance, label)
@@ -984,7 +1173,9 @@ class CobwebTorchNode(object):
         :return: The new child node that was created by the merge
         :rtype: CobwebNode
         """
-        new_child = CobwebTorchNode(shape=self.tree.shape, device=self.tree.device)
+        new_child = CobwebTorchNode(shape=self.tree.shape,
+                                    full_covar=self.tree.full_covar,
+                                    device=self.tree.device)
         new_child.parent = self
         new_child.tree = self.tree
 
